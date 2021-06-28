@@ -1,0 +1,12 @@
+file_type: resources
+
+resources:
+
+  back_button:
+    type: fragment
+    content:
+      type: button
+      content: Back
+      on_click:
+        - handler: yui_load_screen
+          parameters: [welcome_screen, { path: $data }]

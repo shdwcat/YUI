@@ -1,6 +1,7 @@
 /// @description here
 function yui_load_interactions() {
-	var files = gumshoe("Game_Data/UI/Interactions", "yaml");
+	// TODO where to define this properly?
+	var files = gumshoe("YUI/Interactions", "yaml");
 	
 	var map = {};
 	var i = 0; repeat array_length(files) {

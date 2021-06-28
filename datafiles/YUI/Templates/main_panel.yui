@@ -1,7 +1,10 @@
+file_type: resources
+
 resources:
+
   main_panel:
     type: fragment
     content:
       type: panel
       bg_sprite: yui_panel_bg
-      padding: 30
+      padding: 10

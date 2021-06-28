@@ -1,0 +1,66 @@
+slots:
+  - slot: head
+    name: Head
+  - slot: neck
+    name: Neck
+  - slot: body
+    name: Body
+  - slot: ring
+    name: Ring
+  - slot: legs
+    name: Legs
+  - slot: boots
+    name: Boots
+
+items:
+  - name: Boots
+    sprite: boots
+    slot: boots
+
+  - name: Crested Helmet
+    sprite: crested_helmet
+    slot: head
+
+  - name: Heavy Helm
+    sprite: heavy_helm
+    slot: head
+
+  - name: Skull Signet
+    sprite: skull_signet
+    slot: ring
+    
+  - name: Steel Boots
+    sprite: steeltoe_boots
+    slot: boots
+
+  - name: Strange Necklace
+    sprite: necklace
+    slot: neck
+
+  - name: Cape Armor
+    sprite: cape_armor
+    slot: body
+
+  - name: Chest Armor
+    sprite: chest_armor
+    slot: body
+
+  - name: Plate Helmet
+    sprite: closed_barbute
+    slot: head
+
+  - name: Emerald Necklace
+    sprite: emerald_necklace
+    slot: neck
+
+  - name: Loincloth
+    sprite: loincloth
+    slot: legs
+
+  - name: Metal Skirt
+    sprite: metal_skirt
+    slot: legs
+
+  - name: Power Ring
+    sprite: power_ring
+    slot: ring

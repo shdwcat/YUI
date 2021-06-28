@@ -1,4 +1,4 @@
-id: layout_example
+id: data_binding_example
 file_type: screen
 
 import:
@@ -18,7 +18,7 @@ root:
       elements: 
         - type: text
           text_style: title
-          text: Here you can see examples of the various panel layouts
+          text: Here you can see examples of how to get data from your game into the UI
 
     - type: panel
       elements:

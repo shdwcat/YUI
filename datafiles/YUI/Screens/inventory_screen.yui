@@ -1,0 +1,142 @@
+id: inventory_screen
+file_type: screen
+
+import:
+  - "../Templates/main_panel.yui"
+  - "../Templates/back_button.yui"
+
+  # importing interactions here enables live reload for them
+  - "../Interactions/equip_item.yaml"
+
+# resources can also be defined within a .yui file, without needing to be imported
+resources:
+  equipped_item_slot:
+    type: fragment
+    content: 
+      type: panel
+      layout: horizontal
+      alignment: { h: center }
+      spacing: 15
+      elements:
+        - type: main_panel
+          alignment: stretch
+          size: 64
+
+          # Here you can see an example of Data Binding, which is how you can get data from the game
+          # into the UI. Not all properties support binding, so check the documentation!
+          # The most basic thing to do is to specify 'path' which is the 'property path' to the data
+          # you want on the current data context. The data context is the 'root' data for the entire screen,
+          # and is defined in the 'data_context' variable in the o_yui_screen object when you place one
+          # in the Room Editor.
+          # As you can see here, path supports nested property access (but does not currently support [])
+          tooltip: { path: equipped_item.name }
+          tooltip_placement: left_top
+
+          # This section indicates that this panel participates in the 'equip_item' interaction in
+          # the 'drop' role. Elements can participate in multiple interactions in different roles.
+          interactions:
+            equip_item:
+              drop: true
+
+          elements:
+            - type: image
+              sprite: { path: equipped_item.sprite }
+              size: stretch
+        - type: text
+          text: { path: name }
+
+  inventory_item_slot:
+    type: fragment
+    content: 
+      type: main_panel
+      padding: 2
+      alignment: stretch
+
+      # this section specifies that the 'equip_item' interaction should start when the mouse button is
+      # pressed on this panel. 'interaction' is an alternative to the normal 'handler/parameters'
+      # pair.
+      events:
+        on_mouse_down:
+          interaction: equip_item
+
+      tooltip_placement: top_left
+      tooltip:
+        type: panel
+        elements:
+          - type: text
+            text_style: subtitle
+            text: { path: name }
+
+          # the text element accepts an array, which can be a mix of strings and bindings. This is
+          # more performant than using multiple text elements, so take advantage of it!
+          - type: text
+            text: ["Slot: ", { path: slot }]
+      elements:
+        - type: image
+          sprite: { path: sprite }
+          size: stretch
+
+root:
+  type: panel
+  padding: 30
+  layout: canvas 
+  elements:
+    - type: back_button
+
+    - type: main_panel
+      canvas:
+        top: 50
+        left: 191
+        right: 191
+        bottom: 40
+      layout: canvas
+      spacing: 20
+      padding: 30
+      elements:
+        - type: text
+          text_style: title
+          text: Inventory Screen
+
+        - type: main_panel
+          canvas:
+            top: 50
+          spacing: 10
+          padding: 20
+          elements:
+            - type: text
+              text_style: subtitle
+              text: Equipped Items
+
+            # In addition to specifying children via 'elements', panel also supports binding
+            # to game data, via 'path/template'. The template will be used to render each
+            # item in the 'slots' list on the current data context (and the data context for
+            # the template will be the individual item)
+            - type: panel
+              spacing: 10
+              path: slots
+              template:
+                type: equipped_item_slot
+
+        - type: main_panel
+          canvas:
+            top: 210
+            left: 266
+          padding: 20
+          spacing: 10
+          elements:
+            - type: text
+              text_style: subtitle
+              text: Inventory Items
+
+            # the 'grid' layout can be used to divide an area into evenly sized rectangles
+            - type: panel
+              layout: grid
+              padding: [0,13,0,0]
+              grid:
+                rows: 4
+                row_spacing: 10
+                column_spacing: 10
+                columns: 8
+              path: items
+              template:
+                type: inventory_item_slot
