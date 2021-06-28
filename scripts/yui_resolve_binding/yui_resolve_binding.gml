@@ -4,7 +4,7 @@
 /// @param resources - the resources for the yui_document, for transforms and such
 function yui_resolve_binding(binding, data_context, resources) {
 	
-	if instanceof(binding) == "YuiBinding" {
+	if instanceof(binding) == "YuiBinding" || instanceof(binding) == "YuiMultiBinding" {
 		return binding.resolve(data_context, resources);
 	}
 	

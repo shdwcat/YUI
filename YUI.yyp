@@ -7,6 +7,7 @@
     {"id":{"name":"yui_warning","path":"scripts/yui_warning/yui_warning.yy",},"order":11,},
     {"id":{"name":"snap_from_yaml","path":"scripts/snap_from_yaml/snap_from_yaml.yy",},"order":0,},
     {"id":{"name":"YuiBasicTextRenderer","path":"scripts/YuiBasicTextRenderer/YuiBasicTextRenderer.yy",},"order":0,},
+    {"id":{"name":"yui_compare_equal","path":"scripts/yui_compare_equal/yui_compare_equal.yy",},"order":4,},
     {"id":{"name":"yui_register_selection_scope","path":"scripts/yui_register_selection_scope/yui_register_selection_scope.yy",},"order":2,},
     {"id":{"name":"yui_call_event_handler","path":"scripts/yui_call_event_handler/yui_call_event_handler.yy",},"order":0,},
     {"id":{"name":"yui_resolve_layout","path":"scripts/yui_resolve_layout/yui_resolve_layout.yy",},"order":3,},
