@@ -6,6 +6,7 @@ event_inherited();
 // hack for loading screens across rooms
 if yui_file == "" {
 	yui_file = global.__yui_pending_screen_file;
+	data_context = global.__yui_pending_screen_context;
 }
 
 setFullScreen = function() {
