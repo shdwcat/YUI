@@ -7,6 +7,7 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		
 		drag: {
 			condition: undefined,
+			center_visual: true,
 			visual: undefined,
 			action: undefined
 		},
@@ -86,8 +87,10 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		}
 		
 		if result {
-			// center result on cursor
-			result.finalize(-result.w / 2, -result.h / 2);			
+			if props.drag.center_visual {
+				// center result on cursor
+				result.finalize(-result.w / 2, -result.h / 2);
+			}
 			return result;
 		}
 		else 
@@ -107,9 +110,7 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		}
 	}
 	
-	static onHover = function(hotspot, cursor_state, cursor_event) {
-		if cursor_event.hover_consumed return;
-		
+	static onHover = function(hotspot, cursor_state, cursor_event) {		
 		interaction_data = {
 			source: source,
 			target: { // this is customized per target, so that each renderer gets correct data
@@ -121,7 +122,7 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		var is_valid_drop = canDrop(hotspot.ro_context, interaction_data);
 		interaction_data.target.can_drop = is_valid_drop;
 		
-		if cursor_state.hover {
+		if cursor_state.hover && !cursor_event.hover_consumed {			
 			cursor_event.hover_consumed = true;
 			// TODO: something is breaking here when yui_screen.frame_cadence > 1
 			// somehow the target isn't getting set?
