@@ -1,0 +1,34 @@
+id: layout_example
+
+import:
+  - "../Templates/main_panel.yui"
+
+root:
+  type: panel
+  padding: 30
+  spacing: 10
+  
+  elements:
+    - type: button
+      content: Back
+      on_click:
+        - handler: yui_load_screen
+          parameters: [[welcome_screen]]
+
+    - type: panel
+      spacing: 10
+      elements: 
+        - type: text
+          text_style: title
+          text: Here you can see examples of the various panel layouts
+
+    - type: panel
+      elements:
+
+        - type: panel
+          elements:
+            - type: text
+              text_style: title
+              text: Loreum Ipsum
+            - type: text
+              text: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.

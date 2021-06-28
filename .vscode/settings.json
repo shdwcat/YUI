@@ -1,0 +1,27 @@
+{
+    "json.schemas": [
+        {
+            "fileMatch": [
+                "*.location.json"
+            ],
+            "url": "./datafiles/Game_Data/Schemas/location.schema.json"
+        }
+    ],
+    "editor.wordWrap": "on",
+    "files.associations": {
+        "*.ui": "json",
+        "*.yui": "yaml",
+    },
+    "[yaml]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.autoIndent": "advanced",
+    },
+    "workbench.tree.indent": 12,
+    "color-highlight.languages": [
+        "yaml"
+    ],
+    "color-highlight.markerType": "background",
+    "color-highlight.matchWords": true,
+    "color-highlight.markRuler": true
+}
