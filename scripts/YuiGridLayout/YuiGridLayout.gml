@@ -23,10 +23,10 @@ function YuiGridLayout() : YuiLayoutBase() constructor {
 		props = init_props_old(panel[$ "grid"]);
 		
 		spacing_height = (props.rows - 1) * props.row_spacing;
-		row_height = (current_draw_rect.h - spacing_height) / props.rows;
+		row_height = (padding_info.padded_rect.h - spacing_height) / props.rows;
 		
 		spacing_width = (props.columns - 1) * props.column_spacing;
-		column_width = (current_draw_rect.w - spacing_width) / props.columns;
+		column_width = (padding_info.padded_rect.w - spacing_width) / props.columns;
 		return draw_rect;
 	}
 	
@@ -38,8 +38,8 @@ function YuiGridLayout() : YuiLayoutBase() constructor {
 				var column = item_index mod props.columns;
 				var row = floor(item_index / props.columns);
 				return {
-					x: draw_rect.x + (column * (column_width + props.column_spacing)),
-					y: draw_rect.y + (row * (row_height + props.row_spacing)),
+					x: padding_info.padded_rect.x + (column * (column_width + props.column_spacing)),
+					y: padding_info.padded_rect.y + (row * (row_height + props.row_spacing)),
 					w: column_width,
 					h: row_height,
 				};

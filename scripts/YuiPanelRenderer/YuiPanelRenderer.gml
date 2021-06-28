@@ -98,7 +98,7 @@ function YuiPanelRenderer(_props, _resources) : YuiBaseRenderer(_props, _resourc
 		layout = new makeLayout();
 		
 		// returned draw_rect will be adjusted to account for size
-		draw_rect = layout.init(draw_rect, size, props, true);		
+		draw_rect = layout.init(draw_rect, size, props, true);
 				
 		if props.template != noone {
 			// TODO: convert elements to use binding
@@ -131,6 +131,11 @@ function YuiPanelRenderer(_props, _resources) : YuiBaseRenderer(_props, _resourc
 			}
 			
 			data_count = array_length(data_items);
+		}
+		else if props.elements == noone {
+			// this means we didn't specify a template OR elements, so no children to render
+			//yui_warning("Panel has no template or elements specified! ID:", props.id)
+			data_count = 0;
 		}
 		
 		var children = array_create(data_count);

@@ -17,6 +17,10 @@ function YuiElementSize(size) constructor {
 		w = "content";
 		h = "content";
 	}
+	else if is_numeric(size) {
+		w = size;
+		h = size;
+	}
 	else if is_struct(size) {
 		if size[$ "w"] == undefined {
 			w = "auto";

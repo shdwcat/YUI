@@ -15,6 +15,8 @@ function YuiSwitchRenderer(_props, _resources) : YuiBaseRenderer(_props, _resour
 	var case_keys = variable_struct_get_names(props.cases);
 	var i = 0; repeat array_length(case_keys) {
 		var case_key = case_keys[i++];
+		if case_key == "__snap_field_order" continue;
+		
 		var yui_data = props.cases[$ case_key];
 		var case_renderer = yui_resolve_renderer(yui_data, _resources);
 		

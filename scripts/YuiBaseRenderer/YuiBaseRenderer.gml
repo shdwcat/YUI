@@ -122,7 +122,7 @@ function YuiBaseRenderer(_props, _resources) constructor {
 				if button == undefined button = mb_left;
 				
 				if mouse_check_button_released(button) {
-					var handle = yui_call_event_handler(on_mouse_up, self, hotspot.ro_context, hotspot.data);
+					var handled = yui_call_event_handler(on_mouse_up, self, hotspot.ro_context, hotspot.data);
 					if handled == true {
 						cursor_event.cursor_release_consumed = true;
 					}
