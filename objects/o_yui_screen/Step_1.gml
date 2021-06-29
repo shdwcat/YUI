@@ -1,6 +1,6 @@
 /// @description check for reload
-		
-if YuiGlobals.runner_temp_folder != noone {
+
+if YuiGlobals.runner_temp_folder != noone && global.__yui_live_reload_enabled {
 	var got_focus = false;
 	var _lost_focus = !window_has_focus();
 	if _lost_focus {
@@ -26,7 +26,7 @@ if YuiGlobals.runner_temp_folder != noone {
 				var temp_file = YuiGlobals.runner_temp_folder + filepath;
 				file_delete(temp_file);
 			
-				var data_file = global.__yui_globals.debug_config.project_data_folder + filepath;
+				var data_file = global.__yui_local_project_data_folder + filepath;
 				file_copy(data_file, temp_file);
 					
 				i++;
