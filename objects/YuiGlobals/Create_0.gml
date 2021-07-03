@@ -9,13 +9,11 @@ var is_gms2_beta = dot_pos != 2;
 
 runner_temp_folder = yui_get_runner_temp_folder(is_gms2_beta);
 
-__scribble_init();
-
 themes = ds_map_create();
 default_theme = new YuiTheme("yui_scifi", {});
 themes[? "default"] = default_theme;
 
-// move to __yui_init_globals
+// TODO move to __yui_init_globals
 renderer_map = ds_map_create();
 renderer_map[? "panel"] = YuiPanelRenderer;
 renderer_map[? "text"] = YuiTextRenderer;
