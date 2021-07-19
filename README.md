@@ -19,8 +19,6 @@ Documentation is in progress! Feel free to browse the code while you wait :)
 ### The Example Project
 Contained in this repo is the YUI Example project. If you clone the repo locally you can run the project to get an idea of what YUI is capable of. The Example Project is still a work in progress, but make sure to check out the Inventory Screen for an example of how to quickly set up drag and drop!
 
-NOTE: At the moment, the Example Project might not run correctly out of the box, I'm working on fixing that!
-
 ### Dependencies
 YUI has a number of dependencies, which are automatically included in the project.
 
