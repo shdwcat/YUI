@@ -44,6 +44,7 @@ function yui_call_event_handler(event, event_source, ro_context, data) {
 		}
 				
 		// the event or handler might be bound to some data on the context
+		// TODO: I don't think this works because of the check on line 21
 		event = ro_context.resolveBinding(event, data);
 		if !event return;
 			

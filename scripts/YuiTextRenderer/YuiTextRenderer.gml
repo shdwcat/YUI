@@ -7,7 +7,6 @@ function YuiTextRenderer(_props, _resources) : YuiBaseRenderer(_props, _resource
 		
 		text: noone,
 		text_format: noone,
-		path: noone, // defines the source path for the text content
 		
 		text_style: "body",
 		font: undefined, // overrides text_style.font

@@ -5,7 +5,6 @@ function YuiButtonRenderer(_props, _resources) : YuiBaseRenderer(_props, _resour
 		theme: "default",
 		
 		bg_sprite: noone,
-		bg_sprite_size: undefined,
 		bg_color: noone,
 		border_color: noone,
 		border_thickness: 1,
@@ -14,10 +13,8 @@ function YuiButtonRenderer(_props, _resources) : YuiBaseRenderer(_props, _resour
 		
 		content: noone,
 		fit_to_content: true, // can be true/false/width/height
-		scale_mode: "slice", // stretch/tile/clip/none/etc
 		
-		popup: noone, // setting popup will show a popup in an overlay				
-		tooltip: noone, // either tooltip text or a Binding
+		popup: noone, // setting popup will show a popup in an overlay
 		
 		mouseover_color: $55555555,
 		mousedown_color: $99999999,
@@ -94,7 +91,7 @@ function YuiButtonRenderer(_props, _resources) : YuiBaseRenderer(_props, _resour
 	static update = function(ro_context, data, draw_rect, item_index) {
 		
 		if data_source != undefined {
-			if instanceof(data_source) == "YuiBinding" {
+			if instanceof(data_source) == "YuiBinding" { // TODO: support MultiBinding
 				data = ro_context.resolveBinding(data_source, data);
 			}
 			else {
@@ -323,12 +320,7 @@ function YuiButtonRenderer(_props, _resources) : YuiBaseRenderer(_props, _resour
 	static drawBackground = function(x, y, w, h) {
 		// draw the bg sprite or bg color
 		if bg_sprite {
-			if props.scale_mode == "slice" {
-				draw_sprite_stretched(bg_sprite, 0, x, y, w, h);
-			}
-			else { // "none"
-				draw_sprite(bg_sprite, 0, x, y);
-			}
+			draw_sprite_stretched(bg_sprite, 0, x, y, w, h);
 		}
 		else if bg_color != noone {			
 			draw_rectangle_color(
@@ -348,21 +340,12 @@ function YuiButtonRenderer(_props, _resources) : YuiBaseRenderer(_props, _resour
 	
 	static drawHighlight = function(draw_rect, overlay_color) {
 		if bg_sprite {
-			if props.scale_mode == "slice" {
-				gpu_set_blendmode(bm_add);
-				draw_sprite_stretched_ext(
-					bg_sprite, 0,
-					draw_rect.x, draw_rect.y, draw_rect.w, draw_rect.h,
-					overlay_color, bm_add);
-				gpu_set_blendmode(bm_normal);
-			}
-			else { // "none"
-				gpu_set_blendmode(bm_add);
-				draw_sprite_ext(
-					bg_sprite, 0, draw_rect.x, draw_rect.y,
-					1, 1, 0, overlay_color, 1);
-				gpu_set_blendmode(bm_normal);
-			}
+			gpu_set_blendmode(bm_add);
+			draw_sprite_stretched_ext(
+				bg_sprite, 0,
+				draw_rect.x, draw_rect.y, draw_rect.w, draw_rect.h,
+				overlay_color, bm_add);
+			gpu_set_blendmode(bm_normal);
 		}
 		else if bg_color {
 			var bm = gpu_get_blendmode();

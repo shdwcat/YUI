@@ -34,10 +34,6 @@ root:
             - " " # inserts a blank line
             - Select an option below to see more examples
 
-            # - type: text
-            #   text: "Please tread carefully."
-            #   color: #ed254e, #f9Dc5c, #c2eabd, #011936 background and contrasting #465362
-
         - type: button # 'type: button' creates a clickable button! 
           content: Layout Examples # the 'content' for a button can be a simple string like this, or a child element, which could be a panel containing more elements!
           on_click: # on_click is how we tell the button what to do

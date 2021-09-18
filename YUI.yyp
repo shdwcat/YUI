@@ -265,6 +265,7 @@
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Example Data","resourceVersion":"1.0","name":"inventory.yaml","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Interactions","resourceVersion":"1.0","name":"equip_item.yaml","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI","resourceVersion":"1.0","name":".gitattributes","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/YUI/Templates","resourceVersion":"1.0","name":"dropdown.yui","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
     "IDEVersion": "2.3.2.560",

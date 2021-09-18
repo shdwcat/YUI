@@ -4,7 +4,6 @@ function YuiImageRenderer(_props, _resources) : YuiBaseRenderer(_props, _resourc
 		type: "image",			
 		theme: "default",
 		padding: 0,
-		scale_mode: "slice", // stretch/tile/clip/none/etc
 		center: false,
 		
 		sprite: noone,
@@ -123,10 +122,6 @@ function YuiImageRenderer(_props, _resources) : YuiBaseRenderer(_props, _resourc
 						angle, blend_color, opacity);
 				
 					yui_draw_trace_rect(trace, self, c_yellow);
-			
-					//if props.scale_mode == "tile" {
-					//	draw_sprite_tiled_ext(sprite, frame, x + sprite_x_offset, y + sprite_y_offset)
-					//}
 				};
 			}
 		}
