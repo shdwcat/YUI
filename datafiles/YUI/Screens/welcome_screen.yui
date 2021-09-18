@@ -39,13 +39,14 @@ root:
           on_click: # on_click is how we tell the button what to do
             # note that this is an array! you can define multiple handlers for a click and ALL will run
             - handler: yui_load_screen # this is the name of the GML script to run. This one will move to the YuiScreenRoom and load the screen specified below
-              parameters: layout_example # and this is the parameters to pass to the script, in this case the ID of the screen file to load
+              parameters: [layout_example, { path: $data }]
+              # and these are the parameters to pass to the script, in this case the ID of the screen file to load, and the data context to use
 
         - type: button
           content: Binding to Game Data
           on_click:
             - handler: yui_load_screen
-              parameters: data_binding_example
+              parameters: [data_binding_example, { path: $data }]
 
         - type: button
           content: "Use Case: Inventory Screen"
