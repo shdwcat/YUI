@@ -1,5 +1,5 @@
 /// @description adds a tooltip hotspot if there is a tooltip defined
-function yui_render_tooltip_if_any(ro_context, tooltip_rect, props, data, item_index) {
+function yui_render_tooltip_if_any(ro_context, tooltip_rect, props, data = undefined, item_index = undefined) {
 	if props.tooltip != noone {
 		if !variable_struct_exists(self, "tooltip_renderer") {
 			yui_warning("no tooltip renderer for props -- is this a template definition root?");

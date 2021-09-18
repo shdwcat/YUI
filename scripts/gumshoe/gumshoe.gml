@@ -1,7 +1,7 @@
 /// @param directory
 /// @param fileExtension
 /// @param returnStruct
-function gumshoe(_directory, _extension, _return_struct) {
+function gumshoe(_directory, _extension, _return_struct = false) {
     
     //Clean up weirdo directory formats that people might use
     _directory = string_replace_all(_directory, "/", "\\");
