@@ -2,6 +2,7 @@
 ## A UI system for GMS2 by [@shdwcat](https://github.com/shdwcat)
 
 **NOTE:** YUI is ***not*** ready for use in production code yet!
+
 **NOTE:** There is currently a GMS2 bug with running in VM mode *without* the debugger. Please use the debugger or YYC for now!
 
 ### Why YUI?
