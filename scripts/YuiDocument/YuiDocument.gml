@@ -6,6 +6,7 @@ function YuiDocument(_yui_file) constructor {
 	next_animation_states = {};
 	
 	update_result = undefined;
+	interaction_result = undefined;
 	
 	cursor_event_consumed = false;
 	
@@ -51,17 +52,28 @@ function YuiDocument(_yui_file) constructor {
 		loaded_files[array_length(loaded_files)] = filepath;
 	}
 	
-	static update = function(data_context, draw_rect) {
-				
+	static update = function(data_context, draw_rect, cursor_pos) {			
+		// create a render context to coordinate various parts of rendering
 		render_context = new YuiRenderContext(resources, self);
 		
+		// use the previous state as the next state
+		// TODO: ideally we want to rebuild the next state
 		previous_animation_states = next_animation_states;
 		
 		update_result = root_renderer.update(render_context, data_context, draw_rect, undefined);
+				
+		if (YuiCursorManager.active_interaction != undefined) {
+			interaction_result = YuiCursorManager.active_interaction.update(render_context, cursor_pos);			
+		}
 		
-		if YuiCursorManager.active_interaction != undefined {
+		// check again because the interaction may have completed
+		if (YuiCursorManager.active_interaction != undefined) {
 			// update game objects that participate in the interaction
 			yui_handle_game_object_interaction(YuiCursorManager.active_interaction, render_context);
+		}
+		else {
+			// if it completed, clear out the UI
+			interaction_result = undefined;
 		}
 		
 		// hack
@@ -70,10 +82,7 @@ function YuiDocument(_yui_file) constructor {
 	
 	static handleHotspots = function(cursor_pos, cursor_event) {
 		if !update_result return;		
-		
-		// hack
-		_cursor_pos = cursor_pos;
-				
+						
 		// hack
 		var render_size = update_result;
 
@@ -85,14 +94,14 @@ function YuiDocument(_yui_file) constructor {
 			// check if the root document should consume the cursor event
 			if !cursor_event_consumed && root_renderer.props.cursor_events == YuiCursorEvents.auto {
 				
-				//// HACK - fix mouse events not being consumed if panel content doesn't fill full panel
-				//if instanceof(root_renderer) == "YuiPanelRenderer"
-				//	&& root_renderer.props.size != "content"
-				//	&& render_size.w != 0
-				//	&& render_size.h != 0 {
-				//	render_size.w = _draw_rect.w;
-				//	render_size.h = _draw_rect.h;
-				//}
+				// HACK - fix mouse events not being consumed if panel content doesn't fill full panel
+				if instanceof(root_renderer) == "YuiPanelRenderer"
+					&& root_renderer.props.size != "content"
+					&& render_size.w != 0
+					&& render_size.h != 0 {
+					render_size.w = _draw_rect.w;
+					render_size.h = _draw_rect.h;
+				}
 				
 				if yui_cursor_in_rect(cursor_pos, update_result) {
 					cursor_event_consumed = true;
@@ -117,12 +126,8 @@ function YuiDocument(_yui_file) constructor {
 
 		// handle interaction
 		if YuiCursorManager.active_interaction != undefined {
-			
-			// TODO: how do we move the cursor handling to handleHotspots()?
-			// move the update portion to the main update?
-			
+						
 			// update and draw
-			var interaction_result = YuiCursorManager.active_interaction.update(render_context, _cursor_pos);
 			if interaction_result {
 				interaction_result.draw();
 			}
