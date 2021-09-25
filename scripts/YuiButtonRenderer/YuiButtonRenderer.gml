@@ -91,7 +91,7 @@ function YuiButtonRenderer(_props, _resources) : YuiBaseRenderer(_props, _resour
 	static update = function(ro_context, data, draw_rect, item_index) {
 		
 		if data_source != undefined {
-			if instanceof(data_source) == "YuiBinding" { // TODO: support MultiBinding
+			if instanceof(data_source) == "YuiBinding" || instanceof(data_source) == "YuiMultiBinding" {
 				data = ro_context.resolveBinding(data_source, data);
 			}
 			else {
