@@ -12,19 +12,6 @@
 // In the Example Project, they're located in /datafiles//YUI/ but you can change that here.
 #macro YUI_DATA_SUBFOLDER "YUI/"
 
-// Scribble Set-Up
-// The Example Project needs to set up scribble in order to run, but you can disable this
-// and set up scribble yourself, or edit the section below as needed
-#macro YUI_SETUP_SCRIBBLE true
-
-if YUI_SETUP_SCRIBBLE {
-	// by default expect font .yy files in the root of the /datafiles/ folder
-	scribble_font_add_all();
-	
-	// set the YUI body font as the default scribble font
-	scribble_font_set_default(font_get_name(fnt_yui_body));
-}
-
 
 
 

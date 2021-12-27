@@ -26,7 +26,6 @@
   "frames": [
     {"compositeImage":{"FrameId":{"name":"1cbd1a67-997d-4981-bee7-db29cf5213cb","path":"sprites/yui_icon_64/yui_icon_64.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
         {"FrameId":{"name":"1cbd1a67-997d-4981-bee7-db29cf5213cb","path":"sprites/yui_icon_64/yui_icon_64.yy",},"LayerId":{"name":"e7de3e5a-5be1-46fd-9bf3-c6f3231df274","path":"sprites/yui_icon_64/yui_icon_64.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-        {"FrameId":{"name":"1cbd1a67-997d-4981-bee7-db29cf5213cb","path":"sprites/yui_icon_64/yui_icon_64.yy",},"LayerId":{"name":"d2bd1d3a-6c1f-4186-88d1-2973f7ab2cc7","path":"sprites/yui_icon_64/yui_icon_64.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
       ],"parent":{"name":"yui_icon_64","path":"sprites/yui_icon_64/yui_icon_64.yy",},"resourceVersion":"1.0","name":"1cbd1a67-997d-4981-bee7-db29cf5213cb","tags":[],"resourceType":"GMSpriteFrame",},
   ],
   "sequence": {
@@ -43,7 +42,7 @@
     "tracks": [
       {"name":"frames","spriteId":null,"keyframes":{"Keyframes":[
             {"id":"8793e2d2-b446-4bf3-9993-da0ad72503f2","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"1cbd1a67-997d-4981-bee7-db29cf5213cb","path":"sprites/yui_icon_64/yui_icon_64.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
-          ],"resourceVersion":"1.0","resourceType":"KeyframeStore<SpriteFrameKeyframe>",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"modifiers":[],"isCreationTrack":false,"resourceVersion":"1.0","tags":[],"resourceType":"GMSpriteFramesTrack",},
+          ],"resourceVersion":"1.0","resourceType":"KeyframeStore<SpriteFrameKeyframe>",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"isCreationTrack":false,"resourceVersion":"1.0","tags":[],"resourceType":"GMSpriteFramesTrack","modifiers":[],},
     ],
     "visibleRange": null,
     "lockOrigin": true,
@@ -95,7 +94,7 @@
   },
   "parent": {
     "name": "Sprites",
-    "path": "folders/Packages - YUI/Sprites.yy",
+    "path": "folders/temp/Sprites.yy",
   },
   "resourceVersion": "1.0",
   "name": "yui_icon_64",

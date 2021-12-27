@@ -3,7 +3,7 @@
   "isCompatibility": false,
   "parent": {
     "name": "Configuration - Please edit these!",
-    "path": "folders/Packages - Scribble/Configuration - Please edit these!.yy",
+    "path": "folders/Scribble/Configuration - Please edit these!.yy",
   },
   "resourceVersion": "1.0",
   "name": "__scribble_config_colours",

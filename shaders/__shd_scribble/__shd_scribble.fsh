@@ -1,13 +1,21 @@
-//   @jujuadams   v7.0.3   2020-01-02
+//   @jujuadams   v8.0.0   2020-03-16
 precision highp float;
+
+#define PREMULTIPLY_ALPHA false
 
 varying vec2 v_vTexcoord;
 varying vec4 v_vColour;
 
-uniform vec4 u_vFog;
-
 void main()
 {
-    gl_FragColor = v_vColour * texture2D(gm_BaseTexture, v_vTexcoord);
-    gl_FragColor.rgb = mix(gl_FragColor.rgb, u_vFog.rgb, u_vFog.a);
+    gl_FragColor = v_vColour*texture2D(gm_BaseTexture, v_vTexcoord);
+    
+    if (PREMULTIPLY_ALPHA)
+    {
+        gl_FragColor.rgb *= v_vColour.a;
+    }
+    else
+    {
+        gl_FragColor.a *= v_vColour.a;
+    }
 }

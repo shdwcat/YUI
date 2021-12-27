@@ -1,27 +1,37 @@
-//   @jujuadams   v7.0.3   2020-01-02
+//   @jujuadams   v8.0.0   2021-12-15
 precision highp float;
 
-#extension GL_OES_standard_derivatives : enable
+#define PROPORTIONAL_BORDER_SCALE false
+#define PREMULTIPLY_ALPHA false
+#define ROUNDED_BORDERS false
 
-varying vec2 v_vTexcoord;
-varying vec4 v_vColour;
+varying vec2  v_vTexcoord;
+varying vec4  v_vColour;
+varying float v_fPixelScale;
+varying float v_fTextScale;
 
 uniform vec2  u_vTexel;
 uniform float u_fMSDFRange;
-uniform vec4  u_vFog;
+uniform float u_fMSDFThicknessOffset;
 uniform vec4  u_vShadowColour;
-uniform vec2  u_vShadowOffset;
+uniform vec3  u_vShadowOffsetAndSoftness;
 uniform vec3  u_vBorderColour;
 uniform float u_fBorderThickness;
+uniform float u_fSecondDraw;
 
 float median(vec3 v)
 {
     return max(min(v.x, v.y), min(max(v.x, v.y), v.z));
 }
 
-float MSDFSignedDistance(vec2 texOffset)
+float MSDFSignedDistance(vec4 sample)
 {
-    return median(texture2D(gm_BaseTexture, v_vTexcoord - u_vTexel*texOffset).rgb) - 0.5;
+    return median(sample.rgb) + u_fMSDFThicknessOffset - 0.5;
+}
+
+float SDFSignedDistance(vec4 sample)
+{
+    return sample.a + u_fMSDFThicknessOffset - 0.5;
 }
 
 float MSDFAlpha(float signedDistance, float pixelSize, float outerBorder)
@@ -31,29 +41,41 @@ float MSDFAlpha(float signedDistance, float pixelSize, float outerBorder)
 
 void main()
 {
-    //TODO - Mac/iOS have issues with this right now. Figure out a way to get around that
-    float dx = dFdx(v_vTexcoord.x) / u_vTexel.x;
-    float dy = dFdy(v_vTexcoord.y) / u_vTexel.y;
-    float pixelSize = inversesqrt(dx*dx + dy*dy);
-    
-    float distBase = MSDFSignedDistance(vec2(0.0));
-    float alphaBase = MSDFAlpha(distBase, pixelSize, 0.0);
+    vec4 sample = texture2D(gm_BaseTexture, v_vTexcoord);
+    float distBase = MSDFSignedDistance(sample);
+    float alphaBase = MSDFAlpha(distBase, v_fPixelScale, 0.0);
     gl_FragColor = vec4(v_vColour.rgb, alphaBase);
     
-    if (u_fBorderThickness > 0.0)
+    if (u_fSecondDraw < 0.5)
     {
-        float alphaBorder = MSDFAlpha(distBase, pixelSize, u_fBorderThickness);
-        gl_FragColor.rgb = mix(u_vBorderColour, gl_FragColor.rgb, gl_FragColor.a);
-        gl_FragColor.a = max(gl_FragColor.a, alphaBorder);
+        if (u_fBorderThickness > 0.0)
+        {
+            float distRounded = ROUNDED_BORDERS? SDFSignedDistance(sample) : MSDFSignedDistance(sample);
+            float alphaBorder = MSDFAlpha(distRounded, v_fPixelScale, PROPORTIONAL_BORDER_SCALE? (v_fPixelScale*u_fBorderThickness) : u_fBorderThickness);
+            gl_FragColor.rgb = mix(u_vBorderColour, gl_FragColor.rgb, gl_FragColor.a);
+            gl_FragColor.a = max(gl_FragColor.a, alphaBorder);
+        }
+        
+        if (u_vShadowColour.a > 0.0)
+        {
+            vec4 shadowSample = texture2D(gm_BaseTexture, v_vTexcoord + u_vTexel*u_vShadowOffsetAndSoftness.xy/v_fPixelScale);
+            float shadowDist = MSDFSignedDistance(shadowSample);
+            float alphaShadow = u_vShadowColour.a*(1.0 - min(1.0, -2.0*shadowDist/u_vShadowOffsetAndSoftness.z));
+            //Old method = MSDFAlpha(shadowDist, v_fPixelScale, PROPORTIONAL_BORDER_SCALE? (v_fPixelScale*u_fBorderThickness) : u_fBorderThickness);
+            vec4 shadowColour = vec4(u_vShadowColour.rgb, alphaShadow);
+            
+            float preAlpha = gl_FragColor.a;
+            gl_FragColor = mix(shadowColour, gl_FragColor, gl_FragColor.a);
+            gl_FragColor.a = max(preAlpha, alphaShadow);
+        }
     }
     
-    if (length(u_vShadowOffset) > 0.0)
+    if (PREMULTIPLY_ALPHA)
     {
-        float alphaShadow = u_vShadowColour.a*MSDFAlpha(MSDFSignedDistance(u_vShadowOffset/pixelSize), pixelSize, u_fBorderThickness);
-        gl_FragColor.rgb = mix(u_vShadowColour.rgb, gl_FragColor.rgb, gl_FragColor.a);
-        gl_FragColor.a = max(gl_FragColor.a, alphaShadow);
+        gl_FragColor.rgb *= v_vColour.a;
     }
-    
-    gl_FragColor *= v_vColour.a;
-    gl_FragColor.rgb = mix(gl_FragColor.rgb, u_vFog.rgb, u_vFog.a);
+    else
+    {
+        gl_FragColor.a *= v_vColour.a;
+    }
 }

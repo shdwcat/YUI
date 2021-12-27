@@ -2,8 +2,8 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Packages - Scribble",
-    "path": "folders/Packages - Scribble.yy",
+    "name": "Scribble",
+    "path": "folders/Scribble.yy",
   },
   "resourceVersion": "1.0",
   "name": "scribble",
