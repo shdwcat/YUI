@@ -2,13 +2,15 @@
 function YuiLayoutBase() constructor {
 	
 	static init = function(_draw_rect, _size, panel) {
-		size = _size;
+		size = _size;		
+		padding = panel.padding;
 		
-		if panel.trace {
-			var f = "f";
-		}
+		//if panel.trace {
+		//	var f = "f";
+		//}
 		
 		// apply a custom alignment if specified
+		// TODO: move to YuiElementAlignment() in panel constructor
 		if panel.alignment != "default" {
 			if is_string(panel.alignment) {
 				alignment = {
@@ -28,7 +30,12 @@ function YuiLayoutBase() constructor {
 			}
 		}
 		
-		draw_rect = yui_copy_rect(_draw_rect);
+		draw_rect = {
+			x: _draw_rect.x,
+			y: _draw_rect.y,
+			w: _draw_rect.w,
+			h: _draw_rect.h,
+		};
 		
 		// allow the provided numeric size to override the draw rect
 		// TODO: account for overflow (how?)
@@ -48,18 +55,17 @@ function YuiLayoutBase() constructor {
 		if size.max_h != undefined {
 			draw_rect.h = min(draw_rect.h, size.max_h);
 		}
-		
+				
 		// apply the padding to the actual draw rect
-		padding_info = yui_apply_padding(draw_rect, panel.padding);
-		
 		// this is the one that will get updated for each element
-		current_draw_rect = padding_info.padded_rect;
+		current_draw_rect = yui_apply_padding(draw_rect, padding);
+		padded_rect = yui_copy_rect(current_draw_rect);
 		
 		// this is the total size used up by the panel layout, including padding
 		// (important for panels within other panels)
 		draw_size = {
-			w: padding_info.padding_size.w,
-			h: padding_info.padding_size.h,
+			w: padding.w,
+			h: padding.h,
 		}
 		
 		// return the actual draw_rect
@@ -68,10 +74,17 @@ function YuiLayoutBase() constructor {
 	
 	static getItemDrawRect = function(item_index) {
 		// make a copy so that the item renderer can't accidentally mess up our draw rect
-		var item_draw_rect = yui_copy_rect(current_draw_rect);
-		if item_draw_rect.h <= 0 {
-			//yui_log("broken");
-		}
+		var item_draw_rect = {
+			x: current_draw_rect.x,
+			y: current_draw_rect.y,
+			w: current_draw_rect.w,
+			h: current_draw_rect.h,
+		};
+		
+		//if item_draw_rect.h <= 0 {
+		//	yui_log("broken");
+		//}
+		
 		return item_draw_rect;
 	}
 }

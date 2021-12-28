@@ -2,8 +2,8 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "resolve",
-    "path": "folders/Packages - YUI/scripts/resolve.yy",
+    "name": "Binding",
+    "path": "folders/Packages - YUI/Binding.yy",
   },
   "resourceVersion": "1.0",
   "name": "yui_resolve_binding",

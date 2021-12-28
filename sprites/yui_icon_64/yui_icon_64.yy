@@ -94,7 +94,7 @@
   },
   "parent": {
     "name": "Sprites",
-    "path": "folders/temp/Sprites.yy",
+    "path": "folders/Packages - YUI/Sprites.yy",
   },
   "resourceVersion": "1.0",
   "name": "yui_icon_64",

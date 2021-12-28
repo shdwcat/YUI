@@ -1,5 +1,5 @@
 /// @description resolves the imports of a yui_document with the declared resources
-function yui_resolve_resource_imports(resources, imports, yui_folder, trackLoadedFile) {
+function yui_resolve_resource_imports(resources, imports, yui_folder) {
 	
 	var merged_resources = {};
 	
@@ -8,9 +8,7 @@ function yui_resolve_resource_imports(resources, imports, yui_folder, trackLoade
 	var i = 0; repeat import_count {
 		var import_item = imports[i]; 
 		var resource_filepath = yui_folder + "/" + import_item;
-		
-		trackLoadedFile(resource_filepath);
-		
+					
 		var exists = file_exists(resource_filepath);
 		if !exists {
 			throw "File not found! " + resource_filepath;
@@ -27,7 +25,12 @@ function yui_resolve_resource_imports(resources, imports, yui_folder, trackLoade
 		var resource_file_text = string_from_file(resource_filepath);
 		
 		// TODO: cache this per file somehow so that we don't need to re-read files multiple times
-		var resource_data = snap_from_yaml(resource_file_text);
+		var resource_data = snap_from_yui(resource_file_text);
+		
+		var trace = resource_data[$ "trace"];
+		if trace {
+			var f = "f";
+		}
 		
 		// get the inner resources from the imported resource file
 		var resource_file_imports = resource_data[$ "import"];
@@ -41,10 +44,12 @@ function yui_resolve_resource_imports(resources, imports, yui_folder, trackLoade
 				resource_file_resources = {};
 			}
 			
-			var inner_resources = yui_resolve_resource_imports(resource_file_resources, resource_data.import, relative_folder, trackLoadedFile);
+			var inner_resources = yui_resolve_resource_imports(resource_file_resources, resource_data.import, relative_folder);
+			yui_log("loaded file", resource_filepath)
 		}
 		else {
-			var inner_resources = resource_data.resources;
+			var inner_resources = resource_data[$ "resources"];
+			if inner_resources == undefined inner_resources = {};
 		}
 		
 		// copy each named resource from resource_data.resources over merged_resources

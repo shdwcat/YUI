@@ -1,136 +1,71 @@
 /// @description renders a YUI Image
-function YuiImageRenderer(_props, _resources) : YuiBaseRenderer(_props, _resources) constructor {
+function YuiImageRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_props, _resources, _slot_values) constructor {
 	static default_props = {
 		type: "image",			
 		theme: "default",
 		padding: 0,
+		scale_mode: "slice", // stretch/tile/clip/none/etc
 		center: false,
 		
 		sprite: noone,
 		ignore_sprite_origin: true, // default to draw as if origin is 0,0
 		frame: 0,		
-		opacity: 1,
+		opacity: undefined,
 		angle: 0,
 		blend_color: c_white,
 	};
 	
 	props = init_props_old(_props);
 	yui_resolve_theme();
+	props.padding = yui_resolve_padding(props.padding);
 	
-	props.sprite = yui_bind(props.sprite, _resources);
-	props.frame = yui_bind(props.frame, _resources);
-	props.size = yui_bind(props.size, _resources);
-	props.angle = yui_bind(props.angle, _resources);
-	props.opacity = yui_bind(props.opacity, _resources);
-	props.blend_color = yui_bind(props.blend_color, _resources);
+	props.sprite = yui_bind(props.sprite, resources, slot_values);
+	props.frame = yui_bind(props.frame, resources, slot_values);
+	props.angle = yui_bind(props.angle, resources, slot_values);
+	props.opacity = yui_bind(props.opacity, resources, slot_values);
+	props.blend_color = yui_bind(props.blend_color, resources, slot_values);
 	
 	// ===== functions =====
-
-	static update = function(ro_context, data, draw_rect, item_index) {
+	
+	static getLayoutProps = function() {
+		return {
+			padding: props.padding,
+			size: size,
+			alignment: alignment,
+		};
+	}
+	
+	static getBoundValues = function(data, prev) {
+		if data_source != undefined {
+			data = yui_resolve_binding(data_source, data);
+		}
 		
-		var is_visible = ro_context.resolveBinding(props.visible, data);
+		var is_visible = yui_resolve_binding(props.visible, data);
 		if !is_visible return false;
 		
-		var sprite_name = ro_context.resolveBinding(props.sprite, data);
+		var sprite_name = yui_resolve_binding(props.sprite, data);
 		
 		// get the sprite asset from the name
-		var sprite = yui_resolve_sprite_by_name(sprite_name, ro_context.resources);
+		var sprite = yui_resolve_sprite_by_name(sprite_name);
 		if sprite == -1 {
 			sprite = noone; // TODO pink placeholder warning sprite
 		}
 		
-		// this also copies the draw_rect
-		var padding_info = yui_apply_padding(draw_rect, props.padding);
-		padded_rect = padding_info.padded_rect;
-				
-		var _x = props.center == true || props.center == "x"
-			? padded_rect.x + padded_rect.w / 2
-			: padded_rect.x;
+		var frame = yui_resolve_binding(props.frame, data);
+		var angle = yui_resolve_binding(props.angle, data);
+		var blend_color = yui_resolve_color(yui_resolve_binding(props.blend_color, data));
+		var opacity = yui_resolve_binding(props.opacity, data);
+		if opacity == undefined
+		{
+			opacity = draw_get_alpha();
+		}
 			
-		var _y = props.center == true || props.center == "y"
-			? padded_rect.y + padded_rect.h / 2
-			: padded_rect.y;
-		
-		var xscale = 1;
-		var yscale = 1;
-		
-		var size = ro_context.resolveBinding(props.size, data);		
-		
-		if size == "auto" && sprite != noone {
-			var draw_size = {
-				w: min(padded_rect.w, sprite_get_width(sprite)),
-				h: min(padded_rect.h, sprite_get_height(sprite)),
-			};
-		}
-		else if size == "stretch" && sprite != noone {
-			var draw_size = padded_rect;
-			// TODO: use draw_sprite_stretched?
-			var transform = yui_get_sprite_scale_transform(draw_size.w, draw_size.h, sprite);
-			var xscale = transform[0];
-			var yscale = transform[1];
-		}
-		else if is_struct(size) {
-			var draw_size = {
-				w: min(padded_rect.w, size.w),
-				h: min(padded_rect.h, size.h),
-			};
-			// TODO: use draw_sprite_stretched?
-			var transform = yui_get_sprite_scale_transform(draw_size.w, draw_size.h, sprite);
-			var xscale = transform[0];
-			var yscale = transform[1];
-		}
-		else {
-			// no sprite and no size means skip drawing this
-			return false;
-		}
-		
-		var result = yui_instruction({
-			x: draw_rect.x,
-			y: draw_rect.y,
-			w: draw_size.w + padding_info.padding_size.w,
-			h: draw_size.h + padding_info.padding_size.h,
-			
-			trace: props.trace,
-		});
-		
-		// TODO support clipping by using draw_sprite_part!
-		if sprite != noone {
-			// TODO: fix _x and _y to be offsets not coords
-			result.sprite_x_offset = _x - result.x;
-			result.sprite_y_offset = _y - result.y;
-			
-			if props.ignore_sprite_origin {
-				result.sprite_x_offset += xscale * sprite_get_xoffset(sprite);
-				result.sprite_y_offset += yscale * sprite_get_yoffset(sprite);
-			}			
-			
-			result.sprite = sprite;
-			result.xscale = xscale;
-			result.yscale = yscale;
-			result.frame = ro_context.resolveBinding(props.frame, data);
-			result.angle = ro_context.resolveBinding(props.angle, data);
-			result.opacity = ro_context.resolveBinding(props.opacity, data);			
-			result.blend_color = yui_resolve_color(ro_context.resolveBinding(props.blend_color, data));
-			
-			with result {
-				draw = function() {
-										
-					draw_sprite_ext(
-						sprite, frame,
-						x + sprite_x_offset, y + sprite_y_offset,
-						xscale, yscale,
-						angle, blend_color, opacity);
-				
-					yui_draw_trace_rect(trace, self, c_yellow);
-				};
-			}
-		}
-		else {
-			result.draw = function() {};
-		}
-		
-		yui_render_tooltip_if_any(ro_context, result, props, data, item_index);
-		
-		return result;
+		return {
+			sprite: sprite,
+			frame: frame,
+			angle: angle,
+			blend_color: blend_color,
+			opacity: opacity,
+		};
 	}
 }

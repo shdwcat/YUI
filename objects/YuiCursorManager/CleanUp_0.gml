@@ -1,4 +1,4 @@
 /// @description dispose
 
-ds_stack_destroy(overlay_gui_hotspots);
-ds_stack_destroy(underlay_gui_hotspots);
+ds_list_destroy(hover_list);
+ds_map_destroy(participation_map);

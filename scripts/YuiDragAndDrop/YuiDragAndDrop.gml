@@ -4,6 +4,7 @@ function YuiDragAndDrop(_props, _resources) constructor {
 	static default_props = {
 		id: undefined,
 		type: "drag_and_drop",
+		trace: false,
 		
 		drag: {
 			condition: undefined,
@@ -18,157 +19,212 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		},
 		
 		on_cancel: undefined,
-		
-		trace: false,
 	};
 	
 	props = init_props_old(_props);
+	resources = _resources;
 	
-	props.drag.condition = yui_bind(props.drag.condition, _resources);
-	drag_renderer = yui_resolve_renderer(props.drag.visual, _resources);
+	props.drag.condition = yui_bind(props.drag.condition, resources, undefined);
+	drag_renderer = yui_resolve_renderer(props.drag.visual, resources, undefined);
+	props.drag.action = yui_resolve_command(props.drag.action, resources, undefined);
 	
-	props.drop.condition = yui_bind(props.drop.condition, _resources);
-	drop_renderer = yui_resolve_renderer(props.drop.visual, _resources);
+	drop_hash_id = YuiCursorManager.participation_hash.getStringId(props.id + ".drop");
+	props.drop.condition = yui_bind(props.drop.condition, resources, undefined);
+	drop_renderer = yui_resolve_renderer(props.drop.visual, resources, undefined);
+	props.drop.action = yui_resolve_command(props.drop.action, resources, undefined);
 	
-	static canStart = function(ro_context, source_data) {
+	props.on_cancel = yui_resolve_command(props.on_cancel, resources, undefined);
+	
+	
+	static canStart = function(source_data) {
 		if props.drag.condition != undefined {
 			// TODO condition array?		
-			return ro_context.resolveBinding(props.drag.condition, source_data);		
+			return yui_resolve_binding(props.drag.condition, source_data);		
 		}
 		else {
 			return true;
 		}
 	}
 	
-	static start = function(source_data, source_element, event) {
+	static start = function(source_data, event) {
 		// NOTE: assumes initiating event is a mouse button event
 		var button = event[$ "button"];
-		if button == undefined button = mb_left;
+		if button == undefined {
+			// need to be able to use button constants in .yui files
+			// which probably mean we need a YuiEventHandler class to grab the constant from the "mb_left" etc
+			button = mb_left;
+		}
 		
 		source = {
 			data: source_data,
-			button: button,
+			event: { // TODO: include x/y in button event and pass directly
+				x: device_mouse_x_to_gui(0),
+				y: device_mouse_y_to_gui(0),
+				world_x: mouse_x,
+				world_y: mouse_y,
+				button: button,
+			},
 		};
+		
+		// this is the resolved target of the interaction,
+		// aka the one thing we're hovering over (if any)
 		target = {
 			data: undefined,
 			hover: undefined,
 			can_drop: undefined,
 		};
-	}
-	
-	// update drag visual
-	// NOTE: executed after updateTarget!
-	static update = function(ro_context, cursor_pos) {
 		
-		// draw indicator in portion of screen offset from cursor position
-		var draw_rect = {
-			x: cursor_pos.x,
-			y: cursor_pos.y,
-			w: ro_context.screen_size.w,
-			h: ro_context.screen_size.h,
+		cursor = {
+			x: device_mouse_x_to_gui(0),
+			y: device_mouse_y_to_gui(0),
+			world_x: mouse_x,
+			world_y: mouse_y,
 		};
 		
+		return drag_renderer;
+	}
+	
+	static update = function(visual_item, cursor_pos) {
+		
+		// resets target state
+		resetFrame();
+		
+		cursor.x = device_mouse_x_to_gui(0);
+		cursor.y = device_mouse_y_to_gui(0);
+		cursor.world_x = mouse_x;
+		cursor.world_y = mouse_y;
+				
 		var interaction_data = {
 			source: source,
 			target: target,
+			cursor: cursor,
 		};
 		
-		var result = drag_renderer.update(ro_context, interaction_data, draw_rect, undefined);
-				
-		// end drag on mouse up
-		if !mouse_check_button(source.button) {			
-			if target.can_drop {
-				yui_call_event_handler(props.drop.action, self, ro_context, interaction_data);
-			}
-			else {
-				yui_call_event_handler(props.on_cancel, self, ro_context, interaction_data);
-			}
-			finish();
+		// TODO: factor the participation stuff into base class or helper functions!
+		// it's way too clunky currently
+		
+		// evaluate the instances in the 'drop' role
+		var targets = yui_get_interaction_participants(drop_hash_id);
+		var i = 0; repeat array_length(targets) {
+			var drop_item = targets[i++];
+			updateDropTarget(drop_item);
 		}
 		
-		if result {
+		// position the visual at the mouse cursor
+		if visual_item {
+			var xdiff = cursor_pos.x - visual_item.x;
+			var ydiff = cursor_pos.y - visual_item.y;
+			
 			if props.drag.center_visual {
 				// center result on cursor
-				result.finalize(-result.w / 2, -result.h / 2);
+				xdiff -= visual_item.draw_size.w / 2;
+				ydiff -= visual_item.draw_size.h / 2;
 			}
-			return result;
+			
+			visual_item.move(xdiff, ydiff);
 		}
-		else 
+				
+		// end drag on mouse up
+		var button_down = mouse_check_button(source.event.button); // TODO button
+		if !button_down {
+			if target.can_drop {
+				yui_handle_event(props.drop.action, interaction_data);
+			}
+			else {
+				yui_handle_event(props.on_cancel, interaction_data);
+			}
+			finish();
 			return false;
-	}
-	
-	static updateTarget = function(ro_context, target_data, target_rect, target_participation, item_index) {
-		var is_drop = target_participation[$ "drop"] == true;
-		if is_drop {			
-			ro_context.addHotspot(
-				target_rect,
-				self,
-				onHover,
-				props.trace,
-				target_data,
-				item_index);
+		}
+		
+		// optionally run an action every frame
+		if props.drag.action {
+			yui_handle_event(props.drag.action, interaction_data);
 		}
 	}
 	
-	static onHover = function(hotspot, cursor_state, cursor_event) {		
-		interaction_data = {
-			source: source,
-			target: { // this is customized per target, so that each renderer gets correct data
-				data: hotspot.data,
-				hover: cursor_state.hover,
-			},
+	static updateDropTarget = function(drop_item /* yui_cursor_item */) {
+		
+		var is_gui_item = object_is_ancestor(drop_item.object_index, yui_base);
+		
+		// if it's not a yui_base, use the item itself as the data
+		var drop_data = is_gui_item
+			? drop_item.data_context
+			: drop_item;
+		
+		var drop_target = {			
+			data: drop_data,
+			hover: drop_item.highlight,
 		};
 		
-		var is_valid_drop = canDrop(hotspot.ro_context, interaction_data);
-		interaction_data.target.can_drop = is_valid_drop;
 		
-		if cursor_state.hover && !cursor_event.hover_consumed {			
-			cursor_event.hover_consumed = true;
-			// TODO: something is breaking here when yui_screen.frame_cadence > 1
-			// somehow the target isn't getting set?
-			// I think the issue is that the hotspot handler runs and the main update
-			// needs to run immediately after that in that case
-			// because of interaction.resetFrame();
-			target.hover = true;
+		// NOTE: a drop_renderer is currently required!
+		
+		var interaction_data = undefined;
+		if drop_item.interaction_item == undefined {
+			interaction_data = {
+				source: source,
+				target: drop_target,
+			};
+			drop_target.can_drop = canDrop(interaction_data);
 			
-			// only set this for the interaction when the drop is valid
-			if is_valid_drop {
-				target.can_drop = true;
-				target.data = hotspot.data;
+			with drop_item {
+				interaction_item = yui_make_render_instance(other.drop_renderer, interaction_data, , 100);
+				
+				// align drop visual to game position
+				if !is_gui_item {
+					var xdiff = yui_world_to_gui_x(x) - interaction_item.x;
+					var ydiff = yui_world_to_gui_y(y) - interaction_item.y;
+					interaction_item.move(xdiff, ydiff);
+				}
+				else {
+					interaction_item.arrange(drop_item.draw_size);
+				}
 			}
 		}
+		else {
+			// grab the interaction_data from the interaction_visual's data_context
+			interaction_data = drop_item.interaction_item.data_context;
+		}
 		
-		// FUTURE: enable state logic to run before draw, so all renderers have final state
-		// (currently only the drag visual has final state since it's executed last)
-			
-		if drop_renderer {
-			hotspot.result = drop_renderer.update(
-				hotspot.ro_context,
-				interaction_data,
-				hotspot.rect,
-				hotspot.item_index);
+		// TODO: move the visual to the target?? only matters if the target is moving
+		
+		// check if this target is a valid drop
+		drop_target.can_drop = canDrop(interaction_data);
+		
+		// only set this for the interaction when the drop is valid
+		if drop_target.can_drop && drop_target.hover {			
+			target.data = drop_data;	
+			target.can_drop = true;		
 		}
 	}
 	
-	static canDrop = function(ro_context, data) {
-		
+	static canDrop = function(data) {
+		if props.drop.condition == undefined return true;
 		// TODO condition array?
 		
-		var can_drop = ro_context.resolveBinding(props.drop.condition, data);
+		var can_drop = yui_resolve_binding(props.drop.condition, data);
 		return can_drop;
 	}
 	
 	static resetFrame = function() {		
-		target.data = undefined;
+		target.data = undefined;		
 		target.hover = undefined;
 		target.can_drop = undefined;
 	}
 	
 	static finish = function() {
-		// TODO: document.endInteraction();
-		YuiCursorManager.active_interaction = undefined;
-		document = undefined;
+		// clean up drop visuals
+		var targets = yui_get_interaction_participants(drop_hash_id);
+		var i = 0; repeat array_length(targets) {
+			var drop_item = targets[i++];
+			instance_destroy(drop_item.interaction_item);
+			drop_item.interaction_item = undefined;
+		}
+		
+		YuiCursorManager.finishInteraction();
 		source = undefined;
 		target = undefined;
+		cursor = undefined;
 	}
 }

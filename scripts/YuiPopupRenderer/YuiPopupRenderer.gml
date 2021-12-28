@@ -1,5 +1,5 @@
 
-function YuiPopupRenderer(_props, _resources) : YuiBaseRenderer(_props, _resources) constructor {
+function YuiPopupRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_props, _resources, _slot_values) constructor {
 	static default_props = {
 		type: "popup",	
 		theme: "default",
@@ -16,6 +16,8 @@ function YuiPopupRenderer(_props, _resources) : YuiBaseRenderer(_props, _resourc
 	
 	props = init_props_old(_props);
 	yui_resolve_theme();
+	
+	props.placement = yui_bind(props.placement, resources, slot_values);
 	
 	// TODO: clean up initializing props from theme
 	
@@ -39,80 +41,38 @@ function YuiPopupRenderer(_props, _resources) : YuiBaseRenderer(_props, _resourc
 	if props.padding == undefined {
 		props.padding = theme.popup.padding;
 	}
+	props.padding = yui_resolve_padding(props.padding)
 	
-	content_renderer = yui_resolve_renderer(props.content, _resources);
+	content_renderer = yui_resolve_renderer(props.content, resources, slot_values);
 	
 	// ===== functions =====
 	
-	static update = function(ro_context, data, draw_rect, item_index) {
-		
-		var padding_info = yui_apply_padding(draw_rect, props.padding);
-		
-		var content_result = content_renderer.update(ro_context, data, padding_info.padded_rect, item_index);
-		if !content_result {
-			return false;
-		}
-		
-		var renderer = self;
-		
-		var result = yui_instruction({
-			x: draw_rect.x,
-			y: draw_rect.y,
-			w: content_result.w + padding_info.padding_size.w,
-			h: content_result.h + padding_info.padding_size.h,
-			
-			renderer: renderer,
-			content: content_result,
-			
-			draw: function() {				
-				renderer.drawBackground(self);			
-				content.draw();	
-				renderer.drawBorder(self);
-			},
-		});
-		
-		// handle any basic event hotspots
-		pushEventHotspotIfAny(ro_context, data, result, item_index);
-		
-		// add a hotspot to catch clicks in this layer
-		ro_context.addHotspot(
-			result,
-			renderer,
-			onHotspot,
-			props.trace,
-			data,
-			item_index);
-		
-		return result;		
+	static getLayoutProps = function() {
+		return {
+			alignment: alignment,
+			padding: props.padding,
+			size: size,
+			content_renderer: content_renderer,
+		};
 	}
 	
-	static onHotspot = function(hotspot, cursor_state, cursor_event) {
-		// catch any cursor clicks
-		var clicked = !cursor_event.cursor_click_consumed && mouse_check_button_released(mb_any);
-		if clicked && cursor_state.hover {
-			// call the click handler
-			cursor_event.consumeClick(hotspot.ro_context.overlay_id);
-			//yui_log("popup", props.id, "consumed release and click for layer", hotspot.ro_context.overlay_id);
+	static getBoundValues = function(data, prev) {
+		if data_source != undefined {
+			data = yui_resolve_binding(data_source, data);
 		}
-	}
-	
-	static drawBackground = function(draw_rect) {
-		if props.bg_color != noone {			
-			draw_rectangle_color(
-				draw_rect.x, draw_rect.y,
-				draw_rect.x + draw_rect.w - 1, draw_rect.y + draw_rect.h - 1,
-				props.bg_color, props.bg_color, props.bg_color, props.bg_color, false);
-		}
-	}
-	
-	static drawBorder = function(draw_rect) {
-		// draw border
-		if props.border_color != noone {
-			if props.border_thickness > 0 {				
-				yui_draw_rect_outline(
-					draw_rect.x, draw_rect.y, draw_rect.w, draw_rect.h,
-					props.border_thickness, props.border_color);
-			}
-		}
+		
+		var is_visible = yui_resolve_binding(props.visible, data);
+		if !is_visible return false;
+		
+		var placement = yui_resolve_binding(props.placement, data);
+		
+		return {
+			data_source: data,
+			bg_sprite: undefined, // not yet implemented here
+			bg_color: props.bg_color,
+			border_color: props.border_color,
+			border_thickness: props.border_thickness,
+			placement: placement,
+		};
 	}
 }

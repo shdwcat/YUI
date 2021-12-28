@@ -2,67 +2,70 @@ id: welcome_screen
 file_type: screen
 
 import:
-  # import all resources from main_panel.yui
+  // import all resources from main_panel.yui
   - "../Templates/main_panel.yui"
 
 root:
-  type: panel # panel is used to layout and arrange child elements
-  layout: canvas # canvas can be used to position elements arbitrarily within the panel, or along the edges
-  elements: # this defines the child elements of the canvas
+  type: panel // panel is used to layout and arrange child elements
+  layout: canvas // canvas can be used to position elements arbitrarily within the panel, or along the edges
+  elements: // this defines the child elements of the canvas
 
-    - type: main_panel # this is an example of a YUI fragment,
-                       # check out the main_panel.yui file referenced above
-      canvas: # when the parent panel's layout is set to 'canvas',
-              # you can set canvas properties on the child elements
-              # also supports: bottom, right, center: true, center: h, center: v
+    - type: main_panel // this is an example of a YUI fragment,
+                       // check out the main_panel.yui file referenced above
+      canvas: // when the parent panel's layout is set to 'canvas',
+              // you can set canvas properties on the child elements
+              // also supports: bottom, right, center: true, center: h, center: v
         top: 50
         left: 50
       padding: 20
-      spacing: 10 # spacing controls the distance between child elements of a panel      
+      spacing: 10 // spacing controls the distance between child elements of a panel      
       elements:
         - type: panel
           spacing: 5
           elements: 
-            - type: text # 'type: text' is how we draw text! simple
-              text_style: title # this applies one of the text styles defined in the active theme
-              text: "Welcome to the YUI Example Project!" # and here we set the text itself
+            - type: text // 'type: text' is how we draw text! simple
+              text_style: title // this applies one of the text styles defined in the active theme
+              text: "Welcome to the YUI Example Project!" // and here we set the text itself
 
-              # You can also just put a string as a child and it will automatically be converted to a 'text' element. Easy!
+              // You can also just put a string as a child and it will automatically be converted to a 'text' element. Easy!
             - This screen is defined in datafiles/YUI/Screens/welcome_screen.yui
-            - You can edit this file while the game is running! The UI will reload when you switch back to the game.
-            - { path: app_name }
-            - " " # inserts a blank line
+            - You can edit this file while the game is running! Press F5 to reload after making changes
+            - @app_name
+            - " " // inserts a blank line
             - Select an option below to see more examples
 
-        - type: button # 'type: button' creates a clickable button! 
-          content: Layout Examples # the 'content' for a button can be a simple string like this, or a child element, which could be a panel containing more elements!
-          on_click: # on_click is how we tell the button what to do
-            # note that this is an array! you can define multiple handlers for a click and ALL will run
-            - handler: yui_load_screen # this is the name of the GML script to run. This one will move to the YuiScreenRoom and load the screen specified below
-              parameters: [layout_example, { path: $data }]
-              # and these are the parameters to pass to the script, in this case the ID of the screen file to load, and the data context to use
+        - type: button // 'type: button' creates a clickable button! 
+          content: Layout Examples // the 'content' for a button can be a simple string like this, or a child element, which could be a panel containing more elements!
+          on_click: // on_click is how we tell the button what to do
+            // note that this is an array! you can define multiple handlers for a click and ALL will run
+            - $command: yui_change_screen // this is the name of the GML script to run. This one will change the yui_document to display the screen specified in the 'parameters'
+              parameters:
+                screen: layout_example
+              // and these are the parameters to pass to the script, in this case the ID of the screen file to load
 
         - type: button
           content: Binding to Game Data
           on_click:
-            - handler: yui_load_screen
-              parameters: [data_binding_example, { path: $data }]
+            - $command: yui_change_screen
+              parameters:
+                screen: data_binding_example
 
         - type: button
           content: "Use Case: Inventory Screen"
           on_click:
-            - handler: yui_load_screen
-              parameters: [inventory_screen, { path: $data }] # notice that we can also pass an array of parameters, which will be passed through to the function in the normal way (not as an array)
+            - $command: yui_change_screen
+              parameters:
+                screen: inventory_screen
 
     - type: button
-      id: main-menu-button # id is required when using the popup feature - must be unique to the screen!
+      id: main-menu-button // id is required when using the popup feature - must be unique to the screen!
       content: Main Menu
-      padding: 10 # padding sets the space between the button border and the content. Also applies to panels!
+      padding: 10 // padding sets the space between the button border and the content. Also applies to panels!
       canvas:
         top: 10
         right: 10
       popup:
-        placement: bottom_right # where to place the popup relative to the button
+        placement: bottom_right // where to place the popup relative to the button
         padding: 0
         border_thickness: 0
         content:
@@ -71,8 +74,8 @@ root:
           elements:
             - type: button
               content: Quit to Desktop
-              tooltip: Click to exit the YUI Example Project # most elements let you define a tooltip that will be shown on hover!
-              tooltip_placement: left_top # as with the popup itself, controls where the tooltip is placed
+              tooltip: Click to exit the YUI Example Project // most elements let you define a tooltip that will be shown on hover!
+              tooltip_placement: left_top // as with the popup itself, controls where the tooltip is placed
               padding: 10
               on_click:
-                - handler: yui_example_exit_game
+                - $command: yui_example_exit_game

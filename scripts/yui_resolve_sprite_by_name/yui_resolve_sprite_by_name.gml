@@ -1,5 +1,5 @@
 /// @description resolve a sprite name to either a named sprite, or a sprite resource
-function yui_resolve_sprite_by_name(sprite_name, resources) {
+function yui_resolve_sprite_by_name(sprite_name, resources = undefined) {
 	if sprite_name == undefined || sprite_name == -4 return -1;
 	
 	// just return it if it's a sprite
@@ -9,7 +9,7 @@ function yui_resolve_sprite_by_name(sprite_name, resources) {
 	
 	var sprite = asset_get_index(sprite_name);
 	
-	if sprite == -1 {
+	if sprite == -1 && resources != undefined {
 		// check for dynamic sprite resource
 		// TODO: we could do this when initially resolving resource imports (via flag on the struct?)
 		var sprite_resource = resources[$ sprite_name];
@@ -33,6 +33,8 @@ function yui_resolve_sprite_by_name(sprite_name, resources) {
 			yui_error("sprite resource entry", sprite_name, "did not resolve to a struct");
 		}
 	}
+	
+	if sprite == -1 sprite = undefined;
 	
 	return sprite;
 }

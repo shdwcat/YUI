@@ -20,7 +20,6 @@ necklace
 Delapouite - https://delapouite.com/
 ===
 cape_armor
-chest_armor
 closed_barbute
 emerald_necklace
 loincloth

@@ -4,10 +4,20 @@ function YuiElementSize(size) constructor {
 	original_size = size;
 	
 	is_exact_size = false;
-	min_w = undefined;
-	max_w = undefined;
-	min_h = undefined;
-	max_h = undefined;
+	w = undefined;
+	h = undefined;
+	min_w = 0;
+	max_w = NaN;
+	min_h = 0;
+	max_h = NaN;
+	
+	if is_numeric(size) {
+		var temp = {
+			w: size,
+			h: size,
+		};
+		size = temp;
+	}
 	
 	if size == "auto" || size == undefined || size == noone {
 		w = "auto";
@@ -17,9 +27,9 @@ function YuiElementSize(size) constructor {
 		w = "content";
 		h = "content";
 	}
-	else if is_numeric(size) {
-		w = size;
-		h = size;
+	else if size == "stretch" {
+		w = "stretch";
+		h = "stretch";
 	}
 	else if is_struct(size) {
 		if size[$ "w"] == undefined {
@@ -47,4 +57,7 @@ function YuiElementSize(size) constructor {
 	else {
 		yui_warning("Invalid size:", size);
 	}
+	
+	max_w ??= infinity;
+	max_h ??= infinity;
 }

@@ -10,7 +10,12 @@ function YuiCanvasLayout() : YuiLayoutBase() constructor {
 		var canvas_position = item_props[$ "canvas"];
 		if canvas_position == undefined {
 			// make a copy so that the item renderer can't accidentally mess up our draw rect
-			var item_draw_rect = yui_copy_rect(current_draw_rect);
+			var item_draw_rect = {
+				x: current_draw_rect.x,
+				y: current_draw_rect.y,
+				w: current_draw_rect.w,
+				h: current_draw_rect.h,
+			};
 			return item_draw_rect;
 			
 		}

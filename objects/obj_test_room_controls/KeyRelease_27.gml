@@ -1,3 +1,3 @@
 /// @description go back to menu
 
-room_goto(YuiExampleRoom1);
+room_goto(TitleScreen);

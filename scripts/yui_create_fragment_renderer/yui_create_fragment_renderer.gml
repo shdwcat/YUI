@@ -1,7 +1,10 @@
 /// @description creates a renderer from the provided fragment element and definition
-function yui_create_fragment_renderer(fragment_element, fragment_definition, resources) {
+function yui_create_fragment_renderer(fragment_element, fragment_definition, resources, slot_values) {
 	
 	var content = snap_deep_copy(fragment_definition[$ "content"]);
+	
+	// store the original type name for reflection purposes
+	content._type = fragment_element.type;
 	
 	
 	// copy property overrides from element to definition content
@@ -17,7 +20,7 @@ function yui_create_fragment_renderer(fragment_element, fragment_definition, res
 		content[$ input_key] = fragment_element[$ input_key];		
 	}
 	
-	var renderer = yui_resolve_renderer(content, resources);
+	var renderer = yui_resolve_renderer(content, resources, slot_values);
 	
 	return renderer;
 }

@@ -25,10 +25,10 @@ function YuiHorizontalLayout() : YuiLayoutBase() constructor {
 		
 		switch (alignment.vertical) {
 			case "top":
-				draw_size.h = maximum_height + padding_info.padding_size.h;
+				draw_size.h = maximum_height + padding.h;
 				break;
 			case "bottom":
-				draw_size.h = maximum_height + padding_info.padding_size.h;
+				draw_size.h = maximum_height + padding.h;
 								
 				// offset all the children by the difference between their height and the panel height
 				var count = array_length(children);
@@ -50,7 +50,20 @@ function YuiHorizontalLayout() : YuiLayoutBase() constructor {
 			case "left":
 				break;
 			case "right":
-				throw "not yet supported"
+				//draw_size.w = draw_rect.w - padding.w;
+			
+				// offset all the children by the difference between their width and the panel width
+				var used_width = 0;
+				var count = array_length(children);
+				for (var i = count - 1; i >= 0; --i) {
+					var child = children[i];
+					if child {
+						var xoffset = draw_rect.w - draw_size.w;
+						child.finalize(xoffset, 0);
+						used_width += child.w;
+					}
+				}
+			
 				break;
 			case "stretch":
 				draw_size.w = draw_rect.w;

@@ -17,14 +17,15 @@ function YuiPanCamera(_props, _resources) constructor {
 	};
 	
 	props = init_props_old(_props);
+	resources = _resources;
 	
-	cursor_renderer = yui_resolve_renderer(props.cursor_visual, _resources);
+	cursor_renderer = yui_resolve_renderer(props.cursor_visual, resources, undefined);
 	
-	static canStart = function(ro_context, source_data) {
+	static canStart = function(source_data) {
 		return true;
 	}
 	
-	static start = function(source_data, source_element, event) {
+	static start = function(source_data, event) {
 		
 		// NOTE: assumes initiating event is a mouse button event
 		button = event[$ "button"];
@@ -40,9 +41,11 @@ function YuiPanCamera(_props, _resources) constructor {
 		}
 		
 		is_inertia_scrolling = false;
+		
+		return cursor_renderer;
 	}
 	
-	static update = function(ro_context, cursor_pos) {
+	static update = function(visual_item, cursor_pos) {
 				
 		if mouse_check_button_released(button) {
 			
@@ -88,6 +91,14 @@ function YuiPanCamera(_props, _resources) constructor {
 			camera_y = clamp(camera_y, 0, room_height);
 		}
 		
+		// position the visual at the mouse cursor
+		if visual_item {
+			var xdiff = cursor_pos.x - visual_item.x;
+			var ydiff = cursor_pos.y - visual_item.y;
+			visual_item.move(xdiff, ydiff);
+		}
+		
+		//yui_log("setting camera to:", camera_x, camera_y);
 		camera_set_view_pos(view_camera[props.camera_index], camera_x, camera_y);
 		
 		if is_inertia_scrolling && cursor.motion_speed <= 1 {
@@ -97,25 +108,6 @@ function YuiPanCamera(_props, _resources) constructor {
 				
 		cursor.last_mouse_x = cursor_pos.x;
 		cursor.last_mouse_y = cursor_pos.y;
-		
-		if cursor_renderer {
-			// draw indicator in portion of screen offset from cursor position
-			var draw_rect = {
-				x: 0,//cursor_pos.x,
-				y: 0,//cursor_pos.y,
-				w: ro_context.screen_size.w,
-				h: ro_context.screen_size.h,
-			};
-		
-			var interaction_data = self;
-		
-			var result = cursor_renderer.update(ro_context, interaction_data, draw_rect, undefined);
-			if result {
-				// center result on cursor
-				//result.finalize(-result.w / 2, -result.h / 2);			
-				return result;
-			}
-		}
 	}
 	
 	static resetFrame = function() {
@@ -123,8 +115,7 @@ function YuiPanCamera(_props, _resources) constructor {
 	}
 	
 	static finish = function() {
-		// TODO: document.endInteraction();
-		YuiCursorManager.active_interaction = undefined;
+		YuiCursorManager.finishInteraction();
 		cursor = undefined;
 		button = undefined;
 	}

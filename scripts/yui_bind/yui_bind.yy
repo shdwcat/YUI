@@ -2,8 +2,8 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "scripts",
-    "path": "folders/Packages - YUI/scripts.yy",
+    "name": "Binding",
+    "path": "folders/Packages - YUI/Binding.yy",
   },
   "resourceVersion": "1.0",
   "name": "yui_bind",

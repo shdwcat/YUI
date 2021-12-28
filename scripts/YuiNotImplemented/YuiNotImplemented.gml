@@ -1,6 +1,7 @@
 /// @description placeholder for not-yet-implemented types
-function YuiNotImplemented(_props, _resources) : YuiBaseRenderer(_props, _resources) constructor {
+function YuiNotImplemented(_props, _resources, _slot_values) : YuiBaseRenderer(_props, _resources, _slot_values) constructor {
 	static default_props = {
+		type: "edit this",
 		padding: 0,
 	}
 	
@@ -8,7 +9,22 @@ function YuiNotImplemented(_props, _resources) : YuiBaseRenderer(_props, _resour
 	
 	// ===== functions =====
 	
-	static update = function(ro_context, data, draw_rect, item_index) {
-		return false;
+	static getLayoutProps = function() {
+		return {
+			// values that will not change based on bindings
+		};
+	}
+	
+	static getBoundValues = function(data, prev) {
+		if data_source != undefined {
+			data = yui_resolve_binding(data_source, data);
+		}
+		
+		var is_visible = yui_resolve_binding(props.visible, data);
+		if !is_visible return false;
+		
+		return {
+			// resolved bound values
+		}
 	}
 }

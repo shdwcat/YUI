@@ -1,7 +1,7 @@
 /// @description here
 function YuiExampleManager() constructor {
 
-	yui_log("welcome to the example");
+	yui_log("Welcome to the YUI Example Project!");
 		
 	app_name = "Example Project";
 	

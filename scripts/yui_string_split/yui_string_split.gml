@@ -2,8 +2,7 @@
 /// @param string the string to split
 /// @param delim the delimiter that separated tokens
 /// @param [count] max number of tokens to return
-function yui_string_split(str, delim) {
-	var count = argument_count > 2 ? argument[2] : 0;
+function yui_string_split(str, delim, count = 0) {
 	
 	var pos = 1;
 	

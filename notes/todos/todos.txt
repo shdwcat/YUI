@@ -1,0 +1,2 @@
+function whitelist
+inline call? e.g able to call @condition.resolve(@) to resolve a nested binding

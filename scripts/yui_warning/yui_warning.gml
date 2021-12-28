@@ -41,7 +41,7 @@ function yui_error() {
 		i++;
 	}
 
-	show_debug_message(message);
-
 	// TODO: log to errors.txt
+	show_debug_message(message);
+	return message;
 }

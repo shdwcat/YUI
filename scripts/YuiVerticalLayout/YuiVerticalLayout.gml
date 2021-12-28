@@ -28,7 +28,7 @@ function YuiVerticalLayout() : YuiLayoutBase() constructor {
 		switch (alignment.horizontal) {
 			case "left":
 			case "right":
-				draw_size.w = maximum_width + padding_info.padding_size.w;
+				draw_size.w = maximum_width + padding.w;
 				break;
 			case "stretch":
 				draw_size.w = draw_rect.w;
