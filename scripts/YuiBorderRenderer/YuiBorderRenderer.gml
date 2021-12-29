@@ -57,6 +57,13 @@ function YuiBorderRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_
 		var is_visible = yui_resolve_binding(props.visible, data);
 		if !is_visible return false;
 		
+		
+		// diff
+		if prev // currently nothing else is bindable
+		{
+			return true;
+		}
+		
 		return {
 			data_source: data,
 			bg_sprite: bg_sprite,

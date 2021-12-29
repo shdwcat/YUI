@@ -66,6 +66,13 @@ function YuiPopupRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_p
 		
 		var placement = yui_resolve_binding(props.placement, data);
 		
+		// diff
+		if prev
+			&& placement == prev.placement
+		{
+			return true;
+		}
+		
 		return {
 			data_source: data,
 			bg_sprite: undefined, // not yet implemented here

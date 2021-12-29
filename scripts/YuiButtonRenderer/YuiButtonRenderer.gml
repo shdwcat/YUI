@@ -101,6 +101,13 @@ function YuiButtonRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_
 		if !is_visible return false;
 		
 		var enabled = yui_resolve_binding(props.enabled, data);
+		
+		// diff
+		if prev
+			&& enabled == prev.enabled
+		{
+			return true;
+		}
 				
 		var result = {
 			data_source: data,

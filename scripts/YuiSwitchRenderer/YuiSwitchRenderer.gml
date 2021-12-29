@@ -44,6 +44,13 @@ function YuiSwitchRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_
 		
 		var switch_value = yui_resolve_binding(props.switch_on, data);
 		
+		// diff
+		if prev
+			&& switch_value == prev.switch_value
+		{
+			return true;
+		}
+		
 		return {
 			switch_value: switch_value,
 		}

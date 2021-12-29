@@ -67,19 +67,20 @@ onLayoutInit = function() {
 
 bind_values = function() {
 	var new_values = yui_element.getBoundValues(data_context, bound_values)
-	if !new_values {
+	if new_values == false {
 		visible = false;
+		exit;
+	}
+	else if new_values == true {
+		// values are the same as before, nothing to do
 		exit;
 	}
 	else {
 		visible = true;
 	}
 
-	// TODO: could pass previous bound_values into getBoundValues() and check equality right there...
-	var rebuild = bound_values == undefined || !yui_data_equal(bound_values, new_values);
-	old_values = bound_values;
 	bound_values = new_values;
-	return rebuild;
+	return true;
 }
 
 build = function() {

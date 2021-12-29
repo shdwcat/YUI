@@ -59,7 +59,18 @@ function YuiImageRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_p
 		{
 			opacity = draw_get_alpha();
 		}
-			
+		
+		// diff
+		if prev
+			&& sprite == prev.sprite
+			&& frame == prev.frame
+			&& angle == prev.angle
+			&& blend_color == prev.blend_color
+			&& opacity == prev.opacity
+		{
+			return true;
+		}
+		
 		return {
 			sprite: sprite,
 			frame: frame,

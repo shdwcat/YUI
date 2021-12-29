@@ -117,7 +117,16 @@ function YuiPanelRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_p
 			}
 			var item_renderers = self.item_renderers;
 		}
-				
+		
+		// diff
+		if prev
+			&& child_count == prev.child_count
+			&& array_equals(item_renderers, prev.item_renderers)
+			&& array_equals(data_items, prev.data_items)
+		{
+			return true;
+		}
+		
 		return {
 			// border
 			data_source: data,

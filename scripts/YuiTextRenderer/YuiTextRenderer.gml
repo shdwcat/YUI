@@ -111,6 +111,15 @@ function YuiTextRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_pr
 		
 		var typist = yui_resolve_binding(props.typist, data);
 		
+		// diff
+		if prev
+			&& text == prev.text
+			&& color == prev.color
+			&& typist == prev.typist
+		{
+			return true;
+}
+		
 		return {
 			text: text,
 			font: font,

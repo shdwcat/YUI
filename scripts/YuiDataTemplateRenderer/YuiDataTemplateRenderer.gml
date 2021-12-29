@@ -25,6 +25,13 @@ function YuiDataTemplateRenderer(_props, _resources, _slot_values) : YuiBaseRend
 	static getBoundValues = function(data, prev) {
 		var resource_key = yui_resolve_binding(props.resource_key, data);
 		
+		// diff
+		if prev
+			&& resource_key == prev.resource_key
+		{
+			return true;
+		}
+		
 		return {
 			resource_key: resource_key,
 		};
