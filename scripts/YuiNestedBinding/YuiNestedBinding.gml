@@ -1,5 +1,5 @@
 /// @description resolves a binding against the result of another (possible) binding
-function YuiNestedBinding(inner_binding, path) : YuiBinding(undefined, undefined, undefined) constructor {
+function YuiNestedBinding(inner_binding, path) : YuiBinding(undefined) constructor {
 	static is_yui_binding = true;
 	
 	self.inner_binding = inner_binding;

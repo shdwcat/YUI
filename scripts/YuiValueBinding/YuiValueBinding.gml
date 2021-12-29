@@ -1,5 +1,5 @@
 /// @description
-function YuiValueBinding(resource, path) : YuiBinding(undefined, undefined, undefined) constructor {
+function YuiValueBinding(resource, path) : YuiBinding(undefined) constructor {
 	static is_yui_binding = true;
 	
 	self.resource = resource;
