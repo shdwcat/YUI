@@ -1,7 +1,5 @@
 /// @description 
 
-is_mouse_over = YuiCursorManager.isMouseOver();
-
 // maybe just draw_self()?
 // currently we only need the custom call for blend_color (and ignoring sprite origin)
 

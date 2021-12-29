@@ -1,7 +1,5 @@
 /// @description
 
-is_mouse_over = YuiCursorManager.isMouseOver();
-
 // draw background
 if bg_alpha > 0 {
 	if bg_sprite != undefined {

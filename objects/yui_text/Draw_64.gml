@@ -14,7 +14,7 @@ if bg_alpha > 0 {
 if highlight && highlight_color != undefined {
 	scribble_element.blend(highlight_color, 1);
 }
-else {
+else if text_color != c_white {
 	scribble_element.blend(text_color, 1);
 }
 
@@ -26,7 +26,6 @@ yui_draw_trace_rect(trace, padded_rect, c_yellow);
 yui_draw_trace_rect(trace, draw_size, c_fuchsia);
 
 // debug mouseover trace
-is_mouse_over = YuiCursorManager.isMouseOver();
-if is_mouse_over {
+if highlight {
 	yui_draw_trace_rect(trace, draw_size, c_lime);
 }
