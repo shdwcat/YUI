@@ -2,3 +2,7 @@
 function yui_is_binding(binding) {
 	return is_struct(binding) && binding[$ "is_yui_binding"] == true;
 }
+
+function yui_is_live_binding(binding) {
+	return is_struct(binding) && binding[$ "is_yui_live_binding"] == true;
+}

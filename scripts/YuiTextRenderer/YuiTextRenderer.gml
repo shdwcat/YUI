@@ -47,9 +47,9 @@ function YuiTextRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_pr
 	}
 	self.font = font;
 	
-	is_bound = yui_is_binding(props.text)
-		|| yui_is_binding(props.color)
-		|| yui_is_binding(props.typist);
+	is_bound = yui_is_live_binding(props.text)
+		|| yui_is_live_binding(props.color)
+		|| yui_is_live_binding(props.typist);
 		
 	// ===== functions =====
 	

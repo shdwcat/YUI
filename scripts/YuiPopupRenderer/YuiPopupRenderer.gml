@@ -45,7 +45,7 @@ function YuiPopupRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_p
 	
 	content_renderer = yui_resolve_renderer(props.content, resources, slot_values);
 
-	is_bound = yui_is_binding(props.placement);
+	is_bound = yui_is_live_binding(props.placement);
 	
 	// ===== functions =====
 	

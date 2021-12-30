@@ -1,6 +1,7 @@
 /// @description Calls a function with bindable arguments
 function YuiCallFunction(func_name, args) constructor {
 	static is_yui_binding = true;
+	static is_yui_live_binding = true;
 	
 	static runtime_functions = gspl_get_runtime_function_map();
 	

@@ -73,7 +73,7 @@ function YuiPanelRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_p
 		element_count = i;
 	}
 	
-	is_bound = yui_is_binding(props.elements);
+	is_bound = yui_is_live_binding(props.elements);
 		
 	// ===== functions =====
 		

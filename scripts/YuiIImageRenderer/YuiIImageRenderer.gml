@@ -25,11 +25,11 @@ function YuiImageRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_p
 	props.opacity = yui_bind(props.opacity, resources, slot_values);
 	props.blend_color = yui_bind(props.blend_color, resources, slot_values);
 	
-	is_bound = yui_is_binding(props.sprite)
-		|| yui_is_binding(props.frame)
-		|| yui_is_binding(props.angle)
-		|| yui_is_binding(props.opacity)
-		|| yui_is_binding(props.blend_color);
+	is_bound = yui_is_live_binding(props.sprite)
+		|| yui_is_live_binding(props.frame)
+		|| yui_is_live_binding(props.angle)
+		|| yui_is_live_binding(props.opacity)
+		|| yui_is_live_binding(props.blend_color);
 	
 	// ===== functions =====
 	
