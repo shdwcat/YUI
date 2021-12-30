@@ -24,10 +24,11 @@ enum GSPL_FIBER_STATUS {
 
 // TODO: invert this inheritance so that any AST Interpreter can inherit fiber behavior?
 // Or use additive behavior like 'add_fiber_behavior'
+// need to make GsplFiber not inherit KnitInterpreter
 
 /// @description a fiber can run a program (statements) and yield to other fibers during execution
 function GsplFiber(gspl_program, environment, calling_fiber = undefined)
-	: Interpreter(environment) constructor {
+	: KnitInterpreter(environment) constructor {
 		
 	static pauseFiber = new GsplFiberInstruction(GSPL_FIBER_INSTRUCTION.PAUSE, undefined);
 		
@@ -75,12 +76,12 @@ function GsplFiber(gspl_program, environment, calling_fiber = undefined)
 			status = GSPL_FIBER_STATUS.ERROR;
 			self.error = error;
 			if runner runner.stop = true;
-			if instanceof(error) == "RuntimeError" {
-				show_runtime_error(error);
+			if instanceof(error) == "GsplRuntimeError" {
+				gspl_show_runtime_error(error);
 			}
 			else
 				//throw error;
-				debug_log(error);
+				gspl_log(error);
 		}
 	}
 	
@@ -101,12 +102,12 @@ function GsplFiber(gspl_program, environment, calling_fiber = undefined)
 			status = GSPL_FIBER_STATUS.ERROR;
 			self.error = error;
 			if runner runner.stop = true;
-			if instanceof(error) == "RuntimeError" {
-				show_runtime_error(error);
+			if instanceof(error) == "GsplRuntimeError" {
+				gspl_show_runtime_error(error);
 			}
 			else
 				//throw error;
-				debug_log(error);
+				gspl_log(error);
 		}
 	}
 		
@@ -114,7 +115,6 @@ function GsplFiber(gspl_program, environment, calling_fiber = undefined)
 	static sendRunnerInstruction = function(instruction) {
 		if !runner {
 			runner = instance_create_depth(-100, 50, 50, gspl_runner);
-			runner.uid = debug.runner_count;
 			runner.fiber = self;
 		}
 		gspl_set_runner_instruction(instruction);
@@ -130,10 +130,9 @@ function GsplFiber(gspl_program, environment, calling_fiber = undefined)
 	static queueRunnerEvent = function(runner_event) {
 		if !runner {
 			runner = instance_create_depth(-100, 50, 50, gspl_runner);
-			runner.uid = debug.runner_count;
 		}
 		// maybe use a different object since it can use less events?
-		gspl_queue_runner_event(runner_event, runner_event.event_type == GS_TOKEN.DRAWGUI);
+		gspl_queue_runner_event(runner_event, runner_event.event_type == KNIT_TOKEN.DRAWGUI);
 	}
 	
 	static getStatement = function() {

@@ -193,6 +193,6 @@ function GsplScanner(source, token_definition) constructor {
 	
 	static _error = function(line, msg, value = undefined) {
 		if value == undefined value = ""
-		error("[", line, "]", msg, value);
+		gspl_log("[", line, "]", msg, value);
 	}
 }

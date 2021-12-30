@@ -15,7 +15,7 @@ function GsplTimeSpan(value, units) constructor {
 			self.milliseconds = value * 1000 * 60;
 			break;
 		default:
-			throw new RuntimeError(units, "Unsupported timespan units: " + units._lexeme);
+			throw new GsplRuntimeError(units, "Unsupported timespan units: " + units._lexeme);
 	}
 	
 	// defined how this type is iterated

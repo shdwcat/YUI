@@ -35,6 +35,7 @@ if is_binding_active {
 }
 
 // create/destroy tooltip item
+// TODO?: handle this in setHighlight() to avoid the per frame hit
 if tooltip_renderer {
 	if highlight {
 		if tooltip_item == undefined {	

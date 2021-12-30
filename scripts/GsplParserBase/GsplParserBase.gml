@@ -54,12 +54,11 @@ function GsplParserBase(tokens, eof_token) constructor {
 		else {
 			_error(token._line, " at '" + token._lexeme + "' - " + error_message);
 		}
-		return new ParserError(token, error_message);
+		return new GsplParserError(token, error_message);
 	}
 	
 	static _error = function(line, msg) {
-		var text = string_concat("Error on line", line, ":", msg);
-		error(text);
-		debug.debug_output += text + "\n";
+		var text = "Error on line " + string(line) + ": " + msg;
+		gspl_log(text);
 	}
 }

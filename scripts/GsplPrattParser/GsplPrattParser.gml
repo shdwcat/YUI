@@ -38,7 +38,7 @@ function GsplPrattParser(tokens, eof_token) : GsplParserBase(tokens, eof_token) 
 		var infix = infix_parselets[peek()._type];
 		
 		if infix == 0 {
-			log("unknown operator:", peek().getTokenName());
+			gspl_log("unknown operator:", peek().getTokenName());
 		}
 		
 		return infix != 0

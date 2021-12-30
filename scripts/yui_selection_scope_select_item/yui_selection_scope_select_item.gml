@@ -6,6 +6,6 @@ function yui_selection_scope_select_item(params, event_info) {
 		params.scope.select(item);
 	}
 	else {
-		error("no selection scope!");
+		yui_error("no selection scope!");
 	}
 }

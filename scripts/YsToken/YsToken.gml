@@ -1,6 +1,6 @@
 /// @description
 function YsToken(type, lexeme, literal, line)
-	: Token(type, lexeme, literal, line) constructor {
+	: GsplToken(type, lexeme, literal, line) constructor {
 
 	static getTokenName = get_yscript_token_name;
 }

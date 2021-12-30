@@ -1,6 +1,13 @@
 // gets the full path to the local temp folder for the runner (where data files are copied at launch)
-function yui_get_runner_temp_folder(is_beta) {
+function yui_get_runner_temp_folder() {
 	
+	// check if we're in beta via the GM runtime version
+	// Beta is ##.blah
+	// Release is #.#.blah
+	// TODO: move this into yui_get_runner_temp_folder
+	var dot_pos = string_pos(".", GM_runtime_version)
+	var is_beta = dot_pos != 2;
+
 	if parameter_count() > 2 && parameter_string(1) == "-game" {
 		var temp_bundle = parameter_string(2);
 		
