@@ -37,22 +37,18 @@ if is_binding_active {
 // create/destroy tooltip item
 if tooltip_renderer {
 	if highlight {
+		if tooltip_item == undefined {	
+			tooltip_item = yui_make_render_instance(
+				tooltip_renderer,
+				bound_values.data_source, 
+				/* no index */,
+				1000); // ensures tooltips appear above popup layers
 	
-		// make sure we don't orphan an existing item
-		if tooltip_item {
-			instance_destroy(tooltip_item);
+			var popup_space = yui_calc_popup_space(tooltip_item);
+			tooltip_item.arrange(popup_space);
 		}
-	
-		tooltip_item = yui_make_render_instance(
-			tooltip_renderer,
-			bound_values.data_source, 
-			/* no index */,
-			1000); // ensures tooltips appear above popup layers
-	
-		var popup_space = yui_calc_popup_space(tooltip_item);
-		tooltip_item.arrange(popup_space);
 	}
-	else if tooltip_item {
+	else if tooltip_item != undefined {
 		instance_destroy(tooltip_item);
 		tooltip_item = undefined;
 	}
