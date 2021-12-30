@@ -52,6 +52,7 @@ function YuiSwitchRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_
 		}
 		
 		return {
+			is_live: true,
 			switch_value: switch_value,
 		}
 	}

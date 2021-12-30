@@ -46,6 +46,10 @@ function YuiTextRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_pr
 		font = font_get_name(text_style.font);
 	}
 	self.font = font;
+	
+	is_bound = yui_is_binding(props.text)
+		|| yui_is_binding(props.color)
+		|| yui_is_binding(props.typist);
 		
 	// ===== functions =====
 	
@@ -118,9 +122,10 @@ function YuiTextRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_pr
 			&& typist == prev.typist
 		{
 			return true;
-}
+		}
 		
 		return {
+			is_live: is_bound,
 			text: text,
 			font: font,
 			color: color,

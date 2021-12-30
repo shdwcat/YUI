@@ -51,6 +51,7 @@ function YuiLineRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_pr
 		var y2 = yui_resolve_binding(line_end.y, data);
 			
 		return {
+			is_live: true,
 			width: width,
 			color: color,
 			x1: x1,

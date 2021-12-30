@@ -7,24 +7,30 @@ if layout_props == undefined {
 	initLayout();
 }
 
+// hide self if parent is not visible
+// (depth order ensures further children will get hidden in the same frame)
 if parent && !parent.visible {
 	visible = false;
 	rebuild = false;
 	exit;
 }
-	
 
-rebuild = bind_values();
+// NOTE: this will be false if no bindings are live
+if is_binding_active {
 
-if rebuild {
-	build();
+	// check if any bindings require rebuilding UI state
+	rebuild = bind_values();
+
+	if rebuild {
+		build();
 	
-	// way to detect if build() requires re-arrange?
-	// have build return a boolean
-	arrange(draw_rect);
+		// way to detect if build() requires re-arrange?
+		// have build return a boolean
+		arrange(draw_rect);
 	
-	if parent {
-		parent.onChildLayoutComplete(self);
+		if parent {
+			parent.onChildLayoutComplete(self);
+		}
 	}
 }
 

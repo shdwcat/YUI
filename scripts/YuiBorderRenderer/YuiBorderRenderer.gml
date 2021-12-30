@@ -65,6 +65,7 @@ function YuiBorderRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_
 		}
 		
 		return {
+			is_live: false,
 			data_source: data,
 			bg_sprite: bg_sprite,
 			bg_color: bg_color,

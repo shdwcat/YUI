@@ -76,6 +76,8 @@ function YuiButtonRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_
 	
 	// ===== functions =====
 	
+	is_bound = yui_is_binding(props.enabled);
+	
 	// TODO: how to inherit these from YuiBorderRenderer?
 	
 	static getLayoutProps = function() {
@@ -110,6 +112,7 @@ function YuiButtonRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_
 		}
 				
 		var result = {
+			is_live: is_bound,
 			data_source: data,
 			bg_sprite: bg_sprite,
 			bg_color: bg_color,

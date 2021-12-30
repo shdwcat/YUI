@@ -13,6 +13,9 @@ item_index = undefined;
 // the map of values that control layout;
 layout_props = undefined;
 
+// whether there are any UI values that are actively bound in a YuiScript expression
+is_binding_active = true;
+
 // the map of values that depend on the data context
 bound_values = undefined;
 
@@ -78,8 +81,12 @@ bind_values = function() {
 	else {
 		visible = true;
 	}
-
+	
 	bound_values = new_values;
+	
+	// maybe move this to element.is_live()?
+	is_binding_active = bound_values.is_live;
+
 	return true;
 }
 

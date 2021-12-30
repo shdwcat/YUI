@@ -44,6 +44,8 @@ function YuiPopupRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_p
 	props.padding = yui_resolve_padding(props.padding)
 	
 	content_renderer = yui_resolve_renderer(props.content, resources, slot_values);
+
+	is_bound = yui_is_binding(props.placement);
 	
 	// ===== functions =====
 	
@@ -74,6 +76,7 @@ function YuiPopupRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_p
 		}
 		
 		return {
+			is_live: is_bound,
 			data_source: data,
 			bg_sprite: undefined, // not yet implemented here
 			bg_color: props.bg_color,

@@ -33,6 +33,7 @@ function YuiDataTemplateRenderer(_props, _resources, _slot_values) : YuiBaseRend
 		}
 		
 		return {
+			is_live: true,
 			resource_key: resource_key,
 		};
 	}

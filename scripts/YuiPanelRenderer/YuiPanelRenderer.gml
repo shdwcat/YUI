@@ -72,10 +72,13 @@ function YuiPanelRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_p
 		}
 		element_count = i;
 	}
+	
+	is_bound = yui_is_binding(props.elements);
 		
 	// ===== functions =====
 		
 	static getLayoutProps = function() {
+		
 		return {
 			alignment: alignment,
 			padding: props.padding,
@@ -128,6 +131,7 @@ function YuiPanelRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_p
 		}
 		
 		return {
+			is_live: is_bound,
 			// border
 			data_source: data,
 			bg_sprite: bg_sprite,
