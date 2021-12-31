@@ -1,9 +1,18 @@
-function yui_resolve_layout() {
-	var makeLayout = YuiGlobals.layout_map[$ props.layout];
+/// @description get the layout constructor for the provided layout type
+function yui_resolve_layout(layout_type) {
 	
-	if makeLayout == undefined {
-		throw yui_string_concat("Unknown panel layout:", props.layout);
+	switch layout_type {
+		case "vertical":
+			return YuiVerticalLayout;
+		case "horizontal":
+			return YuiHorizontalLayout;
+		case "canvas":
+			return YuiCanvasLayout;
+		case "grid":
+			return YuiGridLayout;
+		default:
+			yui_error("unknown layout type:", layout_type);
+			return undefined;
 	}
-	
-	return new makeLayout();
+
 }

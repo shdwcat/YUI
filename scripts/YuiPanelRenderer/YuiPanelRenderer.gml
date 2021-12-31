@@ -38,7 +38,7 @@ function YuiPanelRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_p
 	// live binding this is not (yet?) supported, but this enables $slot support
 	props.layout = yui_bind(props.layout, resources, slot_values);
 	
-	makeLayout = yui_get_layout_constructor(props.layout);
+	var makeLayout = yui_resolve_layout(props.layout);
 	layout = new makeLayout(alignment, props.padding, spacing);
 	
 	// resolve bg_sprite

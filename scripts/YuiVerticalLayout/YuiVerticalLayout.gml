@@ -1,95 +1,82 @@
-
-function YuiVerticalLayout() : YuiLayoutBase() constructor {
-	alignment = { vertical: "top", horizontal: "left" };
-	maximum_width = 0;
-
-	static update = function(item_render_size, spacing) {
-		// modify the current draw rect by the space that was used
-		current_draw_rect.y += item_render_size.h + spacing;
-		current_draw_rect.h -= item_render_size.h + spacing;
-		
-		maximum_width = max(maximum_width, item_render_size.w);
-		
-		// account for that space in the final size
-		draw_size.h += item_render_size.h + spacing;
-		
-		if current_draw_rect.h <= 0 {
-			//yui_log("layout broken");
-			return false;
-		}
-		
-		return true;
-	};
+/// @description here
+function YuiVerticalLayout(alignment, padding, spacing) constructor {
 	
-	static complete = function(children, spacing) {
+	self.alignment = alignment;
+	self.padding = padding;
+	self.spacing = spacing;
+	
+	static init = function(items, available_size) {
+		self.items = items;
+		self.available_size = available_size;
+	}
+	
+	static arrange = function() {
+		var count = array_length(items);
+		var yoffset = 0;
+		var max_w = 0;
 		
-		draw_size.h -= spacing; // we need to trim off the spacing for the last item
-				
-		switch (alignment.horizontal) {
-			case "left":
-			case "right":
-				draw_size.w = maximum_width + padding.w;
-				break;
-			case "stretch":
-				draw_size.w = draw_rect.w;
-				break;
-				
-			case "center":			
-				draw_size.w = draw_rect.w;
-				
-				// offset all the children by the difference between their width and half the panel width
-				var count = array_length(children);
-				for (var i = 0; i < count; ++i) {
-					var child = children[i];
-					if child {
-						var xoffset = draw_size.w / 2 - child.w / 2;
-						child.finalize(xoffset, 0);
-					}
-				}
-				break;
-		}
-		
-		switch (alignment.vertical) {
-			case "top":
-				break;
-			case "bottom":
+		var i = 0; repeat count {
+						
+			var item = items[i];
+			var possible_size = getAvailableSizeForItem(i, yoffset);
 			
-				// offset all the children by the difference between their height and the panel height
-				var count = array_length(children);
-				for (var i = 0; i < count; ++i) {
-					var child = children[i];
-					if child {
-						var yoffset = draw_size.h - child.h;
-						child.finalize(0, yoffset);
-					}
-				}
-				
-				break;
-				
-			case "center":			
-				draw_size.h = draw_rect.h;
+			var item_size = item.arrange(possible_size);
+			if item_size {
+				max_w = max(max_w, item_size.w);
 			
-				// offset all the children by the difference between their height and half the panel height
-				var count = array_length(children);
-				for (var i = 0; i < count; ++i) {
-					var child = children[i];
-					if child {
-						var yoffset = draw_size.h / 2 - child.h;
-						child.finalize(0, yoffset);
-					}
+				// only include the size if there is space for it
+				if (item_size.h > 0) {
+					yoffset += item_size.h;
+					yoffset += spacing;
 				}
-				
-				break;
-			case "stretch":
-				draw_size.h = draw_rect.h;
-				break;
+			}
+			
+			i++;
 		}
 		
-		if size.is_exact_size {
-			if is_numeric(size.w) draw_size.w = size.w;
-			if is_numeric(size.h) draw_size.h = size.h;
+		// subtract spacing if we used any
+		if yoffset > spacing {
+			yoffset -= spacing
 		}
 		
-		return draw_size;
-	};
+		draw_size = {
+			x: available_size.x,
+			y: available_size.y,
+			w: max_w,
+			h: yoffset,
+		};
+		
+		var used_size = {			
+			x: available_size.x,
+			y: available_size.y,
+			w: max_w,
+			h: yoffset,
+		}			
+		
+		if alignment.h == "center" {
+			i = 0; repeat count {
+				yui_align_item(items[i++], alignment);
+			}
+			draw_size.x += (available_size.w - max_w) / 2;
+			used_size.w = available_size.w;
+		}	
+		if alignment.v == "center" {
+			var offset = (available_size.h - yoffset) / 2;
+			i = 0; repeat count {
+				items[i++].move(0, offset);
+			}
+			used_size.h = available_size.h;
+		}
+		
+		return used_size;
+	}
+	
+	static getAvailableSizeForItem = function(index, yoffset) {		
+		return {
+			x: available_size.x,
+			y: available_size.y + yoffset,
+			w: available_size.w,
+			h: available_size.h - yoffset,
+		};
+	}
 }

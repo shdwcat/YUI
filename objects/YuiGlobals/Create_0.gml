@@ -23,11 +23,3 @@ renderer_map[? "data_template"] = YuiDataTemplateRenderer;
 renderer_map[? "viewport"] = YuiNotImplemented;
 renderer_map[? "checkbox"] = YuiNotImplemented;
 renderer_map[? "slider"] = YuiNotImplemented;
-
-layout_map = {
-	vertical: YuiVerticalLayout,
-	horizontal: YuiHorizontalLayout,
-	overlay: YuiOverlayLayout,
-	grid: YuiGridLayout,
-	canvas: YuiCanvasLayout,
-}

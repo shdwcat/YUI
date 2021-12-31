@@ -1,87 +1,92 @@
-
-function YuiCanvasLayout() : YuiLayoutBase() constructor {
-	_right_aligned = false;
-	_bottom_aligned = false;
-	_center_h = false;
-	_center_v = false;
+/// @description here
+function YuiCanvasLayout(alignment, padding, spacing) constructor {
 	
-	// static base_getItemDrawRect = getItemDrawRect;
-	static getItemDrawRect = function(item_index, item_props) {
-		var canvas_position = item_props[$ "canvas"];
-		if canvas_position == undefined {
-			// make a copy so that the item renderer can't accidentally mess up our draw rect
-			var item_draw_rect = {
-				x: current_draw_rect.x,
-				y: current_draw_rect.y,
-				w: current_draw_rect.w,
-				h: current_draw_rect.h,
-			};
-			return item_draw_rect;
-			
-		}
-		else {
-			var left = canvas_position[$ "left"];
-			var top = canvas_position[$ "top"];
-			right = canvas_position[$ "right"];
-			bottom = canvas_position[$ "bottom"];
-			
-			var center = canvas_position[$ "center"];
-			_center_h = center == true || center == "h";
-			_center_v = center == true || center == "v";
-			
-			if left == undefined {
-				left = 0;
-				_right_aligned = right != undefined;
-			}
-			else {
-				_right_aligned = false;
-			}
-			
-			if top == undefined {
-				top = 0;
-				_bottom_aligned = bottom != undefined;
-			}
-			else {
-				_bottom_aligned = false;
-			}
-			
-			if right == undefined right = 0;
-			if bottom == undefined bottom = 0;
-			
-			var rect = {
-				x: current_draw_rect.x + left,
-				y: current_draw_rect.y + top,
-				w: current_draw_rect.w - (left + right),
-				h: current_draw_rect.h - (top + bottom),
-			};
-			return rect;
-		}
+	self.alignment = alignment;
+	self.padding = padding;
+	self.spacing = spacing;
+	
+	// elements may use this to calculate their own draw size
+	self.draw_size = undefined;
+	
+	static init = function(items, available_size) {
+		self.items = items;
+		self.available_size = available_size;
 	}
-
-	static update = function(item_render_result, spacing) {
-				
-		if _right_aligned {
-			item_render_result.panel_position.x += current_draw_rect.w - item_render_result.w - right;
-			item_render_result.panel_position.needs_finalize = true;
-		}
-		if _bottom_aligned {
-			item_render_result.panel_position.y += current_draw_rect.h - item_render_result.h - bottom;
-			item_render_result.panel_position.needs_finalize = true;
-		}
-		if _center_h {
-			item_render_result.panel_position.x += floor(current_draw_rect.w / 2 - (item_render_result.w / 2));
-			item_render_result.panel_position.needs_finalize = true;
-		}
-		if _center_v {
-			item_render_result.panel_position.y += floor(current_draw_rect.h / 2- (item_render_result.h / 2));
-			item_render_result.panel_position.needs_finalize = true;
+	
+	static arrange = function() {
+		
+		var i = 0; repeat array_length(items) {
+			
+			var item = items[i];
+			var canvas = item.canvas;
+			
+			// fit the item within the bounds defined by the canvas properties
+			var possible_size = {
+				x: available_size.x + canvas.left,
+				y: available_size.y + canvas.top,
+				w: available_size.w - (canvas.left + canvas.right),
+				h: available_size.h - (canvas.top + canvas.bottom),
+			};
+			
+			var item_size = item.arrange(possible_size);
+			
+			// do post-arrange alignment
+			var xoffset = 0;
+			var yoffset = 0;
+			if canvas.right_aligned {
+				xoffset = available_size.w - item_size.w - canvas.right;
+			}
+			if canvas.bottom_aligned {
+				yoffset = available_size.h - item_size.h - canvas.bottom;
+			}
+			if canvas.center_h {
+				xoffset = floor(available_size.w / 2 - (item_size.w / 2));
+			}
+			if canvas.center_v {
+				yoffset = floor(available_size.h / 2 - (item_size.h / 2));
+			}
+			
+			if xoffset != 0 || yoffset != 0 {
+				item.move(xoffset, yoffset);
+			}
+			
+			i++;
 		}
 		
-		// canvas items never consume available space, so we can always draw more
-		return true;
-	};
+		// canvas always fills the available space
+		draw_size = {
+			x: available_size.x,
+			y: available_size.y,
+			w: available_size.w,
+			h: available_size.h,
+		};
+		
+		return draw_size;
+	}
+}
+
+function YuiCanvasPosition(canvas_position = {}) constructor {
+	var center = canvas_position[$ "center"];
+	center_h = center == true || center == "h";
+	center_v = center == true || center == "v";
 	
-	static complete = function() {
-		return draw_rect;
-	};
+	left = canvas_position[$ "left"];
+	top = canvas_position[$ "top"];
+	right = canvas_position[$ "right"];
+	bottom = canvas_position[$ "bottom"];
+	
+	right_aligned = right != undefined && left == undefined;
+	bottom_aligned = bottom != undefined && top == undefined;
+	
+	if center_h && (left != undefined || right != undefined) {
+		throw "Cannot center horizontally AND left/right align";
+	}
+	if center_v && (top != undefined || bottom != undefined) {
+		throw "Cannot center vertically AND top/bottom align";
+	}
+	
+	if left == undefined left = 0;
+	if top == undefined top = 0;
+	if right == undefined right = 0;
+	if bottom == undefined bottom = 0;			
 }
