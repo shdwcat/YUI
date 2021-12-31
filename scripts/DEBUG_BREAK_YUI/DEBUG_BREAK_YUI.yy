@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Layout",
-    "path": "folders/Packages - YUI/Layout.yy",
+    "name": "scripts",
+    "path": "folders/Packages - YUI/scripts.yy",
   },
   "resourceVersion": "1.0",
-  "name": "yui_resize_instance",
+  "name": "DEBUG_BREAK_YUI",
   "tags": [],
   "resourceType": "GMScript",
 }

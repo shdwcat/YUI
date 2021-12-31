@@ -5,7 +5,7 @@ function YuiTextRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_pr
 		theme: "default",
 		padding: 0,
 		
-		text: noone,
+		text: undefined,
 		text_format: undefined,
 		
 		text_style: "body",
@@ -80,7 +80,7 @@ function YuiTextRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_pr
 		if !is_visible return false;
 				
 		var text = yui_resolve_binding(props.text, data);
-		if text == noone || text == "" || text == undefined {
+		if text == "" || text == undefined {
 			return false;
 		}
 		

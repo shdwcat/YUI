@@ -1,6 +1,6 @@
 // TODO figure out enum naming convention
 
-enum placement_mode {
+enum YUI_PLACEMENT_MODE {
 	TopLeft = 0,
 	TopCenter = 1,
 	TopRight = 2,

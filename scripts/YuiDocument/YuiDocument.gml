@@ -9,11 +9,11 @@ function YuiDocument(_yui_file) constructor {
 	
 	// for the loaded document
 	static default_props = {
-		id: noone,
-		data_type: noone,
+		id: undefined,
+		data_type: undefined,
 		import: [], // list of .resource.yui filepaths relative to the yui_folder
 		resources: {},
-		root: noone,
+		root: undefined,
 	}
 	
 	loadDocument();

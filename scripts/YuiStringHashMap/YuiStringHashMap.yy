@@ -2,8 +2,8 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "scripts",
-    "path": "folders/Packages - YUI/Redux/scripts.yy",
+    "name": "Data",
+    "path": "folders/Packages - YUI/Data.yy",
   },
   "resourceVersion": "1.0",
   "name": "YuiStringHashMap",

@@ -23,6 +23,6 @@ function yui_get_runner_temp_folder() {
 		return path;
 	}
 	else {
-		return noone;
+		return undefined;
 	}
 }

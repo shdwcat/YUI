@@ -3,16 +3,16 @@ global.__yui_globals = {};
 
 // converts placement string values from a yui_file to the enum equivalent
 global.__yui_globals.placement_map = {
-	top_left: placement_mode.TopLeft,
-	top_center: placement_mode.TopCenter,
-	top_right: placement_mode.TopRight,
-	left_top: placement_mode.LeftTop,
-	left_middle: placement_mode.LeftCenter,
-	left_bottom: placement_mode.LeftBottom,
-	bottom_left: placement_mode.BottomLeft,
-	bottom_center: placement_mode.BottomCenter,
-	bottom_right: placement_mode.BottomRight,
-	right_top: placement_mode.RightTop,
-	right_middle: placement_mode.RightCenter,
-	right_bottom: placement_mode.RightBottom,	
+	top_left: YUI_PLACEMENT_MODE.TopLeft,
+	top_center: YUI_PLACEMENT_MODE.TopCenter,
+	top_right: YUI_PLACEMENT_MODE.TopRight,
+	left_top: YUI_PLACEMENT_MODE.LeftTop,
+	left_middle: YUI_PLACEMENT_MODE.LeftCenter,
+	left_bottom: YUI_PLACEMENT_MODE.LeftBottom,
+	bottom_left: YUI_PLACEMENT_MODE.BottomLeft,
+	bottom_center: YUI_PLACEMENT_MODE.BottomCenter,
+	bottom_right: YUI_PLACEMENT_MODE.BottomRight,
+	right_top: YUI_PLACEMENT_MODE.RightTop,
+	right_middle: YUI_PLACEMENT_MODE.RightCenter,
+	right_bottom: YUI_PLACEMENT_MODE.RightBottom,	
 };

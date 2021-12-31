@@ -4,7 +4,7 @@ function YuiPopupRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_p
 		type: "popup",	
 		theme: "default",
 		
-		placement: placement_mode.BottomRight,
+		placement: YUI_PLACEMENT_MODE.BottomRight,
 		content: undefined,
 		
 		// default to theme values

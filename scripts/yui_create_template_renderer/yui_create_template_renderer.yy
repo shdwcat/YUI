@@ -2,8 +2,8 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Render",
-    "path": "folders/Packages - YUI/Render.yy",
+    "name": "Elements",
+    "path": "folders/Packages - YUI/Elements.yy",
   },
   "resourceVersion": "1.0",
   "name": "yui_create_template_renderer",

@@ -63,7 +63,7 @@ arrange  = function(available_size) {
 	element_yoffset = padding.top;
 	
 	if trace {
-		DEBUG_BREAK
+		DEBUG_BREAK_YUI;
 	}
 	
 	scribble_element.wrap(padded_rect.w, padded_rect.h);

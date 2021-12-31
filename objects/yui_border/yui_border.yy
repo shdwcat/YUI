@@ -41,8 +41,8 @@
     {"propertyId":{"name":"bg_color","path":"objects/yui_base/yui_base.yy",},"objectId":{"name":"yui_base","path":"objects/yui_base/yui_base.yy",},"value":"0","resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMOverriddenProperty",},
   ],
   "parent": {
-    "name": "Redux",
-    "path": "folders/Packages - YUI/Redux.yy",
+    "name": "Render Items",
+    "path": "folders/Packages - YUI/Render Items.yy",
   },
   "resourceVersion": "1.0",
   "name": "yui_border",

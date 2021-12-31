@@ -13,7 +13,7 @@ function yui_calc_popup_space(popup_item) {
 		// so TopLeft means outside of the top edge of the parent,
 		// but aligned to the left edge of the parent
 		
-		case placement_mode.TopLeft:
+		case YUI_PLACEMENT_MODE.TopLeft:
 		case "top_left":
 			return {
 				x: parent_size.x,
@@ -21,7 +21,7 @@ function yui_calc_popup_space(popup_item) {
 				y: 0,
 				h: parent_size.y
 			};
-		case placement_mode.LeftTop:
+		case YUI_PLACEMENT_MODE.LeftTop:
 		case "left_top":
 			return {
 				x: 0,
@@ -30,7 +30,7 @@ function yui_calc_popup_space(popup_item) {
 				h: screen_h - parent_size.y
 			};
 			
-		case placement_mode.RightTop:
+		case YUI_PLACEMENT_MODE.RightTop:
 		case "right_top":
 			return {
 				x: parent_size.x + parent_size.w, // right edge of parent
@@ -39,7 +39,7 @@ function yui_calc_popup_space(popup_item) {
 				h: screen_h - parent_size.y
 			};
 			
-		case placement_mode.BottomLeft:
+		case YUI_PLACEMENT_MODE.BottomLeft:
 		case "bottom_left":
 			return {
 				x: parent_size.x,
@@ -47,7 +47,7 @@ function yui_calc_popup_space(popup_item) {
 				y: parent_size.y + parent_size.h,
 				h: screen_h - (parent_size.y + parent_size.h)
 			};
-		case placement_mode.BottomRight:
+		case YUI_PLACEMENT_MODE.BottomRight:
 		case "bottom_right":
 			return { 
 				x: 0, 

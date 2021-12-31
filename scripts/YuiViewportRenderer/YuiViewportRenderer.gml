@@ -3,7 +3,7 @@ function YuiViewportRenderer(_props, _resources, _slot_values) : YuiBaseRenderer
 	static default_props = {
 		type: "viewport",
 		
-		content: noone,
+		content: undefined,
 		
 		view_size: "auto",
 		overflow: {

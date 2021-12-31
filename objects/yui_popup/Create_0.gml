@@ -12,30 +12,30 @@ arrange = function(available_size) {
 	
 	// align popup
 	switch bound_values.placement {
-		case placement_mode.TopLeft:
+		case YUI_PLACEMENT_MODE.TopLeft:
 		case "top_left":
 			yui_align_item(self, { h: fa_left, v: fa_bottom });
 			break;
-		case placement_mode.TopCenter:
+		case YUI_PLACEMENT_MODE.TopCenter:
 		case "top_center":
 			yui_align_item(self, { h: fa_center, v: fa_bottom });
 			break;
-		case placement_mode.TopRight:
+		case YUI_PLACEMENT_MODE.TopRight:
 		case "top_right":
 			yui_align_item(self, { h: fa_right, v: fa_bottom });
 			break;
 			
-		case placement_mode.LeftTop:
+		case YUI_PLACEMENT_MODE.LeftTop:
 		case "left_top":
 			yui_align_item(self, { h: fa_right, v: fa_top });
 			break;
 			
-		case placement_mode.RightTop:
+		case YUI_PLACEMENT_MODE.RightTop:
 		case "right_top":
 			yui_align_item(self, { h: fa_left, v: fa_top });
 			break;
 		
-		case placement_mode.BottomRight:
+		case YUI_PLACEMENT_MODE.BottomRight:
 		case "bottom_right":
 			yui_align_item(self, { h: fa_right, v: fa_top });
 			break;

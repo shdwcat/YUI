@@ -1,7 +1,7 @@
 /// @description create and initialize a render instance
 function yui_make_render_instance(yui_element, data, index = 0, depth_offset = 0) {
 	
-	var render_object = yui_get_render_object(yui_element.props.type, yui_element.props);
+	var render_object = yui_resolve_render_item(yui_element.props.type, yui_element.props);
 	if render_object == undefined {
 		throw yui_error("unknown element type:", yui_element.props.type);
 	}

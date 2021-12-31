@@ -1,6 +1,3 @@
-// for lack of a better place
-#macro DEBUG_BREAK var f = "f";
-
 /// @description creates a YuiBinding or YuiMultiBinding if the value is bindable
 function yui_bind(value, resources, slot_values) {
 	// NOTE: 'value' is the binding_expr

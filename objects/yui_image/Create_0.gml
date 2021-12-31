@@ -6,22 +6,24 @@ event_inherited();
 build = function() {
 	trace = yui_element.props.trace; // hack
 	
-	sprite_index = bound_values.sprite;
+	if bound_values.sprite >= 0 {
+		sprite_index = bound_values.sprite;
+	}
+	else {
+		visible = false;
+	}	
+	
 	if bound_values.frame != undefined {
 		image_index = bound_values.frame;
 		image_speed = 0;
 	}
+	
 	image_angle = bound_values.angle;
 	image_alpha = bound_values.opacity;	
 	blend_color = bound_values.blend_color;
 	
-	
 	if trace {
-		DEBUG_BREAK;
-	}
-	
-	if sprite_index < 0 {
-		visible = false;
+		DEBUG_BREAK_YUI;
 	}
 }
 
@@ -35,7 +37,7 @@ arrange = function(available_size) {
 	};
 	
 	if trace {
-		DEBUG_BREAK;
+		DEBUG_BREAK_YUI;
 	}
 
 	draw_rect = available_size;

@@ -29,7 +29,7 @@ function yui_resolve_resource_imports(resources, imports, yui_folder) {
 		
 		var trace = resource_data[$ "trace"];
 		if trace {
-			var f = "f";
+			DEBUG_BREAK_YUI
 		}
 		
 		// get the inner resources from the imported resource file

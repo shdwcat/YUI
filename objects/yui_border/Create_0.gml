@@ -12,9 +12,6 @@ default_props = {
 content_item = undefined;
 
 onLayoutInit = function() {
-	if layout_props.content_renderer == -4 {
-		var f = "f";
-	}
 	if layout_props.content_renderer != undefined {
 		content_item = yui_make_render_instance(layout_props.content_renderer, data_context);
 	}

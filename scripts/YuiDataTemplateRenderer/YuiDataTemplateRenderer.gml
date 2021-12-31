@@ -2,10 +2,10 @@
 function YuiDataTemplateRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_props, _resources, _slot_values) constructor {
 	static default_props = {
 		type: "data_template",
-		data_type: noone,
+		data_type: undefined,
 		
-		resource_group: noone, // this is the group of resources that contains the data templates
-		resource_key: noone, // this is the key to look up within the group (usually bound)
+		resource_group: undefined, // this is the group of resources that contains the data templates
+		resource_key: undefined, // this is the key to look up within the group (usually bound)
 		
 		strict: false,
 	}

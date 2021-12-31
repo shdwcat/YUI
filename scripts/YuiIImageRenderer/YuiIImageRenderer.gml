@@ -7,7 +7,7 @@ function YuiImageRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_p
 		scale_mode: "slice", // stretch/tile/clip/none/etc
 		center: false,
 		
-		sprite: noone,
+		sprite: undefined,
 		ignore_sprite_origin: true, // default to draw as if origin is 0,0
 		frame: 0,		
 		opacity: undefined,
@@ -54,7 +54,7 @@ function YuiImageRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_p
 		// get the sprite asset from the name
 		var sprite = yui_resolve_sprite_by_name(sprite_name);
 		if sprite == -1 {
-			sprite = noone; // TODO pink placeholder warning sprite
+			sprite = undefined; // TODO pink placeholder warning sprite?
 		}
 		
 		var frame = yui_resolve_binding(props.frame, data);

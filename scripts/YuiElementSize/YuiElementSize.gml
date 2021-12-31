@@ -19,7 +19,7 @@ function YuiElementSize(size) constructor {
 		size = temp;
 	}
 	
-	if size == "auto" || size == undefined || size == noone {
+	if size == "auto" || size == undefined {
 		w = "auto";
 		h = "auto";
 	}

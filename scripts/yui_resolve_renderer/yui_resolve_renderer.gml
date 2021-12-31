@@ -1,5 +1,5 @@
 function yui_resolve_renderer(yui_data, resources, slot_values, parent_id = undefined) {
-	if yui_data == noone || yui_data == undefined return noone;
+	if yui_data == undefined return undefined;
 
 	// convert raw string elements to text data
 	if is_string(yui_data) {
@@ -18,18 +18,6 @@ function yui_resolve_renderer(yui_data, resources, slot_values, parent_id = unde
 			text: yui_data,
 		};
 	}
-		
-	//// shortcut syntax for specifying type, like "$panel: vertical"
-	//var field_order = yui_data.__snap_field_order;
-	//if field_order != undefined && array_length(field_order) > 0 {
-	//	var first_field_name = field_order[0];
-	//	if string_char_at(first_field_name) == "$" {
-	//	yui_data.type = string_copy(first_field_name, 2, string_length(first_field_name) -1);
-		
-	//	// need to set primary prop to the first field value
-	//	// e.g. set layout to vertical for the above example
-	//	// is this worth it?
-	//}
 		
 	if yui_data[$ "id"] == undefined {
 		if parent_id == undefined && variable_struct_exists(self, "props") {

@@ -12,19 +12,19 @@ function YuiButtonRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_
 		
 		padding: undefined, // default to theme value
 		
-		content: noone,
+		content: undefined,
 		fit_to_content: true, // can be true/false/width/height
 		scale_mode: "slice", // stretch/tile/clip/none/etc
 		
 		popup: undefined, // setting popup will show a popup in an overlay				
-		tooltip: noone, // either tooltip text or a Binding
+		tooltip: undefined, // either tooltip text or a Binding
 		
 		mouseover_color: $55555555,
 		mousedown_color: $99999999,
 		highlight_color: $FFFFFFFF,
 		
 		enabled: true, // can be bound
-		on_click: noone,
+		on_click: undefined,
 		click_button: mb_left,
 	}
 	
@@ -82,7 +82,6 @@ function YuiButtonRenderer(_props, _resources, _slot_values) : YuiBaseRenderer(_
 	
 	static getLayoutProps = function() {
 		var content = content_renderer;
-		if content == noone content = undefined;
 		
 		return {
 			highlight_color: yui_resolve_color(props.highlight_color),

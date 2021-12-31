@@ -1,5 +1,5 @@
-/// @description get the render object for the provided element type
-function yui_get_render_object(type, element_props) {
+/// @description get the render item object index for the provided element type
+function yui_resolve_render_item(type, element_props) {
 	switch type {
 		case "panel": return yui_panel;
 		case "text": return yui_text;

@@ -1,7 +1,7 @@
 /// @description draw scribble element
 
 //if trace {
-//	var f = "f";
+//	DEBUG_BREAK_YUI;
 //}
 
 // draw background
