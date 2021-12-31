@@ -3,6 +3,8 @@
 
 **NOTE:** YUI is ***not*** ready for use in production code yet!
 
+**NOTE:** There is currently a GMS2 bug with running in VM mode *without* the debugger. Please use the debugger or YYC for now!
+
 ### Why YUI?
 Writing UI code is annoying and tedious! Why write UI code when you can edit some powerful little yaml files instead?
 
