@@ -38,7 +38,7 @@ build = function() {
 			child.data_context = bound_values.data_items[i];
 		}
 		else {
-			var item_element = bound_values.item_renderers[i];
+			var item_element = bound_values.item_elements[i];
 			var data = bound_values.data_items[i]
 			
 			// create the child render object

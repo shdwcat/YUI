@@ -34,7 +34,7 @@ left_click = function() {
 			instance_destroy(popup_item);
 		}
 	
-		popup_item = yui_make_render_instance(bound_values.popup_renderer, bound_values.data_source, ,100);
+		popup_item = yui_make_render_instance(bound_values.popup_element, bound_values.data_source, ,100);
 	
 		var popup_space = yui_calc_popup_space(popup_item);
 		popup_item.arrange(popup_space);

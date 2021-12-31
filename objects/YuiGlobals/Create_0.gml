@@ -9,17 +9,13 @@ default_theme = new YuiTheme("yui_default", {});
 themes[? "default"] = default_theme;
 
 // TODO move to __yui_init_globals?
-renderer_map = ds_map_create();
-renderer_map[? "panel"] = YuiPanelRenderer;
-renderer_map[? "text"] = YuiTextRenderer;
-renderer_map[? "image"] = YuiImageRenderer;
-renderer_map[? "line"] = YuiLineRenderer;
-renderer_map[? "border"] = YuiBorderRenderer;
-renderer_map[? "button"] = YuiButtonRenderer;
-renderer_map[? "popup"] = YuiPopupRenderer;
-renderer_map[? "switch"] = YuiSwitchRenderer;
-renderer_map[? "data_template"] = YuiDataTemplateRenderer;
-
-renderer_map[? "viewport"] = YuiNotImplemented;
-renderer_map[? "checkbox"] = YuiNotImplemented;
-renderer_map[? "slider"] = YuiNotImplemented;
+element_map = ds_map_create();
+element_map[? "panel"] = YuiPanelElement;
+element_map[? "text"] = YuiTextElement;
+element_map[? "image"] = YuiImageElement;
+element_map[? "line"] = YuiLineElement;
+element_map[? "border"] = YuiBorderElement;
+element_map[? "button"] = YuiButtonElement;
+element_map[? "popup"] = YuiPopupElement;
+element_map[? "switch"] = YuiSwitchElement;
+element_map[? "data_template"] = YuiDataTemplateElement;

@@ -19,8 +19,6 @@ if show_highlight {
 
 //if content_item {
 //	// can solve this in the cursor manager hover logic
+//  // except that doesn't handle hovering over the button but not the context (due to padding)
 //	content_item.highlight = highlight;
 //}
-
-//button_highlight = false;
-button_pressed = false;

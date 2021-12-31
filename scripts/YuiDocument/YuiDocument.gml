@@ -44,7 +44,7 @@ function YuiDocument(_yui_file) constructor {
 			document.import,
 			yui_folder);
 		
-		// resolve root renderer
-		root_renderer = yui_resolve_renderer(document.root, resources, undefined, document.id);		
+		// resolve root element
+		root_element = yui_resolve_element(document.root, resources, undefined, document.id);		
 	}
 }

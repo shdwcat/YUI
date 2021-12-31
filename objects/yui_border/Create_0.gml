@@ -12,8 +12,8 @@ default_props = {
 content_item = undefined;
 
 onLayoutInit = function() {
-	if layout_props.content_renderer != undefined {
-		content_item = yui_make_render_instance(layout_props.content_renderer, data_context);
+	if layout_props.content_element != undefined {
+		content_item = yui_make_render_instance(layout_props.content_element, data_context);
 	}
 }
 

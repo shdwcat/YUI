@@ -10,9 +10,9 @@ function yui_try_start_interaction(interaction, source_data, event) {
 	
 	yui_log("starting", interaction.props.type, "interaction");
 	
-	var renderer = interaction.start(source_data, event);
-	if renderer {
-		YuiCursorManager.visual_item = yui_make_render_instance(renderer, interaction, , 100);
+	var element = interaction.start(source_data, event);
+	if element {
+		YuiCursorManager.visual_item = yui_make_render_instance(element, interaction, , 100);
 		YuiCursorManager.visual_item.arrange({
 			x: device_mouse_x_to_gui(0),
 			y: device_mouse_y_to_gui(0),

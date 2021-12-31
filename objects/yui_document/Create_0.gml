@@ -33,9 +33,9 @@ load = function() {
 		return;
 	}	
 	
-	var renderer = document.root_renderer;
+	var element = document.root_element;
 
-	root = yui_make_render_instance(renderer, data_context);
+	root = yui_make_render_instance(element, data_context);
 	root.arrange(draw_rect);
 }
 

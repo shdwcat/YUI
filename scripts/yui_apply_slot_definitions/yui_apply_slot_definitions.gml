@@ -1,9 +1,9 @@
-/// @desc applies slot_definitions to template_renderer props, and returns the slot_values for the template instance
+/// @desc applies slot_definitions to template_element props, and returns the slot_values for the template instance
 function yui_apply_slot_definitions(
 	slot_definitions,
 	parent_slot_values,
 	template_instance_props,
-	template_renderer_props,
+	template_element_props,
 	resources
 	) {
 	
@@ -11,7 +11,7 @@ function yui_apply_slot_definitions(
 	var slot_values = snap_deep_copy(slot_definitions);
 	
 	// loop through the values in template_instance_props and overlay them on the slot_values
-	// OR onto the template_renderer_props if there is not a slot for them
+	// OR onto the template_element_props if there is not a slot for them
 	var input_keys = variable_struct_get_names(template_instance_props);
 	var i = 0; repeat array_length(input_keys) {
 		var input_key = input_keys[i++];
@@ -36,8 +36,8 @@ function yui_apply_slot_definitions(
 			slot_values[$ input_key] = bound_value;
 		}
 		else {
-			// otherwise, just copy it to the template_renderer props
-			template_renderer_props[$ input_key] = template_instance_props[$ input_key];
+			// otherwise, just copy it to the template_element props
+			template_element_props[$ input_key] = template_instance_props[$ input_key];
 		}
 	}
 	

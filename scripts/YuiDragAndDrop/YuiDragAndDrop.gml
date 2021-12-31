@@ -25,12 +25,12 @@ function YuiDragAndDrop(_props, _resources) constructor {
 	resources = _resources;
 	
 	props.drag.condition = yui_bind(props.drag.condition, resources, undefined);
-	drag_renderer = yui_resolve_renderer(props.drag.visual, resources, undefined);
+	drag_element = yui_resolve_element(props.drag.visual, resources, undefined);
 	props.drag.action = yui_resolve_command(props.drag.action, resources, undefined);
 	
 	drop_hash_id = YuiCursorManager.participation_hash.getStringId(props.id + ".drop");
 	props.drop.condition = yui_bind(props.drop.condition, resources, undefined);
-	drop_renderer = yui_resolve_renderer(props.drop.visual, resources, undefined);
+	drop_element = yui_resolve_element(props.drop.visual, resources, undefined);
 	props.drop.action = yui_resolve_command(props.drop.action, resources, undefined);
 	
 	props.on_cancel = yui_resolve_command(props.on_cancel, resources, undefined);
@@ -81,7 +81,7 @@ function YuiDragAndDrop(_props, _resources) constructor {
 			world_y: mouse_y,
 		};
 		
-		return drag_renderer;
+		return drag_element;
 	}
 	
 	static update = function(visual_item, cursor_pos) {
@@ -158,7 +158,7 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		};
 		
 		
-		// NOTE: a drop_renderer is currently required!
+		// NOTE: a drop_element is currently required!
 		
 		var interaction_data = undefined;
 		if drop_item.interaction_item == undefined {
@@ -169,7 +169,7 @@ function YuiDragAndDrop(_props, _resources) constructor {
 			drop_target.can_drop = canDrop(interaction_data);
 			
 			with drop_item {
-				interaction_item = yui_make_render_instance(other.drop_renderer, interaction_data, , 100);
+				interaction_item = yui_make_render_instance(other.drop_element, interaction_data, , 100);
 				
 				// align drop visual to game position
 				if !is_gui_item {

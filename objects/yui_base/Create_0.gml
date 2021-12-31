@@ -4,7 +4,7 @@ event_inherited();
 
 default_props = {};
 
-// the YuiRenderer for this render object
+// the YuiElement for this render object
 yui_element = undefined;
 
 // the index of this item within its parent's children, if any
@@ -25,8 +25,8 @@ bg_alpha = ((bg_color & 0xFF000000) >> 24) / 255;
 // whether this element is currently highlighted (e.g. button press)
 highlight = false;
 
-// the renderer that powers the tooltip item
-tooltip_renderer = undefined;
+// the element that powers the tooltip item
+tooltip_element = undefined;
 
 // the actual render object for the tooltip when it's visible
 tooltip_item = undefined;
@@ -53,7 +53,7 @@ initLayout = function() {
 	layout_props = yui_element.getLayoutProps();
 	
 	canvas = yui_element.canvas;
-	tooltip_renderer = yui_element.tooltip_renderer;
+	tooltip_element = yui_element.tooltip_element;
 	
 	events = yui_element.props.events;
 	yui_register_events(events);

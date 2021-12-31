@@ -36,11 +36,11 @@ if is_binding_active {
 
 // create/destroy tooltip item
 // TODO?: handle this in setHighlight() to avoid the per frame hit
-if tooltip_renderer {
+if tooltip_element {
 	if highlight {
 		if tooltip_item == undefined {	
 			tooltip_item = yui_make_render_instance(
-				tooltip_renderer,
+				tooltip_element,
 				bound_values.data_source, 
 				/* no index */,
 				1000); // ensures tooltips appear above popup layers

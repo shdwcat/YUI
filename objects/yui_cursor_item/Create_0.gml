@@ -20,5 +20,5 @@ right_click = undefined;
 cursor_hover = undefined;
 
 onChildLayoutComplete = function(child) {
-	// this is just here to make the recursive call simpler in yui_renderers
+	// this is just here to make the recursive call simpler in yui_elements
 }

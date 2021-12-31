@@ -4,7 +4,6 @@
 event_inherited();
 
 button_pressed = false;
-button_highlight = false;
 
 // safely override border layout init
 border_onLayoutInit = onLayoutInit;
@@ -22,5 +21,5 @@ left_click = function() {
 }
 
 cursor_hover = function() {
-	button_highlight = true;
+	//
 }

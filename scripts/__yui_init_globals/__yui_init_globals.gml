@@ -2,6 +2,7 @@
 global.__yui_globals = {};
 
 // converts placement string values from a yui_file to the enum equivalent
+// TODO: switch to YuiStringHashMap
 global.__yui_globals.placement_map = {
 	top_left: YUI_PLACEMENT_MODE.TopLeft,
 	top_center: YUI_PLACEMENT_MODE.TopCenter,

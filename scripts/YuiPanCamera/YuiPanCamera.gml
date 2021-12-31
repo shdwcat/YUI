@@ -19,7 +19,7 @@ function YuiPanCamera(_props, _resources) constructor {
 	props = init_props_old(_props);
 	resources = _resources;
 	
-	cursor_renderer = yui_resolve_renderer(props.cursor_visual, resources, undefined);
+	cursor_element = yui_resolve_element(props.cursor_visual, resources, undefined);
 	
 	static canStart = function(source_data) {
 		return true;
@@ -42,7 +42,7 @@ function YuiPanCamera(_props, _resources) constructor {
 		
 		is_inertia_scrolling = false;
 		
-		return cursor_renderer;
+		return cursor_element;
 	}
 	
 	static update = function(visual_item, cursor_pos) {

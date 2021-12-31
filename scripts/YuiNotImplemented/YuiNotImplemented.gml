@@ -1,5 +1,5 @@
 /// @description placeholder for not-yet-implemented types
-function YuiNotImplemented(_props, _resources, _slot_values) : YuiBaseRenderer(_props, _resources, _slot_values) constructor {
+function YuiNotImplemented(_props, _resources, _slot_values) : YuiBaseElement(_props, _resources, _slot_values) constructor {
 	static default_props = {
 		type: "edit this",
 		padding: 0,
