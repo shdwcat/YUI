@@ -55,7 +55,7 @@ arrange  = function(available_size) {
 	
 	// don't bother drawing if there isn't enough room
 	if padded_rect.w < 0 || padded_rect.h < 0 {
-		yui_resize_instance(self, 0, 0);
+		yui_resize_instance(0, 0);
 		return draw_size;
 	}
 	
@@ -80,7 +80,7 @@ arrange  = function(available_size) {
 		h: draw_height + padding.h,
 	});
 	
-	yui_resize_instance(self, drawn_size.w, drawn_size.h);
+	yui_resize_instance(drawn_size.w, drawn_size.h);
 	
 	// when centering, center on the center of the padded rect
 	if layout_props.halign == fa_center {

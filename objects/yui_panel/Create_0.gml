@@ -82,7 +82,7 @@ arrange = function(available_size) {
 		h: layout.draw_size.h + padding.h,
 	});
 	
-	yui_resize_instance(self, drawn_size.w, drawn_size.h);
+	yui_resize_instance(drawn_size.w, drawn_size.h);
 	
 	// our used size is the layout used size with our padding
 	var used_size = {

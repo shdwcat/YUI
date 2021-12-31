@@ -30,7 +30,7 @@ build = function() {
 arrange = function(available_size) {
 	if !visible {
 		if layout_props.size.is_exact_size {
-			yui_resize_instance(self, layout_props.size.w, layout_props.size.h);
+			yui_resize_instance(layout_props.size.w, layout_props.size.h);
 			return draw_size;
 		}
 		return;
@@ -47,7 +47,7 @@ arrange = function(available_size) {
 	
 	// don't bother drawing if there isn't enough room
 	if padded_rect.w < 0 || padded_rect.h < 0 {
-		yui_resize_instance(self, 0, 0);
+		yui_resize_instance(0, 0);
 		return draw_size;
 	}
 	
@@ -106,6 +106,6 @@ arrange = function(available_size) {
 		h: draw_size.h,
 	});
 	
-	yui_resize_instance(self, drawn_size.w, drawn_size.h);
+	yui_resize_instance(drawn_size.w, drawn_size.h);
 	return draw_size;
 }

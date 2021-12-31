@@ -22,5 +22,5 @@ arrange = function(available_size) {
 	draw_rect = available_size;
 	
 	// doesn't take up any size
-	yui_resize_instance(self, 0, 0);
+	yui_resize_instance(0, 0);
 }
