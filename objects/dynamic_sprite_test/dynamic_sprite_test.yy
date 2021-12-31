@@ -27,8 +27,8 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Tests",
-    "path": "folders/Packages - YUI/Tests.yy",
+    "name": "YUI Tests",
+    "path": "folders/YUI Tests.yy",
   },
   "resourceVersion": "1.0",
   "name": "dynamic_sprite_test",

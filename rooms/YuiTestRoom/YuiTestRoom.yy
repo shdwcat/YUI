@@ -48,8 +48,8 @@
     "PhysicsWorldPixToMetres": 0.1,
   },
   "parent": {
-    "name": "Tests",
-    "path": "folders/Packages - YUI/Tests.yy",
+    "name": "YUI Tests",
+    "path": "folders/YUI Tests.yy",
   },
   "resourceVersion": "1.0",
   "name": "YuiTestRoom",

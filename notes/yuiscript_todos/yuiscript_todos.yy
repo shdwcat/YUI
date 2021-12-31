@@ -4,7 +4,7 @@
     "path": "folders/Packages - YUI/Parser.yy",
   },
   "resourceVersion": "1.1",
-  "name": "todos",
+  "name": "yuiscript_todos",
   "tags": [],
   "resourceType": "GMNotes",
 }
