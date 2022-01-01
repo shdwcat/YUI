@@ -1,15 +1,4 @@
-/// @return Nested struct/array data that represents the contents of the YUI string
-/// 
-/// N.B. This is not a full implementation of the YAML spec and doesn't try to be. This YAML parser doesn't support:
-///      1. Single quote delimited strings (you must use double quotes)
-///      2. Block scalars using | and > prefixes
-///      3. Anchors, documents, directives, nodes... all the weird extra stuff
-/// 
-/// @param string              The YUI string to be decoded
-/// @param [replaceKeywords]   Whether to replace keywords (true, false, null) with boolean/undefined equivalents. Default to <true>
-/// @param [trackFieldOrder]   Whether to track the order of struct fields as they appear in the YUI string (stored in __snap_field_order field on each GML struct). Default to <false>
-/// 
-/// @jujuadams 2020-09-20
+// NOTE: This file is adapted from the original snap_from_yaml by @shdwcat
 
 enum __SNAP_YUI
 {
@@ -27,12 +16,20 @@ enum __SNAP_YUI
     JSON_COLON = 11,
 }
 
-function snap_from_yui()
-{
-    var _string = argument[0];
-    var _replace_keywords = ((argument_count > 1) && (argument[1] != undefined))? argument[1] : true;
-    var _track_field_order = ((argument_count > 2) && (argument[2] != undefined))? argument[2] : false;
-    
+/// @return Nested struct/array data that represents the contents of the YUI string
+/// 
+/// N.B. This is not a full implementation of the YAML spec and doesn't try to be. This YAML parser doesn't support:
+///      1. Single quote delimited strings (you must use double quotes)
+///      2. Block scalars using | and > prefixes
+///      3. Anchors, documents, directives, nodes... all the weird extra stuff
+/// 
+/// @param string              The YUI string to be decoded
+/// @param [replaceKeywords]   Whether to replace keywords (true, false, null) with boolean/undefined equivalents. Default to <true>
+/// @param [trackFieldOrder]   Whether to track the order of struct fields as they appear in the YUI string (stored in __snap_field_order field on each GML struct). Default to <false>
+/// 
+/// @jujuadams 2020-09-20
+function snap_from_yui(_string, _replace_keywords = true, _track_field_order = false)
+{   
     var _buffer = buffer_create(string_byte_length(_string)+1, buffer_fixed, 1);
     buffer_write(_buffer, buffer_text, _string);
     buffer_seek(_buffer, buffer_seek_start, 0);
