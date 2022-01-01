@@ -85,8 +85,8 @@ root:
     - type: main_panel
       canvas:
         top: 50
-        left: 150
-        right: 150
+        left: 191
+        right: 191
         bottom: 40
       layout: canvas
       spacing: 20
