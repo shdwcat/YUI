@@ -1,3 +1,7 @@
+#macro YUI_VERSION "0.1.0"
+
+yui_log("Welcome to YUI by @shdwcat - version " + YUI_VERSION);
+
 // define all YUI globals
 global.__yui_globals = {};
 
