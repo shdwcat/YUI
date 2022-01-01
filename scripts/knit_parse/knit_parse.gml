@@ -14,7 +14,7 @@ function knit_parse(script_text) {
 		}
 	}	
 	
-	var parse_tree_definition = define_gscript_parse_tree();
+	var parse_tree_definition = define_knit_parse_tree();
 	var parser = new KnitParser(tokens, KNIT_TOKEN.EOF, parse_tree_definition);
     var program = parser.parse();
 	

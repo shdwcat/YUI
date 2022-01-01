@@ -58,7 +58,7 @@ function YuiBinding(path) constructor {
 	
 	static resolveToken = function(data) {
 		if is_undefined(data) || is_string(data) {
-			return fallback_value; // expecting struct but got undefined or string
+			return undefined; // expecting struct but got undefined or string
 		}
 		return data[$ token];
 	}
