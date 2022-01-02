@@ -6,17 +6,22 @@
 **NOTE:** There is currently a GMS2 bug with running in VM mode *without* the debugger. Please use the debugger or YYC for now!
 
 ### Why YUI?
-Writing UI code is annoying and tedious! Why write UI code when you can edit some powerful little yaml files instead?
+Writing UI code is annoying and tedious! Why write UI code when you can edit readable text files instead?
 
 Notable features:
 - Live Reload while the game is running!
 - Simple but flexible data-binding system to get your game data into the UI
-- Powerful Drag and Drop feature built in (no coding!)
-- Customizable theme
 - Template system lets you design and re-use custom widgets
+- Powerful Drag and Drop feature built in (no coding!)
+
+Future features:
+- Theme system and widget styles
+- Animation (slide/fade/etc)
 
 ### OK, where do I start?
-Documentation is in progress! Feel free to browse the code while you wait :)
+You can either clone the Example Project (this repo) to play around with it, or import the latest package from the Releases page.
+
+Documentation is available on the Wiki (may be out of date at times)
 
 ### The Example Project
 Contained in this repo is the YUI Example project. If you clone the repo locally you can run the project to get an idea of what YUI is capable of. The Example Project is still a work in progress, but make sure to check out the Inventory Screen for an example of how to quickly set up drag and drop!
