@@ -33,3 +33,7 @@ Credit to the amazing [@jujuadams](https://github.com/JujuAdams):
 - [Scribble](https://github.com/JujuAdams/Scribble) - Text renderer
 - [SNAP](https://github.com/JujuAdams/SNAP) - YAML reader
 - [Gumshoe](https://github.com/JujuAdams/Gumshoe) - File finder
+
+### Credits
+<div>Some icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+Specifically the 'yui_error' icon
