@@ -5,7 +5,7 @@ function YuiExampleManager() constructor {
 		
 	app_name = "Example Project";
 	
-	var items_file = string_from_file("YUI/Example Data/inventory.yaml")
+	var items_file = string_from_file("Example Data/inventory.yaml")
 	var inventory = snap_from_yaml(items_file);
 	
 	slots = inventory.slots;
