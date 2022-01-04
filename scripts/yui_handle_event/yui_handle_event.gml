@@ -4,6 +4,11 @@
 /// @param view_item - the view item associated with the data
 function yui_handle_event(event, data, view_item = undefined, event_info = undefined) {
 	
+	if event == undefined {
+		yui_warning("Trying to handle undefined event");
+		return;
+	}
+	
 	// we might have an array of handlers, which we can resolve sequentially
 	if is_array(event) {
 		var i = 0; repeat array_length(event) {
