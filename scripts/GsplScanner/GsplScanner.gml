@@ -108,7 +108,7 @@ function GsplScanner(source, token_definition) constructor {
 		
 		advance(); // the closing "
 		
-		var value = string_substring(_source, _start + 1, _current - 1);
+		var value = gspl_string_substring(_source, _start + 1, _current - 1);
 		addToken(string_token, value);
 	}
 	
@@ -123,7 +123,7 @@ function GsplScanner(source, token_definition) constructor {
 			while isDigit(peek()) advance();
 		}
 		
-		var lexeme = string_substring(_source, _start, _current);
+		var lexeme = gspl_string_substring(_source, _start, _current);
 		var value = real(lexeme);
 		addToken(number_token, value);
 	}
@@ -152,7 +152,7 @@ function GsplScanner(source, token_definition) constructor {
 	
 	static matchHexString = function(offset = 0) {
 		while isHexDigit(peek()) advance();
-		return string_substring(_source, _start + offset, _current);
+		return gspl_string_substring(_source, _start + offset, _current);
 	}
 	
 	static scanColor = function(color_token_type) {

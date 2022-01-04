@@ -72,7 +72,7 @@ function YsScanner(source, token_definition) : GsplScanner(source, token_definit
 							advance(); // consume *
 							advance(); // consume /
 						
-							var comment = string_substring(_source, _start, _current);
+							var comment = gspl_string_substring(_source, _start, _current);
 						}
 					}
 					else {
