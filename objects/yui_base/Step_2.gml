@@ -15,6 +15,9 @@ if parent && !parent.visible {
 	exit;
 }
 
+if trace
+	DEBUG_BREAK_YUI;
+
 // NOTE: this will be false if no bindings are live
 if is_binding_active {
 

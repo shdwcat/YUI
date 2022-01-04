@@ -47,7 +47,9 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	}
 	self.font = font;
 	
-	is_bound = yui_is_live_binding(props.text)
+	is_bound = base_is_bound
+		|| yui_is_live_binding(props.visible)
+		|| yui_is_live_binding(props.text)
 		|| yui_is_live_binding(props.color)
 		|| yui_is_live_binding(props.typist);
 		

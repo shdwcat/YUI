@@ -45,7 +45,8 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	content_element = yui_resolve_element(props.content, resources, slot_values);
 
-	is_bound = yui_is_live_binding(props.placement);
+	is_bound = base_is_bound
+		|| yui_is_live_binding(props.placement);
 	
 	// ===== functions =====
 	

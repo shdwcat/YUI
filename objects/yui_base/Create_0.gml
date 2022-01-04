@@ -71,7 +71,13 @@ onLayoutInit = function() {
 bind_values = function() {
 	var new_values = yui_element.getBoundValues(data_context, bound_values)
 	if new_values == false {
-		visible = false;
+		if visible {
+			visible = false;
+		
+			// need to reset these, as values may change while the element
+			// is not visible, which means the diffing will be out of date
+			bound_values = undefined;
+		}
 		exit;
 	}
 	else if new_values == true {

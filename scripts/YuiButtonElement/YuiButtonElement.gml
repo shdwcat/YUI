@@ -76,7 +76,8 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	
 	// ===== functions =====
 	
-	is_bound = yui_is_live_binding(props.enabled);
+	is_bound = base_is_bound
+		|| yui_is_live_binding(props.enabled);
 	
 	// TODO: how to inherit these from YuiBorderElement?
 	

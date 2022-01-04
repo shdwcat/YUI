@@ -57,6 +57,12 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	
 	data_source = yui_bind(props.data_source, resources, slot_values);
 	
+	base_is_bound = yui_is_live_binding(props.data_source)
+		|| yui_is_live_binding(props.visible)
+		|| yui_is_live_binding(props.tooltip)
+		|| yui_is_live_binding(props.size)
+		|| yui_is_live_binding(props.canvas)
+	
 	tooltip_element = undefined;
 	if props.tooltip != undefined {
 		var tooltip_props = {

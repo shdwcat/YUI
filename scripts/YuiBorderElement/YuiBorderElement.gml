@@ -37,6 +37,8 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	// resolve color
 	bg_color = yui_resolve_color(props.bg_color);
 	border_color = yui_resolve_color(props.border_color);
+	
+	is_bound = base_is_bound;
 		
 	// ===== functions =====
 		
@@ -65,7 +67,7 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		}
 		
 		return {
-			is_live: false,
+			is_live: is_bound,
 			data_source: data,
 			bg_sprite: bg_sprite,
 			bg_color: bg_color,
