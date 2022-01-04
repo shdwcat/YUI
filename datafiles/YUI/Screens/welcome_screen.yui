@@ -51,6 +51,13 @@ root:
                 screen: data_binding_example
 
         - type: button
+          content: Widget Gallery
+          on_click:
+            - $command: yui_change_screen
+              parameters:
+                screen: widget_gallery
+
+        - type: button
           content: "Use Case: Inventory Screen"
           on_click:
             - $command: yui_change_screen

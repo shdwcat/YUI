@@ -1,0 +1,92 @@
+file_type: resources
+
+resources:
+
+  // # menu_item_data_example:
+  // #   label: string
+  // #   command: handler
+  // #   children: YuiMenuItem[] # optional
+
+  menu:
+    type: template
+
+    slots:
+      // the MenuItemDatas to display
+      menu_items: []
+
+      // which direction to display the top level menu items in
+      menu_layout: horizontal
+
+      // placement for the initial submenu popups
+      menu_placement: bottom_left
+
+      // size to use for icons in menu item content
+      menu_icon_size: 16
+
+    template:
+
+        type: panel
+        layout: $menu_layout
+        elements: $menu_items
+        template:
+
+          type: switch
+          switch_on: @type
+          strict: true
+          cases:
+            item:
+              type: button
+              padding: 0
+              bg_sprite: null
+              bg_color: #18263A
+              content: // $item_template
+                type: panel
+                layout: horizontal
+                alignment: { v: center }
+                size: { h: 30 }
+                padding: [5, 0]
+                elements:
+                  - type: image
+                    size: 24
+                    image: @icon_sprite
+                  - type: text
+                    text: @label
+              on_click: @command
+
+            check_item:
+              type: button
+              padding: 0
+              bg_sprite: null
+              bg_color: #18263A
+              content:
+                type: panel
+                layout: horizontal
+                alignment: { v: center }
+                size: { h: 30 }
+                padding: [5, 0]
+                elements:
+                  - type: image
+                    visible: @is_checked
+                    size: 24
+                    sprite: glowing_icons
+                    frame: 14
+                  - type: text
+                    text: @label
+              on_click: @command
+
+            submenu:
+              type: button
+              padding: [29, 5, 5, 5]
+              bg_sprite: null
+              bg_color: #18263A
+              content: //$item_template
+                type: text
+                text: @label
+                padding: [5, 0]
+              popup:
+                placement: $menu_placement
+                content:
+                  type: menu
+                  menu_items: @children
+                  menu_layout: vertical
+                  menu_placement: right_top

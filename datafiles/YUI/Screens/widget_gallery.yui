@@ -1,0 +1,43 @@
+id: widget_gallery
+file_type: screen
+
+import:
+  - "../Templates/main_panel.yui"
+  - "../Templates/back_button.yui"
+  
+// TODO: /Widgets/*
+  - "../Widgets/checkbox.yui"
+  - "../Widgets/dropdown_menu.yui"
+  - "../Widgets/menu.yui"
+
+resources:
+  widget_wrapper:
+    type: template
+
+
+root:
+
+  type: panel
+  padding: 30
+  spacing: 10
+  
+  elements:
+    - type: back_button
+
+    - type: panel
+      data_source:
+        check_state: false
+        
+      elements:
+
+        - type: text
+          text: Checkbox
+          text_style: subtitle
+
+        - type: text
+          text: @check_state
+
+        - type: checkbox
+          is_checked: @check_state
+          foreground: green
+          label: this is a checkbox

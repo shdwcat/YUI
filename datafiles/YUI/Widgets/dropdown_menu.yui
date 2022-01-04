@@ -1,0 +1,82 @@
+file_type: resources
+
+resources:
+  // selectable_text:
+  //   type: template
+  //   slots:
+  //     is_selected: false
+  //   template:
+  //       type: text
+  //       text_style: $is_selected then subtitle else body
+
+  dropdown_menu:
+    type: template
+    
+    slots:
+      // the selection scope that manages selection state
+      selection_scope: null // YuiSelectionScope
+
+      // array of items to select from
+      items: [] 
+
+      // template to use when rendering items in dropdown
+      item_template:
+        type: text
+        text: @
+        font_style: subtitle
+
+      // additional handler executed after item is selected
+      on_item_selected: null 
+
+      // where to place the dropdown
+      dropdown_placement: bottom_right
+
+    events:
+      item_selected:
+        // select the item
+        - handler: yui_selection_scope_select_item
+          parameters:
+            scope: $selection_scope
+            item: @$event.data // change this to !event.data
+
+        // invoke the external handler
+        - $on_item_selected
+
+    template:
+      type: button
+      id: dropwdown_button
+      padding: 2
+      bg_sprite: null
+      bg_color: #06162A
+      border_color: #2183C0
+      content:
+        type: panel
+        layout: horizontal
+        elements:
+          - type: text
+            padding: [5, 2, 0, 0]
+            text: $selection_scope //.selected_item
+          - type: image
+            sprite: glowing_icons
+            size: 24
+            frame: 20 // down arrow
+
+      popup:
+        placement: $dropdown_placement
+        content:
+          type: panel
+          elements: $items
+          template:
+            type: button
+            padding: 5
+            bg_sprite: null
+            bg_color: #06162A
+            content: //$item_template
+              type: text
+              text: @
+
+            on_click:
+              - handler: yui_invoke_event
+                parameters:
+                  event: item_selected
+                  data: @
