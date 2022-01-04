@@ -168,9 +168,9 @@ function GsplScanner(source, token_definition) constructor {
 		
 		if length == 6 {
 			// handle color without alpha
-			var red = hex_value >> 4;
-			var green = hex_value && 0xFF00 >> 2;
-			var blue = hex_value && 0xFF;
+			var red = hex_value >> 16;
+			var green = (hex_value & 0xFF00) >> 8;
+			var blue = hex_value & 0xFF;
 			var color = make_color_rgb(red, green, blue);
 			
 			// set alpha to 1
@@ -178,13 +178,13 @@ function GsplScanner(source, token_definition) constructor {
 		}
 		else {
 			// handle color with alpha
-			var red = hex_value && 0xFF0000 >> 4;
-			var green = hex_value && 0xFF00 >> 2;
-			var blue = hex_value && 0xFF;
+			var red = hex_value >> 16;
+			var green = (hex_value & 0xFF00) >> 8;
+			var blue = hex_value & 0xFF;
 			var color = make_color_rgb(red, green, blue);
 			
 			// set alpha
-			var alpha = hex_value && 0xFF000000;
+			var alpha = hex_value & 0xFF000000;
 			color |= alpha;
 		}
 		

@@ -104,7 +104,9 @@ function YsScanner(source, token_definition) : GsplScanner(source, token_definit
 				scanVariablePath(YS_TOKEN.RESOURCE_IDENTIFIER);
 				break;
 			
-			case "#": scanColor(YS_TOKEN.COLOR); break;
+			case "#":
+				scanColor(YS_TOKEN.COLOR); 
+				break;
 			
 			default:
 				if isDigit(c) scanNumber();
