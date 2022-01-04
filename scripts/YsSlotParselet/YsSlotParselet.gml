@@ -6,8 +6,9 @@ function YsSlotParselet() : GsplPrefixParselet() constructor {
 		
 		// given 'foo.bar.baz' get 'foo' and 'bar.baz'
 		var path_parts = yui_string_split(path, ".", 2);
+		var slot_key = path_parts[0];
 
-		var slot_value = parser.slot_values[$ path_parts[0]];
+		var slot_value = parser.slot_values[$ slot_key];
 		
 		var sub_path = array_length(path_parts) > 1
 			? path_parts[1]

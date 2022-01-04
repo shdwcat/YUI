@@ -45,6 +45,7 @@ function make_yscript_type_map() {
 	type_map[YS_TOKEN.LESS_EQUAL] = "LESS_EQUAL";
 	type_map[YS_TOKEN.LESS] = "LESS";
 	
+	type_map[YS_TOKEN.NOT] = "NOT";
 	type_map[YS_TOKEN.AND] = "AND";
 	type_map[YS_TOKEN.OR] = "OR";
 	type_map[YS_TOKEN.THEN] = "THEN";

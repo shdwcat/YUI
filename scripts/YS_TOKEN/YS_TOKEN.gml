@@ -13,14 +13,16 @@ enum YS_TOKEN {
 	SLASH, STAR,
 	// div/mod?
 	
+	// NOTE: currently unused
+	BANG, 
+	
 	// logic
-	BANG,
 	BANG_EQUAL,	EQUAL_EQUAL,
 	GREATER, GREATER_EQUAL,
 	LESS, LESS_EQUAL,
 	
 	// keywords
-	EQUALS,
+	EQUALS, NOT,
 	AND, OR,
 	THEN, ELSE,
 	

@@ -11,6 +11,7 @@ function YuiOperatorBinding(left, operator, right) constructor {
 	{
 		var left_val = yui_resolve_binding(left, data);
 		
+		// NOTE: could set resolve specific to operator to avoid the switch at bind time
 		switch operator {
 			// NOTE: order is roughly in expected frequency
 			case YS_TOKEN.EQUAL_EQUAL:
@@ -50,8 +51,34 @@ function YuiOperatorBinding(left, operator, right) constructor {
 				
 			case YS_TOKEN.LESS_EQUAL:
 				return left_val <= yui_resolve_binding(right, data);
+				
+			default:
+				throw gspl_log("Unknown operator: " + operator.getTokenName());
 		}
 	}
-	
-	
+		
 } 
+
+/// @description
+function YuiPrefixOperatorBinding(operator, right) constructor {
+	static is_yui_binding = true;
+	static is_yui_live_binding = true;
+
+	self.operator = operator;
+	self.right = right;
+	
+	static resolve = function(data)
+	{
+		var right_val = yui_resolve_binding(right, data);
+		
+		// NOTE: could set resolve specific to operator to avoid the switch at bind time
+		switch operator {
+			// NOTE: order is roughly in expected frequency
+			case YS_TOKEN.NOT:
+				return !right_val;
+				
+			default:
+				throw gspl_log("Unknown operator: " + operator.getTokenName());
+		}
+	}
+}

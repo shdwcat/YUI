@@ -14,6 +14,7 @@ function YsTokenDefinition()
 	static makeKeywordMap = function() {
 		var map = {};
 		map[$"equals"] = YS_TOKEN.EQUALS;
+		map[$"not"] = YS_TOKEN.NOT;
 		map[$"and"] = YS_TOKEN.AND;
 		map[$"or"] = YS_TOKEN.OR;
 		map[$"then"] = YS_TOKEN.THEN;

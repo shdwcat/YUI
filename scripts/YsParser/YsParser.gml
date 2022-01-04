@@ -6,7 +6,7 @@ function YsParser(tokens, eof_token)
 	
 	self.Literal = YuiValueWrapper;
 	self.Identifier = undefined; // unused?
-	self.PrefixOperator = undefined;
+	self.PrefixOperator = YuiPrefixOperatorBinding;
 	self.BinaryOperator = YuiOperatorBinding;
 	self.Indexer = YuiIndexBinding;
 	self.Conditional = YuiThenElseBinding;
@@ -32,7 +32,7 @@ function YsParser(tokens, eof_token)
 	
 	// prefix operators
 	prefixOperator(YS_TOKEN.MINUS, YS_PRECEDENCE.PREFIX);
-	prefixOperator(YS_TOKEN.BANG, YS_PRECEDENCE.PREFIX);
+	prefixOperator(YS_TOKEN.NOT, YS_PRECEDENCE.PREFIX);
 	
 	// conditional (supports then/else and ?:)
 	infix(YS_TOKEN.THEN,
