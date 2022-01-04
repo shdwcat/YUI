@@ -49,6 +49,10 @@ function yui_handle_event(event, data, view_item = undefined, event_info = undef
 		var did_start = yui_try_start_interaction(event.interaction, data, event);
 		return did_start;
 	}
+	else if yui_is_call(event) {
+		// e.g. '>> some_function(arg1, arg2, etc)'
+		event.resolve(data);
+	}
 	else if yui_is_binding(event) {
 		// ideally we should yui_bind and resolve this earlier
 		var resolved_event = yui_resolve_binding(event, data);
