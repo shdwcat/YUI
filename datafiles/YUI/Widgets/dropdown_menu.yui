@@ -29,7 +29,7 @@ resources:
       on_item_selected: null 
 
       // where to place the dropdown
-      dropdown_placement: bottom_right
+      dropdown_placement: bottom_left
 
     events:
       item_selected:
@@ -55,7 +55,7 @@ resources:
         elements:
           - type: text
             padding: [5, 2, 0, 0]
-            text: $selection_scope //.selected_item
+            text: $selection_scope.selected_item
           - type: image
             sprite: glowing_icons
             size: 24
