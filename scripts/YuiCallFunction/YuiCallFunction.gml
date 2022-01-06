@@ -9,27 +9,57 @@ function YuiCallFunction(func_name, args) constructor {
 	self.args = args;
 	self.arg_count = array_length(args);
 	
-	var script_index = asset_get_index(func_name);
-	if script_index != -1 {
-		// call script
-		self.script_index = script_index;
-		resolve = function(data) {
+	if is_string(func_name) {
+		var script_index = asset_get_index(func_name);
+		if script_index != -1 {
+			// call script
+			self.script_index = script_index;
+			resolve = function(data) {
 			
-			resolved_args = array_create(arg_count);
-			var i = 0; repeat arg_count {
-				resolved_args[i] = args[i].resolve(data);
-				i++;
+				resolved_args = array_create(arg_count);
+				var i = 0; repeat arg_count {
+					resolved_args[i] = args[i].resolve(data);
+					i++;
+				}
+			
+				return script_execute_ext(script_index, resolved_args);
 			}
-			
-			return script_execute_ext(script_index, resolved_args);
-		}
 		
+		}
+		else {
+			// call runtime function
+			function_index = runtime_functions[$ func_name];
+		
+			resolve = function(data) {
+			
+				resolved_args = array_create(arg_count);
+				var i = 0; repeat arg_count {
+					resolved_args[i] = args[i].resolve(data);
+					i++;
+				}
+			
+				// NOTE: could hyperoptimize by setting .resolve based on the arg_count (which is already known)
+				var a = resolved_args;
+				switch arg_count {
+					case 0: return function_index();
+					case 1: return function_index(a[0]);
+					case 2: return function_index(a[0], a[1]);
+					case 3: return function_index(a[0], a[1], a[2]);
+					case 4: return function_index(a[0], a[1], a[2], a[3]);
+					case 5: return function_index(a[0], a[1], a[2], a[3], a[4]);
+					case 6: return function_index(a[0], a[1], a[2], a[3], a[4], a[5]);
+					case 7: return function_index(a[0], a[1], a[2], a[3], a[4], a[5], a[6]);
+					case 8: return function_index(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7]);
+					case 9: return function_index(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8]);
+					default:
+						throw "can't call built in function with more than 9 arguments";
+				}
+			}
+		}
 	}
 	else {
-		// call runtime function
-		function_index = runtime_functions[$ func_name];
-		
 		resolve = function(data) {
+			var func_ref = func_name.resolve(data);
 			
 			resolved_args = array_create(arg_count);
 			var i = 0; repeat arg_count {
@@ -39,23 +69,22 @@ function YuiCallFunction(func_name, args) constructor {
 			
 			// NOTE: could hyperoptimize by setting .resolve based on the arg_count (which is already known)
 			var a = resolved_args;
-			switch array_length(a) {
-				case 0: return function_index();
-				case 1: return function_index(a[0]);
-				case 2: return function_index(a[0], a[1]);
-				case 3: return function_index(a[0], a[1], a[2]);
-				case 4: return function_index(a[0], a[1], a[2], a[3]);
-				case 5: return function_index(a[0], a[1], a[2], a[3], a[4]);
-				case 6: return function_index(a[0], a[1], a[2], a[3], a[4], a[5]);
-				case 7: return function_index(a[0], a[1], a[2], a[3], a[4], a[5], a[6]);
-				case 8: return function_index(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7]);
-				case 9: return function_index(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8]);
+			switch arg_count {
+				case 0: return func_ref();
+				case 1: return func_ref(a[0]);
+				case 2: return func_ref(a[0], a[1]);
+				case 3: return func_ref(a[0], a[1], a[2]);
+				case 4: return func_ref(a[0], a[1], a[2], a[3]);
+				case 5: return func_ref(a[0], a[1], a[2], a[3], a[4]);
+				case 6: return func_ref(a[0], a[1], a[2], a[3], a[4], a[5]);
+				case 7: return func_ref(a[0], a[1], a[2], a[3], a[4], a[5], a[6]);
+				case 8: return func_ref(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7]);
+				case 9: return func_ref(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8]);
 				default:
-					throw "can't call built in function with more than 9 arguments";
+					throw "can't call method with more than 9 arguments";
 			}
 		}
 	}
-	
 	
 	
 }

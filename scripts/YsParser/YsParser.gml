@@ -42,6 +42,10 @@ function YsParser(tokens, eof_token)
 	infix(YS_TOKEN.QUESTION,
 		new GsplConditionalParselet(YS_PRECEDENCE.CONDITIONAL, YS_TOKEN.COLON));
 		
+	// method call e.g. foo.bar()
+	infix(YS_TOKEN.LEFT_PAREN,
+		new GsplCallParselet(YS_PRECEDENCE.CALL, YS_TOKEN.COMMA, YS_TOKEN.RIGHT_PAREN));
+		
 	// indexing e.g. map[key]
 	infix(YS_TOKEN.LEFT_BRACKET,
 		new GsplIndexerParselet(YS_PRECEDENCE.CALL, YS_TOKEN.RIGHT_BRACKET));
