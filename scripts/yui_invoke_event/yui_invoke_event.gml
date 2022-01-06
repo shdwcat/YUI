@@ -8,13 +8,21 @@ function yui_invoke_event(params, event, view_item) {
 		
 	while matched_event == undefined {
 		// check if we ran out of parents
-		if item == undefined {
+		if item == undefined || !variable_struct_exists(item, "events") {
 			throw yui_error("unable to find view item with event:", event_name);
 		};
 			
 		// check if we found it
-		var matched_event = item.events[$ event_name];
-		if matched_event != undefined break;
+		var is_event_defined = variable_struct_exists(item.events, event_name);
+		if is_event_defined {
+			var matched_event = item.events[$ event_name];
+			if matched_event != undefined break;
+			else {
+				// if the event is defined but not handled, act as if it was captured
+				// (we don't want e.g. an item_selected event bubbling up to an enclosing item selector)
+				return;
+			}
+		}
 			
 		// recurse up
 		item = item.parent;
