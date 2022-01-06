@@ -29,3 +29,65 @@ function YuiSelectionScope(_id, _options = {}) constructor {
 		}
 	}
 }
+
+function YuiArraySelector(items, selected_item = undefined) constructor {
+	self.items = items;
+	
+	if selected_item == undefined {
+		if array_length(items) > 0 {
+			self.selected_index = 0;
+			self.selected_item = items[0];
+		}
+		else {
+			self.selected_index = undefined;
+			self.selected_item = undefined;
+		}
+	}
+	else {
+		select(selected_item);
+	}
+	
+	self.selected_item = selected_item
+		?? (array_length(items) > 0 ? items[0] : undefined);
+		
+	static select = function(item) {
+		if item != undefined {
+			var index = yui_array_find_index(items, item);
+			if index >= 0 {
+				self.selected_index = index;
+				self.selected_item = item;
+			}
+			else {
+				throw yui_error("unable to find provided item in items array");
+			}
+		}
+		else {
+			self.selected_index = undefined;
+			self.selected_item = undefined;
+		}
+	}
+	
+	selectPreviousIndex = function() {
+		if selected_index <= 0 {
+			throw yui_error("Cannot select index below 0");
+		}
+		else {
+			selected_index--;
+			selected_item = items[selected_index];
+		}
+	}
+	
+	canSelectNextIndex = function() {
+		return selected_index + 1 < array_length(items);
+	}
+	
+	selectNextIndex = function() {
+		if !canSelectNextIndex() {
+			throw yui_error("Cannot select index above item count");
+		}
+		else {
+			selected_index++;
+			selected_item = items[selected_index];
+		}
+	}
+}

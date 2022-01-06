@@ -13,6 +13,7 @@ function YuiExampleManager() constructor {
 	
 	foreach(slots, function(slot) { slot.equipped_item = undefined });
 	
+	widget_data = new WidgetGalleryData();
 	
 	yui_log("Example project loaded");
 }
