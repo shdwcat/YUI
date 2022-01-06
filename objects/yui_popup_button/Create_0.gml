@@ -23,6 +23,8 @@ arrange = function(available_size) {
 }
 
 left_click = function() {
+	if !bound_values.enabled return;
+	
 	// TODO do we need to call base?
 	// only if we support on_click in addition to popup toggle
 	

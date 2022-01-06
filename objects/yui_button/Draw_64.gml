@@ -1,9 +1,18 @@
 /// @description draw border + highlight
 
+if !bound_values.enabled {
+	var alpha = draw_get_alpha();
+	draw_set_alpha(0.5);
+}
+
 // Inherit the parent event
 event_inherited();
 
-var show_highlight = highlight && highlight_color != undefined;
+if !bound_values.enabled {
+	draw_set_alpha(alpha);
+}
+
+var show_highlight = highlight && highlight_color != undefined && bound_values.enabled;
 if show_highlight {
 	var alpha = button_pressed ? pressed_alpha : highlight_alpha;
 	if alpha > 0 {	

@@ -17,6 +17,7 @@ left_pressed = function() {
 }
 
 left_click = function() {
+	if !bound_values.enabled return;
 	yui_handle_event(yui_element.props.on_click, data_context, self);
 }
 
