@@ -10,8 +10,12 @@ resources:
       // (you should bind this)
       is_checked: false
 
+      // handler for when the check state changes
+      // (this should update whatever is_checked is bound to)
+      on_checked_changed: null
+      
       // sprite to use as the checkmark when checked
-      check_icon: yui_icon_check_mark
+      check_icon: yui_icon_checkmark
 
       // what size the check icon should be
       check_icon_size: 16
@@ -22,14 +26,10 @@ resources:
       // label for the checkbox
       label: null
 
-      // handler for when the check state changes
-      // (this should update whatever is_checked is bound to)
-      on_checked_changed: null
-
     template:
 
       type: button
-      bg_color: #00000000
+      bg_color: #00000000 // transparent
       on_click: $on_checked_changed
       content:
 
@@ -45,10 +45,10 @@ resources:
 
               type: image
               visible: $is_checked
+              blend_color: $foreground
               sprite: $check_icon
               size: $check_icon_size
-              blend_color: $foreground
 
           - type: text
-            text: [$label, " - ", $is_checked]
+            text: $label
             color: $foreground

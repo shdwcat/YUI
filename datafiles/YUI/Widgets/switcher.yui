@@ -1,0 +1,52 @@
+file_type: resources
+
+resources:
+
+  switcher:
+    type: template
+
+    slots:
+      selection_scope: null
+      on_item_selected: null
+
+    events:
+      item_selected: $on_item_selected
+
+    template:
+
+      type: panel
+      layout: horizontal
+      padding: 5
+      elements:
+
+        // switch left
+        - type: button
+          bg_sprite: null
+          bg_color: #2f2f2f
+          enabled: $selection_scope.selected_index > 0
+          content: <
+          on_click:
+            - $selection_scope.selectPreviousIndex()
+            - handler: yui_invoke_event
+                parameters:
+                  event: item_selected
+                  data: $selection_scope.selected_item
+
+        // content
+        - type: text
+          padding: [0, 5, 0, 0]
+          text: $selection_scope.selected_item
+
+        // switch right
+        - type: button
+          size: 20
+          bg_sprite: null
+          bg_color: #2f2f2f
+          enabled: $selection_scope.canSelectNextIndex()
+          content: >
+          on_click: 
+            - $selection_scope.selectNextIndex()
+            - handler: yui_invoke_event
+                parameters:
+                  event: item_selected
+                  data: $selection_scope.selected_item
