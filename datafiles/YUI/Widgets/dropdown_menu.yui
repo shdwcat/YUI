@@ -31,6 +31,10 @@ resources:
       // where to place the dropdown
       dropdown_placement: bottom_left
 
+      arrow_icon: yui_down_arrow_64
+      arrow_icon_frame: 0
+      arrow_icon_size: 24
+
     events:
       item_selected:
         // select the item
@@ -53,13 +57,15 @@ resources:
         type: panel
         layout: horizontal
         elements:
+          // current item text
           - type: text
             padding: [5, 2, 0, 0]
             text: $selection_scope.selected_item
+          // down arrow (to indicate this is a dropdown)
           - type: image
-            sprite: glowing_icons
-            size: 24
-            frame: 20 // down arrow
+            size: $arrow_icon_size
+            sprite: $arrow_icon
+            frame: $arrow_icon_frame
 
       popup:
         placement: $dropdown_placement
@@ -71,7 +77,7 @@ resources:
             padding: 5
             bg_sprite: null
             bg_color: #06162A
-            content: //$item_template
+            content: //$item_template (need to be able to resolve slots at render construction)
               type: text
               text: @
 
