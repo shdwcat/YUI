@@ -36,7 +36,6 @@ root:
 
         - type: checkbox
           is_checked: @check_state
-          foreground: aqua
           label: this is a checkbox
           on_checked_changed: >> yui_set_struct_value(@, check_state, not @check_state)
           //? on_checked_changed: @is_checked = not @is_checked

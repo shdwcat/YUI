@@ -9,6 +9,12 @@ resources:
   //       type: text
   //       text_style: $is_selected then subtitle else body
 
+  // default template for displaying the item value
+  dropdown_item_template:
+    type: text
+    text: @
+    color: $foreground
+
   dropdown_menu:
     type: template
     
@@ -20,16 +26,15 @@ resources:
       items: [] 
 
       // template to use when rendering items in dropdown
-      item_template:
-        type: text
-        text: @
-        font_style: subtitle
+      item_template: &dropdown_item_template
 
       // additional handler executed after item is selected
       on_item_selected: null 
 
       // where to place the dropdown
       dropdown_placement: bottom_left
+
+      foreground: null
 
       arrow_icon: yui_down_arrow_64
       arrow_icon_frame: 0
@@ -77,9 +82,9 @@ resources:
             padding: 5
             bg_sprite: null
             bg_color: #06162A
-            content: //$item_template (need to be able to resolve slots at render construction)
-              type: text
-              text: @
+            content: $item_template //(need to be able to resolve slots at render construction)
+              // type: text
+              // text: @
 
             on_click:
               - handler: yui_invoke_event

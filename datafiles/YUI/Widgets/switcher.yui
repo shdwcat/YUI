@@ -1,6 +1,10 @@
 file_type: resources
 
 resources:
+  switcher_content_template:
+    type: text
+    padding: [0, 5, 0, 0]
+    text: $selection_scope.selected_item
 
   switcher:
     type: template
@@ -8,6 +12,7 @@ resources:
     slots:
       selection_scope: null
       on_item_selected: null
+      content_template: &switcher_content_template
 
     events:
       item_selected: $on_item_selected
@@ -33,13 +38,10 @@ resources:
                   data: $selection_scope.selected_item
 
         // content
-        - type: text
-          padding: [0, 5, 0, 0]
-          text: $selection_scope.selected_item
+        - $content_template
 
         // switch right
         - type: button
-          size: 20
           bg_sprite: null
           bg_color: #2f2f2f
           enabled: $selection_scope.canSelectNextIndex()
