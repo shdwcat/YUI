@@ -85,7 +85,7 @@ function YsParser(tokens, eof_token)
 		var expr = parseExpression();
 		
 		// unwrap top level wrappers
-		if instanceof(expr) == "YuiValueWrapper" {
+		if !expr.is_yui_live_binding {
 			expr = expr.resolve();
 		}
 		

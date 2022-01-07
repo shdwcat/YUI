@@ -5,6 +5,10 @@ function yui_resolve_element(yui_data, resources, slot_values, parent_id = undef
 	if is_string(yui_data) {
 		if yui_is_binding_expr(yui_data) {
 			yui_data = yui_bind(yui_data, resources, slot_values);
+			
+			// the result might be something like a slot or resource, or 'raw' element props
+			// In any of those cases, this recursive call will resolve that value correctly.
+			return yui_resolve_element(yui_data, resources, slot_values, parent_id);
 		}
 		yui_data = {
 			type: "text",
