@@ -93,6 +93,7 @@
     {"id":{"name":"scribble_rgb_to_bgr","path":"scripts/scribble_rgb_to_bgr/scribble_rgb_to_bgr.yy",},"order":8,},
     {"id":{"name":"WidgetGalleryData","path":"scripts/WidgetGalleryData/WidgetGalleryData.yy",},"order":5,},
     {"id":{"name":"knit_parse","path":"scripts/knit_parse/knit_parse.yy",},"order":7,},
+    {"id":{"name":"yui_down_arrow_64","path":"sprites/yui_down_arrow_64/yui_down_arrow_64.yy",},"order":6,},
     {"id":{"name":"yui_resolve_command","path":"scripts/yui_resolve_command/yui_resolve_command.yy",},"order":3,},
     {"id":{"name":"yui_icon_checkmark","path":"sprites/yui_icon_checkmark/yui_icon_checkmark.yy",},"order":1,},
     {"id":{"name":"yuiscript_todos","path":"notes/yuiscript_todos/yuiscript_todos.yy",},"order":3,},
@@ -444,7 +445,7 @@
     {"folderPath":"folders/YUI Tests.yy","order":1,"resourceVersion":"1.0","name":"YUI Tests","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Packages - YUI/Themes.yy","order":12,"resourceVersion":"1.0","name":"Themes","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Packages - YUI/scripts/string.yy","order":2,"resourceVersion":"1.0","name":"string","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/Packages - YUI/Sprites/game-icons.net.yy","order":6,"resourceVersion":"1.0","name":"game-icons.net","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/Packages - YUI/Sprites/game-icons.net.yy","order":7,"resourceVersion":"1.0","name":"game-icons.net","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Packages - YUI/Sprites/game-icons.net/delapouite.yy","order":1,"resourceVersion":"1.0","name":"delapouite","tags":[],"resourceType":"GMFolder",},
   ],
   "AudioGroups": [
