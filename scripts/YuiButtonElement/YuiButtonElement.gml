@@ -50,8 +50,8 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	}
 	
 	// resolve color
-	bg_color = yui_resolve_color(props.bg_color);
-	border_color = yui_resolve_color(props.border_color);
+	bg_color = yui_resolve_color(yui_bind(props.bg_color, resources, slot_values));
+	border_color = yui_resolve_color(yui_bind(props.border_color, resources, slot_values));
 	
 	props.on_click = yui_resolve_command(props.on_click, resources, slot_values);
 	

@@ -30,15 +30,12 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	// look up the text style by name from the theme
 	text_style = theme.text_styles[$ props.text_style];
 	
-	var font = props.font == undefined
-		? text_style.font
-		: props.font;
+	var font = props.font ?? text_style.font;
 		
-	color = props.color == undefined
-		? text_style.color
-		: yui_resolve_color(props.color);
-	color = yui_bind(color, resources, slot_values);
-	highlight_color = yui_resolve_color(props.highlight_color);
+	color = props.color ?? text_style.color;
+	color = yui_resolve_color(yui_bind(color, resources, slot_values));
+	
+	highlight_color = yui_resolve_color(yui_bind(props.highlight_color, resources, slot_values));
 			
 	if !is_string(font) font = font_get_name(font);
 	else if !asset_get_index(font) {

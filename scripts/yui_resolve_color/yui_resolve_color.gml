@@ -6,7 +6,12 @@ function yui_resolve_color(color_value) {
 		}
 		else {
 			var color = asset_get_index("c_" + color_value);
-			return color | $FF000000;
+			if color >= 0 {
+				return color | $FF000000;
+			}
+			else {
+				return color_value;
+			}
 		}
 	}
 	else {

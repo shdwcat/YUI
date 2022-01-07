@@ -55,8 +55,8 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	}
 	
 	// resolve colors
-	bg_color = yui_resolve_color(props.bg_color);
-	border_color = yui_resolve_color(props.border_color);
+	bg_color = yui_resolve_color(yui_bind(props.bg_color, resources, slot_values));
+	border_color = yui_resolve_color(yui_bind(props.border_color, resources, slot_values));
 	
 	if props.template != undefined {	
 		item_element = yui_resolve_element(props.template, resources, slot_values, props.id + ":T");	
