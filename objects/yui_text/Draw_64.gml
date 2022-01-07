@@ -14,7 +14,7 @@ if bg_alpha > 0 {
 if highlight && highlight_color != undefined {
 	scribble_element.blend(highlight_color, 1);
 }
-else if text_color != c_white {
+else {
 	scribble_element.blend(text_color, 1);
 }
 
