@@ -52,6 +52,13 @@ padded_rect = { x: x, y: y, w: 0, h: 0 };
 initLayout = function() {
 	layout_props = yui_element.getLayoutProps();
 	
+	focusable = yui_element.props.focusable;
+	
+	// set initial focus if needed
+	if focusable && YuiCursorManager.focused_item == undefined {
+		YuiCursorManager.focused_item = id;
+	}
+	
 	canvas = yui_element.canvas;
 	tooltip_element = yui_element.tooltip_element;
 	

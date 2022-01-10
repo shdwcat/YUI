@@ -1,5 +1,11 @@
 /// @description init
 
+// which item has keyboard/gamepad focus
+focused_item = undefined;
+
+focus_list = ds_list_create();
+
+// list for tracking hover items for mouseover logic
 hover_list = ds_list_create();
 hover_count = 0;
 

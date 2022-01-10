@@ -4,6 +4,8 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		type: "button",
 		theme: "default",
 		
+		focusable: true,
+		
 		bg_sprite: undefined,
 		bg_sprite_size: undefined,
 		bg_color: undefined,
@@ -31,6 +33,9 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	props = yui_apply_props(_props);
 	yui_resolve_theme();
 	props.enabled = yui_bind(props.enabled, resources, slot_values);
+	
+	// TODO: fix prop application order
+	props.focusable = true;
 	
 	// TODO fix theme implementation
 	var padding = props.padding == undefined ? theme.button.padding : props.padding;

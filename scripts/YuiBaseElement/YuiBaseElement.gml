@@ -6,6 +6,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		// TODO: define theme here
 		
 		visible: true,
+		focusable: false,
 		size: "auto", // can also be { w: val, h: val } where val can be a number or "auto" | "content"
 		alignment: "default",
 		canvas: undefined,

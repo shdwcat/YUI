@@ -1,7 +1,11 @@
-/// @description define cursor events
+/// @description init
 
 // NOTE: use this object as a parent object for any objects that
 // should participate in YUI Cursor behavior (click/drag/etc)
+
+// Whether this item participates in focus behavior
+// (e.g. for keyboard/gamepad menu navigation)
+focusable = false;
 
 // render item for any interactions this participates in
 interaction_item = undefined;

@@ -330,6 +330,7 @@
     {"id":{"name":"scribble_typists_add_event","path":"scripts/scribble_typists_add_event/scribble_typists_add_event.yy",},"order":9,},
     {"id":{"name":"heavy_helm","path":"sprites/heavy_helm/heavy_helm.yy",},"order":7,},
     {"id":{"name":"YuiBaseElement","path":"scripts/YuiBaseElement/YuiBaseElement.yy",},"order":4,},
+    {"id":{"name":"yui_find_focus_item","path":"scripts/yui_find_focus_item/yui_find_focus_item.yy",},"order":2,},
     {"id":{"name":"__scribble_gen_2_parser","path":"scripts/__scribble_gen_2_parser/__scribble_gen_2_parser.yy",},"order":1,},
     {"id":{"name":"scribble_font_bake_outline","path":"scripts/scribble_font_bake_outline/scribble_font_bake_outline.yy",},"order":4,},
     {"id":{"name":"yui_align_item","path":"scripts/yui_align_item/yui_align_item.yy",},"order":0,},
