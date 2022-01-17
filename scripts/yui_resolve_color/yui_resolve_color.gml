@@ -6,6 +6,12 @@ function yui_resolve_color(color_value) {
 		aqua: c_aqua,
 		red: c_red,
 		green: c_green,
+		gray: c_gray,
+		lightgray: 0xD3D3D3,
+		darkgray: 0xA9A9A9,
+		grey: c_gray,
+		lightgrey: 0xD3D3D3,
+		darkgrey: 0xA9A9A9,
 	};
 	
 	if is_string(color_value) {
