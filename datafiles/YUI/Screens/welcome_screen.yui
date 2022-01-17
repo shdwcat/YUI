@@ -30,7 +30,7 @@ root:
               // You can also just put a string as a child and it will automatically be converted to a 'text' element. Easy!
             - This screen is defined in datafiles/YUI/Screens/welcome_screen.yui
             - You can edit this file while the game is running! Press F5 to reload after making changes
-            - @app_name
+            //- @app_name
             - " " // inserts a blank line
             - Select an option below to see more examples
 
@@ -42,6 +42,13 @@ root:
               parameters:
                 screen: layout_example
               // and these are the parameters to pass to the script, in this case the ID of the screen file to load
+
+        - type: button
+          content: Keyboard/Gamepad Navigation
+          on_click:
+            - $command: yui_change_screen
+              parameters:
+                screen: kb_navigation_example
 
         - type: button
           content: Binding to Game Data

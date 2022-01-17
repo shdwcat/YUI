@@ -55,8 +55,10 @@ initLayout = function() {
 	focusable = yui_element.props.focusable;
 	
 	// set initial focus if needed
-	if focusable && YuiCursorManager.focused_item == undefined {
-		YuiCursorManager.focused_item = id;
+	if focusable 
+		&& ((YuiCursorManager.focused_item == undefined || !instance_exists(YuiCursorManager.focused_item))
+			|| yui_element.props.autofocus) {
+		YuiCursorManager.setFocus(id);
 	}
 	
 	canvas = yui_element.canvas;

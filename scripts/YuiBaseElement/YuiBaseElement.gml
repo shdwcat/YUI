@@ -5,8 +5,10 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		
 		// TODO: define theme here
 		
+		focusable: false, // whether the item can be focused for kb/gamepad
+		autofocus: false, // whether to auto focus this item on creation (overrides previous focus)
+		
 		visible: true,
-		focusable: false,
 		size: "auto", // can also be { w: val, h: val } where val can be a number or "auto" | "content"
 		alignment: "default",
 		canvas: undefined,

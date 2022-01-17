@@ -3,7 +3,19 @@
 // which item has keyboard/gamepad focus
 focused_item = undefined;
 
+// for use with finding next focus item
 focus_list = ds_list_create();
+
+// which focus scope is currently active
+active_focus_scope = "global";
+
+// map of focus scopes to focused item in that scope
+focus_scope_map = {
+	global: undefined,
+};
+
+// stack used to track focus scope navigation
+focus_scope_stack = ds_stack_create();
 
 // list for tracking hover items for mouseover logic
 hover_list = ds_list_create();
@@ -45,4 +57,18 @@ finishInteraction = function() {
 		visual_item = undefined;
 	}
 	active_interaction = undefined;
+}
+
+setFocus = function(focus_item, new_scope) {
+	focused_item = focus_item;
+	
+	// set the new focus scope if one is provided
+	if new_scope && new_scope != active_focus_scope {
+		active_focus_scope = new_scope;
+		
+		// place it on the stack for when we exit this scope
+		ds_stack_push(focus_scope_stack, new_scope);
+	}
+	
+	focus_scope_map[$ active_focus_scope] = focused_item;
 }
