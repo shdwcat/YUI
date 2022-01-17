@@ -1,0 +1,43 @@
+file_type: resources
+
+resources:
+  
+  fib:
+    type: template
+
+    template:
+      type: panel
+      layout: horizontal
+      elements:
+        - type: text
+          text: 0
+        - type: fib-n
+          first: 0
+          second: 1
+
+  fib-n:
+    type: template
+
+    slots:
+      first: 0
+      second: 1
+      count: 1
+      max: 20
+
+    template:
+      type: panel
+      trace: true
+      layout: horizontal
+      elements:
+        - type: text
+          text: $first + $second | final
+        - type: switch
+          switch_on: $count <= $max
+          cases:
+            true:
+              type: fib-n
+              first: $second
+              second: $first + $second | final
+              count: $count + 1 | final
+              max: $max | final
+

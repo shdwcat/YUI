@@ -65,11 +65,20 @@ root:
                 screen: widget_gallery
 
         - type: button
-          content: "Use Case: Inventory Screen"
+          content: "Use Case: Inventory Screen (Drag and Drop)"
+          tooltip: Demonstrates an inventory screen where you can drag and drop items onto equipment slots for a character
           on_click:
             - $command: yui_change_screen
               parameters:
                 screen: inventory_screen
+
+        - type: button
+          content: Dev Sandbox
+          tooltip: In development work (may crash!)
+          on_click:
+            - $command: yui_change_screen
+              parameters:
+                screen: sandbox
 
     - type: button
       id: main-menu-button // id is required when using the popup feature - must be unique to the screen!
