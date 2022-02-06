@@ -21,12 +21,27 @@ function YuiCanvasLayout(alignment, padding, spacing) constructor {
 			var canvas = item.canvas;
 			
 			// fit the item within the bounds defined by the canvas properties
-			var possible_size = {
-				x: available_size.x + canvas.left,
-				y: available_size.y + canvas.top,
-				w: available_size.w - (canvas.left + canvas.right),
-				h: available_size.h - (canvas.top + canvas.bottom),
-			};
+			if canvas.normalized {
+				// normalized means position units are fractions of the available size
+				var possible_size = {
+					x: available_size.x + (canvas.left * available_size.w),
+					y: available_size.y + (canvas.top * available_size.h),
+					w: available_size.w * (1 - (canvas.left + canvas.right)),
+					h: available_size.h * (1 - (canvas.top + canvas.bottom)),
+				};
+				var right_offset = canvas.right * available_size.w;
+				var bottom_offset = canvas.bottom * available_size.h;
+			}
+			else {
+				var possible_size = {
+					x: available_size.x + canvas.left,
+					y: available_size.y + canvas.top,
+					w: available_size.w - (canvas.left + canvas.right),
+					h: available_size.h - (canvas.top + canvas.bottom),
+				};
+				var right_offset = canvas.right;
+				var bottom_offset = canvas.bottom;
+			}
 			
 			var item_size = item.arrange(possible_size);
 			
@@ -34,10 +49,10 @@ function YuiCanvasLayout(alignment, padding, spacing) constructor {
 			var xoffset = 0;
 			var yoffset = 0;
 			if canvas.right_aligned {
-				xoffset = available_size.w - item_size.w - canvas.right;
+				xoffset = available_size.w - item_size.w - right_offset;
 			}
 			if canvas.bottom_aligned {
-				yoffset = available_size.h - item_size.h - canvas.bottom;
+				yoffset = available_size.h - item_size.h - bottom_offset;
 			}
 			if canvas.center_h {
 				xoffset = floor(available_size.w / 2 - (item_size.w / 2));
@@ -65,15 +80,17 @@ function YuiCanvasLayout(alignment, padding, spacing) constructor {
 	}
 }
 
-function YuiCanvasPosition(canvas_position = {}) constructor {
+function YuiCanvasPosition(canvas_position = {}, resources, slot_values) constructor {
 	var center = canvas_position[$ "center"];
 	center_h = center == true || center == "h";
 	center_v = center == true || center == "v";
 	
-	left = canvas_position[$ "left"];
-	top = canvas_position[$ "top"];
-	right = canvas_position[$ "right"];
-	bottom = canvas_position[$ "bottom"];
+	normalized = canvas_position[$ "normalized"] == true;
+	
+	left = yui_bind(canvas_position[$ "left"], resources, slot_values);
+	top = yui_bind(canvas_position[$ "top"], resources, slot_values);
+	right = yui_bind(canvas_position[$ "right"], resources, slot_values);
+	bottom = yui_bind(canvas_position[$ "bottom"], resources, slot_values);
 	
 	right_aligned = right != undefined && left == undefined;
 	bottom_aligned = bottom != undefined && top == undefined;
