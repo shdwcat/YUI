@@ -15,8 +15,8 @@ function YsParser(tokens, eof_token)
 	// === operators ===
 
 	// prefix
+	prefix(YS_TOKEN.STRING, new YsStringLiteralParselet()); // special handling for lambda variables
 	prefix(YS_TOKEN.NUMBER, new GsplLiteralParselet());
-	prefix(YS_TOKEN.STRING, new GsplLiteralParselet());
 	prefix(YS_TOKEN.COLOR, new GsplLiteralParselet());
 	prefix(YS_TOKEN.TRUE, new GsplLiteralParselet());
 	prefix(YS_TOKEN.FALSE, new GsplLiteralParselet());
@@ -41,6 +41,10 @@ function YsParser(tokens, eof_token)
 		new GsplConditionalParselet(YS_PRECEDENCE.CONDITIONAL, YS_TOKEN.ELSE));
 	infix(YS_TOKEN.QUESTION,
 		new GsplConditionalParselet(YS_PRECEDENCE.CONDITIONAL, YS_TOKEN.COLON));
+		
+	// lambda definition e.g. var => log(var)
+	infix(YS_TOKEN.ARROW,
+		new YsLambdaParselet(YS_PRECEDENCE.LAMBDA));
 		
 	// method call e.g. foo.bar()
 	infix(YS_TOKEN.LEFT_PAREN,
@@ -81,14 +85,16 @@ function YsParser(tokens, eof_token)
 		// setting this context is annoying but *shrug*
 		self.resources = resources;
 		self.slot_values = slot_values;
+		self.context = {};
 		
 		var expr = parseExpression();
 		
-		// unwrap top level wrappers
 		if !expr.is_yui_live_binding {
+			// unwrap top level wrappers
 			expr = expr.resolve();
 		}
 		
+		self.context = undefined;
 		self.slot_values = undefined;
 		self.resources = undefined;
 		

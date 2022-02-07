@@ -4,8 +4,6 @@ function YsDirectiveParselet() constructor {
 	
 	static parse = function(parser, left_expr, token) {
 		
-		var next = parser.peek();
-		
 		// parse all directives (comma separated)
 		do {			
 			var directive = parser.consume(YS_TOKEN.STRING, "Expecting directive name after '|'");

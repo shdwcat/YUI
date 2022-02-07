@@ -9,6 +9,19 @@ function YuiCallFunction(func_name, args) constructor {
 	self.args = args;
 	self.arg_count = array_length(args);
 	
+	self.context = undefined;
+	
+	static setArgs = function(args) {
+		if context && variable_struct_exists(context, "arg_map") {				
+			// get the name of the first param from the arg map (this is set up by YuiLambdaParselet)
+			var param_name = context.arg_map[0];
+		
+			// set the first arg as the value of the first param
+			context.params = {};
+			context.params[$ param_name] = args[0];
+		}
+	}
+	
 	if is_string(func_name) {
 		var script_index = asset_get_index(func_name);
 		if script_index != -1 {
@@ -29,6 +42,9 @@ function YuiCallFunction(func_name, args) constructor {
 		else {
 			// call runtime function
 			function_index = runtime_functions[$ func_name];
+			if function_index == undefined {
+				//throw yui_error("unknown function: " + func_name);
+			}
 		
 			resolve = function(data) {
 			
@@ -57,7 +73,19 @@ function YuiCallFunction(func_name, args) constructor {
 			}
 		}
 	}
+	else if instanceof(func_name) == "YuiLambda" {
+		resolve = function(data) {
+			resolved_args = array_create(arg_count);
+			var i = 0; repeat arg_count {
+				resolved_args[i] = args[i].resolve(data);
+				i++;
+			}
+		
+			return func_name.call(data, resolved_args);
+		}
+	}
 	else {
+		// treat func_name as a binding (may be slot etc also) and resolve it
 		resolve = function(data) {
 			var func_ref = func_name.resolve(data);
 			

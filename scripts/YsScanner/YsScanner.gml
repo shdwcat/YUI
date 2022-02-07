@@ -22,6 +22,7 @@ function YsScanner(source, token_definition) : GsplScanner(source, token_definit
 				break;
 			case "=":
 				if match("=") addToken(YS_TOKEN.EQUAL_EQUAL)
+				else if match(">") addToken(YS_TOKEN.ARROW)
 				else _error(_line, "expected '=' after '='");
 				break;
 				break;
