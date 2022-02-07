@@ -71,7 +71,7 @@ function YuiCanvasDrag(_props, _resources) constructor {
 		};
 		
 		 // TODO yui_denormalize_value()?
-		var value = (data.left * (parameters.max - parameters.min)) - parameters.min;
+		//var value = (data.left * (parameters.max - parameters.min)) - parameters.min;
 				
 		yui_handle_event(on_position_changed, data);
 		
