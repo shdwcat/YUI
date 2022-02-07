@@ -29,7 +29,14 @@ function YuiOperatorBinding(left, operator, right) constructor {
 				return left_val || yui_resolve_binding(right, data);
 				
 			case YS_TOKEN.PLUS:
-				return left_val + yui_resolve_binding(right, data);
+				var right_val = yui_resolve_binding(right, data);
+				
+				if is_string(left_val)
+					return left_val + string(right_val);
+				else if is_string(right_val)
+					return string(left_val) + right_val;
+				else
+					return left_val + right_val;
 				
 			case YS_TOKEN.MINUS:
 				return left_val - yui_resolve_binding(right, data);
