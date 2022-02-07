@@ -1,0 +1,67 @@
+file_type: resources
+
+import:
+  - ../Interactions/slider_drag.yui
+
+resources:
+
+  slider:
+    type: template
+
+    slots:
+      min: 0
+      max: 100
+      value: 0
+      on_value_changed: null
+      show_value: true
+
+      thumb_color: #AA00AA
+
+    template:
+
+      type: panel
+      layout: horizontal
+      // trace: true
+      elements:
+
+        - type: text
+          text: $min
+
+        - type: panel
+          layout: canvas
+          size: { h: 20, w: 100 }
+          //trace: true
+          elements:
+
+            // slider thumb
+            - type: button
+              padding: 0
+              canvas:
+                normalized: true
+                left: $value / ($max - $min)
+              // trace: true
+              bg_sprite: null
+              bg_color: $thumb_color
+              size: { h: 20, w: 8 }
+              events:
+                on_mouse_down:
+                  interaction: slider_drag
+                  parameters:
+                    on_position_changed: $on_value_changed(@left * ($max - $min))
+
+            // slider line
+            - type: border
+              canvas:
+                top: 8
+              bg_color: #888888
+              size: { h: 2, w: stretch }
+
+        - type: text
+          text: $max
+
+        - type: text
+          text: "-"
+
+        - type: text
+          text: $value >> string_format(0, 0)
+          visible: $show_value

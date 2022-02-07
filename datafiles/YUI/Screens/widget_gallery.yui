@@ -10,6 +10,7 @@ import:
   - ../Widgets/checkbox.yui
   - ../Widgets/dropdown_menu.yui
   - ../Widgets/menu.yui
+  - ../Widgets/slider.yui
 
 resources:
   widget_wrapper:
@@ -26,6 +27,7 @@ root:
     - type: back_button
 
     - type: panel
+      spacing: 10
       data_source: @widget_data
 
       elements:
@@ -56,3 +58,15 @@ root:
         - type: dropdown_menu
           items: @switcher_items
           selection_scope: @switcher_selector
+
+        - type: text
+          text: Slider
+          text_style: subtitle
+
+        - type: slider
+          size: { w: 200 }
+          max: 200
+          value: @slider_value
+          // todo: replace this by implementing assignment syntax
+          on_value_changed: value => yui_set_struct_value(@data, 'slider_value', value)
+          
