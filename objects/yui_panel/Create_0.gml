@@ -73,7 +73,7 @@ arrange = function(available_size) {
 	layout.init(internal_children, padded_rect, yui_element.props);
 	
 	is_arranging = true;
-	used_layout_size = layout.arrange();
+	used_layout_size = layout.arrange(bound_values.data_source);
 	is_arranging = false;
 	
 	// update our draw size to encompass the layout's draw size with our padding
