@@ -24,6 +24,12 @@ function yui_resolve_command(event, resources, slot_values) {
 		command_id = event[$ "handler"];
 	};
 	
+	var interaction = event[$ "interaction"];
+	if interaction != undefined && variable_struct_exists(event, "parameters") {
+		// TODO: create a YuiStartInteractionCommand to remove the special cast in yui_handle_event
+		yui_bind_struct(event.parameters, resources, slot_values);
+	}
+	
 	// if it's not a command, we should try to bind it
 	if command_id == undefined {
 		return yui_bind(event, resources, slot_values);
