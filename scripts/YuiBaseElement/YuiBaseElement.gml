@@ -49,7 +49,9 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	YuiCursorManager.participation_hash.hashArray(props.interactions);
 	
 	size = new YuiElementSize(yui_bind(props.size, resources, slot_values));
-	canvas = new YuiCanvasPosition(yui_bind(props.canvas, resources, slot_values));
+	
+	var canvas_binding = yui_bind(props.canvas, resources, slot_values);
+	canvas = new YuiCanvasPosition(canvas_binding, resources, slot_values);
 	
 	// move this to YuiPanelElement
 	alignment = new YuiElementAlignment(yui_bind(props.alignment, resources, slot_values));

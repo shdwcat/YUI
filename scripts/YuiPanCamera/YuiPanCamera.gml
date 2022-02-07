@@ -25,7 +25,7 @@ function YuiPanCamera(_props, _resources) constructor {
 		return true;
 	}
 	
-	static start = function(source_data, event) {
+	static start = function(source_data, event, source_item) {
 		
 		// NOTE: assumes initiating event is a mouse button event
 		button = event[$ "button"];

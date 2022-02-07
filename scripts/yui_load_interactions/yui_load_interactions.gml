@@ -19,6 +19,9 @@ function yui_load_interactions() {
 			case "pan_camera":
 				makeFunc = YuiPanCamera;
 				break;
+			case "canvas_drag":
+				makeFunc = YuiCanvasDrag;
+				break;
 		}
 		
 		map[$ snap.id] = new makeFunc(snap, resources);

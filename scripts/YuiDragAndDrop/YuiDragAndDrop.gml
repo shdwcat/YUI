@@ -46,7 +46,7 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		}
 	}
 	
-	static start = function(source_data, event) {
+	static start = function(source_data, event, source_item) {
 		// NOTE: assumes initiating event is a mouse button event
 		var button = event[$ "button"];
 		if button == undefined {
