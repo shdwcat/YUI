@@ -8,20 +8,7 @@ function YuiCallFunction(func_name, args) constructor {
 	self.func_name = func_name;
 	self.args = args;
 	self.arg_count = array_length(args);
-	
-	self.context = undefined;
-	
-	static setArgs = function(args) {
-		if context && variable_struct_exists(context, "arg_map") {				
-			// get the name of the first param from the arg map (this is set up by YuiLambdaParselet)
-			var param_name = context.arg_map[0];
 		
-			// set the first arg as the value of the first param
-			context.params = {};
-			context.params[$ param_name] = args[0];
-		}
-	}
-	
 	if is_string(func_name) {
 		var script_index = asset_get_index(func_name);
 		if script_index != -1 {

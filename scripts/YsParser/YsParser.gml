@@ -25,6 +25,7 @@ function YsParser(tokens, eof_token)
 	prefix(YS_TOKEN.BINDING_IDENTIFIER, new YsBindingParselet());
 	prefix(YS_TOKEN.SLOT_IDENTIFIER, new YsSlotParselet());
 	prefix(YS_TOKEN.RESOURCE_IDENTIFIER, new YsResourceParselet());
+	prefix(YS_TOKEN.FUNCTION_IDENTIFIER, new YsFunctionParselet());
 	
 	prefix(YS_TOKEN.GREATER_GREATER,
 		new GsplPrefixCallParselet(YS_PRECEDENCE.CALL,
