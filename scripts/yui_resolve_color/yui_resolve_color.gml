@@ -3,7 +3,9 @@ function yui_resolve_color(color_value) {
 	
 	static color_table = {
 		white: c_white,
+		black: c_black,
 		aqua: c_aqua,
+		maroon: c_maroon,
 		red: c_red,
 		green: c_green,
 		gray: c_gray,
