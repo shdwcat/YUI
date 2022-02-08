@@ -10,3 +10,7 @@ function yui_is_live_binding(binding) {
 function yui_is_call(binding) {
 	return is_struct(binding) && instanceof(binding) == "YuiCallFunction";
 }
+
+function yui_is_lambda(binding) {
+	return is_struct(binding) && instanceof(binding) == "YuiLambda";
+}
