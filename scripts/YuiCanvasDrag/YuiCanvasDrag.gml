@@ -40,6 +40,10 @@ function YuiCanvasDrag(_props, _resources) constructor {
 		// NOTE: assumes parent is a canvas!
 		target = source_item;
 		canvas = source_item.parent;
+		position = {
+			left: 0,
+			top: 0,
+		};
 		
 		return undefined;
 	}
@@ -63,14 +67,10 @@ function YuiCanvasDrag(_props, _resources) constructor {
 		
 		// position is either the raw position relative to the canvas x/y,
 		// or the normalized position within the canvas size (relative to the x/y)
-		var data = {
-			target: target,
-			data: target.data_context,
-			left: canvas_left,
-			top: canvas_top,
-		};
-						
-		yui_handle_event(on_position_changed, data);
+		position.left = canvas_left;
+		position.top = canvas_top;
+
+		yui_handle_event(on_position_changed, target.data_context, target, [position]);
 		
 		if mouse_check_button_released(button) {
 			finish();
@@ -84,9 +84,11 @@ function YuiCanvasDrag(_props, _resources) constructor {
 	static finish = function() {
 		YuiCursorManager.finishInteraction();
 		
+		parameters = undefined;
 		button = undefined;
 		target = undefined;
 		canvas = undefined;
+		position = undefined;
 		on_position_changed = undefined;		
 	}
 }
