@@ -15,12 +15,13 @@ resources:
       on_value_changed: null
       show_value: true
 
+      orientation: horizontal
       thumb_color: #AA00AA
 
     template:
 
       type: panel
-      layout: horizontal
+      layout: $orientation
       // trace: true
       elements:
 
@@ -47,12 +48,12 @@ resources:
                 on_mouse_down:
                   interaction: slider_drag
                   parameters:
-                    on_position_changed: $on_value_changed(@left * ($max - $min))
+                    on_position_changed: @@ pos => $on_value_changed(pos.left * ($max - $min))
 
             // slider line
             - type: border
               canvas:
-                top: 8
+                center: v
               bg_color: #888888
               size: { h: 2, w: stretch }
 
@@ -63,5 +64,5 @@ resources:
           text: "-"
 
         - type: text
-          text: $value >> string_format(0, 0)
+          text: $value >> string_format(0, 0) // format as a whole number with no decimals
           visible: $show_value

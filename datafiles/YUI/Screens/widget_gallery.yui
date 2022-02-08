@@ -39,7 +39,7 @@ root:
         - type: checkbox
           is_checked: @check_state
           label: this is a checkbox
-          on_checked_changed: >> yui_set_struct_value(@, check_state, not @check_state)
+          on_checked_changed: @@ yui_set_struct_value(@, check_state, not @check_state)
           //? on_checked_changed: @is_checked = not @is_checked
 
         - type: text
@@ -66,7 +66,8 @@ root:
         - type: slider
           size: { w: 200 }
           max: 200
+          //orientation: vertical
           value: @slider_value
           // todo: replace this by implementing assignment syntax
-          on_value_changed: value => yui_set_struct_value(@data, 'slider_value', value)
+          on_value_changed: @@ value => yui_set_struct_value(@, 'slider_value', value)
           
