@@ -105,6 +105,7 @@
     {"id":{"name":"dynamic_sprite_test","path":"objects/dynamic_sprite_test/dynamic_sprite_test.yy",},"order":1,},
     {"id":{"name":"necklace","path":"sprites/necklace/necklace.yy",},"order":10,},
     {"id":{"name":"yui_hex_to_dec","path":"scripts/yui_hex_to_dec/yui_hex_to_dec.yy",},"order":4,},
+    {"id":{"name":"GsplSubscriptParselet","path":"scripts/GsplSubscriptParselet/GsplSubscriptParselet.yy",},"order":13,},
     {"id":{"name":"snap_to_messagepack","path":"scripts/snap_to_messagepack/snap_to_messagepack.yy",},"order":1,},
     {"id":{"name":"yui_string_concat","path":"scripts/yui_string_concat/yui_string_concat.yy",},"order":2,},
     {"id":{"name":"snap_from_gml","path":"scripts/snap_from_gml/snap_from_gml.yy",},"order":0,},
