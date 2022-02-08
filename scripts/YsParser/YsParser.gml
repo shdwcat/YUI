@@ -8,9 +8,10 @@ function YsParser(tokens, eof_token)
 	self.Identifier = undefined; // unused?
 	self.PrefixOperator = YuiPrefixOperatorBinding;
 	self.BinaryOperator = YuiOperatorBinding;
-	self.Indexer = YuiIndexBinding;
 	self.Conditional = YuiThenElseBinding;
 	self.Call = YuiCallFunction;
+	self.Indexer = YuiIndexBinding;
+	self.Subscript = YuiSubscript;
 	
 	// === operators ===
 
@@ -43,9 +44,13 @@ function YsParser(tokens, eof_token)
 	infix(YS_TOKEN.ARROW,
 		new YsLambdaParselet(YS_PRECEDENCE.LAMBDA));
 		
-	// method call e.g. foo.bar()
+	// method call e.g. bar()
 	infix(YS_TOKEN.LEFT_PAREN,
 		new GsplCallParselet(YS_PRECEDENCE.CALL, YS_TOKEN.COMMA, YS_TOKEN.RIGHT_PAREN));
+				
+	// member access e.g. foo.bar
+	infix(YS_TOKEN.DOT,
+		new GsplSubscriptParselet(YS_PRECEDENCE.CALL, YS_TOKEN.STRING));
 		
 	// indexing e.g. map[key]
 	infix(YS_TOKEN.LEFT_BRACKET,

@@ -12,5 +12,5 @@ enum YS_PRECEDENCE {
 	SUM =         8,
 	PRODUCT =     9,
 	PREFIX =      10,
-	CALL =        11,
+	CALL =        11, // also subscript (e.g. member access and indexing)
 }

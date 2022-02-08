@@ -344,6 +344,7 @@
     {"id":{"name":"yui_color_from_hex_string","path":"scripts/yui_color_from_hex_string/yui_color_from_hex_string.yy",},"order":0,},
     {"id":{"name":"KnitParser","path":"scripts/KnitParser/KnitParser.yy",},"order":5,},
     {"id":{"name":"YsResourceParselet","path":"scripts/YsResourceParselet/YsResourceParselet.yy",},"order":5,},
+    {"id":{"name":"YuiSubscript","path":"scripts/YuiSubscript/YuiSubscript.yy",},"order":11,},
     {"id":{"name":"__scribble_gen_7_build_pages","path":"scripts/__scribble_gen_7_build_pages/__scribble_gen_7_build_pages.yy",},"order":6,},
     {"id":{"name":"yui_icon_resize_h","path":"sprites/yui_icon_resize_h/yui_icon_resize_h.yy",},"order":6,},
     {"id":{"name":"yui_resolve_render_item","path":"scripts/yui_resolve_render_item/yui_resolve_render_item.yy",},"order":4,},
