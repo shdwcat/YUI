@@ -114,6 +114,8 @@ function YsScanner(source, token_definition) : GsplScanner(source, token_definit
 				else if isAlpha(c) {
 					var identifier = matchIdentifierName();
 					if peek() == "(" {
+						// required until I can clean up YuiCallFunction to
+						// be more sane about how it calls scripts/functions/methods
 						addToken(YS_TOKEN.FUNCTION_IDENTIFIER);
 					}
 					else {

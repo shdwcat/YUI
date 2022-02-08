@@ -53,8 +53,7 @@ function YsParser(tokens, eof_token)
 			
 	// infix call e.g. @foo >> bar()
 	infix(YS_TOKEN.GREATER_GREATER,
-		new GsplInfixCallParselet(YS_PRECEDENCE.CALL,
-			YS_TOKEN.FUNCTION_IDENTIFIER, YS_TOKEN.COMMA, YS_TOKEN.RIGHT_PAREN));
+		new GsplInfixCallParselet(YS_PRECEDENCE.CALL));
 	
 	// directives e.g. trace, freeze, etc
 	infix(YS_TOKEN.PIPE, new YsDirectiveParselet());
