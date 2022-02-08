@@ -69,10 +69,7 @@ function YuiCanvasDrag(_props, _resources) constructor {
 			left: canvas_left,
 			top: canvas_top,
 		};
-		
-		 // TODO yui_denormalize_value()?
-		//var value = (data.left * (parameters.max - parameters.min)) - parameters.min;
-				
+						
 		yui_handle_event(on_position_changed, data);
 		
 		if mouse_check_button_released(button) {
