@@ -41,7 +41,6 @@
     {"id":{"name":"yui_resolve_theme","path":"scripts/yui_resolve_theme/yui_resolve_theme.yy",},"order":0,},
     {"id":{"name":"scribble_font_get_glyph_ranges","path":"scripts/scribble_font_get_glyph_ranges/scribble_font_get_glyph_ranges.yy",},"order":6,},
     {"id":{"name":"scribble_external_sound_remove","path":"scripts/scribble_external_sound_remove/scribble_external_sound_remove.yy",},"order":4,},
-    {"id":{"name":"GsplPrefixCallParselet","path":"scripts/GsplPrefixCallParselet/GsplPrefixCallParselet.yy",},"order":10,},
     {"id":{"name":"yui_resolve_resource_imports","path":"scripts/yui_resolve_resource_imports/yui_resolve_resource_imports.yy",},"order":4,},
     {"id":{"name":"snap_to_json","path":"scripts/snap_to_json/snap_to_json.yy",},"order":1,},
     {"id":{"name":"yui_text","path":"objects/yui_text/yui_text.yy",},"order":6,},
@@ -481,6 +480,7 @@
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Screens","resourceVersion":"1.0","name":"kb_navigation_example.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Templates","resourceVersion":"1.0","name":"screen_base.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Screens","resourceVersion":"1.0","name":"sandbox.yui","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/YUI/Interactions","resourceVersion":"1.0","name":"equip_item.yui","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
     "IDEVersion": "23.1.1.457",
