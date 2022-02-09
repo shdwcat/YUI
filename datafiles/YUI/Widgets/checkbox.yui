@@ -30,7 +30,7 @@ resources:
 
       type: button
       bg_color: #00000000 // transparent
-      on_click: $on_checked_changed
+      on_click: $on_checked_changed(not $is_checked)
       content:
 
         type: panel
