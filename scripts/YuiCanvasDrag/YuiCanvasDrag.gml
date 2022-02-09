@@ -70,7 +70,7 @@ function YuiCanvasDrag(_props, _resources) constructor {
 		position.left = canvas_left;
 		position.top = canvas_top;
 
-		yui_handle_event(on_position_changed, target.data_context, target, [position]);
+		yui_call_handler(on_position_changed, [position], target.data_context, target);
 		
 		if mouse_check_button_released(button) {
 			finish();
