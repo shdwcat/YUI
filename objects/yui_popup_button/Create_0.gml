@@ -46,3 +46,11 @@ left_click = function() {
 		popup_item = undefined;
 	}
 }
+
+closePopup = function() {
+	is_popup_visible = false;
+	if popup_item {
+		instance_destroy(popup_item);
+		popup_item = undefined;
+	}
+}

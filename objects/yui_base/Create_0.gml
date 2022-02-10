@@ -131,3 +131,26 @@ move = function(xoffset, yoffset) {
 cursor_tooltip = function() {
 	//var tooltip = yui_resolve_binding(
 }
+
+findAncestor = function(type) {
+	var ancestor = parent;
+	while ancestor != undefined {
+		if ancestor.yui_element.props._type == type {
+			return ancestor;
+		}
+		ancestor = ancestor.parent;
+	}
+	throw yui_error("could not find ancestor with type " + type);
+}
+
+closePopup = function() {
+	var ancestor = parent;
+	while ancestor != undefined {
+		if ancestor.object_index == yui_popup_button {
+			ancestor.closePopup();
+			return;
+		}
+		ancestor = ancestor.parent;
+	}
+	yui_warning("could not find popup to close");
+}
