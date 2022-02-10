@@ -32,6 +32,23 @@ function YuiSelectionScope(_id, _options = {}) constructor {
 
 function YuiArraySelector(items, selected_item = undefined) constructor {
 	self.items = items;
+		
+	select = function(item) {
+		if item != undefined {
+			var index = yui_array_find_index(items, item);
+			if index >= 0 {
+				self.selected_index = index;
+				self.selected_item = item;
+			}
+			else {
+				throw yui_error("unable to find provided item in items array");
+			}
+		}
+		else {
+			self.selected_index = undefined;
+			self.selected_item = undefined;
+		}
+	}
 	
 	if selected_item == undefined {
 		if array_length(items) > 0 {
@@ -49,23 +66,6 @@ function YuiArraySelector(items, selected_item = undefined) constructor {
 	
 	self.selected_item = selected_item
 		?? (array_length(items) > 0 ? items[0] : undefined);
-		
-	static select = function(item) {
-		if item != undefined {
-			var index = yui_array_find_index(items, item);
-			if index >= 0 {
-				self.selected_index = index;
-				self.selected_item = item;
-			}
-			else {
-				throw yui_error("unable to find provided item in items array");
-			}
-		}
-		else {
-			self.selected_index = undefined;
-			self.selected_item = undefined;
-		}
-	}
 	
 	selectPreviousIndex = function() {
 		if selected_index <= 0 {

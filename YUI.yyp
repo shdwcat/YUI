@@ -305,7 +305,6 @@
     {"id":{"name":"yui_popup","path":"objects/yui_popup/yui_popup.yy",},"order":13,},
     {"id":{"name":"YuiIImageElement","path":"scripts/YuiIImageElement/YuiIImageElement.yy",},"order":6,},
     {"id":{"name":"yui_transform_map","path":"scripts/yui_transform_map/yui_transform_map.yy",},"order":0,},
-    {"id":{"name":"yui_selection_scope_select_item","path":"scripts/yui_selection_scope_select_item/yui_selection_scope_select_item.yy",},"order":2,},
     {"id":{"name":"GsplBinaryOperatorParselet","path":"scripts/GsplBinaryOperatorParselet/GsplBinaryOperatorParselet.yy",},"order":0,},
     {"id":{"name":"snap_from_messagepack","path":"scripts/snap_from_messagepack/snap_from_messagepack.yy",},"order":0,},
     {"id":{"name":"gspl_get_runtime_function_map","path":"scripts/gspl_get_runtime_function_map/gspl_get_runtime_function_map.yy",},"order":3,},
