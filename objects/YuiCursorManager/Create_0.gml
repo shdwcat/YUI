@@ -52,7 +52,7 @@ top = function() {
 finishInteraction = function() {
 	yui_log("interaction", active_interaction.props.type, "complete");
 	if visual_item {
-		//yui_log("destroying interaction visual", visual_item);
+		yui_log("destroying interaction visual", visual_item);
 		instance_destroy(visual_item);
 		visual_item = undefined;
 	}

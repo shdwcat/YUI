@@ -128,10 +128,10 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		var button_down = mouse_check_button(source.event.button); // TODO button
 		if !button_down {
 			if target.can_drop {
-				yui_handle_event(props.drop.action, interaction_data);
+				yui_call_handler(props.drop.action, , interaction_data);
 			}
 			else {
-				yui_handle_event(props.on_cancel, interaction_data);
+				yui_call_handler(props.on_cancel, , interaction_data);
 			}
 			finish();
 			return false;
@@ -139,7 +139,7 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		
 		// optionally run an action every frame
 		if props.drag.action {
-			yui_handle_event(props.drag.action, interaction_data);
+			yui_call_handler(props.drag.action, , interaction_data);
 		}
 	}
 	
