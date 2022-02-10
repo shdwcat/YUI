@@ -36,49 +36,34 @@ root:
 
         - type: button // 'type: button' creates a clickable button! 
           content: Layout Examples // the 'content' for a button can be a simple string like this, or a child element, which could be a panel containing more elements!
-          on_click: // on_click is how we tell the button what to do
-            // note that this is an array! you can define multiple handlers for a click and ALL will run
-            - $command: yui_change_screen // this is the name of the GML script to run. This one will change the yui_document to display the screen specified in the 'parameters'
-              parameters:
-                screen: layout_example
-              // and these are the parameters to pass to the script, in this case the ID of the screen file to load
+
+          // on_click is how we tell the button what to do
+          // here we call the 'yui_change_screen' function and pass it 
+          // the name of the screen, and a reference to the visual element
+          // so that the function can determine which screen to change
+          on_click: @@ e => yui_change_screen(layout_example, e.source)
 
         - type: button
           content: Keyboard/Gamepad Navigation
-          on_click:
-            - $command: yui_change_screen
-              parameters:
-                screen: kb_navigation_example
+          on_click: @@ e => yui_change_screen(kb_navigation_example, e.source)
 
         - type: button
           content: Binding to Game Data
-          on_click:
-            - $command: yui_change_screen
-              parameters:
-                screen: data_binding_example
+          on_click: @@ e => yui_change_screen(data_binding_example, e.source)
 
         - type: button
           content: Widget Gallery
-          on_click:
-            - $command: yui_change_screen
-              parameters:
-                screen: widget_gallery
+          on_click: @@ e => yui_change_screen(widget_gallery, e.source)
 
         - type: button
           content: "Use Case: Inventory Screen (Drag and Drop)"
           tooltip: Demonstrates an inventory screen where you can drag and drop items onto equipment slots for a character
-          on_click:
-            - $command: yui_change_screen
-              parameters:
-                screen: inventory_screen
+          on_click: @@ e => yui_change_screen(inventory_screen, e.source)
 
         - type: button
           content: Dev Sandbox
           tooltip: In development work (may crash!)
-          on_click:
-            - $command: yui_change_screen
-              parameters:
-                screen: sandbox
+          on_click: @@ e => yui_change_screen(sandbox, e.source)
 
     - type: button
       id: main-menu-button // id is required when using the popup feature - must be unique to the screen!
@@ -100,5 +85,4 @@ root:
               tooltip: Click to exit the YUI Example Project // most elements let you define a tooltip that will be shown on hover!
               tooltip_placement: left_top // as with the popup itself, controls where the tooltip is placed
               padding: 10
-              on_click:
-                - $command: yui_example_exit_game
+              on_click: @@ yui_example_exit_game()

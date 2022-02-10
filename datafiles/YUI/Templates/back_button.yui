@@ -7,7 +7,4 @@ resources:
     content:
       type: button
       content: Back
-      on_click:
-        - $command: yui_change_screen
-          parameters: 
-            screen: welcome_screen
+      on_click: @@ e => yui_change_screen(welcome_screen, e.source)
