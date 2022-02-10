@@ -26,14 +26,14 @@ function YuiDragAndDrop(_props, _resources) constructor {
 	
 	props.drag.condition = yui_bind(props.drag.condition, resources, undefined);
 	drag_element = yui_resolve_element(props.drag.visual, resources, undefined);
-	props.drag.action = yui_resolve_command(props.drag.action, resources, undefined);
+	props.drag.action = yui_bind_handler(props.drag.action, resources, undefined);
 	
 	drop_hash_id = YuiCursorManager.participation_hash.getStringId(props.id + ".drop");
 	props.drop.condition = yui_bind(props.drop.condition, resources, undefined);
 	drop_element = yui_resolve_element(props.drop.visual, resources, undefined);
-	props.drop.action = yui_resolve_command(props.drop.action, resources, undefined);
+	props.drop.action = yui_bind_handler(props.drop.action, resources, undefined);
 	
-	props.on_cancel = yui_resolve_command(props.on_cancel, resources, undefined);
+	props.on_cancel = yui_bind_handler(props.on_cancel, resources, undefined);
 	
 	
 	static canStart = function(source_data) {
