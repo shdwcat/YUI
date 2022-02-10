@@ -84,6 +84,7 @@ function YsScanner(source, token_definition) : GsplScanner(source, token_definit
 			
 			case "\"": scanString(); break;
 			case "'": scanString("'"); break;
+			case "`": scanString("`"); break;
 			
 			// identifiers
 			case "@":
