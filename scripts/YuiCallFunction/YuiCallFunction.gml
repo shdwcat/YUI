@@ -75,13 +75,17 @@ function YuiCallFunction(func_name, args) constructor {
 		// treat func_name as a binding (may be slot etc also) and resolve it
 		resolve = function(data) {
 			var func_ref = func_name.resolve(data);
-			
 			resolved_args = array_create(arg_count);
 			var i = 0; repeat arg_count {
 				resolved_args[i] = args[i].resolve(data);
 				i++;
 			}
 			
+			if func_ref == undefined {
+				yui_warning("can't call undefined function reference");
+				return;
+			}
+
 			// NOTE: could hyperoptimize by setting .resolve based on the arg_count (which is already known)
 			var a = resolved_args;
 			switch arg_count {
