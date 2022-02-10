@@ -25,7 +25,7 @@ left_click = function() {
 			button: "left",
 		};
 		// NOTE: doesn't support data_source yet
-		yui_call_handler(yui_element.props.on_click, [args], data_context, element);
+		yui_call_handler(yui_element.props.on_click, [args], data_context);
 	}
 }
 

@@ -2,8 +2,7 @@
 /// @param handler - the event handler to call
 /// @param args - the args to pass to the handler function
 /// @param data - the data for any bindings
-/// @param view_item - the view item associated with the data
-function yui_call_handler(handler, args, data, view_item) {
+function yui_call_handler(handler, args, data) {
 	
 	if handler == undefined {
 		yui_warning("Trying to handle undefined event");
@@ -13,7 +12,7 @@ function yui_call_handler(handler, args, data, view_item) {
 	// we might have an array of handlers, which we can resolve sequentially
 	if is_array(handler) {
 		var i = 0; repeat array_length(handler) {
-			yui_call_handler(handler[i++], args, data, view_item);
+			yui_call_handler(handler[i++], args, data);
 		}
 		return;
 	}
@@ -29,11 +28,11 @@ function yui_call_handler(handler, args, data, view_item) {
 		handler.resolve(data);
 	}
 	else if yui_is_lambda(handler) {
-		handler.call(data, args, view_item);
+		handler.call(data, args);
 	}
 	else {
 		// fallback to this so I can switch more things without breaking everything
-		yui_handle_event(handler, data, view_item);
+		yui_handle_event(handler, data);
 		// TODO: fix issue where this can happen when using a $slot binding in an
 		// array of handlers (see dropdown_menu.yui item click handler)
 		//yui_error("unsupported event handler instance");
