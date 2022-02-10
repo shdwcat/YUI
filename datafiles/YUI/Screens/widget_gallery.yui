@@ -50,6 +50,7 @@ root:
           items: @switcher_items
           selection_scope: @switcher_selector
           selected_index: 1
+          on_item_selected: @@ value => show_debug_message('selected ' + value)
 
         - type: text
           text: Dropdown Selector

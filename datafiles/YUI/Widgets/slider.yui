@@ -48,7 +48,7 @@ resources:
                 on_mouse_down:
                   interaction: slider_drag
                   parameters:
-                    on_position_changed: @@ pos => $on_value_changed(pos.left * ($max - $min))
+                    on_position_changed: @@ e => $on_value_changed(e.left * ($max - $min))
 
             // slider line
             - type: border

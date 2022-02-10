@@ -14,9 +14,6 @@ resources:
       on_item_selected: null
       content_template: &switcher_content_template
 
-    events:
-      item_selected: $on_item_selected
-
     template:
 
       type: panel
@@ -32,10 +29,7 @@ resources:
           content: <
           on_click:
             - $selection_scope.selectPreviousIndex()
-            - handler: yui_invoke_event
-                parameters:
-                  event: item_selected
-                  data: $selection_scope.selected_item
+            - $on_item_selected($selection_scope.selected_item)
 
         // content
         - $content_template
@@ -48,7 +42,4 @@ resources:
           content: >
           on_click: 
             - $selection_scope.selectNextIndex()
-            - handler: yui_invoke_event
-                parameters:
-                  event: item_selected
-                  data: $selection_scope.selected_item
+            - $on_item_selected($selection_scope.selected_item)
