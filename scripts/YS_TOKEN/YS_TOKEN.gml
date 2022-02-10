@@ -31,15 +31,10 @@ enum YS_TOKEN {
 	// e.g. @,$,#,! are prefix operators?
 	
 	// primary
-	IDENTIFIER, // plain identifier (for lambdas)
+	IDENTIFIER, // plain identifier (for subscript and lambdas)
 	BINDING_IDENTIFIER, // @bind
 	SLOT_IDENTIFIER, // $slot
 	RESOURCE_IDENTIFIER, // &resource
-	
-	FUNCTION_IDENTIFIER, // function(
-	
-	// using ! here means no $foo == !$bar weird...
-	SPECIAL_IDENTIFIER, // !special
 	
 	// values
 	STRING,

@@ -26,7 +26,7 @@ function YsParser(tokens, eof_token)
 	prefix(YS_TOKEN.BINDING_IDENTIFIER, new YsBindingParselet());
 	prefix(YS_TOKEN.SLOT_IDENTIFIER, new YsSlotParselet());
 	prefix(YS_TOKEN.RESOURCE_IDENTIFIER, new YsResourceParselet());
-	prefix(YS_TOKEN.FUNCTION_IDENTIFIER, new YsFunctionParselet());	
+	prefix(YS_TOKEN.IDENTIFIER, new YsFunctionParselet());
 			
 	prefix(YS_TOKEN.LEFT_PAREN, new GsplGroupParselet(YS_TOKEN.RIGHT_PAREN));
 	
@@ -50,7 +50,7 @@ function YsParser(tokens, eof_token)
 				
 	// member access e.g. foo.bar
 	infix(YS_TOKEN.DOT,
-		new GsplSubscriptParselet(YS_PRECEDENCE.CALL, YS_TOKEN.STRING));
+		new GsplSubscriptParselet(YS_PRECEDENCE.CALL, YS_TOKEN.IDENTIFIER, YS_TOKEN.STRING));
 		
 	// indexing e.g. map[key]
 	infix(YS_TOKEN.LEFT_BRACKET,
