@@ -21,3 +21,19 @@ global.__yui_globals.placement_map = {
 	right_middle: YUI_PLACEMENT_MODE.RightCenter,
 	right_bottom: YUI_PLACEMENT_MODE.RightBottom,	
 };
+
+// color constants available in yui files
+global.__yui_globals.color_table = {
+	white: c_white,
+	black: c_black,
+	aqua: c_aqua,
+	maroon: c_maroon,
+	red: c_red,
+	green: c_green,
+	gray: c_gray,
+	lightgray: 0xD3D3D3,
+	darkgray: 0xA9A9A9,
+	grey: c_gray,
+	lightgrey: 0xD3D3D3,
+	darkgrey: 0xA9A9A9,
+};

@@ -1,20 +1,7 @@
 /// @description here
 function yui_resolve_color(color_value) {	
 	
-	static color_table = {
-		white: c_white,
-		black: c_black,
-		aqua: c_aqua,
-		maroon: c_maroon,
-		red: c_red,
-		green: c_green,
-		gray: c_gray,
-		lightgray: 0xD3D3D3,
-		darkgray: 0xA9A9A9,
-		grey: c_gray,
-		lightgrey: 0xD3D3D3,
-		darkgrey: 0xA9A9A9,
-	};
+	static color_table = global.__yui_globals.color_table;
 	
 	if is_string(color_value) {
 		if string_char_at(color_value, 1) == "#" {
