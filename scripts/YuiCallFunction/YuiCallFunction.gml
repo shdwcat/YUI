@@ -34,6 +34,11 @@ function YuiCallFunction(func_name, args) constructor {
 			}
 		
 			resolve = function(data) {
+								
+				if function_index == undefined {
+					yui_warning("could not find script or built-in function with name: " + func_name);
+					return;
+				}
 			
 				resolved_args = array_create(arg_count);
 				var i = 0; repeat arg_count {

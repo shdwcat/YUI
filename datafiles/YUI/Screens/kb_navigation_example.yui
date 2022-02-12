@@ -21,11 +21,11 @@ root:
             - type: button
               autofocus: true
               content: Start New Game
-              on_click: >> start_new_game()
+              on_click: @@ start_new_game()
             
             - type: button
               content: Continue Game
-              on_click: >> continue_game()
+              on_click: @@ continue_game()
 
             - type: button
               content: Bonuses
