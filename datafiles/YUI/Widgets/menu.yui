@@ -36,6 +36,7 @@ resources:
 
         type: panel
         layout: $menu_layout
+        spacing: 0
         elements: $menu_items
         template:
 
@@ -58,8 +59,11 @@ resources:
                   - type: image
                     size: 24
                     image: @icon_sprite
+                    visible: $is_submenu
                   - $item_template
-              on_click: @command
+              on_click:
+                - @command()
+                - e => e.source.closePopup(true) // recursive
 
             check_item:
               type: button
@@ -75,15 +79,28 @@ resources:
                 elements:
                   - type: image
                     visible: @is_checked
+                    sprite: yui_icon_checkmark
                     size: 24
-                    sprite: glowing_icons
-                    frame: 14
                   - $item_template
-              on_click: @command
+              on_click: @command()
 
             submenu:
               type: button
               padding: [29, 5, 5, 5]
+              bg_sprite: null
+              bg_color: #18263A
+              content: $item_template
+              popup:
+                placement: $menu_placement
+                content:
+                  type: menu
+                  menu_items: @children
+                  menu_layout: vertical
+                  menu_placement: right_top
+
+            topmenu:
+              type: button
+              padding: [15, 5]
               bg_sprite: null
               bg_color: #18263A
               content: $item_template

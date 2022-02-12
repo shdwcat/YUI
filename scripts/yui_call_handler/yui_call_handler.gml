@@ -31,10 +31,6 @@ function yui_call_handler(handler, args, data) {
 		handler.call(data, args);
 	}
 	else {
-		// fallback to this so I can switch more things without breaking everything
-		yui_handle_event(handler, data);
-		// TODO: fix issue where this can happen when using a $slot binding in an
-		// array of handlers (see dropdown_menu.yui item click handler)
-		//yui_error("unsupported event handler instance");
+		yui_error("unsupported event handler instance");
 	}
 }

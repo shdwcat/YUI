@@ -33,6 +33,13 @@ root:
       elements:
 
         - type: text
+          text: Menu
+          text_style: subtitle
+
+        - type: menu
+          menu_items: @menu
+
+        - type: text
           text: Checkbox
           text_style: subtitle
 
