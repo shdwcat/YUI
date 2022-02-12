@@ -58,26 +58,13 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	bg_color = yui_resolve_color(yui_bind(props.bg_color, resources, slot_values));
 	border_color = yui_resolve_color(yui_bind(props.border_color, resources, slot_values));
 	
-	props.on_click = yui_resolve_command(props.on_click, resources, slot_values);
-	
 	// set up popup mode
-	if props.popup {
-				
+	if props.popup {				
 		props.popup.type = "popup";
-		popup_element = yui_resolve_element(props.popup, resources, slot_values);	
-		
-		props.on_click = new YuiMethodCommand(function() {
-			return function(prev_state, next_state) {
-				next_state.popup_visible = !prev_state.popup_visible;
-			}
-		});
-		
-		props.events.on_click_outside = new YuiMethodCommand(function() {
-			return function(prev_state, next_state) {				
-				next_state.popup_visible = false;
-			}
-		});
+		popup_element = yui_resolve_element(props.popup, resources, slot_values);
 	}
+	
+	props.on_click = yui_bind_handler(props.on_click, resources, slot_values);
 	
 	// ===== functions =====
 	

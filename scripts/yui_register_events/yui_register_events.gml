@@ -2,7 +2,12 @@
 function yui_register_events(events) {
 	if events.on_mouse_down {
 		left_pressed = function() {
-			yui_handle_event(events.on_mouse_down, data_context);
+			var source = self;
+			var args = {
+				source: source,
+				button: "left",
+			};
+			yui_call_handler(events.on_mouse_down, [args], data_context);
 		}
 	}
 }

@@ -41,10 +41,10 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	type = props._type; // TODO: string hash this for faster comparison
 	
 	props.events = yui_init_props(props.events, base_events);
-	props.events.on_mouse_down = yui_resolve_command(props.events.on_mouse_down, resources, slot_values);
-	props.events.on_mouse_up = yui_resolve_command(props.events.on_mouse_up, resources, slot_values);
-	props.events.on_click = yui_resolve_command(props.events.on_click, resources, slot_values);
-	props.events.on_click_outside = yui_resolve_command(props.events.on_click_outside, resources, slot_values);
+	props.events.on_mouse_down = yui_bind_handler(props.events.on_mouse_down, resources, slot_values);
+	props.events.on_mouse_up = yui_bind_handler(props.events.on_mouse_up, resources, slot_values);
+	props.events.on_click = yui_bind_handler(props.events.on_click, resources, slot_values);
+	props.events.on_click_outside = yui_bind_handler(props.events.on_click_outside, resources, slot_values);
 	
 	YuiCursorManager.participation_hash.hashArray(props.interactions);
 	
