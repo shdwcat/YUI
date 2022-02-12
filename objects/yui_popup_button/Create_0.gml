@@ -47,10 +47,13 @@ left_click = function() {
 	}
 }
 
-closePopup = function() {
+closePopup = function(close_parent = false) {
 	is_popup_visible = false;
 	if popup_item {
 		instance_destroy(popup_item);
 		popup_item = undefined;
+	}
+	if parent && close_parent {
+		parent.closePopup(true);
 	}
 }

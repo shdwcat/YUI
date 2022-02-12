@@ -143,14 +143,13 @@ findAncestor = function(type) {
 	throw yui_error("could not find ancestor with type " + type);
 }
 
-closePopup = function() {
+closePopup = function(close_parent = false) {
 	var ancestor = parent;
 	while ancestor != undefined {
 		if ancestor.object_index == yui_popup_button {
-			ancestor.closePopup();
+			ancestor.closePopup(close_parent);
 			return;
 		}
 		ancestor = ancestor.parent;
 	}
-	yui_warning("could not find popup to close");
 }
