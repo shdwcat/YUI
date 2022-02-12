@@ -31,7 +31,7 @@ function YuiTheme(_theme_id, _props) constructor {
 	}
 	
 	theme_id = _theme_id;
-	props = init_props_old(_props);
+	props = yui_init_props(_props);
 	
 	// register theme
 	YuiGlobals.themes[? theme_id] = self;

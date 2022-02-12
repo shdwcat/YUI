@@ -27,7 +27,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		template: undefined, // the template to use when rendering elements from the path
 	};
 	
-	props = init_props_old(_props);
+	props = yui_init_props(_props);
 	yui_resolve_theme();
 	
 	props.elements = yui_bind(props.elements, resources, slot_values);

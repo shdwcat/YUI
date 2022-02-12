@@ -12,7 +12,6 @@
     {"id":{"name":"yui_icon_info","path":"sprites/yui_icon_info/yui_icon_info.yy",},"order":9,},
     {"id":{"name":"YsFunctionParselet","path":"scripts/YsFunctionParselet/YsFunctionParselet.yy",},"order":3,},
     {"id":{"name":"YuiTheme","path":"scripts/YuiTheme/YuiTheme.yy",},"order":21,},
-    {"id":{"name":"init_props_old","path":"scripts/init_props_old/init_props_old.yy",},"order":4,},
     {"id":{"name":"yui_calc_popup_space","path":"scripts/yui_calc_popup_space/yui_calc_popup_space.yy",},"order":2,},
     {"id":{"name":"yui_icon_redo","path":"sprites/yui_icon_redo/yui_icon_redo.yy",},"order":2,},
     {"id":{"name":"scribble_anim_blink","path":"scripts/scribble_anim_blink/scribble_anim_blink.yy",},"order":0,},

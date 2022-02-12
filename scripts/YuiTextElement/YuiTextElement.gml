@@ -20,7 +20,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		typist: undefined, // controls typewriter behavior
 	};
 	
-	props = init_props_old(_props);
+	props = yui_init_props(_props);
 	yui_resolve_theme();
 	
 	props.text = yui_bind(props.text, resources, slot_values);

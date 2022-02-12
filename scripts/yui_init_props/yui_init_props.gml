@@ -2,9 +2,9 @@
 /// @description fills in any missing fields in the provided props with values from default_props
 /// @param _props		- the props to fill in
 /// @param [base_props]	- the base props for this struct
-function yui_init_props(_props) {
-	var is_base = argument_count > 1;
-	var _default_props = is_base ? argument[1] : default_props;
+function yui_init_props(_props, _default_props = undefined) {
+	var is_base = _default_props != undefined;
+	_default_props ??= default_props;
 	
 	if is_undefined(_props) {
 		_props = {};

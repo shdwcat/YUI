@@ -14,7 +14,7 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		padding: undefined,
 	}
 	
-	props = init_props_old(_props);
+	props = yui_init_props(_props);
 	yui_resolve_theme();
 	
 	props.placement = yui_bind(props.placement, resources, slot_values);

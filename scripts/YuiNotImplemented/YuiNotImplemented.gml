@@ -5,7 +5,7 @@ function YuiNotImplemented(_props, _resources, _slot_values) : YuiBaseElement(_p
 		padding: 0,
 	}
 	
-	props = init_props_old(_props);
+	props = yui_init_props(_props);
 	
 	// ===== functions =====
 	

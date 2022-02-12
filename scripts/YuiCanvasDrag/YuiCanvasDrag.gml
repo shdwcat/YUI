@@ -18,7 +18,7 @@ function YuiCanvasDrag(_props, _resources) constructor {
 		trace: false,
 	};
 	
-	props = init_props_old(_props);
+	props = yui_init_props(_props);
 	resources = _resources;
 	
 	

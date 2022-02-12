@@ -15,7 +15,7 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		blend_color: c_white,
 	};
 	
-	props = init_props_old(_props);
+	props = yui_init_props(_props);
 	yui_resolve_theme();
 	props.padding = yui_resolve_padding(props.padding);
 	

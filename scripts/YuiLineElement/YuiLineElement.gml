@@ -12,7 +12,7 @@ function YuiLineElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		color: c_white,
 	};
 	
-	props = init_props_old(_props);
+	props = yui_init_props(_props);
 	yui_resolve_theme();
 	
 	props.line_start = yui_bind_struct(props.line_start, resources, slot_values);
