@@ -23,6 +23,9 @@ function yui_resolve_padding(padding) {
             result.bottom = result.top;
         }
     }
+	else if is_struct(padding) {
+		result = padding;
+	}
 		
 	result.w = result.left + result.right;
 	result.h = result.top + result.bottom;
