@@ -10,6 +10,13 @@ root:
   layout: canvas // canvas can be used to position elements arbitrarily within the panel, or along the edges
   elements: // this defines the child elements of the canvas
 
+    // helper message about live reload state
+    - type: text
+      text: @live_reload_label + ' - ' + @live_reload_message
+      canvas:
+        left: 5
+        bottom: 5
+
     - type: main_panel // this is an example of a YUI fragment,
                        // check out the main_panel.yui file referenced above
       canvas: // when the parent panel's layout is set to 'canvas',

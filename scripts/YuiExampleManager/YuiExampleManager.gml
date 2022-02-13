@@ -15,5 +15,25 @@ function YuiExampleManager() constructor {
 	
 	widget_data = new WidgetGalleryData();
 	
+	// set live reload status
+	switch YUI_LIVE_RELOAD_STATE {
+		case YUI_LIVE_RELOAD_STATES.NOT_CONFIGURED:
+			live_reload_label = "Live Reload: NOT CONFIGURED";
+			live_reload_message = "Live Reload is not configured. See instructions in Configure Me! (YUI) folder in the Asset Browser";
+			break;
+		case YUI_LIVE_RELOAD_STATES.SANDBOX_ENABLED:
+			live_reload_label = "Live Reload: DISABLED";
+			live_reload_message = "File System Sandbox must be disabled for Live Reload. Check Game Options > Windows.";
+			break;
+		case YUI_LIVE_RELOAD_STATES.FOLDER_INCORRECT:
+			live_reload_label = "Live Reload: ERROR";
+			live_reload_message = "Project datafiles folder does not exist: " + YUI_LOCAL_PROJECT_DATA_FOLDER;
+			break;
+		case YUI_LIVE_RELOAD_STATES.ENABLED:
+			live_reload_label = "Live Reload: ENABLED";
+			live_reload_message = "Press F5 to reload .yui files from disk";
+			break;
+	}
+	
 	yui_log("Example project loaded");
 }

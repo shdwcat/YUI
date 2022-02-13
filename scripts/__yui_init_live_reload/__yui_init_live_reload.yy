@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Configure Me! (YUI)",
-    "path": "folders/Configure Me! (YUI).yy",
+    "name": "Packages - YUI",
+    "path": "folders/Packages - YUI.yy",
   },
   "resourceVersion": "1.0",
-  "name": "__YuiConfiguration__",
+  "name": "__yui_init_live_reload",
   "tags": [],
   "resourceType": "GMScript",
 }

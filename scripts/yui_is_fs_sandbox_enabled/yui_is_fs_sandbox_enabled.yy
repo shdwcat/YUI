@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Configure Me! (YUI)",
-    "path": "folders/Configure Me! (YUI).yy",
+    "name": "scripts",
+    "path": "folders/Packages - YUI/scripts.yy",
   },
   "resourceVersion": "1.0",
-  "name": "__YuiConfiguration__",
+  "name": "yui_is_fs_sandbox_enabled",
   "tags": [],
   "resourceType": "GMScript",
 }

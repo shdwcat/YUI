@@ -16,27 +16,6 @@
 
 
 
-
-
-// ========= Validation Section - DO NOT EDIT =========
-
-if YUI_USER_PROJECT_DATA_FOLDER == undefined {
-	yui_warning("YUI Live Reload is not configured! Please edit __YuiConfiguration__ to enable.")
-}
-
-
-
-// ========= Live Reload Set-Up Section - DO NOT EDIT =========
-
-#macro YUI_LOCAL_PROJECT_DATA_FOLDER global.__yui_local_project_data_folder
-
-YUI_LOCAL_PROJECT_DATA_FOLDER = YUI_USER_PROJECT_DATA_FOLDER;
-
-if YUI_LOCAL_PROJECT_DATA_FOLDER == undefined {
-	
-	// fallback handling to run on @shdwcat's machine :P
-	YUI_LOCAL_PROJECT_DATA_FOLDER = "D:/Projects/Game Design/YUI/datafiles/";
-}
-
-global.__yui_live_reload_enabled = directory_exists(YUI_LOCAL_PROJECT_DATA_FOLDER);
+// actually do the init - DO NOT DELETE THIS!
+__yui_init_live_reload();
 
