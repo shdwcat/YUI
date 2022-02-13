@@ -30,6 +30,7 @@ load = function() {
 	document = new YuiDocument(yui_file);
 	document_error = document.load_error
 	if document_error != undefined {
+		root = undefined;
 		return;
 	}	
 	
