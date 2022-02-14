@@ -9,6 +9,9 @@ onLayoutInit = function() {
 
 build = function() {
 	trace = yui_element.props.trace; // hack
+	
+	// TODO:
+	//opacity = bound_value.opacity * parent.opacity
 
 	color = bound_values.color;
 	width = bound_values.width;

@@ -19,7 +19,7 @@ build = function() {
 	}
 	
 	image_angle = bound_values.angle;
-	image_alpha = bound_values.opacity;	
+	image_alpha = bound_values.opacity * parent.opacity;
 	blend_color = bound_values.blend_color;
 	
 	if trace {

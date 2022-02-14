@@ -67,10 +67,12 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		var is_visible = yui_resolve_binding(props.visible, data);
 		if !is_visible return false;
 		
+		var opacity = yui_resolve_binding(props.opacity, data);
 		var placement = yui_resolve_binding(props.placement, data);
 		
 		// diff
 		if prev
+			&& opacity == prev.opacity
 			&& placement == prev.placement
 		{
 			return true;
@@ -79,10 +81,13 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		return {
 			is_live: is_bound,
 			data_source: data,
+			// border
 			bg_sprite: undefined, // not yet implemented here
 			bg_color: props.bg_color,
 			border_color: props.border_color,
 			border_thickness: props.border_thickness,
+			// popup
+			opacity: opacity,
 			placement: placement,
 		};
 	}

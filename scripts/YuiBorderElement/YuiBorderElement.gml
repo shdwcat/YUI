@@ -59,9 +59,11 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		var is_visible = yui_resolve_binding(props.visible, data);
 		if !is_visible return false;
 		
+		var opacity = yui_resolve_binding(props.opacity, data);
 		
 		// diff
-		if prev // currently nothing else is bindable
+		if prev
+			&& opacity == prev.opacity
 		{
 			return true;
 		}
@@ -69,6 +71,7 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		return {
 			is_live: is_bound,
 			data_source: data,
+			opacity: opacity,
 			bg_sprite: bg_sprite,
 			bg_color: bg_color,
 			border_color: border_color,

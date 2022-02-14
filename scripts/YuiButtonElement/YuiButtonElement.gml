@@ -95,10 +95,12 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		if !is_visible return false;
 		
 		var enabled = yui_resolve_binding(props.enabled, data);
+		var opacity = yui_resolve_binding(props.opacity, data);
 		
 		// diff
 		if prev
 			&& enabled == prev.enabled
+			&& opacity == prev.opacity
 		{
 			return true;
 		}
@@ -111,6 +113,7 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 			border_color: border_color,
 			border_thickness: props.border_thickness,
 			enabled: enabled,
+			opacity: opacity,
 		};
 		
 		if props.popup {

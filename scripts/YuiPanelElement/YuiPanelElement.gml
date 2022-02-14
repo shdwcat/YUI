@@ -96,6 +96,8 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		var is_visible = yui_resolve_binding(props.visible, data);
 		if !is_visible return false;
 		
+		var opacity = yui_resolve_binding(props.opacity, data);
+		
 		if props.template != undefined {
 			if props.elements == undefined throw "cannot use 'template' without 'elements'";
 			
@@ -124,6 +126,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		
 		// diff
 		if prev
+			&& opacity == prev.opacity
 			&& child_count == prev.child_count
 			&& array_equals(item_elements, prev.item_elements)
 			&& array_equals(data_items, prev.data_items)
@@ -135,6 +138,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			is_live: is_bound,
 			// border
 			data_source: data,
+			opacity: opacity,
 			bg_sprite: bg_sprite,
 			bg_color: bg_color,
 			border_color: border_color,

@@ -3,6 +3,8 @@
 // Inherit the parent event
 event_inherited();
 
+has_content_item = false;
+
 internal_children = [];
 is_arranging = false;
 used_layout_size = undefined;

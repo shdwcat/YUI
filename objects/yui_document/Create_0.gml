@@ -8,6 +8,8 @@ root = undefined;
 // defining this makes 'visual ancestor' search code simpler
 parent = undefined;
 
+opacity = 1;
+
 // the space we were given to draw in
 if is_full_screen {
 	draw_rect = {

@@ -7,6 +7,9 @@ event_inherited();
 template_item = undefined;
 
 build = function() {
+	
+	opacity = parent.opacity
+	
 	// make/update the child item
 	if template_item {
 		instance_destroy(template_item);

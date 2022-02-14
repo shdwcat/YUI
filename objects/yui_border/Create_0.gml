@@ -9,16 +9,21 @@ default_props = {
 	content: "This is a test! Big Test! This is a test! Big Test!This is a test! Big Test!This is a test! Big Test!",
 }
 
+has_content_item = true; // yui_panel sets this to false
 content_item = undefined;
 
 onLayoutInit = function() {
-	if layout_props.content_element != undefined {
-		content_item = yui_make_render_instance(layout_props.content_element, data_context);
-	}
 }
 
 build = function() {
 	trace = yui_element.props.trace; // hack
+	
+	opacity = bound_values.opacity * parent.opacity;
+	
+	// have to do this after opacity
+	if has_content_item && layout_props.content_element != undefined {
+		content_item = yui_make_render_instance(layout_props.content_element, data_context);
+	}
 	
 	if bound_values.bg_color != undefined {
 		bg_color = bound_values.bg_color;
