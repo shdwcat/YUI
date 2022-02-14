@@ -83,6 +83,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			return false;
 		}
 		
+		var opacity = yui_resolve_binding(props.opacity, data);
 		var color = yui_resolve_binding(self.color, data);
 		
 		// handle text array by joining the values		
@@ -117,6 +118,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		// diff
 		if prev
 			&& text == prev.text
+			&& opacity == prev.opacity
 			&& color == prev.color
 			&& typist == prev.typist
 		{
@@ -127,6 +129,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			is_live: is_bound,
 			text: text,
 			font: font,
+			opacity: opacity,
 			color: color,
 			autotype: props.autotype,
 			typist: typist,

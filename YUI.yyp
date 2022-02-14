@@ -220,6 +220,7 @@
     {"id":{"name":"GsplTimeSpan","path":"scripts/GsplTimeSpan/GsplTimeSpan.yy",},"order":0,},
     {"id":{"name":"YuiTestData","path":"scripts/YuiTestData/YuiTestData.yy",},"order":3,},
     {"id":{"name":"scribble_external_sound_exists","path":"scripts/scribble_external_sound_exists/scribble_external_sound_exists.yy",},"order":3,},
+    {"id":{"name":"yui_white_pixel","path":"sprites/yui_white_pixel/yui_white_pixel.yy",},"order":8,},
     {"id":{"name":"__scribble_font_add_from_project","path":"scripts/__scribble_font_add_from_project/__scribble_font_add_from_project.yy",},"order":5,},
     {"id":{"name":"_yui_sprite_credits","path":"notes/_yui_sprite_credits/_yui_sprite_credits.yy",},"order":0,},
     {"id":{"name":"GsplInfixCallParselet","path":"scripts/GsplInfixCallParselet/GsplInfixCallParselet.yy",},"order":6,},

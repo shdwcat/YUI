@@ -9,10 +9,6 @@ function yui_init_props(_props, _default_props = undefined) {
 		if (default_props != undefined) {
 			_default_props = default_props;
 		}
-		else {
-			DEBUG_BREAK_YUI;
-			_default_props = {};
-		}
 	}
 	
 	if is_undefined(_props) {

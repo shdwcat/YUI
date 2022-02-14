@@ -19,6 +19,7 @@ build = function() {
 	
 	// used in Draw GUI
 	text_color = bound_values.color;
+	opacity = bound_values.opacity; // * parent.opacity
 		
 	scribble_element = scribble(bound_values.text, string(id))
 		.starting_format(bound_values.font)

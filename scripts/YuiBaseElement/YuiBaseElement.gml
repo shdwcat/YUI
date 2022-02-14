@@ -4,16 +4,18 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		item_key: undefined, // identifies an element in an array (must bind to unique value on data!)
 		
 		// TODO: define theme here
-		
+				
 		focusable: false, // whether the item can be focused for kb/gamepad
 		autofocus: false, // whether to auto focus this item on creation (overrides previous focus)
 		
+		data_source: undefined, // enables overriding the data context with something else
+		
 		visible: true,
+		opacity: 1, // 0-1, like alpha
 		size: "auto", // can also be { w: val, h: val } where val can be a number or "auto" | "content"
 		alignment: "default",
 		canvas: undefined,
 		
-		data_source: undefined, // enables overriding the data context with something else
 		tooltip: undefined, // @bindable tooltip text/content
 		tooltip_width : 500,
 		tooltip_placement: YUI_PLACEMENT_MODE.BottomLeft, // where to place the tooltip
@@ -53,10 +55,11 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	var canvas_binding = yui_bind(props.canvas, resources, slot_values);
 	canvas = new YuiCanvasPosition(canvas_binding, resources, slot_values);
 	
-	// move this to YuiPanelElement
+	// TODO: move this to YuiPanelElement?
 	alignment = new YuiElementAlignment(yui_bind(props.alignment, resources, slot_values));
 		
 	props.visible = yui_bind(props.visible, resources, slot_values);
+	props.opacity = yui_bind(props.opacity, resources, slot_values);
 	props.item_key = yui_bind(props.item_key, resources, slot_values);
 	props.tooltip = yui_bind(props.tooltip, resources, slot_values);
 	
@@ -64,6 +67,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	
 	base_is_bound = yui_is_live_binding(props.data_source)
 		|| yui_is_live_binding(props.visible)
+		|| yui_is_live_binding(props.opacity)
 		|| yui_is_live_binding(props.tooltip)
 		|| yui_is_live_binding(props.size)
 		|| yui_is_live_binding(props.canvas)
