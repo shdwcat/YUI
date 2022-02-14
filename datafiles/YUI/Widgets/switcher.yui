@@ -23,8 +23,7 @@ resources:
 
         // switch left
         - type: button
-          bg_sprite: null
-          bg_color: #2f2f2f
+          background: #2f2f2f
           enabled: $selection_scope.selected_index > 0
           content: <
           on_click:
@@ -36,8 +35,7 @@ resources:
 
         // switch right
         - type: button
-          bg_sprite: null
-          bg_color: #2f2f2f
+          background: #2f2f2f
           enabled: $selection_scope.canSelectNextIndex()
           content: >
           on_click: 

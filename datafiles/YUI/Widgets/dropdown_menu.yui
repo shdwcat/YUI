@@ -51,8 +51,7 @@ resources:
       type: button
       id: dropdown_button
       padding: 2
-      bg_sprite: null
-      bg_color: #06162A
+      background: #06162A
       border_color: #2183C0
       content:
         type: panel
@@ -76,8 +75,7 @@ resources:
           template:
             type: button
             padding: 5
-            bg_sprite: null
-            bg_color: #06162A
+            background: #06162A
             content: $item_template
             on_click:
               // invoke the item_selected event on the root widget

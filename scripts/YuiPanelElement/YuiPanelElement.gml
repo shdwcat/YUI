@@ -13,6 +13,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		// .horizontal:"left"|"right"|"stretch" - "center" not yet supported
 		
 		// visuals
+		background: undefined,
 		bg_sprite: undefined,
 		bg_color: undefined,
 		border_color: undefined,
@@ -41,21 +42,24 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	var makeLayout = yui_resolve_layout(props.layout);
 	layout = new makeLayout(alignment, props.padding, spacing);
 	
-	// resolve bg_sprite
-	var use_theme = props.bg_sprite == undefined && props.bg_color == undefined;
-	if use_theme {
-		bg_sprite = undefined;
-		//bg_sprite = theme.button.bg_sprite;
-	}
-	else if props.bg_sprite != undefined {
-		bg_sprite = yui_resolve_sprite_by_name(props.bg_sprite, _resources);
+	// resolve slot/resource (not bindable currently)
+	var background_expr = yui_bind(props.background, resources, slot_values);
+	if background_expr != undefined {
+		var bg_spr = yui_resolve_sprite_by_name(background_expr);
+		if bg_spr {
+			bg_sprite = bg_spr;
+			bg_color = undefined;
+		}
+		else {
+			bg_color = yui_resolve_color(background_expr);
+			bg_sprite = undefined;
+		}
 	}
 	else {
+		bg_color = undefined;
 		bg_sprite = undefined;
 	}
 	
-	// resolve colors
-	bg_color = yui_resolve_color(yui_bind(props.bg_color, resources, slot_values));
 	border_color = yui_resolve_color(yui_bind(props.border_color, resources, slot_values));
 	
 	if props.template != undefined {	

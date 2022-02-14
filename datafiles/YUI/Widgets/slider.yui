@@ -5,6 +5,23 @@ import:
 
 resources:
 
+  meter:
+    type: panel
+    layout: canvas
+    size: { w: 200, h: 50 }
+    elements:
+      - type: image
+        sprite: spr_container
+        size: stretch
+        
+      - type: image
+        sprite: spr_gauge
+        size: stretch
+        canvas:
+          normalized: true
+          right: @value / @max
+
+
   slider:
     type: template
 
@@ -16,7 +33,7 @@ resources:
       show_value: true
 
       orientation: horizontal
-      thumb_color: #AA00AA
+      thumb_background: #AA00AA
 
     template:
 
@@ -41,8 +58,7 @@ resources:
                 normalized: true
                 left: $value / ($max - $min)
               // trace: true
-              bg_sprite: null
-              bg_color: $thumb_color
+              background: $thumb_background
               size: { h: 20, w: 8 }
               events:
                 on_mouse_down:
@@ -54,7 +70,7 @@ resources:
             - type: border
               canvas:
                 center: v
-              bg_color: #888888
+              background: #888888
               size: { h: 2, w: stretch }
 
         - type: text

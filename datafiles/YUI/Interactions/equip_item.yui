@@ -16,7 +16,7 @@ drag:
     // NOTE: import does not work in interactions yet :(
     type: panel
     layout: horizontal
-    bg_color: black // note that we can use the name of any built in GMS color
+    background: black // note that we can use the name of any built in GMS color
     border_color: white
     border_thickness: 1
     padding: 1

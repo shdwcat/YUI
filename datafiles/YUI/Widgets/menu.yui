@@ -47,8 +47,7 @@ resources:
             item:
               type: button
               padding: 0
-              bg_sprite: null
-              bg_color: #18263A
+              background: #18263A
               content:
                 type: panel
                 layout: horizontal
@@ -68,8 +67,7 @@ resources:
             check_item:
               type: button
               padding: 0
-              bg_sprite: null
-              bg_color: #18263A
+              background: #18263A
               content:
                 type: panel
                 layout: horizontal
@@ -87,8 +85,7 @@ resources:
             submenu:
               type: button
               padding: [29, 5, 5, 5]
-              bg_sprite: null
-              bg_color: #18263A
+              background: #18263A
               content: $item_template
               popup:
                 placement: $menu_placement
@@ -101,8 +98,7 @@ resources:
             topmenu:
               type: button
               padding: [15, 5]
-              bg_sprite: null
-              bg_color: #18263A
+              background: #18263A
               content: $item_template
               popup:
                 placement: $menu_placement

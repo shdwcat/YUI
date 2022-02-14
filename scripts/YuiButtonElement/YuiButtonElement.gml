@@ -6,6 +6,7 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		
 		focusable: true,
 		
+		background: undefined,
 		bg_sprite: undefined,
 		bg_sprite_size: undefined,
 		bg_color: undefined,
@@ -43,19 +44,26 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	
 	content_element = yui_resolve_element(props.content, resources, slot_values);
 	
-	var use_theme_bg = props.bg_sprite == undefined && props.bg_color == undefined;
-	if use_theme_bg {
-		bg_sprite = theme.button.bg_sprite;
-	}
-	else if props.bg_sprite != undefined {
-		bg_sprite = yui_resolve_sprite_by_name(props.bg_sprite, _resources);
+	// resolve slot/resource (not bindable currently)
+	var background_expr = yui_bind(props.background, resources, slot_values)
+		?? theme.button.background;
+		
+	if background_expr != undefined {
+		var bg_spr = yui_resolve_sprite_by_name(background_expr);
+		if bg_spr != undefined {
+			bg_sprite = bg_spr;
+			bg_color = undefined;
+		}
+		else {
+			bg_color = yui_resolve_color(background_expr);
+			bg_sprite = undefined;
+		}
 	}
 	else {
+		bg_color = undefined;
 		bg_sprite = undefined;
 	}
 	
-	// resolve color
-	bg_color = yui_resolve_color(yui_bind(props.bg_color, resources, slot_values));
 	border_color = yui_resolve_color(yui_bind(props.border_color, resources, slot_values));
 	
 	// set up popup mode

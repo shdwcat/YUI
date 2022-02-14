@@ -5,6 +5,9 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 
 		// visuals
 		theme: "default",
+		
+		background: undefined,
+		
 		bg_sprite: undefined,
 		bg_color: undefined,
 		border_color: undefined,
@@ -20,22 +23,25 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	
 	props.padding = yui_resolve_padding(props.padding);
 	content_element = yui_resolve_element(props.content, resources, slot_values);
-
-	// resolve bg_sprite
-	var use_theme = props.bg_sprite == undefined && props.bg_color == undefined;
-	if use_theme {
-		bg_sprite = undefined;
-		//bg_sprite = theme.button.bg_sprite;
-	}
-	else if props.bg_sprite != undefined {
-		bg_sprite = yui_resolve_sprite_by_name(props.bg_sprite, _resources);
+	
+	// resolve slot/resource (not bindable currently)
+	var background_expr = yui_bind(props.background, resources, slot_values);
+	if background_expr != undefined {
+		var bg_spr = yui_resolve_sprite_by_name(background_expr);
+		if bg_spr != undefined {
+			bg_sprite = bg_spr;
+			bg_color = undefined;
+		}
+		else {
+			bg_color = yui_resolve_color(background_expr);
+			bg_sprite = undefined;
+		}
 	}
 	else {
+		bg_color = undefined;
 		bg_sprite = undefined;
 	}
 	
-	// resolve color
-	bg_color = yui_resolve_color(yui_bind(props.bg_color, resources, slot_values));
 	border_color = yui_resolve_color(yui_bind(props.border_color, resources, slot_values));
 	
 	is_bound = base_is_bound;
