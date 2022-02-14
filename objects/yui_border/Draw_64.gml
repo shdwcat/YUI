@@ -20,10 +20,9 @@ if bg_alpha > 0 {
 
 // draw border
 if border_color != undefined &&	border_thickness > 0 && border_alpha > 0 {	
-	var prev_alpha = draw_get_alpha();
-	draw_set_alpha(border_alpha * opacity);
+	
 	yui_draw_rect_outline(
 		draw_size.x, draw_size.y, draw_size.w, draw_size.h,
-		border_thickness, border_color);
-	draw_set_alpha(prev_alpha);
+		border_thickness, border_color, border_alpha * opacity);
+
 }
