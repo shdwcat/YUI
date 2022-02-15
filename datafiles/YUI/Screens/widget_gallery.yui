@@ -11,6 +11,7 @@ import:
   - ../Widgets/dropdown_menu.yui
   - ../Widgets/menu.yui
   - ../Widgets/slider.yui
+  - ../Widgets/meter_bar.yui
 
 resources:
   widget_wrapper:
@@ -72,10 +73,17 @@ root:
           text_style: subtitle
 
         - type: slider
-          size: { w: 200 }
-          max: 200
-          //orientation: vertical
           value: @slider_value
           // todo: replace this by implementing assignment syntax
           on_value_changed: @@ value => yui_set_struct_value(@, 'slider_value', value)
+
+        - type: text
+          text: Meter Bar
+          text_style: subtitle
+
+        - type: meter_bar
+          size: { w: 140, h: 20 }
+          value: @slider_value
+          background: white
+          meter_blend_color: blue
           
