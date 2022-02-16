@@ -16,7 +16,7 @@
   "option_windows_interpolate_pixels": true,
   "option_windows_vsync": false,
   "option_windows_resize_window": false,
-  "option_windows_borderless": true,
+  "option_windows_borderless": false,
   "option_windows_scale": 0,
   "option_windows_copy_exe_to_dest": false,
   "option_windows_sleep_margin": 10,

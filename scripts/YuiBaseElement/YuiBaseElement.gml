@@ -70,7 +70,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		|| yui_is_live_binding(props.opacity)
 		|| yui_is_live_binding(props.tooltip)
 		|| yui_is_live_binding(props.size)
-		|| yui_is_live_binding(props.canvas)
+		|| yui_is_live_binding(props.canvas);
 	
 	tooltip_element = undefined;
 	if props.tooltip != undefined {

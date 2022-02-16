@@ -19,7 +19,7 @@ global.__yui_globals.placement_map = {
 	bottom_right: YUI_PLACEMENT_MODE.BottomRight,
 	right_top: YUI_PLACEMENT_MODE.RightTop,
 	right_middle: YUI_PLACEMENT_MODE.RightCenter,
-	right_bottom: YUI_PLACEMENT_MODE.RightBottom,	
+	right_bottom: YUI_PLACEMENT_MODE.RightBottom,
 };
 
 // color constants available in yui files

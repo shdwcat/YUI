@@ -25,7 +25,7 @@ build = function() {
 	var excess_count = previous_count - bound_values.child_count;
 	
 	// resize the array if we need more room
-	if previous_count < bound_values.child_count {
+	if bound_values.child_count > previous_count {
 		array_resize(internal_children, bound_values.child_count);
 	}
 	
@@ -35,7 +35,7 @@ build = function() {
 		var exists = child != 0;
 		
 		if exists {
-			// TODO: if the render_object doesn't match, we need to recreate
+			// TODO: if the render item doesn't match, we need to recreate
 			// currently that's not possible so we won't worry about it
 			child.data_context = bound_values.data_items[i];
 		}
