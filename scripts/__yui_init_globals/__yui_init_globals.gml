@@ -30,8 +30,10 @@ global.__yui_globals.color_table = {
 	red: c_red,
 	green: c_green,
 	blue: c_blue,
+	yellow: c_yellow,
 	
 	aqua: c_aqua,
+	cyan: c_aqua,
 	maroon: c_maroon,
 	
 	gray: c_gray,
