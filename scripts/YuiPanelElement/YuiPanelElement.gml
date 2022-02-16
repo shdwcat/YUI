@@ -75,6 +75,9 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			i++;
 		}
 		element_count = i;
+		
+		// force layout to check if it's live
+		layout.init(item_elements, undefined);
 	}
 	
 	is_bound = base_is_bound
@@ -129,7 +132,8 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		}
 		
 		// diff
-		if prev
+		if !layout.is_live
+			&& prev
 			&& opacity == prev.opacity
 			&& child_count == prev.child_count
 			&& array_equals(item_elements, prev.item_elements)
@@ -139,7 +143,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		}
 		
 		return {
-			is_live: is_bound,
+			is_live: is_bound || layout.is_live,
 			// border
 			data_source: data,
 			opacity: opacity,

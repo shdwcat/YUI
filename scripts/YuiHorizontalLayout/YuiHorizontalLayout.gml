@@ -1,5 +1,6 @@
 /// @description here
 function YuiHorizontalLayout(alignment, padding, spacing) constructor {
+	static is_live = false;
 	
 	self.alignment = alignment;
 	self.padding = padding;

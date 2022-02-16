@@ -1,5 +1,6 @@
 /// @description here
 function YuiCanvasLayout(alignment, padding, spacing) constructor {
+	static is_live = false;
 	
 	self.alignment = alignment;
 	self.padding = padding;
@@ -11,13 +12,25 @@ function YuiCanvasLayout(alignment, padding, spacing) constructor {
 	static init = function(items, available_size) {
 		self.items = items;
 		self.available_size = available_size;
+		
+		if !is_live {
+			var i = 0; repeat array_length(items) {			
+				var item = items[i++];
+				var canvas = item.canvas;
+				
+				if canvas.is_bound {
+					is_live = true;
+					break;
+				}
+			}
+		}	
 	}
 	
 	static arrange = function(data_context) {
 		
 		var i = 0; repeat array_length(items) {
 			
-			var item = items[i];
+			var item = items[i++];
 			var canvas = item.canvas;
 			
 			var left = yui_resolve_binding(canvas.left, data_context);
@@ -67,8 +80,6 @@ function YuiCanvasLayout(alignment, padding, spacing) constructor {
 			if xoffset != 0 || yoffset != 0 {
 				item.move(xoffset, yoffset);
 			}
-			
-			i++;
 		}
 		
 		// canvas always fills the available space
@@ -94,6 +105,11 @@ function YuiCanvasPosition(canvas_position = {}, resources, slot_values) constru
 	top = yui_bind(canvas_position[$ "top"], resources, slot_values);
 	right = yui_bind(canvas_position[$ "right"], resources, slot_values);
 	bottom = yui_bind(canvas_position[$ "bottom"], resources, slot_values);
+	
+	is_bound = yui_is_live_binding(left)
+		|| yui_is_live_binding(top)
+		|| yui_is_live_binding(right)
+		|| yui_is_live_binding(bottom);
 	
 	right_aligned = right != undefined && left == undefined;
 	bottom_aligned = bottom != undefined && top == undefined;
