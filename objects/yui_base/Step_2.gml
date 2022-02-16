@@ -31,7 +31,8 @@ if is_binding_active {
 		// have build return a boolean
 		arrange(draw_rect);
 	
-		if parent {
+		// only update parent if our size actually changed
+		if is_size_changed && parent {
 			parent.onChildLayoutComplete(self);
 		}
 	}

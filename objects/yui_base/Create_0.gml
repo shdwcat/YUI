@@ -49,6 +49,8 @@ draw_size = {
 	h: bbox_bottom - bbox_top,
 };
 
+is_size_changed = false;
+
 padded_rect = { x: x, y: y, w: 0, h: 0 };
 
 initLayout = function() {
