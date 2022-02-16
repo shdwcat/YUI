@@ -69,7 +69,7 @@ arrange  = function(available_size) {
 		content_size = content_item.arrange(padded_rect);
 	}
 	else {
-		content_size = { x: padded_rect.x, y: padded_rect.y, w: 0, h:0 };
+		content_size = { x: padded_rect.x, y: padded_rect.y, w: 0, h: 0 };
 	}
 
 	var drawn_size = yui_apply_element_size(layout_props.size, available_size, {
