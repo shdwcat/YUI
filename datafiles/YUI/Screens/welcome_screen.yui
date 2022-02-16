@@ -51,7 +51,7 @@ root:
           on_click: @@ e => yui_change_screen(layout_example, e.source)
 
         - type: button
-          content: Keyboard/Gamepad Navigation
+          content: Keyboard Navigation
           on_click: @@ e => yui_change_screen(kb_navigation_example, e.source)
 
         - type: button
