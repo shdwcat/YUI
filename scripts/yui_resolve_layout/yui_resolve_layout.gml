@@ -10,6 +10,8 @@ function yui_resolve_layout(layout_type) {
 			return YuiCanvasLayout;
 		case "grid":
 			return YuiGridLayout;
+		case "radial":
+			return YuiRadialLayout;
 		default:
 			yui_error("unknown layout type:", layout_type);
 			return undefined;

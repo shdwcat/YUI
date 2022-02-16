@@ -23,10 +23,35 @@ root:
     - type: panel
       elements:
 
+        - type: text
+          text: Radial
+          text_style: subtitle
+
         - type: panel
+          border_color: cyan
+          layout: radial
+          size: 300 // NOTE: Radial layout will fill the space given to it
+          radial:
+            // radial layout requires a fixed item size
+            // can also be { w: <number>, h: <number> }
+            item_size: 50
+
+            // how many degrees of the circle to use for the items
+            // if unspecified, items will be laid out in the full circle
+            // NOTE: a negative value will place items in the opposite direction (counter-clockwise)
+            arc: 180
+
+            // angle where the items should start
+            // NOTE: in GMS 2, 0 is right, 90 is up, 180 is left, and 270 is down          
+            direction: 0 
+
+            // when true, all items will be rotate 'back' by half the arc amount 
+            // so that the 'center' of the arc faces the direction specified above
+            center_arc: false 
+
           elements:
-            - type: text
-              text_style: title
-              text: Loreum Ipsum
-            - type: text
-              text: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            - item 1
+            - item 2
+            - item 3
+            - item 4
+            - item 5

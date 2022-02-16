@@ -40,6 +40,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	props.layout = yui_bind(props.layout, resources, slot_values);
 	
 	var makeLayout = yui_resolve_layout(props.layout);
+	// TODO: padding isn't used so remove it
 	layout = new makeLayout(alignment, props.padding, spacing);
 	
 	// resolve slot/resource (not bindable currently)
@@ -77,7 +78,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		element_count = i;
 		
 		// force layout to check if it's live
-		layout.init(item_elements, undefined);
+		layout.init(item_elements, undefined, props);
 	}
 	
 	is_bound = base_is_bound
