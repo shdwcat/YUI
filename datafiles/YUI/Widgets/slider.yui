@@ -48,6 +48,7 @@ resources:
         - type: panel
           layout: canvas
           size: { h: 20, w: 100 }
+          padding: [0, 0, 15, 0]
           //trace: true
           elements:
 
@@ -59,7 +60,7 @@ resources:
                 left: $value / ($max - $min)
               // trace: true
               background: $thumb_background
-              size: { h: 20, w: 8 }
+              size: { h: 20, w: 10, min_w: 10 }
               events:
                 on_mouse_down:
                   interaction: slider_drag
@@ -69,11 +70,14 @@ resources:
             // slider line
             - type: border
               canvas:
+                left: 5
+                right: -5
                 center: v
               background: #888888
               size: { h: 2, w: stretch }
 
         - type: text
+          padding: [-5, 0, 0, 0]
           text: $max
 
         - type: text
