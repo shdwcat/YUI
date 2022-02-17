@@ -28,17 +28,6 @@ build = function() {
 }
 
 arrange = function(available_size) {
-	if !visible {
-		if layout_props.size.is_exact_size {
-			yui_resize_instance(layout_props.size.w, layout_props.size.h);
-			return draw_size;
-		}
-		return;
-	};
-	
-	if trace {
-		DEBUG_BREAK_YUI;
-	}
 
 	draw_rect = available_size;
 	
