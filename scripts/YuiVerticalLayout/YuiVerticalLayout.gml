@@ -52,20 +52,22 @@ function YuiVerticalLayout(alignment, padding, spacing) constructor {
 			y: available_size.y,
 			w: max_w,
 			h: yoffset,
-		}			
+		}
 		
 		if alignment.h == "center" {
+			var offset = (available_size.w - max_w) / 2
 			i = 0; repeat count {
-				yui_align_item(items[i++], alignment);
+				items[i++].move(offset, 0);
 			}
-			draw_size.x += (available_size.w - max_w) / 2;
+			draw_size.w = available_size.w;
 			used_size.w = available_size.w;
-		}	
+		}
 		if alignment.v == "center" {
 			var offset = (available_size.h - yoffset) / 2;
 			i = 0; repeat count {
 				items[i++].move(0, offset);
 			}
+			draw_size.h = available_size.h;
 			used_size.h = available_size.h;
 		}
 		
