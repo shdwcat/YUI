@@ -20,8 +20,14 @@ build = function() {
 	
 	opacity = bound_values.opacity * parent.opacity;
 	
-	// have to do this after opacity
-	if has_content_item && layout_props.content_element != undefined {
+	// create the content item instance if there should be one
+	// NOTE: have to do this after opacity
+	var make_content_item = 
+		has_content_item
+		&& content_item == undefined
+		&& layout_props.content_element != undefined
+		
+	if make_content_item {
 		content_item = yui_make_render_instance(layout_props.content_element, data_context);
 	}
 	
