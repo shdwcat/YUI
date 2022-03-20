@@ -4,7 +4,7 @@ resources:
   switcher_content_template:
     type: text
     padding: [0, 5, 0, 0]
-    text: $selection_scope.selected_item
+    text: $selection_scope.selected_item // refers to the switcher $selection_scope slot below
 
   switcher:
     type: template
@@ -13,6 +13,10 @@ resources:
       selection_scope: null
       on_item_selected: null
       content_template: &switcher_content_template
+
+      button_background: #2f2f2f
+      left_button_content: <
+      right_button_content: >
 
     template:
 
@@ -23,9 +27,9 @@ resources:
 
         // switch left
         - type: button
-          background: #2f2f2f
+          background: $button_background
           enabled: $selection_scope.selected_index > 0
-          content: <
+          content: $left_button_content
           on_click:
             - $selection_scope.selectPreviousIndex()
             - $on_item_selected($selection_scope.selected_item)
@@ -35,9 +39,9 @@ resources:
 
         // switch right
         - type: button
-          background: #2f2f2f
+          background: $button_background
           enabled: $selection_scope.canSelectNextIndex()
-          content: >
+          content: $right_button_content
           on_click: 
             - $selection_scope.selectNextIndex()
             - $on_item_selected($selection_scope.selected_item)
