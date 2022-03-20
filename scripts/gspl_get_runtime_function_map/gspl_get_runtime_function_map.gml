@@ -6,7 +6,10 @@ function gspl_get_runtime_function_map() {
 	var function_name = script_get_name(i);
 	
 	do {
-		result[$ function_name] = i;
+		if string_char_at(function_name, 1) != "@" {
+			result[$ function_name] = i;
+		}
+		
 		i++;
 		function_name = script_get_name(i);
 	}
