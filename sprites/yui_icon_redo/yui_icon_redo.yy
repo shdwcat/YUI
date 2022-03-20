@@ -59,7 +59,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"yui_icon_redo","path":"sprites/yui_icon_redo/yui_icon_redo.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "yui_icon_redo",
     "tags": [],
     "resourceType": "GMSequence",

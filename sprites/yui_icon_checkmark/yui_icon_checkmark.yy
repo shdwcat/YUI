@@ -59,7 +59,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"yui_icon_checkmark","path":"sprites/yui_icon_checkmark/yui_icon_checkmark.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "yui_icon_checkmark",
     "tags": [],
     "resourceType": "GMSequence",

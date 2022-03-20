@@ -59,7 +59,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"yui_icon_expand","path":"sprites/yui_icon_expand/yui_icon_expand.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "yui_icon_expand",
     "tags": [],
     "resourceType": "GMSequence",

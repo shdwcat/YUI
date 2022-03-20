@@ -59,7 +59,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"chest_armor","path":"sprites/chest_armor/chest_armor.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "chest_armor",
     "tags": [],
     "resourceType": "GMSequence",

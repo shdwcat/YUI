@@ -59,7 +59,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"yui_white_pixel","path":"sprites/yui_white_pixel/yui_white_pixel.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "yui_white_pixel",
     "tags": [],
     "resourceType": "GMSequence",

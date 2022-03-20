@@ -59,7 +59,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"yui_icon_trash","path":"sprites/yui_icon_trash/yui_icon_trash.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "yui_icon_trash",
     "tags": [],
     "resourceType": "GMSequence",

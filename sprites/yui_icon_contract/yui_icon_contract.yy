@@ -59,7 +59,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"yui_icon_contract","path":"sprites/yui_icon_contract/yui_icon_contract.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "yui_icon_contract",
     "tags": [],
     "resourceType": "GMSequence",

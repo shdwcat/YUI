@@ -59,7 +59,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"yui_icon_undo","path":"sprites/yui_icon_undo/yui_icon_undo.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "yui_icon_undo",
     "tags": [],
     "resourceType": "GMSequence",

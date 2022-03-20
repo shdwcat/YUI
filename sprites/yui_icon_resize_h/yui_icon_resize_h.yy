@@ -59,7 +59,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"yui_icon_resize_h","path":"sprites/yui_icon_resize_h/yui_icon_resize_h.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "yui_icon_resize_h",
     "tags": [],
     "resourceType": "GMSequence",

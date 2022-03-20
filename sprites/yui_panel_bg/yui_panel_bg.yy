@@ -59,7 +59,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"yui_panel_bg","path":"sprites/yui_panel_bg/yui_panel_bg.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "yui_panel_bg",
     "tags": [],
     "resourceType": "GMSequence",

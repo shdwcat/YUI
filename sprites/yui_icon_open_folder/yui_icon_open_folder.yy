@@ -59,7 +59,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"yui_icon_open_folder","path":"sprites/yui_icon_open_folder/yui_icon_open_folder.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "yui_icon_open_folder",
     "tags": [],
     "resourceType": "GMSequence",

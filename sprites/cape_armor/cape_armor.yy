@@ -59,7 +59,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"cape_armor","path":"sprites/cape_armor/cape_armor.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "cape_armor",
     "tags": [],
     "resourceType": "GMSequence",
