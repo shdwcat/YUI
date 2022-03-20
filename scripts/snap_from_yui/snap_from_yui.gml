@@ -200,15 +200,6 @@ function __snap_from_yui_tokenizer(_buffer) constructor
                         _in_string = true;
                         _string_start = buffer_tell(_buffer);
                     }
-                    //else if ((_value == 35) // #
-					//	&& (buffer_tell(_buffer) >= 1) && (buffer_peek(_buffer, buffer_tell(_buffer)-2, buffer_u8) <= 32))
-                    //{
-                    //    read_chunk_and_add(_chunk_start, _chunk_end, buffer_tell(_buffer), __SNAP_YUI.SCALAR);
-                        
-                    //    _chunk_start = buffer_tell(_buffer);
-                    //    _chunk_end   = buffer_tell(_buffer);
-                    //    _in_comment  = true;
-                    //}
 					else if ((_value == 47 && buffer_peek(_buffer, buffer_tell(_buffer), buffer_u8) == 47) // // comment
 						&& (buffer_tell(_buffer) >= 1) && (buffer_peek(_buffer, buffer_tell(_buffer)-2, buffer_u8) <= 32))
                     {
