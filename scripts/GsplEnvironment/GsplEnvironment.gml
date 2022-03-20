@@ -1,4 +1,5 @@
 /// @description execution environment
+/// @param {struct.GsplEnvironment} enclosingEnv
 function GsplEnvironment(enclosingEnv = undefined) constructor {
 	self.values = {};
 	self.enclosing = enclosingEnv;
@@ -19,6 +20,8 @@ function GsplEnvironment(enclosingEnv = undefined) constructor {
 		}
 	}
 	
+	/// @func get
+	/// @param {struct.GsplToken} name
 	static get = function(name /* GsplToken */) {
 		if variable_struct_exists(values, name._lexeme) {
 			return variable_struct_get(values, name._lexeme);
