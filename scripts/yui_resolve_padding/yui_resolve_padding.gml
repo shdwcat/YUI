@@ -1,7 +1,6 @@
 /// @description here
-function yui_resolve_padding(padding) {
-	if padding == undefined padding = 0;
-	
+function yui_resolve_padding(padding = 0) {
+		
 	var result = {};
 	
 	if is_numeric(padding) {

@@ -143,9 +143,7 @@ function GsplScanner(source, token_definition) constructor {
 		var token_type = keywords[$ identifier];
 		
 		// if it's not a keyword then it's an identifier
-		if token_type == undefined {
-			token_type = identifier_type ?? identifier_token;
-		}
+		token_type ??= identifier_type ?? identifier_token;
 		
 		addToken(token_type);
 	}
@@ -192,7 +190,7 @@ function GsplScanner(source, token_definition) constructor {
 	}
 	
 	static _error = function(line, msg, value = undefined) {
-		if value == undefined value = ""
+		value ??= ""
 		gspl_log("[", line, "]", msg, value);
 	}
 }

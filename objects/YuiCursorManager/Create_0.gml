@@ -45,9 +45,9 @@ isMouseOver = function() {
 	return hover_count > 0 && hover_list[| hover_count - 1] == other.id;
 }
 
-top = function() {
-	return hover_count > 0 ? hover_list[| hover_count - 1] : undefined;
-}
+//top = function() {
+//	return hover_count > 0 ? hover_list[| hover_count - 1] : undefined;
+//}
 
 finishInteraction = function() {
 	yui_log("interaction", active_interaction.props.type, "complete");

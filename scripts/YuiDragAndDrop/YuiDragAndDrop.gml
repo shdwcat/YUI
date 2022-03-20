@@ -48,12 +48,11 @@ function YuiDragAndDrop(_props, _resources) constructor {
 	
 	static start = function(source_data, event, source_item) {
 		// NOTE: assumes initiating event is a mouse button event
-		var button = event[$ "button"];
-		if button == undefined {
-			// need to be able to use button constants in .yui files
-			// which probably mean we need a YuiEventHandler class to grab the constant from the "mb_left" etc
-			button = mb_left;
-		}
+		var button = event[$ "button"] ?? mb_left;
+		
+		// need to be able to use button constants in .yui files
+		// which probably mean we need a YuiEventHandler class to grab the constant from the "mb_left" etc
+		//button ??= mb_left;
 		
 		source = {
 			data: source_data,

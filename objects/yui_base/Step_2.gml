@@ -1,9 +1,7 @@
 /// @description bind / layout
 
 if layout_props == undefined {
-	if yui_element == undefined {
-		yui_element = new element_constructor(default_props, {});
-	}
+	yui_element ??= new element_constructor(default_props, {});
 	initLayout();
 }
 

@@ -121,8 +121,8 @@ function YuiCanvasPosition(canvas_position = {}, resources, slot_values) constru
 		throw "Cannot center vertically AND top/bottom align";
 	}
 	
-	if left == undefined left = 0;
-	if top == undefined top = 0;
-	if right == undefined right = 0;
-	if bottom == undefined bottom = 0;			
+	left ??= 0;
+	top ??= 0;
+	right ??= 0;
+	bottom ??= 0;			
 }

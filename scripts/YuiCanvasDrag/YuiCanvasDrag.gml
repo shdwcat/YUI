@@ -29,8 +29,7 @@ function YuiCanvasDrag(_props, _resources) constructor {
 	static start = function(source_data, event, source_item) {
 		
 		// NOTE: assumes initiating event is a mouse button event
-		button = event[$ "button"];
-		if button == undefined button = mb_left;
+		button = event[$ "button"] ?? mb_left;
 		
 		// TODO: init_props on the parameters (and define defaults in .yui)
 		parameters = variable_struct_get(event, "parameters") ?? {};

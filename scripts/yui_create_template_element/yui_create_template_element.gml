@@ -2,8 +2,7 @@
 function yui_create_template_element(instance_props, template_definition, resources, parent_slot_values) {
 				
 	// defines what input slots the template supports
-	var slot_definitions = template_definition[$ "slots"];
-	if slot_definitions == undefined slot_definitions = {};
+	var slot_definitions = template_definition[$ "slots"] ?? {};
 	
 	// the props for the element we will create
 	// need to copy the definition since we'll be updating the values

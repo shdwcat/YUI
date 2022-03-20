@@ -60,11 +60,9 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		var frame = yui_resolve_binding(props.frame, data);
 		var angle = yui_resolve_binding(props.angle, data);
 		var blend_color = yui_resolve_color(yui_resolve_binding(props.blend_color, data));
-		var opacity = yui_resolve_binding(props.opacity, data);
-		if opacity == undefined
-		{
-			opacity = draw_get_alpha();
-		}
+		
+		var opacity = yui_resolve_binding(props.opacity, data)
+			?? draw_get_alpha();
 		
 		// diff
 		if prev
