@@ -86,6 +86,10 @@ arrange = function(available_size) {
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
 	
+	if bound_values.xoffset != 0 || bound_values.yoffset != 0 {
+		move(bound_values.xoffset, bound_values.yoffset);
+	}
+	
 	// our used size is the layout used size with our padding
 	var used_size = {
 		x: available_size.x,

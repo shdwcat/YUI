@@ -66,10 +66,14 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		if !is_visible return false;
 		
 		var opacity = yui_resolve_binding(props.opacity, data);
+		var xoffset = yui_resolve_binding(props.xoffset, data);
+		var yoffset = yui_resolve_binding(props.yoffset, data);
 		
 		// diff
 		if prev
 			&& opacity == prev.opacity
+			&& xoffset == prev.xoffset
+			&& yoffset == prev.yoffset
 		{
 			return true;
 		}
@@ -82,6 +86,8 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 			bg_color: bg_color,
 			border_color: border_color,
 			border_thickness: props.border_thickness,
+			xoffset: xoffset,
+			yoffset: yoffset,
 		};
 	}
 }

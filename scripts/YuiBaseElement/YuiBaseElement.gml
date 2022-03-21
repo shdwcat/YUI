@@ -15,6 +15,8 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		size: "auto", // can also be { w: val, h: val } where val can be a number or "auto" | "content"
 		alignment: "default",
 		canvas: undefined,
+		xoffset: 0,
+		yoffset: 0,
 		
 		tooltip: undefined, // @bindable tooltip text/content
 		tooltip_width : 500,
@@ -51,9 +53,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	YuiCursorManager.participation_hash.hashArray(props.interactions);
 	
 	size = new YuiElementSize(yui_bind(props.size, resources, slot_values));
-	
-	var canvas_binding = yui_bind(props.canvas, resources, slot_values);
-	canvas = new YuiCanvasPosition(canvas_binding, resources, slot_values);
+	canvas = new YuiCanvasPosition(props.canvas, resources, slot_values);
 	
 	// TODO: move this to YuiPanelElement?
 	alignment = new YuiElementAlignment(yui_bind(props.alignment, resources, slot_values));
@@ -63,6 +63,9 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	props.item_key = yui_bind(props.item_key, resources, slot_values);
 	props.tooltip = yui_bind(props.tooltip, resources, slot_values);
 	
+	props.xoffset = yui_bind(props.xoffset, resources, slot_values);
+	props.yoffset = yui_bind(props.yoffset, resources, slot_values);
+	
 	data_source = yui_bind(props.data_source, resources, slot_values);
 	
 	base_is_bound = yui_is_live_binding(props.data_source)
@@ -70,7 +73,8 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		|| yui_is_live_binding(props.opacity)
 		|| yui_is_live_binding(props.tooltip)
 		|| yui_is_live_binding(props.size)
-		|| yui_is_live_binding(props.canvas);
+		|| yui_is_live_binding(props.xoffset)
+		|| yui_is_live_binding(props.yoffset);
 	
 	tooltip_element = undefined;
 	if props.tooltip != undefined {

@@ -69,11 +69,15 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		
 		var opacity = yui_resolve_binding(props.opacity, data);
 		var placement = yui_resolve_binding(props.placement, data);
+		var xoffset = yui_resolve_binding(props.xoffset, data);
+		var yoffset = yui_resolve_binding(props.yoffset, data);
 		
 		// diff
 		if prev
 			&& opacity == prev.opacity
 			&& placement == prev.placement
+			&& xoffset == prev.xoffset
+			&& yoffset == prev.yoffset
 		{
 			return true;
 		}
@@ -89,6 +93,8 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			// popup
 			opacity: opacity,
 			placement: placement,
+			xoffset: xoffset,
+			yoffset: yoffset,
 		};
 	}
 }

@@ -103,15 +103,22 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		if !is_visible return false;
 		
 		var enabled = yui_resolve_binding(props.enabled, data);
-		var opacity = yui_resolve_binding(props.opacity, data);
+		var opacity = yui_resolve_binding(props.opacity, data);		
+		var xoffset = yui_resolve_binding(props.xoffset, data);
+		var yoffset = yui_resolve_binding(props.yoffset, data);
 		
 		// diff
 		if prev
 			&& enabled == prev.enabled
 			&& opacity == prev.opacity
+			&& xoffset == prev.xoffset
+			&& yoffset == prev.yoffset
 		{
 			return true;
 		}
+		
+		if props.trace
+			DEBUG_BREAK_YUI;
 				
 		var result = {
 			is_live: is_bound,
@@ -122,6 +129,8 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 			border_thickness: props.border_thickness,
 			enabled: enabled,
 			opacity: opacity,
+			xoffset: xoffset,
+			yoffset: yoffset,
 		};
 		
 		if props.popup {

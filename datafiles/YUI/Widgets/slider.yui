@@ -39,26 +39,21 @@ resources:
 
       type: panel
       layout: $orientation
-      // trace: true
       elements:
 
         - type: text
           text: $min
+          padding: [0,0,8,0]
 
         - type: panel
           layout: canvas
           size: { h: 20, w: 100 }
-          padding: [0, 0, 15, 0]
-          //trace: true
           elements:
 
             // slider thumb
             - type: button
               padding: 0
-              canvas:
-                normalized: true
-                left: $value / ($max - $min)
-              // trace: true
+              xoffset: $value / ($max - $min) * 100 - 10
               background: $thumb_background
               size: { h: 20, w: 10, min_w: 10 }
               events:
@@ -70,18 +65,18 @@ resources:
             // slider line
             - type: border
               canvas:
-                left: 5
-                right: -5
+                left: -5
+                right: 5
                 center: v
               background: #888888
               size: { h: 2, w: stretch }
 
         - type: text
-          padding: [-5, 0, 0, 0]
           text: $max
 
         - type: text
           text: "-"
+          visible: $show_value
 
         - type: text
           text: $value >> string_format(0, 0) // format as a whole number with no decimals
