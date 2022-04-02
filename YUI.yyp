@@ -2,6 +2,7 @@
   "resources": [
     {"id":{"name":"__scribble_gen_1_model_limits_and_bezier_curves","path":"scripts/__scribble_gen_1_model_limits_and_bezier_curves/__scribble_gen_1_model_limits_and_bezier_curves.yy",},"order":0,},
     {"id":{"name":"__scribble_gc_collect","path":"scripts/__scribble_gc_collect/__scribble_gc_collect.yy",},"order":8,},
+    {"id":{"name":"yui_get_item_parent_map","path":"scripts/yui_get_item_parent_map/yui_get_item_parent_map.yy",},"order":16,},
     {"id":{"name":"__scribble_system","path":"scripts/__scribble_system/__scribble_system.yy",},"order":9,},
     {"id":{"name":"yui_arrays_equal","path":"scripts/yui_arrays_equal/yui_arrays_equal.yy",},"order":6,},
     {"id":{"name":"yui_apply_slot_definitions","path":"scripts/yui_apply_slot_definitions/yui_apply_slot_definitions.yy",},"order":0,},

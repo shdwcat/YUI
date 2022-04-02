@@ -35,8 +35,21 @@ left_click = function() {
 		if popup_item {
 			instance_destroy(popup_item);
 		}
+		
+		// find any open popups and close them, unless they're a parent of this button
+		var parent_map = yui_get_item_parent_map(self);
+		with yui_popup {
+			var button = parent;
+			if !ds_map_exists(parent_map, button)
+			{
+				button.closePopup();
+			}
+		}
+		ds_map_destroy(parent_map);
 	
-		popup_item = yui_make_render_instance(bound_values.popup_element, bound_values.data_source, ,100);
+		// open the popup
+	
+		popup_item = yui_make_render_instance(bound_values.popup_element, bound_values.data_source, , 100);
 	
 		var popup_space = yui_calc_popup_space(popup_item);
 		popup_item.arrange(popup_space);
