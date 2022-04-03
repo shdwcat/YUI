@@ -21,6 +21,7 @@ else {
 
 // draw the scribble element
 scribble_element.draw(x + element_xoffset, y + element_yoffset, typist);
+//draw_text(x + element_xoffset, y + element_yoffset, bound_values.text);
 
 if (trace) {
 	yui_draw_trace_rect(trace, padded_rect, c_yellow);
