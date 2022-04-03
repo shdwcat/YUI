@@ -8,107 +8,109 @@ function YuiCallFunction(func_name, args) constructor {
 	self.func_name = func_name;
 	self.args = args;
 	self.arg_count = array_length(args);
+	self.resolved_args = array_create(arg_count);
 		
 	if is_string(func_name) {
 		var script_index = asset_get_index(func_name);
 		if script_index != -1 {
 			// call script
 			self.script_index = script_index;
-			resolve = function(data) {
-			
-				resolved_args = array_create(arg_count);
-				var i = 0; repeat arg_count {
-					resolved_args[i] = args[i].resolve(data);
-					i++;
-				}
-			
-				return script_execute_ext(script_index, resolved_args);
-			}
+			resolve = resolveScript;
 		
 		}
 		else {
 			// call runtime function
 			function_index = runtime_functions[$ func_name];
+					
 			if function_index == undefined {
-				//throw yui_error("unknown function: " + func_name);
+				yui_warning("could not find script or built-in function with name: " + func_name);
+				return;
 			}
 		
-			resolve = function(data) {
-								
-				if function_index == undefined {
-					yui_warning("could not find script or built-in function with name: " + func_name);
-					return;
-				}
-			
-				resolved_args = array_create(arg_count);
-				var i = 0; repeat arg_count {
-					resolved_args[i] = args[i].resolve(data);
-					i++;
-				}
-			
-				// NOTE: could hyperoptimize by setting .resolve based on the arg_count (which is already known)
-				var a = resolved_args;
-				switch arg_count {
-					case 0: return function_index();
-					case 1: return function_index(a[0]);
-					case 2: return function_index(a[0], a[1]);
-					case 3: return function_index(a[0], a[1], a[2]);
-					case 4: return function_index(a[0], a[1], a[2], a[3]);
-					case 5: return function_index(a[0], a[1], a[2], a[3], a[4]);
-					case 6: return function_index(a[0], a[1], a[2], a[3], a[4], a[5]);
-					case 7: return function_index(a[0], a[1], a[2], a[3], a[4], a[5], a[6]);
-					case 8: return function_index(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7]);
-					case 9: return function_index(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8]);
-					default:
-						throw "can't call built in function with more than 9 arguments";
-				}
-			}
+			resolve = resolveRuntimeFunction;
 		}
 	}
 	else if instanceof(func_name) == "YuiLambda" {
-		resolve = function(data) {
-			resolved_args = array_create(arg_count);
-			var i = 0; repeat arg_count {
-				resolved_args[i] = args[i].resolve(data);
-				i++;
-			}
-		
-			return func_name.call(data, resolved_args);
-		}
+		resolve = resolveLambda;
 	}
 	else {
 		// treat func_name as a binding (may be slot etc also) and resolve it
-		resolve = function(data) {
-			var func_ref = func_name.resolve(data);
-			resolved_args = array_create(arg_count);
-			var i = 0; repeat arg_count {
-				resolved_args[i] = args[i].resolve(data);
-				i++;
-			}
+		resolve = resolveBoundFunction;
+	}
+	
+	static resolveScript = function(data) {
 			
-			if func_ref == undefined {
-				yui_warning("can't call undefined function reference");
-				return;
-			}
+		var i = 0; repeat arg_count {
+			resolved_args[i] = args[i].resolve(data);
+			i++;
+		}
+			
+		return script_execute_ext(script_index, resolved_args);
+	}
+	
+	static resolveRuntimeFunction = function(data) {
 
-			// NOTE: could hyperoptimize by setting .resolve based on the arg_count (which is already known)
-			var a = resolved_args;
-			switch arg_count {
-				case 0: return func_ref();
-				case 1: return func_ref(a[0]);
-				case 2: return func_ref(a[0], a[1]);
-				case 3: return func_ref(a[0], a[1], a[2]);
-				case 4: return func_ref(a[0], a[1], a[2], a[3]);
-				case 5: return func_ref(a[0], a[1], a[2], a[3], a[4]);
-				case 6: return func_ref(a[0], a[1], a[2], a[3], a[4], a[5]);
-				case 7: return func_ref(a[0], a[1], a[2], a[3], a[4], a[5], a[6]);
-				case 8: return func_ref(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7]);
-				case 9: return func_ref(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8]);
-				default:
-					throw "can't call method with more than 9 arguments";
-			}
+		var i = 0; repeat arg_count {
+			resolved_args[i] = args[i].resolve(data);
+			i++;
+		}
+			
+		// NOTE: could hyperoptimize by setting .resolve based on the arg_count (which is already known)
+		var a = resolved_args;
+		switch arg_count {
+			case 0: return function_index();
+			case 1: return function_index(a[0]);
+			case 2: return function_index(a[0], a[1]);
+			case 3: return function_index(a[0], a[1], a[2]);
+			case 4: return function_index(a[0], a[1], a[2], a[3]);
+			case 5: return function_index(a[0], a[1], a[2], a[3], a[4]);
+			case 6: return function_index(a[0], a[1], a[2], a[3], a[4], a[5]);
+			case 7: return function_index(a[0], a[1], a[2], a[3], a[4], a[5], a[6]);
+			case 8: return function_index(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7]);
+			case 9: return function_index(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8]);
+			default:
+				throw "can't call built in function with more than 9 arguments";
 		}
 	}
 	
+	static resolveLambda = function(data) {
+		var i = 0; repeat arg_count {
+			resolved_args[i] = args[i].resolve(data);
+			i++;
+		}
+		
+		return func_name.call(data, resolved_args);
+	}
 	
+	static resolveBoundFunction = function(data) {
+		
+		// resolve the function reference and arguments
+		var func_ref = func_name.resolve(data);
+		var i = 0; repeat arg_count {
+			resolved_args[i] = args[i].resolve(data);
+			i++;
+		}
+			
+		if func_ref == undefined {
+			yui_warning("can't call undefined function reference");
+			return;
+		}
+
+		// NOTE: could hyperoptimize by setting .resolve based on the arg_count (which is already known)
+		var a = resolved_args;
+		switch arg_count {
+			case 0: return func_ref();
+			case 1: return func_ref(a[0]);
+			case 2: return func_ref(a[0], a[1]);
+			case 3: return func_ref(a[0], a[1], a[2]);
+			case 4: return func_ref(a[0], a[1], a[2], a[3]);
+			case 5: return func_ref(a[0], a[1], a[2], a[3], a[4]);
+			case 6: return func_ref(a[0], a[1], a[2], a[3], a[4], a[5]);
+			case 7: return func_ref(a[0], a[1], a[2], a[3], a[4], a[5], a[6]);
+			case 8: return func_ref(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7]);
+			case 9: return func_ref(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8]);
+			default:
+				throw "can't call method with more than 9 arguments";
+		}
+	}
 }
