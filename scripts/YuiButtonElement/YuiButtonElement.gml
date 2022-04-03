@@ -74,10 +74,12 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	
 	props.on_click = yui_bind_handler(props.on_click, resources, slot_values);
 	
-	// ===== functions =====
+	is_enabled_live = yui_is_live_binding(props.enabled);
 	
 	is_bound = base_is_bound
 		|| yui_is_live_binding(props.enabled);
+		
+	// ===== functions =====
 	
 	// TODO: how to inherit these from YuiBorderElement?
 	
@@ -99,13 +101,14 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 			data = yui_resolve_binding(data_source, data);
 		}
 		
-		var is_visible = yui_resolve_binding(props.visible, data);
+		var is_visible = is_visible_live ? props.visible.resolve(data) : props.visible;
 		if !is_visible return false;
 		
-		var enabled = yui_resolve_binding(props.enabled, data);
-		var opacity = yui_resolve_binding(props.opacity, data);		
-		var xoffset = yui_resolve_binding(props.xoffset, data);
-		var yoffset = yui_resolve_binding(props.yoffset, data);
+		var opacity = is_opacity_live ? props.opacity.resolve(data) : props.opacity;
+		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
+		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
+		
+		var enabled = is_enabled_live ? props.enabled.resolve(data) : props.enabled;
 		
 		// diff
 		if prev
@@ -117,8 +120,8 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 			return true;
 		}
 		
-		if props.trace
-			DEBUG_BREAK_YUI;
+		//if props.trace
+		//	DEBUG_BREAK_YUI;
 				
 		var result = {
 			is_live: is_bound,
@@ -127,10 +130,10 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 			bg_color: bg_color,
 			border_color: border_color,
 			border_thickness: props.border_thickness,
-			enabled: enabled,
 			opacity: opacity,
 			xoffset: xoffset,
 			yoffset: yoffset,
+			enabled: enabled,
 		};
 		
 		if props.popup {

@@ -140,7 +140,6 @@
     {"id":{"name":"snap_from_json","path":"scripts/snap_from_json/snap_from_json.yy",},"order":0,},
     {"id":{"name":"YuiDragAndDrop","path":"scripts/YuiDragAndDrop/YuiDragAndDrop.yy",},"order":6,},
     {"id":{"name":"GsplGroupParselet","path":"scripts/GsplGroupParselet/GsplGroupParselet.yy",},"order":3,},
-    {"id":{"name":"yui_resolve_nested_binding","path":"scripts/yui_resolve_nested_binding/yui_resolve_nested_binding.yy",},"order":10,},
     {"id":{"name":"YuiValueWrapper","path":"scripts/YuiValueWrapper/YuiValueWrapper.yy",},"order":10,},
     {"id":{"name":"game-icons.net license","path":"notes/game-icons.net license/game-icons.net license.yy",},"order":0,},
     {"id":{"name":"scribble_anim_cycle","path":"scripts/scribble_anim_cycle/scribble_anim_cycle.yy",},"order":1,},

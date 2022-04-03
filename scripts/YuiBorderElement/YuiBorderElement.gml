@@ -62,12 +62,12 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 			data = yui_resolve_binding(data_source, data);
 		}
 		
-		var is_visible = yui_resolve_binding(props.visible, data);
+		var is_visible = is_visible_live ? props.visible.resolve(data) : props.visible;
 		if !is_visible return false;
 		
-		var opacity = yui_resolve_binding(props.opacity, data);
-		var xoffset = yui_resolve_binding(props.xoffset, data);
-		var yoffset = yui_resolve_binding(props.yoffset, data);
+		var opacity = is_opacity_live ? props.opacity.resolve(data) : props.opacity;
+		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
+		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
 		
 		// diff
 		if prev

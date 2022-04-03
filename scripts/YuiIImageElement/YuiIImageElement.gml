@@ -19,16 +19,30 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	props.padding = yui_resolve_padding(props.padding);
 	
 	props.sprite = yui_bind(props.sprite, resources, slot_values);
+	is_sprite_live = yui_is_live_binding(props.sprite);
+	if !is_sprite_live {
+		sprite = yui_resolve_sprite_by_name(props.sprite);
+		if sprite == -1 {
+			sprite = undefined; // TODO pink placeholder warning sprite?
+		}
+	}
+	
 	props.frame = yui_bind(props.frame, resources, slot_values);
 	props.angle = yui_bind(props.angle, resources, slot_values);
-	props.opacity = yui_bind(props.opacity, resources, slot_values);
+	
 	props.blend_color = yui_bind(props.blend_color, resources, slot_values);
+	is_blend_color_live = yui_is_live_binding(props.blend_color);	
+	if !is_blend_color_live {
+		props.blend_color = yui_resolve_color(props.blend_color);
+	}
+		
+	is_frame_live = yui_is_live_binding(props.frame);
+	is_angle_live = yui_is_live_binding(props.angle);
 	
 	is_bound = base_is_bound
 		|| yui_is_live_binding(props.sprite)
 		|| yui_is_live_binding(props.frame)
 		|| yui_is_live_binding(props.angle)
-		|| yui_is_live_binding(props.opacity)
 		|| yui_is_live_binding(props.blend_color);
 	
 	// ===== functions =====
@@ -46,22 +60,27 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			data = yui_resolve_binding(data_source, data);
 		}
 		
-		var is_visible = yui_resolve_binding(props.visible, data);
+		var is_visible = is_visible_live ? props.visible.resolve(data) : props.visible;
 		if !is_visible return false;
 		
-		var sprite_name = yui_resolve_binding(props.sprite, data);
+		var sprite = is_sprite_live ? props.sprite.resolve(data) : self.sprite;
 		
-		// get the sprite asset from the name
-		var sprite = yui_resolve_sprite_by_name(sprite_name);
-		if sprite == -1 {
-			sprite = undefined; // TODO pink placeholder warning sprite?
+		if is_sprite_live {
+			// get the sprite asset from the name
+			sprite = yui_resolve_sprite_by_name(sprite);
+			if sprite == -1 {
+				sprite = undefined; // TODO pink placeholder warning sprite?
+			}
 		}
 		
-		var frame = yui_resolve_binding(props.frame, data);
-		var angle = yui_resolve_binding(props.angle, data);
-		var blend_color = yui_resolve_color(yui_resolve_binding(props.blend_color, data));
+		var frame = is_frame_live ? props.frame.resolve(data) : props.frame;
+		var angle = is_angle_live ? props.angle.resolve(data) : props.angle;
 		
-		var opacity = yui_resolve_binding(props.opacity, data)
+		var blend_color = is_blend_color_live
+			? yui_resolve_color(props.blend_color.resolve(data))
+			: props.blend_color;
+		
+		var opacity = (is_opacity_live ? props.opacity.resolve(data) : props.opacity)
 			?? draw_get_alpha();
 			
 		if props.trace {

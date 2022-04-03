@@ -102,19 +102,19 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	static getBoundValues = function(data, prev) {
 		if data_source != undefined {
-			data = yui_resolve_binding(data_source, data);
+			data = is_data_source_live ? data_source.resolve(data) : data;
 		}
 		
-		var is_visible = yui_resolve_binding(props.visible, data);
+		var is_visible = is_visible_live ? props.visible.resolve(data) : props.visible;
 		if !is_visible return false;
 		
-		var opacity = yui_resolve_binding(props.opacity, data);		
-		var xoffset = yui_resolve_binding(props.xoffset, data);
-		var yoffset = yui_resolve_binding(props.yoffset, data);
+		var opacity = is_opacity_live ? props.opacity.resolve(data) : props.opacity;
+		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
+		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
 		
 		if uses_template {
 			// single template element for bound data_items
-			var source_items = yui_resolve_binding(props.elements, data);
+			var source_items = props.elements.resolve(data);
 			
 			// we need to copy the array for diff detection to work
 			var child_count = array_length(source_items);
@@ -134,7 +134,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			&& xoffset == prev.xoffset
 			&& yoffset == prev.yoffset
 			&& child_count == prev.child_count
-			&& array_equals(data_items, prev.data_items)
+			&& (!is_array(data_items) || array_equals(data_items, prev.data_items))
 		{
 			return true;
 		}
