@@ -9,7 +9,9 @@ internal_children = [];
 is_arranging = false;
 used_layout_size = undefined;
 
+border_onLayoutInit = onLayoutInit;
 onLayoutInit = function() {
+	border_onLayoutInit();
 	layout = layout_props.layout;
 }
 

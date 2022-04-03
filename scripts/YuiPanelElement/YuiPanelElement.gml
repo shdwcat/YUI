@@ -97,6 +97,10 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			padding: props.padding,
 			size: size,
 			layout: layout,
+			bg_sprite: bg_sprite,
+			bg_color: bg_color,
+			border_color: border_color,
+			border_thickness: props.border_thickness,
 		};
 	}
 	
@@ -146,10 +150,6 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			opacity: opacity,
 			xoffset: xoffset,
 			yoffset: yoffset,
-			bg_sprite: bg_sprite,
-			bg_color: bg_color,
-			border_color: border_color,
-			border_thickness: props.border_thickness,
 			// panel
 			child_count: child_count,
 			data_items: data_items,

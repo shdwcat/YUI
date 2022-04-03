@@ -93,6 +93,10 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 			size: size,
 			content_type: content_element ? content_element.props.type : undefined,
 			content_element: content,
+			bg_sprite: bg_sprite,
+			bg_color: bg_color,
+			border_color: border_color,
+			border_thickness: props.border_thickness,
 		};
 	}
 	
@@ -126,10 +130,6 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		var result = {
 			is_live: is_bound,
 			data_source: data,
-			bg_sprite: bg_sprite,
-			bg_color: bg_color,
-			border_color: border_color,
-			border_thickness: props.border_thickness,
 			opacity: opacity,
 			xoffset: xoffset,
 			yoffset: yoffset,
@@ -141,9 +141,5 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		}
 		
 		return result;
-	}
-	
-	static getInitialAnimationState = function() {
-		return { popup_visible: false };
 	}
 }

@@ -56,6 +56,11 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			padding: props.padding,
 			size: size,
 			content_element: content_element,
+			// border
+			bg_sprite: undefined, // not yet implemented here
+			bg_color: props.bg_color,
+			border_color: props.border_color,
+			border_thickness: props.border_thickness,
 		};
 	}
 	
@@ -85,11 +90,6 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		return {
 			is_live: is_bound,
 			data_source: data,
-			// border
-			bg_sprite: undefined, // not yet implemented here
-			bg_color: props.bg_color,
-			border_color: props.border_color,
-			border_thickness: props.border_thickness,
 			// popup
 			opacity: opacity,
 			placement: placement,

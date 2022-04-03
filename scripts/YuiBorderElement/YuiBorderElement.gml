@@ -54,6 +54,10 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 			padding: props.padding,
 			size: size,
 			content_element: content_element,
+			bg_sprite: bg_sprite,
+			bg_color: bg_color,
+			border_color: border_color,
+			border_thickness: props.border_thickness,
 		};
 	}
 	
@@ -82,10 +86,6 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 			is_live: is_bound,
 			data_source: data,
 			opacity: opacity,
-			bg_sprite: bg_sprite,
-			bg_color: bg_color,
-			border_color: border_color,
-			border_thickness: props.border_thickness,
 			xoffset: xoffset,
 			yoffset: yoffset,
 		};

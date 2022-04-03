@@ -35,6 +35,7 @@
       ],"resourceVersion":"1.0","name":"bg_sprite","tags":[],"resourceType":"GMObjectProperty",},
     {"varType":7,"value":"0","rangeEnabled":false,"rangeMin":0.0,"rangeMax":10.0,"listItems":[],"multiselect":false,"filters":[],"resourceVersion":"1.0","name":"border_color","tags":[],"resourceType":"GMObjectProperty",},
     {"varType":0,"value":"1","rangeEnabled":true,"rangeMin":0.0,"rangeMax":5.0,"listItems":[],"multiselect":false,"filters":[],"resourceVersion":"1.0","name":"border_thickness","tags":[],"resourceType":"GMObjectProperty",},
+    {"varType":0,"value":"1","rangeEnabled":false,"rangeMin":0.0,"rangeMax":10.0,"listItems":[],"multiselect":false,"filters":[],"resourceVersion":"1.0","name":"border_alpha","tags":[],"resourceType":"GMObjectProperty",},
   ],
   "overriddenProperties": [
     {"propertyId":{"name":"element_constructor","path":"objects/yui_base/yui_base.yy",},"objectId":{"name":"yui_base","path":"objects/yui_base/yui_base.yy",},"value":"YuiBorderElement","resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMOverriddenProperty",},
