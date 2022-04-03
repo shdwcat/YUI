@@ -1,6 +1,6 @@
 /// @description returns a new rect with the padding applied to the draw rect
 /// and the size of the effective padding that was applied
-function yui_apply_padding(draw_rect, padding, size) {
+function yui_apply_padding(draw_rect, padding, size, bound_values = undefined) {
 	
 	var max_w = draw_rect.w;
 	var max_h = draw_rect.h;
@@ -9,11 +9,31 @@ function yui_apply_padding(draw_rect, padding, size) {
 		max_w = min(draw_rect.w, size.max_w);
 		max_h = min(draw_rect.h, size.max_h);
 		
-		if is_numeric(size.w) {
-			max_w = size.w;
+		if bound_values {
+			var width = bound_values.w;
+			var height = bound_values.h;
 		}
-		if is_numeric(size.h) {
-			max_h = size.h;
+		else {
+			var width = size.w;
+			var height = size.h;
+		}
+		
+		if is_numeric(width) {			
+			if size.w_type == YUI_LENGTH_TYPE.Proportional {
+				max_w = width * max_w;
+			}
+			else {
+				max_w = width;
+			}
+		}
+		
+		if is_numeric(height) {
+			if size.h_type == YUI_LENGTH_TYPE.Proportional {
+				max_h = height * max_h;
+			}
+			else {
+				max_h = height;
+			}
 		}
 	}
 	

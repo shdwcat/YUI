@@ -32,10 +32,10 @@ arrange = function(available_size) {
 	draw_rect = available_size;
 	
 	var padding = layout_props.padding;	
-	padded_rect = yui_apply_padding(available_size, padding, layout_props.size);
+	padded_rect = yui_apply_padding(available_size, padding, layout_props.size, bound_values);
 	
 	// don't bother drawing if there isn't enough room
-	if padded_rect.w < 0 || padded_rect.h < 0 {
+	if padded_rect.w <= 0 || padded_rect.h <= 0 {
 		yui_resize_instance(0, 0);
 		return draw_size;
 	}
@@ -44,7 +44,13 @@ arrange = function(available_size) {
 	x = padded_rect.x;
 	y = padded_rect.y;
 	
-	if layout_props.size.w == "stretch" {
+	if layout_props.size.w_type == YUI_LENGTH_TYPE.Proportional {
+		// assume we want to stretch the sprite to fit the proportional space
+		image_xscale = padded_rect.w / sprite_get_width(sprite_index);
+		// only use the proportion
+		draw_size.w = padded_rect.w + padding.w;
+	}
+	else if layout_props.size.w == "stretch" {
 		image_xscale = padded_rect.w / sprite_get_width(sprite_index);
 		draw_size.w = available_size.w;
 	}
@@ -58,7 +64,13 @@ arrange = function(available_size) {
 		draw_size.w = sprite_width + padding.w;
 	}
 	
-	if layout_props.size.h == "stretch" {
+	if layout_props.size.h_type == YUI_LENGTH_TYPE.Proportional {
+		// assume we want to stretch the sprite to fit the proportional space
+		image_yscale = padded_rect.h / sprite_get_height(sprite_index);
+		// only use the proportion
+		draw_size.h = padded_rect.h + padding.h;
+	}
+	else if layout_props.size.h == "stretch" {
 		image_yscale = padded_rect.h / sprite_get_height(sprite_index);
 		draw_size.h = available_size.h;
 	}

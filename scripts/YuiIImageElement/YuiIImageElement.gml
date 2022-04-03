@@ -63,6 +63,13 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		
 		var opacity = yui_resolve_binding(props.opacity, data)
 			?? draw_get_alpha();
+			
+		if props.trace {
+			DEBUG_BREAK_YUI;
+		}
+			
+		var w = yui_resolve_binding(size.w, data);
+		var h = yui_resolve_binding(size.h, data);
 		
 		// diff
 		if prev
@@ -71,6 +78,8 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			&& angle == prev.angle
 			&& blend_color == prev.blend_color
 			&& opacity == prev.opacity
+			&& w == prev.w
+			&& h == prev.h
 		{
 			return true;
 		}
@@ -82,6 +91,8 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			angle: angle,
 			blend_color: blend_color,
 			opacity: opacity,
+			w: w,
+			h: h,
 		};
 	}
 }

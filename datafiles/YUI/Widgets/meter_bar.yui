@@ -14,13 +14,12 @@ resources:
 
     template:
 
-      type: panel
-      layout: canvas
-      elements:
-        - type: image
-          sprite: $meter_sprite
-          blend_color: $meter_blend_color
-          size: stretch
-          canvas:
-            normalized: true
-            right: @@ 1 - $value / ($max - $min)
+      type: border
+      content:
+        type: image
+        sprite: $meter_sprite
+        blend_color: $meter_blend_color
+        size:
+          w: $value / ($max - $min),
+          w_type: proportional
+          h: stretch

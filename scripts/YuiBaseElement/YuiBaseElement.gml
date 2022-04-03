@@ -53,6 +53,9 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	YuiCursorManager.participation_hash.hashArray(props.interactions);
 	
 	size = new YuiElementSize(yui_bind(props.size, resources, slot_values));
+	size.w = yui_bind(size.w, resources, slot_values);
+	size.h = yui_bind(size.h, resources, slot_values);
+	
 	canvas = new YuiCanvasPosition(props.canvas, resources, slot_values);
 	
 	// TODO: move this to YuiPanelElement?
@@ -73,6 +76,8 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		|| yui_is_live_binding(props.opacity)
 		|| yui_is_live_binding(props.tooltip)
 		|| yui_is_live_binding(props.size)
+		|| yui_is_live_binding(size.w)
+		|| yui_is_live_binding(size.h)
 		|| yui_is_live_binding(props.xoffset)
 		|| yui_is_live_binding(props.yoffset);
 	
