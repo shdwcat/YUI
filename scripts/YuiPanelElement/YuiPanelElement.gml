@@ -63,7 +63,11 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	border_color = yui_resolve_color(yui_bind(props.border_color, resources, slot_values));
 	
-	if props.template != undefined {	
+	uses_template = props.template != undefined;
+	
+	if uses_template {		
+		if props.elements == undefined throw "cannot use 'template' without 'elements'";
+		
 		item_element = yui_resolve_element(props.template, resources, slot_values, props.id + ":T");	
 	}
 	else {
@@ -108,30 +112,19 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		var xoffset = yui_resolve_binding(props.xoffset, data);
 		var yoffset = yui_resolve_binding(props.yoffset, data);
 		
-		if props.template != undefined {
-			if props.elements == undefined throw "cannot use 'template' without 'elements'";
-			
+		if uses_template {
 			// single template element for bound data_items
 			var source_items = yui_resolve_binding(props.elements, data);
-			var child_count = array_length(source_items);
 			
 			// we need to copy the array for diff detection to work
+			var child_count = array_length(source_items);
 			var data_items = array_create(child_count);
 			array_copy(data_items, 0, source_items, 0, child_count);
-			
-			var item_elements = array_create(child_count);
-			var i = 0; repeat child_count {
-				item_elements[i++] = item_element;
-			}
 		}
 		else {
 			// explicit elements bound to panel.data_context
 			var child_count = element_count;
-			var data_items = array_create(child_count);
-			var i = 0; repeat child_count {
-				data_items[i++] = data;
-			}
-			var item_elements = self.item_elements;
+			var data_items = data;
 		}
 		
 		// diff
@@ -141,7 +134,6 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			&& xoffset == prev.xoffset
 			&& yoffset == prev.yoffset
 			&& child_count == prev.child_count
-			&& array_equals(item_elements, prev.item_elements)
 			&& array_equals(data_items, prev.data_items)
 		{
 			return true;
@@ -160,7 +152,6 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			border_thickness: props.border_thickness,
 			// panel
 			child_count: child_count,
-			item_elements: item_elements,
 			data_items: data_items,
 		};
 	}

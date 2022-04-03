@@ -40,8 +40,14 @@ build = function() {
 			child.data_context = bound_values.data_items[i];
 		}
 		else {
-			var item_element = bound_values.item_elements[i];
-			var data = bound_values.data_items[i]
+			if yui_element.uses_template {
+				var item_element =  yui_element.item_element;
+				var data = bound_values.data_items[i];
+			}
+			else {
+				var item_element =  yui_element.item_elements[i];
+				var data = bound_values.data_items;
+			}
 			
 			// create the child render object
 			var child = yui_make_render_instance(item_element, data, i);
