@@ -67,10 +67,10 @@ root:
           tooltip: Demonstrates an inventory screen where you can drag and drop items onto equipment slots for a character
           on_click: @@ e => yui_change_screen(inventory_screen, e.source)
 
-        - type: button
-          content: Dev Sandbox
-          tooltip: In development work (may crash!)
-          on_click: @@ e => yui_change_screen(sandbox, e.source)
+        // - type: button
+        //   content: Dev Sandbox
+        //   tooltip: In development work (may crash!)
+        //   on_click: @@ e => yui_change_screen(sandbox, e.source)
 
     - type: button
       id: main-menu-button // id is required when using the popup feature - must be unique to the screen!
