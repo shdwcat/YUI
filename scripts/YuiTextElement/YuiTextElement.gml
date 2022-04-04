@@ -42,6 +42,22 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	self.font = font;
 	
 	is_text_live = yui_is_live_binding(props.text);
+	
+	// check if text is an array with bindings
+	if is_array(props.text) {
+		var i = 0; repeat array_length(props.text) {
+			var text_item = props.text[i];
+				
+			// update binding expression to YuiBinding in place
+			if yui_is_binding_expr(text_item) {
+				is_text_live = true;
+				var binding = yui_bind(text_item, resources, slot_values)
+				props.text[i] = binding;
+			}	
+			i++;
+		}
+	}
+	
 	is_color_live = yui_is_live_binding(props.color);
 	is_typist_live = yui_is_live_binding(props.typist);
 	
@@ -72,13 +88,13 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	
 	static getBoundValues = function(data, prev) {
 		if data_source != undefined {
-			data = yui_resolve_binding(data_source, data);
+			data = is_data_source_bound ? data_source.resolve(data) : data_source;
 		}
 		
 		var is_visible = is_visible_live ? props.visible.resolve(data) : props.visible;
 		if !is_visible return false;
 				
-		var text = is_text_live ? props.text.resolve(data) : props.text;
+		var text = is_text_live && !is_array(props.text) ? props.text.resolve(data) : props.text;
 		if text == "" || text == undefined {
 			return false;
 		}
@@ -90,20 +106,8 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		if is_array(text) {
 			var joined_text = "";
 			var i = 0; repeat array_length(text) {
-				var text_item = text[i];
-				
-				// update binding expression to YuiBinding in place
-				// TODO: do this on construction
-				if yui_is_binding_expr(text_item) {
-					var binding = yui_bind(text_item, resources, slot_values)
-					props.text[i] = binding;
-					text_item = binding;
-				}				
-				
-				var item_text = yui_resolve_binding(text_item, data);
+				var item_text = yui_resolve_binding(text[i++], data);
 				joined_text += string(item_text);
-				
-				i++;
 			}
 			text = joined_text;
 		}
