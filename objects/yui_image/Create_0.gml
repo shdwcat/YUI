@@ -1,5 +1,8 @@
 /// @description 
 
+// clear the sprite so that we don't accidentally draw the YUI sprite when no sprite is bound
+sprite_index = -1;
+
 // Inherit the parent event
 event_inherited();
 

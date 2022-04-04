@@ -54,25 +54,6 @@ build = function() {
 		content_item.data_context = bound_values.data_source;
 		// will trigger build() as child runs after this
 	}
-	
-	//if layout_props.bg_color != undefined {
-	//	bg_color = layout_props.bg_color;
-	//	bg_alpha = ((bg_color & 0xFF000000) >> 24) / 255;
-	//}
-	//if layout_props.border_color != undefined {
-	//	border_color = layout_props.border_color;
-	//}
-	//if layout_props.border_thickness != undefined {
-	//	border_thickness = layout_props.border_thickness;
-	//}
-	//if layout_props.bg_sprite != undefined {
-	//	bg_sprite = layout_props.bg_sprite;
-	//	bg_alpha = 1;
-	//}
-	
-	//if border_color != undefined {
-	//	border_alpha = ((border_color & 0xFF000000) >> 24) / 255;
-	//}
 }
 
 arrange  = function(available_size) {

@@ -85,8 +85,10 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		layout.init(item_elements, undefined, props);
 	}
 	
+	is_elements_bound = yui_is_live_binding(props.elements);
+	
 	is_bound = base_is_bound
-		|| yui_is_live_binding(props.elements);
+		|| is_elements_bound;
 		
 	// ===== functions =====
 		
@@ -118,7 +120,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		
 		if uses_template {
 			// single template element for bound data_items
-			var source_items = props.elements.resolve(data);
+			var source_items = is_elements_bound ? props.elements.resolve(data) : props.elements;
 			
 			// we need to copy the array for diff detection to work
 			var child_count = array_length(source_items);
@@ -138,7 +140,9 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			&& xoffset == prev.xoffset
 			&& yoffset == prev.yoffset
 			&& child_count == prev.child_count
-			&& (!is_array(data_items) || array_equals(data_items, prev.data_items))
+			&& (uses_template
+				? array_equals(data_items, prev.data_items)
+				: data_items == prev.data_items)
 		{
 			return true;
 		}

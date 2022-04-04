@@ -21,7 +21,7 @@ function YuiSelectionScope(_id, _options = {}) constructor {
 	
 	selected_item = options.default_selected_item;
 		
-	static select = function(selection) {
+	select = function(selection) {
 		switch selection_behavior {
 			case SELECTION_BEHAVIOR.Single:
 				selected_item = selection;

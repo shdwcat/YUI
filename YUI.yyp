@@ -375,7 +375,7 @@
     {"name":"Windows","path":"options/windows/options_windows.yy",},
     {"name":"operagx","path":"options/operagx/options_operagx.yy",},
   ],
-  "isDnDProject": false,
+  "defaultScriptType": 1,
   "isEcma": false,
   "configs": {
     "name": "Default",
@@ -485,7 +485,7 @@
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Screens","resourceVersion":"1.0","name":"welcome_screen.yui","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
-    "IDEVersion": "2022.300.0.496",
+    "IDEVersion": "2022.300.0.499",
   },
   "resourceVersion": "1.5",
   "name": "YUI",

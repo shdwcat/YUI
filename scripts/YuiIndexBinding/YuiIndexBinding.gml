@@ -12,11 +12,11 @@ function YuiIndexBinding(left, index) constructor {
 		
 		if is_array(left_val) {
 			var index_key = index.resolve(data);
-			return left_val[index_key];
+			return index_key != undefined ? left_val[index_key] : undefined;
 		}
 		else if is_struct(left_val) {
 			var index_key = index.resolve(data);
-			return left_val[$ index_key];
+			return index_key != undefined ? left_val[$ index_key] : undefined;
 		}
 		else if left_val == undefined {
 			throw yui_error("attempting to index an undefined value");

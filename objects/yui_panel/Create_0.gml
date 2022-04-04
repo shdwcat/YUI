@@ -82,8 +82,10 @@ arrange = function(available_size) {
 	padded_rect = yui_apply_padding(available_size, padding, layout_props.size);
 	layout.init(internal_children, padded_rect, yui_element.props);
 	
+	var data = bound_values ? bound_values.data_source : {};
+		
 	is_arranging = true;
-	used_layout_size = layout.arrange(bound_values.data_source);
+	used_layout_size = layout.arrange(data);
 	is_arranging = false;
 	
 	// update our draw size to encompass the layout's draw size with our padding
@@ -94,7 +96,7 @@ arrange = function(available_size) {
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
 	
-	if bound_values.xoffset != 0 || bound_values.yoffset != 0 {
+	if bound_values && (bound_values.xoffset != 0 || bound_values.yoffset != 0) {
 		move(bound_values.xoffset, bound_values.yoffset);
 	}
 	

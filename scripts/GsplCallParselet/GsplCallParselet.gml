@@ -17,7 +17,7 @@ function GsplCallParselet(precedence, arg_separator_token, args_end_token)
 				array_push(args, arg);
 			} until !parser.match(arg_separator_token)
 			
-			parser.consume(args_end_token);
+			parser.consume(args_end_token, "expect ')' after arguments");
 		}
 		
 		return new parser.Call(left_expr, args);

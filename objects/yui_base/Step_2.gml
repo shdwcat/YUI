@@ -17,7 +17,7 @@ if trace
 	DEBUG_BREAK_YUI;
 
 // NOTE: this will be false if no bindings are live
-if is_binding_active {
+if is_binding_active || !visible {
 
 	// check if any bindings require rebuilding UI state
 	rebuild = bind_values();

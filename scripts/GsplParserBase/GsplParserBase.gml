@@ -8,7 +8,9 @@ function GsplParserBase(tokens, eof_token) constructor {
 	
 	static consume = function(type, error_message) {
 		if check(type) return advance();
-		else throw parser_error(peek(), error_message);		
+		else {
+			throw parser_error(peek(), error_message);
+		}
 	}
 	
 	static match = function(/* token type args */) { // ...

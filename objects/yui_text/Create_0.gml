@@ -45,7 +45,7 @@ build = function() {
 }
 
 arrange  = function(available_size) {		
-	if !visible return;
+	if !scribble_element return;
 	
 	x = available_size.x;
 	y = available_size.y;

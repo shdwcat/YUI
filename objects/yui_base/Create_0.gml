@@ -54,6 +54,7 @@ is_size_changed = false;
 padded_rect = { x: x, y: y, w: 0, h: 0 };
 
 initLayout = function() {
+	_id = yui_element.props.id;
 	layout_props = yui_element.getLayoutProps();
 	
 	focusable = yui_element.props.focusable;
@@ -93,12 +94,13 @@ bind_values = function() {
 		}
 		exit;
 	}
-	else if new_values == true {
-		// values are the same as before, nothing to do
-		exit;
-	}
 	else {
 		visible = true;
+		
+		if new_values == true {
+			// values are the same as before, nothing to do
+			exit;
+		}
 	}
 	
 	bound_values = new_values;

@@ -23,6 +23,9 @@ right_click = undefined;
 
 cursor_hover = undefined;
 
+// simplifies logic for checking parent opacity
+opacity = 1;
+
 onChildLayoutComplete = function(child) {
 	// this is just here to make the recursive call simpler in yui_elements
 }
