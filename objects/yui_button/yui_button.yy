@@ -30,8 +30,8 @@
   ],
   "properties": [
     {"varType":7,"value":"$FFFFFFFF","rangeEnabled":false,"rangeMin":0.0,"rangeMax":10.0,"listItems":[],"multiselect":false,"filters":[],"resourceVersion":"1.0","name":"highlight_color","tags":[],"resourceType":"GMObjectProperty",},
-    {"varType":0,"value":"0.1","rangeEnabled":true,"rangeMin":0.0,"rangeMax":1.0,"listItems":[],"multiselect":false,"filters":[],"resourceVersion":"1.0","name":"highlight_alpha","tags":[],"resourceType":"GMObjectProperty",},
-    {"varType":0,"value":"0.3","rangeEnabled":true,"rangeMin":0.0,"rangeMax":1.0,"listItems":[],"multiselect":false,"filters":[],"resourceVersion":"1.0","name":"pressed_alpha","tags":[],"resourceType":"GMObjectProperty",},
+    {"varType":0,"value":"0.2","rangeEnabled":true,"rangeMin":0.0,"rangeMax":1.0,"listItems":[],"multiselect":false,"filters":[],"resourceVersion":"1.0","name":"highlight_alpha","tags":[],"resourceType":"GMObjectProperty",},
+    {"varType":0,"value":"0.4","rangeEnabled":true,"rangeMin":0.0,"rangeMax":1.0,"listItems":[],"multiselect":false,"filters":[],"resourceVersion":"1.0","name":"pressed_alpha","tags":[],"resourceType":"GMObjectProperty",},
   ],
   "overriddenProperties": [
     {"propertyId":{"name":"element_constructor","path":"objects/yui_base/yui_base.yy",},"objectId":{"name":"yui_base","path":"objects/yui_base/yui_base.yy",},"value":"YuiButtonElement","resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMOverriddenProperty",},

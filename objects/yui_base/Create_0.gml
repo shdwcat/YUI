@@ -19,6 +19,8 @@ is_binding_active = true;
 // the map of values that depend on the data context
 bound_values = undefined;
 
+opacity = 1;
+
 // this only applies alpha for bg_color set on an element placed in the room editor
 bg_alpha = ((bg_color & 0xFF000000) >> 24) / 255;
 
@@ -47,10 +49,21 @@ draw_size = {
 	h: bbox_bottom - bbox_top,
 };
 
+is_size_changed = false;
+
 padded_rect = { x: x, y: y, w: 0, h: 0 };
 
 initLayout = function() {
 	layout_props = yui_element.getLayoutProps();
+	
+	focusable = yui_element.props.focusable;
+	
+	// set initial focus if needed
+	if focusable 
+		&& ((YuiCursorManager.focused_item == undefined || !instance_exists(YuiCursorManager.focused_item))
+			|| yui_element.props.autofocus) {
+		YuiCursorManager.setFocus(id);
+	}
 	
 	canvas = yui_element.canvas;
 	tooltip_element = yui_element.tooltip_element;
@@ -71,7 +84,13 @@ onLayoutInit = function() {
 bind_values = function() {
 	var new_values = yui_element.getBoundValues(data_context, bound_values)
 	if new_values == false {
-		visible = false;
+		if visible {
+			visible = false;
+		
+			// need to reset these, as values may change while the element
+			// is not visible, which means the diffing will be out of date
+			bound_values = undefined;
+		}
 		exit;
 	}
 	else if new_values == true {
@@ -113,6 +132,30 @@ move = function(xoffset, yoffset) {
 	}
 }
 
+resize = yui_resize_instance;
+
 cursor_tooltip = function() {
 	//var tooltip = yui_resolve_binding(
+}
+
+findAncestor = function(type) {
+	var ancestor = parent;
+	while ancestor != undefined {
+		if ancestor.yui_element.props._type == type {
+			return ancestor;
+		}
+		ancestor = ancestor.parent;
+	}
+	throw yui_error("could not find ancestor with type " + type);
+}
+
+closePopup = function(close_parent = false) {
+	var ancestor = parent;
+	while ancestor != undefined {
+		if ancestor.object_index == yui_popup_button {
+			ancestor.closePopup(close_parent);
+			return;
+		}
+		ancestor = ancestor.parent;
+	}
 }

@@ -14,7 +14,7 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		padding: undefined,
 	}
 	
-	props = init_props_old(_props);
+	props = yui_init_props(_props);
 	yui_resolve_theme();
 	
 	props.placement = yui_bind(props.placement, resources, slot_values);
@@ -45,7 +45,8 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	content_element = yui_resolve_element(props.content, resources, slot_values);
 
-	is_bound = yui_is_live_binding(props.placement);
+	is_bound = base_is_bound
+		|| yui_is_live_binding(props.placement);
 	
 	// ===== functions =====
 	
@@ -55,6 +56,11 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			padding: props.padding,
 			size: size,
 			content_element: content_element,
+			// border
+			bg_sprite: undefined, // not yet implemented here
+			bg_color: props.bg_color,
+			border_color: props.border_color,
+			border_thickness: props.border_thickness,
 		};
 	}
 	
@@ -66,11 +72,17 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		var is_visible = yui_resolve_binding(props.visible, data);
 		if !is_visible return false;
 		
+		var opacity = yui_resolve_binding(props.opacity, data);
 		var placement = yui_resolve_binding(props.placement, data);
+		var xoffset = yui_resolve_binding(props.xoffset, data);
+		var yoffset = yui_resolve_binding(props.yoffset, data);
 		
 		// diff
 		if prev
+			&& opacity == prev.opacity
 			&& placement == prev.placement
+			&& xoffset == prev.xoffset
+			&& yoffset == prev.yoffset
 		{
 			return true;
 		}
@@ -78,11 +90,11 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		return {
 			is_live: is_bound,
 			data_source: data,
-			bg_sprite: undefined, // not yet implemented here
-			bg_color: props.bg_color,
-			border_color: props.border_color,
-			border_thickness: props.border_thickness,
+			// popup
+			opacity: opacity,
 			placement: placement,
+			xoffset: xoffset,
+			yoffset: yoffset,
 		};
 	}
 }

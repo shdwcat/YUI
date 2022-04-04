@@ -1,7 +1,6 @@
 /// @description here
-function yui_resolve_padding(padding) {
-	if padding == undefined padding = 0;
-	
+function yui_resolve_padding(padding = 0) {
+		
 	var result = {};
 	
 	if is_numeric(padding) {
@@ -23,6 +22,9 @@ function yui_resolve_padding(padding) {
             result.bottom = result.top;
         }
     }
+	else if is_struct(padding) {
+		result = padding;
+	}
 		
 	result.w = result.left + result.right;
 	result.h = result.top + result.bottom;

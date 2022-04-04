@@ -1,0 +1,112 @@
+file_type: resources
+
+resources:
+
+  // # menu_item_data_example:
+  // #   label: string
+  // #   command: handler
+  // #   children: YuiMenuItem[] # optional
+
+  menu_item_template:
+    type: text
+    text: @label
+    padding: [0, 2, 0, 0]
+    color: $foreground
+
+  menu:
+    type: template
+
+    slots:
+      // the MenuItemDatas to display
+      menu_items: []
+
+      item_template: &menu_item_template
+
+      // which direction to display the top level menu items in
+      menu_layout: horizontal
+
+      // placement for the initial submenu popups
+      menu_placement: bottom_left
+
+      // size to use for icons in menu item content
+      menu_icon_size: 16
+
+      foreground: null
+
+    template:
+
+        type: panel
+        layout: $menu_layout
+        spacing: 3
+        alignment:
+          h: stretch
+        elements: $menu_items
+        template:
+
+          type: switch
+          switch_on: @type
+          strict: true
+          cases:
+            item:
+              type: button
+              padding: 0
+              background: #18263A
+              content:
+                type: panel
+                layout: horizontal
+                alignment: { v: center }
+                size: { h: 30 }
+                padding: [5, 0]
+                elements:
+                  - type: image
+                    size: 24
+                    image: @icon_sprite
+                    visible: $is_submenu
+                  - $item_template
+              on_click:
+                - @command()
+                - e => e.source.closePopup(true) // recursive
+
+            check_item:
+              type: button
+              padding: 0
+              background: #18263A
+              content:
+                type: panel
+                layout: horizontal
+                alignment: { v: center }
+                size: { h: 30 }
+                padding: [5, 0]
+                elements:
+                  - type: image
+                    visible: @is_checked
+                    sprite: yui_icon_checkmark
+                    size: 24
+                  - $item_template
+              on_click: @command()
+
+            submenu:
+              type: button
+              padding: [29, 5, 5, 5]
+              background: #18263A
+              content: $item_template
+              popup:
+                placement: $menu_placement
+                content:
+                  type: menu
+                  menu_items: @children
+                  menu_layout: vertical
+                  menu_placement: right_top
+
+            topmenu:
+              type: button
+              padding: [15, 5]
+              background: #18263A
+              content: $item_template
+              popup:
+                placement: $menu_placement
+                content:
+                  type: menu
+                  menu_items: @children
+                  menu_layout: vertical
+                  menu_placement: right_top

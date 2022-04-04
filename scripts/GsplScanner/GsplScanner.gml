@@ -108,7 +108,7 @@ function GsplScanner(source, token_definition) constructor {
 		
 		advance(); // the closing "
 		
-		var value = string_substring(_source, _start + 1, _current - 1);
+		var value = gspl_string_substring(_source, _start + 1, _current - 1);
 		addToken(string_token, value);
 	}
 	
@@ -123,7 +123,7 @@ function GsplScanner(source, token_definition) constructor {
 			while isDigit(peek()) advance();
 		}
 		
-		var lexeme = string_substring(_source, _start, _current);
+		var lexeme = gspl_string_substring(_source, _start, _current);
 		var value = real(lexeme);
 		addToken(number_token, value);
 	}
@@ -143,16 +143,14 @@ function GsplScanner(source, token_definition) constructor {
 		var token_type = keywords[$ identifier];
 		
 		// if it's not a keyword then it's an identifier
-		if token_type == undefined {
-			token_type = identifier_type ?? identifier_token;
-		}
+		token_type ??= identifier_type ?? identifier_token;
 		
 		addToken(token_type);
 	}
 	
 	static matchHexString = function(offset = 0) {
 		while isHexDigit(peek()) advance();
-		return string_substring(_source, _start + offset, _current);
+		return gspl_string_substring(_source, _start + offset, _current);
 	}
 	
 	static scanColor = function(color_token_type) {
@@ -168,9 +166,9 @@ function GsplScanner(source, token_definition) constructor {
 		
 		if length == 6 {
 			// handle color without alpha
-			var red = hex_value >> 4;
-			var green = hex_value && 0xFF00 >> 2;
-			var blue = hex_value && 0xFF;
+			var red = hex_value >> 16;
+			var green = (hex_value & 0xFF00) >> 8;
+			var blue = hex_value & 0xFF;
 			var color = make_color_rgb(red, green, blue);
 			
 			// set alpha to 1
@@ -178,13 +176,13 @@ function GsplScanner(source, token_definition) constructor {
 		}
 		else {
 			// handle color with alpha
-			var red = hex_value && 0xFF0000 >> 4;
-			var green = hex_value && 0xFF00 >> 2;
-			var blue = hex_value && 0xFF;
+			var red = hex_value >> 16;
+			var green = (hex_value & 0xFF00) >> 8;
+			var blue = hex_value & 0xFF;
 			var color = make_color_rgb(red, green, blue);
 			
 			// set alpha
-			var alpha = hex_value && 0xFF000000;
+			var alpha = hex_value & 0xFF000000;
 			color |= alpha;
 		}
 		
@@ -192,7 +190,7 @@ function GsplScanner(source, token_definition) constructor {
 	}
 	
 	static _error = function(line, msg, value = undefined) {
-		if value == undefined value = ""
+		value ??= ""
 		gspl_log("[", line, "]", msg, value);
 	}
 }

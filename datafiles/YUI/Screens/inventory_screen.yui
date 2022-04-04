@@ -20,7 +20,8 @@ resources:
       layout: horizontal
       spacing: 15
       elements:
-        - type: main_panel
+        - type: border
+          background: yui_panel_bg
           padding: 2
           size: 64
 
@@ -35,10 +36,10 @@ resources:
           interactions: 
             - equip_item.drop
 
-          elements:
-            - type: image
-              sprite: @equipped_item.sprite
-              size: stretch
+          content:
+            type: image
+            sprite: @equipped_item.sprite
+            size: stretch
         - type: text
           text: @name
 
@@ -49,7 +50,7 @@ resources:
     content: 
       type: border
       padding: 2
-      bg_sprite: yui_panel_bg
+      background: yui_panel_bg
       content:
         type: image
         sprite: @sprite

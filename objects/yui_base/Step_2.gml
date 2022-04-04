@@ -1,9 +1,7 @@
 /// @description bind / layout
 
 if layout_props == undefined {
-	if yui_element == undefined {
-		yui_element = new element_constructor(default_props, {});
-	}
+	yui_element ??= new element_constructor(default_props, {});
 	initLayout();
 }
 
@@ -14,6 +12,9 @@ if parent && !parent.visible {
 	rebuild = false;
 	exit;
 }
+
+if trace
+	DEBUG_BREAK_YUI;
 
 // NOTE: this will be false if no bindings are live
 if is_binding_active {
@@ -28,7 +29,8 @@ if is_binding_active {
 		// have build return a boolean
 		arrange(draw_rect);
 	
-		if parent {
+		// only update parent if our size actually changed
+		if is_size_changed && parent {
 			parent.onChildLayoutComplete(self);
 		}
 	}

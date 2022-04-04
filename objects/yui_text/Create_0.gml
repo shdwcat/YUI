@@ -19,6 +19,7 @@ build = function() {
 	
 	// used in Draw GUI
 	text_color = bound_values.color;
+	opacity = bound_values.opacity * parent.opacity;
 		
 	scribble_element = scribble(bound_values.text, string(id))
 		.starting_format(bound_values.font)
@@ -62,9 +63,9 @@ arrange  = function(available_size) {
 	element_xoffset = padding.left;
 	element_yoffset = padding.top;
 	
-	if trace {
-		DEBUG_BREAK_YUI;
-	}
+	//if trace {
+	//	DEBUG_BREAK_YUI;
+	//}
 	
 	scribble_element.wrap(padded_rect.w, padded_rect.h);
 

@@ -11,9 +11,10 @@ function GsplPrattParser(tokens, eof_token) : GsplParserBase(tokens, eof_token) 
 	self.Identifier = undefined;
 	self.PrefixOperator = undefined;
 	self.BinaryOperator = undefined;
-	self.Indexer = undefined;
 	self.Conditional = undefined;
 	self.Call = undefined;
+	self.Subscript = undefined;
+	self.Indexer = undefined;
 
 	static parseExpression = function(precedence = 0) {
 		var token = advance();

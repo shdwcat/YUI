@@ -5,6 +5,7 @@ enum YS_TOKEN {
 	DOT, // member access
 	COMMA, // function args
 	GREATER_GREATER, // >> prefix/infix function call
+	ARROW, // => lambda definition
 	QUESTION, COLON, // ? : ternary
 	PIPE, // directives
 	
@@ -13,14 +14,16 @@ enum YS_TOKEN {
 	SLASH, STAR,
 	// div/mod?
 	
+	// NOTE: currently unused
+	BANG, 
+	
 	// logic
-	BANG,
 	BANG_EQUAL,	EQUAL_EQUAL,
 	GREATER, GREATER_EQUAL,
 	LESS, LESS_EQUAL,
 	
 	// keywords
-	EQUALS,
+	EQUALS, NOT,
 	AND, OR,
 	THEN, ELSE,
 	
@@ -28,14 +31,10 @@ enum YS_TOKEN {
 	// e.g. @,$,#,! are prefix operators?
 	
 	// primary
+	IDENTIFIER, // plain identifier (for subscript and lambdas)
 	BINDING_IDENTIFIER, // @bind
 	SLOT_IDENTIFIER, // $slot
 	RESOURCE_IDENTIFIER, // &resource
-	
-	FUNCTION_IDENTIFIER, // function(
-	
-	// using ! here means no $foo == !$bar weird...
-	SPECIAL_IDENTIFIER, // !special
 	
 	// values
 	STRING,

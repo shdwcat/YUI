@@ -1,0 +1,83 @@
+file_type: resources
+
+import:
+  - ../Interactions/slider_drag.yui
+
+resources:
+
+  meter:
+    type: panel
+    layout: canvas
+    size: { w: 200, h: 50 }
+    elements:
+      - type: image
+        sprite: spr_container
+        size: stretch
+        
+      - type: image
+        sprite: spr_gauge
+        size: stretch
+        canvas:
+          normalized: true
+          right: @value / @max
+
+
+  slider:
+    type: template
+
+    slots:
+      min: 0
+      max: 100
+      value: 0
+      on_value_changed: null
+      show_value: true
+
+      orientation: horizontal
+      thumb_background: #AA00AA
+
+    template:
+
+      type: panel
+      layout: $orientation
+      elements:
+
+        - type: text
+          text: $min
+          padding: [0,0,8,0]
+
+        - type: panel
+          layout: canvas
+          size: { h: 20, w: 100 }
+          elements:
+
+            // slider thumb
+            - type: button
+              padding: 0
+              xoffset: $value / ($max - $min) * 100 - 10
+              background: $thumb_background
+              size: { h: 20, w: 10, min_w: 10 }
+              events:
+                on_mouse_down:
+                  interaction: slider_drag
+                  parameters:
+                    on_position_changed: @@ e => $on_value_changed(e.left * ($max - $min))
+
+            // slider line
+            - type: border
+              canvas:
+                left: -5
+                right: 5
+                center: v
+              background: #888888
+              size: { h: 2, w: stretch }
+
+        - type: text
+          text: $max
+
+        - type: text
+          text: "-"
+          visible: $show_value
+
+        - type: text
+          text: $value >> string_format(0, 0) // format as a whole number with no decimals
+          visible: $show_value

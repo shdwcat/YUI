@@ -1,7 +1,7 @@
 /// @description here
-function yui_example_equip_item(params) {
-	var item = params.item;
-	var slot = params.slot;
+function yui_example_equip_item(item, slot) {
+	//var item = params.item;
+	//var slot = params.slot;
 	
 	var previous_item = slot.equipped_item;
 	

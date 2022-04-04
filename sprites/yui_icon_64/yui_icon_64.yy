@@ -59,7 +59,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"yui_icon_64","path":"sprites/yui_icon_64/yui_icon_64.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "yui_icon_64",
     "tags": [],
     "resourceType": "GMSequence",

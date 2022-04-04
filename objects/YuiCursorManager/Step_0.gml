@@ -1,4 +1,4 @@
-/// @description check overlay GUI hotspots
+/// @description check cursor hover and run interaction
 
 // get mouse position once per frame
 cursor_state_gui = {

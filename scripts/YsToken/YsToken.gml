@@ -45,6 +45,7 @@ function make_yscript_type_map() {
 	type_map[YS_TOKEN.LESS_EQUAL] = "LESS_EQUAL";
 	type_map[YS_TOKEN.LESS] = "LESS";
 	
+	type_map[YS_TOKEN.NOT] = "NOT";
 	type_map[YS_TOKEN.AND] = "AND";
 	type_map[YS_TOKEN.OR] = "OR";
 	type_map[YS_TOKEN.THEN] = "THEN";
@@ -53,8 +54,7 @@ function make_yscript_type_map() {
 	type_map[YS_TOKEN.BINDING_IDENTIFIER] = "BINDING_IDENTIFIER";
 	type_map[YS_TOKEN.SLOT_IDENTIFIER] = "SLOT_IDENTIFIER";
 	type_map[YS_TOKEN.RESOURCE_IDENTIFIER] = "RESOURCE_IDENTIFIER";
-	type_map[YS_TOKEN.FUNCTION_IDENTIFIER] = "FUNCTION_IDENTIFIER";
-	type_map[YS_TOKEN.SPECIAL_IDENTIFIER] = "SPECIAL_IDENTIFIER";
+	type_map[YS_TOKEN.IDENTIFIER] = "IDENTIFIER";
 	
 	type_map[YS_TOKEN.STRING] = "STRING";
 	type_map[YS_TOKEN.NUMBER] = "NUMBER";

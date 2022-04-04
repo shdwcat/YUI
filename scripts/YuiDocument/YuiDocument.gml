@@ -20,7 +20,9 @@ function YuiDocument(_yui_file) constructor {
 	
 	static loadDocument = function() {
 		
-		var yui_filepath = YUI_LOCAL_PROJECT_DATA_FOLDER + yui_file;
+		var yui_filepath = global.__yui_live_reload_enabled
+			? YUI_LOCAL_PROJECT_DATA_FOLDER + yui_file
+			: yui_file;
 		
 		if !file_exists(yui_filepath) {
 			load_error = yui_string_concat("Could not find yui document file at", yui_filepath);

@@ -1,0 +1,32 @@
+id: widget_gallery
+file_type: screen
+
+import:
+  - ../Templates/main_panel.yui
+  - ../Templates/back_button.yui
+  
+  - ../Widgets/fib.yui
+
+resources:
+  widget_wrapper:
+    type: template
+
+
+root:
+
+  type: panel
+  padding: 30
+  spacing: 10
+  
+  elements:
+    - type: back_button
+
+    - type: panel
+
+      elements:
+
+        - type: text
+          text: Fibonacci test
+          text_style: subtitle
+
+        - type: fib

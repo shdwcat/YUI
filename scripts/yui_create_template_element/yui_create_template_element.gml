@@ -2,8 +2,7 @@
 function yui_create_template_element(instance_props, template_definition, resources, parent_slot_values) {
 				
 	// defines what input slots the template supports
-	var slot_definitions = template_definition[$ "slots"];
-	if slot_definitions == undefined slot_definitions = {};
+	var slot_definitions = template_definition[$ "slots"] ?? {};
 	
 	// the props for the element we will create
 	// need to copy the definition since we'll be updating the values
@@ -38,8 +37,7 @@ function yui_create_template_element(instance_props, template_definition, resour
 		var i = 0; repeat event_count {
 			var key = keys[i];
 			var handler = event_definitions[$ key];
-			var command = yui_resolve_command(handler, resources, slot_values);
-			event_definitions[$ key] = command;
+			event_definitions[$ key] = yui_bind_handler(handler, resources, slot_values);
 		}
 	
 		// merge the events defined for the template with the events of the template's root_element

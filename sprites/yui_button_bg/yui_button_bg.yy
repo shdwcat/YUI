@@ -59,7 +59,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"yui_button_bg","path":"sprites/yui_button_bg/yui_button_bg.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "yui_button_bg",
     "tags": [],
     "resourceType": "GMSequence",

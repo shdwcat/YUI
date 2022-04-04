@@ -21,19 +21,19 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		on_cancel: undefined,
 	};
 	
-	props = init_props_old(_props);
+	props = yui_init_props(_props);
 	resources = _resources;
 	
 	props.drag.condition = yui_bind(props.drag.condition, resources, undefined);
 	drag_element = yui_resolve_element(props.drag.visual, resources, undefined);
-	props.drag.action = yui_resolve_command(props.drag.action, resources, undefined);
+	props.drag.action = yui_bind_handler(props.drag.action, resources, undefined);
 	
 	drop_hash_id = YuiCursorManager.participation_hash.getStringId(props.id + ".drop");
 	props.drop.condition = yui_bind(props.drop.condition, resources, undefined);
 	drop_element = yui_resolve_element(props.drop.visual, resources, undefined);
-	props.drop.action = yui_resolve_command(props.drop.action, resources, undefined);
+	props.drop.action = yui_bind_handler(props.drop.action, resources, undefined);
 	
-	props.on_cancel = yui_resolve_command(props.on_cancel, resources, undefined);
+	props.on_cancel = yui_bind_handler(props.on_cancel, resources, undefined);
 	
 	
 	static canStart = function(source_data) {
@@ -46,14 +46,13 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		}
 	}
 	
-	static start = function(source_data, event) {
+	static start = function(source_data, event, source_item) {
 		// NOTE: assumes initiating event is a mouse button event
-		var button = event[$ "button"];
-		if button == undefined {
-			// need to be able to use button constants in .yui files
-			// which probably mean we need a YuiEventHandler class to grab the constant from the "mb_left" etc
-			button = mb_left;
-		}
+		var button = event[$ "button"] ?? mb_left;
+		
+		// need to be able to use button constants in .yui files
+		// which probably mean we need a YuiEventHandler class to grab the constant from the "mb_left" etc
+		//button ??= mb_left;
 		
 		source = {
 			data: source_data,
@@ -128,10 +127,10 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		var button_down = mouse_check_button(source.event.button); // TODO button
 		if !button_down {
 			if target.can_drop {
-				yui_handle_event(props.drop.action, interaction_data);
+				yui_call_handler(props.drop.action, , interaction_data);
 			}
 			else {
-				yui_handle_event(props.on_cancel, interaction_data);
+				yui_call_handler(props.on_cancel, , interaction_data);
 			}
 			finish();
 			return false;
@@ -139,7 +138,7 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		
 		// optionally run an action every frame
 		if props.drag.action {
-			yui_handle_event(props.drag.action, interaction_data);
+			yui_call_handler(props.drag.action, , interaction_data);
 		}
 	}
 	

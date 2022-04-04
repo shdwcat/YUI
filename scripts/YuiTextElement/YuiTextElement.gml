@@ -12,15 +12,12 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		font: undefined, // overrides text_style.font
 		color: undefined, // overrides text_style.color
 		highlight_color: undefined,
-		
-		// deprecated
-		centered: false,
-		
+				
 		autotype: undefined, // simple option to enable typist.in()
 		typist: undefined, // controls typewriter behavior
 	};
 	
-	props = init_props_old(_props);
+	props = yui_init_props(_props);
 	yui_resolve_theme();
 	
 	props.text = yui_bind(props.text, resources, slot_values);
@@ -30,15 +27,12 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	// look up the text style by name from the theme
 	text_style = theme.text_styles[$ props.text_style];
 	
-	var font = props.font == undefined
-		? text_style.font
-		: props.font;
+	var font = props.font ?? text_style.font;
 		
-	color = props.color == undefined
-		? text_style.color
-		: yui_resolve_color(props.color);
-	color = yui_bind(color, resources, slot_values);
-	highlight_color = yui_resolve_color(props.highlight_color);
+	color = props.color ?? text_style.color;
+	color = yui_resolve_color(yui_bind(color, resources, slot_values));
+	
+	highlight_color = yui_resolve_color(yui_bind(props.highlight_color, resources, slot_values));
 			
 	if !is_string(font) font = font_get_name(font);
 	else if !asset_get_index(font) {
@@ -47,9 +41,14 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	}
 	self.font = font;
 	
-	is_bound = yui_is_live_binding(props.text)
-		|| yui_is_live_binding(props.color)
-		|| yui_is_live_binding(props.typist);
+	is_text_live = yui_is_live_binding(props.text);
+	is_color_live = yui_is_live_binding(props.color);
+	is_typist_live = yui_is_live_binding(props.typist);
+	
+	is_bound = base_is_bound
+		|| is_text_live
+		|| is_color_live
+		|| is_typist_live;
 		
 	// ===== functions =====
 	
@@ -76,15 +75,16 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			data = yui_resolve_binding(data_source, data);
 		}
 		
-		var is_visible = yui_resolve_binding(props.visible, data);
+		var is_visible = is_visible_live ? props.visible.resolve(data) : props.visible;
 		if !is_visible return false;
 				
-		var text = yui_resolve_binding(props.text, data);
+		var text = is_text_live ? props.text.resolve(data) : props.text;
 		if text == "" || text == undefined {
 			return false;
 		}
 		
-		var color = yui_resolve_binding(self.color, data);
+		var color = is_color_live ? self.color.resolve(data) : self.color;
+		var opacity = is_opacity_live ? props.opacity.resolve(data) : props.opacity;
 		
 		// handle text array by joining the values		
 		if is_array(text) {
@@ -113,11 +113,12 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			text = string_replace(props.text_format, "{0}", text);
 		}
 		
-		var typist = yui_resolve_binding(props.typist, data);
+		var typist = is_typist_live ? props.typist.resolve(data) : props.typist;
 		
 		// diff
 		if prev
 			&& text == prev.text
+			&& opacity == prev.opacity
 			&& color == prev.color
 			&& typist == prev.typist
 		{
@@ -128,6 +129,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			is_live: is_bound,
 			text: text,
 			font: font,
+			opacity: opacity,
 			color: color,
 			autotype: props.autotype,
 			typist: typist,

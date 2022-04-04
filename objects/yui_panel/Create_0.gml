@@ -3,11 +3,15 @@
 // Inherit the parent event
 event_inherited();
 
+has_content_item = false;
+
 internal_children = [];
 is_arranging = false;
 used_layout_size = undefined;
 
+border_onLayoutInit = onLayoutInit;
 onLayoutInit = function() {
+	border_onLayoutInit();
 	layout = layout_props.layout;
 }
 
@@ -23,7 +27,7 @@ build = function() {
 	var excess_count = previous_count - bound_values.child_count;
 	
 	// resize the array if we need more room
-	if previous_count < bound_values.child_count {
+	if bound_values.child_count > previous_count {
 		array_resize(internal_children, bound_values.child_count);
 	}
 	
@@ -33,13 +37,19 @@ build = function() {
 		var exists = child != 0;
 		
 		if exists {
-			// TODO: if the render_object doesn't match, we need to recreate
+			// TODO: if the render item doesn't match, we need to recreate
 			// currently that's not possible so we won't worry about it
 			child.data_context = bound_values.data_items[i];
 		}
 		else {
-			var item_element = bound_values.item_elements[i];
-			var data = bound_values.data_items[i]
+			if yui_element.uses_template {
+				var item_element =  yui_element.item_element;
+				var data = bound_values.data_items[i];
+			}
+			else {
+				var item_element =  yui_element.item_elements[i];
+				var data = bound_values.data_items;
+			}
 			
 			// create the child render object
 			var child = yui_make_render_instance(item_element, data, i);
@@ -73,7 +83,7 @@ arrange = function(available_size) {
 	layout.init(internal_children, padded_rect, yui_element.props);
 	
 	is_arranging = true;
-	used_layout_size = layout.arrange();
+	used_layout_size = layout.arrange(bound_values.data_source);
 	is_arranging = false;
 	
 	// update our draw size to encompass the layout's draw size with our padding
@@ -83,6 +93,10 @@ arrange = function(available_size) {
 	});
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
+	
+	if bound_values.xoffset != 0 || bound_values.yoffset != 0 {
+		move(bound_values.xoffset, bound_values.yoffset);
+	}
 	
 	// our used size is the layout used size with our padding
 	var used_size = {

@@ -12,6 +12,8 @@ build = function() {
 		case_item = undefined;
 	}
 	
+	opacity = parent.opacity
+	
 	// make/update the child item
 	if bound_values.switch_value != undefined {
 		if typeof(bound_values.switch_value) == "bool" {
@@ -36,7 +38,7 @@ arrange = function(available_size) {
 	draw_rect = available_size
 	if case_item {
 		case_item.arrange(available_size);
-		return case_item.draw_size;
+		draw_size = case_item.draw_size;
 	}
 	return draw_size;
 }
@@ -44,6 +46,13 @@ arrange = function(available_size) {
 move = function(xoffset, yoffset) {
 	if case_item {
 		case_item.move(xoffset, yoffset);
+	}
+}
+
+resize = function(width, height) {
+	if case_item {
+		yui_resize_instance(width, height);
+		case_item.resize(width, height);
 	}
 }
 

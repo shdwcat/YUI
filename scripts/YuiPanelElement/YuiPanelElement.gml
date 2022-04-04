@@ -13,6 +13,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		// .horizontal:"left"|"right"|"stretch" - "center" not yet supported
 		
 		// visuals
+		background: undefined,
 		bg_sprite: undefined,
 		bg_color: undefined,
 		border_color: undefined,
@@ -27,7 +28,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		template: undefined, // the template to use when rendering elements from the path
 	};
 	
-	props = init_props_old(_props);
+	props = yui_init_props(_props);
 	yui_resolve_theme();
 	
 	props.elements = yui_bind(props.elements, resources, slot_values);
@@ -39,26 +40,34 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	props.layout = yui_bind(props.layout, resources, slot_values);
 	
 	var makeLayout = yui_resolve_layout(props.layout);
+	// TODO: padding isn't used so remove it
 	layout = new makeLayout(alignment, props.padding, spacing);
 	
-	// resolve bg_sprite
-	var use_theme = props.bg_sprite == undefined && props.bg_color == undefined;
-	if use_theme {
-		bg_sprite = undefined;
-		//bg_sprite = theme.button.bg_sprite;
-	}
-	else if props.bg_sprite != undefined {
-		bg_sprite = yui_resolve_sprite_by_name(props.bg_sprite, _resources);
+	// resolve slot/resource (not bindable currently)
+	var background_expr = yui_bind(props.background, resources, slot_values);
+	if background_expr != undefined {
+		var bg_spr = yui_resolve_sprite_by_name(background_expr);
+		if bg_spr {
+			bg_sprite = bg_spr;
+			bg_color = undefined;
+		}
+		else {
+			bg_color = yui_resolve_color(background_expr);
+			bg_sprite = undefined;
+		}
 	}
 	else {
+		bg_color = undefined;
 		bg_sprite = undefined;
 	}
 	
-	// resolve colors
-	bg_color = yui_resolve_color(props.bg_color);
-	border_color = yui_resolve_color(props.border_color);
+	border_color = yui_resolve_color(yui_bind(props.border_color, resources, slot_values));
 	
-	if props.template != undefined {	
+	uses_template = props.template != undefined;
+	
+	if uses_template {		
+		if props.elements == undefined throw "cannot use 'template' without 'elements'";
+		
 		item_element = yui_resolve_element(props.template, resources, slot_values, props.id + ":T");	
 	}
 	else {
@@ -71,9 +80,13 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			i++;
 		}
 		element_count = i;
+		
+		// force layout to check if it's live
+		layout.init(item_elements, undefined, props);
 	}
 	
-	is_bound = yui_is_live_binding(props.elements);
+	is_bound = base_is_bound
+		|| yui_is_live_binding(props.elements);
 		
 	// ===== functions =====
 		
@@ -84,63 +97,61 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			padding: props.padding,
 			size: size,
 			layout: layout,
+			bg_sprite: bg_sprite,
+			bg_color: bg_color,
+			border_color: border_color,
+			border_thickness: props.border_thickness,
 		};
 	}
 	
 	static getBoundValues = function(data, prev) {
 		if data_source != undefined {
-			data = yui_resolve_binding(data_source, data);
+			data = is_data_source_live ? data_source.resolve(data) : data;
 		}
 		
-		var is_visible = yui_resolve_binding(props.visible, data);
+		var is_visible = is_visible_live ? props.visible.resolve(data) : props.visible;
 		if !is_visible return false;
 		
-		if props.template != undefined {
-			if props.elements == undefined throw "cannot use 'template' without 'elements'";
-			
+		var opacity = is_opacity_live ? props.opacity.resolve(data) : props.opacity;
+		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
+		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
+		
+		if uses_template {
 			// single template element for bound data_items
-			var source_items = yui_resolve_binding(props.elements, data);
-			var child_count = array_length(source_items);
+			var source_items = props.elements.resolve(data);
 			
 			// we need to copy the array for diff detection to work
+			var child_count = array_length(source_items);
 			var data_items = array_create(child_count);
 			array_copy(data_items, 0, source_items, 0, child_count);
-			
-			var item_elements = array_create(child_count);
-			var i = 0; repeat child_count {
-				item_elements[i++] = item_element;
-			}
 		}
 		else {
 			// explicit elements bound to panel.data_context
 			var child_count = element_count;
-			var data_items = array_create(child_count);
-			var i = 0; repeat child_count {
-				data_items[i++] = data;
-			}
-			var item_elements = self.item_elements;
+			var data_items = data;
 		}
 		
 		// diff
-		if prev
+		if !layout.is_live
+			&& prev
+			&& opacity == prev.opacity
+			&& xoffset == prev.xoffset
+			&& yoffset == prev.yoffset
 			&& child_count == prev.child_count
-			&& array_equals(item_elements, prev.item_elements)
-			&& array_equals(data_items, prev.data_items)
+			&& (!is_array(data_items) || array_equals(data_items, prev.data_items))
 		{
 			return true;
 		}
 		
 		return {
-			is_live: is_bound,
+			is_live: is_bound || layout.is_live,
 			// border
 			data_source: data,
-			bg_sprite: bg_sprite,
-			bg_color: bg_color,
-			border_color: border_color,
-			border_thickness: props.border_thickness,
+			opacity: opacity,
+			xoffset: xoffset,
+			yoffset: yoffset,
 			// panel
 			child_count: child_count,
-			item_elements: item_elements,
 			data_items: data_items,
 		};
 	}

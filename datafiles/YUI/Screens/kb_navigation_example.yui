@@ -1,0 +1,53 @@
+id: kb_navigation_example
+file_type: screen
+
+import:
+  - ../Templates/main_panel.yui
+  - ../Templates/screen_base.yui
+
+root:
+  type: screen_base
+  items:
+    - This example demonstrates how keyboard/gamepad navigation works.\nCheck kb_navigation_example.yui to see how submenus etc are configured
+
+    - type: panel
+      layout: horizontal
+      spacing: 100
+      elements:
+
+        - type: panel
+          elements:
+
+            - type: button
+              autofocus: true
+              content: Start New Game
+              on_click: @@ start_new_game()
+            
+            - type: button
+              content: Continue Game
+              on_click: @@ continue_game()
+
+            - type: button
+              content: Bonuses
+
+            - type: button
+              content: Options
+            
+            - type: button
+              content: Credits
+
+        - type: panel
+          elements:
+            
+            - type: button
+              content: Column 2 item 1
+            
+            - type: button
+              content: Column 2 item 2
+            
+            - type: button
+              content: Column 2 item 3
+            
+            - type: button
+              content: Column 2 item 4
+          

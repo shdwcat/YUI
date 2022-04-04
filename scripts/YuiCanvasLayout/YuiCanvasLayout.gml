@@ -1,5 +1,6 @@
 /// @description here
 function YuiCanvasLayout(alignment, padding, spacing) constructor {
+	static is_live = false;
 	
 	self.alignment = alignment;
 	self.padding = padding;
@@ -11,22 +12,52 @@ function YuiCanvasLayout(alignment, padding, spacing) constructor {
 	static init = function(items, available_size) {
 		self.items = items;
 		self.available_size = available_size;
+		
+		if !is_live {
+			var i = 0; repeat array_length(items) {			
+				var item = items[i++];
+				var canvas = item.canvas;
+				
+				if canvas.is_bound {
+					is_live = true;
+					break;
+				}
+			}
+		}	
 	}
 	
-	static arrange = function() {
+	static arrange = function(data_context) {
 		
 		var i = 0; repeat array_length(items) {
 			
-			var item = items[i];
+			var item = items[i++];
 			var canvas = item.canvas;
 			
+			var left = yui_resolve_binding(canvas.left, data_context);
+			var top = yui_resolve_binding(canvas.top, data_context);
+			var right = yui_resolve_binding(canvas.right, data_context);
+			var bottom = yui_resolve_binding(canvas.bottom, data_context);
+			
 			// fit the item within the bounds defined by the canvas properties
-			var possible_size = {
-				x: available_size.x + canvas.left,
-				y: available_size.y + canvas.top,
-				w: available_size.w - (canvas.left + canvas.right),
-				h: available_size.h - (canvas.top + canvas.bottom),
-			};
+			if canvas.normalized {
+				// normalized means position units are fractions of the available size
+				var possible_size = {
+					x: available_size.x + (left * available_size.w),
+					y: available_size.y + (top * available_size.h),
+					w: available_size.w * (1 - (left + right)),
+					h: available_size.h * (1 - (top + bottom)),
+				};
+				right = right * available_size.w;
+				bottom = bottom * available_size.h;
+			}
+			else {
+				var possible_size = {
+					x: available_size.x + left,
+					y: available_size.y + top,
+					w: available_size.w - (left + right),
+					h: available_size.h - (top + bottom),
+				};
+			}
 			
 			var item_size = item.arrange(possible_size);
 			
@@ -34,10 +65,10 @@ function YuiCanvasLayout(alignment, padding, spacing) constructor {
 			var xoffset = 0;
 			var yoffset = 0;
 			if canvas.right_aligned {
-				xoffset = available_size.w - item_size.w - canvas.right;
+				xoffset = available_size.w - item_size.w - right;
 			}
 			if canvas.bottom_aligned {
-				yoffset = available_size.h - item_size.h - canvas.bottom;
+				yoffset = available_size.h - item_size.h - bottom;
 			}
 			if canvas.center_h {
 				xoffset = floor(available_size.w / 2 - (item_size.w / 2));
@@ -49,8 +80,6 @@ function YuiCanvasLayout(alignment, padding, spacing) constructor {
 			if xoffset != 0 || yoffset != 0 {
 				item.move(xoffset, yoffset);
 			}
-			
-			i++;
 		}
 		
 		// canvas always fills the available space
@@ -65,15 +94,22 @@ function YuiCanvasLayout(alignment, padding, spacing) constructor {
 	}
 }
 
-function YuiCanvasPosition(canvas_position = {}) constructor {
+function YuiCanvasPosition(canvas_position = {}, resources, slot_values) constructor {
 	var center = canvas_position[$ "center"];
 	center_h = center == true || center == "h";
 	center_v = center == true || center == "v";
 	
-	left = canvas_position[$ "left"];
-	top = canvas_position[$ "top"];
-	right = canvas_position[$ "right"];
-	bottom = canvas_position[$ "bottom"];
+	normalized = canvas_position[$ "normalized"] == true;
+	
+	left = yui_bind(canvas_position[$ "left"], resources, slot_values);
+	top = yui_bind(canvas_position[$ "top"], resources, slot_values);
+	right = yui_bind(canvas_position[$ "right"], resources, slot_values);
+	bottom = yui_bind(canvas_position[$ "bottom"], resources, slot_values);
+	
+	is_bound = yui_is_live_binding(left)
+		|| yui_is_live_binding(top)
+		|| yui_is_live_binding(right)
+		|| yui_is_live_binding(bottom);
 	
 	right_aligned = right != undefined && left == undefined;
 	bottom_aligned = bottom != undefined && top == undefined;
@@ -85,8 +121,8 @@ function YuiCanvasPosition(canvas_position = {}) constructor {
 		throw "Cannot center vertically AND top/bottom align";
 	}
 	
-	if left == undefined left = 0;
-	if top == undefined top = 0;
-	if right == undefined right = 0;
-	if bottom == undefined bottom = 0;			
+	left ??= 0;
+	top ??= 0;
+	right ??= 0;
+	bottom ??= 0;			
 }

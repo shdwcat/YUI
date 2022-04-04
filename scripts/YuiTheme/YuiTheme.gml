@@ -8,19 +8,13 @@ function YuiTheme(_theme_id, _props) constructor {
 			body: { font: fnt_yui_body, color: c_white },
 		},
 		panel: {
-			bg_sprite: yui_panel_bg,
+			background: undefined,
 			padding: 30,
 			spacing: 5,
 		},
 		button: {
-			bg_sprite: yui_button_bg,
+			background: yui_button_bg,
 			padding: [10, 5],
-		},
-		tooltip: {
-			bg_color: yui_color_from_hex_string("#08334C"),
-			border_color: yui_color_from_hex_string("#278ED1"),
-			border_thickness: 1,
-			padding: 5,
 		},
 		popup: {
 			bg_color: yui_color_from_hex_string("#06162A"),
@@ -31,7 +25,7 @@ function YuiTheme(_theme_id, _props) constructor {
 	}
 	
 	theme_id = _theme_id;
-	props = init_props_old(_props);
+	props = yui_init_props(_props);
 	
 	// register theme
 	YuiGlobals.themes[? theme_id] = self;

@@ -39,17 +39,13 @@ function yui_resolve_resource_imports(resources, imports, yui_folder) {
 			// recursively resolve imports from the resource data
 			var relative_folder = filename_dir(resource_filepath);
 			
-			var resource_file_resources = resource_data[$ "resources"];
-			if resource_file_resources == undefined {
-				resource_file_resources = {};
-			}
+			var resource_file_resources = resource_data[$ "resources"] ?? {};
 			
 			var inner_resources = yui_resolve_resource_imports(resource_file_resources, resource_data.import, relative_folder);
 			yui_log("loaded file", resource_filepath)
 		}
 		else {
-			var inner_resources = resource_data[$ "resources"];
-			if inner_resources == undefined inner_resources = {};
+			var inner_resources = resource_data[$ "resources"] ?? {};
 		}
 		
 		// copy each named resource from resource_data.resources over merged_resources

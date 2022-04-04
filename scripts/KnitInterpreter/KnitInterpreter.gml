@@ -1,4 +1,5 @@
 /// @description Interpreter that can run parsed Knit code
+/// @param {struct.GsplEnvironment} environment
 function KnitInterpreter(environment) constructor {
 	
 	self.environment = environment;

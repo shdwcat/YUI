@@ -9,6 +9,11 @@
         "editor.tabSize": 2,
         "editor.autoIndent": "advanced",
     },
+    "[yui]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.autoIndent": "advanced",
+    },
     "workbench.tree.indent": 12,
     "color-highlight.languages": [
         "yaml",

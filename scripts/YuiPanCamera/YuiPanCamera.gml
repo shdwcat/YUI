@@ -16,7 +16,7 @@ function YuiPanCamera(_props, _resources) constructor {
 		trace: false,
 	};
 	
-	props = init_props_old(_props);
+	props = yui_init_props(_props);
 	resources = _resources;
 	
 	cursor_element = yui_resolve_element(props.cursor_visual, resources, undefined);
@@ -25,11 +25,10 @@ function YuiPanCamera(_props, _resources) constructor {
 		return true;
 	}
 	
-	static start = function(source_data, event) {
+	static start = function(source_data, event, source_item) {
 		
 		// NOTE: assumes initiating event is a mouse button event
-		button = event[$ "button"];
-		if button == undefined button = mb_left;
+		button = event[$ "button"] ?? mb_left;
 		
 		cursor = {
 			original_camera_x: camera_get_view_x(view_camera[props.camera_index]),

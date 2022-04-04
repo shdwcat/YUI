@@ -16,8 +16,8 @@ function YuiElementAlignment(alignment, h_default = "left", v_default = "top") c
 		h = alignment[$"h"];
 		v = alignment[$"v"];
 		
-		if h == undefined h = h_default;
-		if v == undefined v = v_default;
+		h ??= h_default;
+		v ??= v_default;
 	}
 	else {
 		throw "unsupported alignment value";

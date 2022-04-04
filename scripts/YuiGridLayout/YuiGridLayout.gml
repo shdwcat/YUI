@@ -1,5 +1,6 @@
 /// @description
 function YuiGridLayout(alignment, padding, spacing) constructor {
+	static is_live = false;
 
 	self.alignment = alignment;
 	self.padding = padding;
@@ -29,12 +30,8 @@ function YuiGridLayout(alignment, padding, spacing) constructor {
 			left_to_right = settings.props.direction == "left_to_right";
 		}
 		
-		if row_height == undefined {
-			row_height = (available_size.h - settings.spacing_height) / rows;
-		}
-		if column_width == undefined {
-			column_width = (available_size.w - settings.spacing_width) / columns;
-		}
+		row_height ??= (available_size.h - settings.spacing_height) / rows;
+		column_width ??= (available_size.w - settings.spacing_width) / columns;
 	}
 	
 	static arrange = function() {

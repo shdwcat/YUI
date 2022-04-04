@@ -1,0 +1,84 @@
+file_type: resources
+
+resources:
+  // selectable_text:
+  //   type: template
+  //   slots:
+  //     is_selected: false
+  //   template:
+  //       type: text
+  //       text_style: $is_selected then subtitle else body
+
+  // default template for displaying the item value
+  dropdown_item_template:
+    type: text
+    text: @
+    color: $foreground
+
+  dropdown_menu:
+    type: template
+    
+    slots:
+      // the selection scope that manages selection state
+      selection_scope: null // type: YuiSelectionScope
+
+      // array of items to select from
+      items: [] 
+
+      // template to use when rendering items in dropdown
+      item_template: &dropdown_item_template
+
+      // additional handler executed after item is selected
+      on_item_selected: null 
+
+      // where to place the dropdown
+      dropdown_placement: bottom_left
+
+      foreground: null
+
+      arrow_icon: yui_down_arrow_64
+      arrow_icon_frame: 0
+      arrow_icon_size: 24
+
+    events:
+      item_selected:
+        // select the item
+        - item => $selection_scope.select(item)
+        // invoke the user handler
+        - $on_item_selected
+
+    template:
+      type: button
+      id: dropdown_button
+      padding: 2
+      background: #06162A
+      border_color: #2183C0
+      content:
+        type: panel
+        layout: horizontal
+        elements:
+          // current item text
+          - type: text
+            padding: [5, 2, 0, 0]
+            text: $selection_scope.selected_item
+          // down arrow (to indicate this is a dropdown)
+          - type: image
+            size: $arrow_icon_size
+            sprite: $arrow_icon
+            frame: $arrow_icon_frame
+
+      popup:
+        placement: $dropdown_placement
+        content:
+          type: panel
+          elements: $items
+          template:
+            type: button
+            padding: 5
+            background: #06162A
+            content: $item_template
+            on_click:
+              // invoke the item_selected event on the root widget
+              - e => yui_invoke_event(e.source, item_selected, @)
+              // close the popup
+              - e => e.source.closePopup()

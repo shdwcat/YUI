@@ -22,6 +22,7 @@ function YsScanner(source, token_definition) : GsplScanner(source, token_definit
 				break;
 			case "=":
 				if match("=") addToken(YS_TOKEN.EQUAL_EQUAL)
+				else if match(">") addToken(YS_TOKEN.ARROW)
 				else _error(_line, "expected '=' after '='");
 				break;
 				break;
@@ -72,7 +73,7 @@ function YsScanner(source, token_definition) : GsplScanner(source, token_definit
 							advance(); // consume *
 							advance(); // consume /
 						
-							var comment = string_substring(_source, _start, _current);
+							var comment = gspl_string_substring(_source, _start, _current);
 						}
 					}
 					else {
@@ -83,6 +84,7 @@ function YsScanner(source, token_definition) : GsplScanner(source, token_definit
 			
 			case "\"": scanString(); break;
 			case "'": scanString("'"); break;
+			case "`": scanString("`"); break;
 			
 			// identifiers
 			case "@":
@@ -104,14 +106,18 @@ function YsScanner(source, token_definition) : GsplScanner(source, token_definit
 				scanVariablePath(YS_TOKEN.RESOURCE_IDENTIFIER);
 				break;
 			
-			case "#": scanColor(YS_TOKEN.COLOR); break;
+			case "#":
+				scanColor(YS_TOKEN.COLOR); 
+				break;
 			
 			default:
 				if isDigit(c) scanNumber();
 				else if isAlpha(c) {
 					var identifier = matchIdentifierName();
 					if peek() == "(" {
-						addToken(YS_TOKEN.FUNCTION_IDENTIFIER);
+						// required until I can clean up YuiCallFunction to
+						// be more sane about how it calls scripts/functions/methods
+						addToken(YS_TOKEN.IDENTIFIER);
 					}
 					else {
 						// check keywords first
@@ -138,9 +144,7 @@ function YsScanner(source, token_definition) : GsplScanner(source, token_definit
 		var token_type = keywords[$ identifier];
 		
 		// if it's not a keyword then it's an identifier
-		if token_type == undefined {
-			token_type = identifier_type ?? identifier_token;
-		}
+		token_type ??= identifier_type ?? identifier_token;
 		
 		addToken(token_type);
 	}
