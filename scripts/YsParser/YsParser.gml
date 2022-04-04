@@ -81,6 +81,8 @@ function YsParser(tokens, eof_token)
 	infixOperatorLeft(YS_TOKEN.AND, YS_PRECEDENCE.LOGIC_AND);
 	infixOperatorLeft(YS_TOKEN.OR, YS_PRECEDENCE.LOGIC_OR);
 	
+	infixOperatorLeft(YS_TOKEN.QUESTION_QUESTION, YS_PRECEDENCE.CONDITIONAL);
+	
 	static parse = function(resources, slot_values) {
 		
 		// setting this context is annoying but *shrug*

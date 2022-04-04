@@ -59,6 +59,9 @@ function YuiOperatorBinding(left, operator, right) constructor {
 			case YS_TOKEN.LESS_EQUAL:
 				return left_val <= yui_resolve_binding(right, data);
 				
+			case YS_TOKEN.QUESTION_QUESTION:
+				return left_val ?? yui_resolve_binding(right, data);
+				
 			default:
 				throw gspl_log("Unknown operator: " + operator.getTokenName());
 		}

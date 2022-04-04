@@ -27,6 +27,7 @@ function make_yscript_type_map() {
 	type_map[YS_TOKEN.COMMA] = "COMMA";
 	type_map[YS_TOKEN.GREATER_GREATER] = "GREATER_GREATER";
 	type_map[YS_TOKEN.QUESTION] = "QUESTION";
+	type_map[YS_TOKEN.QUESTION_QUESTION] = "QUESTION_QUESTION";
 	type_map[YS_TOKEN.COLON] = "COLON";
 	type_map[YS_TOKEN.PIPE] = "PIPE";
 		
