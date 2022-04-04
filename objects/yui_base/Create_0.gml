@@ -132,6 +132,8 @@ move = function(xoffset, yoffset) {
 	}
 }
 
+resize = yui_resize_instance;
+
 cursor_tooltip = function() {
 	//var tooltip = yui_resolve_binding(
 }

@@ -62,6 +62,13 @@ function YuiVerticalLayout(alignment, padding, spacing) constructor {
 			draw_size.w = available_size.w;
 			used_size.w = available_size.w;
 		}
+		else if alignment.h == "stretch" {
+			i = 0; repeat count {
+				var item = items[i++];
+				item.resize(used_size.w, item.draw_size.h);
+			}
+		}
+		
 		if alignment.v == "center" {
 			var offset = (available_size.h - yoffset) / 2;
 			i = 0; repeat count {

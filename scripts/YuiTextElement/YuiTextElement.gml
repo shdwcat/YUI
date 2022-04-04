@@ -12,10 +12,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		font: undefined, // overrides text_style.font
 		color: undefined, // overrides text_style.color
 		highlight_color: undefined,
-		
-		// deprecated
-		centered: false,
-		
+				
 		autotype: undefined, // simple option to enable typist.in()
 		typist: undefined, // controls typewriter behavior
 	};

@@ -70,6 +70,12 @@ function YuiHorizontalLayout(alignment, padding, spacing) constructor {
 			draw_size.h = available_size.h;
 			used_size.h = available_size.h;
 		}
+		else if alignment.v == "stretch" {
+			i = 0; repeat count {
+				var item = items[i++];
+				item.resize(item.draw_size.w, used_size.h);
+			}
+		}
 		
 		return used_size;
 	}

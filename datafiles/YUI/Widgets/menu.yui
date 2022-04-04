@@ -10,6 +10,7 @@ resources:
   menu_item_template:
     type: text
     text: @label
+    padding: [0, 2, 0, 0]
     color: $foreground
 
   menu:
@@ -36,7 +37,9 @@ resources:
 
         type: panel
         layout: $menu_layout
-        spacing: 0
+        spacing: 3
+        alignment:
+          h: stretch
         elements: $menu_items
         template:
 
