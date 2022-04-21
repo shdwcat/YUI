@@ -248,6 +248,7 @@
     {"id":{"name":"YuiElementSize","path":"scripts/YuiElementSize/YuiElementSize.yy",},"order":7,},
     {"id":{"name":"yui_create_dynamic_sprite","path":"scripts/yui_create_dynamic_sprite/yui_create_dynamic_sprite.yy",},"order":7,},
     {"id":{"name":"yui_resolve_sprite_by_name","path":"scripts/yui_resolve_sprite_by_name/yui_resolve_sprite_by_name.yy",},"order":5,},
+    {"id":{"name":"yui_resolve_nested_binding","path":"scripts/yui_resolve_nested_binding/yui_resolve_nested_binding.yy",},"order":10,},
     {"id":{"name":"__scribble_config_behaviours","path":"scripts/__scribble_config_behaviours/__scribble_config_behaviours.yy",},"order":0,},
     {"id":{"name":"yui_structs_equal","path":"scripts/yui_structs_equal/yui_structs_equal.yy",},"order":10,},
     {"id":{"name":"yui_game_item","path":"objects/yui_game_item/yui_game_item.yy",},"order":0,},

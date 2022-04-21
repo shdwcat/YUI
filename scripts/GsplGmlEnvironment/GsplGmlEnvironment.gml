@@ -6,7 +6,9 @@ function GsplGmlEnvironment() : GsplEnvironment() constructor {
 		var i = 0;
 		var function_name = script_get_name(i);
 		do {
-			result[$ function_name] = new GsplCallableRuntimeFunction(i);
+			if string_char_at(function_name, 1) != "@" {
+				result[$ function_name] = new GsplCallableRuntimeFunction(i);
+			}
 			i++;
 			function_name = script_get_name(i);
 		}
