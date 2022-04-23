@@ -5,6 +5,8 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		theme: "default",
 		padding: 0,
 		
+		scribble: false, // whether to use scribble to draw the text
+		
 		text: undefined,
 		text_format: undefined,
 		
@@ -26,14 +28,13 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	
 	// look up the text style by name from the theme
 	text_style = theme.text_styles[$ props.text_style];
-	
-	var font = props.font ?? text_style.font;
 		
 	color = props.color ?? text_style.color;
 	color = yui_resolve_color(yui_bind(color, resources, slot_values));
 	
 	highlight_color = yui_resolve_color(yui_bind(props.highlight_color, resources, slot_values));
 			
+	var font = props.font ?? text_style.font;
 	if !is_string(font) font = font_get_name(font);
 	else if !asset_get_index(font) {
 		yui_warning ("could not find font with font name:", font, "- reverting to text_style.font");
@@ -83,6 +84,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			halign: halign,
 			valign: valign,
 			highlight_color: highlight_color,
+			use_scribble: props.scribble,
 		};
 	}
 	

@@ -3,8 +3,10 @@
 // Inherit the parent event
 event_inherited();
 
+use_scribble = false;
 scribble_element = undefined;
 typist = undefined;
+
 element_xoffset = 0;
 element_yoffset = 0;
 
@@ -12,6 +14,7 @@ element_yoffset = 0;
 
 onLayoutInit = function() {
 	highlight_color = layout_props.highlight_color;
+	use_scribble = layout_props.use_scribble;
 }
 
 build = function() {
@@ -42,6 +45,8 @@ build = function() {
 			throw "invalid autotype value";
 		}
 	}	
+	
+	font = asset_get_index(bound_values.font);
 }
 
 arrange  = function(available_size) {		
@@ -66,6 +71,8 @@ arrange  = function(available_size) {
 	//if trace {
 	//	DEBUG_BREAK_YUI;
 	//}
+	
+	text_width = padded_rect.w;
 	
 	scribble_element.wrap(padded_rect.w, padded_rect.h);
 
