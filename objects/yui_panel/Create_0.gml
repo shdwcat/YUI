@@ -39,7 +39,9 @@ build = function() {
 		if exists {
 			// TODO: if the render item doesn't match, we need to recreate
 			// currently that's not possible so we won't worry about it
-			child.data_context = bound_values.data_items[i];
+			child.data_context = yui_element.uses_template
+				? bound_values.data_items[i]
+				: bound_values.data_items;
 		}
 		else {
 			if yui_element.uses_template {

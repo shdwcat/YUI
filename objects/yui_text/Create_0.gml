@@ -10,7 +10,7 @@ typist = undefined;
 element_xoffset = 0;
 element_yoffset = 0;
 
-
+text_width = 2000;
 
 onLayoutInit = function() {
 	highlight_color = layout_props.highlight_color;
