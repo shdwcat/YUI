@@ -57,8 +57,7 @@ resources:
         size: stretch
 
       // this section specifies that the 'equip_item' interaction should start when the mouse button 
-      // is pressed on this panel. 'interaction' is an alternative to the normal 'handler/parameters'
-      // pair.
+      // is pressed on this panel. 'interaction' is an alternative to calling a function directly
       events:
         on_mouse_down:
           interaction: equip_item
