@@ -88,7 +88,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		};
 	}
 	
-	static getBoundValues = function(data, prev) {
+	static getBoundValues = function YuiTextElement_getBoundValues(data, prev) {
 		if data_source != undefined {
 			data = is_data_source_bound ? data_source.resolve(data) : data_source;
 		}

@@ -29,7 +29,7 @@ function YuiLineElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		};
 	}
 	
-	static getBoundValues = function(data, prev) {
+	static getBoundValues = function YuiLineElement_getBoundValues(data, prev) {
 		if data_source != undefined {
 			data = yui_resolve_binding(data_source, data);
 		}

@@ -30,7 +30,7 @@ function YuiSwitchElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		};
 	}
 	
-	static getBoundValues = function(data, prev) {		
+	static getBoundValues = function YuiSwitchElement_getBoundValues(data, prev) {		
 		var is_visible = yui_resolve_binding(props.visible, data);
 		if !is_visible return false;		
 		
@@ -49,7 +49,7 @@ function YuiSwitchElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		}
 	}
 	
-	static getCaseElement = function(case_key) {
+	static getCaseElement = function YuiSwitchElement_getCaseElement(case_key) {
 		var element = case_elements[$ case_key];
 		
 		// make sure the case props are resolved to an element

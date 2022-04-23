@@ -82,7 +82,7 @@ onLayoutInit = function() {
 	// virtual
 }
 
-bind_values = function() {
+bind_values = function yui_base__bind_values() {
 	var new_values = yui_element.getBoundValues(data_context, bound_values)
 	if new_values == false {
 		if visible {

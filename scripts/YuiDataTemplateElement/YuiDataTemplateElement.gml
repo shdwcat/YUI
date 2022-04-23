@@ -22,7 +22,7 @@ function YuiDataTemplateElement(_props, _resources, _slot_values) : YuiBaseEleme
 		return;
 	}
 	
-	static getBoundValues = function(data, prev) {
+	static getBoundValues = function YuiDataTemplateElement_getBoundValues(data, prev) {
 		var resource_key = yui_resolve_binding(props.resource_key, data);
 		
 		// diff

@@ -61,7 +61,7 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		};
 	}
 	
-	static getBoundValues = function(data, prev) {
+	static getBoundValues = function YuiBorderElement_getBoundValues(data, prev) {
 		if data_source != undefined {
 			data = yui_resolve_binding(data_source, data);
 		}

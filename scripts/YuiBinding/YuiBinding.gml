@@ -41,7 +41,7 @@ function YuiBinding(path) constructor {
 		//}
 	}
 	
-	static resolve = function(data_context, view_context) {
+	static resolve = function YuiBinding_resolve(data_context, view_context) {
 		//if view_resolver {
 		//	// replace the data_context with the data_context from the resolved view item
 		//	data_context = view_resolver(view_context);
@@ -52,18 +52,18 @@ function YuiBinding(path) constructor {
 		return data;
 	}
 	
-	static resolveEmptyPath = function(data) {
+	static resolveEmptyPath = function YuiBinding_resolveEmptyPath(data) {
 		return data;
 	}
 	
-	static resolveToken = function(data) {
+	static resolveToken = function YuiBinding_resolveToken(data) {
 		if is_undefined(data) || is_string(data) {
 			return undefined; // expecting struct but got undefined or string
 		}
 		return data[$ token];
 	}
 	
-	static resolveTokenArray = function(data) {
+	static resolveTokenArray = function YuiBinding_resolveTokenArray(data) {
 		
 		if data == undefined {
 			return undefined;
