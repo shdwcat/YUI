@@ -41,6 +41,3 @@ if show_highlight {
 //  // except that doesn't handle hovering over the button but not the context (due to padding)
 //	content_item.highlight = highlight;
 //}
-
-
-
