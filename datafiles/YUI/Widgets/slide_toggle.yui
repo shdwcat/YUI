@@ -1,0 +1,76 @@
+file_type: resources
+
+resources:
+
+  slide_toggle:
+    type: template
+
+    slots:
+
+      // label for the slide toggle (can be text or any other YUI content)
+      label: null
+      
+      // labels for the on/off states
+      on_label: On
+      off_label: Off
+
+      // whether the checkbox is currently checked
+      // (you should bind this)
+      is_checked: false
+
+      // handler for when the check state changes
+      // (this should update whatever is_checked is bound to)
+      on_checked_changed: null
+      
+      toggle_foreground: #AA00AA
+      toggle_background: #2f2f2f
+      toggle_border_color: white
+
+      toggle_thumb:
+        type: image
+        sprite: yui_white_pixel
+        blend_color: $toggle_foreground
+        size: 20
+
+    template:
+      type: panel
+      layout: horizontal
+      spacing: 10
+      elements:
+        - type: border
+          padding: 5
+          content: $label
+
+        - type: button
+          background: $toggle_background
+          border_color: $toggle_border_color
+          highlight_color: #777777
+
+          on_click: $on_checked_changed(not $is_checked)
+          content:
+            type: switch
+            switch_on: $is_checked
+            cases:
+
+              true: 
+                type: panel
+                layout: horizontal
+                spacing: 10
+                elements:
+                  - type: border
+                    visible: $is_checked
+                    content: $on_label
+
+                  - $toggle_thumb
+
+              false:
+                type: panel
+                layout: horizontal
+                spacing: 10
+                elements:
+
+                  - $toggle_thumb
+
+                  - type: border
+                    visible: @@ not $is_checked
+                    content: $off_label

@@ -11,11 +11,12 @@ import:
   - ../Widgets/dropdown_menu.yui
   - ../Widgets/menu.yui
   - ../Widgets/slider.yui
+  - ../Widgets/slide_toggle.yui
   - ../Widgets/meter_bar.yui
 
-resources:
-  widget_wrapper:
-    type: template
+// resources:
+//   widget_wrapper:
+//     type: template
 
 
 root:
@@ -49,6 +50,16 @@ root:
           label: this is a checkbox
           on_checked_changed: @@ checked => yui_set_struct_value(@, check_state, checked)
           //? on_checked_changed: @is_checked = not @is_checked
+
+        - type: text
+          text: Slide Toggle
+          text_style: subtitle
+
+        - type: slide_toggle
+          is_checked: @check_state
+          label: this is a slide toggle
+          on_checked_changed: @@ checked => yui_set_struct_value(@, check_state, checked)
+          text_style: subtitle
 
         - type: text
           text: Switcher
