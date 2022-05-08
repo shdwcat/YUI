@@ -1,7 +1,7 @@
 /// @description move focus down
 
 if !focused_item {
-	DEBUG_BREAK_YUI;
+	return;
 }
 
 // also need to check for a 'navigate_down' event, in case we wanted to override
