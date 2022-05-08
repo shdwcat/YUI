@@ -8,9 +8,10 @@ function YuiCallFunction(func_name, args) constructor {
 	self.func_name = func_name;
 	self.args = args;
 	self.arg_count = array_length(args);
-	self.resolved_args = array_create(arg_count);
+	self.resolved_args = array_create(arg_count);	
 		
-	if is_string(func_name) {
+	if instanceof(func_name) == "YuiIdentifier" {
+		func_name = func_name.resolve();
 		var script_index = asset_get_index(func_name);
 		if script_index != -1 {
 			// call script

@@ -16,7 +16,7 @@ function YsParser(tokens, eof_token)
 	// === operators ===
 
 	// prefix
-	prefix(YS_TOKEN.STRING, new YsStringLiteralParselet()); // special handling for lambda variables
+	prefix(YS_TOKEN.STRING, new GsplLiteralParselet());
 	prefix(YS_TOKEN.NUMBER, new GsplLiteralParselet());
 	prefix(YS_TOKEN.COLOR, new GsplLiteralParselet());
 	prefix(YS_TOKEN.TRUE, new GsplLiteralParselet());

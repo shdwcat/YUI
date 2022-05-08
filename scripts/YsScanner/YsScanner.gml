@@ -117,22 +117,16 @@ function YsScanner(source, token_definition) : GsplScanner(source, token_definit
 				if isDigit(c) scanNumber();
 				else if isAlpha(c) {
 					var identifier = matchIdentifierName();
-					if peek() == "(" {
-						// required until I can clean up YuiCallFunction to
-						// be more sane about how it calls scripts/functions/methods
-						addToken(YS_TOKEN.IDENTIFIER);
+					
+					// check keywords first
+					var token_type = keywords[$ identifier];
+					if token_type {
+						addToken(token_type);
 					}
 					else {
-						// check keywords first
-						var token_type = keywords[$ identifier];
-						if token_type {
-							addToken(token_type);
-						}
-						else {
-							// if it's not a keyword, allow simple strings without quotes
-							addToken(YS_TOKEN.STRING, identifier);
-						}
-					}
+						// if it's not a keyword, it's an identifier
+						addToken(YS_TOKEN.IDENTIFIER, identifier);
+					}					
 				}
 				else _error(_line, "Unexpected character:", c);
 				break;
