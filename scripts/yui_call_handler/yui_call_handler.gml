@@ -24,7 +24,7 @@ function yui_call_handler(handler, args, data) {
 		return did_start;
 	}
 	else if yui_is_call(handler) {
-		// e.g. '>> some_function(arg1, arg2, etc)'
+		// e.g. '@@ some_function(arg1, arg2, etc)'
 		handler.resolve(data);
 	}
 	else if yui_is_lambda(handler) {

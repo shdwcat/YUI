@@ -9,7 +9,7 @@ function YsLambdaParselet(precedence) : GsplInfixParselet(precedence) constructo
 		// set up the args -> param lookup
 		parser.context.arg_map = [param];
 		
-		var body = parser.parseExpression(precedence);
+		var body = parser.parseExpression();
 		
 		return new YuiLambda(body, parser.context);
 	}

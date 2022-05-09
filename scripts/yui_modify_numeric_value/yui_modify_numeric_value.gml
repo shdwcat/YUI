@@ -1,3 +1,5 @@
+// TODO next major version - delete this
+
 /// @description modifies a numeric variable on a target
 function yui_modify_numeric_value(target, variable_name, amount) {
 	

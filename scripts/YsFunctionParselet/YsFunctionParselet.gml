@@ -10,6 +10,9 @@ function YsFunctionParselet() : GsplPrefixParselet() constructor {
 		}
 		
 		var identifier = token._lexeme;
+		
+		// TODO could try to resolve here against asset names, global variables etc
+		
 		return new YuiIdentifier(identifier);
 	}
 }

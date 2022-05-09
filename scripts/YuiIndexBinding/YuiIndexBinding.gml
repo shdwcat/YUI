@@ -8,7 +8,7 @@ function YuiIndexBinding(left, index) constructor {
 	
 	static resolve = function(data)
 	{
-		var left_val = yui_resolve_binding(left, data);
+		var left_val = left.resolve(data);
 		
 		if is_array(left_val) {
 			var index_key = index.resolve(data);

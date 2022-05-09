@@ -48,8 +48,7 @@ root:
         - type: checkbox
           is_checked: @check_state
           label: this is a checkbox
-          on_checked_changed: @@ checked => yui_set_struct_value(@, check_state, checked)
-          //? on_checked_changed: @is_checked = not @is_checked
+          on_checked_changed: @@ checked => @check_state = checked
 
         - type: text
           text: Slide Toggle
@@ -58,7 +57,7 @@ root:
         - type: slide_toggle
           is_checked: @check_state
           label: this is a slide toggle
-          on_checked_changed: @@ checked => yui_set_struct_value(@, check_state, checked)
+          on_checked_changed: @@ checked => @check_state = checked
           text_style: subtitle
 
         - type: text
@@ -85,8 +84,7 @@ root:
 
         - type: slider
           value: @slider_value
-          // todo: replace this by implementing assignment syntax
-          on_value_changed: @@ value => yui_set_struct_value(@, 'slider_value', value)
+          on_value_changed: @@ value => @slider_value = value
 
         - type: text
           text: Meter Bar
