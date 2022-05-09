@@ -55,7 +55,7 @@ root:
           on_click: @@ e => yui_change_screen(kb_navigation_example, e.source)
 
         - type: button
-          content: Binding to Game Data
+          content: Text Rendering Demo
           on_click: @@ e => yui_change_screen(data_binding_example, e.source)
 
         - type: button

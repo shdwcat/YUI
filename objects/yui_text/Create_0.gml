@@ -10,7 +10,9 @@ typist = undefined;
 element_xoffset = 0;
 element_yoffset = 0;
 
+font = undefined;
 text_width = 2000;
+text_surface = undefined;
 
 onLayoutInit = function() {
 	highlight_color = layout_props.highlight_color;
@@ -88,6 +90,10 @@ arrange  = function(available_size) {
 		h: draw_height + padding.h,
 	});
 	
+	if font >= 0 && !use_scribble {
+		buildTextSurface();
+	}
+	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
 	
 	// when centering, center on the center of the padded rect
@@ -100,3 +106,12 @@ arrange  = function(available_size) {
 	
 	return draw_size;
 }
+buildTextSurface = function() {
+	var h = string_height_ext(bound_values.text, -1, text_width);
+		text_surface = yui_draw_text_to_surface(
+			element_xoffset, element_yoffset, text_width, h,
+			bound_values.text, text_color ?? c_white, opacity,
+			layout_props.halign, layout_props.valign,
+			font, text_surface);
+}
+
