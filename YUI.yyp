@@ -493,7 +493,7 @@
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"slide_toggle.yui","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
-    "IDEVersion": "2022.300.0.499",
+    "IDEVersion": "2022.500.0.71",
   },
   "resourceVersion": "1.5",
   "name": "YUI",
