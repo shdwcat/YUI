@@ -1,16 +1,19 @@
 /// @description check cursor hover and run interaction
 
 // get mouse position once per frame
-cursor_state_gui = {
-	x: device_mouse_x_to_gui(device_index),
-	y: device_mouse_y_to_gui(device_index),
-};
+var mouse_gui_x = device_mouse_x_to_gui(device_index);
+var mouse_gui_y = device_mouse_y_to_gui(device_index);
+
+// get mouse position once per frame
+
 
 // ===== run mouse hover logic =====
 
-ds_list_clear(hover_list);
+if !ds_list_empty(hover_list) {
+	ds_list_clear(hover_list);
+}
 
-// first get yui_game_item from the room coordinates
+// first get yui_game_items from the room coordinates
 // NOTE: we do this first because we'll interate this list in reverse for top-down behavior
 hover_count = instance_position_list(
 	mouse_x,
@@ -21,12 +24,11 @@ hover_count = instance_position_list(
 	
 // then get the yui items from the UI layer
 hover_count += instance_position_list(
-	device_mouse_x_to_gui(0),
-	device_mouse_y_to_gui(0),
+	mouse_gui_x,
+	mouse_gui_y,
 	yui_base,
 	hover_list,
 	false);
-
 
 var hover_consumed = false;
 
@@ -57,6 +59,9 @@ var i = hover_count - 1; repeat hover_count {
 // ===== run interaction =====
 
 if active_interaction {
-	// this runs the logic but how do we draw the things?
+	var cursor_state_gui = {
+		x: mouse_gui_x,
+		y: mouse_gui_y,
+	};
 	var interaction_result = active_interaction.update(visual_item, cursor_state_gui);		
 }
