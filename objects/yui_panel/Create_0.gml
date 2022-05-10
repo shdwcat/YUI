@@ -28,6 +28,7 @@ build = function() {
 	
 	// resize the array if we need more room
 	if bound_values.child_count > previous_count {
+		// TODO: this needs to cleanup the excess items or they will be orphaned
 		array_resize(internal_children, bound_values.child_count);
 	}
 	
