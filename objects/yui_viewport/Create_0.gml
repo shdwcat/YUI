@@ -7,9 +7,9 @@ event_inherited();
 viewport_x = 0;
 viewport_y = 0;
 
-// default to infinite viewport
-viewport_w = infinity;
-viewport_h = infinity;
+// default to infinite content size
+content_w = infinity;
+content_h = infinity;
 
 // info about viewport extents
 viewport_info = {
@@ -24,11 +24,11 @@ onLayoutInit = function() {
 	set_viewport_info = layout_props.on_viewport_info;
 	
 	// get viewport size override if defined
-	if layout_props.viewport_w != undefined {
-		viewport_w = layout_props.viewport_w;
+	if layout_props.content_w != undefined {
+		content_w = layout_props.content_w;
 	}
-	if layout_props.viewport_h != undefined {
-		viewport_h = layout_props.viewport_h;
+	if layout_props.content_h != undefined {
+		content_h = layout_props.content_h;
 	}
 }
 
@@ -40,31 +40,28 @@ build = function() {
 	viewport_y = bound_values.viewport_y;
 }
 
-arrange = function(available_size) {
+arrange = function(available_size, viewport_size) {
 	
 	x = available_size.x;
 	y = available_size.y;
 	draw_rect = available_size;
 	
-	// override this to the viewport size
-	available_size = {
-		x: available_size.x,
-		y: available_size.y,
-		w: viewport_w,
-		h: viewport_h,
+	// arrange content using the specified content size
+	var available_content_size = {
+		x: x,
+		y: y,
+		w: content_w,
+		h: content_h,
 	}
 	
 	var content_size = undefined;
 	if content_item {
-		content_size = content_item.arrange(available_size);
+		content_size = content_item.arrange(available_content_size, available_size);
 	}
 	else {
-		content_size = { x: available_size.x, y: available_size.y, w: 0, h: 0 };
+		content_size = { x: x, y: y, w: 0, h: 0 };
 	}
 	
-	// restore the original available_size for finalizing size
-	available_size = draw_rect;
-
 	var drawn_size = yui_apply_element_size(layout_props.size, available_size, {
 		w: content_size.w,
 		h: content_size.h,

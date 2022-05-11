@@ -15,9 +15,9 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 		viewport_x: 0,
 		viewport_y: 0,
 		
-		// size of the internal viewport (defaults to the screen size)
-		viewport_w: undefined,
-		viewport_h: undefined,
+		// size of the contained content
+		content_w: infinity,
+		content_h: infinity,
 		
 		// where to send viewport info (for scrollbar sizes etc)
 		on_viewport_info: undefined,
@@ -79,8 +79,8 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 			border_color: border_color,
 			border_thickness: props.border_thickness,
 			// viewport
-			viewport_w: props.viewport_w,
-			viewport_h: props.viewport_h,
+			content_w: props.content_w,
+			content_h: props.content_h,
 			on_viewport_info: props.on_viewport_info,
 		};
 	}
