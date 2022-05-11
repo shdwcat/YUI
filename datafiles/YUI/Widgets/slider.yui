@@ -31,6 +31,8 @@ resources:
       value: 0
       on_value_changed: null
       show_value: true
+      size: { h: 20, w: 100 }
+      thumb_size: { h: 20, w: 10, min_w: 10 }
 
       orientation: horizontal
       thumb_background: #AA00AA
@@ -47,15 +49,15 @@ resources:
 
         - type: panel
           layout: canvas
-          size: { h: 20, w: 100 }
+          size: $size
           elements:
 
             // slider thumb
             - type: button
               padding: 0
-              xoffset: $value / ($max - $min) * 100 - 10
+              xoffset: $value / ($max - $min) * ($size.w - $thumb_size.w + 10) - 10
               background: $thumb_background
-              size: { h: 20, w: 10, min_w: 10 }
+              size: $thumb_size
               events:
                 on_mouse_down:
                   interaction: slider_drag
