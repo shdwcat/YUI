@@ -19,3 +19,4 @@ element_map[? "button"] = YuiButtonElement;
 element_map[? "popup"] = YuiPopupElement;
 element_map[? "switch"] = YuiSwitchElement;
 element_map[? "data_template"] = YuiDataTemplateElement;
+element_map[? "viewport"] = YuiViewportElement;

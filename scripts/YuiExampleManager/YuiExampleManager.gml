@@ -15,6 +15,11 @@ function YuiExampleManager() constructor {
 	
 	widget_data = new WidgetGalleryData();
 	
+	// for viewport demo
+	scroll_x = 0;
+	scroll_y = 0;
+	scroll_info = {};
+	
 	// set live reload status
 	switch YUI_LIVE_RELOAD_STATE {
 		case YUI_LIVE_RELOAD_STATES.NOT_CONFIGURED:

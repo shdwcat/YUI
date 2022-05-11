@@ -107,11 +107,17 @@ arrange  = function(available_size) {
 	return draw_size;
 }
 buildTextSurface = function() {
-	var h = string_height_ext(bound_values.text, -1, text_width);
-		text_surface = yui_draw_text_to_surface(
-			element_xoffset, element_yoffset, text_width, h,
-			bound_values.text, text_color ?? c_white, opacity,
-			layout_props.halign, layout_props.valign,
-			font, text_surface);
+	
+	var w = text_width == infinity
+		? string_width(bound_values.text)
+		: text_width;
+	var h = string_height_ext(bound_values.text, -1, w);
+	
+	text_surface = yui_draw_text_to_surface(
+		element_xoffset, element_yoffset, w, h,
+		bound_values.text, text_color ?? c_white, opacity,
+		layout_props.halign, layout_props.valign,
+		font, text_surface);
 }
+
 
