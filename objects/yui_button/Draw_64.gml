@@ -18,14 +18,8 @@ var show_highlight = (highlight || YuiCursorManager.focused_item == id)
 	
 if show_highlight {
 	var alpha = button_pressed ? pressed_alpha : highlight_alpha;
-	if alpha > 0 {	
-		var old_alpha = draw_get_alpha();
-		draw_set_alpha(alpha);
-		draw_rectangle_color(
-			draw_size.x, draw_size.y,
-			draw_size.x + draw_size.w - 1, draw_size.y + draw_size.h - 1,
-			highlight_color, highlight_color, highlight_color, highlight_color, false);
-		draw_set_alpha(old_alpha);
+	if alpha > 0 {
+		draw_sprite_stretched_ext(yui_white_pixel, 0, draw_size.x, draw_size.y, draw_size.w, draw_size.h, highlight_color, alpha);
 	}
 }
 
