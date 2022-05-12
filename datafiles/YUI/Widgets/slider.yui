@@ -16,6 +16,7 @@ resources:
       show_value: true
       size: { h: 20, w: 100 }
       thumb_size: { h: 20, w: 10, min_w: 10 }
+      wheel_increment: 4
 
       orientation: horizontal
       thumb_background: #AA00AA
@@ -24,6 +25,9 @@ resources:
 
       type: panel
       layout: $orientation
+      events:
+        on_mouse_wheel_down: $on_value_changed(max($value - $wheel_increment, $min))
+        on_mouse_wheel_up: $on_value_changed(min($value + $wheel_increment, $max))
       elements:
 
         - type: text

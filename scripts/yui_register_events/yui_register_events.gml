@@ -10,4 +10,36 @@ function yui_register_events(events) {
 			yui_call_handler(events.on_mouse_down, [args], data_context);
 		}
 	}
+	if events.on_mouse_up {
+		left_clicked = function() {
+			var source = self;
+			var args = {
+				source: source,
+				button: "left",
+			};
+			yui_call_handler(events.on_click, [args], data_context);
+		}
+	}
+	
+	// TODO hook up other mouse buttons
+	
+	if events.on_mouse_wheel_up {
+		on_mouse_wheel_up = function() {
+			var source = self;
+			var args = {
+				source: source,
+			};
+			yui_call_handler(events.on_mouse_wheel_up, [args], data_context);
+		}
+	}
+	
+	if events.on_mouse_wheel_down {
+		on_mouse_wheel_down = function() {
+			var source = self;
+			var args = {
+				source: source,
+			};
+			yui_call_handler(events.on_mouse_wheel_down, [args], data_context);
+		}
+	}
 }

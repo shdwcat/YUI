@@ -34,6 +34,8 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	static base_events = {
 		on_mouse_down: undefined,
 		on_mouse_up: undefined,
+		on_mouse_wheel_up: undefined,
+		on_mouse_wheel_down: undefined,
 		on_click: undefined,
 		on_click_outside: undefined,
 	};
@@ -47,6 +49,8 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	props.events = yui_init_props(props.events, base_events);
 	props.events.on_mouse_down = yui_bind_handler(props.events.on_mouse_down, resources, slot_values);
 	props.events.on_mouse_up = yui_bind_handler(props.events.on_mouse_up, resources, slot_values);
+	props.events.on_mouse_wheel_up = yui_bind_handler(props.events.on_mouse_wheel_up, resources, slot_values);
+	props.events.on_mouse_wheel_down = yui_bind_handler(props.events.on_mouse_wheel_down, resources, slot_values);
 	props.events.on_click = yui_bind_handler(props.events.on_click, resources, slot_values);
 	props.events.on_click_outside = yui_bind_handler(props.events.on_click_outside, resources, slot_values);
 	

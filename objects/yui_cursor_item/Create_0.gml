@@ -23,6 +23,9 @@ right_click = undefined;
 
 cursor_hover = undefined;
 
+on_mouse_wheel_up = undefined;
+on_mouse_wheel_down = undefined;
+
 // simplifies logic for checking parent opacity
 opacity = 1;
 
