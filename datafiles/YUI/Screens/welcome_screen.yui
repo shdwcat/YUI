@@ -56,7 +56,7 @@ root:
 
         - type: button
           content: Viewport/Scrolling WIP (may crash)
-          on_click: @@ e => yui_change_screen(data_binding_example, e.source)
+          on_click: @@ e => yui_change_screen(viewport_example, e.source)
 
         - type: button
           content: Widget Gallery

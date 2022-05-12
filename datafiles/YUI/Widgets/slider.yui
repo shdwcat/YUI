@@ -5,23 +5,6 @@ import:
 
 resources:
 
-  meter:
-    type: panel
-    layout: canvas
-    size: { w: 200, h: 50 }
-    elements:
-      - type: image
-        sprite: spr_container
-        size: stretch
-        
-      - type: image
-        sprite: spr_gauge
-        size: stretch
-        canvas:
-          normalized: true
-          right: @value / @max
-
-
   slider:
     type: template
 

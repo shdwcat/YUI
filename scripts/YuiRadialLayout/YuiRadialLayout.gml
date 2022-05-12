@@ -2,7 +2,7 @@
 function YuiRadialLayout(alignment, padding, spacing) constructor {
 	static is_live = false;
 
-	// note relevant to this layout
+	// NOTE: not relevant to this layout
 	//self.alignment = alignment;
 	//self.padding = padding;
 	//self.spacing = spacing;
@@ -13,10 +13,11 @@ function YuiRadialLayout(alignment, padding, spacing) constructor {
 	// the settings for this radial instance
 	self.settings = undefined;
 	
-	static init = function(items, available_size, panel_props) {
+	static init = function(items, available_size, viewport_size, panel_props) {
 		self.items = items;
 		self.item_count = array_length(items);
 		self.available_size = available_size;
+		self.viewport_size = viewport_size;
 		
 		if !settings {
 			settings = new YuiRadialSettings(panel_props[$ "radial"]);
@@ -67,9 +68,17 @@ function YuiRadialLayout(alignment, padding, spacing) constructor {
 					w: item_w,
 					h: item_h,
 				};
+			
+				var is_visible = !viewport_size || rectangle_in_rectangle(
+					possible_size.x, possible_size.y,
+					possible_size.x + possible_size.w, possible_size.y + possible_size.h,
+					viewport_size.x, viewport_size.y,
+					viewport_size.x + viewport_size.w, viewport_size.y + viewport_size.h)
+				
+				item.hidden = !is_visible;
 				
 				// arrange it
-				var item_size = item.arrange(possible_size);
+				var item_size = item.arrange(possible_size, viewport_size);
 				
 				i++;
 			}

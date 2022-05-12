@@ -13,9 +13,9 @@ function YsSetParselet(precedence)
 				left_expr = new YuiBinding("");
 			}
 			else if left_expr.resolver == left_expr.resolveTokenArray {
-				var token_count = array_length(left_expr.tokens_array);
-				var name = left_expr.tokens_array[token_count - 1];
-				array_resize(left_expr.tokens_array, token_count - 1);
+				var token_count = array_length(left_expr.tokens);
+				var name = left_expr.tokens[token_count - 1];
+				array_resize(left_expr.tokens, token_count - 1);
 			}
 			else {
 				throw yui_error("Cannot set value on a binding with an empty path (e.g. '@')");
@@ -42,3 +42,4 @@ function YsSetParselet(precedence)
 	}
 	
 }
+

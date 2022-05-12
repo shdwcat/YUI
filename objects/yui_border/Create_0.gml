@@ -56,10 +56,11 @@ build = function() {
 	}
 }
 
-arrange  = function(available_size) {
+arrange = function(available_size, viewport_size) {
 	x = available_size.x;
 	y = available_size.y;
 	draw_rect = available_size;
+	self.viewport_size = viewport_size;
 	
 	var padding = layout_props.padding;
 	padded_rect = yui_apply_padding(available_size, padding, layout_props.size);
@@ -72,7 +73,7 @@ arrange  = function(available_size) {
 	
 	var content_size = undefined;
 	if content_item {
-		content_size = content_item.arrange(padded_rect);
+		content_size = content_item.arrange(padded_rect, viewport_size);
 	}
 	else {
 		content_size = { x: padded_rect.x, y: padded_rect.y, w: 0, h: 0 };

@@ -34,10 +34,10 @@ build = function() {
 
 // forward the rest to the child item or vice versa
 
-arrange = function(available_size) {
+arrange = function(available_size, viewport_size) {
 	draw_rect = available_size
 	if case_item {
-		case_item.arrange(available_size);
+		case_item.arrange(available_size, viewport_size);
 		draw_size = case_item.draw_size;
 	}
 	return draw_size;

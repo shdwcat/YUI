@@ -1,0 +1,97 @@
+id: data_binding_example
+file_type: screen
+
+import:
+  - "../Templates/main_panel.yui"
+  - "../Templates/back_button.yui"
+  - "../Widgets/slider.yui"
+  - "../Widgets/slide_toggle.yui"
+
+root:
+  type: panel
+  padding: 30
+  //padding: [100, 30, 30, 30]
+  spacing: 10
+  
+  elements:
+    - type: back_button
+
+    - type: panel
+      spacing: 10
+      elements: 
+        - type: text
+          text_style: title
+          text: Viewport/Scrolling WIP
+
+    - type: slider
+      value: @scroll_x
+      min: 0
+      max: @scroll_info.x_max ?? 1000
+      on_value_changed: @@ value => @scroll_x = value
+      visible: @scroll_info.x_max > 0
+      size: { w: 200, h: 20 }
+      thumb_size: { w: 30, h: 20 }
+
+    - type: slider
+      value: @scroll_y
+      min: 0
+      max: @scroll_info.y_max ?? 1000
+      on_value_changed: @@ value => @scroll_y = value >> floor()
+      visible: @scroll_info.y_max > 0
+      size: { w: 200, h: 20 }
+      thumb_size: { w: 30, h: 20 }
+
+    - type: border
+      padding: [ 2, 2, 2, 2 ]
+      border_thickness: 2
+      border_color: grey
+      content:
+
+        type: viewport
+        size: { w: 500, h: 800 }
+        content_w: 500
+        viewport_x: @scroll_x
+        viewport_y: @scroll_y
+        on_viewport_info: @@ value => @scroll_info = value
+        content:
+
+          type: panel
+          padding: 5
+          id: vp_content
+          //background: maroon
+          //size: { w: 1000 }
+          //trace: true
+          elements:
+
+            - type: panel
+              layout: horizontal
+              id: image-test
+              //trace: true
+              elements: [ boots, chest_armor, cape_armor, loincloth, metal_skirt, necklace ]
+              template:
+                type: image
+                sprite: @
+                size: 150
+
+            - type: text
+              text_style: title
+              text: Loreum Ipsum
+
+            - type: text
+              //trace: true
+              text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum dui orci, in venenatis ipsum elementum vitae. Integer sagittis neque in nibh mollis venenatis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed commodo ultricies dolor eget maximus. Duis non gravida nulla, vel tincidunt lectus. Vestibulum dapibus sapien a augue ultrices porttitor. Fusce ultrices lacus nisl. Vestibulum nisi velit, placerat sed lacus vel, tincidunt ultricies metus. Maecenas porta, justo in imperdiet iaculis, urna ipsum varius urna, porta bibendum enim lorem sit amet enim. Nullam mattis tincidunt augue, vitae ultrices magna faucibus vel. Nunc lorem nunc, commodo ut tincidunt id, sagittis sed ipsum. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+
+            - type: slide_toggle
+              is_checked: @widget_data.check_state
+              label: this is a slide toggle
+              on_checked_changed: @@ checked => @widget_data.check_state = checked
+              text_style: subtitle
+
+            - type: text
+              text: Mauris eleifend fringilla fringilla. Aliquam ut mi tincidunt, aliquam magna tincidunt, gravida turpis. Nullam eleifend ante sed pharetra commodo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nullam tempus bibendum elit ac tempor. Nullam ut euismod dui, nec pretium nulla. Curabitur vehicula quis purus vel molestie. Nam pharetra quis turpis sit amet malesuada. Cras vitae felis nec augue vestibulum condimentum eu id nisl. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam ut ligula vel mi ullamcorper vestibulum nec sit amet libero. Sed eros diam, pellentesque nec porta molestie, aliquet at sapien. In vulputate quam quis neque venenatis, vitae cursus quam ullamcorper. Donec quis accumsan augue, non luctus lectus. Aenean ultrices a ligula quis eleifend.
+
+            - type: text
+              text: Curabitur porta massa purus, at porta velit commodo vel. Sed consequat justo quam, nec tristique risus consequat et. Pellentesque vel tempus ligula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce erat lectus, commodo eu metus nec, dapibus tempor odio. Nullam quis lorem id massa lacinia placerat in ut risus. Cras placerat libero non suscipit varius. Sed iaculis erat ac ornare commodo. Duis aliquet erat eget cursus mattis. Praesent auctor sapien maximus lorem lacinia, vitae porttitor nisl auctor. Morbi ligula purus, dapibus vitae lobortis ac, aliquet ac mi. Mauris mollis nec tortor et vulputate. Fusce ac sollicitudin justo, in rhoncus lorem. Fusce eget eros molestie enim condimentum eleifend. 
+
+            - type: text
+              text: Sed nunc nibh, rutrum vel vestibulum nec, luctus sit amet nisl. Nunc ultrices, nibh non hendrerit sodales, dolor ligula fringilla enim, non faucibus tellus nisl quis dui. Integer ut odio urna. Donec ut justo id erat vestibulum maximus. Quisque rutrum felis mauris, ut dignissim mauris tincidunt in. Aliquam id nisi varius justo efficitur congue. Etiam eleifend fringilla mi, ac placerat mauris ultrices eget. Phasellus sit amet est tempus, dignissim justo quis, fringilla magna. In luctus mauris felis, et interdum diam consequat at. Pellentesque posuere cursus tellus at tempus. Morbi id blandit felis. Aenean egestas velit convallis lacus venenatis interdum. In tincidunt dictum nisi. 

@@ -36,7 +36,31 @@ else {
 			buildTextSurface();
 		}
 
-		yui_draw_alpha_surface(text_surface, x, y);
+		if viewport_size {
+			
+			//yui_draw_alpha_surface(text_surface, x, y);
+			
+			var trim = trimToViewport(x, y, text_surface_w, draw_size.h);
+			
+			var yrel = y - parent.y;
+			var yoffset = y - viewport_size.y;
+			if yoffset < 0 {
+				DEBUG_BREAK_YUI;
+			}
+			
+			yui_draw_alpha_surface_part(
+				text_surface,
+				x < viewport_size.x ? viewport_size.vx : 0,
+				yoffset < 0 ? viewport_size.vy - yrel : 0,
+				trim.w, trim.h,
+				trim.x, trim.y);
+			//draw_rectangle_color(
+			//	trim.x, trim.y, trim.x2, trim.y2,
+			//	c_blue, c_blue, c_blue, c_blue, true);
+		}
+		else {
+			yui_draw_alpha_surface(text_surface, x, y);
+		}
 	}
 }
 

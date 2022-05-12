@@ -6,9 +6,10 @@ function YuiHorizontalLayout(alignment, padding, spacing) constructor {
 	self.padding = padding;
 	self.spacing = spacing;
 	
-	static init = function(items, available_size) {
+	static init = function(items, available_size, viewport_size, panel_props) {
 		self.items = items;
 		self.available_size = available_size;
+		self.viewport_size = viewport_size;
 	}
 	
 	static arrange = function() {
@@ -21,7 +22,19 @@ function YuiHorizontalLayout(alignment, padding, spacing) constructor {
 			var item = items[i];
 			var possible_size = getAvailableSizeForItem(i, xoffset);
 			
-			var item_size = item.arrange(possible_size);
+			if trace {
+				DEBUG_BREAK_YUI;
+			}
+			
+			var is_visible = !viewport_size || rectangle_in_rectangle(
+				possible_size.x, possible_size.y,
+				possible_size.x + possible_size.w, possible_size.y + possible_size.h,
+				viewport_size.x, viewport_size.y,
+				viewport_size.x + viewport_size.w, viewport_size.y + viewport_size.h)
+				
+			item.hidden = !is_visible;
+
+			var item_size = item.arrange(possible_size, viewport_size);
 			if item_size {
 				max_h = max(max_h, item_size.h);
 			

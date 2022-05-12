@@ -13,6 +13,11 @@ if parent && !parent.visible {
 	exit;
 }
 
+if hidden {
+	visible = false;
+	exit;
+}
+
 if trace
 	DEBUG_BREAK_YUI;
 

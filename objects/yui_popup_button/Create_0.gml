@@ -9,8 +9,8 @@ popup_item = undefined;
 // do we need to override build?
 
 button_arrange = arrange;
-arrange = function(available_size) {
-	var size = button_arrange(available_size);
+arrange = function(available_size, viewport_size) {
+	var size = button_arrange(available_size, viewport_size);
 	if popup_item {
 		var popup_space = yui_calc_popup_space(popup_item);
 		

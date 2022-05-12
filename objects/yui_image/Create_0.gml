@@ -30,9 +30,10 @@ build = function() {
 	}
 }
 
-arrange = function(available_size) {
+arrange = function(available_size, viewport_size) {
 
 	draw_rect = available_size;
+	self.viewport_size = viewport_size;
 	
 	var padding = layout_props.padding;	
 	padded_rect = yui_apply_padding(available_size, padding, layout_props.size, bound_values);

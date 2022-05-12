@@ -4,6 +4,8 @@ event_inherited();
 
 default_props = {};
 
+hidden = false;
+
 // the YuiElement for this render object
 yui_element = undefined;
 
@@ -115,7 +117,7 @@ build = function() {
 	throw "build not implemented on this type";
 }
 
-arrange = function(available_size) {
+arrange = function(available_size, viewport_size) {
 	throw "arrange not implemented on this type";
 }
 
@@ -126,6 +128,11 @@ move = function(xoffset, yoffset) {
 	y += yoffset;
 	draw_size.y += yoffset;
 	padded_rect.y += yoffset;
+	
+	//if viewport_size {
+	//	viewport_size.x += xoffset;
+	//	viewport_size.y += yoffset;
+	//}
 	
 	// move tooltip?
 	

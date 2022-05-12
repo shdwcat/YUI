@@ -45,6 +45,16 @@ arrange = function(available_size, viewport_size) {
 	x = available_size.x;
 	y = available_size.y;
 	draw_rect = available_size;
+	self.viewport_size = viewport_size;
+	
+	var actual_viewport_size = yui_apply_element_size(layout_props.size, available_size, {
+		x: x, // + viewport_x,
+		y: y, // + viewport_y,
+		w: 0,
+		h: 0,
+		vx: viewport_x,
+		vy: viewport_y,
+	});
 	
 	// arrange content using the specified content size
 	var available_content_size = {
@@ -56,7 +66,7 @@ arrange = function(available_size, viewport_size) {
 	
 	var content_size = undefined;
 	if content_item {
-		content_size = content_item.arrange(available_content_size, available_size);
+		content_size = content_item.arrange(available_content_size, actual_viewport_size);
 	}
 	else {
 		content_size = { x: x, y: y, w: 0, h: 0 };

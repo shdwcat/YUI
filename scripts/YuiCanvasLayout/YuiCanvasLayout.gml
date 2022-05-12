@@ -9,12 +9,13 @@ function YuiCanvasLayout(alignment, padding, spacing) constructor {
 	// elements may use this to calculate their own draw size
 	self.draw_size = undefined;
 	
-	static init = function(items, available_size) {
+	static init = function(items, available_size, viewport_size, panel_props) {
 		self.items = items;
 		self.available_size = available_size;
+		self.viewport_size = viewport_size;
 		
 		if !is_live {
-			var i = 0; repeat array_length(items) {			
+			var i = 0; repeat array_length(items) {
 				var item = items[i++];
 				var canvas = item.canvas;
 				
@@ -59,7 +60,15 @@ function YuiCanvasLayout(alignment, padding, spacing) constructor {
 				};
 			}
 			
-			var item_size = item.arrange(possible_size);
+			var is_visible = !viewport_size || rectangle_in_rectangle(
+				possible_size.x, possible_size.y,
+				possible_size.x + possible_size.w, possible_size.y + possible_size.h,
+				viewport_size.x, viewport_size.y,
+				viewport_size.x + viewport_size.w, viewport_size.y + viewport_size.h)
+				
+			item.hidden = !is_visible;
+			
+			var item_size = item.arrange(possible_size, viewport_size);
 			
 			// do post-arrange alignment
 			var xoffset = 0;

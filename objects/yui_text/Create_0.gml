@@ -13,6 +13,8 @@ element_yoffset = 0;
 font = undefined;
 text_width = 2000;
 text_surface = undefined;
+text_surface_w = 0;
+text_surface_h = 0;
 
 onLayoutInit = function() {
 	highlight_color = layout_props.highlight_color;
@@ -51,12 +53,13 @@ build = function() {
 	font = asset_get_index(bound_values.font);
 }
 
-arrange  = function(available_size) {		
+arrange = function(available_size, viewport_size) {
 	if !scribble_element return;
 	
 	x = available_size.x;
 	y = available_size.y;
 	draw_rect = available_size;
+	self.viewport_size = viewport_size;
 	
 	var padding = layout_props.padding;	
 	padded_rect = yui_apply_padding(available_size, padding, layout_props.size);
@@ -106,18 +109,39 @@ arrange  = function(available_size) {
 	
 	return draw_size;
 }
+
 buildTextSurface = function() {
 	
-	var w = text_width == infinity
+	text_surface_w = text_width == infinity
 		? string_width(bound_values.text)
 		: text_width;
-	var h = string_height_ext(bound_values.text, -1, w);
+	text_surface_h = string_height_ext(bound_values.text, -1, text_surface_w);
 	
-	text_surface = yui_draw_text_to_surface(
-		element_xoffset, element_yoffset, w, h,
-		bound_values.text, text_color ?? c_white, opacity,
-		layout_props.halign, layout_props.valign,
-		font, text_surface);
+	if (text_surface_w > 0 && text_surface_h > 0) {
+		text_surface = yui_draw_text_to_surface(
+			element_xoffset, element_yoffset, text_surface_w, text_surface_h,
+			bound_values.text, text_color ?? c_white, opacity,
+			layout_props.halign, layout_props.valign,
+			font, text_surface);
+	}
+}
+
+trimToViewport = function(x, y, w, h) {
+	var vR = viewport_size.x + viewport_size.w;
+	var vB = viewport_size.y + viewport_size.h;
+	var innerL = clamp(x, viewport_size.x, vR);
+	var innerT = clamp(y, viewport_size.y, vB);
+	var innerR = clamp(x + w, viewport_size.x, vR);
+	var innerB = clamp(y + h, viewport_size.y, vB);
+	
+	return {
+		x: innerL,
+		y: innerT,
+		w: innerR - innerL,
+		h: innerB - innerT,
+		x2: innerR,
+		y2: innerB
+	};
 }
 
 

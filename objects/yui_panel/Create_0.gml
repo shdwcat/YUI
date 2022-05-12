@@ -75,15 +75,20 @@ build = function() {
 	}
 }
 
-arrange = function(available_size) {
+arrange = function(available_size, viewport_size) {
 		
 	x = available_size.x;
 	y = available_size.y;
 	draw_rect = available_size;
+	self.viewport_size = viewport_size;
+	
+	if trace {
+		DEBUG_BREAK_YUI;
+	}
 	
 	var padding = layout_props.padding;
 	padded_rect = yui_apply_padding(available_size, padding, layout_props.size);
-	layout.init(internal_children, padded_rect, yui_element.props);
+	layout.init(internal_children, padded_rect, viewport_size, yui_element.props);
 	
 	var data = bound_values ? bound_values.data_source : {};
 		
