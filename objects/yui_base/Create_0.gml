@@ -55,6 +55,8 @@ is_size_changed = false;
 
 padded_rect = { x: x, y: y, w: 0, h: 0 };
 
+viewport_size = undefined;
+
 initLayout = function() {
 	_id = yui_element.props.id;
 	layout_props = yui_element.getLayoutProps();
@@ -129,10 +131,9 @@ move = function(xoffset, yoffset) {
 	draw_size.y += yoffset;
 	padded_rect.y += yoffset;
 	
-	//if viewport_size {
-	//	viewport_size.x += xoffset;
-	//	viewport_size.y += yoffset;
-	//}
+	if viewport_size {
+		updateViewport()
+	}
 	
 	// move tooltip?
 	
@@ -141,11 +142,11 @@ move = function(xoffset, yoffset) {
 	}
 }
 
-resize = yui_resize_instance;
-
-cursor_tooltip = function() {
-	//var tooltip = yui_resolve_binding(
+updateViewport = function() {
+	viewport_part =	yui_trim_rect_to_viewport(x, y, draw_size.w, draw_size.h, viewport_size);
 }
+
+resize = yui_resize_instance;
 
 findAncestor = function(type) {
 	var ancestor = parent;

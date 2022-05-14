@@ -12,6 +12,9 @@ element_yoffset = 0;
 
 font = undefined;
 text_width = 2000;
+
+viewport_part = undefined;
+use_text_surface = false;
 text_surface = undefined;
 text_surface_w = 0;
 text_surface_h = 0;
@@ -93,8 +96,21 @@ arrange = function(available_size, viewport_size) {
 		h: draw_height + padding.h,
 	});
 	
-	if font >= 0 && !use_scribble {
-		buildTextSurface();
+	use_text_surface = font >= 0 && !use_scribble;
+	if use_text_surface {
+		
+		var build_surface = true;
+		if viewport_size {
+			updateViewport();		
+			
+			if !viewport_part.visible {
+				build_surface = false;
+			}
+		}
+		
+		if build_surface {
+			buildTextSurface();
+		}
 	}
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
@@ -115,7 +131,9 @@ buildTextSurface = function() {
 	text_surface_w = text_width == infinity
 		? string_width(bound_values.text)
 		: text_width;
-	text_surface_h = string_height_ext(bound_values.text, -1, text_surface_w);
+		
+	// can't use string_height_ext because it doesn't account for letters like pqyg
+	text_surface_h = draw_size.h;
 	
 	if (text_surface_w > 0 && text_surface_h > 0) {
 		text_surface = yui_draw_text_to_surface(
@@ -126,22 +144,8 @@ buildTextSurface = function() {
 	}
 }
 
-trimToViewport = function(x, y, w, h) {
-	var vR = viewport_size.x + viewport_size.w;
-	var vB = viewport_size.y + viewport_size.h;
-	var innerL = clamp(x, viewport_size.x, vR);
-	var innerT = clamp(y, viewport_size.y, vB);
-	var innerR = clamp(x + w, viewport_size.x, vR);
-	var innerB = clamp(y + h, viewport_size.y, vB);
-	
-	return {
-		x: innerL,
-		y: innerT,
-		w: innerR - innerL,
-		h: innerB - innerT,
-		x2: innerR,
-		y2: innerB
-	};
-}
+
+
+
 
 

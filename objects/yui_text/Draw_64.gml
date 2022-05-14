@@ -29,36 +29,29 @@ else {
 		color = highlight_color;
 	}
 
-	if text_surface {
-
-		// remake the surface if it doesn't exist
-		if !surface_exists(text_surface) {
-			buildTextSurface();
-		}
+	if use_text_surface {
 
 		if viewport_size {
 			
-			//yui_draw_alpha_surface(text_surface, x, y);
-			
-			var trim = trimToViewport(x, y, text_surface_w, draw_size.h);
-			
-			var yrel = y - parent.y;
-			var yoffset = y - viewport_size.y;
-			if yoffset < 0 {
-				DEBUG_BREAK_YUI;
+			if viewport_part.visible
+			{		
+				// remake the surface if it doesn't exist
+				if !text_surface || !surface_exists(text_surface) {
+					buildTextSurface();
+				}
+
+				yui_draw_alpha_surface_part(
+					text_surface,
+					viewport_part.l, viewport_part.t,
+					viewport_part.w, viewport_part.h,
+					viewport_part.x, viewport_part.y);
 			}
-			
-			yui_draw_alpha_surface_part(
-				text_surface,
-				x < viewport_size.x ? viewport_size.vx : 0,
-				yoffset < 0 ? viewport_size.vy - yrel : 0,
-				trim.w, trim.h,
-				trim.x, trim.y);
-			//draw_rectangle_color(
-			//	trim.x, trim.y, trim.x2, trim.y2,
-			//	c_blue, c_blue, c_blue, c_blue, true);
 		}
 		else {
+			// remake the surface if it doesn't exist
+			if !surface_exists(text_surface) {
+				buildTextSurface();
+			}
 			yui_draw_alpha_surface(text_surface, x, y);
 		}
 	}
@@ -73,5 +66,12 @@ if (trace) {
 	// debug mouseover trace
 	if highlight {
 		yui_draw_trace_rect(trace, draw_size, c_lime);
+	}
+	
+	if viewport_part {
+		// trace viewport part rect
+		draw_rectangle_color(
+			viewport_part.x, viewport_part.y, viewport_part.x2, viewport_part.y2,
+			c_blue, c_blue, c_blue, c_blue, true);
 	}
 }
