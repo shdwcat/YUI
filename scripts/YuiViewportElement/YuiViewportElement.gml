@@ -57,6 +57,10 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 	props.viewport_x = yui_bind(props.viewport_x, resources, slot_values);
 	props.viewport_y = yui_bind(props.viewport_y, resources, slot_values);
 	
+	// supports slots etc but not live binding
+	props.content_w = yui_bind(props.content_w, resources, slot_values);
+	props.content_h = yui_bind(props.content_h, resources, slot_values);
+	
 	is_viewport_x_bound = yui_is_live_binding(props.viewport_x);
 	is_viewport_y_bound = yui_is_live_binding(props.viewport_y);
 	
@@ -121,4 +125,5 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 		};
 	}
 }
+
 

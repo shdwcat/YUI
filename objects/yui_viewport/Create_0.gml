@@ -48,8 +48,8 @@ arrange = function(available_size, viewport_size) {
 	self.viewport_size = viewport_size;
 	
 	var actual_viewport_size = yui_apply_element_size(layout_props.size, available_size, {
-		x: x, // + viewport_x,
-		y: y, // + viewport_y,
+		x: x,
+		y: y,
 		w: 0,
 		h: 0,
 		vx: viewport_x,
@@ -60,8 +60,8 @@ arrange = function(available_size, viewport_size) {
 	var available_content_size = {
 		x: x,
 		y: y,
-		w: content_w,
-		h: content_h,
+		w: content_w == "stretch" ? actual_viewport_size.w : content_w,
+		h: content_h == "stretch" ? actual_viewport_size.h : content_h,
 	}
 	
 	var content_size = undefined;
@@ -96,7 +96,7 @@ arrange = function(available_size, viewport_size) {
 	}
 	
 	// push viewport info back to game layer if requested
-	if set_viewport_info {
+	if set_viewport_info != undefined {
 		yui_call_handler(set_viewport_info, [viewport_info], bound_values.data_source);
 	}
 	
