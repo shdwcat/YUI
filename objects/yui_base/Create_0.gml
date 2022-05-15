@@ -4,8 +4,6 @@ event_inherited();
 
 default_props = {};
 
-hidden = false;
-
 // the YuiElement for this render object
 yui_element = undefined;
 
@@ -55,7 +53,10 @@ is_size_changed = false;
 
 padded_rect = { x: x, y: y, w: 0, h: 0 };
 
+// if defined, the size of the viewport containing this element
 viewport_size = undefined;
+
+// the part of this element that is visible within the viewport
 viewport_part = undefined;
 
 initLayout = function() {

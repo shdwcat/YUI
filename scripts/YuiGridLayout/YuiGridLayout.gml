@@ -44,14 +44,6 @@ function YuiGridLayout(alignment, padding, spacing) constructor {
 			// size the item according to the grid settings
 			var possible_size = getAvailableSizeForItem(i);
 			
-			var is_visible = !viewport_size || rectangle_in_rectangle(
-				possible_size.x, possible_size.y,
-				possible_size.x + possible_size.w, possible_size.y + possible_size.h,
-				viewport_size.x, viewport_size.y,
-				viewport_size.x + viewport_size.w, viewport_size.y + viewport_size.h)
-				
-			item.hidden = !is_visible;
-			
 			// arrange it within the size
 			var item_size = item.arrange(possible_size, viewport_size);
 			
