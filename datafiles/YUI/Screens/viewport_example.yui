@@ -64,17 +64,6 @@ root:
           on_mouse_wheel_down: @scroll_y = min(@scroll_y + @scroll_info.y_max * 0.05, @scroll_info.y_max) >> floor()
         content:
 
-          // type: panel
-          // //layout: horizontal
-          // id: image-test
-          // //trace: true
-          // elements: [ boots, chest_armor, cape_armor, loincloth, metal_skirt, necklace ]
-          // template:
-          //   type: image
-          //   sprite: @
-          //   trace: true
-          //   size: 150
-
           type: panel
           padding: 5
           id: vp_content
