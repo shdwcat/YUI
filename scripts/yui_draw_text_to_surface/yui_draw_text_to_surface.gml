@@ -1,6 +1,6 @@
 /// @description draws text to a provided surface (or creates it if needed)
 function yui_draw_text_to_surface(
-	x, y, w, h, text, color, opacity, halign, valign, font, surface_id = undefined) {
+	x, y, w, h, text, text_w, color, opacity, halign, valign, font, surface_id = undefined) {
 		
 	if surface_id == undefined || !surface_exists(surface_id){
 		surface_id = surface_create(w, h);
@@ -26,7 +26,7 @@ function yui_draw_text_to_surface(
 	
 	draw_text_ext_color(
 		x, y,
-		text, -1, w,
+		text, -1, text_w,
 		color, color, color, color, opacity);
 	
 	if old_surface > 1 {

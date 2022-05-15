@@ -11,7 +11,6 @@ element_xoffset = 0;
 element_yoffset = 0;
 
 font = undefined;
-text_width = 2000;
 
 viewport_part = undefined;
 use_text_surface = false;
@@ -64,7 +63,7 @@ arrange = function(available_size, viewport_size) {
 	draw_rect = available_size;
 	self.viewport_size = viewport_size;
 	
-	var padding = layout_props.padding;	
+	var padding = layout_props.padding;
 	padded_rect = yui_apply_padding(available_size, padding, layout_props.size);
 	
 	// don't bother drawing if there isn't enough room
@@ -79,8 +78,6 @@ arrange = function(available_size, viewport_size) {
 	//if trace {
 	//	DEBUG_BREAK_YUI;
 	//}
-	
-	text_width = padded_rect.w;
 	
 	scribble_element.wrap(padded_rect.w, padded_rect.h);
 
@@ -128,24 +125,19 @@ arrange = function(available_size, viewport_size) {
 
 buildTextSurface = function() {
 	
-	text_surface_w = text_width == infinity
-		? string_width(bound_values.text)
-		: text_width;
-		
+	text_surface_w = draw_size.w;
+
 	// can't use string_height_ext because it doesn't account for letters like pqyg
 	text_surface_h = draw_size.h;
 	
 	if (text_surface_w > 0 && text_surface_h > 0) {
 		text_surface = yui_draw_text_to_surface(
-			element_xoffset, element_yoffset, text_surface_w, text_surface_h,
-			bound_values.text, text_color ?? c_white, opacity,
+			element_xoffset, element_yoffset,
+			text_surface_w, text_surface_h,
+			bound_values.text,
+			text_surface_w - layout_props.padding.w,
+			text_color ?? c_white, opacity,
 			layout_props.halign, layout_props.valign,
 			font, text_surface);
 	}
 }
-
-
-
-
-
-

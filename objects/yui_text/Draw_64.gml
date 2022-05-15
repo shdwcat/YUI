@@ -43,16 +43,19 @@ else {
 				yui_draw_alpha_surface_part(
 					text_surface,
 					viewport_part.l, viewport_part.t,
-					viewport_part.w, viewport_part.h,
+					viewport_part.w,// text_surface_w),
+					viewport_part.h,// text_surface_h),
 					viewport_part.x, viewport_part.y);
 			}
 		}
 		else {
 			// remake the surface if it doesn't exist
-			if !surface_exists(text_surface) {
+			if !text_surface || !surface_exists(text_surface) {
 				buildTextSurface();
 			}
-			yui_draw_alpha_surface(text_surface, x, y);
+			if text_surface {
+				yui_draw_alpha_surface(text_surface, x, y);
+			}
 		}
 	}
 }
