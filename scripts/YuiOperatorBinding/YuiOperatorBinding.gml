@@ -9,7 +9,7 @@ function YuiOperatorBinding(left, operator, right) constructor {
 	
 	static resolve = function(data)
 	{
-		var left_val = yui_resolve_binding(left, data);
+		var left_val = left.resolve(data);
 		
 		// NOTE: could set resolve specific to operator to avoid the switch at bind time
 		switch operator {
@@ -17,19 +17,19 @@ function YuiOperatorBinding(left, operator, right) constructor {
 			case YS_TOKEN.EQUAL_EQUAL:
 			case YS_TOKEN.EQUALS:
 				// TODO: per type logic here (arrays, structs, ?)
-				return left_val == yui_resolve_binding(right, data);
+				return left_val == right.resolve(data);
 				
 			case YS_TOKEN.BANG_EQUAL:
-				return left_val != yui_resolve_binding(right, data);
+				return left_val != right.resolve(data);
 				
 			case YS_TOKEN.AND:
-				return left_val && yui_resolve_binding(right, data);
+				return left_val && right.resolve(data);
 				
 			case YS_TOKEN.OR:
-				return left_val || yui_resolve_binding(right, data);
+				return left_val || right.resolve(data);
 				
 			case YS_TOKEN.PLUS:
-				var right_val = yui_resolve_binding(right, data);
+				var right_val = right.resolve(data);
 				
 				if is_string(left_val)
 					return left_val + string(right_val);
@@ -39,28 +39,28 @@ function YuiOperatorBinding(left, operator, right) constructor {
 					return left_val + right_val;
 				
 			case YS_TOKEN.MINUS:
-				return left_val - yui_resolve_binding(right, data);
+				return left_val - right.resolve(data);
 				
 			case YS_TOKEN.STAR:
-				return left_val * yui_resolve_binding(right, data);
+				return left_val * right.resolve(data);
 				
 			case YS_TOKEN.SLASH:
-				return left_val / yui_resolve_binding(right, data);
+				return left_val / right.resolve(data);
 				
 			case YS_TOKEN.GREATER:
-				return left_val > yui_resolve_binding(right, data);
+				return left_val > right.resolve(data);
 				
 			case YS_TOKEN.GREATER_EQUAL:
-				return left_val >= yui_resolve_binding(right, data);
+				return left_val >= right.resolve(data);
 				
 			case YS_TOKEN.LESS:
-				return left_val < yui_resolve_binding(right, data);
+				return left_val < right.resolve(data);
 				
 			case YS_TOKEN.LESS_EQUAL:
-				return left_val <= yui_resolve_binding(right, data);
+				return left_val <= right.resolve(data);
 				
 			case YS_TOKEN.QUESTION_QUESTION:
-				return left_val ?? yui_resolve_binding(right, data);
+				return left_val ?? right.resolve(data);
 				
 			default:
 				throw gspl_log("Unknown operator: " + operator.getTokenName());
@@ -79,7 +79,7 @@ function YuiPrefixOperatorBinding(operator, right) constructor {
 	
 	static resolve = function(data)
 	{
-		var right_val = yui_resolve_binding(right, data);
+		var right_val = right.resolve(data);
 		
 		// NOTE: could set resolve specific to operator to avoid the switch at bind time
 		switch operator {
