@@ -78,4 +78,7 @@ function YuiElementSize(size) constructor {
 	
 	max_w ??= infinity;
 	max_h ??= infinity;
+	
+	is_w_bound = yui_is_binding(w);
+	is_h_bound = yui_is_binding(h);
 }
