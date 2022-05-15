@@ -6,7 +6,7 @@ function YsDirectiveParselet() constructor {
 		
 		// parse all directives (comma separated)
 		do {			
-			var directive = parser.consume(YS_TOKEN.STRING, "Expecting directive name after '|'");
+			var directive = parser.consume(YS_TOKEN.IDENTIFIER, "Expecting directive name after '|'");
 			left_expr = applyDirective(left_expr, directive._literal);
 		} until !parser.match(YS_TOKEN.COMMA)
 		
