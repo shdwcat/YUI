@@ -108,6 +108,10 @@ arrange = function(available_size, viewport_size) {
 		move(bound_values.xoffset, bound_values.yoffset);
 	}
 	
+	if viewport_size {
+		updateViewport();
+	}
+	
 	// our used size is the layout used size with our padding
 	var used_size = {
 		x: available_size.x,

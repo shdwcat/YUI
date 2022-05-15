@@ -32,7 +32,7 @@ if is_binding_active || !visible {
 	
 		// way to detect if build() requires re-arrange?
 		// have build return a boolean
-		arrange(draw_rect);
+		arrange(draw_rect, viewport_size);
 	
 		// only update parent if our size actually changed
 		if is_size_changed && parent {

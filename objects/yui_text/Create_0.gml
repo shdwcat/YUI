@@ -96,6 +96,8 @@ arrange = function(available_size, viewport_size) {
 		h: draw_height + padding.h,
 	});
 	
+	yui_resize_instance(drawn_size.w, drawn_size.h);
+	
 	use_text_surface = font >= 0 && !use_scribble;
 	if use_text_surface {
 		
@@ -112,8 +114,6 @@ arrange = function(available_size, viewport_size) {
 			buildTextSurface();
 		}
 	}
-	
-	yui_resize_instance(drawn_size.w, drawn_size.h);
 	
 	// when centering, center on the center of the padded rect
 	if layout_props.halign == fa_center {

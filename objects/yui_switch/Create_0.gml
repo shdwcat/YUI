@@ -35,15 +35,23 @@ build = function() {
 // forward the rest to the child item or vice versa
 
 arrange = function(available_size, viewport_size) {
-	draw_rect = available_size
+	draw_rect = available_size;
+	self.viewport_size = viewport_size;
+	
 	if case_item {
 		case_item.arrange(available_size, viewport_size);
 		draw_size = case_item.draw_size;
+		if viewport_size {
+			updateViewport();
+		}
 	}
+	
 	return draw_size;
 }
 
+base_move = move;
 move = function(xoffset, yoffset) {
+	base_move(xoffset, yoffset);
 	if case_item {
 		case_item.move(xoffset, yoffset);
 	}

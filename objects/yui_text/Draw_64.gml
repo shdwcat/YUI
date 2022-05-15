@@ -59,19 +59,16 @@ else {
 
 
 if (trace) {
-	yui_draw_trace_rect(trace, padded_rect, c_yellow);
+	yui_draw_trace_rect(true, padded_rect, yui_padding_color);
 
-	yui_draw_trace_rect(trace, draw_size, c_fuchsia);
+	yui_draw_trace_rect(true, draw_size, yui_draw_size_color);
 
 	// debug mouseover trace
 	if highlight {
-		yui_draw_trace_rect(trace, draw_size, c_lime);
+		yui_draw_trace_rect(true, draw_size, yui_hover_color);
 	}
 	
 	if viewport_part {
-		// trace viewport part rect
-		draw_rectangle_color(
-			viewport_part.x, viewport_part.y, viewport_part.x2, viewport_part.y2,
-			c_blue, c_blue, c_blue, c_blue, true);
+		yui_draw_trace_rect(true, viewport_part, yui_viewport_color);
 	}
 }

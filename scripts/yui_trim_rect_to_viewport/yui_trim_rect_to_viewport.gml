@@ -1,5 +1,6 @@
 /// @description calculates the viewport part when a rectangle does not fit within the viewport size
-function yui_trim_rect_to_viewport(x, y, w, h, viewport_size) {	var vR = viewport_size.x + viewport_size.w;
+function yui_trim_rect_to_viewport(x, y, w, h, viewport_size) {
+	var vR = viewport_size.x + viewport_size.w;
 	var vB = viewport_size.y + viewport_size.h;
 	var innerL = clamp(x, viewport_size.x, vR);
 	var innerT = clamp(y, viewport_size.y, vB);
@@ -21,6 +22,7 @@ function yui_trim_rect_to_viewport(x, y, w, h, viewport_size) {	var vR = viewpor
 		x2: innerR,
 		y2: innerB,
 		visible: vw > 0 && vh > 0,
+		clipped: vw < w || vh < h,
 	};
 }
 

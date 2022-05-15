@@ -112,5 +112,10 @@ arrange = function(available_size, viewport_size) {
 	});
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
+	
+	if viewport_size {
+		updateViewport();
+	}
+			
 	return draw_size;
 }

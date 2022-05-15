@@ -90,6 +90,10 @@ arrange = function(available_size, viewport_size) {
 		move(bound_values.xoffset, bound_values.yoffset);
 	}
 	
+	if viewport_size {
+		updateViewport();
+	}
+	
 	return draw_size;
 }
 

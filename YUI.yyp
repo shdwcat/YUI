@@ -69,7 +69,7 @@
     {"id":{"name":"scribble_font_set_default","path":"scripts/scribble_font_set_default/scribble_font_set_default.yy",},"order":10,},
     {"id":{"name":"gspl_log","path":"scripts/gspl_log/gspl_log.yy",},"order":10,},
     {"id":{"name":"yui_world_to_gui_y","path":"scripts/yui_world_to_gui_y/yui_world_to_gui_y.yy",},"order":5,},
-    {"id":{"name":"yui_trim_rect_to_viewport","path":"scripts/yui_trim_rect_to_viewport/yui_trim_rect_to_viewport.yy",},"order":1,},
+    {"id":{"name":"yui_trim_rect_to_viewport","path":"scripts/yui_trim_rect_to_viewport/yui_trim_rect_to_viewport.yy",},"order":19,},
     {"id":{"name":"YuiPanCamera","path":"scripts/YuiPanCamera/YuiPanCamera.yy",},"order":7,},
     {"id":{"name":"YuiBorderElement","path":"scripts/YuiBorderElement/YuiBorderElement.yy",},"order":8,},
     {"id":{"name":"__shd_scribble_msdf","path":"shaders/__shd_scribble_msdf/__shd_scribble_msdf.yy",},"order":5,},

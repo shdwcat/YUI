@@ -56,6 +56,7 @@ is_size_changed = false;
 padded_rect = { x: x, y: y, w: 0, h: 0 };
 
 viewport_size = undefined;
+viewport_part = undefined;
 
 initLayout = function() {
 	_id = yui_element.props.id;
