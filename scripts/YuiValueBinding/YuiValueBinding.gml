@@ -8,7 +8,7 @@ function YuiValueBinding(value, path) : YuiBinding(undefined) constructor {
 	
 	if path == "" {
 		resolver = resolveEmptyPath;
-		is_yui_live_binding = false;
+		self.is_yui_live_binding = false;
 	}
 	else if string_count(".", path) == 0 {
 		resolver = resolveToken;

@@ -24,7 +24,7 @@ function YsSetParselet(precedence)
 		else if expr_type == "YuiValueBinding" {
 			if left_expr.resolver == left_expr.resolveToken {
 				var name = left_expr.token;
-				left_expr = new YuiBinding("");
+				left_expr = new YuiValueBinding(left_expr.value, "");
 			}
 			else if left_expr.resolver == left_expr.resolveTokenArray {
 				var token_count = array_length(left_expr.tokens);
@@ -56,5 +56,3 @@ function YsSetParselet(precedence)
 	}
 	
 }
-
-
