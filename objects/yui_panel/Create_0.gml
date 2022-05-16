@@ -82,18 +82,16 @@ arrange = function(available_size, viewport_size) {
 	draw_rect = available_size;
 	self.viewport_size = viewport_size;
 	
-	if trace {
-		DEBUG_BREAK_YUI;
-	}
+	//if trace {
+	//	DEBUG_BREAK_YUI;
+	//}
 	
 	var padding = layout_props.padding;
 	padded_rect = yui_apply_padding(available_size, padding, layout_props.size);
 	layout.init(internal_children, padded_rect, viewport_size, yui_element.props);
-	
-	var data = bound_values ? bound_values.data_source : {};
-		
+
 	is_arranging = true;
-	used_layout_size = layout.arrange(data);
+	used_layout_size = layout.arrange(bound_values);
 	is_arranging = false;
 	
 	// update our draw size to encompass the layout's draw size with our padding

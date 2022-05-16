@@ -134,9 +134,12 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			var data_items = data;
 		}
 		
+		var liveItemValues = layout.is_live
+			? layout.getLiveItemValues(data, prev)
+			: undefined;
+		
 		// diff
-		if !layout.is_live
-			&& prev
+		if prev
 			&& opacity == prev.opacity
 			&& xoffset == prev.xoffset
 			&& yoffset == prev.yoffset
@@ -144,6 +147,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			&& (uses_template
 				? array_equals(data_items, prev.data_items)
 				: data_items == prev.data_items)
+			&& (!layout.is_live || liveItemValues == true)
 		{
 			return true;
 		}
@@ -158,6 +162,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			// panel
 			child_count: child_count,
 			data_items: data_items,
+			liveItemValues: liveItemValues,
 		};
 	}
 }
