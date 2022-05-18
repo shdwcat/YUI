@@ -5,7 +5,12 @@ function YuiOperatorBinding(left, operator, right) constructor {
 	
 	self.left = left;
 	self.right = right;
-	self.operator = operator;
+	self.operator = operator._type;
+	self.operator_name = operator.getTokenName();
+	
+	if (!left.is_yui_live_binding && !right.is_yui_live_binding) {
+		self.is_yui_live_binding = false;
+	}
 	
 	static resolve = function(data)
 	{

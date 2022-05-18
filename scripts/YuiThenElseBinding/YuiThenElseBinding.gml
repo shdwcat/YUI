@@ -7,6 +7,12 @@ function YuiThenElseBinding(left, then_expr, else_expr) constructor {
 	self.then_expr = then_expr;
 	self.else_expr = else_expr;
 	
+	if (!left.is_yui_live_binding
+		&& !then_expr.is_yui_live_binding
+		&& !else_expr.is_yui_live_binding) {
+		self.is_yui_live_binding = false;
+	}
+	
 	static resolve = function(data)
 	{
 		var left_val = left.resolve(data);
