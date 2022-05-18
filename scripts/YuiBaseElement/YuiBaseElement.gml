@@ -60,7 +60,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	size.w = yui_bind(size.w, resources, slot_values);
 	size.h = yui_bind(size.h, resources, slot_values);
 	
-	canvas = new YuiCanvasPosition(props.canvas, resources, slot_values);
+	canvas = new YuiCanvasPosition(props.canvas, resources, slot_values, props.id);
 	
 	// TODO: move this to YuiPanelElement?
 	alignment = new YuiElementAlignment(yui_bind(props.alignment, resources, slot_values));

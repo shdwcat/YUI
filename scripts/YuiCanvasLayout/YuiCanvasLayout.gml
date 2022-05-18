@@ -35,7 +35,7 @@ function YuiCanvasLayout(alignment, padding, spacing) constructor {
 	}
 	
 	static getLiveItemValues = function(data, prev) {
-		var is_changed = true;
+		var is_changed = prev == undefined;
 		
 		var results = array_create(array_length(live_items), undefined);
 		
@@ -51,14 +51,15 @@ function YuiCanvasLayout(alignment, padding, spacing) constructor {
 					bottom: yui_resolve_binding(canvas.bottom, data),
 				};
 			
+				// if we have previous values, check if any of them are different
 				if prev {
 					var old_values = prev.liveItemValues[i];
 				
-					if old_values.left == values.left
-					&& old_values.top == values.top
-					&& old_values.right == values.right
-					&& old_values.bottom == values.bottom {
-						is_changed = false;
+					if old_values.left != values.left
+					|| old_values.top != values.top
+					|| old_values.right != values.right
+					|| old_values.bottom != values.bottom {
+						is_changed = true;
 					}
 				}
 			
@@ -154,7 +155,9 @@ function YuiCanvasLayout(alignment, padding, spacing) constructor {
 	}
 }
 
-function YuiCanvasPosition(canvas_position = {}, resources, slot_values) constructor {
+function YuiCanvasPosition(canvas_position = {}, resources, slot_values, item_id) constructor {
+	self.item_id = item_id;
+	
 	var center = canvas_position[$ "center"];
 	center_h = center == true || center == "h";
 	center_v = center == true || center == "v";
