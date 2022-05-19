@@ -25,5 +25,13 @@ function YuiThenElseBinding(left, then_expr, else_expr) constructor {
 		}
 	}
 	
-	
+	static optimize = function() {
+		if is_yui_live_binding && !left.is_yui_live_binding {
+			if left.resolve() == true
+				return then_expr
+			else
+				return else_expr
+		}
+		return self;
+	}
 } 

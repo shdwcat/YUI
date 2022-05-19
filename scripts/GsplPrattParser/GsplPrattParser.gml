@@ -25,6 +25,9 @@ function GsplPrattParser(tokens, eof_token) : GsplParserBase(tokens, eof_token) 
 		if prefix == undefined throw new yui_error("Could not parse token:", token._literal);
 		
 		var left_expr = prefix.parse(self, token);
+		if left_expr[$ "optimize"] != undefined {
+			left_expr = left_expr.optimize();
+		}
 		
 		while peek()._type != eof_token && precedence < getPrecedence() {
 
@@ -32,6 +35,9 @@ function GsplPrattParser(tokens, eof_token) : GsplParserBase(tokens, eof_token) 
 			
 			var infix = infix_parselets[token._type];
 			left_expr = infix.parse(self, left_expr, token);
+			if left_expr[$ "optimize"] != undefined {
+				left_expr = left_expr.optimize();
+			}
 		}
 		
 		return left_expr;
