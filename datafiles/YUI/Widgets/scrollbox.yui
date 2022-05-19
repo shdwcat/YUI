@@ -21,8 +21,8 @@ resources:
       content_h: null
 
       // scroll bar visibility - defaults to automatically visible if scrollable
-      hbar_visible: null
-      vbar_visible: null
+      hbar_visible: $scroll_state.info.x_max > 0
+      vbar_visible: $scroll_state.info.y_max > 0
 
       // bar visuals
       bar_thickness: 20
@@ -32,10 +32,11 @@ resources:
       thumb_background: #AA00AA
       thumb_size: 20
 
-      // state - do not override
       scroll_state:
         x: 0
         y: 0
+        // x_max: 0
+        // y_max: 0
         info:
           x_ratio: 0
           y_ratio: 0
@@ -44,16 +45,11 @@ resources:
           viewport_w: 0
           viewport_h: 0
 
-    // macros:
-    //   is_hbar_visible: $hbar_visible ?? $scroll_state.info.x_max > 0
-      // is_vbar_visible: $vbar_visible ?? $scroll_state.info.y_max > 0
-
     template:
 
       type: panel
       padding: 1
       layout: canvas
-      border_color: grey
       events:
         on_mouse_wheel_up: $scroll_state.y = max($scroll_state.y - $scroll_state.info.y_max * 0.05, 0) >> round()
         on_mouse_wheel_down: $scroll_state.y = min($scroll_state.y + $scroll_state.info.y_max * 0.05, $scroll_state.info.y_max) >> round()
@@ -70,44 +66,43 @@ resources:
         //     - @@ 'ymod - ' + (min($scroll_state.y + $scroll_state.info.y_max * 0.05, $scroll_state.info.y_max))
         //     - @@ 'ymax - ' + $scroll_state.info.y_max
 
+        // proper grid layout might optimize a bunch here
+
         - type: viewport
           id: scrollbox-viewport
           size: stretch
-          //trace: true
           content: $content
-            // type: panel
-            // elements: 
-            //   - @@ 'ymax - ' + $scroll_state.info.y_max
-            //   - $content
           content_w: $content_w
           content_h: $content_h
           canvas:
-            right: @@ ($vbar_visible ?? $scroll_state.info.y_max > 0) then $bar_thickness else 0
-            bottom: @@ ($hbar_visible ?? $scroll_state.info.x_max > 0) then $bar_thickness else 0
+            right: $vbar_visible|resolve then $bar_thickness else 0
+            bottom: $hbar_visible|resolve then $bar_thickness else 0
           viewport_x: $scroll_state.x
           viewport_y: $scroll_state.y
           on_viewport_info:
             - @@ value => $scroll_state.info = value
+            // - @@ value => $scroll_state.y_max = value.y_max
+            // - @@ value => $scroll_state.x_max = value.x_max
 
         // vbar
         - type: scrollbar
           id: vbar
           layout: vertical
           size: { w: $bar_thickness, h: stretch }
-          visible: $vbar_visible ?? $scroll_state.info.y_max > 0
+          visible: $vbar_visible|resolve
           canvas:
             right: 0
-            bottom: @@ ($hbar_visible ?? $scroll_state.info.x_max > 0) then $bar_thickness else 0
+            bottom: $hbar_visible|resolve then $bar_thickness else 0
 
         // hbar
         - type: scrollbar
           id: hbar
           layout: horizontal
           size: { w: stretch, h: $bar_thickness }
-          visible: $hbar_visible ?? $scroll_state.info.x_max > 0
+          visible: $hbar_visible|resolve
           canvas:
             bottom: 0
-            right: @@ ($vbar_visible ?? $scroll_state.info.y_max > 0) then $bar_thickness else 0
+            right: $vbar_visible|resolve then $bar_thickness else 0
 
   scrollbar:
     type: template

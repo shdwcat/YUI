@@ -105,6 +105,10 @@ function YsParser(tokens, eof_token)
 		
 		var expr = parseExpression();
 		
+		if expr[$ "trace"] == true {
+			DEBUG_BREAK_YUI;
+		}
+		
 		if !expr.is_yui_live_binding {
 			// unwrap top level wrappers
 			expr = expr.resolve();
