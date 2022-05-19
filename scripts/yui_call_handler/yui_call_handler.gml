@@ -18,8 +18,6 @@ function yui_call_handler(handler, args, data) {
 	}
 	
 	if variable_struct_exists(handler, "interaction") {
-		// TODO: support parameterized interaction?
-		// NOTE: currently doing this by setting interaction.parameters, see YuiCanvasDrag
 		var did_start = yui_try_start_interaction(handler.interaction, data, handler);
 		return did_start;
 	}

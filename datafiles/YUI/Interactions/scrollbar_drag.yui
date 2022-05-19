@@ -1,4 +1,4 @@
-id: slider_drag
+id: scrollbar_drag
 file_type: interaction
 type: element_drag
 

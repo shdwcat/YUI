@@ -20,7 +20,8 @@ function yui_load_interactions() {
 				makeFunc = YuiPanCamera;
 				break;
 			case "canvas_drag":
-				makeFunc = YuiCanvasDrag;
+			case "element_drag":
+				makeFunc = YuiElementDrag;
 				break;
 		}
 		

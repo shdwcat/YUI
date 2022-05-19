@@ -1,29 +1,26 @@
+// TODO next major version - rename to YuiElementDrag
 /// @description
-function YuiCanvasDrag(_props, _resources) constructor {
+function YuiElementDrag(_props, _resources) constructor {
 	
 	static default_props = {
 		id: undefined,
-		type: "canvas_drag",
-		
-		camera_index: 0,
-		drag_scale: 1,
+		type: "element_drag",
 		
 		clamp_to_size: true,
 		
 		normalized: false, // whether to normalize the resulting position within the size of the canvas
 		
-		condition: undefined,		
+		condition: undefined,
 		on_position_changed: undefined,
-				
+
 		trace: false,
 	};
 	
 	props = yui_init_props(_props);
 	resources = _resources;
 	
-	
 	static canStart = function(source_data) {
-		return true;
+		return true; // eval condition?
 	}
 	
 	static start = function(source_data, event, source_item) {
@@ -35,10 +32,9 @@ function YuiCanvasDrag(_props, _resources) constructor {
 		parameters = variable_struct_get(event, "parameters") ?? {};
 		
 		on_position_changed = parameters[$ "on_position_changed"] ?? props.on_position_changed;
-				
-		// NOTE: assumes parent is a canvas!
+		
 		target = source_item;
-		canvas = source_item.parent;
+		parent = source_item.parent;
 		position = {
 			left: 0,
 			top: 0,
@@ -49,7 +45,7 @@ function YuiCanvasDrag(_props, _resources) constructor {
 	
 	static update = function(visual_item, cursor_pos) {
 		
-		var canvas_size = canvas.used_layout_size;
+		var canvas_size = parent.draw_size;
 		
 		var canvas_left = cursor_pos.x - canvas_size.x;
 		var canvas_top = cursor_pos.y - canvas_size.y;
@@ -68,6 +64,10 @@ function YuiCanvasDrag(_props, _resources) constructor {
 		// or the normalized position within the canvas size (relative to the x/y)
 		position.left = canvas_left;
 		position.top = canvas_top;
+		
+		if props.trace {
+			yui_log("left", canvas_left, "-", "top", canvas_top);
+		}
 
 		yui_call_handler(on_position_changed, [position], target.data_context);
 		
@@ -86,8 +86,8 @@ function YuiCanvasDrag(_props, _resources) constructor {
 		parameters = undefined;
 		button = undefined;
 		target = undefined;
-		canvas = undefined;
+		parent = undefined;
 		position = undefined;
-		on_position_changed = undefined;		
+		on_position_changed = undefined;
 	}
 }
