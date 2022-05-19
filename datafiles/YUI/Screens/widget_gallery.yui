@@ -13,6 +13,7 @@ import:
   - ../Widgets/slider.yui
   - ../Widgets/slide_toggle.yui
   - ../Widgets/meter_bar.yui
+  - ../Widgets/scrollbox.yui
 
 // resources:
 //   widget_wrapper:
@@ -28,71 +29,89 @@ root:
   elements:
     - type: back_button
 
-    - type: panel
-      spacing: 10
-      data_source: @widget_data
+    - type: scrollbox
+      padding: 15
+      content:
 
-      elements:
+        type: panel
+        spacing: 10
+        data_source: @widget_data
 
-        - type: text
-          text: Menu
-          text_style: subtitle
+        elements:
 
-        - type: menu
-          menu_items: @menu
+          - type: text
+            text: Scrollbox
+            text_style: subtitle
 
-        - type: text
-          text: Checkbox
-          text_style: subtitle
+          - type: scrollbox
+            size: { w: 300, h: 300 }
+            //content_w: fit
+            //content_h: 700
+            content: 
+              type: text
+              size: { w: 400 }
+              padding: 5
+              text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum dui orci, in venenatis ipsum elementum vitae. Integer sagittis neque in nibh mollis venenatis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed commodo ultricies dolor eget maximus. Duis non gravida nulla, vel tincidunt lectus. Vestibulum dapibus sapien a augue ultrices porttitor. Fusce ultrices lacus nisl. Vestibulum nisi velit, placerat sed lacus vel, tincidunt ultricies metus. Maecenas porta, justo in imperdiet iaculis, urna ipsum varius urna, porta bibendum enim lorem sit amet enim. Nullam mattis tincidunt augue, vitae ultrices magna faucibus vel. Nunc lorem nunc, commodo ut tincidunt id, sagittis sed ipsum. Interdum et malesuada fames ac ante ipsum primis in faucibus.
 
-        - type: checkbox
-          is_checked: @check_state
-          label: this is a checkbox
-          on_checked_changed: @@ checked => @check_state = checked
+          - type: text
+            text: Menu
+            text_style: subtitle
 
-        - type: text
-          text: Slide Toggle
-          text_style: subtitle
+          - type: menu
+            menu_items: @menu
 
-        - type: slide_toggle
-          is_checked: @check_state
-          label: this is a slide toggle
-          on_checked_changed: @@ checked => @check_state = checked
-          text_style: subtitle
+          - type: text
+            text: Checkbox
+            text_style: subtitle
 
-        - type: text
-          text: Switcher
-          text_style: subtitle
+          - type: checkbox
+            is_checked: @check_state
+            label: this is a checkbox
+            on_checked_changed: @@ checked => @check_state = checked
 
-        - type: switcher
-          items: @switcher_items
-          selection_scope: @switcher_selector
-          selected_index: 1
-          on_item_selected: @@ value => show_debug_message('selected ' + value)
+          - type: text
+            text: Slide Toggle
+            text_style: subtitle
 
-        - type: text
-          text: Dropdown Selector
-          text_style: subtitle
+          - type: slide_toggle
+            is_checked: @check_state
+            label: this is a slide toggle
+            on_checked_changed: @@ checked => @check_state = checked
+            text_style: subtitle
 
-        - type: dropdown_menu
-          items: @switcher_items
-          selection_scope: @switcher_selector
+          - type: text
+            text: Switcher
+            text_style: subtitle
 
-        - type: text
-          text: Slider
-          text_style: subtitle
+          - type: switcher
+            items: @switcher_items
+            selection_scope: @switcher_selector
+            selected_index: 1
+            on_item_selected: @@ value => show_debug_message('selected ' + value)
 
-        - type: slider
-          value: @slider_value
-          on_value_changed: @@ value => @slider_value = value
+          - type: text
+            text: Dropdown Selector
+            text_style: subtitle
 
-        - type: text
-          text: Meter Bar
-          text_style: subtitle
+          - type: dropdown_menu
+            items: @switcher_items
+            selection_scope: @switcher_selector
 
-        - type: meter_bar
-          size: { w: 140, h: 20 }
-          value: @slider_value
-          background: white
-          meter_blend_color: blue
+          - type: text
+            text: Slider
+            text_style: subtitle
+
+          - type: slider
+            value: @slider_value
+            on_value_changed: @@ value => @slider_value = value
+
+          - type: text
+            text: Meter Bar
+            text_style: subtitle
+
+          - type: meter_bar
+            size: { w: 140, h: 20 }
+            value: @slider_value
+            background: white
+            meter_blend_color: blue
           

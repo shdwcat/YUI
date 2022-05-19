@@ -1,0 +1,146 @@
+file_type: resources
+
+import:
+  - ../Interactions/scrollbar_drag.yui
+
+resources:
+
+  scrollbox:
+    type: template
+
+    slots:
+
+      // the scrollable content
+      content: undefined
+
+      scroll_x: 0
+      scroll_y: 0
+
+      // explicitly set width and/or height of scrollable content
+      content_w: null
+      content_h: null
+
+      // scroll bar visibility - defaults to automatically visible if scrollable
+      hbar_visible: null
+      vbar_visible: null
+
+      // bar visuals
+      bar_thickness: 20
+      bar_background: #2f2f2f
+      bar_border_color: null
+      //bar_border_thickness: 1
+      thumb_background: #AA00AA
+      thumb_size: 20
+
+      // state - do not override
+      scroll_state:
+        x: 0
+        y: 0
+        info:
+          x_ratio: 0
+          y_ratio: 0
+          x_max: 0
+          y_max: 0
+          viewport_w: 0
+          viewport_h: 0
+
+    // macros:
+    //   is_hbar_visible: $hbar_visible ?? $scroll_state.info.x_max > 0
+      // is_vbar_visible: $vbar_visible ?? $scroll_state.info.y_max > 0
+
+    template:
+
+      type: panel
+      padding: 1
+      layout: canvas
+      border_color: grey
+      events:
+        on_mouse_wheel_up: $scroll_state.y = max($scroll_state.y - $scroll_state.info.y_max * 0.05, 0) >> round()
+        on_mouse_wheel_down: $scroll_state.y = min($scroll_state.y + $scroll_state.info.y_max * 0.05, $scroll_state.info.y_max) >> round()
+        // on_mouse_wheel_up: $scroll_state.x = max($scroll_state.x - $scroll_state.info.x_max * 0.05, 0) >> floor()
+        // on_mouse_wheel_down: $scroll_state.x = min($scroll_state.x + $scroll_state.info.x_max * 0.05, $scroll_state.info.x_max) >> floor()
+      elements:
+
+        // - type: panel
+        //   canvas:
+        //     left: 320
+        //     right: -300
+        //   elements:
+        //     - @@ 'y - ' + $scroll_state.y
+        //     - @@ 'ymod - ' + (min($scroll_state.y + $scroll_state.info.y_max * 0.05, $scroll_state.info.y_max))
+        //     - @@ 'ymax - ' + $scroll_state.info.y_max
+
+        - type: viewport
+          id: scrollbox-viewport
+          size: stretch
+          //trace: true
+          content: $content
+            // type: panel
+            // elements: 
+            //   - @@ 'ymax - ' + $scroll_state.info.y_max
+            //   - $content
+          content_w: $content_w
+          content_h: $content_h
+          canvas:
+            right: @@ ($vbar_visible ?? $scroll_state.info.y_max > 0) then $bar_thickness else 0
+            bottom: @@ ($hbar_visible ?? $scroll_state.info.x_max > 0) then $bar_thickness else 0
+          viewport_x: $scroll_state.x
+          viewport_y: $scroll_state.y
+          on_viewport_info:
+            - @@ value => $scroll_state.info = value
+
+        // vbar
+        - type: scrollbar
+          id: vbar
+          layout: vertical
+          size: { w: $bar_thickness, h: stretch }
+          visible: $vbar_visible ?? $scroll_state.info.y_max > 0
+          canvas:
+            right: 0
+            bottom: @@ ($hbar_visible ?? $scroll_state.info.x_max > 0) then $bar_thickness else 0
+
+        // hbar
+        - type: scrollbar
+          id: hbar
+          layout: horizontal
+          size: { w: stretch, h: $bar_thickness }
+          visible: $hbar_visible ?? $scroll_state.info.x_max > 0
+          canvas:
+            bottom: 0
+            right: @@ ($vbar_visible ?? $scroll_state.info.y_max > 0) then $bar_thickness else 0
+
+  scrollbar:
+    type: template
+    slots:
+      layout: vertical
+    template:
+      type: panel
+      background: $bar_background
+      border_color: $bar_border_color
+      //border_thickness: $bar_border_thickness
+      elements:
+        - $layout == 'vertical' then &v_scroll_button else &h_scroll_button
+
+  v_scroll_button:
+    type: button
+    size: $thumb_size
+    background: $thumb_background
+    yoffset: $scroll_state.info.y_ratio * ($scroll_state.info.viewport_h - $thumb_size)
+    events:
+      on_mouse_down:
+        interaction: scrollbar_drag
+        parameters:
+          trace: true
+          on_position_changed: @@ e => $scroll_state.y = e.top * $scroll_state.info.y_max
+
+  h_scroll_button:
+    type: button
+    size: $thumb_size
+    background: $thumb_background
+    xoffset: $scroll_state.info.x_ratio * ($scroll_state.info.viewport_w - $thumb_size)
+    events:
+      on_mouse_down:
+        interaction: scrollbar_drag
+        parameters:
+          trace: true
+          on_position_changed: @@ e => $scroll_state.x = e.left * $scroll_state.info.x_max
