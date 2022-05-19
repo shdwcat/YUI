@@ -50,6 +50,8 @@ build = function() {
 		content_item = yui_make_render_instance(layout_props.content_element, data_context);
 	}
 	
+		DEBUG_BREAK_YUI;
+	
 	if content_item {
 		content_item.data_context = bound_values.data_source;
 		// will trigger build() as child runs after this
@@ -92,6 +94,11 @@ arrange = function(available_size, viewport_size) {
 	
 	if viewport_size {
 		updateViewport();
+	}
+	
+	if bound_values && events.on_arrange != undefined {
+		var data = bound_values ? bound_values.data_source : undefined;
+		yui_call_handler(events.on_arrange, [draw_size], data);
 	}
 	
 	return draw_size;

@@ -117,6 +117,12 @@ arrange = function(available_size, viewport_size) {
 		w: max(drawn_size.w, used_layout_size.w + padding.w),
 		h: max(drawn_size.h, used_layout_size.h + padding.h),
 	};
+	
+	if events.on_arrange != undefined {
+		var data = bound_values ? bound_values.data_source : undefined;
+		yui_call_handler(events.on_arrange, [used_size], data);
+	}
+	
 	return used_size;
 }
 
