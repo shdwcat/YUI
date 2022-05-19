@@ -62,8 +62,8 @@ arrange = function(available_size, viewport_size) {
 	var available_content_size = {
 		x: x,
 		y: y,
-		w: content_w == "stretch" ? actual_viewport_size.w : content_w,
-		h: content_h == "stretch" ? actual_viewport_size.h : content_h,
+		w: content_w == "fit" ? actual_viewport_size.w : content_w,
+		h: content_h == "fit" ? actual_viewport_size.h : content_h,
 	}
 	
 	var content_size = undefined;
