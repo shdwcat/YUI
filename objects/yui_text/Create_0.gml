@@ -83,6 +83,11 @@ arrange = function(available_size, viewport_size) {
 
 	var new_bbox = scribble_element.get_bbox(x, y, padding.left, padding.top, padding.right, padding.bottom);
 	
+	text_surface_w = new_bbox.width + padding.w;
+	
+	// can't use string_height_ext because it doesn't account for letters like pqyg
+	text_surface_h = new_bbox.height + padding.h;
+	
 	// update draw size
 	var draw_width = layout_props.halign
 		|| scribble_element.get_wrapped() ? available_size.w : new_bbox.width;
@@ -124,11 +129,7 @@ arrange = function(available_size, viewport_size) {
 }
 
 buildTextSurface = function() {
-	
-	text_surface_w = draw_size.w;
 
-	// can't use string_height_ext because it doesn't account for letters like pqyg
-	text_surface_h = draw_size.h;
 	
 	if (text_surface_w > 0 && text_surface_h > 0) {
 		text_surface = yui_draw_text_to_surface(
@@ -141,3 +142,4 @@ buildTextSurface = function() {
 			font, text_surface);
 	}
 }
+
