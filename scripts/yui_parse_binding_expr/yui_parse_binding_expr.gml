@@ -9,12 +9,19 @@ function yui_parse_binding_expr(expr, resources, slot_values) {
 	var scanner = new YsScanner(expr, token_def);
 	
 	var tokens = scanner.scanTokens();
+		
+	var old_tokens = parser.tokens;
+	var old_expr = parser.source;
+	var old_current = parser.current;
 	
-	// NOTE: will break if we ever recursively parse
 	parser.source = expr;
 	parser.tokens = tokens;
 	parser.current = 0;
 	var binding = parser.parse(resources, slot_values);
+	
+	parser.tokens = old_tokens;
+	parser.source = old_expr;
+	parser.current = old_current;
 	
 	return binding;
 }

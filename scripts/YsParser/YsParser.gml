@@ -2,6 +2,11 @@
 function YsParser(tokens, eof_token)
 	: GsplPrattParser(tokens, eof_token) constructor {
 
+	self.source = undefined;
+	self.resources = undefined;
+	self.slot_values = undefined;
+	self.context = undefined;
+
 	// === expression types ===
 	
 	self.Literal = YuiValueWrapper;
@@ -89,6 +94,10 @@ function YsParser(tokens, eof_token)
 	
 	static parse = function(resources, slot_values) {
 		
+		var old_resources = self.resources;
+		var old_slot_values = self.slot_values;
+		var old_context = self.context;
+				
 		// setting this context is annoying but *shrug*
 		self.resources = resources;
 		self.slot_values = slot_values;
@@ -101,9 +110,9 @@ function YsParser(tokens, eof_token)
 			expr = expr.resolve();
 		}
 		
-		self.context = undefined;
-		self.slot_values = undefined;
-		self.resources = undefined;
+		self.context = old_context;
+		self.slot_values = old_slot_values;
+		self.resources = old_resources;
 		
 		return expr;
 	}
