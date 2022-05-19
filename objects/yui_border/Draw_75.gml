@@ -8,3 +8,4 @@ if trace {
 	if highlight {
 		yui_draw_trace_rect(true, draw_size, yui_hover_color);
 	}}
+

@@ -11,7 +11,7 @@ function yui_try_start_interaction(interaction, source_data, event) {
 		}
 		
 		interaction = YuiCursorManager.interaction_map[$ interaction];
-	}	
+	}
 
 	var can_start = interaction.canStart(source_data);
 	if !can_start return false;

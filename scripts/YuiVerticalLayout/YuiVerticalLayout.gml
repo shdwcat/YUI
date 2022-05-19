@@ -48,25 +48,17 @@ function YuiVerticalLayout(alignment, padding, spacing) constructor {
 			h: yoffset,
 		};
 		
-		var used_size = {			
-			x: available_size.x,
-			y: available_size.y,
-			w: max_w,
-			h: yoffset,
-		}
-		
 		if alignment.h == "center" {
 			var offset = (available_size.w - max_w) / 2
 			i = 0; repeat count {
 				items[i++].move(offset, 0);
 			}
 			draw_size.w = available_size.w;
-			used_size.w = available_size.w;
 		}
 		else if alignment.h == "stretch" {
 			i = 0; repeat count {
 				var item = items[i++];
-				item.resize(used_size.w, item.draw_size.h);
+				item.resize(draw_size.w, item.draw_size.h);
 			}
 		}
 		
@@ -76,10 +68,9 @@ function YuiVerticalLayout(alignment, padding, spacing) constructor {
 				items[i++].move(0, offset);
 			}
 			draw_size.h = available_size.h;
-			used_size.h = available_size.h;
 		}
 		
-		return used_size;
+		return draw_size;
 	}
 	
 	static getAvailableSizeForItem = function(index, yoffset) {		
