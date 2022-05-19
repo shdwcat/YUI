@@ -24,6 +24,9 @@ function YuiOperatorBinding(left, operator, right) constructor {
 				// TODO: per type logic here (arrays, structs, ?)
 				return left_val == right.resolve(data);
 				
+			case YS_TOKEN.QUESTION_QUESTION:
+				return left_val ?? right.resolve(data);
+				
 			case YS_TOKEN.BANG_EQUAL:
 				return left_val != right.resolve(data);
 				
@@ -64,14 +67,11 @@ function YuiOperatorBinding(left, operator, right) constructor {
 			case YS_TOKEN.LESS_EQUAL:
 				return left_val <= right.resolve(data);
 				
-			case YS_TOKEN.QUESTION_QUESTION:
-				return left_val ?? right.resolve(data);
-				
 			default:
 				throw gspl_log("Unknown operator: " + operator.getTokenName());
 		}
 	}
-		
+	
 } 
 
 /// @description
