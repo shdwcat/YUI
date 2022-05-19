@@ -13,6 +13,8 @@ content_h = infinity;
 
 // info about viewport extents
 viewport_info = {
+	x_ratio: 0,
+	y_ratio: 0,
 	x_max: undefined,
 	y_max: undefined,
 }
@@ -83,8 +85,6 @@ arrange = function(available_size, viewport_size) {
 	
 	var viewport_x_max = max(0, content_size.w - drawn_size.w);
 	var viewport_y_max = max(0, content_size.h - drawn_size.h);
-	viewport_info.x_max = viewport_x_max;
-	viewport_info.y_max = viewport_y_max;
 	
 	if content_item && (viewport_x != 0 || viewport_y != 0) {
 		
@@ -97,6 +97,12 @@ arrange = function(available_size, viewport_size) {
 	
 	// push viewport info back to game layer if requested
 	if set_viewport_info != undefined {
+		viewport_info.x_max = viewport_x_max;
+		viewport_info.y_max = viewport_y_max;
+		viewport_info.x_ratio = viewport_x / viewport_x_max;
+		viewport_info.y_ratio = viewport_y / viewport_y_max;
+		viewport_info.viewport_w = draw_size.w;
+		viewport_info.viewport_h = draw_size.h;
 		yui_call_handler(set_viewport_info, [viewport_info], bound_values.data_source);
 	}
 	
