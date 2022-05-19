@@ -7,17 +7,18 @@ function YsDirectiveParselet() constructor {
 		// parse all directives (comma separated)
 		do {			
 			var directive = parser.consume(YS_TOKEN.IDENTIFIER, "Expecting directive name after '|'");
-			left_expr = applyDirective(left_expr, directive._literal);
+			left_expr = applyDirective(left_expr, directive._literal, parser);
 		} until !parser.match(YS_TOKEN.COMMA)
 		
 		return left_expr;
 	}
 	
-	static applyDirective = function (expr, directive) {
+	static applyDirective = function (expr, directive, parser) {
 		switch directive {
 			case "trace":
 				expr.trace = true;
 				break;
+				
 			case "final":
 			// TODO: maybe just wrap left_expr in a YuiFinalBinding?
 				expr.dynamic_resolve = expr.resolve;
@@ -31,6 +32,18 @@ function YsDirectiveParselet() constructor {
 					}
 				}
 				break;
+			
+			// if the expr is a binding expression literal, parse it
+			case "resolve":
+				if instanceof(expr) == "YuiValueWrapper" {
+					var expr_value = expr.resolve();
+					if yui_is_binding_expr(expr_value) {
+						var inner_expr = yui_parse_binding_expr(expr_value, parser.resources, parser.slot_values);
+						expr = inner_expr;
+					}
+				}
+				break;
+			
 			// TODO: gm_asset instead and allow any asset? what's the use case for that?
 			case "gm_object":
 				expr = new YuiObjectBinding(expr);
