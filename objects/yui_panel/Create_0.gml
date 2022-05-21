@@ -136,6 +136,7 @@ onChildLayoutComplete = function(child) {
 }
 
 move = function(xoffset, yoffset) {
+	// use base move, not border's move
 	base_move(xoffset, yoffset);
 	
 	var i = 0; repeat array_length(internal_children) {

@@ -134,10 +134,13 @@ move = function(xoffset, yoffset) {
 	padded_rect.y += yoffset;
 	
 	if viewport_size {
-		updateViewport()
+		updateViewport();
 	}
 	
-	// move tooltip?
+	
+	if tooltip_item {
+		tooltip_item.move(xoffset, yoffset);
+	}
 	
 	if interaction_item {
 		interaction_item.move(xoffset, yoffset);
@@ -145,7 +148,16 @@ move = function(xoffset, yoffset) {
 }
 
 updateViewport = function() {
-	viewport_part =	yui_trim_rect_to_viewport(x, y, draw_size.w, draw_size.h, viewport_size);
+	
+	// if our viewport has a parent, trim it within the parent
+	var vp_size = viewport_size.parent
+		? yui_trim_rect_to_viewport(
+			viewport_size.x, viewport_size.y,
+			viewport_size.w, viewport_size.h,
+			viewport_size.parent)
+		: viewport_size;
+			
+	viewport_part =	yui_trim_rect_to_viewport(x, y, draw_size.w, draw_size.h, vp_size);
 }
 
 resize = yui_resize_instance;

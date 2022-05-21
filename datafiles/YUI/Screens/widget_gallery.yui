@@ -30,10 +30,12 @@ root:
     - type: back_button
 
     - type: scrollbox
-      padding: 15
+      // trace: true
+      border_color: grey
       content:
 
         type: panel
+        padding: 15
         spacing: 10
         data_source: @widget_data
 
@@ -44,6 +46,7 @@ root:
             text_style: subtitle
 
           - type: scrollbox
+            //trace: true
             size: { w: 300, h: 300 }
             content_w: fit
             //content_w: 400

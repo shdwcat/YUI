@@ -33,8 +33,7 @@ else {
 
 		if viewport_size {
 			
-			if viewport_part.visible
-			{		
+			if viewport_part.visible {
 				// remake the surface if it doesn't exist
 				if !text_surface || !surface_exists(text_surface) {
 					buildTextSurface();
@@ -73,5 +72,9 @@ if (trace) {
 	
 	if viewport_part {
 		yui_draw_trace_rect(true, viewport_part, yui_viewport_color);
+	}
+	
+	if viewport_size {
+		yui_draw_trace_rect(true, viewport_size, c_olive);
 	}
 }

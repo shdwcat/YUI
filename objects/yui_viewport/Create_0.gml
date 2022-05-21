@@ -56,6 +56,7 @@ arrange = function(available_size, viewport_size) {
 		h: 0,
 		vx: viewport_x,
 		vy: viewport_y,
+		parent: viewport_size,
 	});
 	
 	// arrange content using the specified content size
@@ -107,4 +108,14 @@ arrange = function(available_size, viewport_size) {
 	}
 	
 	return draw_size;
+}
+border_move = move;
+move = function(xoffset, yoffset) {
+	if content_item {
+		content_item.viewport_size.x += xoffset;
+		content_item.viewport_size.y += yoffset;
+	}
+	
+	border_move(xoffset, yoffset);
+	
 }
