@@ -1,5 +1,5 @@
 /// @description stores the name of an identifier
-function YuiIdentifier(identifier) constructor {
+function YuiIdentifier(identifier) : YuiExpr() constructor {
 	static is_yui_binding = true;
 	static is_yui_live_binding = false;
 	static is_yui_call = false;
@@ -13,4 +13,10 @@ function YuiIdentifier(identifier) constructor {
 		
 		return identifier;
 	}
+
+	static compile = function()
+	{
+		return "\"" + identifier + "\"";
+	}
 }
+

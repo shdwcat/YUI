@@ -11,14 +11,19 @@ function YuiExampleManager() constructor {
 	slots = inventory.slots;
 	items = inventory.items;
 	
-	foreach(slots, function(slot) { slot.equipped_item = undefined });
+	foreach(slots, function(slot) {
+			slot.equipped_item = { name: undefined, sprite: undefined }
+		});
 	
 	widget_data = new WidgetGalleryData();
 	
 	// for viewport demo
 	scroll_x = 0;
 	scroll_y = 0;
-	scroll_info = {};
+	scroll_info = {
+		x_max: 13,
+		y_max: 13,
+	};
 	
 	// set live reload status
 	switch YUI_LIVE_RELOAD_STATE {

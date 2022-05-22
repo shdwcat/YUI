@@ -11,6 +11,9 @@ enum YS_TOKEN {
 	PIPE, // directives
 	EQUAL, // assignment
 	
+	// string ops
+	STRING_PLUS,
+	
 	// math
 	MINUS, PLUS,
 	SLASH, STAR,

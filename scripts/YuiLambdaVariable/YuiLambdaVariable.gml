@@ -1,5 +1,5 @@
 /// @description resolves the value of a lambda variable from the context
-function YuiLambdaVariable(param_name, context) constructor {
+function YuiLambdaVariable(param_name, context) : YuiExpr() constructor {
 	static is_yui_binding = true;
 	static is_yui_live_binding = true;
 	static is_yui_call = false;
@@ -10,5 +10,10 @@ function YuiLambdaVariable(param_name, context) constructor {
 	static resolve = function(data) {
 		// note: this is some bootleg shit
 		return context.params[$ param_name];
+	}
+
+	static compile = function()
+	{
+		return param_name;
 	}
 }

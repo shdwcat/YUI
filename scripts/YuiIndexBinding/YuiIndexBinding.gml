@@ -1,5 +1,5 @@
 /// @description
-function YuiIndexBinding(left, index) constructor {
+function YuiIndexBinding(left, index) : YuiExpr() constructor {
 	static is_yui_binding = true;
 	static is_yui_live_binding = true;
 	
@@ -24,6 +24,10 @@ function YuiIndexBinding(left, index) constructor {
 		else {
 			throw yui_error("cannot index value of type", typeof(left_val));
 		}
+	}
 	
+	static compile = function() {
+		// assume struct 🤷‍
+		return left.compile() + "[$ " + index.compile() + "]";
 	}
 } 

@@ -6,6 +6,7 @@ function YsParser(tokens, eof_token)
 	self.resources = undefined;
 	self.slot_values = undefined;
 	self.context = undefined;
+	self.level = 0;
 
 	// === expression types ===
 	
@@ -73,6 +74,8 @@ function YsParser(tokens, eof_token)
 	infix(YS_TOKEN.PIPE, new YsDirectiveParselet());
 	
 	// infix operators (left associative)
+	infixOperatorLeft(YS_TOKEN.STRING_PLUS, YS_PRECEDENCE.STRING_OP);
+	
 	infixOperatorLeft(YS_TOKEN.PLUS, YS_PRECEDENCE.SUM);
 	infixOperatorLeft(YS_TOKEN.MINUS, YS_PRECEDENCE.SUM);
 	infixOperatorLeft(YS_TOKEN.STAR, YS_PRECEDENCE.PRODUCT);
@@ -102,6 +105,7 @@ function YsParser(tokens, eof_token)
 		self.resources = resources;
 		self.slot_values = slot_values;
 		self.context = {};
+		self.level++;
 		
 		var expr = parseExpression();
 		
@@ -114,6 +118,7 @@ function YsParser(tokens, eof_token)
 			expr = expr.resolve();
 		}
 		
+		self.level--;
 		self.context = old_context;
 		self.slot_values = old_slot_values;
 		self.resources = old_resources;

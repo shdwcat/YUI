@@ -8,10 +8,11 @@ function yui_is_live_binding(binding) {
 }
 
 function yui_is_call(binding) {
-	return is_struct(binding)
-		&& (instanceof(binding) == "YuiCallFunction" || instanceof(binding) == "YuiSetValue");
+	return is_struct(binding) && binding[$ "is_call"] == true;
+		//&& (instanceof(binding) == "YuiCallFunction" || instanceof(binding) == "YuiSetValue");
 }
 
 function yui_is_lambda(binding) {
-	return is_struct(binding) && instanceof(binding) == "YuiLambda";
+	return is_struct(binding) && binding[$ "is_lambda"] == true;
+		//instanceof(binding) == "YuiLambda";
 }

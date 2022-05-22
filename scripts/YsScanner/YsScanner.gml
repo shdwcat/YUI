@@ -100,8 +100,13 @@ function YsScanner(source, token_definition) : GsplScanner(source, token_definit
 				}
 				break;
 			case "$":
-				skip(1);
-				scanVariablePath(YS_TOKEN.SLOT_IDENTIFIER);
+				if match("+") {
+					addToken(YS_TOKEN.STRING_PLUS);
+				}
+				else {
+					skip(1);
+					scanVariablePath(YS_TOKEN.SLOT_IDENTIFIER);
+				}
 				break;
 			case "&":
 				skip(1);

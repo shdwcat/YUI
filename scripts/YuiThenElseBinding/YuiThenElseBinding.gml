@@ -1,5 +1,5 @@
 /// @description
-function YuiThenElseBinding(left, then_expr, else_expr) constructor {
+function YuiThenElseBinding(left, then_expr, else_expr) : YuiExpr() constructor {
 	static is_yui_binding = true;
 	static is_yui_live_binding = true; // check inner bindings?
 	
@@ -33,5 +33,9 @@ function YuiThenElseBinding(left, then_expr, else_expr) constructor {
 				return else_expr
 		}
 		return self;
+	}
+	
+	static compile = function() {
+		return left.compile() + " ? " + then_expr.compile() + " : " + else_expr.compile();
 	}
 } 

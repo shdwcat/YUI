@@ -1,7 +1,8 @@
 /// @description Calls a function with bindable arguments
-function YuiCallFunction(func_name, args) constructor {
+function YuiCallFunction(func_name, args) : YuiExpr() constructor {
 	static is_yui_binding = true;
 	static is_yui_live_binding = true;
+	static is_call = true;
 	
 	static runtime_functions = gspl_get_runtime_function_map();
 	
@@ -113,5 +114,40 @@ function YuiCallFunction(func_name, args) constructor {
 			default:
 				throw "can't call method with more than 9 arguments";
 		}
+	}
+	
+	static compile = function() {
+		
+		if is_string(func_name) {
+			var call = func_name;
+		}
+		else if instanceof(func_name) == "YuiIdentifier" {
+			// needs special handling until I can fix how function names work...
+			var call = func_name.identifier;
+		}
+		else if instanceof(func_name) == "YuiLambda" {
+			// needs special handling until I can fix how function names work...
+			var call = func_name.compiled_script_name;
+		}
+		else {
+			var call = func_name.compile();
+		}
+		
+		call += "(";
+		
+		if instanceof(func_name) == "YuiLambda" {
+			call += "data, ";
+		}
+		
+		var i = 0; repeat arg_count {
+			call += args[i].compile();
+			i++;
+			if i != arg_count {
+				call += ", ";
+			}
+		}
+		call += ")";
+		
+		return call;
 	}
 }

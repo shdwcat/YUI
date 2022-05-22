@@ -10,8 +10,9 @@ enum YS_PRECEDENCE {
 	LOGIC_AND =   6,
 	COMPARISON =  7,
 	EQUALITY =    8,
-	SUM =         9,
-	PRODUCT =     10,
-	PREFIX =      11,
-	CALL =        12, // also subscript (e.g. member access and indexing)
+	STRING_OP =   9,
+	SUM =         10,
+	PRODUCT =     11,
+	PREFIX =      12,
+	CALL =        13, // also subscript (e.g. member access and indexing)
 }

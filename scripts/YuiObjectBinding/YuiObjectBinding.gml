@@ -1,5 +1,5 @@
 /// @description a version of YuiBinding that binds to an object instead of the data context
-function YuiObjectBinding(object_name_expr) constructor {
+function YuiObjectBinding(object_name_expr) : YuiExpr() constructor {
 	static is_yui_binding = true;
 	static is_yui_live_binding = false;
 

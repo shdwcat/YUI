@@ -1,11 +1,13 @@
 /// @description
-function YuiLambda(body, context) constructor {
+function YuiLambda(body, context) : YuiExpr() constructor {
 	static is_yui_binding = true;
 	static is_yui_live_binding = true;
 	static is_yui_call = true;
+	static is_lambda = true;
 
 	self.body = body;
 	self.context = context;
+	self.compiled_script_name = undefined;
 	
 	static resolve = function(data) {
 		throw yui_error("attemped to resolve() YuiLmabda, use call() instead");
@@ -29,5 +31,10 @@ function YuiLambda(body, context) constructor {
 		
 		// clean up
 		context.params = undefined;
+	}
+
+	static compile = function(func_name = "")
+	{
+		return "function " + func_name + "(data, " + context.arg_map[0] + ") {\n\t" + body.compile() + "\n}\n\n";
 	}
 }

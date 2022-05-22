@@ -1,7 +1,9 @@
 /// @description struct that can dynamically resolve a value from a single data path at runtime
-function YuiBinding(path) constructor {
+function YuiBinding(path) : YuiExpr() constructor {
 	static is_yui_binding = true;
 	static is_yui_live_binding = true;
+	
+	self.path = path;
 	
 	if path != undefined {
 		init(path);
@@ -12,7 +14,7 @@ function YuiBinding(path) constructor {
 		// get a resolver for the path if we have one
 		// NOTE: this is for derived Binding classes that may not pass a path
 		if path != undefined {	
-			if path == "" || path = " " || path == "$data" {
+			if path == "" || path = " " {
 				resolver = resolveEmptyPath;
 			}
 			else {
@@ -69,7 +71,7 @@ function YuiBinding(path) constructor {
 			return undefined;
 		}
 		
-		var i = 0; repeat array_length(tokens) {		
+		var i = 0; repeat array_length(tokens) {
 			if is_string(data) {
 				return undefined; // expecting struct but got string
 			}
@@ -104,5 +106,34 @@ function YuiBinding(path) constructor {
 		
 		// if we got here we couldn't find the type
 		throw yui_error("unable to find item for ancestor_type", ancestor_type);
+	}
+	
+	static compile = function() {
+		
+		//switch resolver {
+		//	case resolveEmptyPath:
+		//		return "data";
+				
+		//	case resolveToken:
+		//		return "data." + path;
+		//		//"(data != undefined ? data." + path + " : undefined)";
+				
+		//	case resolveTokenArray:
+		//		var compiled = "data != undefined";
+		//		var token_path = "data";
+				
+		//		var i = 0; repeat array_length(tokens) {
+		//			token_path += "." + tokens[i++];
+		//			compiled += " && " + token_path + " != undefined";
+		//		}
+				
+		//		compiled += " \n\t\t? " + token_path + " \n\t\t: undefined";
+				
+		//		return "(" + compiled + ")";
+		//}
+		
+		return path = ""
+			? "data"
+			: "data." + path;
 	}
 }
