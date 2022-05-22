@@ -6,6 +6,11 @@ function yui_resolve_element(yui_data, resources, slot_values, parent_id = undef
 		if yui_is_binding_expr(yui_data) {
 			var resolved_yui_data = yui_bind(yui_data, resources, slot_values);
 			
+			// copy the resolved values to ensure we're not sharing state incorrectly
+			if is_struct(resolved_yui_data) || is_array(resolved_yui_data) {
+				resolved_yui_data = snap_deep_copy(resolved_yui_data)
+			}
+			
 			// the result might be something like a slot or resource, or 'raw' element props
 			// In any of those cases, this recursive call will resolve that value correctly.
 			return yui_resolve_element(resolved_yui_data, resources, slot_values, parent_id);
