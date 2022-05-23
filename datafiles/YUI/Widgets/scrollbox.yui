@@ -81,8 +81,6 @@ resources:
           viewport_y: $scroll_state.y
           on_viewport_info:
             - @@ value => $scroll_state.info = value
-            // - @@ value => $scroll_state.y_max = value.y_max
-            // - @@ value => $scroll_state.x_max = value.x_max
 
         // vbar
         - type: scrollbar
