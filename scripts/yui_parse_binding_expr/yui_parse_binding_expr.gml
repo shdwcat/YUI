@@ -13,6 +13,15 @@ function yui_parse_binding_expr(expr_source, resources, slot_values) {
 	
 		// check if the expression has been compiled
 		if table {
+			// TODO BUG
+			// loading by source doesn't work for slots where the same $slot may resolvw
+			// to different values in different template instances.
+			// to fix this, we'd ned to recursively replace slot identifiers with
+			// their slot values in order to get the unique source per use case.
+			// This might be difficult to do correctly as it's posible that the number of
+			// unique source expressions could be different for different runs depending
+			// on how dynamically the UI is assembled
+			
 			var entry = table[? expr_source];
 			if entry {
 				var compiled_binding = new YuiCompiledBinding(entry.id, expr_source, entry);
