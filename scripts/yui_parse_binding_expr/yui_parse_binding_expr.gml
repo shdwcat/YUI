@@ -5,17 +5,19 @@ function yui_parse_binding_expr(expr_source, resources, slot_values) {
 	
 	static parser = new YsParser(undefined, YS_TOKEN.EOF);
 	
-	// need to get this by string in case it gets deleted from yui_compiled_functions.gml
-	static getFunctionTable = asset_get_index("yui_get_function_table");
+	if YUI_COMPILER_ENABLED {
+		// need to get this by string in case it gets deleted from yui_compiled_functions.gml
+		static getFunctionTable = asset_get_index("yui_get_function_table");
 	
-	static table = getFunctionTable ? getFunctionTable() : undefined;
+		static table = getFunctionTable ? getFunctionTable() : undefined;
 	
-	// check if the expression has been compiled
-	if table {
-		var entry = table[? expr_source];
-		if entry {
-			var compiled_binding = new YuiCompiledBinding(entry.id, expr_source, entry);
-			return compiled_binding;
+		// check if the expression has been compiled
+		if table {
+			var entry = table[? expr_source];
+			if entry {
+				var compiled_binding = new YuiCompiledBinding(entry.id, expr_source, entry);
+				return compiled_binding;
+			}
 		}
 	}
 	
