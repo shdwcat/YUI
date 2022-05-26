@@ -38,7 +38,7 @@ var i = hover_count - 1; repeat hover_count {
 	//yui_log("list instance", i, "is", next.id, "type", script_get_name(next.element_constructor));
 	
 	// should I rename this to hover to prevent confusion?
-	next.highlight = true;
+	next.setHighlight(true);
 	
 	if !hover_consumed && next.cursor_hover {
 		//yui_log("hover instance", i, "is", next.id, "type", object_get_name(next.object_index));

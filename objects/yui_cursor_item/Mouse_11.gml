@@ -1,5 +1,5 @@
 /// @description 
-highlight = false;
+setHighlight(false);
 
 // virtual cursor will also need to handle this somehow...
 

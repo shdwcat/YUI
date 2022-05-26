@@ -12,7 +12,7 @@ root:
 
     // helper message about live reload state
     - type: text
-      text: @live_reload_label + ' - ' + @live_reload_message
+      text: @live_reload_label + ' - ' + @live_reload_message | final
       canvas:
         left: 5
         bottom: 5

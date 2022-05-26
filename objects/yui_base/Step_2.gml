@@ -35,24 +35,3 @@ if is_binding_active || !visible {
 		}
 	}
 }
-
-// create/destroy tooltip item
-// TODO?: handle this in setHighlight() to avoid the per frame hit
-if tooltip_element {
-	if highlight {
-		if tooltip_item == undefined {	
-			tooltip_item = yui_make_render_instance(
-				tooltip_element,
-				bound_values.data_source, 
-				/* no index */,
-				1000); // ensures tooltips appear above popup layers
-	
-			var popup_space = yui_calc_popup_space(tooltip_item);
-			tooltip_item.arrange(popup_space);
-		}
-	}
-	else if tooltip_item != undefined {
-		instance_destroy(tooltip_item);
-		tooltip_item = undefined;
-	}
-}
