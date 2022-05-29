@@ -3,8 +3,8 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		id: "", // unique ID for this element, required to enabled animations and other effects
 		item_key: undefined, // identifies an element in an array (must bind to unique value on data!)
 		
-		// TODO: define theme here
-				
+		theme: "default",
+		
 		focusable: false, // whether the item can be focused for kb/gamepad
 		autofocus: false, // whether to auto focus this item on creation (overrides previous focus)
 		
@@ -21,9 +21,9 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		tooltip: undefined, // @bindable tooltip text/content
 		tooltip_width : 500,
 		tooltip_placement: YUI_PLACEMENT_MODE.BottomLeft, // where to place the tooltip
-				
+		
 		trace: false, // enables various debug visuals/breakpoints/logging
-				
+		
 		events: undefined,
 		
 		// array of interaction.role participation
@@ -44,6 +44,8 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	slot_values = _slot_values;
 	
 	props = yui_init_props(_props, base_props);
+	yui_resolve_theme();
+	
 	type = props._type; // TODO: string hash this for faster comparison
 	
 	props.events = yui_init_props(props.events, base_events);

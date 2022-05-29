@@ -2,7 +2,7 @@
 function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_props, _resources, _slot_values) constructor {
 	static default_props = {
 		type: "panel",
-				
+		
 		// layout
 		layout: "vertical",
 		padding: 0,
@@ -17,8 +17,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		bg_sprite: undefined,
 		bg_color: undefined,
 		border_color: undefined,
-		border_thickness: 1,	
-		theme: "default",
+		border_thickness: 1,
 		
 		// option A: explicitly list the elements in the panel
 		elements: undefined,
@@ -29,7 +28,6 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	};
 	
 	props = yui_init_props(_props);
-	yui_resolve_theme();
 	
 	props.elements = yui_bind(props.elements, resources, slot_values);
 	

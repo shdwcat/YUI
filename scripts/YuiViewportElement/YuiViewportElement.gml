@@ -4,8 +4,6 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 		type: "viewport",
 
 		// visuals
-		theme: "default",
-		
 		background: undefined,
 		border_color: undefined,
 		border_thickness: 1,	
@@ -27,7 +25,6 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 	};
 	
 	props = yui_init_props(_props);
-	yui_resolve_theme();
 	
 	props.padding = yui_resolve_padding(props.padding);
 	content_element = yui_resolve_element(props.content, resources, slot_values);
@@ -125,5 +122,6 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 		};
 	}
 }
+
 
 

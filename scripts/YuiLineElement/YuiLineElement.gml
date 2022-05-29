@@ -1,8 +1,7 @@
 /// @description YUI Element that draws a line from one point to another
 function YuiLineElement(_props, _resources, _slot_values) : YuiBaseElement(_props, _resources, _slot_values) constructor {
 	static default_props = {
-		type: "line",			
-		theme: "default",
+		type: "line",
 		padding: 0,
 		
 		draw_to_world: false, // whether to draw world coordinates
@@ -13,7 +12,6 @@ function YuiLineElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	};
 	
 	props = yui_init_props(_props);
-	yui_resolve_theme();
 	
 	props.line_start = yui_bind_struct(props.line_start, resources, slot_values);
 	props.line_end = yui_bind_struct(props.line_end, resources, slot_values);

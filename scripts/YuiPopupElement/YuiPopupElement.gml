@@ -1,8 +1,7 @@
 
 function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_props, _resources, _slot_values) constructor {
 	static default_props = {
-		type: "popup",	
-		theme: "default",
+		type: "popup",
 		
 		placement: YUI_PLACEMENT_MODE.BottomRight,
 		content: undefined,
@@ -10,12 +9,11 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		// default to theme values
 		bg_color: undefined,
 		border_color: undefined,
-		border_thickness: undefined,		
+		border_thickness: undefined,
 		padding: undefined,
 	}
 	
 	props = yui_init_props(_props);
-	yui_resolve_theme();
 	
 	props.placement = yui_bind(props.placement, resources, slot_values);
 	

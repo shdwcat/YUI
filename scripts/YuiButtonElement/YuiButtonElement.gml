@@ -1,8 +1,7 @@
 /// @description renders a YUI Button
 function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_props, _resources, _slot_values) constructor {
-	static default_props = {		
+	static default_props = {
 		type: "button",
-		theme: "default",
 		
 		focusable: true,
 		
@@ -19,7 +18,7 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		fit_to_content: true, // can be true/false/width/height
 		scale_mode: "slice", // stretch/tile/clip/none/etc
 		
-		popup: undefined, // setting popup will show a popup in an overlay				
+		popup: undefined, // setting popup will show a popup in an overlay
 		tooltip: undefined, // either tooltip text or a Binding
 		
 		mouseover_color: $55555555,
@@ -32,7 +31,7 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	}
 	
 	props = yui_apply_props(_props);
-	yui_resolve_theme();
+	
 	props.enabled = yui_bind(props.enabled, resources, slot_values);
 	
 	// TODO: fix prop application order

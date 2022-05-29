@@ -4,14 +4,11 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		type: "border",
 
 		// visuals
-		theme: "default",
-		
 		background: undefined,
-		
 		bg_sprite: undefined,
 		bg_color: undefined,
 		border_color: undefined,
-		border_thickness: 1,	
+		border_thickness: 1,
 		padding: 0,
 		
 		// the content to display inside the border
@@ -19,7 +16,6 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	};
 	
 	props = yui_init_props(_props);
-	yui_resolve_theme();
 	
 	props.padding = yui_resolve_padding(props.padding);
 	content_element = yui_resolve_element(props.content, resources, slot_values);

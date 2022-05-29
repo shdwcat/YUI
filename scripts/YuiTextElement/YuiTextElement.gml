@@ -1,8 +1,7 @@
 /// @description renders YUI text
 function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_props, _resources, _slot_values) constructor {
-	static default_props = {		
-		type: "text",		
-		theme: "default",
+	static default_props = {
+		type: "text",
 		padding: 0,
 		
 		scribble: false, // whether to use scribble to draw the text
@@ -20,7 +19,6 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	};
 	
 	props = yui_init_props(_props);
-	yui_resolve_theme();
 	
 	props.text = yui_bind(props.text, resources, slot_values);
 	props.typist = yui_bind(props.typist, resources, slot_values);
