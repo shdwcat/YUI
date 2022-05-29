@@ -1,4 +1,18 @@
 function yui_resolve_element(yui_data, resources, slot_values, parent_id = undefined) {
+	
+	static element_map = {
+		panel: YuiPanelElement,
+		text: YuiTextElement,
+		image: YuiImageElement,
+		line: YuiLineElement,
+		border: YuiBorderElement,
+		button: YuiButtonElement,
+		popup: YuiPopupElement,
+		"switch": YuiSwitchElement,
+		data_template: YuiDataTemplateElement,
+		viewport: YuiViewportElement,
+	}
+	
 	if yui_data == undefined return undefined;
 
 	// convert raw string elements to text data
@@ -42,7 +56,7 @@ function yui_resolve_element(yui_data, resources, slot_values, parent_id = undef
 		yui_data._type = yui_data.type;
 	}
 	
-	var element_constructor = YuiGlobals.element_map[? yui_data.type];	
+	var element_constructor = element_map[$ yui_data.type];	
 	var element;
 		
 	if is_undefined(element_constructor) {
