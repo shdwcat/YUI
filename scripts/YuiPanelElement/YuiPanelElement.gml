@@ -14,8 +14,6 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		
 		// visuals
 		background: undefined,
-		bg_sprite: undefined,
-		bg_color: undefined,
 		border_color: undefined,
 		border_thickness: 1,
 		

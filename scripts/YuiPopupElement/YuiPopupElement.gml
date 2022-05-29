@@ -7,7 +7,7 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		content: undefined,
 		
 		// default to theme values
-		bg_color: undefined,
+		background: undefined,
 		border_color: undefined,
 		border_thickness: undefined,
 		padding: undefined,
@@ -18,12 +18,26 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	props.placement = yui_bind(props.placement, resources, slot_values);
 	
 	// TODO: clean up initializing props from theme
+	if props.background == undefined {
+		props.background = theme.popup.background;
+	}
 	
-	if props.bg_color == undefined {
-		props.bg_color = theme.popup.bg_color;
+	// resolve slot/resource (not bindable currently)
+	var background_expr = yui_bind(props.background, resources, slot_values);
+	if background_expr != undefined {
+		var bg_spr = yui_resolve_sprite_by_name(background_expr);
+		if bg_spr != undefined {
+			bg_sprite = bg_spr;
+			bg_color = undefined;
+		}
+		else {
+			bg_color = yui_resolve_color(background_expr);
+			bg_sprite = undefined;
+		}
 	}
 	else {
-		props.bg_color = yui_resolve_color(props.bg_color);
+		bg_color = undefined;
+		bg_sprite = undefined;
 	}
 	
 	if props.border_color == undefined {
@@ -55,8 +69,8 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			size: size,
 			content_element: content_element,
 			// border
-			bg_sprite: undefined, // not yet implemented here
-			bg_color: props.bg_color,
+			bg_sprite: bg_sprite,
+			bg_color: bg_color,
 			border_color: props.border_color,
 			border_thickness: props.border_thickness,
 		};

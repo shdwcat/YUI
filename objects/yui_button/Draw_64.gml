@@ -1,4 +1,4 @@
-/// @description draw border + highlight
+/// @description draw alpha + highlight
 
 if !bound_values.enabled {
 	var alpha = draw_get_alpha();
@@ -41,5 +41,6 @@ if show_highlight {
 //  // except that doesn't handle hovering over the button but not the context (due to padding)
 //	content_item.highlight = highlight;
 //}
+
 
 

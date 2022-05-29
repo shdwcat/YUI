@@ -6,28 +6,20 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		focusable: true,
 		
 		background: undefined,
-		bg_sprite: undefined,
-		bg_sprite_size: undefined,
-		bg_color: undefined,
 		border_color: undefined,
 		border_thickness: 1,
 		
 		padding: undefined, // default to theme value
 		
 		content: undefined,
-		fit_to_content: true, // can be true/false/width/height
 		scale_mode: "slice", // stretch/tile/clip/none/etc
 		
 		popup: undefined, // setting popup will show a popup in an overlay
-		tooltip: undefined, // either tooltip text or a Binding
 		
-		mouseover_color: $55555555,
-		mousedown_color: $99999999,
 		highlight_color: $FFFFFFFF,
 		
 		enabled: true, // can be bound
 		on_click: undefined,
-		click_button: mb_left,
 	}
 	
 	props = yui_apply_props(_props);

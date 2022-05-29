@@ -45,7 +45,7 @@ build = function() {
 		has_content_item
 		&& content_item == undefined
 		&& layout_props.content_element != undefined
-		
+
 	if make_content_item {
 		content_item = yui_make_render_instance(layout_props.content_element, data_context);
 	}

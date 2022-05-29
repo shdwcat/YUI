@@ -5,8 +5,6 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 
 		// visuals
 		background: undefined,
-		bg_sprite: undefined,
-		bg_color: undefined,
 		border_color: undefined,
 		border_thickness: 1,
 		padding: 0,
