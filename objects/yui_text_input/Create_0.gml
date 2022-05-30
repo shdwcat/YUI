@@ -6,6 +6,11 @@ event_inherited();
 // track the current live text so we can determine when to update the inner yui_text element
 live_text = undefined;
 
+caret_color = c_white;
+caret_x = undefined;
+caret_y = undefined;
+caret_h = undefined;
+
 border_onLayoutInit = onLayoutInit;
 onLayoutInit = function() {
 	border_onLayoutInit();
@@ -18,6 +23,17 @@ build = function() {
 	enabled = bound_values.enabled;
 	focusable = bound_values.enabled;
 	border_build();
+}
+
+border_arrange = arrange;
+arrange = function(available_size, viewport_size) {
+	var size = border_arrange(available_size, viewport_size);
+	
+	caret_x = content_item.draw_size.x + content_item.draw_size.w;
+	caret_y = content_item.draw_size.y;
+	caret_h = content_item.draw_size.h;
+	
+	return size;
 }
 
 left_click = function() {
@@ -48,3 +64,4 @@ on_lost_focus = function() {
 	live_text = undefined;
 	original_text = undefined;
 }
+

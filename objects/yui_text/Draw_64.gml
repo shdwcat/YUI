@@ -6,10 +6,10 @@
 
 // draw background
 if bg_alpha > 0 {
-	draw_sprite_stretched_ext(
+	draw_sprite_ext(
 		yui_white_pixel, 0, 
 		x, y, draw_size.w, draw_size.h,
-		bg_color, bg_alpha * opacity);
+		0, bg_color, bg_alpha * opacity);
 }
 
 if use_scribble {

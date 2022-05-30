@@ -26,8 +26,9 @@ if focused {
 		
 		// only update our size if child size actually changed
 		if content_item.is_size_changed {
-			onChildLayoutComplete(self);
+			onChildLayoutComplete(content_item);
 		}
 	}
 }
+
 
