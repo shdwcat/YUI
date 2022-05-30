@@ -3,9 +3,12 @@
 // Inherit the parent event
 event_inherited();
 
+// whether to force an update to the yui_text element
+update = false;
+
 // track the current live text so we can determine when to update the inner yui_text element
 live_text = undefined;
-
+after_caret = "";
 caret_color = c_white;
 caret_x = undefined;
 caret_y = undefined;
@@ -29,7 +32,6 @@ border_arrange = arrange;
 arrange = function(available_size, viewport_size) {
 	var size = border_arrange(available_size, viewport_size);
 	
-	caret_x = content_item.draw_size.x + content_item.draw_size.w;
 	caret_y = content_item.draw_size.y;
 	caret_h = content_item.draw_size.h;
 	
@@ -43,7 +45,7 @@ left_click = function() {
 }
 
 on_submit = function() {
-	var submit_text = input_string_get();
+	var submit_text = input_string_get() + after_caret;
 	if events.on_text_changed != undefined {
 		yui_call_handler(events.on_text_changed, [submit_text], bound_values.data_source);
 	}
@@ -51,6 +53,7 @@ on_submit = function() {
 }
 
 on_got_focus = function() {
+	update = false;
 	input_string_trigger_set(on_submit);
 }
 
@@ -61,7 +64,9 @@ on_lost_focus = function() {
 		content_item.override_text = undefined;
 	}
 	live_text = undefined;
+	after_caret = "";
 	original_text = undefined;
+	update = false;
 }
 
 

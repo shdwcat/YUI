@@ -7,7 +7,7 @@ function __input_string()
     
     auto_closevkb = true;   // Whether the 'Return' key closes the virtual keyboard
     auto_submit   = true;   // Whether the 'Return' key runs the submission trigger
-    auto_trim     = true;   // Whether submit trims leading and trailing whitespace
+    auto_trim     = false;  // Whether submit trims leading and trailing whitespace
     
     allow_empty   = false;  // Whether a blank field submission is treated as valid
     allow_newline = false;  // Whether to allow newline characters or swap to space
