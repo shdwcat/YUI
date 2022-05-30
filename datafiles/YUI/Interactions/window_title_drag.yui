@@ -1,0 +1,17 @@
+id: window_title_drag
+type: drag_and_drop
+
+drag:
+  condition: null
+  center_visual: false
+
+  visual: null
+
+  action: @source.data.set_position(@cursor.x - @cursor.relative_x, @cursor.y - @cursor.relative_y)
+
+drop:
+  condition: null  
+  visual: null
+  action: log('window drag finished')
+
+on_cancel: log('interaction window_title_drag was cancelled')
