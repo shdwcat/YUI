@@ -25,11 +25,16 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 		color: undefined, // overrides text_style.color
 	};
 	
-	props = yui_init_props(_props);
+	static default_events = {
+		on_text_changed: undefined,
+	}
 	
-	// TODO: need to add on_text_changed event
+	props = yui_init_props(_props);
+	props.events = yui_init_props(props.events, default_events);
+	props.events.on_text_changed = yui_bind_handler(props.events.on_text_changed, resources, slot_values);
 	
 	props.focusable = true;
+	props.autofocus = true;
 	
 	props.max_chars = min(props.max_chars, YUI_MAX_INPUT_CHARS);
 	

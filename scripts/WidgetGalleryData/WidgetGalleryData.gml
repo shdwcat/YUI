@@ -9,6 +9,8 @@ function WidgetGalleryData() constructor {
 	
 	debug_overlay_visible = false;
 	
+	editable_text = "placeholder text";
+	
 	menu = [
 		new YuiTopMenu("Debug", , [
 			new YuiMenuItemCheckable("Show Debug Overlay", , function(show) {

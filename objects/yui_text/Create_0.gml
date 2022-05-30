@@ -32,8 +32,10 @@ build = function() {
 	// used in Draw GUI
 	text_color = bound_values.color;
 	opacity = bound_values.opacity * parent.opacity;
+	
+	var text = override_text ?? bound_values.text;
 		
-	scribble_element = scribble(bound_values.text, string(id))
+	scribble_element = scribble(text, string(id))
 		.starting_format(bound_values.font)
 		.align(layout_props.halign, layout_props.valign);
 	

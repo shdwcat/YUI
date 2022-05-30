@@ -46,7 +46,10 @@ root:
             text_style: subtitle
 
           - type: text_input
-            text: placeholder text
+            text: @editable_text
+            size: { min_w: 300 }
+            events:
+              on_text_changed: @@ text => @editable_text = text
 
           // - type: text
           //   text: Scrollbox

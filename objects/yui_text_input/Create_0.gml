@@ -20,18 +20,16 @@ left_click = function() {
 }
 
 on_submit = function() {
-	// invoke on_text_changed?
-	yui_log("submitted: " + input_string_get());
+	var submit_text = input_string_get();
+	if events.on_text_changed != undefined {
+		yui_call_handler(events.on_text_changed, [submit_text], bound_values.data_source);
+	}
+	yui_log("submitted: " + submit_text);
 }
 
 on_got_focus = function() {
 	// need to tick once so that the value we set doesn't get stomped
-	input_string_tick();
-	
 	input_string_trigger_set(on_submit);
-	
-	live_text = content_item.bound_values.text;
-	input_string_set(live_text);
 }
 
 on_lost_focus = function() {
@@ -39,4 +37,5 @@ on_lost_focus = function() {
 	input_string_set();
 	content_item.override_text = undefined;
 	live_text = undefined;
+	original_text = undefined;
 }
