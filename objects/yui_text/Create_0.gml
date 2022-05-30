@@ -18,6 +18,9 @@ text_surface = undefined;
 text_surface_w = 0;
 text_surface_h = 0;
 
+// used by yui_text_input
+override_text = undefined;
+
 onLayoutInit = function() {
 	highlight_color = layout_props.highlight_color;
 	use_scribble = layout_props.use_scribble;
@@ -105,7 +108,7 @@ arrange = function(available_size, viewport_size) {
 		
 		var build_surface = true;
 		if viewport_size {
-			updateViewport();		
+			updateViewport();
 			
 			if !viewport_part.visible {
 				build_surface = false;
@@ -130,17 +133,19 @@ arrange = function(available_size, viewport_size) {
 
 buildTextSurface = function() {
 
+	var text = override_text ?? bound_values.text;
 	
 	if (text_surface_w > 0 && text_surface_h > 0) {
 		text_surface = yui_draw_text_to_surface(
 			element_xoffset, element_yoffset,
 			text_surface_w, text_surface_h,
-			bound_values.text,
+			text,
 			text_surface_w - layout_props.padding.w,
 			text_color ?? c_white, opacity,
 			layout_props.halign, layout_props.valign,
 			font, text_surface);
 	}
 }
+
 
 

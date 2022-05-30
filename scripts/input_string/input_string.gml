@@ -9,7 +9,7 @@ function __input_string()
     auto_submit   = true;   // Whether the 'Return' key runs the submission trigger
     auto_trim     = true;   // Whether submit trims leading and trailing whitespace
     
-    allow_empty   = false;  // Whether a blank field submission is treated as valid
+    allow_empty   = true;  // Whether a blank field submission is treated as valid
     allow_newline = false;  // Whether to allow newline characters or swap to space
     
     max_length = 1000;  // Maximum text entry string length. Do not exceed 1024

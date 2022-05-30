@@ -7,6 +7,12 @@ function YuiTheme(_theme_id, _props) constructor {
 			subtitle: { font: fnt_yui_subtitle, color: c_white },
 			body: { font: fnt_yui_body, color: c_white },
 		},
+		text_input: {
+			background: "#06162A",
+			border_color: "grey",
+			border_thickness: 1,
+			padding: 7,
+		},
 		panel: {
 			background: undefined,
 			padding: 30,

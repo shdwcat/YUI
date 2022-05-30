@@ -11,7 +11,7 @@ function yui_register_events(events) {
 		}
 	}
 	if events.on_mouse_up {
-		left_clicked = function() {
+		left_click = function() {
 			var source = self;
 			var args = {
 				source: source,

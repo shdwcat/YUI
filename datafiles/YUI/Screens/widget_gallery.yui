@@ -42,8 +42,15 @@ root:
         elements:
 
           - type: text
-            text: Scrollbox
+            text: Textbox
             text_style: subtitle
+
+          - type: text_input
+            text: placeholder text
+
+          // - type: text
+          //   text: Scrollbox
+          //   text_style: subtitle
 
           // - type: scrollbox
           //   //trace: true

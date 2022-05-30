@@ -3,6 +3,7 @@ function yui_resolve_render_item(type, element_props) {
 	switch type {
 		case "panel": return yui_panel;
 		case "text": return yui_text;
+		case "text_input": return yui_text_input;
 		case "image": return yui_image;
 		case "line": return yui_line;
 		case "border": return yui_border;

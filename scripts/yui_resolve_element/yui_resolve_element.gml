@@ -11,6 +11,7 @@ function yui_resolve_element(yui_data, resources, slot_values, parent_id = undef
 		"switch": YuiSwitchElement,
 		data_template: YuiDataTemplateElement,
 		viewport: YuiViewportElement,
+		text_input: YuiTextInputElement,
 	}
 	
 	if yui_data == undefined return undefined;
