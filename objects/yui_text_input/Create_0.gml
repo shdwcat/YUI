@@ -51,7 +51,6 @@ on_submit = function() {
 }
 
 on_got_focus = function() {
-	// need to tick once so that the value we set doesn't get stomped
 	input_string_trigger_set(on_submit);
 }
 
@@ -64,4 +63,5 @@ on_lost_focus = function() {
 	live_text = undefined;
 	original_text = undefined;
 }
+
 

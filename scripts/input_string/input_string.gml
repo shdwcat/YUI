@@ -9,7 +9,7 @@ function __input_string()
     auto_submit   = true;   // Whether the 'Return' key runs the submission trigger
     auto_trim     = true;   // Whether submit trims leading and trailing whitespace
     
-    allow_empty   = true;  // Whether a blank field submission is treated as valid
+    allow_empty   = false;  // Whether a blank field submission is treated as valid
     allow_newline = false;  // Whether to allow newline characters or swap to space
     
     max_length = 1000;  // Maximum text entry string length. Do not exceed 1024
@@ -29,6 +29,8 @@ function __input_string()
     
     virtual_submit = false;
     async_submit   = false;
+    just_ticked     = false;
+    just_set        = false;
     
     keyboard_supported = ((os_type == os_operagx) || (os_browser != browser_not_a_browser)
                        || (os_type == os_windows) || (os_type == os_macosx) || (os_type == os_linux)
@@ -67,8 +69,8 @@ function __input_string()
     trim = function(_string)
     {        
         var _char  = "";
-        var _left  = 1;
         var _right = string_length(_string);
+        var _left  = 1;
         
         repeat (_right)
         {
@@ -111,7 +113,7 @@ function __input_string()
         }
         
         // Enforce length
-        var _max = max_length + ((os_type == os_android) ? 1 : 0);
+        var _max = max_length + ((os_type == os_android)? 1 : 0);
         _string = string_copy(_string, 1, _max);
         
         // Left pad one space (fixes Android quirk on first character)
@@ -124,8 +126,8 @@ function __input_string()
         }
         
         //Update internal value
-        if ((tick_last > (current_time - (delta_time div 1000) - 2))
-        &&  (keyboard_string != _string))
+        if (((tick_last > (current_time - (delta_time div 1000) - 2)) || just_ticked)
+        &&   (keyboard_string != _string))
         {
             if (((os_type == os_ios) || (os_type == os_tvos))
             && (string_length(keyboard_string) > _max))
@@ -138,7 +140,8 @@ function __input_string()
             keyboard_string = _string;
         }
         
-        value = _string;
+        just_ticked = false;
+        value       = _string;
         
         if ((os_type == os_android) && _trim)
         {
@@ -165,7 +168,13 @@ function __input_string()
     
     tick = function()
     {
-        if (keyboard_supported && (async_id == undefined))
+        if (tick_last <= (current_time - (delta_time div 1000) - 2))
+        {
+            just_ticked = true;
+            set(value);
+        }
+        
+        if (keyboard_supported && (async_id == undefined) && (!just_set))
         {
             // Manage text input
             var _string = keyboard_string;
@@ -233,6 +242,7 @@ function __input_string()
             
             set(_string);
         }
+        just_set = false;
                 
         if (auto_submit && !async_submit
         && (virtual_submit || (keyboard_supported && keyboard_check_pressed(vk_enter))))
@@ -249,17 +259,25 @@ function __input_string()
     })(); return instance;
 }
 
-function input_string_set(_string = "")
+function input_string_max_length_set(_max_length)
 {
-    gml_pragma("forceinline"); 
-    
-    if ((os_type == os_ios) || (os_type == os_tvos))
+    gml_pragma("forceinline");    
+    if (!is_numeric(_max_length) || _max_length < 0 || _max_length > 1024)
     {
-        // Close virtual keyboard if string is manually set (fixes iOS setting quirk)
-        keyboard_virtual_hide();
+        show_error
+        (
+            "Input String Error: Invalid value provided for max length: \"" 
+                + string(_max_length) 
+                + "\". Expected a value between 0 and 1024.",
+            true
+        );
     }
     
-    (__input_string()).set(_string);
+    with (__input_string())
+    {
+        max_length = _max_length;
+        set(string_copy(value, 0, _max_length));
+    }
 }
 
 function input_string_trigger_set(_trigger = undefined)
@@ -267,7 +285,7 @@ function input_string_trigger_set(_trigger = undefined)
     gml_pragma("forceinline");
     
     if (!is_undefined(_trigger) && !is_method(_trigger)
-    && (!is_numeric(_trigger) || !script_exists(_trigger)))
+    && (!is_numeric(_trigger)   || !script_exists(_trigger)))
     {
         show_error
         (
@@ -278,13 +296,30 @@ function input_string_trigger_set(_trigger = undefined)
         );
     }
     
-    (__input_string()).trigger = _trigger;
+    with (__input_string()) trigger = _trigger;
+}
+
+function input_string_set(_string = "")
+{
+    gml_pragma("forceinline");
+    
+    if ((os_type == os_ios) || (os_type == os_tvos))
+    {
+        // Close virtual keyboard if string is manually set (fixes iOS setting quirk)
+        keyboard_virtual_hide();
+    }
+    
+    with (__input_string())
+    {
+        just_set = true;
+        set(_string);
+    }
 }
 
 function input_string_add(_string)
 {
     gml_pragma("forceinline"); 
-    return input_string_set((__input_string()).value + string(_string));
+    input_string_set((__input_string()).value + string(_string));
 }
 
 function input_string_virtual_submit() { gml_pragma("forceinline"); return (__input_string()).virtual_submit; }
