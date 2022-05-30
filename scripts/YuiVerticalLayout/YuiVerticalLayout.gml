@@ -1,9 +1,8 @@
 /// @description here
-function YuiVerticalLayout(alignment, padding, spacing) constructor {
+function YuiVerticalLayout(alignment, spacing) constructor {
 	static is_live = false;
 	
 	self.alignment = alignment;
-	self.padding = padding;
 	self.spacing = spacing;
 	
 	static init = function(items, available_size, viewport_size, panel_props) {

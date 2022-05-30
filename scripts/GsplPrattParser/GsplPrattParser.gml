@@ -11,7 +11,6 @@ function GsplPrattParser(tokens, eof_token) : GsplParserBase(tokens, eof_token) 
 	self.Identifier = undefined;
 	self.PrefixOperator = undefined;
 	self.BinaryOperator = undefined;
-	//self.Assignment = undefined; TODO
 	self.Set = undefined;
 	self.Conditional = undefined;
 	self.Call = undefined;

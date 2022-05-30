@@ -38,7 +38,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	var makeLayout = yui_resolve_layout(props.layout);
 	// TODO: padding isn't used so remove it
-	layout = new makeLayout(alignment, props.padding, spacing);
+	layout = new makeLayout(alignment, spacing);
 	layout.trace = props.trace;
 	
 	// resolve slot/resource (not bindable currently)

@@ -38,8 +38,8 @@ function YuiDragAndDrop(_props, _resources) constructor {
 	
 	static canStart = function(source_data) {
 		if props.drag.condition != undefined {
-			// TODO condition array?		
-			return yui_resolve_binding(props.drag.condition, source_data);		
+			// TODO condition array?
+			return yui_resolve_binding(props.drag.condition, source_data);
 		}
 		else {
 			return true;

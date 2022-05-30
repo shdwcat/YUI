@@ -1,9 +1,8 @@
 /// @description here
-function YuiCanvasLayout(alignment, padding, spacing) constructor {
+function YuiCanvasLayout(alignment, spacing) constructor {
 	static is_live = false;
 	
 	self.alignment = alignment;
-	self.padding = padding;
 	self.spacing = spacing;
 	self.live_items = undefined;
 	

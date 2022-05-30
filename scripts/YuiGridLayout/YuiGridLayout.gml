@@ -1,9 +1,8 @@
 /// @description
-function YuiGridLayout(alignment, padding, spacing) constructor {
+function YuiGridLayout(alignment, spacing) constructor {
 	static is_live = false;
 
 	self.alignment = alignment;
-	self.padding = padding;
 	self.spacing = spacing;
 	
 	// elements may use this to calculate their own draw size
