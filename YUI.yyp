@@ -130,6 +130,7 @@
     {"id":{"name":"YS_TOKEN","path":"scripts/YS_TOKEN/YS_TOKEN.yy",},"order":1,},
     {"id":{"name":"YuiRadialLayout","path":"scripts/YuiRadialLayout/YuiRadialLayout.yy",},"order":12,},
     {"id":{"name":"yui_bind_array","path":"scripts/yui_bind_array/yui_bind_array.yy",},"order":2,},
+    {"id":{"name":"yui_find_item_by_id","path":"scripts/yui_find_item_by_id/yui_find_item_by_id.yy",},"order":13,},
     {"id":{"name":"GsplExpressionFactory","path":"scripts/GsplExpressionFactory/GsplExpressionFactory.yy",},"order":2,},
     {"id":{"name":"yui_is_binding","path":"scripts/yui_is_binding/yui_is_binding.yy",},"order":4,},
     {"id":{"name":"yui_icon_64","path":"sprites/yui_icon_64/yui_icon_64.yy",},"order":1,},
