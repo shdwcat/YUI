@@ -38,6 +38,8 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		on_mouse_wheel_down: undefined,
 		on_click: undefined,
 		on_arrange: undefined,
+		on_got_focus: undefined,
+		on_lost_focus: undefined,
 	};
 	
 	resources = _resources;

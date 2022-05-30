@@ -22,7 +22,7 @@ hover_list = ds_list_create();
 hover_count = 0;
 
 left_pressed_consumed = false;
-left_clicked_consumed = false;
+left_click_consumed = false;
 
 // hash of interaction.role strings to ids
 participation_hash = new YuiStringHashMap("participation_hash");
@@ -59,7 +59,14 @@ finishInteraction = function() {
 	active_interaction = undefined;
 }
 
-setFocus = function(focus_item, new_scope) {
+setFocus = function(focus_item, new_scope = undefined) {
+	
+	// trigger lost focus
+	if focused_item && focused_item.on_lost_focus {
+		focused_item.on_lost_focus();
+		focused_item.focused = false;
+	}
+	
 	focused_item = focus_item;
 	
 	// set the new focus scope if one is provided
@@ -71,4 +78,10 @@ setFocus = function(focus_item, new_scope) {
 	}
 	
 	focus_scope_map[$ active_focus_scope] = focused_item;
+	
+	// trigger got focus
+	if focused_item && focused_item.on_got_focus {
+		focused_item.on_got_focus();
+		focused_item.focused = true;
+	}
 }

@@ -7,6 +7,9 @@
 // (e.g. for keyboard/gamepad menu navigation)
 focusable = false;
 
+// whether this item is currently focused (managed by YuiCursorManager)
+focused = false;
+
 // render item for any interactions this participates in
 interaction_item = undefined;
 
@@ -26,6 +29,9 @@ cursor_hover = undefined;
 on_mouse_wheel_up = undefined;
 on_mouse_wheel_down = undefined;
 
+on_got_focus = undefined;
+on_lost_focus = undefined;
+
 // simplifies logic for checking parent opacity
 opacity = 1;
 
@@ -35,3 +41,4 @@ onChildLayoutComplete = function(child) {
 setHighlight = function(highlight) {
 	self.highlight = highlight;
 }
+
