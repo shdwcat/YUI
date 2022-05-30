@@ -10,6 +10,7 @@ function YuiTheme(_theme_id, _props) constructor {
 		text_input: {
 			background: "#06162A",
 			border_color: "grey",
+			border_focus_color: "white",
 			border_thickness: 1,
 			padding: 7,
 		},
@@ -19,7 +20,7 @@ function YuiTheme(_theme_id, _props) constructor {
 			spacing: 5,
 		},
 		button: {
-			background: yui_button_bg,
+			background: "yui_button_bg",
 			padding: [10, 5],
 		},
 		popup: {

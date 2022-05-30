@@ -19,6 +19,7 @@ is_binding_active = true;
 // the map of values that depend on the data context
 bound_values = undefined;
 
+enabled = true;
 opacity = 1;
 
 // this only applies alpha for bg_color set on an element placed in the room editor
@@ -207,3 +208,4 @@ setHighlight = function (highlight) {
 		}
 	}
 }
+

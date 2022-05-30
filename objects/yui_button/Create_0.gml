@@ -12,6 +12,13 @@ onLayoutInit = function() {
 	highlight_color = layout_props.highlight_color;
 }
 
+border_build = build;
+build = function() {
+	enabled = bound_values.enabled;
+	focusable = bound_values.enabled;
+	border_build();
+}
+
 left_pressed = function() {
 	// scoop this up to prevent drag drop initiation through buttons
 }

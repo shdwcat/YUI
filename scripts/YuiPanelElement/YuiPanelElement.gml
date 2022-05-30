@@ -16,6 +16,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		background: undefined,
 		border_color: undefined,
 		border_thickness: 1,
+		border_focus_color: undefined,
 		
 		// option A: explicitly list the elements in the panel
 		elements: undefined,
@@ -59,6 +60,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	}
 	
 	border_color = yui_resolve_color(yui_bind(props.border_color, resources, slot_values));
+	border_focus_color = yui_resolve_color(yui_bind(props.border_focus_color, resources, slot_values));
 	
 	uses_template = props.template != undefined;
 	
@@ -96,10 +98,12 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			padding: props.padding,
 			size: size,
 			layout: layout,
+			// border
 			bg_sprite: bg_sprite,
 			bg_color: bg_color,
 			border_color: border_color,
 			border_thickness: props.border_thickness,
+			border_focus_color: border_focus_color,
 		};
 	}
 	

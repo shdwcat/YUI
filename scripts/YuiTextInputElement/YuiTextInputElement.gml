@@ -7,7 +7,6 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 		padding: undefined,
 		
 		focusable: true,
-		autofocus: true,
 		
 		enabled: true, // can be bound
 		max_chars: YUI_MAX_INPUT_CHARS,
@@ -17,6 +16,7 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 		background: undefined,
 		border_color: undefined,
 		border_thickness: 1,
+		border_focus_color: undefined,
 		
 		// text props (scribble not supported for text input)
 		text: undefined,
@@ -30,11 +30,12 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 	}
 	
 	props = yui_init_props(_props);
+	
 	props.events = yui_init_props(props.events, default_events);
 	props.events.on_text_changed = yui_bind_handler(props.events.on_text_changed, resources, slot_values);
 	
+	// TODO: fix prop application order
 	props.focusable = true;
-	props.autofocus = true;
 	
 	props.max_chars = min(props.max_chars, YUI_MAX_INPUT_CHARS);
 	
@@ -43,6 +44,7 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 	props.background ??= theme.text_input.background;
 	props.border_color ??= theme.text_input.border_color;
 	props.border_thickness ??= theme.text_input.border_thickness;
+	props.border_focus_color ??= theme.text_input.border_focus_color;
 	
 	props.padding = yui_resolve_padding(props.padding);
 	
@@ -65,6 +67,7 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 	}
 	
 	border_color = yui_resolve_color(yui_bind(props.border_color, resources, slot_values));
+	border_focus_color = yui_resolve_color(yui_bind(props.border_focus_color, resources, slot_values));
 	
 	content_element = yui_resolve_element({
 		type: "text",
@@ -96,6 +99,7 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 			bg_color: bg_color,
 			border_color: border_color,
 			border_thickness: props.border_thickness,
+			border_focus_color: border_focus_color,
 			// text_input
 			max_chars: props.max_chars,
 			highlight_color: yui_resolve_color(props.highlight_color),

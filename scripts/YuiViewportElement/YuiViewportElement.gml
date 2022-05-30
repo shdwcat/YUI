@@ -6,8 +6,8 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 		// visuals
 		background: undefined,
 		border_color: undefined,
-		border_thickness: 1,	
-		padding: 0, // remove??
+		border_thickness: 1,
+		border_focus_color: undefined,
 		
 		// offset within the viewport to render the contents at
 		viewport_x: 0,
@@ -26,7 +26,6 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 	
 	props = yui_init_props(_props);
 	
-	props.padding = yui_resolve_padding(props.padding);
 	content_element = yui_resolve_element(props.content, resources, slot_values);
 	
 	// resolve slot/resource (not bindable currently)
@@ -48,6 +47,7 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 	}
 	
 	border_color = yui_resolve_color(yui_bind(props.border_color, resources, slot_values));
+	border_focus_color = yui_resolve_color(yui_bind(props.border_focus_color, resources, slot_values));
 	
 	props.on_viewport_info = yui_bind_handler(props.on_viewport_info, resources, slot_values);
 	
@@ -71,7 +71,6 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 		return {
 			// base
 			alignment: alignment,
-			padding: props.padding,
 			size: size,
 			// border
 			content_element: content_element,
@@ -79,6 +78,7 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 			bg_color: bg_color,
 			border_color: border_color,
 			border_thickness: props.border_thickness,
+			border_focus_color: border_focus_color,
 			// viewport
 			content_w: props.content_w,
 			content_h: props.content_h,

@@ -85,3 +85,20 @@ setFocus = function(focus_item, new_scope = undefined) {
 		focused_item.focused = true;
 	}
 }
+moveFocus = function(direction = YUI_FOCUS_DIRECTION.DOWN) {
+	var next_item = yui_find_focus_item(
+		focused_item,
+		focus_list,
+		direction,
+		is_focus_precise); // TODO move to macro
+
+	if next_item {
+		setFocus(next_item);
+	}
+	else if direction != YUI_FOCUS_DIRECTION.UP {
+		moveFocus(YUI_FOCUS_DIRECTION.UP);
+	}
+	else {
+		setFocus(undefined);
+	}
+}

@@ -2,6 +2,7 @@
 function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_props, _resources, _slot_values) constructor {
 	static default_props = {
 		type: "popup",
+		padding: undefined,
 		
 		placement: YUI_PLACEMENT_MODE.BottomRight,
 		content: undefined,
@@ -10,7 +11,6 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		background: undefined,
 		border_color: undefined,
 		border_thickness: undefined,
-		padding: undefined,
 	}
 	
 	props = yui_init_props(_props);
@@ -73,6 +73,8 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			bg_color: bg_color,
 			border_color: props.border_color,
 			border_thickness: props.border_thickness,
+			// not supported
+			border_focus_color: undefined,
 		};
 	}
 	

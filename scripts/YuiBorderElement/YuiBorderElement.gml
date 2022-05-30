@@ -2,12 +2,13 @@
 function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_props, _resources, _slot_values) constructor {
 	static default_props = {
 		type: "border",
+		padding: 0,
 
 		// visuals
 		background: undefined,
 		border_color: undefined,
 		border_thickness: 1,
-		padding: 0,
+		border_focus_color: undefined,
 		
 		// the content to display inside the border
 		content: undefined,
@@ -37,6 +38,7 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	}
 	
 	border_color = yui_resolve_color(yui_bind(props.border_color, resources, slot_values));
+	border_focus_color = yui_resolve_color(yui_bind(props.border_focus_color, resources, slot_values));
 	
 	is_bound = base_is_bound;
 		
@@ -52,6 +54,7 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 			bg_color: bg_color,
 			border_color: border_color,
 			border_thickness: props.border_thickness,
+			border_focus_color: border_focus_color,
 		};
 	}
 	

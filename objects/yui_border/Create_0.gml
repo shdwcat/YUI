@@ -12,6 +12,8 @@ default_props = {
 has_content_item = true; // yui_panel sets this to false
 content_item = undefined;
 
+draw_border = false;
+
 onLayoutInit = function() {	
 	trace = yui_element.props.trace; // hack
 		
@@ -30,14 +32,20 @@ onLayoutInit = function() {
 		bg_alpha = 1;
 	}
 	
+	border_focus_color = layout_props.border_focus_color ?? border_color;
+	
 	if border_color != undefined {
 		border_alpha = ((border_color & 0xFF000000) >> 24) / 255;
 	}
+	
+	draw_border =
+		border_thickness > 0 && border_alpha > 0
+		&& (border_color > 0 || border_focus_color > 0);
 }
 
 build = function() {
 	
-	opacity = bound_values.opacity * parent.opacity;
+	opacity = bound_values.opacity * parent.opacity * 1 - (!enabled * 0.5);
 	
 	// create the content item instance if there should be one
 	// NOTE: have to do this after opacity is updated
@@ -49,8 +57,6 @@ build = function() {
 	if make_content_item {
 		content_item = yui_make_render_instance(layout_props.content_element, data_context);
 	}
-	
-		DEBUG_BREAK_YUI;
 	
 	if content_item {
 		content_item.data_context = bound_values.data_source;

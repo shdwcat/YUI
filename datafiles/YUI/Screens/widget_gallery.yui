@@ -46,6 +46,7 @@ root:
             text_style: subtitle
 
           - type: text_input
+            autofocus: true
             text: @editable_text
             size: { min_w: 300 }
             events:

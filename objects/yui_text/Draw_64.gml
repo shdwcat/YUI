@@ -16,7 +16,7 @@ if use_scribble {
 	if highlight && highlight_color != undefined {
 		scribble_element.blend(highlight_color, opacity);
 	}
-	else {	
+	else {
 		scribble_element.blend(text_color, opacity);
 	}
 

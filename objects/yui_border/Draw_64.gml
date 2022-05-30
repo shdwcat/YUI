@@ -29,25 +29,26 @@ if bg_alpha > 0 {
 }
 
 // draw border
-if border_color != undefined &&	border_thickness > 0 && border_alpha > 0 {	
+if draw_border {
+	var color = focused ? border_focus_color : border_color;
 	if viewport_size {
 		if viewport_part.visible {
 			if viewport_part.clipped {
 				yui_draw_rect_outline_clipped(
 					draw_size.x, draw_size.y, draw_size.w, draw_size.h,
 					viewport_part.x, viewport_part.y, viewport_part.x2, viewport_part.y2,
-					border_thickness, border_color, border_alpha * opacity);
+					border_thickness, color, border_alpha * opacity);
 			}
 			else {
 				yui_draw_rect_outline(
 					draw_size.x, draw_size.y, draw_size.w, draw_size.h,
-					border_thickness, border_color, border_alpha * opacity);
+					border_thickness, color, border_alpha * opacity);
 			}
 		}
 	}
 	else {
 		yui_draw_rect_outline(
 			draw_size.x, draw_size.y, draw_size.w, draw_size.h,
-			border_thickness, border_color, border_alpha * opacity);
+			border_thickness, color, border_alpha * opacity);
 	}
 }
