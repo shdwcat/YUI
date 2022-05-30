@@ -73,11 +73,18 @@ function YuiDragAndDrop(_props, _resources) constructor {
 			can_drop: undefined,
 		};
 		
+		var gui_x = device_mouse_x_to_gui(0);
+		var gui_y = device_mouse_y_to_gui(0);
+		
 		cursor = {
-			x: device_mouse_x_to_gui(0),
-			y: device_mouse_y_to_gui(0),
+			x: gui_x,
+			y: gui_y,
 			world_x: mouse_x,
 			world_y: mouse_y,
+			relative_x: gui_x - source_item.x,
+			relative_y: gui_y - source_item.y,
+			relative_world_x: mouse_x - source_item.x,
+			relative_world_y: mouse_y - source_item.y,
 		};
 		
 		return drag_element;
@@ -125,7 +132,7 @@ function YuiDragAndDrop(_props, _resources) constructor {
 				
 		// end drag on mouse up
 		var button_down = mouse_check_button(source.event.button); // TODO button
-		if !button_down {
+		if !button_down || props.drop.condition == true {
 			if target.can_drop {
 				yui_call_handler(props.drop.action, , interaction_data);
 			}

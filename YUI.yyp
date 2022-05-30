@@ -499,7 +499,6 @@
     {"CopyToMask":-1,"filePath":"datafiles/YUI","resourceVersion":"1.0","name":".gitattributes","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles","resourceVersion":"1.0","name":"crash.txt","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/Example Data","resourceVersion":"1.0","name":"inventory.yaml","resourceType":"GMIncludedFile",},
-    {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"menu.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"switcher.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"fib.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Screens","resourceVersion":"1.0","name":"kb_navigation_example.yui","resourceType":"GMIncludedFile",},
@@ -516,6 +515,7 @@
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"slide_toggle.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Interactions","resourceVersion":"1.0","name":"scrollbar_drag.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"scrollbox.yui","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"menu.yui","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
     "IDEVersion": "2022.300.0.499",

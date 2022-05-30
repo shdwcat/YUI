@@ -65,6 +65,7 @@ initLayout = function() {
 	layout_props = yui_element.getLayoutProps();
 	
 	focusable = yui_element.props.focusable;
+	is_cursor_layer = yui_element.props.is_cursor_layer;
 	
 	// set initial focus if needed
 	if focusable 
@@ -208,4 +209,5 @@ setHighlight = function (highlight) {
 		}
 	}
 }
+
 

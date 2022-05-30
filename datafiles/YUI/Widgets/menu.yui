@@ -83,7 +83,9 @@ resources:
                     sprite: yui_icon_checkmark
                     size: 24
                   - $item_template
-              on_click: @command()
+              on_click:
+                - @command()
+                - e => e.source.closePopup(true) // recursive
 
             submenu:
               type: button

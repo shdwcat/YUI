@@ -5,6 +5,8 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		
 		theme: "default",
 		
+		layer: 0, // offset to apply to the layer depth
+		is_cursor_layer: false, // whether the element consumes cursor events
 		focusable: false, // whether the item can be focused for kb/gamepad
 		autofocus: false, // whether to auto focus this item on creation (overrides previous focus)
 		
