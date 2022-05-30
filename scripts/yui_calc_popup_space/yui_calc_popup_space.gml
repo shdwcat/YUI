@@ -1,13 +1,11 @@
 // calculates the space on screen where a popup could draw
-function yui_calc_popup_space(popup_item) {
-	var parent_size = popup_item.parent.draw_size;
+function yui_calc_popup_space(placement, parent_size) {
 	
 	// TODO: any way to account for views?
 	screen_w = window_get_width();
 	screen_h = window_get_height();
 	
-	var placement = popup_item.bound_values.placement;
-	switch popup_item.bound_values.placement {
+	switch placement {
 		// in e.g. TopLeft, the first part says which edge to position outside of
 		// and the second one says which side of that space to align to
 		// so TopLeft means outside of the top edge of the parent,

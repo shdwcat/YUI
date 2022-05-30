@@ -199,7 +199,7 @@ setHighlight = function (highlight) {
 					/* no index */,
 					1000); // ensures tooltips appear above popup layers
 	
-				var popup_space = yui_calc_popup_space(tooltip_item);
+				var popup_space = yui_calc_popup_space(tooltip_item.bound_values.placement, draw_size);
 				tooltip_item.arrange(popup_space);
 			}
 		}
@@ -209,5 +209,4 @@ setHighlight = function (highlight) {
 		}
 	}
 }
-
 
