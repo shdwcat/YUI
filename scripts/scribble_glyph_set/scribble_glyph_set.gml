@@ -33,11 +33,11 @@ function scribble_glyph_set(_font, _character, _property, _value, _relative = fa
     {
         if (_relative)
         {
-            ds_grid_add_region(_grid, 0, _property, ds_grid_height(_grid)-1, _property, _value);
+            ds_grid_add_region(_grid, 0, _property, ds_grid_width(_grid)-1, _property, _value);
         }
         else
         {
-            ds_grid_set_region(_grid, 0, _property, ds_grid_height(_grid)-1, _property, _value);
+            ds_grid_set_region(_grid, 0, _property, ds_grid_width(_grid)-1, _property, _value);
         }
         
         //Space character separation and width should always be the same
@@ -53,7 +53,7 @@ function scribble_glyph_set(_font, _character, _property, _value, _relative = fa
     }
     else
     {
-        var _unicode = ord(_character);
+        var _unicode = is_real(_character)? _character : ord(_character);
         var _glyph_index = _map[? _unicode];
         
         if (_glyph_index == undefined)

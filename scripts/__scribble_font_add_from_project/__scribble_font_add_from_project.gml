@@ -2,9 +2,15 @@
 
 function __scribble_font_add_from_project(_font)
 {
-    if (SCRIBBLE_VERBOSE) __scribble_trace("Adding \"", font_get_name(_font), "\" as standard font");
-    
     var _name = font_get_name(_font);
+    
+    if (ds_map_exists(global.__scribble_font_data, _name))
+    {
+        __scribble_trace("Warning! A font for \"", _name, "\" has already been added. Destroying the old font and creating a new one");
+        global.__scribble_font_data[? _name].__destroy();
+    }
+    
+    if (SCRIBBLE_VERBOSE) __scribble_trace("Adding \"", _name, "\" as standard font");
     
     if (global.__scribble_default_font == undefined)
     {
@@ -12,6 +18,7 @@ function __scribble_font_add_from_project(_font)
         global.__scribble_default_font = _name;
     }
     
+    var _is_krutidev = __scribble_asset_is_krutidev(_font, asset_font);
     var _global_glyph_bidi_map = global.__scribble_glyph_data.__bidi_map;
     
     //Get font info from the runtime
@@ -43,12 +50,15 @@ function __scribble_font_add_from_project(_font)
     var _texture_th = texture_get_texel_height(_texture);
     var _texture_w  = (_texture_uvs[2] - _texture_uvs[0])/_texture_tw; //texture_get_width(_texture);
     var _texture_h  = (_texture_uvs[3] - _texture_uvs[1])/_texture_th; //texture_get_height(_texture);
-
+    var _texture_l  = round(_texture_uvs[0] / _texture_tw);
+    var _texture_t  = round(_texture_uvs[1] / _texture_th);
+    
     if (SCRIBBLE_VERBOSE)
     {
         __scribble_trace("  \"" + _name +"\""
                          + ", asset = " + string(_asset)
                          + ", texture = " + string(_texture)
+                         + ", top-left = " + string(_texture_l) + "," + string(_texture_t)
                          + ", size = " + string(_texture_w) + " x " + string(_texture_h)
                          + ", texel = " + string_format(_texture_tw, 1, 10) + " x " + string_format(_texture_th, 1, 10)
                          + ", uvs = " + string_format(_texture_uvs[0], 1, 10) + "," + string_format(_texture_uvs[1], 1, 10)
@@ -58,15 +68,14 @@ function __scribble_font_add_from_project(_font)
     var _font_data = new __scribble_class_font(_name, _size, false);
     var _font_glyphs_map      = _font_data.__glyphs_map;
     var _font_glyph_data_grid = _font_data.__glyph_data_grid;
+    if (_is_krutidev) _font_data.__is_krutidev = true;
     
     var _i = 0;
     repeat(_size)
     {
         var _glyph_dict = _info_glyphs_array[_i];
         
-        var _unicode  = _glyph_dict.char;
-        var _char = chr(_unicode);
-        
+        var _unicode = _glyph_dict.char;
         if ((_unicode >= 0x4E00) && (_unicode <= 0x9FFF)) //CJK Unified ideographs block
         {
             var _bidi = __SCRIBBLE_BIDI.ISOLATED;
@@ -77,10 +86,29 @@ function __scribble_font_add_from_project(_font)
             if (_bidi == undefined) _bidi = __SCRIBBLE_BIDI.L2R;
         }
         
-        var _x = _glyph_dict.x;
-        var _y = _glyph_dict.y;
+        if (_is_krutidev)
+        {
+            if (_bidi != __SCRIBBLE_BIDI.WHITESPACE)
+            {
+                _bidi = __SCRIBBLE_BIDI.L2R_DEVANAGARI;
+                _unicode += __SCRIBBLE_DEVANAGARI_OFFSET;
+            }
+        }
+        
+        var _char = chr(_unicode);
+        
+        //FIXME - Workaround for HTML5 in GMS2.3.7.606 and above
+        //        This doesn't seem to be needed in 2022.3.0.497
+        var _x = _glyph_dict[$ "x"];
+        var _y = _glyph_dict[$ "y"];
         var _w = _glyph_dict.w;
         var _h = _glyph_dict.h;
+        
+        if (__SCRIBBLE_ON_WEB)
+        {
+            _x += _texture_l;
+            _y += _texture_t;
+        }
         
         var _u0 = _x*_texture_tw;
         var _v0 = _y*_texture_th;

@@ -1,8 +1,9 @@
 // @jujuadams
-#macro __SCRIBBLE_VERSION     "8.0.1 beta 1"
-#macro __SCRIBBLE_DATE        "2021-12-23"
-#macro __SCRIBBLE_DEBUG       false
-#macro __SCRIBBLE_VERBOSE_GC  false
+#macro __SCRIBBLE_VERSION           "8.0.2"
+#macro __SCRIBBLE_DATE              "2022-05-29"
+#macro __SCRIBBLE_DEBUG             false
+#macro __SCRIBBLE_VERBOSE_GC        false
+#macro SCRIBBLE_LOAD_FONTS_ON_BOOT  true
 
 
 
@@ -67,22 +68,24 @@ if (!__SCRIBBLE_ON_WEB)
 #region Initialization
     
 //Declare global variables
-global.__scribble_lcg                 = date_current_datetime()*100;
-global.__scribble_font_directory      = _font_directory;
-global.__scribble_font_data           = ds_map_create();  //Stores a data array for each font defined inside Scribble
-global.__scribble_effects             = ds_map_create();  //Bidirectional lookup - stores name:index as well as index:name
-global.__scribble_effects_slash       = ds_map_create();  //Bidirectional lookup - stores name:index as well as index:name
-global.__scribble_external_sound_map  = ds_map_create();
-global.__scribble_default_font        = "scribble_fallback_font";
-global.__scribble_buffer              = buffer_create(1024, buffer_grow, 1);
-global.__scribble_glyph_grid          = ds_grid_create(1000, __SCRIBBLE_GEN_GLYPH.__SIZE);
-global.__scribble_control_grid        = ds_grid_create(1000, __SCRIBBLE_GEN_CONTROL.__SIZE);
-global.__scribble_word_grid           = ds_grid_create(1000, __SCRIBBLE_GEN_WORD.__SIZE);
-global.__scribble_line_grid           = ds_grid_create(__SCRIBBLE_MAX_LINES, __SCRIBBLE_GEN_LINE.__SIZE);
-global.__scribble_stretch_grid        = ds_grid_create(1000, __SCRIBBLE_GEN_STRETCH.__SIZE);
-global.__scribble_temp_grid           = ds_grid_create(1000, __SCRIBBLE_GEN_WORD.__SIZE); //Somewhat arbitrary size. Feel free to increase this size as is needed
-global.__scribble_vbuff_pos_grid      = ds_grid_create(1000, __SCRIBBLE_GEN_VBUFF_POS.__SIZE);
-//global.__scribble_window_array_null   = array_create(2*__SCRIBBLE_WINDOW_COUNT, 1.0); //TODO - Do we still need this?
+global.__scribble_lcg                  = date_current_datetime()*100;
+global.__scribble_font_directory       = _font_directory;
+global.__scribble_font_data            = ds_map_create();  //Stores a data array for each font defined inside Scribble
+global.__scribble_effects              = ds_map_create();  //Bidirectional lookup - stores name:index as well as index:name
+global.__scribble_effects_slash        = ds_map_create();  //Bidirectional lookup - stores name:index as well as index:name
+global.__scribble_external_sound_map   = ds_map_create();
+global.__scribble_tex_index_lookup_map = ds_map_create();
+global.__scribble_default_font         = "scribble_fallback_font";
+global.__scribble_buffer               = buffer_create(1024, buffer_grow, 1);
+global.__scribble_glyph_grid           = ds_grid_create(1000, __SCRIBBLE_GEN_GLYPH.__SIZE);
+global.__scribble_control_grid         = ds_grid_create(1000, __SCRIBBLE_GEN_CONTROL.__SIZE);
+global.__scribble_word_grid            = ds_grid_create(1000, __SCRIBBLE_GEN_WORD.__SIZE);
+global.__scribble_line_grid            = ds_grid_create(__SCRIBBLE_MAX_LINES, __SCRIBBLE_GEN_LINE.__SIZE);
+global.__scribble_stretch_grid         = ds_grid_create(1000, __SCRIBBLE_GEN_STRETCH.__SIZE);
+global.__scribble_temp_grid            = ds_grid_create(1000, __SCRIBBLE_GEN_WORD.__SIZE); //For some reason, changing the width of this grid causes GM to crash
+global.__scribble_temp2_grid           = ds_grid_create(1000, __SCRIBBLE_GEN_GLYPH.__SIZE);
+global.__scribble_vbuff_pos_grid       = ds_grid_create(1000, __SCRIBBLE_GEN_VBUFF_POS.__SIZE);
+//global.__scribble_window_array_null    = array_create(2*__SCRIBBLE_WINDOW_COUNT, 1.0); //TODO - Do we still need this?
 
 global.__scribble_cache_check_time = current_time;
 
@@ -101,8 +104,9 @@ global.__scribble_gc_vbuff_refs  = [];
 global.__scribble_gc_vbuff_ids   = [];
 
 global.__scribble_generator_state = {};
+if (__SCRIBBLE_ON_WEB) global.__scribble_html5_sprite_height_workaround = {};
 
-if (!variable_global_exists("__scribble_colours")) global.__scribble_colours = ds_map_create();
+if (!variable_global_exists("__scribble_colours")) __scribble_config_colours();
 
 if (!variable_global_exists("__scribble_typewriter_events")) global.__scribble_typewriter_events = ds_map_create();
 global.__scribble_typewriter_events[? "pause" ] = undefined;
@@ -157,6 +161,7 @@ _map[? "bi"        ] = 27;
 _map[? "surface"   ] = 28;
 _map[? "region"    ] = 29;
 _map[? "/region"   ] = 30;
+_map[? "zwsp"      ] = 31;
 global.__scribble_command_tag_lookup_accelerator = _map;
 
 //Add bindings for default effect names
@@ -182,6 +187,27 @@ global.__scribble_effects_slash[? "/jitter" ] = 8;
 global.__scribble_effects_slash[? "/blink"  ] = 9;
 global.__scribble_effects_slash[? "/slant"  ] = 10;
 
+global.__scribble_effects[?       "WAVE"    ] = 1;
+global.__scribble_effects[?       "SHAKE"   ] = 2;
+global.__scribble_effects[?       "RAINBOW" ] = 3;
+global.__scribble_effects[?       "WOBBLE"  ] = 4;
+global.__scribble_effects[?       "PULSE"   ] = 5;
+global.__scribble_effects[?       "WHEEL"   ] = 6;
+global.__scribble_effects[?       "CYCLE"   ] = 7;
+global.__scribble_effects[?       "JITTER"  ] = 8;
+global.__scribble_effects[?       "BLINK"   ] = 9;
+global.__scribble_effects[?       "SLANT"   ] = 10;
+global.__scribble_effects_slash[? "/WAVE"   ] = 1;
+global.__scribble_effects_slash[? "/SHAKE"  ] = 2;
+global.__scribble_effects_slash[? "/RAINBOW"] = 3;
+global.__scribble_effects_slash[? "/WOBBLE" ] = 4;
+global.__scribble_effects_slash[? "/PULSE"  ] = 5;
+global.__scribble_effects_slash[? "/WHEEL"  ] = 6;
+global.__scribble_effects_slash[? "/CYCLE"  ] = 7;
+global.__scribble_effects_slash[? "/JITTER" ] = 8;
+global.__scribble_effects_slash[? "/BLINK"  ] = 9;
+global.__scribble_effects_slash[? "/SLANT"  ] = 10;
+
 //Create a vertex format for our text
 vertex_format_begin();
 vertex_format_add_position_3d();                                  //12 bytes
@@ -201,6 +227,7 @@ global.__scribble_passthrough_vertex_format = vertex_format_end();
 global.__scribble_u_fTime                    = shader_get_uniform(__shd_scribble, "u_fTime"                   );
 global.__scribble_u_vColourBlend             = shader_get_uniform(__shd_scribble, "u_vColourBlend"            );
 global.__scribble_u_vGradient                = shader_get_uniform(__shd_scribble, "u_vGradient"               );
+global.__scribble_u_vFlash                   = shader_get_uniform(__shd_scribble, "u_vFlash"                  );
 global.__scribble_u_vRegionActive            = shader_get_uniform(__shd_scribble, "u_vRegionActive"           );
 global.__scribble_u_vRegionColour            = shader_get_uniform(__shd_scribble, "u_vRegionColour"           );
 global.__scribble_u_aDataFields              = shader_get_uniform(__shd_scribble, "u_aDataFields"             );
@@ -218,6 +245,7 @@ global.__scribble_u_fTypewriterAlphaDuration = shader_get_uniform(__shd_scribble
 global.__scribble_msdf_u_fTime                    = shader_get_uniform(__shd_scribble_msdf, "u_fTime"                   );
 global.__scribble_msdf_u_vColourBlend             = shader_get_uniform(__shd_scribble_msdf, "u_vColourBlend"            );
 global.__scribble_msdf_u_vGradient                = shader_get_uniform(__shd_scribble_msdf, "u_vGradient"               );
+global.__scribble_msdf_u_vFlash                   = shader_get_uniform(__shd_scribble_msdf, "u_vFlash"                  );
 global.__scribble_msdf_u_vRegionActive            = shader_get_uniform(__shd_scribble_msdf, "u_vRegionActive"           );
 global.__scribble_msdf_u_vRegionColour            = shader_get_uniform(__shd_scribble_msdf, "u_vRegionColour"           );
 global.__scribble_msdf_u_aDataFields              = shader_get_uniform(__shd_scribble_msdf, "u_aDataFields"             );
@@ -260,75 +288,7 @@ global.__scribble_bezier_using      = false;
 global.__scribble_bezier_msdf_using = false;
 global.__scribble_bezier_null_array = array_create(6, 0);
 
-//Try to add all fonts in the project to Scribble
-var _i = 0;
-repeat(1000)
-{
-    if (!font_exists(_i)) break;
-    
-    var _skip = false;
-    
-    var _tags = asset_get_tags(_i, asset_font);
-    var _j = 0;
-    repeat(array_length(_tags))
-    {
-        if (string_lower(_tags[_j]) == "scribble skip")
-        {
-            _skip = true;
-            break;
-        }
-        
-        ++_j;
-    }
-    
-    var _name = font_get_name(_i);
-    if (string_copy(_name, 1, 9) == "__newfont") //Don't scan fonts created at runtime (e.g. by font_add_sprite())
-    {
-        _skip = true;
-    }
-    
-    if (!_skip)
-    {
-        __scribble_font_add_from_project(_i);
-    }
-    
-    ++_i;
-}
-
-//Find every sprite asset with the "scribble msdf" tag
-//We check variations on the tag because they're case sensitive and people might spell it differently despite what documentation says
-var _assets = [];
-
-var _array = tag_get_assets("Scribble MSDF");
-array_copy(_assets, array_length(_assets), _array, 0, array_length(_array));
-
-var _array = tag_get_assets("scribble MSDF");
-array_copy(_assets, array_length(_assets), _array, 0, array_length(_array));
-
-var _array = tag_get_assets("Scribble msdf");
-array_copy(_assets, array_length(_assets), _array, 0, array_length(_array));
-
-var _array = tag_get_assets("scribble msdf");
-array_copy(_assets, array_length(_assets), _array, 0, array_length(_array));
-
-var _array = tag_get_assets("scribblemsdf");
-array_copy(_assets, array_length(_assets), _array, 0, array_length(_array));
-
-var _i = 0;
-repeat(array_length(_assets))
-{
-    var _asset = _assets[_i];
-    if (asset_get_type(_asset) != asset_sprite)
-    {
-        __scribble_error("\"scribble msdf\" tag should only be applied to sprite assets (\"", _asset, "\" had the tag)");
-    }
-    else
-    {
-        __scribble_font_add_msdf_from_project(asset_get_index(_asset));
-    }
-    
-    ++_i;
-}
+if (SCRIBBLE_LOAD_FONTS_ON_BOOT) __scribble_font_add_all_from_project();
 
 #endregion
 
@@ -356,6 +316,29 @@ function __scribble_trace()
     }
     
     show_debug_message(_string);
+}
+
+function __scribble_loud()
+{
+    var _string = "Scribble:\n";
+    
+    var _i = 0
+    repeat(argument_count)
+    {
+        if (is_real(argument[_i]))
+        {
+            _string += string_format(argument[_i], 0, 4);
+        }
+        else
+        {
+            _string += string(argument[_i]);
+        }
+        
+        ++_i;
+    }
+    
+    show_debug_message(_string);
+    show_message(_string);
 }
 
 function __scribble_error()
@@ -389,12 +372,12 @@ function __scribble_process_colour(_value)
 {
     if (is_string(_value))
     {
-        if (!ds_map_exists(global.__scribble_colours, _value))
+        if (!variable_struct_exists(global.__scribble_colours, _value))
         {
             __scribble_error("Colour \"", _value, "\" not recognised. Please add it to __scribble_config_colours()");
         }
         
-        return (global.__scribble_colours[? _value] & 0xFFFFFF);
+        return (global.__scribble_colours[$ _value] & 0xFFFFFF);
     }
     else
     {
@@ -419,53 +402,19 @@ function __scribble_array_find_index(_array, _value)
     
     return -1;
 }
-
-function __scribble_prepare_super_work_array(_input_array)
+ 
+function __scribble_asset_is_krutidev(_asset, _asset_type)
 {
-    var _output_array = [];
-    
+    var _tags_array = asset_get_tags(_asset, _asset_type);
     var _i = 0;
-    repeat(array_length(_input_array))
+    repeat(array_length(_tags_array))
     {
-        var _glyph_to_copy = _input_array[_i];
-        
-        if (is_string(_glyph_to_copy))
-        {
-            var _j = 1;
-            repeat(string_length(_glyph_to_copy))
-            {
-                var _unicode = ord(string_char_at(_glyph_to_copy, _j));
-                array_push(_output_array, [_unicode, _unicode]);
-                ++_j;
-            }
-            
-            _glyph_to_copy = undefined;
-        }
-        
-        if (is_numeric(_glyph_to_copy))
-        {
-            _glyph_to_copy = [_glyph_to_copy, _glyph_to_copy];
-        }
-        
-        if (is_array(_glyph_to_copy))
-        {
-            array_push(_output_array, _glyph_to_copy);
-        }
-        
+        var _tag = _tags_array[_i];
+        if ((_tag == "scribble krutidev") || (_tag == "Scribble krutidev") || (_tag == "Scribble Krutidev")) return true;
         ++_i;
     }
     
-    return _output_array;
-}
-
-/// @param oldGlyph
-/// @param [yOffset=0]
-function __scribble_glyph_duplicate(_old, _y_offset = 0)
-{
-    var _new = array_create(SCRIBBLE_GLYPH.__SIZE);
-    array_copy(_new, 0, _old, 0, SCRIBBLE_GLYPH.__SIZE);
-    _new[@ SCRIBBLE_GLYPH.Y_OFFSET] += _y_offset;
-    return _new;
+    return false;
 }
 
 function __scribble_buffer_read_unicode(_buffer)
@@ -544,6 +493,11 @@ function __scribble_buffer_write_unicode(_buffer, _value)
         buffer_write(_buffer, buffer_u8, 0x80 | ((_value >>  9) & 0x3F));
         buffer_write(_buffer, buffer_u8, 0x80 | ((_value >> 15) & 0x3F));
     }
+}
+
+function __scribble_image_speed_get(_sprite)
+{
+    return (sprite_get_speed_type(_sprite) == spritespeed_framespergameframe)? sprite_get_speed(_sprite) : (sprite_get_speed(_sprite) / game_get_speed(gamespeed_fps));
 }
 
 function __scribble_matrix_inverse(_matrix)
@@ -725,55 +679,6 @@ enum SCRIBBLE_GLYPH
     __SIZE        //16
 }
 
-enum __SCRIBBLE_GLYPH_LAYOUT
-{
-    UNICODE, // 0
-    LEFT,    // 1
-    TOP,     // 2
-    RIGHT,   // 3
-    BOTTOM,  // 4
-    __SIZE,  // 5
-}
-
-enum __SCRIBBLE_VERTEX_BUFFER
-{
-    VERTEX_BUFFER, //0
-    TEXTURE,       //1
-    MSDF_RANGE,    //2
-    TEXEL_WIDTH,   //3
-    TEXEL_HEIGHT,  //4
-    SHADER,        //5
-    BUFFER,        //6
-    BILINEAR,      //7
-    __SIZE         //8
-}
-
-enum __SCRIBBLE_ANIM
-{
-    WAVE_SIZE,        // 0
-    WAVE_FREQ,        // 1
-    WAVE_SPEED,       // 2
-    SHAKE_SIZE,       // 3
-    SHAKE_SPEED,      // 4
-    RAINBOW_WEIGHT,   // 5
-    RAINBOW_SPEED,    // 6
-    WOBBLE_ANGLE,     // 7
-    WOBBLE_FREQ,      // 8
-    PULSE_SCALE,      // 9
-    PULSE_SPEED,      //10
-    WHEEL_SIZE,       //11
-    WHEEL_FREQ,       //12
-    WHEEL_SPEED,      //13
-    CYCLE_SPEED,      //14
-    CYCLE_SATURATION, //15
-    CYCLE_VALUE,      //16
-    JITTER_MINIMUM,   //17
-    JITTER_MAXIMUM,   //18
-    JITTER_SPEED,     //19
-    SLANT_GRADIENT,   //20
-    __SIZE,           //21
-}
-
 enum SCRIBBLE_EASE
 {
     NONE,     // 0
@@ -794,6 +699,55 @@ enum SCRIBBLE_EASE
     __SIZE    //15
 }
 
+enum __SCRIBBLE_GLYPH_LAYOUT
+{
+    __UNICODE, // 0
+    __LEFT,    // 1
+    __TOP,     // 2
+    __RIGHT,   // 3
+    __BOTTOM,  // 4
+    __SIZE,    // 5
+}
+
+enum __SCRIBBLE_VERTEX_BUFFER
+{
+    __VERTEX_BUFFER, //0
+    __TEXTURE,       //1
+    __MSDF_RANGE,    //2
+    __TEXEL_WIDTH,   //3
+    __TEXEL_HEIGHT,  //4
+    __SHADER,        //5
+    __BUFFER,        //6
+    __BILINEAR,      //7
+    __SIZE           //8
+}
+
+enum __SCRIBBLE_ANIM
+{
+    __WAVE_SIZE,        // 0
+    __WAVE_FREQ,        // 1
+    __WAVE_SPEED,       // 2
+    __SHAKE_SIZE,       // 3
+    __SHAKE_SPEED,      // 4
+    __RAINBOW_WEIGHT,   // 5
+    __RAINBOW_SPEED,    // 6
+    __WOBBLE_ANGLE,     // 7
+    __WOBBLE_FREQ,      // 8
+    __PULSE_SCALE,      // 9
+    __PULSE_SPEED,      //10
+    __WHEEL_SIZE,       //11
+    __WHEEL_FREQ,       //12
+    __WHEEL_SPEED,      //13
+    __CYCLE_SPEED,      //14
+    __CYCLE_SATURATION, //15
+    __CYCLE_VALUE,      //16
+    __JITTER_MINIMUM,   //17
+    __JITTER_MAXIMUM,   //18
+    __JITTER_SPEED,     //19
+    __SLANT_GRADIENT,   //20
+    __SIZE,             //21
+}
+
 #endregion
 
 
@@ -802,54 +756,55 @@ enum SCRIBBLE_EASE
 
 enum __SCRIBBLE_GEN_GLYPH
 {
-    UNICODE,          // 0  \   Can be negative, see below
-    BIDI,             // 1   |
-                      //     |
-    X,                // 2   |
-    Y,                // 3   |
-    WIDTH,            // 4   |
-    HEIGHT,           // 5   |
-    FONT_HEIGHT,      // 6   |
-    SEPARATION,       // 7   |
-    LEFT_OFFSET,      // 8   |
-    SCALE,            // 9   | This group of enums must not change order or be split
-                      //     |
-    TEXTURE,          //10   |
-    QUAD_U0,          //11   | Be careful of ordering!
-    QUAD_U1,          //12   | scribble_font_bake_shader() relies on this
-    QUAD_V0,          //13   |
-    QUAD_V1,          //14   |
-                      //     |
-    MSDF_PXRANGE,     //15   |
-    BILINEAR,         //16  /
+    __UNICODE,          // 0  \   Can be negative, see below
+    __BIDI,             // 1   |
+                        //     |
+    __X,                // 2   |
+    __Y,                // 3   |
+    __WIDTH,            // 4   |
+    __HEIGHT,           // 5   |
+    __FONT_HEIGHT,      // 6   |
+    __SEPARATION,       // 7   |
+    __LEFT_OFFSET,      // 8   |
+    __SCALE,            // 9   | This group of enums must not change order or be split
+                        //     |
+    __TEXTURE,          //10   |
+    __QUAD_U0,          //11   | Be careful of ordering!
+    __QUAD_U1,          //12   | scribble_font_bake_shader() relies on this
+    __QUAD_V0,          //13   |
+    __QUAD_V1,          //14   |
+                        //     |
+    __MSDF_PXRANGE,     //15   |
+    __BILINEAR,         //16  /
     
-    CONTROL_COUNT,    //17
-    ANIMATION_INDEX,  //18
+    __CONTROL_COUNT,    //17
+    __ANIMATION_INDEX,  //18
                       
-    SPRITE_INDEX,     //19  \
-    IMAGE_INDEX,      //20   | Only used for sprites
-    IMAGE_SPEED,      //21  /
+    __SPRITE_INDEX,     //19  \
+    __IMAGE_INDEX,      //20   | Only used for sprites
+    __IMAGE_SPEED,      //21  /
                       
-    __SIZE,           //20
+    __SIZE,             //22
 }
 
 enum __SCRIBBLE_GEN_VBUFF_POS
 {
-    QUAD_L, //0
-    QUAD_T, //1
-    QUAD_R, //2
-    QUAD_B, //3
-    __SIZE, //4
+    __QUAD_L, //0
+    __QUAD_T, //1
+    __QUAD_R, //2
+    __QUAD_B, //3
+    __SIZE,   //4
 }
 
 enum __SCRIBBLE_GEN_CONTROL_TYPE
 {
-    EVENT,
-    HALIGN,
-    COLOUR,
-    EFFECT,
-    CYCLE,
-    REGION,
+    __EVENT,  //0
+    __HALIGN, //1
+    __COLOUR, //2
+    __EFFECT, //3
+    __CYCLE,  //4
+    __REGION, //5
+    __FONT,   //6
 }
 
 //These can be used for ORD
@@ -858,40 +813,40 @@ enum __SCRIBBLE_GEN_CONTROL_TYPE
 
 enum __SCRIBBLE_GEN_CONTROL
 {
-    TYPE,   //0
-    DATA,   //1
+    __TYPE, //0
+    __DATA, //1
     __SIZE, //2
 }
 
 enum __SCRIBBLE_GEN_WORD
 {
-    BIDI_RAW,    //0
-    BIDI,        //1
-    GLYPH_START, //2
-    GLYPH_END,   //3
-    WIDTH,       //4
-    HEIGHT,      //5
-    __SIZE,      //6
+    __BIDI_RAW,    //0
+    __BIDI,        //1
+    __GLYPH_START, //2
+    __GLYPH_END,   //3
+    __WIDTH,       //4
+    __HEIGHT,      //5
+    __SIZE,        //6
 }
 
 enum __SCRIBBLE_GEN_STRETCH
 {
-    WORD_START, //0
-    WORD_END,   //1
-    BIDI,       //2
+    __WORD_START, //0
+    __WORD_END,   //1
+    __BIDI,       //2
     __SIZE,
 }
 
 enum __SCRIBBLE_GEN_LINE
 {
-    Y,                  //0
-    WORD_START,         //1
-    WORD_END,           //2
-    WIDTH,              //3
-    HEIGHT,             //4
-    HALIGN,             //5
-    STARTS_MANUAL_PAGE, //6
-    __SIZE,             //7
+    __Y,                  //0
+    __WORD_START,         //1
+    __WORD_END,           //2
+    __WIDTH,              //3
+    __HEIGHT,             //4
+    __HALIGN,             //5
+    __STARTS_MANUAL_PAGE, //6
+    __SIZE,               //7
 }
 
 #endregion
@@ -901,18 +856,21 @@ enum __SCRIBBLE_GEN_LINE
 #region Misc Macros
 
 #macro __SCRIBBLE_ON_DIRECTX           ((os_type == os_windows) || (os_type == os_xboxone) || (os_type == os_uwp) || (os_type == os_win8native) || (os_type == os_winphone))
-#macro __SCRIBBLE_ON_OPENGL            (!__SCRIBBLE_ON_DIRECTX)
 #macro __SCRIBBLE_ON_MOBILE            ((os_type == os_ios) || (os_type == os_android) || (os_type == os_tvos))
 #macro __SCRIBBLE_ON_WEB               (os_browser != browser_not_a_browser)
+#macro __SCRIBBLE_ON_OPENGL            (!__SCRIBBLE_ON_DIRECTX || __SCRIBBLE_ON_WEB)
+#macro __SCRIBBLE_FIX_ARGB             (__SCRIBBLE_ON_OPENGL)
 #macro __SCRIBBLE_EXPECTED_FRAME_TIME  (0.95*game_get_speed(gamespeed_microseconds)/1000) //Uses to prevent the autotype from advancing if a draw call is made multiple times a frame to the same text element
 #macro __SCRIBBLE_PIN_LEFT             3
 #macro __SCRIBBLE_PIN_CENTRE           4
 #macro __SCRIBBLE_PIN_RIGHT            5
-#macro __SCRIBBLE_JUSTIFY              6
+#macro __SCRIBBLE_FA_JUSTIFY           6
 #macro __SCRIBBLE_WINDOW_COUNT         3
 #macro __SCRIBBLE_GC_STEP_SIZE         3
 #macro __SCRIBBLE_CACHE_TIMEOUT        120 //How long to wait (in milliseconds) before the text element cache automatically cleans up unused data
 #macro __SCRIBBLE_AUDIO_COMMAND_TAG    "__scribble_audio_playback__"
+
+#macro __SCRIBBLE_DEVANAGARI_OFFSET  0xFFFF
 
 #macro __SCRIBBLE_MAX_LINES  1000  //Maximum number of lines in a textbox. This constant must match the corresponding values in __shd_scribble and __shd_scribble_msdf
 
