@@ -62,7 +62,7 @@ finishInteraction = function() {
 setFocus = function(focus_item, new_scope = undefined) {
 	
 	// trigger lost focus
-	if focused_item && focused_item.on_lost_focus {
+	if focused_item && instance_exists(focused_item) && focused_item.on_lost_focus {
 		focused_item.on_lost_focus();
 		focused_item.focused = false;
 	}
@@ -80,11 +80,12 @@ setFocus = function(focus_item, new_scope = undefined) {
 	focus_scope_map[$ active_focus_scope] = focused_item;
 	
 	// trigger got focus
-	if focused_item && focused_item.on_got_focus {
+	if focused_item && instance_exists(focused_item) && focused_item.on_got_focus {
 		focused_item.on_got_focus();
 		focused_item.focused = true;
 	}
 }
+
 moveFocus = function(direction = YUI_FOCUS_DIRECTION.DOWN) {
 	var next_item = yui_find_focus_item(
 		focused_item,
@@ -102,3 +103,4 @@ moveFocus = function(direction = YUI_FOCUS_DIRECTION.DOWN) {
 		setFocus(undefined);
 	}
 }
+

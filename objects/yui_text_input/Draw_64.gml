@@ -12,7 +12,7 @@ if !bound_values.enabled {
 	draw_set_alpha(alpha);
 }
 
-var show_highlight = (highlight || YuiCursorManager.focused_item == id)
+var show_highlight = (highlight || focused)
 	&& highlight_color != undefined
 	&& bound_values.enabled;
 	
@@ -34,6 +34,14 @@ if show_highlight {
 		}
 	}
 }
+
+if focused && (current_time div 500 mod 2) == 1 {
+	draw_sprite_ext(
+		yui_white_pixel, 0,
+		caret_x, caret_y, 1, caret_h,
+		0, caret_color, 1);
+}
+
 
 
 
