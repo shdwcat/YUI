@@ -10,6 +10,8 @@ border_onLayoutInit = onLayoutInit;
 onLayoutInit = function() {
 	border_onLayoutInit();
 	highlight_color = layout_props.highlight_color;
+	highlight_alpha = ((highlight_color & 0xFF000000) >> 24) / 255;
+	pressed_alpha = layout_props.pressed_alpha;
 }
 
 border_build = build;
