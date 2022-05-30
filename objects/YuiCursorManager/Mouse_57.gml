@@ -1,13 +1,13 @@
-/// @description find and run left_clicked handler
+/// @description find and run right_clicked handler
 
 var i = hover_count - 1; repeat hover_count {
 	var next = hover_list[| i];
 	//yui_log("released instance", i, "is", next.id, "type", object_get_name(next.object_index));
 	
 	if instance_exists(next) {
-		if next.left_click && yui_array_contains(mouse_down_array[mb_left], next) {
+		if next.right_click && yui_array_contains(mouse_down_array[mb_right], next) {
 			yui_log("clicked instance", i, "is", next.id, "type", object_get_name(next.object_index));
-			var handled = next.left_click();
+			var handled = next.right_click();
 			if handled != false {
 				break;
 			}
@@ -22,6 +22,7 @@ var i = hover_count - 1; repeat hover_count {
 	
 	i--;
 }
+
 // forget the list
-mouse_down_array[mb_left] = [];
+mouse_down_array[mb_right] = [];
 

@@ -23,3 +23,4 @@ var i = hover_count - 1; repeat hover_count {
 	
 	i--;
 }
+trackMouseDownItems(mb_right);

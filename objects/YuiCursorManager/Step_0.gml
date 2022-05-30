@@ -30,6 +30,13 @@ hover_count += instance_position_list(
 	hover_list,
 	false);
 
+// copy to array for easier debugging
+array_resize(hover_array, hover_count);
+var i = hover_count - 1; repeat hover_count {
+	hover_array[i] = hover_list[| i];
+	i--;
+}
+
 var hover_consumed = false;
 
 // check hover now so that it's available to item build/arrange

@@ -20,6 +20,15 @@ focus_scope_stack = ds_stack_create();
 // list for tracking hover items for mouseover logic
 hover_list = ds_list_create();
 hover_count = 0;
+hover_array = [];
+
+// arrays for tracking mouse down->up on same item
+mouse_down_array = [];
+mouse_down_array[mb_left] = [];
+mouse_down_array[mb_middle] = [];
+mouse_down_array[mb_right] = [];
+mouse_down_array[mb_side1] = [];
+mouse_down_array[mb_side2] = [];
 
 left_pressed_consumed = false;
 left_click_consumed = false;
@@ -104,3 +113,11 @@ moveFocus = function(direction = YUI_FOCUS_DIRECTION.DOWN) {
 	}
 }
 
+trackMouseDownItems = function(button) {
+	array_resize(mouse_down_array[button], hover_count);
+	var i = hover_count - 1; repeat hover_count {
+		yui_log("mouse down on:", hover_list[|i]);
+		mouse_down_array[button][i] = hover_list[| i];
+		i--;
+	}
+}

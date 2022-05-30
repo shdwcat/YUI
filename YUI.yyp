@@ -378,6 +378,7 @@
     {"id":{"name":"__scribble_class_model","path":"scripts/__scribble_class_model/__scribble_class_model.yy",},"order":3,},
     {"id":{"name":"yui_underscores_to_words","path":"scripts/yui_underscores_to_words/yui_underscores_to_words.yy",},"order":2,},
     {"id":{"name":"YuiNotImplemented","path":"scripts/YuiNotImplemented/YuiNotImplemented.yy",},"order":16,},
+    {"id":{"name":"yui_array_contains","path":"scripts/yui_array_contains/yui_array_contains.yy",},"order":14,},
     {"id":{"name":"GsplFiber","path":"scripts/GsplFiber/GsplFiber.yy",},"order":4,},
     {"id":{"name":"yui_string_before","path":"scripts/yui_string_before/yui_string_before.yy",},"order":1,},
     {"id":{"name":"power_ring","path":"sprites/power_ring/power_ring.yy",},"order":11,},
@@ -516,6 +517,8 @@
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Interactions","resourceVersion":"1.0","name":"scrollbar_drag.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"scrollbox.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"menu.yui","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/YUI/Interactions","resourceVersion":"1.0","name":"window_title_drag.yui","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"child_window.yui","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
     "IDEVersion": "2022.300.0.499",

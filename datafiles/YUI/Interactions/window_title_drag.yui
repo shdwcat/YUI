@@ -12,6 +12,6 @@ drag:
 drop:
   condition: null  
   visual: null
-  action: log('window drag finished')
+  action: yui_log('window drag finished')
 
-on_cancel: log('interaction window_title_drag was cancelled')
+on_cancel: yui_log('interaction window_title_drag was cancelled')
