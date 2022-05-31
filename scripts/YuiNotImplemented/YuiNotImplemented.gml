@@ -7,6 +7,8 @@ function YuiNotImplemented(_props, _resources, _slot_values) : YuiBaseElement(_p
 	
 	props = yui_init_props(_props);
 	
+	baseInit(props);
+	
 	// ===== functions =====
 	
 	static getLayoutProps = function() {

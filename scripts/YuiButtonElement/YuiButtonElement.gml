@@ -27,6 +27,8 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	
 	props = yui_apply_props(_props);
 	
+	baseInit(props);
+	
 	props.enabled = yui_bind(props.enabled, resources, slot_values);
 	
 	// TODO: fix prop application order

@@ -16,6 +16,8 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	
 	props = yui_init_props(_props);
 	
+	baseInit(props);
+	
 	props.padding = yui_resolve_padding(props.padding);
 	content_element = yui_resolve_element(props.content, resources, slot_values);
 	

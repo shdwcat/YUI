@@ -11,6 +11,9 @@ function YuiDataTemplateElement(_props, _resources, _slot_values) : YuiBaseEleme
 	}
 	
 	props = yui_init_props(_props);
+	
+	baseInit(props);
+	
 	props.resource_key = yui_bind(props.resource_key, resources, slot_values);
 	
 	// this is unique pet data_template element!

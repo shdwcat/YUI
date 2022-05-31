@@ -31,6 +31,8 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 	
 	props = yui_init_props(_props);
 	
+	baseInit(props);
+	
 	props.events = yui_init_props(props.events, default_events);
 	props.events.on_text_changed = yui_bind_handler(props.events.on_text_changed, resources, slot_values);
 	
@@ -140,3 +142,4 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 		};
 	}
 }
+

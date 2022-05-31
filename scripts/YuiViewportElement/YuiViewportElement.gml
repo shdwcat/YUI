@@ -26,6 +26,8 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 	
 	props = yui_init_props(_props);
 	
+	baseInit(props);
+	
 	content_element = yui_resolve_element(props.content, resources, slot_values);
 	
 	// resolve slot/resource (not bindable currently)
@@ -122,6 +124,7 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 		};
 	}
 }
+
 
 
 

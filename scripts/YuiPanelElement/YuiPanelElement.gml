@@ -28,6 +28,8 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	props = yui_init_props(_props);
 	
+	baseInit(props);
+	
 	props.elements = yui_bind(props.elements, resources, slot_values);
 	
 	spacing = props.spacing == undefined ? theme.panel.spacing : props.spacing;

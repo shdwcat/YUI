@@ -20,6 +20,8 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	
 	props = yui_init_props(_props);
 	
+	baseInit(props);
+	
 	props.text = yui_bind(props.text, resources, slot_values);
 	props.typist = yui_bind(props.typist, resources, slot_values);
 	props.padding = yui_resolve_padding(props.padding);

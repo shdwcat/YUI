@@ -13,6 +13,8 @@ function YuiLineElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	
 	props = yui_init_props(_props);
 	
+	baseInit(props);
+	
 	props.line_start = yui_bind_struct(props.line_start, resources, slot_values);
 	props.line_end = yui_bind_struct(props.line_end, resources, slot_values);
 	

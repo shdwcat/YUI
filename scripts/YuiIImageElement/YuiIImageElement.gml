@@ -15,6 +15,8 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	props = yui_init_props(_props);
 	
+	baseInit(props);
+	
 	props.padding = yui_resolve_padding(props.padding);
 	
 	props.sprite = yui_bind(props.sprite, resources, slot_values);

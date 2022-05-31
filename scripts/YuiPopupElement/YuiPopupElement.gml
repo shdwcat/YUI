@@ -15,6 +15,8 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	props = yui_init_props(_props);
 	
+	baseInit(props);
+	
 	props.placement = yui_bind(props.placement, resources, slot_values);
 	
 	// TODO: clean up initializing props from theme
