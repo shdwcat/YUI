@@ -87,7 +87,7 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 			padding: props.padding,
 			size: size,
 			highlight_color: yui_resolve_color(props.highlight_color),
-			pressed_alpha: pressed_alpha,
+			pressed_alpha: props.pressed_alpha,
 			// border
 			content_element: content,
 			bg_sprite: bg_sprite,
