@@ -21,8 +21,8 @@ function yui_resolve_element(yui_data, resources, slot_values, parent_id = undef
 		if yui_is_binding_expr(yui_data) {
 			var resolved_yui_data = yui_bind(yui_data, resources, slot_values);
 			
-			// copy the resolved values to ensure we're not sharing state incorrectly
-			if is_struct(resolved_yui_data) || is_array(resolved_yui_data) {
+			// if the result is not a binding, copy the resolved values to ensure we're not sharing state incorrectly
+			if !yui_is_binding(resolved_yui_data) && (is_struct(resolved_yui_data) || is_array(resolved_yui_data)) {
 				resolved_yui_data = snap_deep_copy(resolved_yui_data)
 			}
 			
