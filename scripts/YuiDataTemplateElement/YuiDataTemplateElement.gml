@@ -10,7 +10,7 @@ function YuiDataTemplateElement(_props, _resources, _slot_values) : YuiBaseEleme
 		strict: false,
 	}
 	
-	props = yui_init_props(_props);
+	props = yui_apply_props(_props);
 	
 	baseInit(props);
 	

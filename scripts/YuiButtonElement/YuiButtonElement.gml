@@ -32,7 +32,7 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	props.enabled = yui_bind(props.enabled, resources, slot_values);
 	
 	// TODO: fix prop application order
-	props.focusable = true;
+	//props.focusable = true;
 	
 	// TODO fix theme implementation
 	var padding = props.padding == undefined ? theme.button.padding : props.padding;

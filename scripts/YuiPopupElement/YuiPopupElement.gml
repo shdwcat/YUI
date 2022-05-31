@@ -13,7 +13,7 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		border_thickness: undefined,
 	}
 	
-	props = yui_init_props(_props);
+	props = yui_apply_props(_props);
 	
 	baseInit(props);
 	

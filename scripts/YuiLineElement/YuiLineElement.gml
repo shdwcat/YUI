@@ -11,7 +11,7 @@ function YuiLineElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		color: c_white,
 	};
 	
-	props = yui_init_props(_props);
+	props = yui_apply_props(_props);
 	
 	baseInit(props);
 	
