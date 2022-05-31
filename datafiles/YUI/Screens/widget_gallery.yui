@@ -52,6 +52,10 @@ root:
             events:
               on_text_changed: @@ text => @editable_text = text
 
+          - type: text
+            text: @editable_text
+            text_format: "Committed Text: {0}"
+
           // - type: text
           //   text: Scrollbox
           //   text_style: subtitle

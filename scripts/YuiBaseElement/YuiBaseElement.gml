@@ -47,13 +47,13 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	resources = _resources;
 	slot_values = _slot_values;
 	
-	static baseInit = function(props) {
+	static baseInit = function(props, default_events = undefined) {
 	
 		type = props._type; // TODO: string hash this for faster comparison
 		
 		yui_resolve_theme();
 	
-		props.events = yui_init_props(props.events, base_events);
+		props.events = yui_apply_props(props.events, default_events, base_events);
 		props.events.on_mouse_down = yui_bind_handler(props.events.on_mouse_down, resources, slot_values);
 		props.events.on_mouse_up = yui_bind_handler(props.events.on_mouse_up, resources, slot_values);
 		props.events.on_mouse_wheel_up = yui_bind_handler(props.events.on_mouse_wheel_up, resources, slot_values);
