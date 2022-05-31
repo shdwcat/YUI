@@ -97,7 +97,7 @@ function YuiRadialSettings(radial_settings = {}) constructor {
 		item_size: undefined, // the size of the items in the radial (required)
 	};
 	
-	props = yui_init_props(radial_settings);
+	props = yui_apply_props(radial_settings);
 
 	if is_numeric(props.item_size)
 	{

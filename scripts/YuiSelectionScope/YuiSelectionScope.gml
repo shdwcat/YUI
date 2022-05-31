@@ -14,7 +14,7 @@ function YuiSelectionScope(_id, _options = {}) constructor {
 		default_selected_item: undefined,
 	}
 	
-	var options = yui_init_props(_options);
+	var options = yui_apply_props(_options);
 	
 	id = _id;
 	selection_behavior = options.selection_behavior;

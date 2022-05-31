@@ -36,8 +36,8 @@ function YuiDocument(_yui_file) constructor {
 		
 		var file_data = snap_from_yui(file_text);
 		
-		// apply default props		
-		document = yui_init_props(file_data, default_props);
+		// apply default props
+		document = yui_apply_props(file_data);
 		
 		// resolve imports
 		var yui_folder = filename_dir(yui_filepath);		

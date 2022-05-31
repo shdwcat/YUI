@@ -90,7 +90,7 @@ function YuiGridSettings(grid_settings = {}) constructor {
 		column_spacing: 0,
 	};
 	
-	self.props = yui_init_props(grid_settings);
+	self.props = yui_apply_props(grid_settings);
 	
 	// the total h/w used by spacing
 	spacing_height = (props.rows - 1) * props.row_spacing;

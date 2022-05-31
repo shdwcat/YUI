@@ -16,7 +16,7 @@ function YuiPanCamera(_props, _resources) constructor {
 		trace: false,
 	};
 	
-	props = yui_init_props(_props);
+	props = yui_apply_props(_props);
 	resources = _resources;
 	
 	cursor_element = yui_resolve_element(props.cursor_visual, resources, undefined);

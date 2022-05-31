@@ -21,7 +21,7 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		on_cancel: undefined,
 	};
 	
-	props = yui_init_props(_props);
+	props = yui_apply_props(_props);
 	resources = _resources;
 	
 	props.drag.condition = yui_bind(props.drag.condition, resources, undefined);

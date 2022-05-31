@@ -16,7 +16,7 @@ function YuiElementDrag(_props, _resources) constructor {
 		trace: false,
 	};
 	
-	props = yui_init_props(_props);
+	props = yui_apply_props(_props);
 	resources = _resources;
 	
 	static canStart = function(source_data) {
