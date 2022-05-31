@@ -22,6 +22,9 @@ hover_list = ds_list_create();
 hover_count = 0;
 hover_array = [];
 
+// tracking highlight
+highlight_map = ds_map_create();
+
 // arrays for tracking mouse down->up on same item
 mouse_down_array = [];
 mouse_down_array[mb_left] = [];
@@ -121,3 +124,4 @@ trackMouseDownItems = function(button) {
 		i--;
 	}
 }
+

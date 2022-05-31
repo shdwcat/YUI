@@ -39,13 +39,26 @@ var i = hover_count - 1; repeat hover_count {
 
 var hover_consumed = false;
 
+// set internal highlight flag to false
+var keys = ds_map_keys_to_array(highlight_map);
+var i = 0; repeat ds_map_size(highlight_map) {
+	highlight_map[? keys[i++]] = false;
+}
+
 // check hover now so that it's available to item build/arrange
 var i = hover_count - 1; repeat hover_count {
 	var next = hover_list[| i];
 	//yui_log("list instance", i, "is", next.id, "type", script_get_name(next.element_constructor));
 	
 	// should I rename this to hover to prevent confusion?
-	next.setHighlight(true);
+
+	// only set highlight if not already highlighted
+	if !next.highlight {
+		next.setHighlight(true);
+	}
+
+	// flag item as highlighted this frame
+	highlight_map[? next] = true;
 	
 	if !hover_consumed && next.cursor_hover {
 		//yui_log("hover instance", i, "is", next.id, "type", object_get_name(next.object_index));
@@ -61,6 +74,23 @@ var i = hover_count - 1; repeat hover_count {
 	}
 	
 	i--;
+}
+
+// clear highlight from old items
+var keys = ds_map_keys_to_array(highlight_map);
+var i = 0; repeat ds_map_size(highlight_map) {
+	var item = keys[i++];
+	var highlighted = highlight_map[? item];
+
+	if !highlighted {
+		// clear highlight and remove from map
+
+		if instance_exists(item) {
+			item.setHighlight(false);
+		}
+
+		ds_map_delete(highlight_map, item);
+	}
 }
 
 // ===== run interaction =====
