@@ -17,7 +17,8 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		
 		popup: undefined, // setting popup will show a popup in an overlay
 		
-		highlight_color: 0x33FFFFFF,
+		highlight_color: 0xFFFFFF,
+		highlight_alpha: 0.2,
 		pressed_alpha: 0.4,
 		
 		enabled: true, // can be bound
@@ -87,6 +88,7 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 			padding: props.padding,
 			size: size,
 			highlight_color: yui_resolve_color(props.highlight_color),
+			highlight_alpha: props.highlight_alpha,
 			pressed_alpha: props.pressed_alpha,
 			// border
 			content_element: content,

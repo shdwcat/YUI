@@ -44,7 +44,7 @@ resources:
         - type: button
           background: $toggle_background
           border_color: $toggle_border_color
-          highlight_color: #777777
+          highlight_alpha: .1
 
           on_click: $on_checked_changed(not $is_checked)
           content:
