@@ -1,7 +1,14 @@
+// Original code by Juju via https://github.com/JujuAdams/Gumshoe
+
 /// @param directory
 /// @param fileExtension
 /// @param returnStruct
-function gumshoe(_directory, _extension, _return_struct = false) {
+/// @param treeValueGenerator
+function gumshoe(_directory, _extension, _return_struct = false, _generator = undefined) {
+
+    if (_return_struct == false && _generator != undefined) {
+        throw "treeValueGenerator can only be specified when returning a struct";
+    }
     
     //Clean up weirdo directory formats that people might use
     _directory = string_replace_all(_directory, "/", "\\");
@@ -16,7 +23,7 @@ function gumshoe(_directory, _extension, _return_struct = false) {
     if (_return_struct)
     {
         global.__gumshoe_count = 0;
-        return __gumshoe_struct(_directory, _extension);
+        return __gumshoe_struct(_directory, _extension, _generator);
     }
     else
     {
@@ -65,7 +72,8 @@ function __gumshoe_array(_directory, _extension, _result)
 
 /// @param directory
 /// @param fileExtension
-function __gumshoe_struct(_directory, _extension)
+/// @param treeValueGenerator
+function __gumshoe_struct(_directory, _extension, _generator)
 {
     var _directories = [];
     var _result = {};
@@ -85,7 +93,8 @@ function __gumshoe_struct(_directory, _extension)
         else if ((_extension == ".*") || (filename_ext(_file) == _extension))
         {
             //Add this matching file to the output array
-            variable_struct_set(_result, _file, global.__gumshoe_count);
+            var value = _generator ? _generator(_directory, _file, _extension, global.__gumshoe_count) : global.__gumshoe_count;
+            variable_struct_set(_result, _file, value);
             ++global.__gumshoe_count;
         }
     }
@@ -96,7 +105,7 @@ function __gumshoe_struct(_directory, _extension)
     var _i = 0;
     repeat(array_length(_directories))
     {
-        variable_struct_set(_result, _directories[_i], __gumshoe_struct(_directory + _directories[_i] + "\\", _extension));
+        variable_struct_set(_result, _directories[_i], __gumshoe_struct(_directory + _directories[_i] + "\\", _extension, _generator));
         ++_i;
     }
     
