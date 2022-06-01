@@ -53,6 +53,9 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	// resolve theme first so it can be used in yui_apply_props
 	theme = yui_resolve_theme(_props[$ "theme"]);
 	
+	// get the theme props for our type (applies template type first)
+	type_theme = theme[$ _props.type] ?? theme[$ element_type];
+	
 	static baseInit = function(props, default_events = undefined) {
 	
 		props.events = yui_apply_props(props.events, default_events, base_events);

@@ -7,15 +7,7 @@ function yui_apply_props(instance_data) {
 		var _default_props = variable_struct_get(self, "default_props");
 		var _base_props = variable_struct_get(self, "base_props");
 		
-		if _base_props && _default_props {
-			return yui_apply_props(instance_data, _default_props, _base_props);
-		}
-		else if _base_props {
-			return yui_apply_props(instance_data, _base_props);
-		}
-		else if _default_props {
-			return yui_apply_props(instance_data, _default_props);
-		}
+		return yui_apply_props(instance_data, _default_props, _base_props);
 	}
 			
 	// set up a new struct to hold the result to avoid modifying the raw instance_data
@@ -44,5 +36,9 @@ function yui_apply_props(instance_data) {
 	}
 	
 	return result;
+}
+
+function yui_apply_element_props(instance_data) {
+	return yui_apply_props(instance_data, type_theme, default_props, base_props);
 }
 

@@ -25,25 +25,18 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		on_click: undefined,
 	}
 	
-	props = yui_apply_props(_props);
+	props = yui_apply_element_props(_props);
 	
 	baseInit(props);
 	
 	props.enabled = yui_bind(props.enabled, resources, slot_values);
 	
-	// TODO: fix prop application order
-	//props.focusable = true;
-	
-	// TODO fix theme implementation
-	var padding = props.padding == undefined ? theme.button.padding : props.padding;
-	props.padding = yui_resolve_padding(padding);
+	props.padding = yui_resolve_padding(props.padding);
 	
 	content_element = yui_resolve_element(props.content, resources, slot_values);
 	
 	// resolve slot/resource (not bindable currently)
-	var background_expr = yui_bind(props.background, resources, slot_values)
-		?? theme.button.background;
-		
+	var background_expr = yui_bind(props.background, resources, slot_values);
 	if background_expr != undefined {
 		var bg_spr = is_string(background_expr)
 			? yui_resolve_sprite_by_name(background_expr)
@@ -66,7 +59,7 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	border_focus_color = yui_resolve_color(yui_bind(props.border_focus_color, resources, slot_values));
 	
 	// set up popup mode
-	if props.popup {				
+	if props.popup {
 		props.popup.type = "popup";
 		popup_element = yui_resolve_element(props.popup, resources, slot_values);
 	}
