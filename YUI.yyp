@@ -202,6 +202,7 @@
     {"id":{"name":"scribble_anim_pulse","path":"scripts/scribble_anim_pulse/scribble_anim_pulse.yy",},"order":3,},
     {"id":{"name":"yui_draw_dashed_line","path":"scripts/yui_draw_dashed_line/yui_draw_dashed_line.yy",},"order":2,},
     {"id":{"name":"YuiEnums","path":"scripts/YuiEnums/YuiEnums.yy",},"order":23,},
+    {"id":{"name":"yui_variable_struct_try_get","path":"scripts/yui_variable_struct_try_get/yui_variable_struct_try_get.yy",},"order":15,},
     {"id":{"name":"yui_draw_rect_outline","path":"scripts/yui_draw_rect_outline/yui_draw_rect_outline.yy",},"order":4,},
     {"id":{"name":"scribble_font_add_all","path":"scripts/scribble_font_add_all/scribble_font_add_all.yy",},"order":1,},
     {"id":{"name":"__YuiConfiguration__","path":"scripts/__YuiConfiguration__/__YuiConfiguration__.yy",},"order":0,},

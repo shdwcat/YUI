@@ -24,9 +24,6 @@ function yui_apply_props(instance_data) {
 		var i = 0; repeat array_length(keys) {
 			var key = keys[i++];
 			
-			if key == "focusable" && instanceof(self) == "YuiButtonElement"
-				DEBUG_BREAK_YUI
-			
 			var exists = variable_struct_exists(result, key);
 			if !exists {
 				var source_value = source[$ key];
