@@ -44,14 +44,16 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		on_lost_focus: undefined,
 	};
 	
+	// this is the actual element type as defined in yui_resolve_element.element_map
+	element_type = _props.element_type; // TODO: string hash this for faster comparison
+	
 	resources = _resources;
 	slot_values = _slot_values;
 	
-	static baseInit = function(props, default_events = undefined) {
+	// resolve theme first so it can be used in yui_apply_props
+	theme = yui_resolve_theme(_props[$ "theme"]);
 	
-		type = props._type; // TODO: string hash this for faster comparison
-		
-		yui_resolve_theme();
+	static baseInit = function(props, default_events = undefined) {
 	
 		props.events = yui_apply_props(props.events, default_events, base_events);
 		props.events.on_mouse_down = yui_bind_handler(props.events.on_mouse_down, resources, slot_values);
@@ -103,7 +105,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		if props.tooltip != undefined {
 			var tooltip_props = {
 				type: "popup",
-				_type: "popup",
+				element_type: "popup",
 				content: props.tooltip,
 				placement: props.tooltip_placement,
 				size: { max_w: props.tooltip_width },

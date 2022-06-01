@@ -167,7 +167,7 @@ resize = yui_resize_instance;
 findAncestor = function(type) {
 	var ancestor = parent;
 	while ancestor != undefined {
-		if ancestor.yui_element.props._type == type {
+		if ancestor.yui_element.element_type == type {
 			return ancestor;
 		}
 		ancestor = ancestor.parent;
@@ -209,4 +209,5 @@ setHighlight = function (highlight) {
 		}
 	}
 }
+
 
