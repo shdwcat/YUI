@@ -13,16 +13,11 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		border_thickness: undefined,
 	}
 	
-	props = yui_apply_props(_props);
+	props = yui_apply_element_props(_props);
 	
 	baseInit(props);
 	
 	props.placement = yui_bind(props.placement, resources, slot_values);
-	
-	// TODO: clean up initializing props from theme
-	if props.background == undefined {
-		props.background = theme.popup.background;
-	}
 	
 	// resolve slot/resource (not bindable currently)
 	var background_expr = yui_bind(props.background, resources, slot_values);
@@ -42,19 +37,8 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		bg_sprite = undefined;
 	}
 	
-	if props.border_color == undefined {
-		props.border_color = theme.popup.border_color;
-	}
-	else {
-		props.border_color = yui_resolve_color(props.border_color);
-	}
+	props.border_color = yui_resolve_color(props.border_color);
 	
-	if props.border_thickness == undefined {
-		props.border_thickness = theme.popup.border_thickness;
-	}
-	if props.padding == undefined {
-		props.padding = theme.popup.padding;
-	}
 	props.padding = yui_resolve_padding(props.padding)
 	
 	content_element = yui_resolve_element(props.content, resources, slot_values);

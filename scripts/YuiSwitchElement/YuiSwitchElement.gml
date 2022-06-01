@@ -8,7 +8,7 @@ function YuiSwitchElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		strict: false,
 	}
 	
-	props = yui_apply_props(_props);
+	props = yui_apply_element_props(_props);
 	
 	baseInit(props);
 	

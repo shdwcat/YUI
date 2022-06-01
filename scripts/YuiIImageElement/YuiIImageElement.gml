@@ -13,7 +13,7 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		blend_color: c_white,
 	};
 	
-	props = yui_apply_props(_props);
+	props = yui_apply_element_props(_props);
 	
 	baseInit(props);
 	

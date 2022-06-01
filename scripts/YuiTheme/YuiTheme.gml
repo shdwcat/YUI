@@ -16,7 +16,6 @@ function YuiTheme(_theme_id, _props) constructor {
 		},
 		panel: {
 			background: undefined,
-			padding: 30,
 			spacing: 5,
 		},
 		button: {
@@ -24,8 +23,8 @@ function YuiTheme(_theme_id, _props) constructor {
 			padding: [10, 5],
 		},
 		popup: {
-			background: yui_color_from_hex_string("#06162A"),
-			border_color: yui_color_from_hex_string("#2183C0"),
+			background: "#06162A",
+			border_color: "#2183C0",
 			border_thickness: 1.5,
 			padding: 5,
 		},

@@ -24,7 +24,7 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 		content: undefined,
 	};
 	
-	props = yui_apply_props(_props);
+	props = yui_apply_element_props(_props);
 	
 	baseInit(props);
 	

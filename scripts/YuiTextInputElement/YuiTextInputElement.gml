@@ -29,20 +29,13 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 		on_text_changed: undefined,
 	}
 	
-	props = yui_apply_props(_props);
+	props = yui_apply_element_props(_props);
 	
 	baseInit(props, default_events);
 	
 	props.events.on_text_changed = yui_bind_handler(props.events.on_text_changed, resources, slot_values);
 	
 	props.max_chars = min(props.max_chars, YUI_MAX_INPUT_CHARS);
-	
-	// apply theme defaults
-	props.padding ??= theme.text_input.padding;
-	props.background ??= theme.text_input.background;
-	props.border_color ??= theme.text_input.border_color;
-	props.border_thickness ??= theme.text_input.border_thickness;
-	props.border_focus_color ??= theme.text_input.border_focus_color;
 	
 	props.padding = yui_resolve_padding(props.padding);
 	

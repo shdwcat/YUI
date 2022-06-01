@@ -26,21 +26,19 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		template: undefined, // the template to use when rendering elements from the path
 	};
 	
-	props = yui_apply_props(_props);
+	props = yui_apply_element_props(_props);
 	
 	baseInit(props);
 	
-	props.elements = yui_bind(props.elements, resources, slot_values);
-	
-	spacing = props.spacing == undefined ? theme.panel.spacing : props.spacing;
 	props.padding = yui_resolve_padding(props.padding);
+	
+	props.elements = yui_bind(props.elements, resources, slot_values);
 	
 	// live binding this is not (yet?) supported, but this enables $slot support
 	props.layout = yui_bind(props.layout, resources, slot_values);
 	
 	var makeLayout = yui_resolve_layout(props.layout);
-	// TODO: padding isn't used so remove it
-	layout = new makeLayout(alignment, spacing);
+	layout = new makeLayout(alignment, props.spacing);
 	layout.trace = props.trace;
 	
 	// resolve slot/resource (not bindable currently)
@@ -66,10 +64,10 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	uses_template = props.template != undefined;
 	
-	if uses_template {		
+	if uses_template {
 		if props.elements == undefined throw "cannot use 'template' without 'elements'";
 		
-		item_element = yui_resolve_element(props.template, resources, slot_values, props.id + ":T");	
+		item_element = yui_resolve_element(props.template, resources, slot_values, props.id + ":T");
 	}
 	else {
 		// generate item_elements if we have explicit elements
