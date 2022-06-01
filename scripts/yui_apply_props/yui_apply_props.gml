@@ -39,6 +39,6 @@ function yui_apply_props(instance_data) {
 }
 
 function yui_apply_element_props(instance_data) {
-	return yui_apply_props(instance_data, type_theme, default_props, base_props);
+	return yui_apply_props(instance_data, element_theme, default_props, base_props);
 }
 
