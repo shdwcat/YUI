@@ -1,4 +1,5 @@
 id: window_title_drag
+file_type: interaction
 type: drag_and_drop
 
 drag:

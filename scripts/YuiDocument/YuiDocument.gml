@@ -40,13 +40,13 @@ function YuiDocument(_yui_file) constructor {
 		document = yui_apply_props(file_data);
 		
 		// resolve imports
-		var yui_folder = filename_dir(yui_filepath);		
+		var yui_folder = filename_dir(yui_filepath);
 		resources = yui_resolve_resource_imports(
 			document.resources,
 			document.import,
 			yui_folder);
 		
 		// resolve root element
-		root_element = yui_resolve_element(document.root, resources, undefined, document.id);		
+		root_element = yui_resolve_element(document.root, resources, undefined, document.id);
 	}
 }

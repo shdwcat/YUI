@@ -14,13 +14,6 @@ function yui_resolve_resource_imports(resources, imports, yui_folder) {
 			throw "File not found! " + resource_filepath;
 		}
 		
-		// don't try to load non-yui files (might be an interaction or such)
-		var tokens = yui_string_split(import_item, ".");
-		var last_token = tokens[array_length(tokens) - 1];
-		if last_token != "yui" {
-			continue;
-		}
-		
 		// load the text
 		var resource_file_text = string_from_file(resource_filepath);
 		
@@ -30,6 +23,11 @@ function yui_resolve_resource_imports(resources, imports, yui_folder) {
 		var trace = resource_data[$ "trace"];
 		if trace {
 			DEBUG_BREAK_YUI
+		}
+		
+		// only load resource files
+		if resource_data.file_type != "resources" {
+			continue;
 		}
 		
 		// get the inner resources from the imported resource file
