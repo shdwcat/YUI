@@ -1,9 +1,8 @@
 /// @description
-function Cabinet(folder_path, extension = ".*", options = undefined, generator = undefined) constructor {
+function Cabinet(folder_path, extension = ".*", options = undefined) constructor {
 
 	self.folder_path = folder_path;
 	self.extension = extension;
-	self.generator = generator;
 	
 	self.options = new CabinetOptions(options);
 	
@@ -61,8 +60,8 @@ function Cabinet(folder_path, extension = ".*", options = undefined, generator =
 		});
 		
 		// apply customization
-		if generator {
-			generator(result);
+		if options.cabinet_file_customizer {
+			options.cabinet_file_customizer(result);
 		}
 		
 		// point the flat_map entry at the cabinet file
@@ -185,6 +184,10 @@ function CabinetOptions(options = {}) constructor {
 		throw "CabinetOptions.read_mode must be either 'string' or 'binary'";
 	}
 	
+	// function to modify the CabinetFile with additional data
+	cabinet_file_customizer = options[$ "cabinet_file_customizer"];
+	
+	// function to convert the raw file contents into another value (e.g. a struct or sprite etc)
 	file_value_generator = options[$ "file_value_generator"];
 }
 
