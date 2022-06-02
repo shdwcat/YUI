@@ -9,18 +9,17 @@ interactions = {};
 
 yui_file_generator = function (text, cabinet_file) {
 	var snap = snap_from_yui(text);
-	var type = snap[$ "file_type"] ?? "unknown";
-	switch type {
+	
+	switch cabinet_file.file_type {
 		case "screen":
-			screens[$ snap.id] = cabinet_file;
-			break;
+			return snap;
+			
 		case "interaction":
-			interactions[$ snap.id] = cabinet_file;
-			cabinet_file.interaction_type = snap.type;
-			break;
+			var interaction = yui_resolve_interaction(snap);
+			return interaction;
+			
 		case "resources":
-			// nothing custom yet
-			break;
+			return snap;
 	}
 }
 
@@ -29,7 +28,28 @@ var options = {
 };
 
 yui_cabinet = new Cabinet(YUI_DATA_SUBFOLDER, ".yui", options, function(cabinet_file) {
-	cabinet_file.tryRead();
+	
+	// scan the file type
+	var file_type = cabinet_file.tryScanLines(function (line) {
+		if string_pos("file_type: ", line) == 1 {
+			return string_copy(line, 12, string_length(line) - 13);
+		}
+	});
+	
+	// store the file type and track special files
+	cabinet_file.file_type = file_type;
+	switch file_type {
+		case "screen":
+			screens[$ cabinet_file.file_id] = cabinet_file;
+			break;
+			
+		case "interaction":
+			interactions[$ cabinet_file.file_id] = cabinet_file;
+			break;
+			
+		case "resources":
+			break;
+	}
 });
 
 yui_log("loaded globals");

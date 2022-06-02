@@ -32,12 +32,13 @@ function Cabinet(folder_path, extension = ".*", options = undefined, generator =
 	}
 	
 	static __generateCabinetItem = function(directory, file, extension, index) {
+		
 		var result = new CabinetFile(self, {
 			fullpath: directory + file,
 			directory: directory,
 			file: file,
 			extension: extension,
-		})
+		});
 		
 		// apply customization
 		if generator {
@@ -57,6 +58,11 @@ function CabinetFile(cabinet, data) constructor {
 	directory = data.directory;
 	file = data.file;
 	extension = data.extension;
+	
+	// calculate file_id (the name of the file without the extension)
+	var filename_len = string_length(file);
+	var extension_len = string_length(extension);
+	file_id = string_copy(file, 1, filename_len - extension_len);
 	
 	scan_time = date_datetime_string(date_current_datetime());
 	read_time = undefined;
@@ -84,6 +90,23 @@ function CabinetFile(cabinet, data) constructor {
 			
 		if file_exists(fullpath)
 			return __readFile(fullpath);
+	}
+	
+	static tryScanLines = function(match_line) {
+		if file_exists(fullpath) {
+			var file = file_text_open_read(fullpath)
+			
+			while !file_text_eof(file) {
+				var line = file_text_readln(file);
+				var match = match_line(line);
+				if match != undefined {
+					file_text_close(file);
+					return match;
+				}
+			}
+			
+			file_text_close(file);
+		}
 	}
 	
 	static __readFile = function() {
@@ -137,3 +160,4 @@ function CabinetOptions(options = {}) constructor {
 	
 	file_value_generator = options[$ "file_value_generator"];
 }
+
