@@ -1,14 +1,11 @@
 /// @description
-function Cabinet(folder_path, extension, options, generator = undefined) constructor {
+function Cabinet(folder_path, extension = ".*", options = undefined, generator = undefined) constructor {
 
 	self.folder_path = folder_path;
 	self.extension = extension;
 	self.generator = generator;
 	
-	//self.options = options ?? {};
-	//self.options.file_options = options[$ "file_options"] ?? {}
-	//self.options.file_options.cache_reads
-	cache_reads = true;
+	self.options = new CabinetOptions(options);
 
 	// flat view of the folder tree (indexed by full filepath)
 	flat_map = {};
@@ -21,6 +18,17 @@ function Cabinet(folder_path, extension, options, generator = undefined) constru
 	
 	static clearCache = function() {
 		cache = {};
+	}
+	
+	static file = function(path) {
+		return flat_map[$ path];
+	}
+	
+	static readFile = function(path) {
+		var file = self.file(path);
+		if file != undefined {
+			return file.tryRead();
+		}
 	}
 	
 	static __generateCabinetItem = function(directory, file, extension, index) {
@@ -53,10 +61,10 @@ function CabinetFile(cabinet, data) constructor {
 	scan_time = date_datetime_string(date_current_datetime());
 	read_time = undefined;
 	
-	static tryLoadText = function() {
+	static tryLoad = function() {
 		
 		// try to read the file
-		var text = file_exists(fullpath) ? __readFileAsString(fullpath) : undefined;
+		var text = file_exists(fullpath) ? __readFile(fullpath) : undefined;
 		
 		// if we read the file, cache it, track the time, and return it
 		if text != undefined {
@@ -66,16 +74,35 @@ function CabinetFile(cabinet, data) constructor {
 		}
 	}
 	
-	static tryReadText = function() {
+	static tryRead = function() {
 		var cached_text = cabinet.cache[$ fullpath];
 		if cached_text != undefined
 			return cached_text;
 
-		if cabinet.cache_reads
-			return tryLoadText();
+		if cabinet.options.cache_reads
+			return tryLoad();
 			
 		if file_exists(fullpath)
-			return __readFileAsString(fullpath);
+			return __readFile(fullpath);
+	}
+	
+	static __readFile = function() {
+		switch cabinet.options.read_mode {
+			case "string":
+				var text = __readFileAsString(fullpath);
+				if cabinet.options.file_value_generator {
+					return cabinet.options.file_value_generator(text, self);
+				}
+				else {
+					return text;
+				}
+			case "binary":
+				return __readFileAsBinary(fullpath);
+		}
+	}
+	
+	static __readFileAsBinary = function(_filename) {
+		throw "TODO";
 	}
 	
 	// adapted from SNAP by Juju via https://github.com/JujuAdams/SNAP
@@ -92,4 +119,21 @@ function CabinetFile(cabinet, data) constructor {
 		buffer_delete(_buffer);
 		return _string;
 	}
+}
+
+function CabinetOptions(options = {}) constructor {
+	// whether to cache file contents after reading once
+	cache_reads = options[$ "cache_reads"] ?? true;
+	
+	// if set, a file will be reloaded if the timeout has elapsed since it was last read
+	//cache_timeout = options[$ "cache_timeout"];
+	
+	// whether to read files as strings or binary
+	read_mode = options[$ "read_mode"] ?? "string";
+	
+	if read_mode != "string" && read_mode != "binary" {
+		throw "CabinetOptions.read_mode must be either 'string' or 'binary'";
+	}
+	
+	file_value_generator = options[$ "file_value_generator"];
 }
