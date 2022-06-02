@@ -1,7 +1,5 @@
 /// @description init
 
-runner_temp_folder = yui_get_runner_temp_folder();
-
 selection_scopes = ds_map_create();
 
 screens = {};
@@ -53,7 +51,7 @@ yui_cabinet = new Cabinet(yui_data_folder, ".yui", options, function(cabinet_fil
 	}
 });
 
-yui_log("loaded globals");
+yui_log("YuiGlobals: loaded");
 
 
 

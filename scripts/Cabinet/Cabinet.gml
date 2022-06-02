@@ -6,15 +6,19 @@ function Cabinet(folder_path, extension = ".*", options = undefined, generator =
 	self.generator = generator;
 	
 	self.options = new CabinetOptions(options);
-
-	// flat view of the folder tree (indexed by full filepath)
-	flat_map = {};
 	
 	// stores cached reads for any files in this cabinet
 	cache = {};
 	
-	file_list = gumshoe(folder_path, extension);
-	tree = gumshoe(folder_path, extension, true, __generateCabinetItem);
+	rescan();
+	
+	static rescan = function() {
+		// flat view of the folder tree (indexed by full filepath)
+		flat_map = {};
+		
+		file_list = gumshoe(folder_path, extension);
+		tree = gumshoe(folder_path, extension, true, __generateCabinetItem);
+	}
 	
 	static clearCache = function() {
 		cache = {};
@@ -51,6 +55,8 @@ function Cabinet(folder_path, extension = ".*", options = undefined, generator =
 		return result;
 	}
 }
+
+/// @description
 function CabinetFile(cabinet, data) constructor {
 	self.cabinet = cabinet;
 	
@@ -148,6 +154,7 @@ function CabinetFile(cabinet, data) constructor {
 	}
 }
 
+/// @description
 function CabinetOptions(options = {}) constructor {
 	// whether to cache file contents after reading once
 	cache_reads = options[$ "cache_reads"] ?? true;

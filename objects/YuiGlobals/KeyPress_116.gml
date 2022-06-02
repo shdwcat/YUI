@@ -1,6 +1,11 @@
-/// @description - reload interactions
-
-// TODO clear cabinet cache, call document reloads from here
+/// @description reload UI
 
 yui_cabinet.clearCache();
-//yui_cabinet.rescan();
+screens = {};
+interactions = {};
+yui_cabinet.rescan();
+
+with yui_document {
+	reload();
+	yui_log("reloaded screen: " + yui_file);
+}
