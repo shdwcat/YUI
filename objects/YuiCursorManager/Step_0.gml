@@ -4,9 +4,6 @@
 var mouse_gui_x = device_mouse_x_to_gui(device_index);
 var mouse_gui_y = device_mouse_y_to_gui(device_index);
 
-// get mouse position once per frame
-
-
 // ===== run mouse hover logic =====
 
 if !ds_list_empty(hover_list) {
