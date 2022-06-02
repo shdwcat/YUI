@@ -26,6 +26,7 @@ function Cabinet(folder_path, extension = ".*", options = undefined, generator =
 	
 	static file = function(path) {
 		path = string_replace_all(path, "/", "\\");
+		path = __fixPath(path);
 		return flat_map[$ path];
 	}
 	
@@ -34,6 +35,20 @@ function Cabinet(folder_path, extension = ".*", options = undefined, generator =
 		if file != undefined {
 			return file.tryRead();
 		}
+	}
+	
+	static __fixPath = function(path) {
+		var fixed_path = path;
+		
+		var pos = string_pos("..\\", fixed_path);
+		while pos != 0 {
+			var previous_directory_pos = string_last_pos_ext("\\", fixed_path, pos - 2);
+			fixed_path = string_delete(fixed_path, previous_directory_pos, pos - previous_directory_pos + 2);
+			
+			pos = string_pos("..\\", fixed_path);
+		}
+		
+		return fixed_path;
 	}
 	
 	static __generateCabinetItem = function(directory, file, extension, index) {
