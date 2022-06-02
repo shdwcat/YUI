@@ -16,7 +16,7 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 		flat_map = {};
 		
 		file_list = gumshoe(folder_path, extension);
-		tree = gumshoe(folder_path, extension, true, __generateCabinetItem);
+		tree = gumshoe(folder_path, extension, true, true, __generateCabinetItem);
 	}
 	
 	static clearCache = function() {
