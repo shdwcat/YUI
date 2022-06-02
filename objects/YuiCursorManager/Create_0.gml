@@ -2,9 +2,6 @@
 
 // ===== interactions =====
 
-// the map of interaction names to interactions
-interaction_map = yui_load_interactions();
-
 // hash of interaction.role strings to ids
 participation_hash = new YuiStringHashMap("participation_hash");
 
@@ -119,5 +116,6 @@ trackMouseDownItems = function(button) {
 		i--;
 	}
 }
+
 
 

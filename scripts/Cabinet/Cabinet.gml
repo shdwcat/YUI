@@ -70,20 +70,20 @@ function CabinetFile(cabinet, data) constructor {
 	static tryLoad = function() {
 		
 		// try to read the file
-		var text = file_exists(fullpath) ? __readFile(fullpath) : undefined;
+		var file_result = file_exists(fullpath) ? __readFile(fullpath) : undefined;
 		
 		// if we read the file, cache it, track the time, and return it
-		if text != undefined {
-			cabinet.cache[$ fullpath] = text;
+		if file_result != undefined {
+			cabinet.cache[$ fullpath] = file_result;
 			read_time = date_datetime_string(date_current_datetime());
-			return text;
+			return file_result;
 		}
 	}
 	
 	static tryRead = function() {
-		var cached_text = cabinet.cache[$ fullpath];
-		if cached_text != undefined
-			return cached_text;
+		var cached_file = cabinet.cache[$ fullpath];
+		if cached_file != undefined
+			return cached_file;
 
 		if cabinet.options.cache_reads
 			return tryLoad();
@@ -93,6 +93,10 @@ function CabinetFile(cabinet, data) constructor {
 	}
 	
 	static tryScanLines = function(match_line) {
+		if cabinet.options.read_mode != "string" {
+			throw "CabinetFile Error: cannot use tryScanLines when read_mode is: " + cabinet.options.read_mode;
+		}
+		
 		if file_exists(fullpath) {
 			var file = file_text_open_read(fullpath)
 			
@@ -160,4 +164,5 @@ function CabinetOptions(options = {}) constructor {
 	
 	file_value_generator = options[$ "file_value_generator"];
 }
+
 

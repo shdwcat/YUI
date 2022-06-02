@@ -1,16 +1,21 @@
 /// @description starts an interaction if it is valid to do so (via checking interaction.canStart())
-function yui_try_start_interaction(interaction, source_data, event) {
+function yui_try_start_interaction(interaction_name, source_data, event) {
 	
-	if is_string(interaction) {
+	if !is_string(interaction_name) {
+		throw yui_error("yui_try_start_interaction() - interaction_name must be a string");
+	}
 		
-		if !variable_struct_exists(YuiCursorManager.interaction_map, interaction) {
-			if debug_mode {
-				show_message("Could not find interaction with name: " + interaction);
-			}
-			return false;
+	var interaction_file = YuiGlobals.interactions[$ interaction_name];
+	if interaction_file == undefined {
+		if debug_mode {
+			show_message("Could not find interaction with name: " + interaction);
 		}
+		return false;
+	}
 		
-		interaction = YuiCursorManager.interaction_map[$ interaction];
+	var interaction = interaction_file.tryRead();
+	if interaction == undefined {
+		throw yui_error("unable to read interaction from file: " + interaction_file.fullpath);
 	}
 
 	var can_start = interaction.canStart(source_data);

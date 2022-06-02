@@ -27,7 +27,8 @@ var options = {
 	file_value_generator: yui_file_generator,
 };
 
-yui_cabinet = new Cabinet(YUI_DATA_SUBFOLDER, ".yui", options, function(cabinet_file) {
+var yui_data_folder = YUI_LOCAL_PROJECT_DATA_FOLDER + YUI_DATA_SUBFOLDER;
+yui_cabinet = new Cabinet(yui_data_folder, ".yui", options, function(cabinet_file) {
 	
 	// scan the file type
 	var file_type = cabinet_file.tryScanLines(function (line) {
@@ -53,6 +54,7 @@ yui_cabinet = new Cabinet(YUI_DATA_SUBFOLDER, ".yui", options, function(cabinet_
 });
 
 yui_log("loaded globals");
+
 
 
 
