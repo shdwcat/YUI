@@ -25,6 +25,7 @@ function Cabinet(folder_path, extension = ".*", options = undefined, generator =
 	}
 	
 	static file = function(path) {
+		path = string_replace_all(path, "/", "\\");
 		return flat_map[$ path];
 	}
 	

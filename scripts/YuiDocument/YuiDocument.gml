@@ -30,11 +30,11 @@ function YuiDocument(_yui_file) constructor {
 			return;
 		}
 		
-		// load the file data from disk
-		yui_log("loading yui_file:", yui_filepath);
-		var file_text = string_from_file(yui_filepath);
+		var cabinet_file = YuiGlobals.yui_cabinet.file(yui_filepath);
 		
-		var file_data = snap_from_yui(file_text);
+		// load the file data (possibly cached)
+		yui_log("loading yui_file:", yui_filepath);
+		var file_data = cabinet_file.tryRead();
 		
 		// apply default props
 		document = yui_apply_props(file_data);
