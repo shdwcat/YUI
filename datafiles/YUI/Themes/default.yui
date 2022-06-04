@@ -1,0 +1,43 @@
+file_type: theme
+
+theme:
+  
+  // overrides default values for the specified element
+  elements:
+
+    text_input:
+      background: #06162A
+      border_color: grey
+      border_focus_color: white
+      border_thickness: 1
+      padding: 7
+    
+    panel:
+      background: null
+      spacing: 5
+    
+    button:
+      background: yui_button_bg
+      padding: [10, 5]
+    
+    popup:
+      background: #06162A
+      border_color: #2183C0
+      border_thickness: 1.5
+      padding: 5
+
+  // used for text.text_style (or text_input.text_style) to set the font and color
+  // this enables you to adjust style values in one place rather than in each text element
+  text_styles:
+
+    title:
+      font: fnt_yui_title
+      color: white
+
+    subtitle:
+      font: fnt_yui_subtitle
+      color: white
+
+    body:
+      font: fnt_yui_body
+      color: white

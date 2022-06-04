@@ -34,13 +34,10 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	
 	highlight_color = yui_resolve_color(yui_bind(props.highlight_color, resources, slot_values));
 			
-	var font = props.font ?? text_style.font;
-	if !is_string(font) font = font_get_name(font);
-	else if !asset_get_index(font) {
-		yui_warning ("could not find font with font name:", font, "- reverting to text_style.font");
-		font = font_get_name(text_style.font);
+	font = props.font ?? text_style.font;
+	if !is_string(font) {
+		throw yui_error("Expecting font name");
 	}
-	self.font = font;
 	
 	is_text_live = yui_is_live_binding(props.text);
 	

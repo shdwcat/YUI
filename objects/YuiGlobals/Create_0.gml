@@ -4,6 +4,7 @@ selection_scopes = ds_map_create();
 
 screens = {};
 interactions = {};
+themes = {};
 
 var yui_file_customizer = function(cabinet_file) {
 	
@@ -25,6 +26,10 @@ var yui_file_customizer = function(cabinet_file) {
 			interactions[$ cabinet_file.file_id] = cabinet_file;
 			break;
 			
+		case "theme":
+			themes[$ cabinet_file.file_id] = cabinet_file;
+			break;
+			
 		case "resources":
 			break;
 	}
@@ -34,14 +39,11 @@ var yui_file_generator = function (text, cabinet_file) {
 	var snap = snap_from_yui(text);
 	
 	switch cabinet_file.file_type {
-		case "screen":
-			return snap;
-			
 		case "interaction":
 			var interaction = yui_resolve_interaction(snap);
 			return interaction;
 			
-		case "resources":
+		default:
 			return snap;
 	}
 }
@@ -55,6 +57,7 @@ var yui_data_folder = YUI_LOCAL_PROJECT_DATA_FOLDER + YUI_DATA_SUBFOLDER;
 yui_cabinet = new Cabinet(yui_data_folder, ".yui", options);
 
 yui_log("YuiGlobals: loaded");
+
 
 
 

@@ -524,6 +524,7 @@
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"menu.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Interactions","resourceVersion":"1.0","name":"window_title_drag.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"child_window.yui","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/YUI/Themes","resourceVersion":"1.0","name":"default.yui","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
     "IDEVersion": "2022.300.0.499",
