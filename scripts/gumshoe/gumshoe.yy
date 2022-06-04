@@ -3,7 +3,7 @@
   "isCompatibility": false,
   "parent": {
     "name": "Cabinet",
-    "path": "folders/Packages - YUI/Cabinet.yy",
+    "path": "folders/Cabinet.yy",
   },
   "resourceVersion": "1.0",
   "name": "gumshoe",

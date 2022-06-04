@@ -1,4 +1,7 @@
-/// @description
+/// @description scans a folder on disk for files and tracks information about the files found
+/// @param folder_path
+/// @param extension
+/// @param options
 function Cabinet(folder_path, extension = ".*", options = undefined) constructor {
 
 	self.folder_path = folder_path;
@@ -11,6 +14,7 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 	
 	rescan();
 	
+	// regenerates the tree/file_list/flat_map from disk
 	static rescan = function() {
 		// flat view of the folder tree (indexed by full filepath)
 		flat_map = {};
@@ -19,16 +23,20 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 		tree = gumshoe(folder_path, extension, true, true, __generateCabinetItem);
 	}
 	
+	// clears the cached values for this Cabinet (and all associated CabinetFiles)
 	static clearCache = function() {
 		cache = {};
 	}
 	
+	// gets the CabinetFile corresponding to the provided 'path' if it exists
 	static file = function(path) {
+		// TODO: use platform safe logic here (from nik's gumshoe fixes)
 		path = string_replace_all(path, "/", "\\");
 		path = __fixPath(path);
 		return flat_map[$ path];
 	}
 	
+	// gets the content from the CabinetFile for the provided 'path' (possibly cached)
 	static readFile = function(path) {
 		var file = self.file(path);
 		if file != undefined {
@@ -36,6 +44,7 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 		}
 	}
 	
+	// fixes the provided path by resolving '..' segments to the appropriate final directory
 	static __fixPath = function(path) {
 		var fixed_path = path;
 		
@@ -50,6 +59,8 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 		return fixed_path;
 	}
 	
+	// creates and tracks the CabinetFile for the provided file information,
+	// and applies customization logic from cabinet options if present
 	static __generateCabinetItem = function(directory, file, extension, index) {
 		
 		var result = new CabinetFile(self, {
@@ -71,7 +82,9 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 	}
 }
 
-/// @description
+/// @description Tracks a data file found on disk by the associated Cabinet
+/// @param the Cabinet associated with this CabinetFile
+/// @param the data for the file (directory, filename, etc)
 function CabinetFile(cabinet, data) constructor {
 	self.cabinet = cabinet;
 	
@@ -88,6 +101,22 @@ function CabinetFile(cabinet, data) constructor {
 	scan_time = date_datetime_string(date_current_datetime());
 	read_time = undefined;
 	
+	// Returns the contents of the file, from the cache if possible or from disk if it exists.
+	// If a fileValueGenerator was specified in the cabinet options, that function
+	// will be applied to the raw file content before returning (or caching) the value.
+	static tryRead = function() {
+		var cached_file = cabinet.cache[$ fullpath];
+		if cached_file != undefined
+			return cached_file;
+
+		if cabinet.options.cache_reads
+			return tryLoad();
+			
+		if file_exists(fullpath)
+			return __readFile(fullpath);
+	}
+	
+	// if the file exists on disk, will load the file from disk and cache it, then return it
 	static tryLoad = function() {
 		
 		// try to read the file
@@ -101,18 +130,9 @@ function CabinetFile(cabinet, data) constructor {
 		}
 	}
 	
-	static tryRead = function() {
-		var cached_file = cabinet.cache[$ fullpath];
-		if cached_file != undefined
-			return cached_file;
-
-		if cabinet.options.cache_reads
-			return tryLoad();
-			
-		if file_exists(fullpath)
-			return __readFile(fullpath);
-	}
-	
+	// Opens the associated file and scans lines one by one until match_line(line) returns a value
+	// then returns that value.
+	// Useful for reading 'header' info without loading the whole file into memmory.
 	static tryScanLines = function(match_line) {
 		if cabinet.options.read_mode != "string" {
 			throw "CabinetFile Error: cannot use tryScanLines when read_mode is: " + cabinet.options.read_mode;
@@ -134,6 +154,7 @@ function CabinetFile(cabinet, data) constructor {
 		}
 	}
 	
+	// reads file content from disk according to options.read_mode
 	static __readFile = function() {
 		switch cabinet.options.read_mode {
 			case "string":
@@ -149,8 +170,9 @@ function CabinetFile(cabinet, data) constructor {
 		}
 	}
 	
-	static __readFileAsBinary = function(_filename) {
-		throw "TODO";
+	static __readFileAsBinary = function(filename) {
+		var buffer = buffer_load(filename);
+		return buffer;
 	}
 	
 	// adapted from SNAP by Juju via https://github.com/JujuAdams/SNAP
@@ -169,7 +191,7 @@ function CabinetFile(cabinet, data) constructor {
 	}
 }
 
-/// @description
+/// @description Options used by Cabinet. Created automatically from the options struct passed to Cabinet constructor.
 function CabinetOptions(options = {}) constructor {
 	// whether to cache file contents after reading once
 	cache_reads = options[$ "cache_reads"] ?? true;
@@ -184,11 +206,10 @@ function CabinetOptions(options = {}) constructor {
 		throw "CabinetOptions.read_mode must be either 'string' or 'binary'";
 	}
 	
-	// function to modify the CabinetFile with additional data
-	cabinet_file_customizer = options[$ "cabinet_file_customizer"];
-	
 	// function to convert the raw file contents into another value (e.g. a struct or sprite etc)
 	file_value_generator = options[$ "file_value_generator"];
+	
+	// function to modify the CabinetFile with additional data
+	cabinet_file_customizer = options[$ "cabinet_file_customizer"];
 }
-
 

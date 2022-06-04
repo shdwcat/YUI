@@ -1,4 +1,5 @@
-/*More info for nerds that care:
+/*
+More info for nerds that care:
 Back in MS-DOS days all filesystem entries had to follow the 8+3 formula
 (name + extension)
 And when you made a folder, it's extension part would be an empty string.
@@ -32,7 +33,7 @@ On Microsoft platforms this flag does nothing as the file system is not case sen
 /// @param fileExtension
 /// @param returnStruct
 /// @param [forceLCNames] Force lowercase names on non-MSFT platforms, see comment(s) above for an explanation.
-/// @param [structValueGenerator] when returnStruct = true, function that generates the value for the file
+/// @param [structValueGenerator] when returnStruct = true, function that generates the value for the file (params: directiory, file, extension, index)
 function gumshoe(_directory, _extension, _return_struct = false, _force_lcnames = true, _generator = undefined)
 {
     //Microsoft platforms handle wildcards and patterns slightly different than others (Linux or web based).
