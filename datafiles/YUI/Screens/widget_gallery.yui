@@ -25,6 +25,7 @@ root:
   type: panel
   padding: 30
   spacing: 10
+  theme: pink!
   
   elements:
     - type: back_button

@@ -5,6 +5,20 @@ function YuiExampleManager() constructor {
 		
 	app_name = "Example Project";
 	
+	static toggleTheme = function(theme_name) {
+		// so hacky
+		var first = YuiGlobals.themes[$"default"];
+		var second = YuiGlobals.themes[$"pink!"];
+		var first_path = first.fullpath;
+		first.fullpath = second.fullpath;
+		second.fullpath = first_path;
+		
+		YuiGlobals.yui_cabinet.clearCache();
+		with yui_document {
+			reload();
+		}
+	}
+	
 	var items_file = string_from_file("Example Data/inventory.yaml")
 	var inventory = snap_from_yaml(items_file);
 	

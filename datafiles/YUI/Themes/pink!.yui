@@ -1,22 +1,32 @@
 file_type: theme
 
 resources:
-  input_border_color: grey
+  input_border_color: #f2bacb
+  input_border_focus_color: white
+  button_bg: pink_button_cc0
+  //button_bg: #ea7ca5
+
+  panel_bg: #ea7ca5
+  panel_border_color: #f2bacb
+
+  input_border_thickness: 1
 
 theme:
   
   // overrides default values for the specified element
   elements:
-  
+
     main_panel:
-      background: yui_panel_bg
+      background: &panel_bg
+      border_color: &panel_border_color
+      border_thickness: 2
       spacing: 5
 
     text_input:
       background: #06162A
       border_color: &input_border_color
       border_focus_color: white
-      border_thickness: 1
+      border_thickness: &input_border_thickness
       padding: 7
     
     panel:
@@ -24,17 +34,16 @@ theme:
       spacing: 5
     
     button:
-      //background: yui_button_bg
-      background: #06162A
+      background: &button_bg
       border_color: &input_border_color
-      border_focus_color: white
-      border_thickness: 1
-      padding: [10, 5]
+      border_focus_color: &input_border_focus_color
+      border_thickness: 0 //&input_border_thickness
+      padding: [10, 10]
     
     popup:
-      background: #06162A
-      border_color: #2183C0
-      border_thickness: 1.5
+      background: #ca4d77
+      border_color: &input_border_color
+      border_thickness: &input_border_thickness
       padding: 5
 
   // used for text.text_style (or text_input.text_style) to set the font and color
@@ -42,13 +51,13 @@ theme:
   text_styles:
 
     title:
-      font: fnt_yui_title
+      font: fnt_comic_sans_20
       color: white
 
     subtitle:
-      font: fnt_yui_subtitle
+      font: fnt_comic_sans_16
       color: white
 
     body:
-      font: fnt_yui_body
+      font: fnt_comic_sans_12
       color: white

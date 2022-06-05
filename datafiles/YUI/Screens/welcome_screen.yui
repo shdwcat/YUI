@@ -8,6 +8,7 @@ import:
 root:
   type: panel // panel is used to layout and arrange child elements
   layout: canvas // canvas can be used to position elements arbitrarily within the panel, or along the edges
+  theme: pink!
   elements: // this defines the child elements of the canvas
 
     // helper message about live reload state
@@ -73,7 +74,13 @@ root:
         //   on_click: @@ e => yui_change_screen(sandbox, e.source)
 
     - type: button
-      id: main-menu-button // id is required when using the popup feature - must be unique to the screen!
+      content: Toggle Theme
+      canvas:
+        top: 10
+        right: 140
+      on_click: @toggleTheme()
+
+    - type: button
       content: Main Menu
       padding: 10 // padding sets the space between the button border and the content. Also applies to panels!
       canvas:
