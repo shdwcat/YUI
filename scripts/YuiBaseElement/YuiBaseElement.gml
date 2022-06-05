@@ -3,7 +3,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		id: "", // unique ID for this element, required to enabled animations and other effects
 		item_key: undefined, // identifies an element in an array (must bind to unique value on data!)
 		
-		theme: "default",
+		theme: undefined,
 		
 		layer: 0, // offset to apply to the layer depth
 		is_cursor_layer: false, // whether the element consumes cursor events
@@ -47,11 +47,16 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	// this is the type from the .yui declaration which may be a template or fragment name
 	yui_type = _props.yui_type; // TODO: string hash this for faster comparison
 	
+	var theme_name = _props[$ "theme"];
+	if theme_name != undefined {
+		// TODO apply theme to slot values
+	}
+	
 	resources = _resources;
 	slot_values = _slot_values;
 	
-	// resolve theme first so it can be used in yui_apply_props
-	theme = yui_resolve_theme(_props[$ "theme"]);
+	// grab the theme from the slot values
+	theme = slot_values.theme;
 	
 	// get the theme props for our type (applies template/fragment type first)
 	element_theme = theme.elements[$ yui_type] ?? theme.elements[$ _props.type];
