@@ -45,7 +45,7 @@ resources:
         // select the item
         - item => $selection_scope.select(item)
         // invoke the user handler
-        - $on_item_selected
+        - item => $on_item_selected(item)
 
     template:
       type: button
