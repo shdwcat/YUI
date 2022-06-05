@@ -38,6 +38,13 @@ arrange = function(available_size, viewport_size) {
 	return size;
 }
 
+border_move = move;
+move = function(xoffset, yoffset) {
+	border_move(xoffset, yoffset);
+	caret_x += xoffset;
+	caret_y += yoffset;
+}
+
 left_click = function() {
 	if focusable && !focused {
 		YuiCursorManager.setFocus(id);
@@ -68,5 +75,6 @@ on_lost_focus = function() {
 	original_text = undefined;
 	update = false;
 }
+
 
 
