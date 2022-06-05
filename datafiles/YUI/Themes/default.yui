@@ -1,5 +1,8 @@
 file_type: theme
 
+resources:
+  input_border_color: grey
+
 theme:
   
   // overrides default values for the specified element
@@ -7,7 +10,7 @@ theme:
 
     text_input:
       background: #06162A
-      border_color: grey
+      border_color: &input_border_color
       border_focus_color: white
       border_thickness: 1
       padding: 7
@@ -17,7 +20,11 @@ theme:
       spacing: 5
     
     button:
-      background: yui_button_bg
+      //background: yui_button_bg
+      background: #06162A
+      border_color: &input_border_color
+      border_focus_color: white
+      border_thickness: 1
       padding: [10, 5]
     
     popup:

@@ -7,7 +7,7 @@ function yui_resolve_theme(theme_name = "default") {
 		throw yui_error("Unable to find theme with name: " + theme_name);
 	}
 	
-	var theme_data = theme_file.tryRead();
+	var theme = theme_file.tryRead();
 	
-	return theme_data.theme;
+	return theme;
 }

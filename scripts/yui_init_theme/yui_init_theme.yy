@@ -6,7 +6,7 @@
     "path": "folders/Packages - YUI/Themes.yy",
   },
   "resourceVersion": "1.0",
-  "name": "YuiTheme",
+  "name": "yui_init_theme",
   "tags": [],
   "resourceType": "GMScript",
 }

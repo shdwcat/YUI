@@ -43,6 +43,10 @@ var yui_file_generator = function (text, cabinet_file) {
 			var interaction = yui_resolve_interaction(snap);
 			return interaction;
 			
+		case "theme":
+			var theme = yui_init_theme(snap, cabinet_file.directory);
+			return theme;
+			
 		default:
 			return snap;
 	}
