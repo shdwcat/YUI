@@ -9,8 +9,8 @@ function yui_create_template_element(instance_props, template_definition, resour
 	// with the customized props from the instance_props
 	var template_element_props = snap_deep_copy(template_definition.template);
 	
-	// store the original type name for reflection purposes
-	template_element_props.element_type = instance_props.type;
+	// store the original .yui type name for reflection purposes
+	template_element_props.yui_type = instance_props.type;
 		
 	// TODO: handle collision where both define data_source
 	var instance_data_source = instance_props[$ "data_source"];

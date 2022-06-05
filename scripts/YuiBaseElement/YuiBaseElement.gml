@@ -44,8 +44,8 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		on_lost_focus: undefined,
 	};
 	
-	// this is the actual element type as defined in yui_resolve_element.element_map
-	element_type = _props.element_type; // TODO: string hash this for faster comparison
+	// this is the type from the .yui declaration which may be a template or fragment name
+	yui_type = _props.yui_type; // TODO: string hash this for faster comparison
 	
 	resources = _resources;
 	slot_values = _slot_values;
@@ -53,8 +53,8 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	// resolve theme first so it can be used in yui_apply_props
 	theme = yui_resolve_theme(_props[$ "theme"]);
 	
-	// get the theme props for our type (applies template type first)
-	element_theme = theme.elements[$ _props.type] ?? theme.elements[$ element_type];
+	// get the theme props for our type (applies template/fragment type first)
+	element_theme = theme.elements[$ yui_type] ?? theme.elements[$ _props.type];
 	
 	static baseInit = function(props, default_events = undefined) {
 	
@@ -108,7 +108,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		if props.tooltip != undefined {
 			var tooltip_props = {
 				type: "popup",
-				element_type: "popup",
+				yui_type: "popup",
 				content: props.tooltip,
 				placement: props.tooltip_placement,
 				size: { max_w: props.tooltip_width },

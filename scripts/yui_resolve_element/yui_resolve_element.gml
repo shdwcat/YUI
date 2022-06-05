@@ -52,9 +52,9 @@ function yui_resolve_element(yui_data, resources, slot_values, parent_id = undef
 		yui_data.id = (parent_id ?? "unknown parent") + "." + yui_data.type;
 	}
 	
-	// store the real type name for reflection purposes
-	if yui_data[$ "element_type"] == undefined {
-		yui_data.element_type = yui_data.type;
+	// store the .yui type name for reflection purposes
+	if yui_data[$ "yui_type"] == undefined {
+		yui_data.yui_type = yui_data.type;
 	}
 	
 	var element_constructor = element_map[$ yui_data.type];	

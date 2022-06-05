@@ -3,8 +3,8 @@ function yui_create_fragment_element(fragment_element_props, fragment_definition
 	
 	var content = snap_deep_copy(fragment_definition[$ "content"]);
 	
-	// store the original type name for reflection purposes
-	content.element_type = fragment_element_props.type;
+	// store the original .yui type name for reflection purposes
+	content.yui_type = fragment_element_props.type;
 	
 	
 	// copy property overrides from element props to definition content
