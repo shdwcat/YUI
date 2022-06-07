@@ -32,7 +32,7 @@ root:
 
     - type: scrollbox
       // trace: true
-      border_color: grey
+      background: #2f2f2f
       content:
 
         type: panel
@@ -57,21 +57,21 @@ root:
             text: @editable_text
             text_format: "Committed Text: {0}"
 
-          // - type: text
-          //   text: Scrollbox
-          //   text_style: subtitle
+          - type: text
+            text: Scrollbox
+            text_style: subtitle
 
-          // - type: scrollbox
-          //   //trace: true
-          //   size: { w: 300, h: 300 }
-          //   content_w: fit
-          //   //content_w: 400
-          //   //content_h: 700
-          //   content: 
-          //     type: text
-          //     //size: { w: 400 }
-          //     padding: 5
-          //     text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum dui orci, in venenatis ipsum elementum vitae. Integer sagittis neque in nibh mollis venenatis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed commodo ultricies dolor eget maximus. Duis non gravida nulla, vel tincidunt lectus. Vestibulum dapibus sapien a augue ultrices porttitor. Fusce ultrices lacus nisl. Vestibulum nisi velit, placerat sed lacus vel, tincidunt ultricies metus. Maecenas porta, justo in imperdiet iaculis, urna ipsum varius urna, porta bibendum enim lorem sit amet enim. Nullam mattis tincidunt augue, vitae ultrices magna faucibus vel. Nunc lorem nunc, commodo ut tincidunt id, sagittis sed ipsum. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+          - type: scrollbox
+            //trace: true
+            size: { w: 300, h: 100 }
+            content_w: fit
+            //content_w: 400
+            //content_h: 700
+            content: 
+              type: text
+              //size: { w: 400 }
+              padding: 5
+              text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum dui orci, in venenatis ipsum elementum vitae. Integer sagittis neque in nibh mollis venenatis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed commodo ultricies dolor eget maximus. Duis non gravida nulla, vel tincidunt lectus. Vestibulum dapibus sapien a augue ultrices porttitor. Fusce ultrices lacus nisl. Vestibulum nisi velit, placerat sed lacus vel, tincidunt ultricies metus. Maecenas porta, justo in imperdiet iaculis, urna ipsum varius urna, porta bibendum enim lorem sit amet enim. Nullam mattis tincidunt augue, vitae ultrices magna faucibus vel. Nunc lorem nunc, commodo ut tincidunt id, sagittis sed ipsum. Interdum et malesuada fames ac ante ipsum primis in faucibus.
 
           - type: text
             text: Menu

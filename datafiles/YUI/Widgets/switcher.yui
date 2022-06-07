@@ -14,7 +14,7 @@ resources:
       on_item_selected: null
       content_template: &switcher_content_template
 
-      button_background: #2f2f2f
+      //button_background: #2f2f2f
       left_button_content: <
       right_button_content: >
 

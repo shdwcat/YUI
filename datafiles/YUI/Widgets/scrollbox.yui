@@ -26,10 +26,10 @@ resources:
 
       // bar visuals
       bar_thickness: 20
-      bar_background: #2f2f2f
-      bar_border_color: null
+      //bar_background: #2f2f2f
+      //bar_border_color: null
       //bar_border_thickness: 1
-      thumb_background: #AA00AA
+      thumb_background: grey
       thumb_size: 20
 
       scroll_state:
@@ -79,8 +79,7 @@ resources:
             bottom: $hbar_visible|resolve then $bar_thickness else 0
           viewport_x: $scroll_state.x
           viewport_y: $scroll_state.y
-          on_viewport_info:
-            - @@ value => $scroll_state.info = value
+          on_viewport_info: @@ value => $scroll_state.info = value
 
         // vbar
         - type: scrollbar
@@ -108,8 +107,8 @@ resources:
       layout: vertical
     template:
       type: panel
-      background: $bar_background
-      border_color: $bar_border_color
+      background: black
+      //border_color: $bar_border_color
       //border_thickness: $bar_border_thickness
       elements:
         - $layout == 'vertical' then &v_scroll_button else &h_scroll_button

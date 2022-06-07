@@ -23,8 +23,8 @@ resources:
       on_checked_changed: null
       
       toggle_foreground: #AA00AA
-      toggle_background: #2f2f2f
-      toggle_border_color: white
+      toggle_background: #252525
+      toggle_border_color: #1b1b1b
 
       toggle_thumb:
         type: image

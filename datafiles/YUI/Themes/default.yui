@@ -1,21 +1,50 @@
 file_type: theme
 
 resources:
-  input_border_color: grey
+  text_color: #f0f0f0
+  hint_text: #969696
+
+  panel_bg: #2f2f2f
+  subpanel_bg: #3c3c3c
+
+  control_bg: #252525
+  control_border: #1b1b1b
+
+  focus_border: #AA00AA
 
 theme:
   
   // overrides default values for the specified element
   elements:
-  
+
     main_panel:
-      background: yui_panel_bg
-      spacing: 5
+      background: &panel_bg
+
+    // === widgets ===
+
+    checkbox:
+      border_thickness: 0
+      box_bg: &control_bg // slots don't work yet
+
+    switcher:
+      background: &control_bg
+      border_color: &control_border
+      padding: 0
+
+
+    scrollbar:
+      background: &control_border
+
+    scrollbox:
+      background: &control_bg
+      thumb_background: &focus_border // move to scrollbar style somewhere?
+
+    // === elements ===
 
     text_input:
-      background: #06162A
-      border_color: &input_border_color
-      border_focus_color: white
+      background: &control_bg
+      border_color: &control_border
+      border_focus_color: &focus_border
       border_thickness: 1
       padding: 7
     
@@ -23,16 +52,16 @@ theme:
       spacing: 5
     
     button:
-      background: #06162A
-      border_color: &input_border_color
-      border_focus_color: white
+      background: &control_bg
+      border_color: &control_border
+      border_focus_color: &focus_border
       border_thickness: 1
       padding: [10, 5]
     
     popup:
-      background: #06162A
-      border_color: #2183C0
-      border_thickness: 1.5
+      background: &control_bg
+      border_color: &focus_border
+      border_thickness: 1
       padding: 5
 
   // used for text.text_style (or text_input.text_style) to set the font and color
@@ -41,12 +70,12 @@ theme:
 
     title:
       font: fnt_yui_title
-      color: white
+      color: &text_color
 
     subtitle:
       font: fnt_yui_subtitle
-      color: white
+      color: &text_color
 
     body:
       font: fnt_yui_body
-      color: white
+      color: &text_color
