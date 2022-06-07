@@ -47,6 +47,9 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	// this is the type from the .yui declaration which may be a template or fragment name
 	yui_type = _props.yui_type; // TODO: string hash this for faster comparison
 	
+	template_type = _props[$ "template_type"];
+	template_def = _props[$ "template_def"];
+	
 	var theme_name = _props[$ "theme"];
 	if theme_name != undefined {
 		// TODO apply theme to slot values
@@ -58,8 +61,9 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	// grab the theme from the slot values
 	theme = slot_values.theme;
 	
-	// get the theme props for our type (applies template/fragment type first)
-	element_theme = theme.elements[$ yui_type] ?? theme.elements[$ _props.type];
+	// get the theme props for our element type
+	element_theme = theme.elements[$ _props.type];
+	//element_theme = theme.elements[$ yui_type] ?? theme.elements[$ _props.type];
 	
 	static baseInit = function(props, default_events = undefined) {
 	

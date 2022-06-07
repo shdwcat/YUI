@@ -36,6 +36,37 @@ function yui_apply_props(instance_data) {
 }
 
 function yui_apply_element_props(instance_data) {
+	
+	// TODO: it would be a lot faster to merge the theme and template props *once* rather than repeat it
+	// for every instance. Doing so would mean we'd need to 'initialize' a widget definition once
+	// possibly yui_resolve_element is the right place for this -- need to check instanceof and see
+	// if it's been replaced by a constructor, otherwise init it.
+	// BUT we'd need to do this per theme.
+	
+	// maybe the trick is to squash it into the template theme definition? (assuming there is one)
+	// except we don't know the loaded widgets at the point...
+	// maybe the theme file is there you import the widgets you want?
+	// at least the ones you want to theme...
+	// though that gets tricky if I want to allow private resources...
+	
+	// for now this seems fast enough *shrug*
+	
+	// templates get additional props *and* theme support
+	if template_type != undefined {
+		var template_theme = theme.elements[$ template_type];
+		
+		var template_def = self.template_def;
+		
+		// clear the stored definition to reduce memory bloat
+		// this is stupid hack to avoid messing with the parameters of every element constructor 🙄
+		self.template_def = undefined;
+		
+		var props = yui_apply_props(instance_data, template_theme, template_def, element_theme, default_props, base_props);
+		return props;
+	}
+	
 	return yui_apply_props(instance_data, element_theme, default_props, base_props);
 }
+
+
 

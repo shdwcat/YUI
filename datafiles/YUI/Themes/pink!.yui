@@ -16,11 +16,13 @@ theme:
   // overrides default values for the specified element
   elements:
 
+    checkbox:
+      foreground: &panel_bg
+
     main_panel:
       background: &panel_bg
-      border_color: &panel_border_color
+      border_color: #ca4d77
       border_thickness: 2
-      spacing: 5
 
     text_input:
       background: #06162A
@@ -30,7 +32,6 @@ theme:
       padding: 7
     
     panel:
-      background: null
       spacing: 5
     
     button:

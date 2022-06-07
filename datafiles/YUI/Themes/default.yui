@@ -20,11 +20,9 @@ theme:
       padding: 7
     
     panel:
-      background: null
       spacing: 5
     
     button:
-      //background: yui_button_bg
       background: #06162A
       border_color: &input_border_color
       border_focus_color: white

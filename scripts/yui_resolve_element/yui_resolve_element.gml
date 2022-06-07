@@ -82,11 +82,11 @@ function yui_resolve_element(yui_data, resources, slot_values, parent_id = undef
 				element = yui_create_fragment_element(yui_data, element_definition, resources, slot_values);
 			}
 			else {
-				throw new yui_string_concat("Unknown element resource type: ", element_type);
+				throw new yui_error("Unknown element resource type: ", element_type);
 			}
 		}
 		else {
-			throw yui_string_concat("could not find Element or Template for:", yui_data.type);
+			throw yui_error("could not find Element or Template for:", yui_data.type);
 		}
 	}
 	else {
