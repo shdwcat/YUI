@@ -3,7 +3,6 @@ function yui_apply_slot_definitions(
 	slot_definitions,
 	parent_slot_values,
 	template_instance_props,
-	template_element_props,
 	resources
 	) {
 	
@@ -11,12 +10,10 @@ function yui_apply_slot_definitions(
 	var slot_values = snap_deep_copy(slot_definitions);
 	
 	// loop through the values in template_instance_props and overlay them on the slot_values
-	// OR onto the template_element_props if there is not a slot for them
 	var input_keys = variable_struct_get_names(template_instance_props);
 	var i = 0; repeat array_length(input_keys) {
 		var input_key = input_keys[i++];
 		
-		// NOTE: this is ugly, ideally should delete these from the instance props first?
 		if input_key == "type"
 		
 		// these have to do with data templates
@@ -32,19 +29,17 @@ function yui_apply_slot_definitions(
 		if slot_exists {
 			// if slot exists, bind it and copy value into slot
 			var slot_value = template_instance_props[$ input_key];
-			var bound_value = yui_bind(template_instance_props[$ input_key], resources, parent_slot_values);
+			var bound_value = yui_bind(slot_value, resources, parent_slot_values);
 			slot_values[$ input_key] = bound_value;
 		}
-		else {
-			// otherwise, just copy it to the template_element props
-			template_element_props[$ input_key] = template_instance_props[$ input_key];
-		}
+		// should this get deleted from the instance props?
+		// if so then we'd have to do background: $background if we wanted a background *slot* and apply to template root
 	}
 	
 	// now copy the parent slot values into the output slot values
 	// this way the instance props for an inner template can use $slot binding
 	// to access the slot values defined on an outer template
-	// (AKA using template instances inside the template definition of another template)
+	// (AKA using template instances inside the template definition of another template such as a checkbox in a menu)
 	if parent_slot_values {
 		var parent_slot_names = variable_struct_get_names(parent_slot_values);
 		var i = 0; repeat array_length(parent_slot_names) {

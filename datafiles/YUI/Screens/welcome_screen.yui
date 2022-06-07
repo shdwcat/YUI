@@ -8,7 +8,7 @@ import:
 root:
   type: panel // panel is used to layout and arrange child elements
   layout: canvas // canvas can be used to position elements arbitrarily within the panel, or along the edges
-  theme: pink!
+  //theme: pink!
   elements: // this defines the child elements of the canvas
 
     // helper message about live reload state

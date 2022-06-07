@@ -13,6 +13,7 @@ function YsResourceParselet() : GsplPrefixParselet() constructor {
 			? path_parts[1]
 			: "";
 		
+		// TODO default this to not live since resources *should* be static?
 		return new YuiValueBinding(resource, sub_path);
 	}
 	
