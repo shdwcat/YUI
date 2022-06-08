@@ -21,6 +21,8 @@ resources:
       menu_items: []
 
       item_template: &menu_item_template
+      item_background: null
+      item_highlight_alpha: 0.1
 
       // which direction to display the top level menu items in
       menu_layout: horizontal
@@ -31,6 +33,7 @@ resources:
       // size to use for icons in menu item content
       menu_icon_size: 16
 
+      menu_border_color: grey
       foreground: null
 
     template:
@@ -38,8 +41,6 @@ resources:
         type: panel
         layout: $menu_layout
         spacing: 3
-        // alignment:
-        //   h: stretch
         elements: $menu_items
         template:
 
@@ -49,8 +50,9 @@ resources:
           cases:
             item:
               type: button
+              background: $item_background
+              highlight_alpha: $item_highlight_alpha
               padding: 0
-              //background: #18263A
               content:
                 type: panel
                 layout: horizontal
@@ -69,8 +71,9 @@ resources:
 
             check_item:
               type: button
+              background: $item_background
+              highlight_alpha: $item_highlight_alpha
               padding: 0
-              //background: #18263A
               content:
                 type: panel
                 layout: horizontal
@@ -81,7 +84,8 @@ resources:
                   - type: image
                     visible: @is_checked
                     sprite: yui_icon_checkmark
-                    size: 24
+                    padding: 1
+                    size: 20
                   - $item_template
               on_click:
                 - @command()
@@ -89,11 +93,13 @@ resources:
 
             submenu:
               type: button
+              background: $item_background
+              highlight_alpha: $item_highlight_alpha
               padding: [29, 5, 5, 5]
-              //background: #18263A
               content: $item_template
               popup:
                 placement: $menu_placement
+                border_color: $menu_border_color
                 content:
                   type: menu
                   menu_items: @children
@@ -103,12 +109,13 @@ resources:
             topmenu:
               type: button
               padding: [15, 5]
-              //background: #18263A
               content: $item_template
               popup:
                 placement: $menu_placement
+                border_color: $menu_border_color
                 content:
                   type: menu
+                  alignment: { h: stretch }
                   menu_items: @children
                   menu_layout: vertical
                   menu_placement: right_top

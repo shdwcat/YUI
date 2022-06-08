@@ -19,7 +19,8 @@ resources:
       wheel_increment: 4
 
       orientation: horizontal
-      thumb_background: #AA00AA
+      thumb_background: grey
+      line_color: grey
 
     template:
 
@@ -57,7 +58,7 @@ resources:
                 left: -5
                 right: 5
                 center: v
-              background: #888888
+              background: $line_color
               size: { h: 2, w: stretch }
 
         - type: text

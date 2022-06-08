@@ -23,8 +23,9 @@ resources:
       // (blend) color to use for the checkmark and text
       foreground: white
 
-      box_bg: #5b5b5b
-      box_border: #1b1b1b
+      // border and background for the checkbox box
+      box_bg: null
+      box_border: white
 
       // label for the checkbox
       label: null
@@ -48,6 +49,7 @@ resources:
             content:
 
               type: image
+              padding: 1
               visible: $is_checked
               blend_color: $foreground
               sprite: $check_icon

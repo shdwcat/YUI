@@ -22,14 +22,14 @@ resources:
       // (this should update whatever is_checked is bound to)
       on_checked_changed: null
       
-      toggle_foreground: #AA00AA
+      toggle_foreground: grey
       toggle_background: #252525
       toggle_border_color: #1b1b1b
 
       toggle_thumb:
-        type: image
-        sprite: yui_white_pixel
-        blend_color: $toggle_foreground
+        type: border
+        border_color: $toggle_border_color
+        background: $toggle_foreground
         size: 20
 
     template:
@@ -42,6 +42,7 @@ resources:
           content: $label
 
         - type: button
+          padding: [7, 5, 7, 5]
           background: $toggle_background
           border_color: $toggle_border_color
           highlight_alpha: .1

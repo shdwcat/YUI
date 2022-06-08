@@ -24,13 +24,33 @@ theme:
 
     checkbox:
       border_thickness: 0
-      box_bg: &control_bg // slots don't work yet
+      box_bg: #5b5b5b
+      box_border: &control_border
+      //highlight_alpha: 0.1
+
+    dropdown_menu:
+      item_background: &control_border
+
+    menu:
+      spacing: 0
+      menu_border_color: &control_bg
+      item_background: &control_border
+      //item_highlight_alpha: 0.1
+
+    slider:
+      thumb_background: &focus_border
+      line_color: &control_border
+
+    slide_toggle:
+      toggle_foreground: &focus_border
+      toggle_background: &control_bg
+      toggle_border_color: &control_border
 
     switcher:
       background: &control_bg
       border_color: &control_border
+      button_background: #555555
       padding: 0
-
 
     scrollbar:
       background: &control_border
@@ -56,13 +76,14 @@ theme:
       border_color: &control_border
       border_focus_color: &focus_border
       border_thickness: 1
+      //highlight_alpha: 0.1
       padding: [10, 5]
     
     popup:
-      background: &control_bg
+      background: &control_border
       border_color: &focus_border
       border_thickness: 1
-      padding: 5
+      padding: 2
 
   // used for text.text_style (or text_input.text_style) to set the font and color
   // this enables you to adjust style values in one place rather than in each text element

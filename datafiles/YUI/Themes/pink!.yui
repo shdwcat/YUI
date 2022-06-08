@@ -25,7 +25,7 @@ theme:
       border_thickness: 2
 
     text_input:
-      background: #06162A
+      background: #252525
       border_color: &input_border_color
       border_focus_color: white
       border_thickness: &input_border_thickness
