@@ -31,7 +31,7 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	
 	props.enabled = yui_bind(props.enabled, resources, slot_values);
 	
-	props.padding = yui_resolve_padding(props.padding);
+	props.padding = yui_resolve_padding(yui_bind(props.padding, resources, slot_values));
 	
 	content_element = yui_resolve_element(props.content, resources, slot_values);
 	
@@ -57,6 +57,9 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	
 	border_color = yui_resolve_color(yui_bind(props.border_color, resources, slot_values));
 	border_focus_color = yui_resolve_color(yui_bind(props.border_focus_color, resources, slot_values));
+	
+	props.highlight_alpha = yui_bind(props.highlight_alpha, resources, slot_values);
+	props.pressed_alpha = yui_bind(props.pressed_alpha, resources, slot_values);
 	
 	// set up popup mode
 	if props.popup {

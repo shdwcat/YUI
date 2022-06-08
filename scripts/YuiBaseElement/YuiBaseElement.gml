@@ -116,8 +116,10 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 				yui_type: "popup",
 				content: props.tooltip,
 				placement: props.tooltip_placement,
+				padding: 5,
 				size: { max_w: props.tooltip_width },
 			};
+			// TODO: set yui_type: tooltip and use yui_resolve_element so that we can apply theme to this
 			tooltip_element = new YuiPopupElement(tooltip_props, resources, slot_values);
 		}
 	}

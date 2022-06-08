@@ -37,9 +37,9 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		bg_sprite = undefined;
 	}
 	
-	props.border_color = yui_resolve_color(props.border_color);
+	border_color = yui_resolve_color(yui_bind(props.border_color, resources, slot_values));
 	
-	props.padding = yui_resolve_padding(props.padding)
+	props.padding = yui_resolve_padding(yui_bind(props.padding, resources, slot_values));
 	
 	content_element = yui_resolve_element(props.content, resources, slot_values);
 
@@ -57,7 +57,7 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			// border
 			bg_sprite: bg_sprite,
 			bg_color: bg_color,
-			border_color: props.border_color,
+			border_color: border_color,
 			border_thickness: props.border_thickness,
 			// not supported
 			border_focus_color: undefined,

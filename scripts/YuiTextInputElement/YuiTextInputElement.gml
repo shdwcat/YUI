@@ -37,7 +37,7 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 	
 	props.max_chars = min(props.max_chars, YUI_MAX_INPUT_CHARS);
 	
-	props.padding = yui_resolve_padding(props.padding);
+	props.padding = yui_resolve_padding(yui_bind(props.padding, resources, slot_values));
 	
 	// resolve slot/resource (not bindable currently)
 	var background_expr = yui_bind(props.background, resources, slot_values);

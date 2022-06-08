@@ -17,7 +17,7 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	baseInit(props);
 	
-	props.padding = yui_resolve_padding(props.padding);
+	props.padding = yui_resolve_padding(yui_bind(props.padding, resources, slot_values));
 	
 	props.sprite = yui_bind(props.sprite, resources, slot_values);
 	is_sprite_live = yui_is_live_binding(props.sprite);
