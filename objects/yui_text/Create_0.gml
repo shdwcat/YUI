@@ -134,6 +134,8 @@ arrange = function(available_size, viewport_size) {
 }
 
 buildTextSurface = function() {
+	
+	if !bound_values return;
 
 	var text = override_text ?? bound_values.text;
 	
