@@ -22,6 +22,14 @@ arrange = function(available_size, viewport_size) {
 	return size;
 }
 
+border_move = move;
+move = function(xoffset, yoffset) {
+	border_move(xoffset, yoffset);
+	if popup_item {
+		positionPopup(popup_item.bound_values.placement, popup_item.parent.draw_size);
+	}
+}
+
 left_click = function() {
 	
 	if !bound_values.enabled return;
