@@ -45,7 +45,7 @@ function YuiArraySelector(items, selected_item = undefined) constructor {
 			}
 		}
 		else {
-			self.selected_index = undefined;
+			self.selected_index = -1;
 			self.selected_item = undefined;
 		}
 	}
@@ -56,7 +56,7 @@ function YuiArraySelector(items, selected_item = undefined) constructor {
 			self.selected_item = items[0];
 		}
 		else {
-			self.selected_index = undefined;
+			self.selected_index = -1;
 			self.selected_item = undefined;
 		}
 	}
