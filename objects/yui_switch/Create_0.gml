@@ -51,7 +51,6 @@ arrange = function(available_size, viewport_size) {
 
 base_move = move;
 move = function(xoffset, yoffset) {
-	base_move(xoffset, yoffset);
 	if case_item {
 		case_item.move(xoffset, yoffset);
 	}
