@@ -6,8 +6,20 @@ function yui_apply_slot_definitions(
 	resources
 	) {
 	
-	// copy the slot definiton values to the slot_values since these are the default values
-	var slot_values = snap_deep_copy(slot_definitions);
+	var instance_theme_name = template_instance_props[$ "theme"];
+	var theme = instance_theme_name != undefined
+		? yui_resolve_theme(instance_theme_name)
+		: parent_slot_values[$ "theme"];
+		
+	var template_theme = theme.elements[$ template_instance_props.yui_type] ?? {};
+	
+	// initialize the slot values by deep copying either the value from the theme or the slot definitions
+	var slot_values = {};
+	var slot_keys = variable_struct_get_names(slot_definitions);
+	var i = 0; repeat array_length(slot_keys) {
+		var slot_key = slot_keys[i++];
+		slot_values[$ slot_key] = snap_deep_copy(template_theme[$ slot_key] ?? slot_definitions[$ slot_key]);
+	}
 	
 	// loop through the values in template_instance_props and overlay them on the slot_values
 	var input_keys = variable_struct_get_names(template_instance_props);

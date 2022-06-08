@@ -61,8 +61,3 @@ var yui_data_folder = YUI_LOCAL_PROJECT_DATA_FOLDER + YUI_DATA_SUBFOLDER;
 yui_cabinet = new Cabinet(yui_data_folder, ".yui", options);
 
 yui_log("YuiGlobals: loaded");
-
-
-
-
-
