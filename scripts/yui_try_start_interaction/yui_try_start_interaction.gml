@@ -23,7 +23,7 @@ function yui_try_start_interaction(interaction_name, source_data, event) {
 	
 	yui_log("starting", interaction.props.type, "interaction");
 	
-	var element = interaction.start(source_data, event, self);
+	var element = interaction.start(source_data, event, id);
 	if element {
 		YuiCursorManager.visual_item = yui_make_render_instance(element, interaction, , 100);
 		YuiCursorManager.visual_item.arrange({
