@@ -1,5 +1,5 @@
 /// @description convert any binding expressions on the struct variables to YuiBindings
-function yui_bind_struct(struct, resources, slot_values, recursive = false) {
+function yui_bind_struct(struct, resources, slot_values, resolve = false, recursive = false) {
 		
 	if !is_struct(struct) return; // might be an array? is that useful?
 	
@@ -9,10 +9,11 @@ function yui_bind_struct(struct, resources, slot_values, recursive = false) {
 		var value = struct[$ key];
 		
 		if recursive && is_struct(value) {
-			struct[$ key] = yui_bind_struct(value, resources, slot_values, true)
+			struct[$ key] = yui_bind_struct(value, resources, slot_values, resolve, true)
 		}
 		else {
-			struct[$ key] = yui_bind(value, resources, slot_values)
+			var binding = yui_bind(value, resources, slot_values);
+			struct[$ key] = resolve && yui_is_binding(binding) ? binding.resolve() : binding;
 		}
 	}
 	
