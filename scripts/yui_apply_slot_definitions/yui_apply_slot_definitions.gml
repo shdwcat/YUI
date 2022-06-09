@@ -1,10 +1,13 @@
 /// @desc applies slot_definitions to template_element props, and returns the slot_values for the template instance
 function yui_apply_slot_definitions(
 	slot_definitions,
-	parent_slot_values,
 	template_instance_props,
+	parent_slot_values,
 	resources
 	) {
+	
+	// ensure we have a slot definitions struct
+	slot_definitions ??= {};
 	
 	var instance_theme_name = template_instance_props[$ "theme"];
 	var theme = instance_theme_name != undefined

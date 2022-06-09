@@ -15,7 +15,8 @@ function yui_create_fragment_element(fragment_element_props, fragment_definition
 	// set the type to the definition root type to prevent recursion
 	fragment_element_props.type = content.type;
 	
-	var element = yui_resolve_element(fragment_element_props, resources, slot_values);
+	var element_constructor = YuiGlobals.element_map[$ fragment_element_props.type];
+	var element = new element_constructor(fragment_element_props, resources, slot_values);
 	
 	return element;
 }

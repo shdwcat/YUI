@@ -1,18 +1,6 @@
 function yui_resolve_element(yui_data, resources, slot_values, parent_id = undefined) {
 	
-	static element_map = {
-		panel: YuiPanelElement,
-		text: YuiTextElement,
-		image: YuiImageElement,
-		line: YuiLineElement,
-		border: YuiBorderElement,
-		button: YuiButtonElement,
-		popup: YuiPopupElement,
-		"switch": YuiSwitchElement,
-		data_template: YuiDataTemplateElement,
-		viewport: YuiViewportElement,
-		text_input: YuiTextInputElement,
-	}
+	static element_map = YuiGlobals.element_map;
 	
 	if yui_data == undefined return undefined;
 
@@ -66,10 +54,17 @@ function yui_resolve_element(yui_data, resources, slot_values, parent_id = undef
 		yui_data.yui_type = yui_data.type;
 	}
 	
-	var element_constructor = element_map[$ yui_data.type];	
+	var element_constructor = element_map[$ yui_data.type];
 	var element;
-		
-	if is_undefined(element_constructor) {
+	
+	// already resolved the template. just need to apply slots and construct
+	var slot_defs = yui_data[$ "slot_defs"];
+	if slot_defs != undefined {
+		var new_slot_values = yui_apply_slot_definitions(slot_defs, yui_data, slot_values, resources)
+		var element = new element_constructor(yui_data, resources, new_slot_values);
+		return element;
+	}
+	else if is_undefined(element_constructor) {
 		// check for a template or fragment resource
 		var element_definition = resources[$ yui_data.type];
 			

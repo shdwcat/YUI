@@ -2,7 +2,7 @@
 function yui_create_template_element(instance_props, template_definition, resources, parent_slot_values) {
 				
 	// defines what input slots the template supports
-	var slot_definitions = template_definition[$ "slots"] ?? {};
+	var slot_definitions = template_definition[$ "slots"];
 	
 	// the props for the element we will create
 	// need to copy the definition since we'll be updating the values
@@ -19,8 +19,8 @@ function yui_create_template_element(instance_props, template_definition, resour
 	// resolve the updated slot values that get passed to the template element
 	var slot_values = yui_apply_slot_definitions(
 		slot_definitions, // the slot definitions for this template
-		parent_slot_values, // values coming in from the parent
 		instance_props, // the props for this instance of the template
+		parent_slot_values, // values coming in from the parent
 		resources);
 	
 	// store the original .yui type name for reflection purposes
@@ -29,6 +29,7 @@ function yui_create_template_element(instance_props, template_definition, resour
 	// track the fragment type and definition to apply to props
 	instance_props.template_type = instance_props.type;
 	instance_props.template_def = template_element_props;
+	instance_props.slot_defs = slot_definitions;
 	
 	// set the type to the definition root type to prevent recursion
 	instance_props.type = template_element_props.type;
@@ -63,6 +64,8 @@ function yui_create_template_element(instance_props, template_definition, resour
 		}
 	}
 	
-	var template_element = yui_resolve_element(instance_props, resources, slot_values);
+	var element_constructor = YuiGlobals.element_map[$ instance_props.type];
+	var template_element = new element_constructor(instance_props, resources, slot_values);
+	
 	return template_element;
 }

@@ -2,6 +2,20 @@
 
 selection_scopes = ds_map_create();
 
+element_map = {
+	panel: YuiPanelElement,
+	text: YuiTextElement,
+	image: YuiImageElement,
+	line: YuiLineElement,
+	border: YuiBorderElement,
+	button: YuiButtonElement,
+	popup: YuiPopupElement,
+	"switch": YuiSwitchElement,
+	data_template: YuiDataTemplateElement,
+	viewport: YuiViewportElement,
+	text_input: YuiTextInputElement,
+};
+
 screens = {};
 interactions = {};
 themes = {};
