@@ -69,6 +69,7 @@ resources:
           - type: button
             content:
               type: text // TODO X sprite
+              color: $theme.resources.negative_color | eval
               text: X
             padding: [5, 0]
             size: 20
@@ -80,6 +81,7 @@ resources:
           // down arrow (to indicate this is a dropdown)
           - type: image
             padding: 2
+            blend_color: $theme.resources.accent_color | eval
             size: $arrow_icon_size
             sprite: $arrow_icon
             frame: $arrow_icon_frame

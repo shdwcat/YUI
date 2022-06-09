@@ -1,16 +1,39 @@
 file_type: theme
 
 resources:
-  text_color: #f0f0f0
+  //text_color: #f0f0f0
+  text_color: #ffffff
+  //text_color: #70FFFA
   hint_text: #969696
 
-  panel_bg: #2f2f2f
-  subpanel_bg: #3c3c3c
+  // for 'negative' actions like deleting things
+  negative_color: #cc0000
 
-  control_bg: #252525
-  control_border: #1b1b1b
+  // for 'positive' actions like adding things
+  positive_color: #66bb00
 
-  focus_border: #AA00AA
+  tint_color: #ffffff
+  accent_color: #AA00AA
+  
+  // tint_color: #33FF33
+  // accent_color: #00ff00
+
+  tint_color: #ff2a6d
+  accent_color: #05dae8
+  lum_factor: .8
+  
+  // tint_color: #00bbbb
+  // accent_color: #ffbb00
+
+  panel_bg: @@ #2f2f2f >> yui_color_shift_hue(yui_resolve_color(&tint_color), &lum_factor)
+  subpanel_bg: @@ #3c3c3c >> yui_color_shift_hue(yui_resolve_color(&tint_color), &lum_factor)
+
+  control_bg: @@ #252525 >> yui_color_shift_hue(yui_resolve_color(&tint_color), &lum_factor)
+  control_border: @@ #1b1b1b >> yui_color_shift_hue(yui_resolve_color(&tint_color), &lum_factor)
+  control_bg_light: @@ #5b5b5b >> yui_color_shift_hue(yui_resolve_color(&accent_color), &lum_factor + 0.5)
+  //control_bg_light: @@ #5b5b5b >> yui_color_shift_hue(yui_resolve_color(&accent_color), 0.5)
+
+  focus_border: &accent_color
 
 theme:
   
@@ -24,18 +47,19 @@ theme:
 
     checkbox:
       border_thickness: 0
-      box_bg: #5b5b5b
+      box_bg: &control_bg_light
       box_border: &control_border
-      //highlight_alpha: 0.1
 
     dropdown_menu:
       item_background: &control_border
+      item_highlight_alpha: 0.4
+
 
     menu:
       spacing: 0
       menu_border_color: &control_bg
       item_background: &control_border
-      //item_highlight_alpha: 0.1
+      item_highlight_alpha: 0.5
 
     slider:
       thumb_background: &focus_border
@@ -49,7 +73,7 @@ theme:
     switcher:
       background: &control_bg
       border_color: &control_border
-      button_background: #555555
+      button_background: &control_bg_light
       padding: 0
 
     scrollbar:
@@ -76,7 +100,8 @@ theme:
       border_color: &control_border
       border_focus_color: &focus_border
       border_thickness: 1
-      //highlight_alpha: 0.1
+      highlight_color: &accent_color //>> yui_color_shift_hue(&accent_color, 1.5)
+      highlight_alpha: .5
       padding: [10, 5]
     
     popup:

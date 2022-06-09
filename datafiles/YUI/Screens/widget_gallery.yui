@@ -27,7 +27,7 @@ root:
 
     - type: scrollbox
       // trace: true
-      background: #2f2f2f
+      background: $theme.resources.panel_bg | eval
       padding: 0
       content:
 

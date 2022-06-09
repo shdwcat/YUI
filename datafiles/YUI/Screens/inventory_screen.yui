@@ -21,8 +21,8 @@ resources:
       spacing: 15
       elements:
         - type: border
-          border_color: #1b1b1b
-          background: #252525
+          border_color: $theme.resources.control_border | eval
+          background: $theme.resources.control_bg | eval
           padding: 2
           size: 64
 
@@ -51,8 +51,8 @@ resources:
     content: 
       type: border
       padding: 2
-      border_color: #1b1b1b
-      background: #252525
+      border_color: $theme.resources.control_border | eval
+      background: $theme.resources.control_bg | eval
       content:
         type: image
         sprite: @sprite
@@ -99,7 +99,7 @@ root:
           text: Inventory Screen
 
         - type: main_panel
-          background: #3c3c3c
+          background: $theme.resources.subpanel_bg | eval
           canvas:
             top: 50
           spacing: 10
@@ -121,7 +121,7 @@ root:
                 type: equipped_item_slot
 
         - type: main_panel
-          background: #3c3c3c
+          background: $theme.resources.subpanel_bg | eval
           canvas:
             top: 210
             left: 220
