@@ -36,7 +36,7 @@ root:
             - type: button
               content: Credits
 
-        - type: panel
+        - type: main_panel
           elements:
             
             - type: button

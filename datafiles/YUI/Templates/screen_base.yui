@@ -27,6 +27,7 @@ resources:
           canvas:
             top: 80
             left: 30
+            bottom: 30
           padding: 20
           spacing: 10
           elements: $items

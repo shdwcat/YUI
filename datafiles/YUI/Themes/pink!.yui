@@ -8,6 +8,8 @@ resources:
 
   panel_bg: #ea7ca5
   panel_border_color: #f2bacb
+  control_bg: #ca4d77
+  control_border: #f2bacb
 
   input_border_thickness: 1
 
