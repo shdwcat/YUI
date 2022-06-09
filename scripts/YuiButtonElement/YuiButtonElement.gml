@@ -58,6 +58,7 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	border_color = yui_resolve_color(yui_bind(props.border_color, resources, slot_values));
 	border_focus_color = yui_resolve_color(yui_bind(props.border_focus_color, resources, slot_values));
 	
+	props.highlight_color = yui_bind(props.highlight_color, resources, slot_values);
 	props.highlight_alpha = yui_bind(props.highlight_alpha, resources, slot_values);
 	props.pressed_alpha = yui_bind(props.pressed_alpha, resources, slot_values);
 	

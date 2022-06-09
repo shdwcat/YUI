@@ -280,6 +280,7 @@
     {"id":{"name":"KnitToken","path":"scripts/KnitToken/KnitToken.yy",},"order":1,},
     {"id":{"name":"scribble_flush_everything","path":"scripts/scribble_flush_everything/scribble_flush_everything.yy",},"order":3,},
     {"id":{"name":"YsScanner","path":"scripts/YsScanner/YsScanner.yy",},"order":4,},
+    {"id":{"name":"yui_color_shift_hue","path":"scripts/yui_color_shift_hue/yui_color_shift_hue.yy",},"order":13,},
     {"id":{"name":"YsBindingParselet","path":"scripts/YsBindingParselet/YsBindingParselet.yy",},"order":1,},
     {"id":{"name":"yui_resolve_binding","path":"scripts/yui_resolve_binding/yui_resolve_binding.yy",},"order":7,},
     {"id":{"name":"input_string_async","path":"scripts/input_string_async/input_string_async.yy",},"order":1,},

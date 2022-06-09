@@ -7,6 +7,7 @@ function yui_bind(value, resources, slot_values) {
 			case "@":
 			case "$":
 			case "&":
+			case "#":
 				return yui_parse_binding_expr(value, resources, slot_values);
 			case ">":
 				if string_char_at(value, 2) == ">" {
