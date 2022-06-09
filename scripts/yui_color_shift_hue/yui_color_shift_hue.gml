@@ -1,5 +1,5 @@
 /// @description changes the hue in the source color to match the hue color while maintaining source luminance
-function yui_color_shift_hue(source_color, hue_color, lum_factor) {
+function yui_color_shift_hue(source_color, hue_color, lum_factor = 1) {
 	
 	// calculate source luminance
 	var r = color_get_red(source_color);
@@ -13,7 +13,7 @@ function yui_color_shift_hue(source_color, hue_color, lum_factor) {
 	// shift the hue of the original color
 	var hue = color_get_hue(hue_color);
 	var sat = color_get_saturation(hue_color);
-	var val = color_get_value(source_color);	
+	var val = color_get_value(source_color);
 	var shift_color = make_color_hsv(hue, sat, val) 
 	
 	// calculate new luminance
