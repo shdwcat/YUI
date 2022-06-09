@@ -27,10 +27,12 @@ function YuiLambda(body, context) : YuiExpr() constructor {
 		context.params[$ param_name] = args[0];
 		
 		// call the function body
-		body.resolve(data);
+		var result = body.resolve(data);
 		
 		// clean up
 		context.params = undefined;
+		
+		return result;
 	}
 
 	static compile = function(func_name = "")
