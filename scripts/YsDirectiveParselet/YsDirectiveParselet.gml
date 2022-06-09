@@ -49,6 +49,10 @@ function YsDirectiveParselet() constructor {
 				expr = new YuiObjectBinding(expr);
 				break;
 				
+			case "eval":
+				expr.is_yui_live_binding = false;
+				break;
+				
 			default:
 				throw yui_error("unknown directive:", directive);
 		}
