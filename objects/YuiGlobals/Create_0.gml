@@ -58,7 +58,7 @@ var yui_file_generator = function (text, cabinet_file) {
 			return interaction;
 			
 		case "theme":
-			var theme = yui_init_theme(snap, cabinet_file.directory);
+			var theme = yui_init_theme(snap, cabinet_file.file_id, cabinet_file.directory);
 			return theme;
 			
 		default:

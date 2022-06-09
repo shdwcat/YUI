@@ -55,8 +55,17 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	resources = _resources;
 	slot_values = _slot_values;
 	
-	// grab the theme from the slot values
-	theme = slot_values.theme;
+	var theme_override = _props[$ "theme"];
+	if theme_override != undefined {
+		// grab new theme and override slot theme
+		theme = yui_resolve_theme(theme_override);
+		slot_values = yui_shallow_copy(slot_values);
+		slot_values.theme = theme;
+	}
+	else {
+		// grab the theme from the slot values
+		theme = slot_values.theme;
+	}
 	
 	// get the theme props for our element type
 	element_theme = theme.elements[$ _props.type];

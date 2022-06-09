@@ -262,6 +262,7 @@
     {"id":{"name":"yui_create_template_element","path":"scripts/yui_create_template_element/yui_create_template_element.yy",},"order":2,},
     {"id":{"name":"yui_call_handler","path":"scripts/yui_call_handler/yui_call_handler.yy",},"order":1,},
     {"id":{"name":"YS_PRECEDENCE","path":"scripts/YS_PRECEDENCE/YS_PRECEDENCE.yy",},"order":0,},
+    {"id":{"name":"yui_shallow_copy","path":"scripts/yui_shallow_copy/yui_shallow_copy.yy",},"order":16,},
     {"id":{"name":"YuiLambdaVariable","path":"scripts/YuiLambdaVariable/YuiLambdaVariable.yy",},"order":8,},
     {"id":{"name":"yui_warning","path":"scripts/yui_warning/yui_warning.yy",},"order":12,},
     {"id":{"name":"yui_try_start_interaction","path":"scripts/yui_try_start_interaction/yui_try_start_interaction.yy",},"order":4,},

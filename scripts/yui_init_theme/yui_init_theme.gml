@@ -1,5 +1,5 @@
 /// @description loads a theme from the theme definition
-function yui_init_theme(theme_definition, folder_path) {
+function yui_init_theme(theme_definition, name, folder_path) {
 	
 	static default_props = {
 		import: [],
@@ -21,6 +21,8 @@ function yui_init_theme(theme_definition, folder_path) {
 	
 	// bind the theme struct recursively to resolve resource imports
 	var theme = yui_bind_struct(props.theme, bound_resources, slot_values, , true);
+	
+	theme.name = name;
 	
 	// allow the resources to be accessed directly
 	theme.resources = bound_resources
