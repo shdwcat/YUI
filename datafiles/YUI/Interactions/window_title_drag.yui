@@ -3,12 +3,19 @@ file_type: interaction
 type: drag_and_drop
 
 drag:
-  condition: null
+  condition: true
   center_visual: false
 
   visual: null
 
-  action: @source.data.set_position(@cursor.x - @cursor.relative_x, @cursor.y - @cursor.relative_y)
+  start:
+    - @cursor.original_top = @source.data.top
+    - @cursor.original_left = @source.data.left
+
+  action:
+    - @source.data.top = @cursor.original_top + @cursor.y_diff
+    - @source.data.left = @cursor.original_left + @cursor.x_diff
+    //- yui_log('cursor ', @cursor)
 
 drop:
   condition: null  

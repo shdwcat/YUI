@@ -6,14 +6,16 @@ import:
 resources:
 
   child_window_title_template:
-    type: button
-    background: $title_background
-    padding: [10, 5] // padding doesn't support slot yet          
-    content: $title
-    events:
-      on_mouse_down: 
-        - @@ yui_log('clicked title')
-        - interaction: window_title_drag
+    type: fragment
+    content:
+      type: button
+      background: $theme.resources.control_bg_light | eval
+      padding: [10, 5] // padding doesn't support slot yet
+      content: $title
+      events:
+        on_mouse_down: 
+          - @@ yui_log('clicked title')
+          - interaction: window_title_drag
 
   child_window:
     type: template
@@ -21,18 +23,21 @@ resources:
       top: 0
       left: 0
       title: NO TITLE
-      title_background: #101080
-      title_template: &child_window_title_template
+      title_template: 
+        type: child_window_title_template
       content: null
 
     template:
       type: panel
       is_cursor_layer: true
-      xoffset: $top
-      yoffset: $left
+      alignment:
+        h: stretch
+      xoffset: $left
+      yoffset: $top
+      spacing: 0
       padding: 1
-      background: #101030
-      border_color: grey
+      background: $theme.resources.control_border | eval
+      border_color: $theme.resources.control_border | eval
 
       elements:
         - $title_template

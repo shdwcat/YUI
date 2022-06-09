@@ -1,0 +1,91 @@
+id: windows_example
+file_type: screen
+
+import:
+  - ../Templates/main_panel.yui
+  - ../Templates/screen_base.yui
+  - ../Widgets/child_window.yui
+
+root:
+  type: screen_base
+  data_source: @windows
+  items:
+    - This example demonstrates how keyboard/gamepad navigation works.\nCheck kb_navigation_example.yui to see how submenus etc are configured
+
+    - type: panel
+      layout: horizontal
+      size: { h: stretch }
+      spacing: 10
+      elements:
+
+        - type: child_window
+          data_source: @default
+          title: buttons
+          top: @top
+          left: @left
+          content:
+            type: panel
+            alignment: { h: stretch }
+            elements:
+              - type: button
+                autofocus: true
+                content: Start New Game
+                //on_click: @@ start_new_game()
+              
+              - type: button
+                content: Continue Game
+                //on_click: @@ continue_game()
+
+              - type: button
+                content: Bonuses
+
+              - type: button
+                content: Options
+              
+              - type: button
+                content: Credits
+
+        - type: child_window
+          data_source: @pink
+          title: more buttons
+          top: @top
+          left: @left
+          content:
+            type: panel
+            alignment: { h: stretch }
+            elements:
+              
+              - type: button
+                content: Column 2 item 1
+              
+              - type: button
+                content: Column 2 item 2
+              
+              - type: button
+                content: Column 2 item 3
+              
+              - type: button
+                content: Column 2 item 4
+
+        - type: child_window
+          data_source: @more
+          title: even more buttons
+          top: @top
+          left: @left
+          content:
+            type: panel
+            alignment: { h: stretch }
+            elements:
+              
+              - type: button
+                content: Column 2 item 1
+              
+              - type: button
+                content: Column 2 item 2
+              
+              - type: button
+                content: Column 2 item 3
+              
+              - type: button
+                content: Column 2 item 4
+      

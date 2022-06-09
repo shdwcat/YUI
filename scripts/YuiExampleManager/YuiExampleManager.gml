@@ -31,6 +31,13 @@ function YuiExampleManager() constructor {
 	
 	widget_data = new WidgetGalleryData();
 	
+	// windows demo
+	windows = {
+		"default": new YuiWindowItem("default"),
+		"pink": new YuiWindowItem("pink"),
+		"more": new YuiWindowItem("more"),
+	}
+	
 	// for viewport demo
 	scroll_x = 0;
 	scroll_y = 0;

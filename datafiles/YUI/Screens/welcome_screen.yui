@@ -56,6 +56,10 @@ root:
           on_click: @@ e => yui_change_screen(kb_navigation_example, e.source)
 
         - type: button
+          content: Windows
+          on_click: @@ e => yui_change_screen(windows_example, e.source)
+
+        - type: button
           content: Viewport/Scrolling WIP
           on_click: @@ e => yui_change_screen(viewport_example, e.source)
 
