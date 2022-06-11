@@ -1,8 +1,7 @@
 file_type: theme
 
-resources:
-  //text_color: #f0f0f0
-  text_color: #ffffff
+constants:
+  text_color: #f0f0f0
   //text_color: #70FFFA
   hint_text: #969696
 
@@ -14,24 +13,35 @@ resources:
 
   tint_color: #ffffff
   accent_color: #AA00AA
+  lum_factor: 1
+  accent_lum: -0.5
   
   // tint_color: #33FF33
   // accent_color: #00ff00
 
-  tint_color: #ff2a6d
-  accent_color: #05dae8
-  lum_factor: .8
+  // text_color: #ffffff
+  // tint_color: #ff2a6d
+  // accent_color: #05dae8
+  // lum_factor: .8
+  // accent_lum: .5
   
   // tint_color: #00bbbb
   // accent_color: #ffbb00
+  // accent_lum: 1
 
-  panel_bg: @@ #2f2f2f >> yui_color_shift_hue(yui_resolve_color(&tint_color), &lum_factor)
-  subpanel_bg: @@ #3c3c3c >> yui_color_shift_hue(yui_resolve_color(&tint_color), &lum_factor)
+functions:
 
-  control_bg: @@ #252525 >> yui_color_shift_hue(yui_resolve_color(&tint_color), &lum_factor)
-  control_border: @@ #1b1b1b >> yui_color_shift_hue(yui_resolve_color(&tint_color), &lum_factor)
-  control_bg_light: @@ #5b5b5b >> yui_color_shift_hue(yui_resolve_color(&accent_color), &lum_factor + 0.5)
-  //control_bg_light: @@ #5b5b5b >> yui_color_shift_hue(yui_resolve_color(&accent_color), 0.5)
+  do_shift: @@ color => color >> yui_color_shift_hue(yui_resolve_color(&tint_color), &lum_factor)
+  do_accent_shift: @@ color => color >> yui_color_shift_hue(yui_resolve_color(&accent_color), &lum_factor + &accent_lum)
+
+resources:
+
+  panel_bg: @@ #2f2f2f >> &do_shift()
+  subpanel_bg: @@ #3c3c3c >> &do_shift()
+
+  control_bg: @@ #252525 >> &do_shift()
+  control_border: @@ #1b1b1b >> &do_shift()
+  control_bg_light: @@ #5b5b5b >> &do_accent_shift()
 
   focus_border: &accent_color
 

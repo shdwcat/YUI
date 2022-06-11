@@ -9,7 +9,7 @@ resources:
     type: fragment
     content:
       type: button
-      background: $theme.resources.control_bg_light | eval
+      background: $theme.resources.control_bg_light
       padding: [10, 5] // padding doesn't support slot yet
       content: $title
       events:
@@ -36,8 +36,8 @@ resources:
       yoffset: $top
       spacing: 0
       padding: 1
-      background: $theme.resources.control_border | eval
-      border_color: $theme.resources.control_border | eval
+      background: $theme.resources.control_border
+      border_color: $theme.resources.control_border
 
       elements:
         - $title_template

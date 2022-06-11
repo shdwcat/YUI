@@ -103,4 +103,4 @@ root:
               tooltip: Click to exit the YUI Example Project // most elements let you define a tooltip that will be shown on hover!
               tooltip_placement: left_top // as with the popup itself, controls where the tooltip is placed
               padding: 10
-              on_click: @@ yui_example_exit_game()
+              on_click: @@ e => yui_example_exit_game()
