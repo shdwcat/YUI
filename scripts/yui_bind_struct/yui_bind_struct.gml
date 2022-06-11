@@ -12,8 +12,11 @@ function yui_bind_struct(struct, resources, slot_values, resolve = false, recurs
 			struct[$ key] = yui_bind_struct(value, resources, slot_values, resolve, true)
 		}
 		else {
-			var binding = yui_bind(value, resources, slot_values);
-			struct[$ key] = resolve && yui_is_binding(binding) ? binding.resolve() : binding;
+			var result = yui_bind(value, resources, slot_values);
+			if resolve && yui_is_binding(result) && !result.is_lambda {
+				result = result.resolve();
+			}
+			struct[$ key] = result;
 		}
 	}
 	

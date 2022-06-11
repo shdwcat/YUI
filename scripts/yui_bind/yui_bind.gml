@@ -7,7 +7,6 @@ function yui_bind(value, resources, slot_values) {
 			case "@":
 			case "$":
 			case "&":
-			case "#":
 				return yui_parse_binding_expr(value, resources, slot_values);
 			case ">":
 				if string_char_at(value, 2) == ">" {
@@ -17,4 +16,11 @@ function yui_bind(value, resources, slot_values) {
 	}
 	
 	return value;
+}
+function yui_bind_and_resolve(value, resources, slot_values) {
+	var binding = yui_bind(value, resources, slot_values)
+	
+	return yui_is_binding(binding)
+		? binding.resolve()
+		: binding;
 }
