@@ -3,6 +3,8 @@ function yui_init_theme(theme_definition, name, folder_path) {
 	
 	static default_props = {
 		import: [],
+		constants: {},
+		functions: {},
 		resources: {},
 	};
 	
@@ -16,11 +18,21 @@ function yui_init_theme(theme_definition, name, folder_path) {
 		folder_path);
 		
 	var slot_values = {};
-		
-	var bound_resources = yui_bind_struct(resources, resources, slot_values, true, true);
 	
-	// bind the theme struct recursively to resolve resource imports
-	var theme = yui_bind_struct(props.theme, bound_resources, slot_values, , true);
+	
+	// bind functions
+	
+	// TODO we could avoid this if using snap field order so that values would be resolved in order
+	var functions = yui_bind_struct(props.functions, props.constants, slot_values, false, true);
+	
+	// merge constants and functions into resources
+	var merged_resources = yui_apply_props(props.constants, functions, resources);
+	
+	// bind and resolve resources
+	var bound_resources = yui_bind_struct(merged_resources, merged_resources, slot_values, true, true);
+	
+	// bind the theme struct recursively to resolve resource constants
+	var theme = yui_bind_struct(props.theme, bound_resources, slot_values, false, true);
 	
 	theme.name = name;
 	
