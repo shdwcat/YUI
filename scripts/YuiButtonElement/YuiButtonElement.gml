@@ -35,28 +35,7 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	
 	content_element = yui_resolve_element(props.content, resources, slot_values);
 	
-	// resolve slot/resource (not bindable currently)
-	var background_expr = yui_bind(props.background, resources, slot_values);
-	if background_expr != undefined {
-		var bg_spr = is_string(background_expr)
-			? yui_resolve_sprite_by_name(background_expr)
-			: undefined;
-		if bg_spr != undefined {
-			bg_sprite = bg_spr;
-			bg_color = undefined;
-		}
-		else {
-			bg_color = yui_resolve_color(background_expr);
-			bg_sprite = undefined;
-		}
-	}
-	else {
-		bg_color = undefined;
-		bg_sprite = undefined;
-	}
-	
-	border_color = yui_resolve_color(yui_bind(props.border_color, resources, slot_values));
-	border_focus_color = yui_resolve_color(yui_bind(props.border_focus_color, resources, slot_values));
+	resolveBackgroundAndBorder()
 	
 	props.highlight_color = yui_bind(props.highlight_color, resources, slot_values);
 	props.highlight_alpha = yui_bind(props.highlight_alpha, resources, slot_values);

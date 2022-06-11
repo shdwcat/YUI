@@ -21,26 +21,7 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	props.padding = yui_resolve_padding(yui_bind(props.padding, resources, slot_values));
 	content_element = yui_resolve_element(props.content, resources, slot_values);
 	
-	// resolve slot/resource (not bindable currently)
-	var background_expr = yui_bind(props.background, resources, slot_values);
-	if background_expr != undefined {
-		var bg_spr = yui_resolve_sprite_by_name(background_expr);
-		if bg_spr != undefined {
-			bg_sprite = bg_spr;
-			bg_color = undefined;
-		}
-		else {
-			bg_color = yui_resolve_color(background_expr);
-			bg_sprite = undefined;
-		}
-	}
-	else {
-		bg_color = undefined;
-		bg_sprite = undefined;
-	}
-	
-	border_color = yui_resolve_color(yui_bind(props.border_color, resources, slot_values));
-	border_focus_color = yui_resolve_color(yui_bind(props.border_focus_color, resources, slot_values));
+	resolveBackgroundAndBorder()
 	
 	is_bound = base_is_bound;
 		

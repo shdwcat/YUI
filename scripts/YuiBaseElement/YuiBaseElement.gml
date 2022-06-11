@@ -132,4 +132,34 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 			tooltip_element = new YuiPopupElement(tooltip_props, resources, slot_values);
 		}
 	}
+	
+	// logic shared by some control
+	
+	static resolveBackgroundAndBorder = function() {
+	
+		// resolve background
+		var background_expr = yui_bind_and_resolve(props.background, resources, slot_values);
+		if background_expr != undefined {
+			var bg_spr = yui_resolve_sprite_by_name(background_expr);
+			if bg_spr != undefined {
+				bg_sprite = bg_spr;
+				bg_color = undefined;
+			}
+			else {
+				bg_color = yui_resolve_color(background_expr);
+				bg_sprite = undefined;
+			}
+		}
+		else {
+			bg_color = undefined;
+			bg_sprite = undefined;
+		}
+	
+		// resolve border
+		border_color = yui_resolve_color(yui_bind_and_resolve(props.border_color, resources, slot_values));
+		
+		if variable_struct_exists(props, "border_focus_color") {
+			border_focus_color = yui_resolve_color(yui_bind_and_resolve(props.border_focus_color, resources, slot_values));
+		}
+	}
 }
