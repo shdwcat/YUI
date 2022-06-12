@@ -19,9 +19,7 @@ function yui_init_theme(theme_definition, name, folder_path) {
 		
 	var slot_values = {};
 	
-	
 	// bind functions
-	
 	// TODO we could avoid this if using snap field order so that values would be resolved in order
 	var functions = yui_bind_struct(props.functions, props.constants, slot_values, false, true);
 	
