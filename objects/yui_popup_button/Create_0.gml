@@ -18,7 +18,7 @@ border_move = move;
 move = function(xoffset, yoffset) {
 	border_move(xoffset, yoffset);
 	if popup_item {
-		var popup_space = yui_calc_popup_space(popup_item);
+		positionPopup(popup_item.bound_values.placement, popup_item.parent.draw_size);
 	}
 }
 
@@ -84,5 +84,6 @@ closePopup = function(close_parent = false) {
 		parent.closePopup(true);
 	}
 }
+
 
 
