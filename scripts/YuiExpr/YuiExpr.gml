@@ -9,6 +9,6 @@ function YuiExpr() constructor {
 	}
 	
 	static compile = function() {
-		return "TODO";
+		return "NOT IMPLEMENTED";
 	}
 }

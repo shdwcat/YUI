@@ -60,7 +60,7 @@ function YuiDragAndDrop(_props, _resources) constructor {
 			x: source_item.x,
 			y: source_item.y,
 			data: source_data,
-			event: { // TODO: include x/y in button event and pass directly
+			event: { // TODO: include x/y in button event and pass directly?
 				x: device_mouse_x_to_gui(0),
 				y: device_mouse_y_to_gui(0),
 				world_x: mouse_x,

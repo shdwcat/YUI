@@ -8,13 +8,6 @@ function yui_create_template_element(instance_props, template_definition, resour
 	// need to copy the definition since we'll be updating the values
 	// with the customized props from the instance_props
 	var template_element_props = snap_deep_copy(template_definition.template);
-		
-	//// TODO: handle collision where both define data_source
-	//var instance_data_source = instance_props[$ "data_source"];
-	//if instance_data_source != undefined {
-	//	// is this even needed?
-	//	template_element_props.data_source = instance_data_source;
-	//}
 	
 	// resolve the updated slot values that get passed to the template element
 	var slot_values = yui_apply_slot_definitions(

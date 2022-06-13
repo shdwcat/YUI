@@ -14,7 +14,7 @@ function yui_parse_binding_expr(expr_source, resources, slot_values) {
 		// check if the expression has been compiled
 		if table {
 			// TODO BUG
-			// loading by source doesn't work for slots where the same $slot may resolvw
+			// loading by source doesn't work for slots where the same $slot may resolve
 			// to different values in different template instances.
 			// to fix this, we'd ned to recursively replace slot identifiers with
 			// their slot values in order to get the unique source per use case.

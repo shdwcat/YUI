@@ -11,14 +11,6 @@ popup_item = undefined;
 button_arrange = arrange;
 arrange = function(available_size, viewport_size) {
 	var size = button_arrange(available_size, viewport_size);
-	if popup_item {
-		//var popup_space = yui_calc_popup_space(popup_item);
-		
-		// we can't arrange here because final positions haven't been set
-		// (e.g. the popup button is right aligned in a panel)
-		// TODO: set the popup_space and cue it to re-arrange on its next pass		
-		//popup_item.arrange(popup_space);
-	}
 	return size;
 }
 
@@ -92,3 +84,4 @@ closePopup = function(close_parent = false) {
 		parent.closePopup(true);
 	}
 }
+
