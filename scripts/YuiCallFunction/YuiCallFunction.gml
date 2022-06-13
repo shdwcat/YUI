@@ -97,6 +97,10 @@ function YuiCallFunction(func_name, args) : YuiExpr() constructor {
 			yui_warning("can't call undefined function reference");
 			return;
 		}
+		
+		if instanceof(func_ref) == "YuiLambda" {
+			return func_ref.call(data, resolved_args);
+		}
 
 		// NOTE: could hyperoptimize by setting .resolve based on the arg_count (which is already known)
 		var a = resolved_args;
