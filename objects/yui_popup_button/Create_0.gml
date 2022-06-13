@@ -66,7 +66,7 @@ openPopup = function() {
 }
 
 positionPopup = function(placement, parent_size) {
-	if popup_item {
+	if popup_item && instance_exists(popup_item) {
 		var popup_space = yui_calc_popup_space(placement, parent_size);
 		popup_item.arrange(popup_space);
 	}

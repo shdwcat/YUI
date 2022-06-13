@@ -58,7 +58,11 @@ function yui_create_template_element(instance_props, template_definition, resour
 	}
 	
 	var element_constructor = YuiGlobals.element_map[$ instance_props.type];
-	var template_element = new element_constructor(instance_props, resources, slot_values);
-	
-	return template_element;
+	if element_constructor != undefined {
+		var template_element = new element_constructor(instance_props, resources, slot_values);
+		return template_element;
+	}
+	else {
+		return yui_resolve_element(instance_props, resources, slot_values);
+	}
 }

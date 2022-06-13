@@ -16,6 +16,7 @@ function yui_resolve_resource_imports(resources, imports, yui_folder) {
 		
 		// only load resource files
 		if resource_file.file_type != "resources" {
+			i++;
 			continue;
 		}
 		
