@@ -44,7 +44,12 @@ function yui_apply_slot_definitions(
 		if slot_exists {
 			// if slot exists, bind it and copy value into slot
 			var slot_value = template_instance_props[$ input_key];
-			var bound_value = yui_bind(slot_value, resources, parent_slot_values);
+			
+			// bind the value (and bind inner arrays to deal with event handler array values)
+			// TODO: move all handlers slots to 'events' so that they get bound as handlers
+			// and then copy over to slots?
+			var bound_value = yui_bind(slot_value, resources, parent_slot_values, true);
+			
 			slot_values[$ input_key] = bound_value;
 		}
 		// should this get deleted from the instance props?
