@@ -3,7 +3,7 @@
 /// N.B. You never need to run this script yourself! All of these macros are handled automatically when Scribble is compiled into your project
 
 #macro SCRIBBLE_HASH_NEWLINE                  false  //Replaces hashes (#) with newlines (ASCII chr10) to emulate GMS1's newline behaviour
-#macro SCRIBBLE_FIX_ESCAPED_NEWLINES          false  //Replaces newline literals ("\\n") with an actual newline ("\n")
+#macro SCRIBBLE_FIX_ESCAPED_NEWLINES          true   //Replaces newline literals ("\\n") with an actual newline ("\n")
 #macro SCRIBBLE_COLORIZE_SPRITES              true   //Whether to use colourization for sprites. This includes [rainbow] and [cycle]
 #macro SCRIBBLE_ADD_SPRITE_ORIGINS            false  //Whether to use sprite origins. Setting this to <false> will vertically centre sprites on the line of text
 #macro SCRIBBLE_MISSING_CHARACTER             "?"    //Character to use when another character is missing from a font
@@ -14,7 +14,7 @@
 #macro SCRIBBLE_FLEXIBLE_WHITESPACE_WIDTH     true   //Controls if spaces and tabs have a fixed, unchanging size. Setting this to <false> will ensure that spaces are always the same size, which is useful for monospaced fonts
 #macro SCRIBBLE_PIN_ALIGNMENT_USES_PAGE_SIZE  false  //Sets whether pin alignments use the size of the page for positioning, or the size of the text element (the bounding box across all pages)
 #macro SCRIBBLE_ALLOW_TEXT_GETTER             false  //Set to <true> to enable the .get_text() method on text elements. This will apply to all text elements and carries a performance penalty
-#macro SCRIBBLE_ALLOW_GLYPH_DATA_GETTER       false  //Set to <true> to enable the .get_glyph_data() method on text elements (and a few other features too). This will apply to all text elements and carries a performance penalty
+#macro SCRIBBLE_ALLOW_GLYPH_DATA_GETTER       true   //Set to <true> to enable the .get_glyph_data() method on text elements (and a few other features too). This will apply to all text elements and carries a performance penalty
 
 
 
