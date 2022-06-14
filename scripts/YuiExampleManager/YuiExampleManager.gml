@@ -34,8 +34,8 @@ function YuiExampleManager() constructor {
 	// windows demo
 	windows = {
 		"default": new YuiWindowItem("default"),
-		"pink": new YuiWindowItem("pink"),
-		"more": new YuiWindowItem("more"),
+		"pink": new YuiWindowItem("pink", , 300),
+		"more": new YuiWindowItem("more", , 600),
 	}
 	
 	// for viewport demo

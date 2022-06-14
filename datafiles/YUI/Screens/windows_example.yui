@@ -13,9 +13,10 @@ root:
     - This example demonstrates how keyboard/gamepad navigation works.\nCheck kb_navigation_example.yui to see how submenus etc are configured
 
     - type: panel
-      layout: horizontal
-      size: { h: stretch }
-      spacing: 10
+      layout: canvas
+      size: stretch
+      background: $theme.resources.control_bg
+      border_color: $theme.resources.control_border
       elements:
 
         - type: child_window
@@ -23,6 +24,10 @@ root:
           title: buttons
           top: @top
           left: @left
+          on_position_changed:
+            - @@ e => @top = e.top
+            - @@ e => @left = e.left
+
           content:
             type: panel
             alignment: { h: stretch }
@@ -30,11 +35,9 @@ root:
               - type: button
                 autofocus: true
                 content: Start New Game
-                //on_click: @@ start_new_game()
               
               - type: button
                 content: Continue Game
-                //on_click: @@ continue_game()
 
               - type: button
                 content: Bonuses
@@ -50,6 +53,10 @@ root:
           title: more buttons
           top: @top
           left: @left
+          on_position_changed:
+            - @@ e => @top = e.top
+            - @@ e => @left = e.left
+
           content:
             type: panel
             alignment: { h: stretch }
@@ -72,6 +79,10 @@ root:
           title: even more buttons
           top: @top
           left: @left
+          on_position_changed:
+            - @@ e => @top = e.top
+            - @@ e => @left = e.left
+
           content:
             type: panel
             alignment: { h: stretch }

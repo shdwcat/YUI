@@ -1,8 +1,5 @@
 file_type: resources
 
-import:
-  - "../Interactions/window_title_drag.yui"
-
 resources:
 
   child_window_title_template:
@@ -15,7 +12,10 @@ resources:
       events:
         on_mouse_down: 
           - @@ yui_log('clicked title')
-          - interaction: window_title_drag
+          - interaction: window_move
+            parameters:
+              source_type: child_window
+              on_position_changed: $on_position_changed
 
   child_window:
     type: template
@@ -26,6 +26,8 @@ resources:
       title_template: 
         type: child_window_title_template
       content: null
+      
+      on_position_changed: null
 
     template:
       type: panel

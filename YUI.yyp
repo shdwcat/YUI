@@ -534,7 +534,6 @@
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"slide_toggle.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Interactions","resourceVersion":"1.0","name":"scrollbar_drag.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"menu.yui","resourceType":"GMIncludedFile",},
-    {"CopyToMask":-1,"filePath":"datafiles/YUI/Interactions","resourceVersion":"1.0","name":"window_title_drag.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"child_window.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Themes","resourceVersion":"1.0","name":"pink!.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"scrollbox.yui","resourceType":"GMIncludedFile",},
@@ -542,6 +541,7 @@
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Screens","resourceVersion":"1.0","name":"windows_example.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Screens","resourceVersion":"1.0","name":"kb_navigation_example.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Themes","resourceVersion":"1.0","name":"default.yui","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/YUI/Interactions","resourceVersion":"1.0","name":"window_move.yui","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
     "IDEVersion": "2022.300.0.499",
