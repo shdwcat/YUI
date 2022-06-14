@@ -2,6 +2,7 @@
 function yui_apply_slot_definitions(
 	slot_definitions,
 	template_instance_props,
+	parent_template,
 	parent_slot_values,
 	resources
 	) {
@@ -54,6 +55,40 @@ function yui_apply_slot_definitions(
 		}
 		// should this get deleted from the instance props?
 		// if so then we'd have to do background: $background if we wanted a background *slot* and apply to template root
+	}
+	
+	// loop through the values in parent template and overlay them on the slot_values
+	if parent_template != undefined {
+		var input_keys = variable_struct_get_names(parent_template);
+		var i = 0; repeat array_length(input_keys) {
+			var input_key = input_keys[i++];
+		
+			if input_key == "type"
+		
+			// these have to do with data templates
+			// TODO: should change the data template to define the element in a subprop, to avoid this
+			|| input_key == "resource_group"
+			|| input_key == "resource_key"
+		
+			|| input_key == "item_key" {
+				continue;
+			}
+				
+			var slot_exists = variable_struct_exists(slot_definitions, input_key);
+			if slot_exists {
+				// if slot exists, bind it and copy value into slot
+				var slot_value = parent_template[$ input_key];
+			
+				// bind the value (and bind inner arrays to deal with event handler array values)
+				// TODO: move all handlers slots to 'events' so that they get bound as handlers
+				// and then copy over to slots?
+				var bound_value = yui_bind(slot_value, resources, parent_slot_values, true);
+			
+				slot_values[$ input_key] = bound_value;
+			}
+			// should this get deleted from the instance props?
+			// if so then we'd have to do background: $background if we wanted a background *slot* and apply to template root
+		}
 	}
 	
 	// now copy the parent slot values into the output slot values

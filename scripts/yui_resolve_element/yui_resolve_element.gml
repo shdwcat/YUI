@@ -60,7 +60,7 @@ function yui_resolve_element(yui_data, resources, slot_values, parent_id = undef
 	// already resolved the template. just need to apply slots and construct
 	var slot_defs = yui_data[$ "slot_defs"];
 	if slot_defs != undefined {
-		var new_slot_values = yui_apply_slot_definitions(slot_defs, yui_data, slot_values, resources)
+		var new_slot_values = yui_apply_slot_definitions(slot_defs, yui_data, , slot_values, resources)
 		var element = new element_constructor(yui_data, resources, new_slot_values);
 		return element;
 	}

@@ -9,10 +9,22 @@ function yui_create_template_element(instance_props, template_definition, resour
 	// with the customized props from the instance_props
 	var template_element_props = snap_deep_copy(template_definition.template);
 	
+	// if we're evaluating recursive templates, we need to consider the parent template 
+	// as a source of slot values (e.g. context_menu overriding menu slot values)
+	var parent_template = instance_props[$ "template_def"]
+	
+	// we also need to merge the top level props
+	if parent_template != undefined {
+		var type = template_element_props.type;
+		template_element_props = yui_apply_props(parent_template, template_element_props);
+		template_element_props.type = type;
+	}
+	
 	// resolve the updated slot values that get passed to the template element
 	var slot_values = yui_apply_slot_definitions(
 		slot_definitions, // the slot definitions for this template
 		instance_props, // the props for this instance of the template
+		parent_template,
 		parent_slot_values, // values coming in from the parent
 		resources);
 	
@@ -20,6 +32,7 @@ function yui_create_template_element(instance_props, template_definition, resour
 	instance_props.yui_type = instance_props.type;
 	
 	// track the fragment type and definition to apply to props
+	// NOTE: this may be recursive so we need to merge a new template definition with an existing one
 	instance_props.template_type = instance_props.type;
 	instance_props.template_def = template_element_props;
 	instance_props.slot_defs = slot_definitions;
