@@ -111,11 +111,14 @@ moveFocus = function(direction = YUI_FOCUS_DIRECTION.DOWN) {
 trackMouseDownItems = function(button) {
 	array_resize(mouse_down_array[button], hover_count);
 	var i = hover_count - 1; repeat hover_count {
-		yui_log("mouse down on:", hover_list[|i]);
-		mouse_down_array[button][i] = hover_list[| i];
+		var item = hover_list[|i];
+		var type = object_get_name(item.object_index);
+		yui_log("mouse down on:", item, " - ", type, " - ", item._id);
+		mouse_down_array[button][i] = item;
 		i--;
 	}
 }
+
 
 
 

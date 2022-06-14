@@ -8,7 +8,8 @@ function YuiSubscript(expr, variable_name) : YuiExpr() constructor {
 	
 	static resolve = function(data) {
 		var struct = expr.resolve(data);
-		return variable_struct_get(struct, variable_name);
+		var result = variable_struct_get(struct, variable_name);
+		return result;
 	}
 
 	static compile = function()
