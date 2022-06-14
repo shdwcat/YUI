@@ -109,6 +109,9 @@ function YsParser(tokens, eof_token)
 		
 		var expr = parseExpression();
 		
+		// store the source for debugging
+		expr.source = source;
+		
 		if expr[$ "trace"] == true {
 			DEBUG_BREAK_YUI;
 		}
