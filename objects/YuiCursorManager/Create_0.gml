@@ -113,11 +113,12 @@ trackMouseDownItems = function(button) {
 	var i = hover_count - 1; repeat hover_count {
 		var item = hover_list[|i];
 		var type = object_get_name(item.object_index);
-		yui_log("mouse down on:", item, " - ", type, " - ", item._id);
+		yui_log("mouse down on:", item, " - ", type, " - ", item[$" _id"]);
 		mouse_down_array[button][i] = item;
 		i--;
 	}
 }
+
 
 
 
