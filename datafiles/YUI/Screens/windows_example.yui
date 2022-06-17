@@ -24,6 +24,9 @@ root:
           title: buttons
           top: @top
           left: @left
+          size: { w: 160 }
+          closable: true
+          on_closed: @@ e => @onClosed(e)
           on_position_changed:
             - @@ e => @top = e.top
             - @@ e => @left = e.left
@@ -53,6 +56,8 @@ root:
           title: more buttons
           top: @top
           left: @left
+          size: { w: 160 }
+          closable: true
           on_position_changed:
             - @@ e => @top = e.top
             - @@ e => @left = e.left
@@ -79,6 +84,8 @@ root:
           title: even more buttons
           top: @top
           left: @left
+          size: { w: 200 }
+          closable: true
           on_position_changed:
             - @@ e => @top = e.top
             - @@ e => @left = e.left
