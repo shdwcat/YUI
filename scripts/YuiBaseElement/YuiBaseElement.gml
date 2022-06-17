@@ -16,9 +16,11 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		opacity: 1, // 0-1, like alpha
 		size: "auto", // can also be { w: val, h: val } where val can be a number or "auto" | "content"
 		alignment: "default",
-		canvas: undefined,
 		xoffset: 0,
 		yoffset: 0,
+		
+		canvas: undefined,
+		flex: undefined, // default behavior is "auto"
 		
 		tooltip: undefined, // @bindable tooltip text/content
 		tooltip_width : 500,
@@ -87,6 +89,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		size.h = yui_bind(size.h, resources, slot_values);
 	
 		canvas = new YuiCanvasPosition(props.canvas, resources, slot_values, props.id);
+		flex = new YuiFlexValue(props.flex);
 	
 		// TODO: move this to YuiPanelElement?
 		alignment = new YuiElementAlignment(yui_bind(props.alignment, resources, slot_values));

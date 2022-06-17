@@ -75,6 +75,7 @@ initLayout = function() {
 	}
 	
 	canvas = yui_element.canvas;
+	flex = yui_element.flex;
 	tooltip_element = yui_element.tooltip_element;
 	
 	events = yui_element.props.events;
@@ -209,6 +210,7 @@ setHighlight = function (highlight) {
 		}
 	}
 }
+
 
 
 

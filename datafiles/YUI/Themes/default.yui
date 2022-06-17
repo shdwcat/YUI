@@ -7,12 +7,14 @@ constants:
 
   // for 'negative' actions like deleting things
   negative_color: #cc0000
+  negative_color_dim: #770000
 
   // for 'positive' actions like adding things
   positive_color: #66bb00
 
   tint_color: #ffffff
-  accent_color: #AA00AA
+  //accent_color: #AA00AA
+  accent_color: #e3008c
   lum_factor: 1
   accent_lum: -0.5
   
@@ -59,6 +61,9 @@ theme:
       border_thickness: 0
       box_bg: &control_bg_light
       box_border: &control_border
+
+    child_window:
+      border_color: &accent_color
 
     dropdown_menu:
       item_background: &control_border

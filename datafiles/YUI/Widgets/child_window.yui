@@ -6,6 +6,8 @@ resources:
     type: fragment
     content:
       type: button
+      flex: true
+      border_thickness: 0
       background: $theme.resources.control_bg_light
       padding: [10, 5] // padding doesn't support slot yet
       content: $title
@@ -29,6 +31,9 @@ resources:
       
       on_position_changed: null
 
+      closable: false
+      on_closed: null
+
     template:
       type: panel
       is_cursor_layer: true
@@ -42,6 +47,20 @@ resources:
       border_color: $theme.resources.control_border
 
       elements:
-        - $title_template
+        - type: panel
+          layout: horizontal
+          spacing: 0
+          elements:
+            - $title_template
+            - type: button
+              background: $theme.resources.negative_color_dim
+              border_thickness: 0
+              highlight_color: $theme.resources.negative_color | eval
+              highlight_alpha: 1
+              visible: $closable
+              content:
+                type: text
+                text: X
+              on_click: $on_closed
 
         - $content

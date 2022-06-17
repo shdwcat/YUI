@@ -82,3 +82,26 @@ function YuiElementSize(size) constructor {
 	is_w_bound = yui_is_binding(w);
 	is_h_bound = yui_is_binding(h);
 }
+
+function YuiFlexValue(value) constructor {
+	is_normal = true;
+	proportional = undefined;
+	
+	if value == true {
+		proportional = 1;
+		is_normal = false;
+	}
+	else if is_real(value) {
+		proportional = value;
+		is_normal = false;
+		
+		if proportional <= 0 {
+			throw yui_error("Exact flex size must be greater than zero:", value);
+		}
+	}
+	else if value != undefined {
+		throw yui_error("Invalid flex value:", value);
+	}
+}
+
+
