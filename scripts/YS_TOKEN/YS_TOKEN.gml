@@ -9,6 +9,10 @@ enum YS_TOKEN {
 	QUESTION, COLON, // ? : ternary
 	QUESTION_QUESTION, // ?? null coalesce
 	PIPE, // directives
+	EQUAL, // assignment
+	
+	// string ops
+	STRING_PLUS,
 	
 	// math
 	MINUS, PLUS,

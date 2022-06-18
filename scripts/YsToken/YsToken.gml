@@ -30,6 +30,7 @@ function make_yscript_type_map() {
 	type_map[YS_TOKEN.QUESTION_QUESTION] = "QUESTION_QUESTION";
 	type_map[YS_TOKEN.COLON] = "COLON";
 	type_map[YS_TOKEN.PIPE] = "PIPE";
+	type_map[YS_TOKEN.EQUAL] = "EQUAL";
 		
 	type_map[YS_TOKEN.MINUS] = "MINUS";
 	type_map[YS_TOKEN.PLUS] = "PLUS";

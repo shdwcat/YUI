@@ -1,15 +1,17 @@
 /// @description
-function yui_find_screen_file_by_id(screen_id) {	
-	var hits = gumshoe(YUI_DATA_SUBFOLDER, ".yui", false);
-	var i = 0; repeat array_length(hits) {
-		var path = hits[i++];
+function yui_find_screen_file_by_id(screen_id) {
+	
+	var cabinet_file = YuiGlobals.screens[$ screen_id];
+	
+	if cabinet_file {
+		var path = cabinet_file.fullpath;
 		
-		// stil a hack
-		var tokens = yui_string_split(path, "\\");
-		var filename = tokens[array_length(tokens) - 1];
-		
-		if filename == screen_id + ".yui" {
-			return path;	
+		if YUI_LIVE_RELOAD_ENABLED {
+			path = yui_string_after(path, YUI_LOCAL_PROJECT_DATA_FOLDER);
+			path = gspl_string_substring(path, 2)
 		}
+		
+		return path;
+		
 	}
 }

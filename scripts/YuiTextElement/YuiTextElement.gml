@@ -1,8 +1,7 @@
 /// @description renders YUI text
 function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_props, _resources, _slot_values) constructor {
-	static default_props = {		
-		type: "text",		
-		theme: "default",
+	static default_props = {
+		type: "text",
 		padding: 0,
 		
 		scribble: false, // whether to use scribble to draw the text
@@ -19,28 +18,29 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		typist: undefined, // controls typewriter behavior
 	};
 	
-	props = yui_init_props(_props);
-	yui_resolve_theme();
+	props = yui_apply_element_props(_props);
+	
+	baseInit(props);
 	
 	props.text = yui_bind(props.text, resources, slot_values);
 	props.typist = yui_bind(props.typist, resources, slot_values);
-	props.padding = yui_resolve_padding(props.padding);
+	props.padding = yui_resolve_padding(yui_bind(props.padding, resources, slot_values));
 	
 	// look up the text style by name from the theme
 	text_style = theme.text_styles[$ props.text_style];
 		
-	color = props.color ?? text_style.color;
-	color = yui_resolve_color(yui_bind(color, resources, slot_values));
+	color = yui_bind(props.color ?? text_style.color, resources, slot_values);
+	is_color_live = yui_is_live_binding(color);
+	if !is_color_live {
+		color = yui_resolve_color(color);
+	}
 	
 	highlight_color = yui_resolve_color(yui_bind(props.highlight_color, resources, slot_values));
-			
-	var font = props.font ?? text_style.font;
-	if !is_string(font) font = font_get_name(font);
-	else if !asset_get_index(font) {
-		yui_warning ("could not find font with font name:", font, "- reverting to text_style.font");
-		font = font_get_name(text_style.font);
+	
+	font = props.font ?? text_style.font;
+	if !is_string(font) {
+		throw yui_error("Expecting font name");
 	}
-	self.font = font;
 	
 	is_text_live = yui_is_live_binding(props.text);
 	
@@ -59,7 +59,6 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		}
 	}
 	
-	is_color_live = yui_is_live_binding(props.color);
 	is_typist_live = yui_is_live_binding(props.typist);
 	
 	is_bound = base_is_bound
@@ -101,7 +100,10 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			return false;
 		}
 		
-		var color = is_color_live ? self.color.resolve(data) : self.color;
+		var color = is_color_live
+			? yui_resolve_color(self.color.resolve(data))
+			: self.color;
+		
 		var opacity = is_opacity_live ? props.opacity.resolve(data) : props.opacity;
 		
 		// handle text array by joining the values		

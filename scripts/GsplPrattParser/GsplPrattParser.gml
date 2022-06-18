@@ -11,6 +11,7 @@ function GsplPrattParser(tokens, eof_token) : GsplParserBase(tokens, eof_token) 
 	self.Identifier = undefined;
 	self.PrefixOperator = undefined;
 	self.BinaryOperator = undefined;
+	self.Set = undefined;
 	self.Conditional = undefined;
 	self.Call = undefined;
 	self.Subscript = undefined;
@@ -23,6 +24,9 @@ function GsplPrattParser(tokens, eof_token) : GsplParserBase(tokens, eof_token) 
 		if prefix == undefined throw new yui_error("Could not parse token:", token._literal);
 		
 		var left_expr = prefix.parse(self, token);
+		if left_expr[$ "optimize"] != undefined {
+			left_expr = left_expr.optimize();
+		}
 		
 		while peek()._type != eof_token && precedence < getPrecedence() {
 
@@ -30,6 +34,9 @@ function GsplPrattParser(tokens, eof_token) : GsplParserBase(tokens, eof_token) 
 			
 			var infix = infix_parselets[token._type];
 			left_expr = infix.parse(self, left_expr, token);
+			if left_expr[$ "optimize"] != undefined {
+				left_expr = left_expr.optimize();
+			}
 		}
 		
 		return left_expr;
@@ -39,7 +46,7 @@ function GsplPrattParser(tokens, eof_token) : GsplParserBase(tokens, eof_token) 
 		var infix = infix_parselets[peek()._type];
 		
 		if infix == 0 {
-			gspl_log("unknown operator:", peek().getTokenName());
+			//gspl_log("unknown operator:", peek().getTokenName());
 		}
 		
 		return infix != 0

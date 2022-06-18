@@ -23,14 +23,20 @@ function yui_color_from_hex_string(hex_string) {
 		color |= 0xFF000000;
 	}
 	else {
+		
+		// set alpha
+		var alpha = hex_value & 0xFF000000;
+		
+		// clear alpha
+		hex_value = hex_value ^ 0xFF000000;
+		
 		// handle color with alpha
 		var red = hex_value >> 16;
 		var green = (hex_value & 0xFF00) >> 8;
 		var blue = hex_value & 0xFF;
 		var color = make_color_rgb(red, green, blue);
-			
-		// set alpha
-		var alpha = hex_value & 0xFF000000;
+		
+		// re-set alpha
 		color |= alpha;
 	}
 	

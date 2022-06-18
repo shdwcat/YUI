@@ -2,8 +2,8 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Packages - YUI",
-    "path": "folders/Packages - YUI.yy",
+    "name": "Themes",
+    "path": "folders/Packages - YUI/Themes.yy",
   },
   "resourceVersion": "1.0",
   "name": "YuiTheme",

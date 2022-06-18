@@ -14,7 +14,7 @@ function YuiSelectionScope(_id, _options = {}) constructor {
 		default_selected_item: undefined,
 	}
 	
-	var options = yui_init_props(_options);
+	var options = yui_apply_props(_options);
 	
 	id = _id;
 	selection_behavior = options.selection_behavior;
@@ -45,7 +45,7 @@ function YuiArraySelector(items, selected_item = undefined) constructor {
 			}
 		}
 		else {
-			self.selected_index = undefined;
+			self.selected_index = -1;
 			self.selected_item = undefined;
 		}
 	}
@@ -56,7 +56,7 @@ function YuiArraySelector(items, selected_item = undefined) constructor {
 			self.selected_item = items[0];
 		}
 		else {
-			self.selected_index = undefined;
+			self.selected_index = -1;
 			self.selected_item = undefined;
 		}
 	}

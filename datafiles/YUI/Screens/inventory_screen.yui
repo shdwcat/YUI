@@ -21,7 +21,8 @@ resources:
       spacing: 15
       elements:
         - type: border
-          background: yui_panel_bg
+          border_color: $theme.resources.control_border
+          background: $theme.resources.control_bg
           padding: 2
           size: 64
 
@@ -50,7 +51,8 @@ resources:
     content: 
       type: border
       padding: 2
-      background: yui_panel_bg
+      border_color: $theme.resources.control_border
+      background: $theme.resources.control_bg
       content:
         type: image
         sprite: @sprite
@@ -97,6 +99,7 @@ root:
           text: Inventory Screen
 
         - type: main_panel
+          background: $theme.resources.subpanel_bg
           canvas:
             top: 50
           spacing: 10
@@ -118,6 +121,7 @@ root:
                 type: equipped_item_slot
 
         - type: main_panel
+          background: $theme.resources.subpanel_bg
           canvas:
             top: 210
             left: 220

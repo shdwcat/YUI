@@ -5,23 +5,6 @@ import:
 
 resources:
 
-  meter:
-    type: panel
-    layout: canvas
-    size: { w: 200, h: 50 }
-    elements:
-      - type: image
-        sprite: spr_container
-        size: stretch
-        
-      - type: image
-        sprite: spr_gauge
-        size: stretch
-        canvas:
-          normalized: true
-          right: @value / @max
-
-
   slider:
     type: template
 
@@ -31,14 +14,21 @@ resources:
       value: 0
       on_value_changed: null
       show_value: true
+      size: { h: 20, w: 100 }
+      thumb_size: { h: 20, w: 10, min_w: 10 }
+      wheel_increment: 4
 
       orientation: horizontal
-      thumb_background: #AA00AA
+      thumb_background: grey
+      line_color: grey
 
     template:
 
       type: panel
       layout: $orientation
+      events:
+        on_mouse_wheel_down: $on_value_changed(max($value - $wheel_increment, $min))
+        on_mouse_wheel_up: $on_value_changed(min($value + $wheel_increment, $max))
       elements:
 
         - type: text
@@ -47,15 +37,15 @@ resources:
 
         - type: panel
           layout: canvas
-          size: { h: 20, w: 100 }
+          size: $size
           elements:
 
             // slider thumb
             - type: button
               padding: 0
-              xoffset: $value / ($max - $min) * 100 - 10
+              xoffset: $value / ($max - $min) * ($size.w - $thumb_size.w + 10) - 10
               background: $thumb_background
-              size: { h: 20, w: 10, min_w: 10 }
+              size: $thumb_size
               events:
                 on_mouse_down:
                   interaction: slider_drag
@@ -68,7 +58,7 @@ resources:
                 left: -5
                 right: 5
                 center: v
-              background: #888888
+              background: $line_color
               size: { h: 2, w: stretch }
 
         - type: text

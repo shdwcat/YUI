@@ -6,6 +6,7 @@ function yui_make_render_instance(yui_element, data, index = 0, depth_offset = 0
 		throw yui_error("unknown element type:", yui_element.props.type);
 	}
 	
+	depth_offset += yui_element.props.layer;
 	
 	// NOTE: expects to be called from an yui_base-derived object
 

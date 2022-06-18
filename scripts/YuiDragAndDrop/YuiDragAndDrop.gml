@@ -10,6 +10,7 @@ function YuiDragAndDrop(_props, _resources) constructor {
 			condition: undefined,
 			center_visual: true,
 			visual: undefined,
+			start: undefined,
 			action: undefined
 		},
 		drop: {
@@ -21,11 +22,12 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		on_cancel: undefined,
 	};
 	
-	props = yui_init_props(_props);
+	props = yui_apply_props(_props);
 	resources = _resources;
 	
 	props.drag.condition = yui_bind(props.drag.condition, resources, undefined);
 	drag_element = yui_resolve_element(props.drag.visual, resources, undefined);
+	props.drag.start = yui_bind_handler(props.drag[$ "start"], resources, undefined);
 	props.drag.action = yui_bind_handler(props.drag.action, resources, undefined);
 	
 	drop_hash_id = YuiCursorManager.participation_hash.getStringId(props.id + ".drop");
@@ -38,8 +40,8 @@ function YuiDragAndDrop(_props, _resources) constructor {
 	
 	static canStart = function(source_data) {
 		if props.drag.condition != undefined {
-			// TODO condition array?		
-			return yui_resolve_binding(props.drag.condition, source_data);		
+			// TODO condition array?
+			return yui_resolve_binding(props.drag.condition, source_data);
 		}
 		else {
 			return true;
@@ -55,8 +57,10 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		//button ??= mb_left;
 		
 		source = {
+			x: source_item.x,
+			y: source_item.y,
 			data: source_data,
-			event: { // TODO: include x/y in button event and pass directly
+			event: { // TODO: include x/y in button event and pass directly?
 				x: device_mouse_x_to_gui(0),
 				y: device_mouse_y_to_gui(0),
 				world_x: mouse_x,
@@ -73,12 +77,33 @@ function YuiDragAndDrop(_props, _resources) constructor {
 			can_drop: undefined,
 		};
 		
+		var gui_x = device_mouse_x_to_gui(0);
+		var gui_y = device_mouse_y_to_gui(0);
+		
 		cursor = {
-			x: device_mouse_x_to_gui(0),
-			y: device_mouse_y_to_gui(0),
+			// gui
+			x: gui_x,
+			y: gui_y,
+			start_x : gui_x,
+			start_y : gui_y,
+			relative_x: gui_x - source_item.x,
+			relative_y: gui_y - source_item.y,
+			// world
 			world_x: mouse_x,
 			world_y: mouse_y,
+			relative_world_x: mouse_x - source_item.x,
+			relative_world_y: mouse_y - source_item.y,
 		};
+		
+		// call start handler if defined
+		if props.drag.start != undefined {
+			var interaction_data = {
+				source: source,
+				target: target,
+				cursor: cursor,
+			};
+			yui_call_handler(props.drag.start, , interaction_data);
+		}
 		
 		return drag_element;
 	}
@@ -92,6 +117,8 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		cursor.y = device_mouse_y_to_gui(0);
 		cursor.world_x = mouse_x;
 		cursor.world_y = mouse_y;
+		cursor.x_diff = cursor.x - cursor.start_x;
+		cursor.y_diff = cursor.y - cursor.start_y;
 				
 		var interaction_data = {
 			source: source,
@@ -126,7 +153,7 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		// end drag on mouse up
 		var button_down = mouse_check_button(source.event.button); // TODO button
 		if !button_down {
-			if target.can_drop {
+			if target.can_drop || props.drop.condition == true {
 				yui_call_handler(props.drop.action, , interaction_data);
 			}
 			else {
@@ -137,7 +164,7 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		}
 		
 		// optionally run an action every frame
-		if props.drag.action {
+		if props.drag.action != undefined {
 			yui_call_handler(props.drag.action, , interaction_data);
 		}
 	}
@@ -151,7 +178,7 @@ function YuiDragAndDrop(_props, _resources) constructor {
 			? drop_item.data_context
 			: drop_item;
 		
-		var drop_target = {			
+		var drop_target = {
 			data: drop_data,
 			hover: drop_item.highlight,
 		};

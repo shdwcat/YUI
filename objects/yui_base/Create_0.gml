@@ -19,6 +19,7 @@ is_binding_active = true;
 // the map of values that depend on the data context
 bound_values = undefined;
 
+enabled = true;
 opacity = 1;
 
 // this only applies alpha for bg_color set on an element placed in the room editor
@@ -53,20 +54,19 @@ is_size_changed = false;
 
 padded_rect = { x: x, y: y, w: 0, h: 0 };
 
+// if defined, the size of the viewport containing this element
+viewport_size = undefined;
+
+// the part of this element that is visible within the viewport
+viewport_part = undefined;
+
 initLayout = function() {
 	_id = yui_element.props.id;
-	layout_props = yui_element.getLayoutProps();
 	
-	focusable = yui_element.props.focusable;
-	
-	// set initial focus if needed
-	if focusable 
-		&& ((YuiCursorManager.focused_item == undefined || !instance_exists(YuiCursorManager.focused_item))
-			|| yui_element.props.autofocus) {
-		YuiCursorManager.setFocus(id);
-	}
-	
+	default_w = yui_element.size.default_w;
+	default_h = yui_element.size.default_h;
 	canvas = yui_element.canvas;
+	flex = yui_element.flex;
 	tooltip_element = yui_element.tooltip_element;
 	
 	events = yui_element.props.events;
@@ -75,6 +75,17 @@ initLayout = function() {
 	interactions = yui_element.props.interactions;
 	yui_register_interactions(interactions);
 	
+	focusable = yui_element.props.focusable;
+	is_cursor_layer = yui_element.props.is_cursor_layer;
+	
+	// set initial focus if needed
+	if focusable 
+		&& ((YuiCursorManager.focused_item == undefined || !instance_exists(YuiCursorManager.focused_item))
+			|| yui_element.props.autofocus) {
+		YuiCursorManager.setFocus(id);
+	}
+	
+	layout_props = yui_element.getLayoutProps();
 	onLayoutInit();
 }
 
@@ -94,16 +105,21 @@ bind_values = function yui_base__bind_values() {
 		}
 		exit;
 	}
-	else {
-		visible = true;
+	
+	// ensure that we're now visible
+	var was_visible = visible;
+	visible = true;
 		
-		if new_values == true {
+	// if bound values are same as before exit early
+	if new_values == true {
+		if was_visible {
 			// values are the same as before, nothing to do
 			exit;
 		}
 	}
-	
-	bound_values = new_values;
+	else {
+		bound_values = new_values;
+	}
 	
 	// maybe move this to element.is_live()?
 	is_binding_active = bound_values.is_live;
@@ -115,7 +131,7 @@ build = function() {
 	throw "build not implemented on this type";
 }
 
-arrange = function(available_size) {
+arrange = function(available_size, viewport_size) {
 	throw "arrange not implemented on this type";
 }
 
@@ -127,23 +143,46 @@ move = function(xoffset, yoffset) {
 	draw_size.y += yoffset;
 	padded_rect.y += yoffset;
 	
-	// move tooltip?
+	if viewport_size {
+		updateViewport();
+	}
+	
+	
+	if tooltip_item {
+		tooltip_item.move(xoffset, yoffset);
+	}
 	
 	if interaction_item {
 		interaction_item.move(xoffset, yoffset);
 	}
 }
 
+updateViewport = function() {
+	
+	// if our viewport has a parent, trim it within the parent
+	var vp_size = viewport_size.parent
+		? yui_trim_rect_to_viewport(
+			viewport_size.x, viewport_size.y,
+			viewport_size.w, viewport_size.h,
+			viewport_size.parent)
+		: viewport_size;
+			
+	viewport_part =	yui_trim_rect_to_viewport(x, y, draw_size.w, draw_size.h, vp_size);
+}
+
 resize = yui_resize_instance;
 
-cursor_tooltip = function() {
-	//var tooltip = yui_resolve_binding(
+sizeToDefault = function(available_size) {
+	var w = min(default_w, available_size.w);
+	var h = min(default_h, available_size.h);
+	yui_resize_instance(w, h);
+	return draw_size;
 }
 
 findAncestor = function(type) {
 	var ancestor = parent;
 	while ancestor != undefined {
-		if ancestor.yui_element.props._type == type {
+		if ancestor.yui_element.yui_type == type {
 			return ancestor;
 		}
 		ancestor = ancestor.parent;
@@ -161,3 +200,32 @@ closePopup = function(close_parent = false) {
 		ancestor = ancestor.parent;
 	}
 }
+base_setHighlight = setHighlight;
+setHighlight = function (highlight) {
+	
+	base_setHighlight(highlight)
+	
+	if tooltip_element {
+		if highlight {
+			if tooltip_item == undefined {	
+				tooltip_item = yui_make_render_instance(
+					tooltip_element,
+					bound_values.data_source, 
+					/* no index */,
+					1000); // ensures tooltips appear above popup layers
+	
+				var popup_space = yui_calc_popup_space(tooltip_item.bound_values.placement, draw_size);
+				tooltip_item.arrange(popup_space);
+			}
+		}
+		else if tooltip_item != undefined {
+			instance_destroy(tooltip_item);
+			tooltip_item = undefined;
+		}
+	}
+}
+
+
+
+
+

@@ -1,0 +1,142 @@
+file_type: theme
+
+constants:
+  text_color: #f0f0f0
+  //text_color: #70FFFA
+  hint_text: #969696
+
+  // for 'negative' actions like deleting things
+  negative_color: #cc0000
+  negative_color_dim: #770000
+
+  // for 'positive' actions like adding things
+  positive_color: #66bb00
+
+  tint_color: #ffffff
+  //accent_color: #AA00AA
+  accent_color: #e3008c
+  lum_factor: 1
+  accent_lum: -0.5
+  
+  // tint_color: #33FF33
+  // accent_color: #00ff00
+
+  // text_color: #ffffff
+  // tint_color: #ff2a6d
+  // accent_color: #05dae8
+  // lum_factor: .8
+  // accent_lum: .5
+  
+  // tint_color: #00bbbb
+  // accent_color: #ffbb00
+  // accent_lum: 1
+
+functions:
+
+  do_shift: @@ color => color >> yui_color_shift_hue(yui_resolve_color(&tint_color), &lum_factor)
+  do_accent_shift: @@ color => color >> yui_color_shift_hue(yui_resolve_color(&accent_color), &lum_factor + &accent_lum)
+
+resources:
+
+  panel_bg: @@ #2f2f2f >> &do_shift()
+  subpanel_bg: @@ #3c3c3c >> &do_shift()
+
+  control_bg: @@ #252525 >> &do_shift()
+  control_border: @@ #1b1b1b >> &do_shift()
+  control_bg_light: @@ #5b5b5b >> &do_accent_shift()
+
+  focus_border: &accent_color
+
+theme:
+  
+  // overrides default values for the specified element
+  elements:
+
+    main_panel:
+      background: &panel_bg
+
+    // === widgets ===
+
+    checkbox:
+      border_thickness: 0
+      box_bg: &control_bg_light
+      box_border: &control_border
+
+    child_window:
+      border_color: &accent_color
+
+    dropdown_menu:
+      item_background: &control_border
+      item_highlight_alpha: 0.4
+
+
+    menu:
+      spacing: 0
+      menu_border_color: &control_bg
+      item_background: &control_border
+      item_highlight_alpha: 0.5
+
+    slider:
+      thumb_background: &focus_border
+      line_color: &control_border
+
+    slide_toggle:
+      toggle_foreground: &focus_border
+      toggle_background: &control_bg
+      toggle_border_color: &control_border
+
+    switcher:
+      background: &control_bg
+      border_color: &control_border
+      button_background: &control_bg_light
+      padding: 0
+
+    scrollbar:
+      background: &control_border
+
+    scrollbox:
+      background: &control_bg
+      thumb_background: &focus_border // move to scrollbar style somewhere?
+
+    // === elements ===
+
+    text_input:
+      background: &control_bg
+      border_color: &control_border
+      border_focus_color: &focus_border
+      border_thickness: 1
+      padding: 7
+    
+    panel:
+      spacing: 5
+    
+    button:
+      background: &control_bg
+      border_color: &control_border
+      border_focus_color: &focus_border
+      border_thickness: 1
+      highlight_color: &accent_color //>> yui_color_shift_hue(&accent_color, 1.5)
+      highlight_alpha: .5
+      padding: [10, 5]
+    
+    popup:
+      background: &control_border
+      border_color: &focus_border
+      border_thickness: 1
+      padding: 2
+
+  // used for text.text_style (or text_input.text_style) to set the font and color
+  // this enables you to adjust style values in one place rather than in each text element
+  text_styles:
+
+    title:
+      font: fnt_yui_title
+      color: &text_color
+
+    subtitle:
+      font: fnt_yui_subtitle
+      color: &text_color
+
+    body:
+      font: fnt_yui_body
+      color: &text_color

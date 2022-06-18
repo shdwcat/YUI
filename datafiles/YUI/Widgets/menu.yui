@@ -7,6 +7,13 @@ resources:
   // #   command: handler
   // #   children: YuiMenuItem[] # optional
 
+  context_menu:
+    type: template
+    template:
+      type: menu
+      alignment: { h: stretch }
+      layout: vertical
+
   menu_item_template:
     type: text
     text: @label
@@ -21,6 +28,8 @@ resources:
       menu_items: []
 
       item_template: &menu_item_template
+      item_background: null
+      item_highlight_alpha: 0.1
 
       // which direction to display the top level menu items in
       menu_layout: horizontal
@@ -31,82 +40,91 @@ resources:
       // size to use for icons in menu item content
       menu_icon_size: 16
 
+      menu_border_color: null
       foreground: null
 
     template:
 
-        type: panel
-        layout: $menu_layout
-        spacing: 3
-        alignment:
-          h: stretch
-        elements: $menu_items
-        template:
+      type: panel
+      layout: horizontal
+      spacing: 3
+      elements: $menu_items
+      template:
 
-          type: switch
-          switch_on: @type
-          strict: true
-          cases:
-            item:
-              type: button
-              padding: 0
-              background: #18263A
+        type: switch
+        switch_on: @type
+        visible: @visible ?? true
+        strict: true
+        cases:
+          item:
+            type: button
+            background: $item_background
+            highlight_alpha: $item_highlight_alpha
+            padding: 0
+            content:
+              type: panel
+              layout: horizontal
+              alignment: { v: center }
+              size: { h: 30 }
+              padding: [5, 0]
+              elements:
+                - type: image
+                  size: 24
+                  image: @icon_sprite
+                  visible: $is_submenu
+                - $item_template
+            on_click:
+              - @command()
+              - e => e.source.closePopup(true) // recursive
+
+          check_item:
+            type: button
+            background: $item_background
+            highlight_alpha: $item_highlight_alpha
+            padding: 0
+            content:
+              type: panel
+              layout: horizontal
+              alignment: { v: center }
+              size: { h: 30 }
+              padding: [5, 0]
+              elements:
+                - type: image
+                  visible: @is_checked
+                  sprite: yui_icon_checkmark
+                  padding: 1
+                  size: 20
+                - $item_template
+            on_click:
+              - @command()
+              - e => e.source.closePopup(true) // recursive
+
+          submenu:
+            type: button
+            background: $item_background
+            highlight_alpha: $item_highlight_alpha
+            padding: [29, 5, 5, 5]
+            content: $item_template
+            popup:
+              placement: $menu_placement
+              border_color: $menu_border_color
               content:
-                type: panel
-                layout: horizontal
-                alignment: { v: center }
-                size: { h: 30 }
-                padding: [5, 0]
-                elements:
-                  - type: image
-                    size: 24
-                    image: @icon_sprite
-                    visible: $is_submenu
-                  - $item_template
-              on_click:
-                - @command()
-                - e => e.source.closePopup(true) // recursive
+                type: menu
+                menu_items: @children
+                layout: vertical
+                menu_placement: right_top
+                item_background: $item_background
 
-            check_item:
-              type: button
-              padding: 0
-              background: #18263A
+          topmenu:
+            type: button
+            padding: [15, 5]
+            content: $item_template
+            popup:
+              placement: $menu_placement
+              border_color: $menu_border_color
               content:
-                type: panel
-                layout: horizontal
-                alignment: { v: center }
-                size: { h: 30 }
-                padding: [5, 0]
-                elements:
-                  - type: image
-                    visible: @is_checked
-                    sprite: yui_icon_checkmark
-                    size: 24
-                  - $item_template
-              on_click: @command()
-
-            submenu:
-              type: button
-              padding: [29, 5, 5, 5]
-              background: #18263A
-              content: $item_template
-              popup:
-                placement: $menu_placement
-                content:
-                  type: menu
-                  menu_items: @children
-                  menu_layout: vertical
-                  menu_placement: right_top
-
-            topmenu:
-              type: button
-              padding: [15, 5]
-              background: #18263A
-              content: $item_template
-              popup:
-                placement: $menu_placement
-                content:
-                  type: menu
-                  menu_items: @children
-                  menu_layout: vertical
-                  menu_placement: right_top
+                type: menu
+                alignment: { h: stretch }
+                menu_items: @children
+                layout: vertical
+                menu_placement: right_top

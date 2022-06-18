@@ -7,8 +7,8 @@ event_inherited();
 is_cursor_layer = true;
 
 border_arrange = arrange;
-arrange = function(available_size) {
-	border_arrange(available_size);
+arrange = function(available_size, viewport_size) {
+	border_arrange(available_size, viewport_size);
 	
 	// align popup
 	switch bound_values.placement {

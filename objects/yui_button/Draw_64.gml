@@ -1,4 +1,4 @@
-/// @description draw border + highlight
+/// @description draw alpha + highlight
 
 if !bound_values.enabled {
 	var alpha = draw_get_alpha();
@@ -18,14 +18,21 @@ var show_highlight = (highlight || YuiCursorManager.focused_item == id)
 	
 if show_highlight {
 	var alpha = button_pressed ? pressed_alpha : highlight_alpha;
-	if alpha > 0 {	
-		var old_alpha = draw_get_alpha();
-		draw_set_alpha(alpha);
-		draw_rectangle_color(
-			draw_size.x, draw_size.y,
-			draw_size.x + draw_size.w - 1, draw_size.y + draw_size.h - 1,
-			highlight_color, highlight_color, highlight_color, highlight_color, false);
-		draw_set_alpha(old_alpha);
+	if alpha > 0 {
+		if viewport_size {
+			if viewport_part.visible {
+				draw_sprite_ext(
+					yui_white_pixel, 0,
+					viewport_part.x, viewport_part.y, viewport_part.w, viewport_part.h,
+					0, highlight_color, alpha);
+			}
+		}
+		else {
+			draw_sprite_ext(
+				yui_white_pixel, 0,
+				draw_size.x, draw_size.y, draw_size.w, draw_size.h,
+				0, highlight_color, alpha);
+		}
 	}
 }
 

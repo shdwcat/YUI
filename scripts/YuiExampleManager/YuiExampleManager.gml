@@ -5,15 +5,46 @@ function YuiExampleManager() constructor {
 		
 	app_name = "Example Project";
 	
+	static toggleTheme = function(theme_name) {
+		// so hacky
+		var first = YuiGlobals.themes[$"default"];
+		var second = YuiGlobals.themes[$"pink!"];
+		var first_path = first.fullpath;
+		first.fullpath = second.fullpath;
+		second.fullpath = first_path;
+		
+		YuiGlobals.yui_cabinet.clearCache();
+		with yui_document {
+			reload();
+		}
+	}
+	
 	var items_file = string_from_file("Example Data/inventory.yaml")
 	var inventory = snap_from_yaml(items_file);
 	
 	slots = inventory.slots;
 	items = inventory.items;
 	
-	foreach(slots, function(slot) { slot.equipped_item = undefined });
+	foreach(slots, function(slot) {
+			slot.equipped_item = { name: undefined, sprite: undefined }
+		});
 	
 	widget_data = new WidgetGalleryData();
+	
+	// windows demo
+	windows = {
+		"default": new YuiWindowItem("default"),
+		"pink": new YuiWindowItem("pink", , 300),
+		"more": new YuiWindowItem("more", , 600),
+	}
+	
+	// for viewport demo
+	scroll_x = 0;
+	scroll_y = 0;
+	scroll_info = {
+		x_max: 13,
+		y_max: 13,
+	};
 	
 	// set live reload status
 	switch YUI_LIVE_RELOAD_STATE {

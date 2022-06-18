@@ -6,5 +6,5 @@ resources:
     type: fragment
     content:
       type: panel
-      background: yui_panel_bg
+      //background: yui_panel_bg
       padding: 10

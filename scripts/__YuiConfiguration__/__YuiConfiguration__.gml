@@ -12,10 +12,12 @@
 // In the Example Project, they're located in /datafiles/YUI/ but you can change that here.
 #macro YUI_DATA_SUBFOLDER "YUI/"
 
-
+// whether to enable compiling bindings to GML (requires Live Reload to be configured)
+#macro YUI_ENABLE_COMPILER false
 
 
 
 // actually do the init - DO NOT DELETE THIS!
 __yui_init_live_reload();
+
 

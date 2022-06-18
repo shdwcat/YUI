@@ -8,24 +8,19 @@ function yui_resolve_resource_imports(resources, imports, yui_folder) {
 	var i = 0; repeat import_count {
 		var import_item = imports[i]; 
 		var resource_filepath = yui_folder + "/" + import_item;
-					
-		var exists = file_exists(resource_filepath);
-		if !exists {
-			throw "File not found! " + resource_filepath;
+
+		var resource_file = YuiGlobals.yui_cabinet.file(resource_filepath);
+		if resource_file == undefined {
+			throw yui_error("File not found! " + resource_filepath);
 		}
 		
-		// don't try to load non-yui files (might be an interaction or such)
-		var tokens = yui_string_split(import_item, ".");
-		var last_token = tokens[array_length(tokens) - 1];
-		if last_token != "yui" {
+		// only load resource files
+		if resource_file.file_type != "resources" {
+			i++;
 			continue;
 		}
 		
-		// load the text
-		var resource_file_text = string_from_file(resource_filepath);
-		
-		// TODO: cache this per file somehow so that we don't need to re-read files multiple times
-		var resource_data = snap_from_yui(resource_file_text);
+		var resource_data = resource_file.tryRead();
 		
 		var trace = resource_data[$ "trace"];
 		if trace {

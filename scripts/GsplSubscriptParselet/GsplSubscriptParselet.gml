@@ -1,4 +1,4 @@
-/// @description
+/// @description parses the '.' in 'foo.bar'
 function GsplSubscriptParselet(precedence, identifier_token, second_token) : GsplInfixParselet(precedence) constructor {
 	
 	self.identifier_token = identifier_token;

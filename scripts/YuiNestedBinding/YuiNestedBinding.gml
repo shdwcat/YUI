@@ -22,4 +22,10 @@ function YuiNestedBinding(inner_binding, path) : YuiBinding(undefined) construct
 		var inner_result = inner_binding.resolve(data);
 		return resolver(inner_result);
 	}
+	
+	static compile = function() {
+		return path == ""
+			? inner_binding.compile()
+			: inner_binding.compile() + "." + path;
+	}
 }

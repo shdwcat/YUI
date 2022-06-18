@@ -14,6 +14,7 @@ function YuiDocument(_yui_file) constructor {
 		import: [], // list of .resource.yui filepaths relative to the yui_folder
 		resources: {},
 		root: undefined,
+		trace: false,
 	}
 	
 	loadDocument();
@@ -30,23 +31,26 @@ function YuiDocument(_yui_file) constructor {
 			return;
 		}
 		
-		// load the file data from disk
+		var cabinet_file = YuiGlobals.yui_cabinet.file(yui_filepath);
+		
+		// load the file data (possibly cached)
 		yui_log("loading yui_file:", yui_filepath);
-		var file_text = string_from_file(yui_filepath);
+		var file_data = cabinet_file.tryRead();
 		
-		var file_data = snap_from_yui(file_text);
+		// apply default props
+		document = yui_apply_props(file_data);
 		
-		// apply default props		
-		document = yui_init_props(file_data, default_props);
+		if document.trace 
+			DEBUG_BREAK_YUI
 		
 		// resolve imports
-		var yui_folder = filename_dir(yui_filepath);		
+		var yui_folder = filename_dir(yui_filepath);
 		resources = yui_resolve_resource_imports(
 			document.resources,
 			document.import,
 			yui_folder);
 		
 		// resolve root element
-		root_element = yui_resolve_element(document.root, resources, undefined, document.id);		
+		root_element = yui_resolve_element(document.root, resources, undefined, document.id);
 	}
 }

@@ -23,10 +23,14 @@ resources:
       selection_scope: null // type: YuiSelectionScope
 
       // array of items to select from
-      items: [] 
+      items: []
+
+      can_clear_value: true
 
       // template to use when rendering items in dropdown
       item_template: &dropdown_item_template
+
+      item_background: null
 
       // additional handler executed after item is selected
       on_item_selected: null 
@@ -38,31 +42,46 @@ resources:
 
       arrow_icon: yui_down_arrow_64
       arrow_icon_frame: 0
-      arrow_icon_size: 24
+      arrow_icon_size: 20
 
     events:
       item_selected:
         // select the item
         - item => $selection_scope.select(item)
         // invoke the user handler
-        - $on_item_selected
+        - item => $on_item_selected(item)
 
     template:
       type: button
       id: dropdown_button
       padding: 2
-      background: #06162A
-      border_color: #2183C0
       content:
         type: panel
         layout: horizontal
+        spacing: 0
+        padding: 2
         elements:
           // current item text
           - type: text
-            padding: [5, 2, 0, 0]
+            padding: [5, 0, 5, 0]
             text: $selection_scope.selected_item
+
+          - type: button
+            content:
+              type: text // TODO X sprite
+              color: $theme.resources.negative_color
+              text: X
+            padding: [5, 0]
+            size: 20
+            background: #00000000
+            border_thickness: 0
+            visible: $can_clear_value and $selection_scope.selected_index >= 0
+            on_click: e => yui_invoke_event(e.source, item_selected, undefined)
+
           // down arrow (to indicate this is a dropdown)
           - type: image
+            padding: 2
+            blend_color: $theme.resources.accent_color
             size: $arrow_icon_size
             sprite: $arrow_icon
             frame: $arrow_icon_frame
@@ -71,11 +90,14 @@ resources:
         placement: $dropdown_placement
         content:
           type: panel
+          spacing: 0
+          alignment: { h: stretch }
           elements: $items
           template:
             type: button
+            border_thickness: 0
             padding: 5
-            background: #06162A
+            background: $item_background
             content: $item_template
             on_click:
               // invoke the item_selected event on the root widget

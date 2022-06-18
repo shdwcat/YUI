@@ -1,9 +1,8 @@
 /// @description
-function YuiGridLayout(alignment, padding, spacing) constructor {
+function YuiGridLayout(alignment, spacing) constructor {
 	static is_live = false;
 
 	self.alignment = alignment;
-	self.padding = padding;
 	self.spacing = spacing;
 	
 	// elements may use this to calculate their own draw size
@@ -12,9 +11,10 @@ function YuiGridLayout(alignment, padding, spacing) constructor {
 	// the settings for this grid instance
 	self.settings = undefined;
 	
-	static init = function(items, available_size, panel_props) {
+	static init = function(items, available_size, viewport_size, panel_props) {
 		self.items = items;
 		self.available_size = available_size;
+		self.viewport_size = viewport_size;
 		
 		if !settings {
 			settings = new YuiGridSettings(panel_props[$ "grid"]);
@@ -30,8 +30,10 @@ function YuiGridLayout(alignment, padding, spacing) constructor {
 			left_to_right = settings.props.direction == "left_to_right";
 		}
 		
-		row_height ??= (available_size.h - settings.spacing_height) / rows;
-		column_width ??= (available_size.w - settings.spacing_width) / columns;
+		if available_size {
+			row_height ??= (available_size.h - settings.spacing_height) / rows;
+			column_width ??= (available_size.w - settings.spacing_width) / columns;
+		}
 	}
 	
 	static arrange = function() {
@@ -44,7 +46,7 @@ function YuiGridLayout(alignment, padding, spacing) constructor {
 			var possible_size = getAvailableSizeForItem(i);
 			
 			// arrange it within the size
-			var item_size = item.arrange(possible_size);
+			var item_size = item.arrange(possible_size, viewport_size);
 			
 			i++;
 		}
@@ -90,7 +92,7 @@ function YuiGridSettings(grid_settings = {}) constructor {
 		column_spacing: 0,
 	};
 	
-	self.props = yui_init_props(grid_settings);
+	self.props = yui_apply_props(grid_settings);
 	
 	// the total h/w used by spacing
 	spacing_height = (props.rows - 1) * props.row_spacing;

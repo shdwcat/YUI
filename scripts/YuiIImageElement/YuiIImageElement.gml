@@ -1,8 +1,7 @@
 /// @description renders a YUI Image
 function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_props, _resources, _slot_values) constructor {
 	static default_props = {
-		type: "image",			
-		theme: "default",
+		type: "image",
 		padding: 0,
 		scale_mode: "slice", // stretch/tile/clip/none/etc
 		center: false,
@@ -14,9 +13,11 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		blend_color: c_white,
 	};
 	
-	props = yui_init_props(_props);
-	yui_resolve_theme();
-	props.padding = yui_resolve_padding(props.padding);
+	props = yui_apply_element_props(_props);
+	
+	baseInit(props);
+	
+	props.padding = yui_resolve_padding(yui_bind(props.padding, resources, slot_values));
 	
 	props.sprite = yui_bind(props.sprite, resources, slot_values);
 	is_sprite_live = yui_is_live_binding(props.sprite);

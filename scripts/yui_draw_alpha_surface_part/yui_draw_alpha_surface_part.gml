@@ -1,5 +1,4 @@
 /// @description draw an alpha-enabled surface part
-// only used by ViewportElement currently, which is not even functional
 function yui_draw_alpha_surface_part(surface, left, top, width, height, x, y) {
 
 	var bm = gpu_get_blendmode_ext();

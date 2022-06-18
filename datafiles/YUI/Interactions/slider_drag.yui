@@ -1,6 +1,6 @@
 id: slider_drag
 file_type: interaction
-type: canvas_drag
+type: element_drag
 
 normalized: true
 condition: null

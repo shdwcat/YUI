@@ -13,6 +13,6 @@ if trace {
 
 	// debug mouseover trace
 	if highlight {
-		yui_draw_trace_rect(trace, draw_size, yui_draw_size_color);
+		yui_draw_trace_rect(trace, draw_size, yui_hover_color);
 	}
 }

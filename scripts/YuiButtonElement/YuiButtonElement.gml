@@ -1,73 +1,48 @@
 /// @description renders a YUI Button
 function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_props, _resources, _slot_values) constructor {
-	static default_props = {		
+	static default_props = {
 		type: "button",
-		theme: "default",
 		
 		focusable: true,
 		
 		background: undefined,
-		bg_sprite: undefined,
-		bg_sprite_size: undefined,
-		bg_color: undefined,
 		border_color: undefined,
 		border_thickness: 1,
+		border_focus_color: undefined,
 		
 		padding: undefined, // default to theme value
 		
 		content: undefined,
-		fit_to_content: true, // can be true/false/width/height
 		scale_mode: "slice", // stretch/tile/clip/none/etc
 		
-		popup: undefined, // setting popup will show a popup in an overlay				
-		tooltip: undefined, // either tooltip text or a Binding
+		popup: undefined, // setting popup will show a popup in an overlay
 		
-		mouseover_color: $55555555,
-		mousedown_color: $99999999,
-		highlight_color: $FFFFFFFF,
+		highlight_color: 0xFFFFFF,
+		highlight_alpha: 0.2,
+		pressed_alpha: 0.4,
 		
 		enabled: true, // can be bound
 		on_click: undefined,
-		click_button: mb_left,
 	}
 	
-	props = yui_apply_props(_props);
-	yui_resolve_theme();
+	props = yui_apply_element_props(_props);
+	
+	baseInit(props);
+	
 	props.enabled = yui_bind(props.enabled, resources, slot_values);
 	
-	// TODO: fix prop application order
-	props.focusable = true;
-	
-	// TODO fix theme implementation
-	var padding = props.padding == undefined ? theme.button.padding : props.padding;
-	props.padding = yui_resolve_padding(padding);
+	props.padding = yui_resolve_padding(yui_bind(props.padding, resources, slot_values));
 	
 	content_element = yui_resolve_element(props.content, resources, slot_values);
 	
-	// resolve slot/resource (not bindable currently)
-	var background_expr = yui_bind(props.background, resources, slot_values)
-		?? theme.button.background;
-		
-	if background_expr != undefined {
-		var bg_spr = yui_resolve_sprite_by_name(background_expr);
-		if bg_spr != undefined {
-			bg_sprite = bg_spr;
-			bg_color = undefined;
-		}
-		else {
-			bg_color = yui_resolve_color(background_expr);
-			bg_sprite = undefined;
-		}
-	}
-	else {
-		bg_color = undefined;
-		bg_sprite = undefined;
-	}
+	resolveBackgroundAndBorder()
 	
-	border_color = yui_resolve_color(yui_bind(props.border_color, resources, slot_values));
+	props.highlight_color = yui_bind_and_resolve(props.highlight_color, resources, slot_values);
+	props.highlight_alpha = yui_bind(props.highlight_alpha, resources, slot_values);
+	props.pressed_alpha = yui_bind(props.pressed_alpha, resources, slot_values);
 	
 	// set up popup mode
-	if props.popup {				
+	if props.popup {
 		props.popup.type = "popup";
 		popup_element = yui_resolve_element(props.popup, resources, slot_values);
 	}
@@ -87,16 +62,19 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		var content = content_element;
 		
 		return {
-			highlight_color: yui_resolve_color(props.highlight_color),
 			alignment: alignment,
 			padding: props.padding,
 			size: size,
-			content_type: content_element ? content_element.props.type : undefined,
+			highlight_color: yui_resolve_color(props.highlight_color),
+			highlight_alpha: props.highlight_alpha,
+			pressed_alpha: props.pressed_alpha,
+			// border
 			content_element: content,
 			bg_sprite: bg_sprite,
 			bg_color: bg_color,
 			border_color: border_color,
 			border_thickness: props.border_thickness,
+			border_focus_color: border_focus_color,
 		};
 	}
 	

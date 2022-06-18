@@ -1,47 +1,26 @@
 
 function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_props, _resources, _slot_values) constructor {
 	static default_props = {
-		type: "popup",	
-		theme: "default",
+		type: "popup",
+		padding: undefined,
 		
 		placement: YUI_PLACEMENT_MODE.BottomRight,
 		content: undefined,
 		
-		// default to theme values
-		bg_color: undefined,
+		background: undefined,
 		border_color: undefined,
-		border_thickness: undefined,		
-		padding: undefined,
+		border_thickness: undefined,
 	}
 	
-	props = yui_init_props(_props);
-	yui_resolve_theme();
+	props = yui_apply_element_props(_props);
+	
+	baseInit(props);
 	
 	props.placement = yui_bind(props.placement, resources, slot_values);
 	
-	// TODO: clean up initializing props from theme
+	resolveBackgroundAndBorder()
 	
-	if props.bg_color == undefined {
-		props.bg_color = theme.popup.bg_color;
-	}
-	else {
-		props.bg_color = yui_resolve_color(props.bg_color);
-	}
-	
-	if props.border_color == undefined {
-		props.border_color = theme.popup.border_color;
-	}
-	else {
-		props.border_color = yui_resolve_color(props.border_color);
-	}
-	
-	if props.border_thickness == undefined {
-		props.border_thickness = theme.popup.border_thickness;
-	}
-	if props.padding == undefined {
-		props.padding = theme.popup.padding;
-	}
-	props.padding = yui_resolve_padding(props.padding)
+	props.padding = yui_resolve_padding(yui_bind(props.padding, resources, slot_values));
 	
 	content_element = yui_resolve_element(props.content, resources, slot_values);
 
@@ -57,10 +36,12 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			size: size,
 			content_element: content_element,
 			// border
-			bg_sprite: undefined, // not yet implemented here
-			bg_color: props.bg_color,
-			border_color: props.border_color,
+			bg_sprite: bg_sprite,
+			bg_color: bg_color,
+			border_color: border_color,
 			border_thickness: props.border_thickness,
+			// not supported
+			border_focus_color: undefined,
 		};
 	}
 	

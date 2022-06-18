@@ -6,17 +6,17 @@
 
 // draw background
 if bg_alpha > 0 {
-	draw_sprite_stretched_ext(
+	draw_sprite_ext(
 		yui_white_pixel, 0, 
 		x, y, draw_size.w, draw_size.h,
-		bg_color, bg_alpha * opacity);
+		0, bg_color, bg_alpha * opacity);
 }
 
 if use_scribble {
 	if highlight && highlight_color != undefined {
 		scribble_element.blend(highlight_color, opacity);
 	}
-	else {	
+	else {
 		scribble_element.blend(text_color, opacity);
 	}
 
@@ -29,32 +29,52 @@ else {
 		color = highlight_color;
 	}
 
-	var old_font = draw_get_font();
-	var old_halign = draw_get_halign();
-	var old_valign = draw_get_valign();
-	
-	draw_set_font(font);
-	draw_set_halign(layout_props.halign);
-	draw_set_valign(layout_props.valign);
-	
-	draw_text_ext_color(
-		x + element_xoffset, y + element_yoffset,
-		bound_values.text, -1, text_width,
-		color, color, color, color, opacity);
-		
-	draw_set_font(old_font);
-	draw_set_halign(old_halign);
-	draw_set_valign(old_valign);
+	if use_text_surface {
+
+		if viewport_size {
+			
+			if viewport_part.visible {
+				// remake the surface if it doesn't exist
+				if !text_surface || !surface_exists(text_surface) {
+					buildTextSurface();
+				}
+
+				yui_draw_alpha_surface_part(
+					text_surface,
+					viewport_part.l, viewport_part.t,
+					viewport_part.w,// text_surface_w),
+					viewport_part.h,// text_surface_h),
+					viewport_part.x, viewport_part.y);
+			}
+		}
+		else {
+			// remake the surface if it doesn't exist
+			if !text_surface || !surface_exists(text_surface) {
+				buildTextSurface();
+			}
+			if text_surface {
+				yui_draw_alpha_surface(text_surface, x, y);
+			}
+		}
+	}
 }
 
 
 if (trace) {
-	yui_draw_trace_rect(trace, padded_rect, c_yellow);
+	yui_draw_trace_rect(true, padded_rect, yui_padding_color);
 
-	yui_draw_trace_rect(trace, draw_size, c_fuchsia);
+	yui_draw_trace_rect(true, draw_size, yui_draw_size_color);
 
 	// debug mouseover trace
 	if highlight {
-		yui_draw_trace_rect(trace, draw_size, c_lime);
+		yui_draw_trace_rect(true, draw_size, yui_hover_color);
+	}
+	
+	if viewport_part {
+		yui_draw_trace_rect(true, viewport_part, yui_viewport_color);
+	}
+	
+	if viewport_size {
+		yui_draw_trace_rect(true, viewport_size, c_olive);
 	}
 }

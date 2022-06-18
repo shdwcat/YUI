@@ -13,88 +13,121 @@ import:
   - ../Widgets/slider.yui
   - ../Widgets/slide_toggle.yui
   - ../Widgets/meter_bar.yui
-
-// resources:
-//   widget_wrapper:
-//     type: template
-
+  - ../Widgets/scrollbox.yui
 
 root:
 
   type: panel
   padding: 30
   spacing: 10
+  //theme: pink!
   
   elements:
     - type: back_button
 
-    - type: panel
-      spacing: 10
-      data_source: @widget_data
+    - type: scrollbox
+      // trace: true
+      background: $theme.resources.panel_bg
+      padding: 0
+      content:
 
-      elements:
+        type: panel
+        padding: 15
+        spacing: 10
+        data_source: @widget_data
 
-        - type: text
-          text: Menu
-          text_style: subtitle
+        elements:
 
-        - type: menu
-          menu_items: @menu
+          - type: text
+            text: Textbox
+            text_style: subtitle
 
-        - type: text
-          text: Checkbox
-          text_style: subtitle
+          - type: text_input
+            autofocus: true
+            text: @editable_text
+            size: { min_w: 300 }
+            events:
+              on_text_changed: @@ text => @editable_text = text
 
-        - type: checkbox
-          is_checked: @check_state
-          label: this is a checkbox
-          on_checked_changed: @@ checked => yui_set_struct_value(@, check_state, checked)
-          //? on_checked_changed: @is_checked = not @is_checked
+          - type: text
+            text: @editable_text
+            text_format: "Committed Text: {0}"
 
-        - type: text
-          text: Slide Toggle
-          text_style: subtitle
+          - type: text
+            text: Scrollbox
+            text_style: subtitle
 
-        - type: slide_toggle
-          is_checked: @check_state
-          label: this is a slide toggle
-          on_checked_changed: @@ checked => yui_set_struct_value(@, check_state, checked)
-          text_style: subtitle
+          - type: scrollbox
+            //trace: true
+            size: { w: 300, h: 100 }
+            content_w: fit
+            //content_w: 400
+            //content_h: 700
+            content: 
+              type: text
+              //size: { w: 400 }
+              padding: 5
+              text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum dui orci, in venenatis ipsum elementum vitae. Integer sagittis neque in nibh mollis venenatis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed commodo ultricies dolor eget maximus. Duis non gravida nulla, vel tincidunt lectus. Vestibulum dapibus sapien a augue ultrices porttitor. Fusce ultrices lacus nisl. Vestibulum nisi velit, placerat sed lacus vel, tincidunt ultricies metus. Maecenas porta, justo in imperdiet iaculis, urna ipsum varius urna, porta bibendum enim lorem sit amet enim. Nullam mattis tincidunt augue, vitae ultrices magna faucibus vel. Nunc lorem nunc, commodo ut tincidunt id, sagittis sed ipsum. Interdum et malesuada fames ac ante ipsum primis in faucibus.
 
-        - type: text
-          text: Switcher
-          text_style: subtitle
+          - type: text
+            text: Menu
+            text_style: subtitle
 
-        - type: switcher
-          items: @switcher_items
-          selection_scope: @switcher_selector
-          selected_index: 1
-          on_item_selected: @@ value => show_debug_message('selected ' + value)
+          - type: menu
+            menu_items: @menu
 
-        - type: text
-          text: Dropdown Selector
-          text_style: subtitle
+          - type: text
+            text: Checkbox
+            text_style: subtitle
 
-        - type: dropdown_menu
-          items: @switcher_items
-          selection_scope: @switcher_selector
+          - type: checkbox
+            is_checked: @check_state
+            label: this is a checkbox
+            on_checked_changed: @@ checked => @check_state = checked
 
-        - type: text
-          text: Slider
-          text_style: subtitle
+          - type: text
+            text: Slide Toggle
+            text_style: subtitle
 
-        - type: slider
-          value: @slider_value
-          // todo: replace this by implementing assignment syntax
-          on_value_changed: @@ value => yui_set_struct_value(@, 'slider_value', value)
+          - type: slide_toggle
+            is_checked: @check_state
+            label: this is a slide toggle
+            on_checked_changed: @@ checked => @check_state = checked
+            text_style: subtitle
 
-        - type: text
-          text: Meter Bar
-          text_style: subtitle
+          - type: text
+            text: Switcher
+            text_style: subtitle
 
-        - type: meter_bar
-          size: { w: 140, h: 20 }
-          value: @slider_value
-          background: white
-          meter_blend_color: blue
+          - type: switcher
+            items: @switcher_items
+            selection_scope: @switcher_selector
+            selected_index: 1
+            on_item_selected: @@ value => show_debug_message('selected ' + value)
+
+          - type: text
+            text: Dropdown Selector
+            text_style: subtitle
+
+          - type: dropdown_menu
+            items: @switcher_items
+            selection_scope: @switcher_selector
+
+          - type: text
+            text: Slider
+            text_style: subtitle
+
+          - type: slider
+            value: @slider_value
+            on_value_changed: @@ value => @slider_value = value
+
+          - type: text
+            text: Meter Bar
+            text_style: subtitle
+
+          - type: meter_bar
+            size: { w: 140, h: 20 }
+            value: @slider_value
+            background: white
+            meter_blend_color: blue
           

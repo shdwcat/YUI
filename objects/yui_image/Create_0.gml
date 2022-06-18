@@ -30,17 +30,21 @@ build = function() {
 	}
 }
 
-arrange = function(available_size) {
+arrange = function(available_size, viewport_size) {
 
 	draw_rect = available_size;
+	self.viewport_size = viewport_size;
+	
+	if !visible {
+		return sizeToDefault(available_size);
+	}
 	
 	var padding = layout_props.padding;	
 	padded_rect = yui_apply_padding(available_size, padding, layout_props.size, bound_values);
 	
 	// don't bother drawing if there isn't enough room
 	if padded_rect.w <= 0 || padded_rect.h <= 0 {
-		yui_resize_instance(0, 0);
-		return draw_size;
+		return sizeToDefault(available_size);
 	}
 	
 	// position at the padded rect corner so we can just draw at x/y
@@ -111,5 +115,10 @@ arrange = function(available_size) {
 	});
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
+	
+	if viewport_size {
+		updateViewport();
+	}
+			
 	return draw_size;
 }

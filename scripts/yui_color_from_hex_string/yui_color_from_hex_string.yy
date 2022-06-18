@@ -2,8 +2,8 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "util",
-    "path": "folders/Packages - YUI/scripts/util.yy",
+    "name": "color",
+    "path": "folders/Packages - YUI/scripts/color.yy",
   },
   "resourceVersion": "1.0",
   "name": "yui_color_from_hex_string",

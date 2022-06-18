@@ -1,7 +1,7 @@
 /// @description move focus up
 
 if !focused_item {
-	DEBUG_BREAK_YUI;
+	return;
 }
 
 var next_item = yui_find_focus_item(

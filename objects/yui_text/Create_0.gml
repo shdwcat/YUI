@@ -10,7 +10,16 @@ typist = undefined;
 element_xoffset = 0;
 element_yoffset = 0;
 
-text_width = 2000;
+font = undefined;
+
+viewport_part = undefined;
+use_text_surface = false;
+text_surface = undefined;
+text_surface_w = 0;
+text_surface_h = 0;
+
+// used by yui_text_input
+override_text = undefined;
 
 onLayoutInit = function() {
 	highlight_color = layout_props.highlight_color;
@@ -23,8 +32,10 @@ build = function() {
 	// used in Draw GUI
 	text_color = bound_values.color;
 	opacity = bound_values.opacity * parent.opacity;
+	
+	var text = override_text ?? bound_values.text;
 		
-	scribble_element = scribble(bound_values.text, string(id))
+	scribble_element = scribble(text, string(id))
 		.starting_format(bound_values.font)
 		.align(layout_props.halign, layout_props.valign);
 	
@@ -49,20 +60,24 @@ build = function() {
 	font = asset_get_index(bound_values.font);
 }
 
-arrange  = function(available_size) {		
+arrange = function(available_size, viewport_size) {
 	if !scribble_element return;
 	
 	x = available_size.x;
 	y = available_size.y;
 	draw_rect = available_size;
+	self.viewport_size = viewport_size;
 	
-	var padding = layout_props.padding;	
+	if !visible {
+		return sizeToDefault(available_size);
+	}
+	
+	var padding = layout_props.padding;
 	padded_rect = yui_apply_padding(available_size, padding, layout_props.size);
 	
 	// don't bother drawing if there isn't enough room
 	if padded_rect.w < 0 || padded_rect.h < 0 {
-		yui_resize_instance(0, 0);
-		return draw_size;
+		return sizeToDefault(available_size);
 	}
 	
 	element_xoffset = padding.left;
@@ -72,11 +87,14 @@ arrange  = function(available_size) {
 	//	DEBUG_BREAK_YUI;
 	//}
 	
-	text_width = padded_rect.w;
-	
 	scribble_element.wrap(padded_rect.w, padded_rect.h);
 
 	var new_bbox = scribble_element.get_bbox(x, y, padding.left, padding.top, padding.right, padding.bottom);
+	
+	text_surface_w = new_bbox.width + padding.w;
+	
+	// can't use string_height_ext because it doesn't account for letters like pqyg
+	text_surface_h = new_bbox.height + padding.h;
 	
 	// update draw size
 	var draw_width = layout_props.halign
@@ -90,6 +108,23 @@ arrange  = function(available_size) {
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
 	
+	use_text_surface = font >= 0 && !use_scribble;
+	if use_text_surface {
+		
+		var build_surface = true;
+		if viewport_size {
+			updateViewport();
+			
+			if !viewport_part.visible {
+				build_surface = false;
+			}
+		}
+		
+		if build_surface {
+			buildTextSurface();
+		}
+	}
+	
 	// when centering, center on the center of the padded rect
 	if layout_props.halign == fa_center {
 		element_xoffset += padded_rect.w / 2;
@@ -100,3 +135,26 @@ arrange  = function(available_size) {
 	
 	return draw_size;
 }
+
+buildTextSurface = function() {
+	
+	if !bound_values return;
+
+	var text = override_text ?? bound_values.text;
+	
+	if (text_surface_w > 0 && text_surface_h > 0) {
+		text_surface = yui_draw_text_to_surface(
+			element_xoffset, element_yoffset,
+			text_surface_w, text_surface_h,
+			text,
+			text_surface_w - layout_props.padding.w,
+			text_color ?? c_white, opacity,
+			layout_props.halign, layout_props.valign,
+			font, text_surface);
+	}
+}
+
+
+
+
+

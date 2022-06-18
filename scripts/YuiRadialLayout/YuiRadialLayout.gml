@@ -1,10 +1,9 @@
 /// @description Arranges item in a radial layout
-function YuiRadialLayout(alignment, padding, spacing) constructor {
+function YuiRadialLayout(alignment, spacing) constructor {
 	static is_live = false;
 
-	// note relevant to this layout
+	// NOTE: not relevant to this layout
 	//self.alignment = alignment;
-	//self.padding = padding;
 	//self.spacing = spacing;
 	
 	// elements may use this to calculate their own draw size
@@ -13,10 +12,11 @@ function YuiRadialLayout(alignment, padding, spacing) constructor {
 	// the settings for this radial instance
 	self.settings = undefined;
 	
-	static init = function(items, available_size, panel_props) {
+	static init = function(items, available_size, viewport_size, panel_props) {
 		self.items = items;
 		self.item_count = array_length(items);
 		self.available_size = available_size;
+		self.viewport_size = viewport_size;
 		
 		if !settings {
 			settings = new YuiRadialSettings(panel_props[$ "radial"]);
@@ -69,7 +69,7 @@ function YuiRadialLayout(alignment, padding, spacing) constructor {
 				};
 				
 				// arrange it
-				var item_size = item.arrange(possible_size);
+				var item_size = item.arrange(possible_size, viewport_size);
 				
 				i++;
 			}
@@ -97,7 +97,7 @@ function YuiRadialSettings(radial_settings = {}) constructor {
 		item_size: undefined, // the size of the items in the radial (required)
 	};
 	
-	props = yui_init_props(radial_settings);
+	props = yui_apply_props(radial_settings);
 
 	if is_numeric(props.item_size)
 	{

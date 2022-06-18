@@ -11,6 +11,15 @@ function YsLambdaParselet(precedence) : GsplInfixParselet(precedence) constructo
 		
 		var body = parser.parseExpression(precedence);
 		
-		return new YuiLambda(body, parser.context);
+		var lambda = new YuiLambda(body, parser.context);
+		
+		if YUI_COMPILER_ENABLED {
+			if parser.level > 1 {
+				yui_log(parser.source);
+			}
+			//yui_compile_binding(lambda, parser.source);
+		}
+		
+		return lambda;
 	}
 }

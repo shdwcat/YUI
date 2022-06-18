@@ -15,11 +15,11 @@ function yui_resolve_resource_category_map(resource_group_name, resources) {
 		var resource = variable_struct_get(resources, resource_name);
 		
 		// get the resource_group value for the resource, if any
-		var item_group_name = variable_struct_try_get(resource, "resource_group");
+		var item_group_name = yui_variable_struct_try_get(resource, "resource_group");
 		
 		// match against the provided resource_group_name
 		if item_group_name == resource_group_name {
-			var item_resource_key = variable_struct_try_get(resource, "resource_key");
+			var item_resource_key = yui_variable_struct_try_get(resource, "resource_key");
 			variable_struct_set(category_map, item_resource_key, resource);
 		}
 		

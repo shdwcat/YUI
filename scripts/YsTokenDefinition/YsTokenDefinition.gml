@@ -4,7 +4,7 @@ function YsTokenDefinition()
 		YS_TOKEN.EOF,
 		YS_TOKEN.STRING,
 		YS_TOKEN.NUMBER,
-		undefined // does not have identifier token
+		YS_TOKEN.IDENTIFIER
 	) constructor {
 
 	self.token_type = YsToken;

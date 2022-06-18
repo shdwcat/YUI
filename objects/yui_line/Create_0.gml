@@ -21,8 +21,9 @@ build = function() {
 	y2 = bound_values.y2;
 }
 
-arrange = function(available_size) {
+arrange = function(available_size, viewport_size) {
 	draw_rect = available_size;
+	self.viewport_size = viewport_size;
 	
 	// doesn't take up any size
 	yui_resize_instance(0, 0);

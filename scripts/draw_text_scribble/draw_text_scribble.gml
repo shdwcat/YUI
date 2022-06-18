@@ -17,9 +17,9 @@
 
 function draw_text_scribble(_x, _y, _string, _reveal = undefined)
 {
-	var _font = draw_get_font();
+    var _font = draw_get_font();
     _font = !font_exists(_font)? global.__scribble_default_font : font_get_name(_font);
-	
+    
     var _element = scribble(_string)
     .align(draw_get_halign(), draw_get_valign())
     .starting_format(_font, c_white)

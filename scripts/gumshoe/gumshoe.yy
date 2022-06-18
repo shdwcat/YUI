@@ -2,8 +2,8 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Packages - Gumshoe",
-    "path": "folders/Packages - Gumshoe.yy",
+    "name": "Cabinet",
+    "path": "folders/Cabinet.yy",
   },
   "resourceVersion": "1.0",
   "name": "gumshoe",

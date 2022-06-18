@@ -1,42 +1,100 @@
 /// @description here
-function YuiCanvasLayout(alignment, padding, spacing) constructor {
+function YuiCanvasLayout(alignment, spacing) constructor {
 	static is_live = false;
 	
 	self.alignment = alignment;
-	self.padding = padding;
 	self.spacing = spacing;
+	self.live_items = undefined;
 	
 	// elements may use this to calculate their own draw size
 	self.draw_size = undefined;
 	
-	static init = function(items, available_size) {
+	static init = function(items, available_size, viewport_size, panel_props) {
 		self.items = items;
 		self.available_size = available_size;
+		self.viewport_size = viewport_size;
 		
-		if !is_live {
-			var i = 0; repeat array_length(items) {			
-				var item = items[i++];
+		// init live items only once
+		if live_items == undefined {
+			
+			live_items = array_create(array_length(items));
+			
+			var i = 0; repeat array_length(items) {
+				var item = items[i];
 				var canvas = item.canvas;
 				
 				if canvas.is_bound {
 					is_live = true;
-					break;
+					live_items[i] = item.canvas;
 				}
+				
+				i++;
 			}
-		}	
+		}
 	}
 	
-	static arrange = function(data_context) {
+	static getLiveItemValues = function(data, prev) {
+		var is_changed = prev == undefined;
+		
+		var results = array_create(array_length(live_items), undefined);
+		
+		var i = 0; repeat array_length(live_items) {
+			var canvas = live_items[i];
+			
+			// only live item indexes will have a canvas value
+			if canvas {
+				var values = {
+					left: yui_resolve_binding(canvas.left, data),
+					top: yui_resolve_binding(canvas.top, data),
+					right: yui_resolve_binding(canvas.right, data),
+					bottom: yui_resolve_binding(canvas.bottom, data),
+				};
+			
+				// if we have previous values, check if any of them are different
+				if prev {
+					var old_values = prev.liveItemValues[i];
+				
+					if old_values.left != values.left
+					|| old_values.top != values.top
+					|| old_values.right != values.right
+					|| old_values.bottom != values.bottom {
+						is_changed = true;
+					}
+				}
+			
+				results[i] = values;
+			}
+			i++;
+		}
+		
+		if !is_changed {
+			return true;
+		}
+		
+		return results;
+	}
+	
+	static arrange = function(bound_values) {
 		
 		var i = 0; repeat array_length(items) {
 			
-			var item = items[i++];
+			var item = items[i];
 			var canvas = item.canvas;
 			
-			var left = yui_resolve_binding(canvas.left, data_context);
-			var top = yui_resolve_binding(canvas.top, data_context);
-			var right = yui_resolve_binding(canvas.right, data_context);
-			var bottom = yui_resolve_binding(canvas.bottom, data_context);
+			// if the item is live, get the live value instead
+			if canvas.is_bound {
+				var live_values = bound_values.liveItemValues[i];
+				var left = live_values.left;
+				var top = live_values.top;
+				var right = live_values.right;
+				var bottom = live_values.bottom;
+			}
+			else {
+				var left = canvas.left;
+				var top = canvas.top;
+				var right = canvas.right;
+				var bottom = canvas.bottom;
+			}
 			
 			// fit the item within the bounds defined by the canvas properties
 			if canvas.normalized {
@@ -59,7 +117,7 @@ function YuiCanvasLayout(alignment, padding, spacing) constructor {
 				};
 			}
 			
-			var item_size = item.arrange(possible_size);
+			var item_size = item.arrange(possible_size, viewport_size);
 			
 			// do post-arrange alignment
 			var xoffset = 0;
@@ -80,6 +138,8 @@ function YuiCanvasLayout(alignment, padding, spacing) constructor {
 			if xoffset != 0 || yoffset != 0 {
 				item.move(xoffset, yoffset);
 			}
+			
+			i++;
 		}
 		
 		// canvas always fills the available space
@@ -94,7 +154,9 @@ function YuiCanvasLayout(alignment, padding, spacing) constructor {
 	}
 }
 
-function YuiCanvasPosition(canvas_position = {}, resources, slot_values) constructor {
+function YuiCanvasPosition(canvas_position = {}, resources, slot_values, item_id) constructor {
+	self.item_id = item_id;
+	
 	var center = canvas_position[$ "center"];
 	center_h = center == true || center == "h";
 	center_v = center == true || center == "v";
@@ -124,5 +186,5 @@ function YuiCanvasPosition(canvas_position = {}, resources, slot_values) constru
 	left ??= 0;
 	top ??= 0;
 	right ??= 0;
-	bottom ??= 0;			
+	bottom ??= 0;
 }

@@ -12,6 +12,8 @@ default_props = {
 has_content_item = true; // yui_panel sets this to false
 content_item = undefined;
 
+draw_border = false;
+
 onLayoutInit = function() {	
 	trace = yui_element.props.trace; // hack
 		
@@ -30,14 +32,20 @@ onLayoutInit = function() {
 		bg_alpha = 1;
 	}
 	
+	border_focus_color = layout_props.border_focus_color ?? border_color;
+	
 	if border_color != undefined {
 		border_alpha = ((border_color & 0xFF000000) >> 24) / 255;
 	}
+	
+	draw_border =
+		border_thickness > 0 && border_alpha > 0
+		&& (border_color > 0 || border_focus_color > 0);
 }
 
 build = function() {
 	
-	opacity = bound_values.opacity * parent.opacity;
+	opacity = bound_values.opacity * parent.opacity * 1 - (!enabled * 0.5);
 	
 	// create the content item instance if there should be one
 	// NOTE: have to do this after opacity is updated
@@ -45,7 +53,7 @@ build = function() {
 		has_content_item
 		&& content_item == undefined
 		&& layout_props.content_element != undefined
-		
+
 	if make_content_item {
 		content_item = yui_make_render_instance(layout_props.content_element, data_context);
 	}
@@ -56,23 +64,27 @@ build = function() {
 	}
 }
 
-arrange  = function(available_size) {
+arrange = function(available_size, viewport_size) {
 	x = available_size.x;
 	y = available_size.y;
 	draw_rect = available_size;
+	self.viewport_size = viewport_size;
+	
+	if !visible {
+		return sizeToDefault(available_size);
+	}
 	
 	var padding = layout_props.padding;
 	padded_rect = yui_apply_padding(available_size, padding, layout_props.size);
 	
 	// don't bother drawing if there isn't enough room
 	if padded_rect.w < 0 || padded_rect.h < 0 {
-		yui_resize_instance(0, 0);
-		return draw_size;
+		return sizeToDefault(available_size);
 	}
 	
 	var content_size = undefined;
 	if content_item {
-		content_size = content_item.arrange(padded_rect);
+		content_size = content_item.arrange(padded_rect, viewport_size);
 	}
 	else {
 		content_size = { x: padded_rect.x, y: padded_rect.y, w: 0, h: 0 };
@@ -87,6 +99,15 @@ arrange  = function(available_size) {
 	
 	if bound_values && (bound_values.xoffset != 0 || bound_values.yoffset != 0) {
 		move(bound_values.xoffset, bound_values.yoffset);
+	}
+	
+	if viewport_size {
+		updateViewport();
+	}
+	
+	if bound_values && events.on_arrange != undefined {
+		var data = bound_values ? bound_values.data_source : undefined;
+		yui_call_handler(events.on_arrange, [draw_size], data);
 	}
 	
 	return draw_size;

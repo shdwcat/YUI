@@ -10,6 +10,15 @@ border_onLayoutInit = onLayoutInit;
 onLayoutInit = function() {
 	border_onLayoutInit();
 	highlight_color = layout_props.highlight_color;
+	highlight_alpha = layout_props.highlight_alpha;
+	pressed_alpha = layout_props.pressed_alpha;
+}
+
+border_build = build;
+build = function() {
+	enabled = bound_values.enabled;
+	focusable = bound_values.enabled;
+	border_build();
 }
 
 left_pressed = function() {
@@ -24,8 +33,8 @@ left_click = function() {
 			source: element,
 			button: "left",
 		};
-		// NOTE: doesn't support data_source yet
-		yui_call_handler(yui_element.props.on_click, [args], data_context);
+		
+		yui_call_handler(yui_element.props.on_click, [args], bound_values.data_source);
 	}
 }
 

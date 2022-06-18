@@ -1,14 +1,22 @@
 function yui_resolve_element(yui_data, resources, slot_values, parent_id = undefined) {
+	
+	static element_map = YuiGlobals.element_map;
+	
 	if yui_data == undefined return undefined;
 
 	// convert raw string elements to text data
 	if is_string(yui_data) {
 		if yui_is_binding_expr(yui_data) {
-			yui_data = yui_bind(yui_data, resources, slot_values);
+			var resolved_yui_data = yui_bind(yui_data, resources, slot_values);
+			
+			// if the result is not a binding, copy the resolved values to ensure we're not sharing state incorrectly
+			if !yui_is_binding(resolved_yui_data) && (is_struct(resolved_yui_data) || is_array(resolved_yui_data)) {
+				resolved_yui_data = snap_deep_copy(resolved_yui_data)
+			}
 			
 			// the result might be something like a slot or resource, or 'raw' element props
 			// In any of those cases, this recursive call will resolve that value correctly.
-			return yui_resolve_element(yui_data, resources, slot_values, parent_id);
+			return yui_resolve_element(resolved_yui_data, resources, slot_values, parent_id);
 		}
 		yui_data = {
 			type: "text",
@@ -22,7 +30,16 @@ function yui_resolve_element(yui_data, resources, slot_values, parent_id = undef
 			text: yui_data,
 		};
 	}
-		
+	
+	// if we don't have slots yet (because this is a root element)
+	// then resolve the theme and use it as the initial slot values
+	if slot_values == undefined {
+		var theme = yui_resolve_theme(yui_data[$ "theme"]);
+		slot_values = {
+			theme: theme,
+		}
+	}
+	
 	if yui_data[$ "id"] == undefined {
 		if parent_id == undefined && variable_struct_exists(self, "props") {
 			parent_id = props.id;
@@ -32,15 +49,22 @@ function yui_resolve_element(yui_data, resources, slot_values, parent_id = undef
 		yui_data.id = (parent_id ?? "unknown parent") + "." + yui_data.type;
 	}
 	
-	// store the real type name for reflection purposes
-	if yui_data[$ "_type"] == undefined {
-		yui_data._type = yui_data.type;
+	// store the .yui type name for reflection purposes
+	if yui_data[$ "yui_type"] == undefined {
+		yui_data.yui_type = yui_data.type;
 	}
 	
-	var element_constructor = YuiGlobals.element_map[? yui_data.type];	
+	var element_constructor = element_map[$ yui_data.type];
 	var element;
-		
-	if is_undefined(element_constructor) {
+	
+	// already resolved the template. just need to apply slots and construct
+	var slot_defs = yui_data[$ "slot_defs"];
+	if slot_defs != undefined {
+		var new_slot_values = yui_apply_slot_definitions(slot_defs, yui_data, , slot_values, resources)
+		var element = new element_constructor(yui_data, resources, new_slot_values);
+		return element;
+	}
+	else if is_undefined(element_constructor) {
 		// check for a template or fragment resource
 		var element_definition = resources[$ yui_data.type];
 			
@@ -53,11 +77,11 @@ function yui_resolve_element(yui_data, resources, slot_values, parent_id = undef
 				element = yui_create_fragment_element(yui_data, element_definition, resources, slot_values);
 			}
 			else {
-				throw new yui_string_concat("Unknown element resource type: ", element_type);
+				throw new yui_error("Unknown element resource type: ", element_type);
 			}
 		}
 		else {
-			throw yui_string_concat("could not find Element or Template for:", yui_data.type);
+			throw yui_error("could not find Element or Template for:", yui_data.type);
 		}
 	}
 	else {

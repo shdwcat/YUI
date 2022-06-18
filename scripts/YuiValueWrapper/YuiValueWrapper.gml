@@ -1,5 +1,5 @@
 /// @description
-function YuiValueWrapper(value, type = undefined) constructor {
+function YuiValueWrapper(value, type = undefined) : YuiExpr() constructor {
 	static is_yui_binding = true;
 	static is_yui_live_binding = false;
 	
@@ -15,5 +15,29 @@ function YuiValueWrapper(value, type = undefined) constructor {
 	
 	resolve = function() {
 		return value;
+	}
+	
+	static checkType = function() {
+		return typeof(value);
+	}
+
+	static compile = function()
+	{
+		switch typeof(value) {
+			case "string":
+				return "\"" + value + "\"";
+			case "number":
+				return string(value);
+			case "bool":
+				return value == true ? "true" : "false";
+			case "undefined":
+				return "undefined";
+				
+			//case "struct":
+			//	return value; // hmmm
+				
+			default:
+				throw yui_error("cannot compile value of type: " + typeof(value));
+		}
 	}
 }

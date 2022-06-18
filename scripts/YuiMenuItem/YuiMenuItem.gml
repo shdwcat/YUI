@@ -12,6 +12,8 @@ function YuiMenuItem(label, icon_sprite = undefined, command = undefined) constr
 	self.command = command ?? function() {
 		yui_log("clicked menu item");
 	};
+	
+	self.visible = true;
 }
 
 function YuiMenuItemCheckable(label, icon_sprite = undefined, on_checked_changed = undefined, is_checked = false)
@@ -23,7 +25,7 @@ function YuiMenuItemCheckable(label, icon_sprite = undefined, on_checked_changed
 	
 	self.command = function() {
 		is_checked = !is_checked;
-		on_checked_changed(is_checked);
+		on_checked_changed(is_checked, self);
 	}
 }
 

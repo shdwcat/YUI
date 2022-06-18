@@ -8,7 +8,10 @@ function YuiSwitchElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		strict: false,
 	}
 	
-	props = yui_init_props(_props);
+	props = yui_apply_element_props(_props);
+	
+	baseInit(props);
+	
 	props.switch_on = yui_bind(props.switch_on, resources, slot_values);
 	
 	// init case elements

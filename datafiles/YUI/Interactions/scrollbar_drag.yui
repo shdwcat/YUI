@@ -1,0 +1,7 @@
+id: scrollbar_drag
+file_type: interaction
+type: element_drag
+
+normalized: true
+condition: null
+on_position_changed: null

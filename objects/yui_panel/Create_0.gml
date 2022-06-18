@@ -16,7 +16,7 @@ onLayoutInit = function() {
 }
 
 border_build = build;
-build = function() {
+build = function yui_panel__build() {
 	border_build();
 	
 	trace = yui_element.props.trace; // hack
@@ -28,6 +28,7 @@ build = function() {
 	
 	// resize the array if we need more room
 	if bound_values.child_count > previous_count {
+		// TODO: this needs to cleanup the excess items or they will be orphaned
 		array_resize(internal_children, bound_values.child_count);
 	}
 	
@@ -74,20 +75,27 @@ build = function() {
 	}
 }
 
-arrange = function(available_size) {
+arrange = function yui_panel__arrange(available_size, viewport_size) {
 		
 	x = available_size.x;
 	y = available_size.y;
 	draw_rect = available_size;
+	self.viewport_size = viewport_size;
+	
+	if !visible {
+		return sizeToDefault(available_size);
+	}
+	
+	//if trace {
+	//	DEBUG_BREAK_YUI;
+	//}
 	
 	var padding = layout_props.padding;
 	padded_rect = yui_apply_padding(available_size, padding, layout_props.size);
-	layout.init(internal_children, padded_rect, yui_element.props);
-	
-	var data = bound_values ? bound_values.data_source : {};
-		
+	layout.init(internal_children, padded_rect, viewport_size, yui_element.props);
+
 	is_arranging = true;
-	used_layout_size = layout.arrange(data);
+	used_layout_size = layout.arrange(bound_values);
 	is_arranging = false;
 	
 	// update our draw size to encompass the layout's draw size with our padding
@@ -102,6 +110,10 @@ arrange = function(available_size) {
 		move(bound_values.xoffset, bound_values.yoffset);
 	}
 	
+	if viewport_size {
+		updateViewport();
+	}
+	
 	// our used size is the layout used size with our padding
 	var used_size = {
 		x: available_size.x,
@@ -109,6 +121,12 @@ arrange = function(available_size) {
 		w: max(drawn_size.w, used_layout_size.w + padding.w),
 		h: max(drawn_size.h, used_layout_size.h + padding.h),
 	};
+	
+	if events.on_arrange != undefined {
+		var data = bound_values ? bound_values.data_source : undefined;
+		yui_call_handler(events.on_arrange, [used_size], data);
+	}
+	
 	return used_size;
 }
 
@@ -122,6 +140,7 @@ onChildLayoutComplete = function(child) {
 }
 
 move = function(xoffset, yoffset) {
+	// use base move, not border's move
 	base_move(xoffset, yoffset);
 	
 	var i = 0; repeat array_length(internal_children) {

@@ -9,7 +9,7 @@ function GsplBinaryOperatorParselet(precedence, is_right) : GsplInfixParselet(pr
 		
 		right_expr = parser.parseExpression(right_precedence);
 		
-		return new parser.BinaryOperator(left_expr, token._type, right_expr);
+		return new parser.BinaryOperator(left_expr, token, right_expr);
 	}
 	
 }
