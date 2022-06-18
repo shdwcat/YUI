@@ -14,6 +14,7 @@ function YuiDocument(_yui_file) constructor {
 		import: [], // list of .resource.yui filepaths relative to the yui_folder
 		resources: {},
 		root: undefined,
+		trace: false,
 	}
 	
 	loadDocument();
@@ -38,6 +39,9 @@ function YuiDocument(_yui_file) constructor {
 		
 		// apply default props
 		document = yui_apply_props(file_data);
+		
+		if document.trace 
+			DEBUG_BREAK_YUI
 		
 		// resolve imports
 		var yui_folder = filename_dir(yui_filepath);

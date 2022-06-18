@@ -10,6 +10,9 @@ focusable = false;
 // whether this item is currently focused (managed by YuiCursorManager)
 focused = false;
 
+// whether the cursor is over this item
+highlight = false;
+
 // render item for any interactions this participates in
 interaction_item = undefined;
 
@@ -42,5 +45,6 @@ onChildLayoutComplete = function(child) {
 setHighlight = function(highlight) {
 	self.highlight = highlight;
 }
+
 
 
