@@ -30,8 +30,10 @@ function YuiGridLayout(alignment, spacing) constructor {
 			left_to_right = settings.props.direction == "left_to_right";
 		}
 		
-		row_height ??= (available_size.h - settings.spacing_height) / rows;
-		column_width ??= (available_size.w - settings.spacing_width) / columns;
+		if available_size {
+			row_height ??= (available_size.h - settings.spacing_height) / rows;
+			column_width ??= (available_size.w - settings.spacing_width) / columns;
+		}
 	}
 	
 	static arrange = function() {

@@ -9,13 +9,15 @@ function YuiHorizontalLayout(alignment, spacing) constructor {
 		self.items = items;
 		self.available_size = available_size;
 		self.viewport_size = viewport_size;
-		self.proportional_total = 0;
+		proportional_count = 0;
+		proportional_total = 0;
 		
 		var count = array_length(items);
 		var i = 0; repeat count {
 			var item = items[i];
 			var flex = item.flex;
 			if !flex.is_normal {
+				proportional_count++;
 				proportional_total += flex.proportional;
 			}
 			i++;
@@ -61,8 +63,13 @@ function YuiHorizontalLayout(alignment, spacing) constructor {
 			i++;
 		}
 		
+		// subtract final spacing if we used any
+		if xoffset > spacing {
+			xoffset -= spacing
+		}
+		
 		if is_flex_panel {
-			var remaining_space = available_size.w - xoffset;
+			var remaining_space = available_size.w - xoffset  - (spacing * proportional_count);
 			var i = 0; repeat count {
 				var item = items[i];
 				
@@ -116,11 +123,6 @@ function YuiHorizontalLayout(alignment, spacing) constructor {
 		//if trace {
 		//	DEBUG_BREAK_YUI;
 		//}
-		
-		// subtract spacing if we used any
-		if xoffset > spacing {
-			xoffset -= spacing
-		}
 		
 		draw_size = {
 			x: available_size.x,
