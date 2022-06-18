@@ -49,6 +49,10 @@ arrange = function(available_size, viewport_size) {
 	draw_rect = available_size;
 	self.viewport_size = viewport_size;
 	
+	if !visible {
+		return sizeToDefault(available_size);
+	}
+	
 	var actual_viewport_size = yui_apply_element_size(layout_props.size, available_size, {
 		x: x,
 		y: y,
@@ -119,3 +123,4 @@ move = function(xoffset, yoffset) {
 	border_move(xoffset, yoffset);
 	
 }
+

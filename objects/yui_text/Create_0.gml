@@ -68,13 +68,16 @@ arrange = function(available_size, viewport_size) {
 	draw_rect = available_size;
 	self.viewport_size = viewport_size;
 	
+	if !visible {
+		return sizeToDefault(available_size);
+	}
+	
 	var padding = layout_props.padding;
 	padded_rect = yui_apply_padding(available_size, padding, layout_props.size);
 	
 	// don't bother drawing if there isn't enough room
 	if padded_rect.w < 0 || padded_rect.h < 0 {
-		yui_resize_instance(0, 0);
-		return draw_size;
+		return sizeToDefault(available_size);
 	}
 	
 	element_xoffset = padding.left;
@@ -150,6 +153,7 @@ buildTextSurface = function() {
 			font, text_surface);
 	}
 }
+
 
 
 

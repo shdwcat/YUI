@@ -15,6 +15,8 @@ function YuiElementSize(size) constructor {
 	max_w = NaN;
 	min_h = 0;
 	max_h = NaN;
+	default_w = 0;
+	default_h = 0;
 	
 	w_type = YUI_LENGTH_TYPE.Pixel;
 	h_type = YUI_LENGTH_TYPE.Pixel;
@@ -58,8 +60,15 @@ function YuiElementSize(size) constructor {
 		max_w = size[$ "max_w"];
 		min_h = size[$ "min_h"];
 		max_h = size[$ "max_h"];
-				
-		is_exact_size = is_numeric(w) && is_numeric(h);		
+		
+		is_exact_w = is_numeric(w);
+		is_exact_h = is_numeric(h);
+		is_exact_size = is_exact_w && is_exact_h;
+		
+		if is_exact_w
+			default_w = w;
+		if is_exact_h
+			default_h = h;
 		
 		if variable_struct_exists(size, "w_type") {
 			if size.w_type == "proportional" {
@@ -103,5 +112,6 @@ function YuiFlexValue(value) constructor {
 		throw yui_error("Invalid flex value:", value);
 	}
 }
+
 
 

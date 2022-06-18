@@ -62,7 +62,18 @@ viewport_part = undefined;
 
 initLayout = function() {
 	_id = yui_element.props.id;
-	layout_props = yui_element.getLayoutProps();
+	
+	default_w = yui_element.size.default_w;
+	default_h = yui_element.size.default_h;
+	canvas = yui_element.canvas;
+	flex = yui_element.flex;
+	tooltip_element = yui_element.tooltip_element;
+	
+	events = yui_element.props.events;
+	yui_register_events(events);
+	
+	interactions = yui_element.props.interactions;
+	yui_register_interactions(interactions);
 	
 	focusable = yui_element.props.focusable;
 	is_cursor_layer = yui_element.props.is_cursor_layer;
@@ -74,16 +85,7 @@ initLayout = function() {
 		YuiCursorManager.setFocus(id);
 	}
 	
-	canvas = yui_element.canvas;
-	flex = yui_element.flex;
-	tooltip_element = yui_element.tooltip_element;
-	
-	events = yui_element.props.events;
-	yui_register_events(events);
-	
-	interactions = yui_element.props.interactions;
-	yui_register_interactions(interactions);
-	
+	layout_props = yui_element.getLayoutProps();
 	onLayoutInit();
 }
 
@@ -165,6 +167,13 @@ updateViewport = function() {
 
 resize = yui_resize_instance;
 
+sizeToDefault = function(available_size) {
+	var w = min(default_w, available_size.w);
+	var h = min(default_h, available_size.h);
+	yui_resize_instance(w, h);
+	return draw_size;
+}
+
 findAncestor = function(type) {
 	var ancestor = parent;
 	while ancestor != undefined {
@@ -210,6 +219,7 @@ setHighlight = function (highlight) {
 		}
 	}
 }
+
 
 
 
