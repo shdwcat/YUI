@@ -37,7 +37,7 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	
 	resolveBackgroundAndBorder()
 	
-	props.highlight_color = yui_bind(props.highlight_color, resources, slot_values);
+	props.highlight_color = yui_bind_and_resolve(props.highlight_color, resources, slot_values);
 	props.highlight_alpha = yui_bind(props.highlight_alpha, resources, slot_values);
 	props.pressed_alpha = yui_bind(props.pressed_alpha, resources, slot_values);
 	

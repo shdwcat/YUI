@@ -9,6 +9,7 @@ function YuiElementDrag(_props, _resources) constructor {
 		clamp_to_size: true,
 		
 		mode: "point", // "point" or "element"
+		direct: false, // whether to directly move the target element
 		
 		normalized: false, // whether to normalize the resulting position within the size of the parent
 		
@@ -49,13 +50,14 @@ function YuiElementDrag(_props, _resources) constructor {
 		var gui_x = device_mouse_x_to_gui(0);
 		var gui_y = device_mouse_y_to_gui(0);
 		
+		// cursor position relative to the target
 		relative_x = gui_x - target.x;
 		relative_y = gui_y - target.y;
 		
 		event = {
 			source: target.id,
-			left: 0,
-			top: 0,
+			left: undefined,
+			top: undefined,
 		};
 		
 		return undefined;
@@ -88,11 +90,18 @@ function YuiElementDrag(_props, _resources) constructor {
 			relative_top = relative_top / parent_size.h;
 		}
 		
+		event.x_diff = event.left == undefined ? 0 : relative_left - event.left;
+		event.y_diff = event.top == undefined ? 0 : relative_top - event.top;
+		
 		// top/left is either the raw top/left relative to the parent x/y,
 		// or the normalized top/left within the parent size (relative to the x/y)
 		event.source = target.id;
 		event.left = relative_left;
 		event.top = relative_top;
+		
+		if props.direct == true {
+			target.move(event.x_diff, event.y_diff);
+		}
 		
 		if props.trace {
 			yui_log(event);

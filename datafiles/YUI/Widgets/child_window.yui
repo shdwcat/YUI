@@ -39,12 +39,14 @@ resources:
       is_cursor_layer: true
       alignment:
         h: stretch
-      xoffset: $left
-      yoffset: $top
       spacing: 0
       padding: 1
       background: $theme.resources.control_border
       border_color: $theme.resources.control_border
+      
+      // bind these with final for performance, position will be updated directly
+      xoffset: $left | final
+      yoffset: $top | final
 
       elements:
         - type: panel
@@ -55,7 +57,7 @@ resources:
             - type: button
               background: $theme.resources.negative_color_dim
               border_thickness: 0
-              highlight_color: $theme.resources.negative_color | eval
+              highlight_color: $theme.resources.negative_color
               highlight_alpha: 1
               visible: $closable
               content:

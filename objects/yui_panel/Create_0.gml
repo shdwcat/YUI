@@ -16,7 +16,7 @@ onLayoutInit = function() {
 }
 
 border_build = build;
-build = function() {
+build = function yui_panel__build() {
 	border_build();
 	
 	trace = yui_element.props.trace; // hack
@@ -75,7 +75,7 @@ build = function() {
 	}
 }
 
-arrange = function(available_size, viewport_size) {
+arrange = function yui_panel__arrange(available_size, viewport_size) {
 		
 	x = available_size.x;
 	y = available_size.y;
