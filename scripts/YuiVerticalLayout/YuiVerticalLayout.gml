@@ -36,8 +36,8 @@ function YuiVerticalLayout(alignment, spacing) constructor {
 		var i = 0; repeat count {
 			var item = items[i];
 			
-			// skip invisible items and proportional items
-			if !item.visible || !item.flex.is_normal {
+			// skip proportional items
+			if !item.flex.is_normal {
 				i++;
 				continue;
 			}
@@ -73,8 +73,8 @@ function YuiVerticalLayout(alignment, spacing) constructor {
 			var i = 0; repeat count {
 				var item = items[i];
 				
-				// skip invisible items and normal items
-				if !item.visible || item.flex.is_normal {
+				// skip normal-sized items
+				if item.flex.is_normal {
 					i++;
 					continue;
 				}
