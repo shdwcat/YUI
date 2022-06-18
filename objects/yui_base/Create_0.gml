@@ -105,16 +105,21 @@ bind_values = function yui_base__bind_values() {
 		}
 		exit;
 	}
-	else {
-		visible = true;
+	
+	// ensure that we're now visible
+	var was_visible = visible;
+	visible = true;
 		
-		if new_values == true {
+	// if bound values are same as before exit early
+	if new_values == true {
+		if was_visible {
 			// values are the same as before, nothing to do
 			exit;
 		}
 	}
-	
-	bound_values = new_values;
+	else {
+		bound_values = new_values;
+	}
 	
 	// maybe move this to element.is_live()?
 	is_binding_active = bound_values.is_live;
