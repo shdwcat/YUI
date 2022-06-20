@@ -16,9 +16,9 @@ Future features:
 - In Game Editor (?)
 
 ### OK, where do I start?
-You can either clone the Example Project (this repo) to play around with it, or import the latest package from the Releases page.
+You can either clone the Example Project (this repo) to play around with it, or import the latest package from the [Releases](https://github.com/shdwcat/YUI/releases) page.
 
-Documentation is available on the Wiki (may be out of date at times)
+Documentation is available on the [Wiki](https://github.com/shdwcat/YUI/wiki) (may be out of date at times)
 
 ### The Example Project
 Contained in this repo is the YUI Example project. If you clone the repo locally you can run the project to get an idea of what YUI is capable of. The Example Project is still a work in progress, but make sure to check out the Inventory Screen for an example of how to quickly set up drag and drop!
