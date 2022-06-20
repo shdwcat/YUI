@@ -5,11 +5,11 @@
 Writing UI code is annoying and tedious! Why write UI code when you can edit readable text files instead?
 
 Notable features:
-- [[Live Reload]] while the game is running!
-- Flexible and powerful [[Data Binding]] and [scripting](YuiScript) system to get your game data into the UI
-- [Template](Templates) system lets you design and re-use [[custom widgets]]
-- [Theme](Themes) system and widget styles
-- Powerful [[Drag and Drop]] feature built in (no coding!)
+- [Live Reload](https://github.com/shdwcat/YUI/wiki/Live-Reload) while the game is running!
+- Flexible and powerful [Data Binding](https://github.com/shdwcat/YUI/wiki/Data-Binding) and [scripting](https://github.com/shdwcat/YUI/wiki/YuiScript) system to get your game data into the UI
+- [Template](https://github.com/shdwcat/YUI/wiki/Templates) system lets you design and re-use [custom widgets](https://github.com/shdwcat/YUI/wiki/Custom-Widgets)
+- [Theme](https://github.com/shdwcat/YUI/wiki/Themes) system and widget styles
+- Powerful [Drag and Drop](https://github.com/shdwcat/YUI/wiki/Drag-and-Drop) feature built in (no coding!)
 
 Future features:
 - Animation (slide/fade/etc)
