@@ -5,14 +5,15 @@
 Writing UI code is annoying and tedious! Why write UI code when you can edit readable text files instead?
 
 Notable features:
-- Live Reload while the game is running!
-- Flexible and powerful data-binding system to get your game data into the UI
-- Template system lets you design and re-use custom widgets
-- Theme system and widget styles
-- Powerful Drag and Drop feature built in (no coding!)
+- [[Live Reload]] while the game is running!
+- Flexible and powerful [[Data Binding]] and [scripting](YuiScript) system to get your game data into the UI
+- [Template](Templates) system lets you design and re-use [[custom widgets]]
+- [Theme](Themes) system and widget styles
+- Powerful [[Drag and Drop]] feature built in (no coding!)
 
 Future features:
 - Animation (slide/fade/etc)
+- In Game Editor (?)
 
 ### OK, where do I start?
 You can either clone the Example Project (this repo) to play around with it, or import the latest package from the Releases page.
