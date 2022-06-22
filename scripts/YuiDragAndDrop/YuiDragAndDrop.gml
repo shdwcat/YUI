@@ -207,11 +207,16 @@ function YuiDragAndDrop(_props, _resources) constructor {
 			with drop_item {
 				interaction_item = yui_make_render_instance(other.drop_element, interaction_data, , 100);
 				
-				// align drop visual to game position
 				if !is_gui_item {
-					var xdiff = yui_world_to_gui_x(x) - interaction_item.x;
-					var ydiff = yui_world_to_gui_y(y) - interaction_item.y;
-					interaction_item.move(xdiff, ydiff);
+					// align drop visual to game position
+					// TODO: move this to yui_game_item
+					var size = {
+						x: x + yui_world_to_gui_x(x) - interaction_item.x,
+						y: y + yui_world_to_gui_y(y) - interaction_item.y,
+						w: infinity,
+						h: infinity,
+					};
+					interaction_item.arrange(size);
 				}
 				else {
 					interaction_item.arrange(drop_item.draw_size);
@@ -229,9 +234,9 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		drop_target.can_drop = canDrop(interaction_data);
 		
 		// only set this for the interaction when the drop is valid
-		if drop_target.can_drop && drop_target.hover {			
-			target.data = drop_data;	
-			target.can_drop = true;		
+		if drop_target.can_drop && drop_target.hover {
+			target.data = drop_data;
+			target.can_drop = true;
 		}
 	}
 	
