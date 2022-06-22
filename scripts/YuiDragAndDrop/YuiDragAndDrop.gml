@@ -5,6 +5,7 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		id: undefined,
 		type: "drag_and_drop",
 		trace: false,
+		hide_source: false,
 		
 		drag: {
 			condition: undefined,
@@ -95,6 +96,11 @@ function YuiDragAndDrop(_props, _resources) constructor {
 			relative_world_y: mouse_y - source_item.y,
 		};
 		
+		if props.hide_source {
+			self.source_item = source_item;
+			source_item.hidden = true;
+		}
+		
 		// call start handler if defined
 		if props.drag.start != undefined {
 			var interaction_data = {
@@ -145,6 +151,10 @@ function YuiDragAndDrop(_props, _resources) constructor {
 				// center result on cursor
 				xdiff -= visual_item.draw_size.w / 2;
 				ydiff -= visual_item.draw_size.h / 2;
+			}
+			else {
+				xdiff -= cursor.relative_x;
+				ydiff -= cursor.relative_y;
 			}
 			
 			visual_item.move(xdiff, ydiff);
@@ -233,8 +243,8 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		return can_drop;
 	}
 	
-	static resetFrame = function() {		
-		target.data = undefined;		
+	static resetFrame = function() {
+		target.data = undefined;
 		target.hover = undefined;
 		target.can_drop = undefined;
 	}
@@ -246,6 +256,11 @@ function YuiDragAndDrop(_props, _resources) constructor {
 			var drop_item = targets[i++];
 			instance_destroy(drop_item.interaction_item);
 			drop_item.interaction_item = undefined;
+		}
+		
+		if props.hide_source {
+			source_item.hidden = false;
+			source_item = undefined;
 		}
 		
 		YuiCursorManager.finishInteraction();

@@ -20,6 +20,7 @@ is_binding_active = true;
 bound_values = undefined;
 
 enabled = true;
+hidden = false;
 opacity = 1;
 
 // this only applies alpha for bg_color set on an element placed in the room editor

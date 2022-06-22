@@ -26,6 +26,7 @@ function yui_try_start_interaction(interaction_name, source_data, event) {
 	var element = interaction.start(source_data, event, id);
 	if element {
 		YuiCursorManager.visual_item = yui_make_render_instance(element, interaction, , 100);
+		YuiCursorManager.visual_item.parent = undefined;
 		YuiCursorManager.visual_item.arrange({
 			x: device_mouse_x_to_gui(0),
 			y: device_mouse_y_to_gui(0),
