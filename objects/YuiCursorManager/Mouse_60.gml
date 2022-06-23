@@ -23,3 +23,8 @@ var i = hover_count - 1; repeat hover_count {
 	
 	i--;
 }
+
+if i < 0 && global_wheel_up {
+	global_wheel_up();
+}
+

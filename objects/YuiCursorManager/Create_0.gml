@@ -59,9 +59,12 @@ mouse_down_array[mb_side2] = [];
 left_pressed_consumed = false;
 left_click_consumed = false;
 
-// hack to make o_camera_panner work
+// events to handle mouse interaction if YUI screen has not handled it
 // NOTE: only supports one subscriber!
 global_left_pressed = undefined;
+global_wheel_up = undefined
+global_wheel_down = undefined
+// TODO: global versions of all events
 
 setFocus = function(focus_item, new_scope = undefined) {
 	
