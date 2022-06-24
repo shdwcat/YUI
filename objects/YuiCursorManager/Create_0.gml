@@ -121,9 +121,3 @@ trackMouseDownItems = function(button) {
 		i--;
 	}
 }
-
-
-
-
-
-

@@ -4,6 +4,10 @@ function yui_try_start_interaction(interaction_name, source_data, event) {
 	if !is_string(interaction_name) {
 		throw yui_error("yui_try_start_interaction() - interaction_name must be a string");
 	}
+	
+	if YuiCursorManager.active_interaction != undefined {
+		return false;
+	}
 		
 	var interaction_file = YuiGlobals.interactions[$ interaction_name];
 	if interaction_file == undefined {
