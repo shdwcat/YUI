@@ -29,7 +29,7 @@ function yui_draw_text_to_surface(
 		text, -1, text_w,
 		color, color, color, color, opacity);
 	
-	if old_surface > 1 {
+	if old_surface > 0 && old_surface != application_surface {
 		surface_set_target(old_surface);
 	}
 	else {
