@@ -52,6 +52,7 @@ function YuiLineElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			
 		return {
 			is_live: true,
+			data_source: data,
 			width: width,
 			color: color,
 			x1: x1,

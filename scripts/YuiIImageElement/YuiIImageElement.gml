@@ -106,6 +106,7 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		
 		return {
 			is_live: is_bound,
+			data_source: data,
 			sprite: sprite,
 			frame: frame,
 			angle: angle,

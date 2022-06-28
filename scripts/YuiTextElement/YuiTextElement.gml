@@ -135,6 +135,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		
 		return {
 			is_live: is_bound,
+			data_source: data,
 			text: text,
 			font: font,
 			opacity: opacity,
