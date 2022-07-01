@@ -176,13 +176,6 @@ function YuiCanvasPosition(canvas_position = {}, resources, slot_values, item_id
 	right_aligned = right != undefined && left == undefined;
 	bottom_aligned = bottom != undefined && top == undefined;
 	
-	if center_h && (left != undefined || right != undefined) {
-		throw "Cannot center horizontally AND left/right align";
-	}
-	if center_v && (top != undefined || bottom != undefined) {
-		throw "Cannot center vertically AND top/bottom align";
-	}
-	
 	left ??= 0;
 	top ??= 0;
 	right ??= 0;
