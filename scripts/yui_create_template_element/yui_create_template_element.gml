@@ -43,6 +43,7 @@ function yui_create_template_element(instance_props, template_definition, resour
 	// handle events defined on the template
 	var event_definitions = template_definition[$ "events"];
 	if event_definitions {
+		var resolved_events = {};
 		
 		// resolve the handlers for the events defined in the template to commands
 		var keys = variable_struct_get_names(event_definitions);
@@ -50,7 +51,7 @@ function yui_create_template_element(instance_props, template_definition, resour
 		var i = 0; repeat event_count {
 			var key = keys[i];
 			var handler = event_definitions[$ key];
-			event_definitions[$ key] = yui_bind_handler(handler, resources, slot_values);
+			resolved_events[$ key] = yui_bind_handler(handler, resources, slot_values);
 		}
 	
 		// merge the events defined for the template with the events of the template's root_element
@@ -61,12 +62,12 @@ function yui_create_template_element(instance_props, template_definition, resour
 				if instance_props.events[$ key] {
 					yui_warning("overwriting event:", key);
 				}
-				instance_props.events[$ key] = event_definitions[$ key];
+				instance_props.events[$ key] = resolved_events[$ key];
 			}
 		}
-		else if event_definitions {
-			// if the element did not have events, just set the defined events
-			instance_props.events = event_definitions;
+		else {
+			// if the element did not have events, just set the resolved events
+			instance_props.events = resolved_events;
 		}
 	}
 	
