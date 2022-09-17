@@ -19,7 +19,8 @@ function YuiIndexBinding(left, index) : YuiExpr() constructor {
 			return index_key != undefined ? left_val[$ index_key] : undefined;
 		}
 		else if left_val == undefined {
-			throw yui_error("attempting to index an undefined value");
+			var left_type = instanceof(left);
+			throw yui_error("attempting to index an undefined value from expression of type: " + left_type);
 		}
 		else {
 			throw yui_error("cannot index value of type", typeof(left_val));
