@@ -100,13 +100,7 @@ function YuiCallFunction(func_name, args) : YuiExpr() constructor {
 		
 		// handle calling arrays
 		if is_array(func_ref) {
-			var func_count = array_length(func_ref);
-			var results = array_create(func_count)
-			var i = 0; repeat array_length(func_ref) {
-				results[i] = yui_call_handler(func_ref, resolved_args, data);
-				i++;
-			}
-			return results;
+			return yui_call_handler(func_ref, resolved_args, data);
 		}
 		
 		if instanceof(func_ref) == "YuiLambda" {
