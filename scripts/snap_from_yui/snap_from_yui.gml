@@ -38,7 +38,7 @@ function snap_from_yui(_string, _replace_keywords = true, _track_field_order = f
     
     buffer_delete(_buffer);
     
-    return (new __snap_from_yui_builder(_tokens_array, _replace_keywords, _track_field_order)).result;
+    return (new __snap_from_yui_builder(_tokens_array, _replace_keywords, _track_field_order, _string)).result;
 }
 
 #macro snap_from_yui_get_token_type tokens_array[token_index][0]
@@ -287,11 +287,12 @@ function __snap_from_yui_tokenizer(_buffer) constructor
     }
 }
 
-function __snap_from_yui_builder(_tokens_array, _replace_keywords, _track_field_order) constructor
+function __snap_from_yui_builder(_tokens_array, _replace_keywords, _track_field_order, source) constructor
 {
     tokens_array = _tokens_array;
     replace_keywords = _replace_keywords;
 	track_field_order = _track_field_order;
+	self.source = source;
     
     token_count  = array_length(tokens_array);
     token_index  = 0;
