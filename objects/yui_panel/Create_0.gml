@@ -35,16 +35,19 @@ build = function yui_panel__build() {
 		array_resize(internal_children, bound_values.child_count);
 	}
 	
-	var i = 0; repeat bound_values.child_count {
+	var child_count = bound_values.child_count
+	var i = 0; repeat child_count {
 				
 		var child = internal_children[i];
 		var exists = child != 0;
+		
+		var data_index = layout_props.reverse ? child_count - i - 1 : i;
 		
 		if exists {
 			// TODO: if the render item type doesn't match, we need to recreate
 			// currently that's not possible so we won't worry about it
 			var new_data = yui_element.uses_template
-				? bound_values.data_items[i]
+				? bound_values.data_items[data_index]
 				: bound_values.data_items;
 				
 			// check if we need to rebuild
@@ -57,10 +60,10 @@ build = function yui_panel__build() {
 		else {
 			if yui_element.uses_template {
 				var item_element =  yui_element.item_element;
-				var data = bound_values.data_items[i];
+				var data = bound_values.data_items[data_index];
 			}
 			else {
-				var item_element =  yui_element.item_elements[i];
+				var item_element =  yui_element.item_elements[data_index];
 				var data = bound_values.data_items;
 			}
 			

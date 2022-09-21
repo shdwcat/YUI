@@ -5,6 +5,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		
 		// layout
 		layout: "vertical",
+		reverse: false,
 		padding: 0,
 		spacing: undefined,
 		alignment: "default",
@@ -79,6 +80,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			padding: props.padding,
 			size: size,
 			layout: layout,
+			reverse: props.reverse,
 			// border
 			bg_sprite: bg_sprite,
 			bg_color: bg_color,
