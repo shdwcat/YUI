@@ -23,20 +23,23 @@ build = function yui_panel__build() {
 	
 	// resync our internal children to the bound children
 	
+	var child_count = bound_values.child_count;
+	var display_count = layout_props.count
+		? min(child_count, layout_props.count)
+		: child_count;
+	
 	var previous_count = array_length(internal_children);
-	var excess_count = previous_count - bound_values.child_count;
+	var excess_count = previous_count - display_count;
 	
 	//if trace
 	//	DEBUG_BREAK_YUI
 	
 	// resize the array if we need more room
-	if bound_values.child_count > previous_count {
+	if display_count > previous_count {
 		// TODO: this needs to cleanup the excess items or they will be orphaned
-		array_resize(internal_children, bound_values.child_count);
+		array_resize(internal_children, display_count);
 	}
-	
-	var child_count = bound_values.child_count
-	var i = 0; repeat child_count {
+	var i = 0; repeat display_count {
 				
 		var child = internal_children[i];
 		var exists = child != 0;
@@ -88,7 +91,7 @@ build = function yui_panel__build() {
 		}
 		
 		// resize the array to the new count
-		array_resize(internal_children, bound_values.child_count);
+		array_resize(internal_children, display_count);
 	}
 }
 

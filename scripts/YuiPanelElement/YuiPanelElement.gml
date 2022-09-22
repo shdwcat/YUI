@@ -5,7 +5,8 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		
 		// layout
 		layout: "vertical",
-		reverse: false,
+		reverse: false, // when true, shows items in reverse order
+		count: undefined, // max number of items to show (applies after reverse)
 		padding: 0,
 		spacing: undefined,
 		alignment: "default",
@@ -37,6 +38,8 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	// live binding this is not (yet?) supported, but this enables $slot support
 	props.layout = yui_bind(props.layout, resources, slot_values);
+	
+	props.count = yui_bind_and_resolve(props.count, resources, slot_values);
 	
 	var makeLayout = yui_resolve_layout(props.layout);
 	layout = new makeLayout(alignment, props.spacing);
@@ -81,6 +84,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			size: size,
 			layout: layout,
 			reverse: props.reverse,
+			count: props.count,
 			// border
 			bg_sprite: bg_sprite,
 			bg_color: bg_color,
