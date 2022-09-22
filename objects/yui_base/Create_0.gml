@@ -71,7 +71,7 @@ initLayout = function() {
 	default_h = yui_element.size.default_h;
 	canvas = yui_element.canvas;
 	flex = yui_element.flex;
-	tooltip_element = yui_element.tooltip_element;
+	has_tooltip = yui_element.props.tooltip != undefined;
 	
 	events = yui_element.props.events;
 	yui_register_events(events);
@@ -211,9 +211,10 @@ setHighlight = function(highlight) {
 	
 	base_setHighlight(highlight)
 	
-	if tooltip_element {
+	if has_tooltip {
 		if highlight {
-			if tooltip_item == undefined {	
+			tooltip_element ??= yui_element.createTooltip();
+			if tooltip_item == undefined {
 				tooltip_item = yui_make_render_instance(
 					tooltip_element,
 					bound_values.data_source, 

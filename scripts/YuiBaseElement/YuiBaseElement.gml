@@ -122,7 +122,10 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 			|| is_yoffset_live;
 	
 		tooltip_element = undefined;
-		if props.tooltip != undefined {
+	}
+	
+	static createTooltip = function() {
+		if tooltip_element == undefined && props.tooltip != undefined {
 			var tooltip_props = {
 				type: "popup",
 				yui_type: "popup",
@@ -134,6 +137,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 			// TODO: set yui_type: tooltip and use yui_resolve_element so that we can apply theme to this
 			tooltip_element = new YuiPopupElement(tooltip_props, resources, slot_values);
 		}
+		return tooltip_element;
 	}
 	
 	// logic shared by some control
