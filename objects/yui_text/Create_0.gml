@@ -61,7 +61,8 @@ build = function() {
 }
 
 arrange = function(available_size, viewport_size) {
-	if !scribble_element return;
+	if !scribble_element 
+		return sizeToDefault(available_size);
 	
 	x = available_size.x;
 	y = available_size.y;
@@ -153,6 +154,7 @@ buildTextSurface = function() {
 			font, text_surface);
 	}
 }
+
 
 
 
