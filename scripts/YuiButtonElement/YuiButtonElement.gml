@@ -94,6 +94,7 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		
 		// diff
 		if prev
+			&& data == prev.data_source
 			&& enabled == prev.enabled
 			&& opacity == prev.opacity
 			&& xoffset == prev.xoffset

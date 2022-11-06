@@ -121,6 +121,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		
 		// diff
 		if prev
+			&& data == prev.data_source
 			&& opacity == prev.opacity
 			&& xoffset == prev.xoffset
 			&& yoffset == prev.yoffset

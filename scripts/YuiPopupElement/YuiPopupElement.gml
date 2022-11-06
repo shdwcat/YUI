@@ -60,6 +60,7 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		
 		// diff
 		if prev
+			&& data == prev.data_source
 			&& opacity == prev.opacity
 			&& placement == prev.placement
 			&& xoffset == prev.xoffset
