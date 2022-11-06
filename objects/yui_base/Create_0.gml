@@ -102,6 +102,11 @@ bind_values = function yui_base__bind_values() {
 	if new_values == false {
 		if visible {
 			visible = false;
+			
+			// trigger parent re-layout since we might have been taking up space
+			if parent and bound_values {
+				parent.onChildLayoutComplete(self);
+			}
 		
 			// need to reset these, as values may change while the element
 			// is not visible, which means the diffing will be out of date
