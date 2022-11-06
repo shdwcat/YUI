@@ -22,6 +22,8 @@ resources:
       // the selection scope that manages selection state
       selection_scope: null // type: YuiSelectionScope
 
+      selected_item: null
+
       // array of items to select from
       items: []
 
@@ -47,24 +49,27 @@ resources:
     events:
       item_selected:
         // select the item
-        - item => $selection_scope.select(item)
+        - item => $selection_scope then $selection_scope.select(item) else false
         // invoke the user handler
         - item => $on_item_selected(item)
 
     template:
       type: button
       id: dropdown_button
+      data_source: @
       padding: 2
       content:
         type: panel
         layout: horizontal
         spacing: 0
         padding: 2
+        data_source: @
         elements:
           // current item text
-          - type: text
+          - type: border
             padding: [5, 0, 5, 0]
-            text: $selection_scope.selected_item
+            data_source: $selected_item ?? $selection_scope.selected_item
+            content: $item_template
 
           - type: button
             content:
@@ -72,15 +77,13 @@ resources:
               color: $theme.resources.negative_color
               text: X
             padding: [5, 0]
-            size: 20
             background: #00000000
             border_thickness: 0
-            visible: $can_clear_value and $selection_scope.selected_index >= 0
+            visible: $can_clear_value and ($selected_item != undefined or $selection_scope.selected_index >= 0)
             on_click: e => yui_invoke_event(e.source, item_selected, undefined)
 
           // down arrow (to indicate this is a dropdown)
           - type: image
-            padding: 2
             blend_color: $theme.resources.accent_color
             size: $arrow_icon_size
             sprite: $arrow_icon
