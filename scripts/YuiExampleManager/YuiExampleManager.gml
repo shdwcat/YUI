@@ -33,10 +33,12 @@ function YuiExampleManager() constructor {
 	
 	// windows demo
 	windows = {
-		"default": new YuiWindowItem("default"),
-		"pink": new YuiWindowItem("pink", , 300),
-		"more": new YuiWindowItem("more", , 600),
+		"default": new YuiWindowItem("buttons"),
+		"pink": new YuiWindowItem("more buttons", , 300),
+		"more": new YuiWindowItem("even more buttons", , 600),
 	}
+	
+	window_list = [windows[$ "default"], windows.pink, windows.more];
 	
 	// for viewport demo
 	scroll_x = 0;

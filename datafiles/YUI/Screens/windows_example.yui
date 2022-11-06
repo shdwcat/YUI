@@ -5,12 +5,29 @@ import:
   - ../Templates/main_panel.yui
   - ../Templates/screen_base.yui
   - ../Widgets/child_window.yui
+  - ../Widgets/checkbox.yui
 
 root:
   type: screen_base
-  data_source: @windows
   items:
-    - This example demonstrates how keyboard/gamepad navigation works.\nCheck kb_navigation_example.yui to see how submenus etc are configured
+    - This example demonstrates the child_window widget
+
+    - type: panel
+      layout: horizontal
+      elements:
+        - type: text
+          text: "Visible Windows:"
+          //padding: [0, 5, 0, 0]
+        - type: panel
+          layout: horizontal
+          spacing: 10
+          elements: @window_list
+          template:
+            type: checkbox
+            padding: 0
+            label: @unique_id
+            is_checked: @visible
+            on_checked_changed: @@ checked => @visible = checked
 
     - type: panel
       layout: canvas
@@ -20,13 +37,14 @@ root:
       elements:
 
         - type: child_window
-          data_source: @default
+          data_source: @windows.default
+          visible: @visible
           title: buttons
           top: @top
           left: @left
           size: { w: 160 }
           closable: true
-          on_closed: @@ e => @onClosed(e)
+          on_closed: @visible = false
           on_position_changed:
             - @@ e => @top = e.top
             - @@ e => @left = e.left
@@ -52,13 +70,15 @@ root:
                 content: Credits
 
         - type: child_window
-          data_source: @pink
+          data_source: @windows.pink
+          visible: @visible
           title: more buttons
           layer: 10
           top: @top
           left: @left
           size: { w: 160 }
           closable: true
+          on_closed: @visible = false
           on_position_changed:
             - @@ e => @top = e.top
             - @@ e => @left = e.left
@@ -81,13 +101,15 @@ root:
                 content: Column 2 item 4
 
         - type: child_window
-          data_source: @more
+          data_source: @windows.more
+          visible: @visible
           layer: 20
           title: even more buttons
           top: @top
           left: @left
           size: { w: 200 }
           closable: true
+          on_closed: @visible = false
           on_position_changed:
             - @@ e => @top = e.top
             - @@ e => @left = e.left
