@@ -54,6 +54,7 @@ root:
         - type: child_window
           data_source: @pink
           title: more buttons
+          layer: 10
           top: @top
           left: @left
           size: { w: 160 }
@@ -81,6 +82,7 @@ root:
 
         - type: child_window
           data_source: @more
+          layer: 20
           title: even more buttons
           top: @top
           left: @left
