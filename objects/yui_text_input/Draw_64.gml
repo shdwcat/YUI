@@ -36,11 +36,15 @@ if show_highlight {
 }
 
 if focused && (current_time div 500 mod 2) == 1 {
-	draw_sprite_ext(
-		yui_white_pixel, 0,
-		caret_x, caret_y, 1, caret_h,
-		0, caret_color, 1);
+	
+	if isPointVisible(caret_x, caret_y) {
+		draw_sprite_ext(
+			yui_white_pixel, 0,
+			caret_x, caret_y, 1, caret_h,
+			0, caret_color, 1);
+	}
 }
+
 
 
 

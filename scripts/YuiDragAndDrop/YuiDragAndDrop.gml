@@ -7,6 +7,9 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		trace: false,
 		hide_source: false,
 		
+		// whether to use the XY of the source item for cursor hit testing
+		hit_test_source_position: false,
+		
 		drag: {
 			condition: undefined,
 			center_visual: true,
@@ -96,8 +99,21 @@ function YuiDragAndDrop(_props, _resources) constructor {
 			relative_world_y: mouse_y - source_item.y,
 		};
 		
+		if props.hit_test_source_position {
+			// adjust cursor checks to use the x y of the dragged item
+			var is_gui_item = object_is_ancestor(source_item.object_index, yui_base)
+			if is_gui_item {
+				YuiCursorManager.cursor_offset_x -= cursor.relative_x;
+				YuiCursorManager.cursor_offset_y -= cursor.relative_y;
+			}
+			else {
+				YuiCursorManager.cursor_offset_x -= cursor.relative_world_x;
+				YuiCursorManager.cursor_offset_y -= cursor.relative_world_y;
+			}
+		}
+		
+		self.source_item = source_item;
 		if props.hide_source {
-			self.source_item = source_item;
 			source_item.hidden = true;
 		}
 		
@@ -226,6 +242,7 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		else {
 			// grab the interaction_data from the interaction_visual's data_context
 			interaction_data = drop_item.interaction_item.data_context;
+			interaction_data.target = drop_target;
 		}
 		
 		// TODO: move the visual to the target?? only matters if the target is moving
@@ -265,10 +282,10 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		
 		if props.hide_source {
 			source_item.hidden = false;
-			source_item = undefined;
 		}
 		
 		YuiCursorManager.finishInteraction();
+		source_item = undefined;
 		source = undefined;
 		target = undefined;
 		cursor = undefined;

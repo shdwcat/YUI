@@ -11,11 +11,17 @@ participation_map = ds_map_create();
 active_interaction = undefined;
 visual_item = undefined;
 
+// offset of actual cursor from point to check (e.g. when dragging an item)
+cursor_offset_x = 0;
+cursor_offset_y = 0;
+
 finishInteraction = function() {
 	yui_log("interaction", active_interaction.props.type, "complete");
 	if visual_item {
 		yui_log("destroying interaction visual", visual_item);
 		instance_destroy(visual_item);
+		cursor_offset_x = 0;
+		cursor_offset_y = 0;
 		visual_item = undefined;
 	}
 	active_interaction = undefined;
@@ -120,4 +126,8 @@ trackMouseDownItems = function(button) {
 		mouse_down_array[button][i] = item;
 		i--;
 	}
+}
+
+isCursorOnVisiblePart = function(item) {
+	return item.isPointVisible(mouse_x + cursor_offset_x, mouse_y + cursor_offset_y);
 }

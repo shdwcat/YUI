@@ -202,7 +202,7 @@ closePopup = function(close_parent = false) {
 	}
 }
 base_setHighlight = setHighlight;
-setHighlight = function (highlight) {
+setHighlight = function(highlight) {
 	
 	base_setHighlight(highlight)
 	
@@ -226,6 +226,19 @@ setHighlight = function (highlight) {
 	}
 }
 
+isPointVisible = function(x, y) {
+	if viewport_part != undefined {
+		return point_in_rectangle(
+				x, y,
+				viewport_part.x,
+				viewport_part.y,
+				viewport_part.x + viewport_part.w,
+				viewport_part.y + viewport_part.h);
+	}
+	else {
+		return true;
+	}
+}
 
 
 
