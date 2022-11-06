@@ -8,19 +8,22 @@ function yui_bind_struct(struct, resources, slot_values, resolve = false, recurs
 		var key = keys[i++];
 		var value = struct[$ key];
 		
-		if recursive && is_struct(value) {
-			struct[$ key] = yui_bind_struct(value, resources, slot_values, resolve, true)
-		}
-		else if recursive && is_array(value) {
-			struct[$ key] = yui_bind_array(value, resources, slot_values, resolve, true)
-		}
-		else {
-			var result = yui_bind(value, resources, slot_values);
-			if resolve && yui_is_binding(result) && !result.is_lambda {
-				result = result.resolve();
+		if recursive {
+			if is_struct(value) && !yui_is_binding(value) {
+				struct[$ key] = yui_bind_struct(value, resources, slot_values, resolve, true)
+				continue;
 			}
-			struct[$ key] = result;
+			if is_array(value) {
+				struct[$ key] = yui_bind_array(value, resources, slot_values, resolve, true)
+				continue;
+			}
 		}
+		
+		var result = yui_bind(value, resources, slot_values);
+		if resolve && yui_is_binding(result) && !result.is_lambda {
+			result = result.resolve();
+		}
+		struct[$ key] = result;
 	}
 	
 	return struct;
