@@ -1,17 +1,14 @@
 /// @description creates a top level YUI document
 function YuiDocument(_yui_file) constructor {
 	yui_file = _yui_file;
-			
-	previous_animation_states = {};
-	next_animation_states = {};
-		
+	
 	load_error = undefined;
 	
 	// for the loaded document
 	static default_props = {
 		id: undefined,
 		data_type: undefined,
-		import: [], // list of .resource.yui filepaths relative to the yui_folder
+		import: [], // list of .yui filepaths relative to the yui_file
 		resources: {},
 		root: undefined,
 		trace: false,

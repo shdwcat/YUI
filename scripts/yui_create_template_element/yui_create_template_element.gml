@@ -1,5 +1,5 @@
 /// @description creates the root element for a template instance
-function yui_create_template_element(instance_props, template_definition, resources, parent_slot_values) {
+function yui_create_template_element(instance_props, template_definition, resources, outer_slot_values) {
 				
 	// defines what input slots the template supports
 	var slot_definitions = template_definition[$ "slots"];
@@ -9,14 +9,14 @@ function yui_create_template_element(instance_props, template_definition, resour
 	// with the customized props from the instance_props
 	var template_element_props = snap_deep_copy(template_definition.template);
 	
-	// if we're evaluating recursive templates, we need to consider the parent template 
+	// if we're evaluating recursive templates, we need to consider the outer template 
 	// as a source of slot values (e.g. context_menu overriding menu slot values)
-	var parent_template = instance_props[$ "template_def"]
+	var outer_template = instance_props[$ "template_def"]
 	
 	// we also need to merge the top level props
-	if parent_template != undefined {
+	if outer_template != undefined {
 		var type = template_element_props.type;
-		template_element_props = yui_apply_props(parent_template, template_element_props);
+		template_element_props = yui_apply_props(outer_template, template_element_props);
 		template_element_props.type = type;
 	}
 	
@@ -24,8 +24,8 @@ function yui_create_template_element(instance_props, template_definition, resour
 	var slot_values = yui_apply_slot_definitions(
 		slot_definitions, // the slot definitions for this template
 		instance_props, // the props for this instance of the template
-		parent_template,
-		parent_slot_values, // values coming in from the parent
+		outer_template,
+		outer_slot_values, // values coming in from the outer template
 		resources);
 	
 	// store the original .yui type name for reflection purposes
