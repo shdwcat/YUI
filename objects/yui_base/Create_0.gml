@@ -7,6 +7,9 @@ default_props = {};
 // the YuiElement for this render object
 yui_element = undefined;
 
+// whether we need to rebuild due to data changes
+rebuild = false;
+
 // the index of this item within its parent's children, if any
 item_index = undefined;
 
@@ -242,6 +245,7 @@ isPointVisible = function(x, y) {
 		return visible;
 	}
 }
+
 
 
 

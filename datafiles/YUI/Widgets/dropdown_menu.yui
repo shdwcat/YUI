@@ -56,14 +56,12 @@ resources:
     template:
       type: button
       id: dropdown_button
-      data_source: @
       padding: 2
       content:
         type: panel
         layout: horizontal
         spacing: 0
         padding: 2
-        data_source: @
         elements:
           // current item text
           - type: border
