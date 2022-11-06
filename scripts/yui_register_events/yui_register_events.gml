@@ -42,4 +42,15 @@ function yui_register_events(events) {
 			yui_call_handler(events.on_mouse_wheel_down, [args], data_context);
 		}
 	}
+	
+	if events.on_hover_changed != undefined {
+		on_hover_changed = function() {
+			var source = self;
+			var args = {
+				source: source,
+				hover: source.highlight,
+			};
+			yui_call_handler(events.on_hover_changed, [args], data_context);
+		}
+	}
 }

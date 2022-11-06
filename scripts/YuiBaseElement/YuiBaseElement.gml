@@ -44,6 +44,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		on_arrange: undefined,
 		on_got_focus: undefined,
 		on_lost_focus: undefined,
+		on_hover_changed: undefined,
 	};
 	
 	// this is the type from the .yui declaration which may be a template or fragment name
@@ -81,6 +82,9 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		props.events.on_mouse_wheel_down = yui_bind_handler(props.events.on_mouse_wheel_down, resources, slot_values);
 		props.events.on_click = yui_bind_handler(props.events.on_click, resources, slot_values);
 		props.events.on_arrange = yui_bind_handler(props.events.on_arrange, resources, slot_values);
+		props.events.on_got_focus = yui_bind_handler(props.events.on_got_focus, resources, slot_values);
+		props.events.on_lost_focus = yui_bind_handler(props.events.on_lost_focus, resources, slot_values);
+		props.events.on_hover_changed = yui_bind_handler(props.events.on_hover_changed, resources, slot_values);
 	
 		YuiCursorManager.participation_hash.hashArray(props.interactions);
 	

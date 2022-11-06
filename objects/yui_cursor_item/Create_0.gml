@@ -35,6 +35,8 @@ on_mouse_wheel_down = undefined;
 on_got_focus = undefined;
 on_lost_focus = undefined;
 
+on_hover_changed = undefined;
+
 // simplifies logic for checking parent opacity
 opacity = 1;
 
@@ -43,7 +45,12 @@ onChildLayoutComplete = function(child) {
 }
 
 setHighlight = function(highlight) {
+	var changed = self.highlight != highlight;
 	self.highlight = highlight;
+	
+	if changed && on_hover_changed {
+		on_hover_changed();
+	}
 }
 
 
