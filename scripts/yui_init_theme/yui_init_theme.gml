@@ -15,7 +15,8 @@ function yui_init_theme(theme_definition, name, folder_path) {
 	var resources = yui_resolve_resource_imports(
 		props.resources,
 		props.import,
-		folder_path);
+		folder_path,
+		YuiGlobals.yui_cabinet);
 		
 	var slot_values = {};
 	
