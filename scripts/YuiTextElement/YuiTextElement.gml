@@ -96,7 +96,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		if !is_visible return false;
 				
 		var text = is_text_live && !is_array(props.text) ? props.text.resolve(data) : props.text;
-		if text == "" || text == undefined {
+		if text == undefined {
 			return false;
 		}
 		

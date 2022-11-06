@@ -10,8 +10,8 @@ update = false;
 live_text = undefined;
 after_caret = "";
 caret_color = c_white;
-caret_x = undefined;
-caret_y = undefined;
+caret_x =0;// undefined;
+caret_y =0;// undefined;
 caret_h = undefined;
 
 border_onLayoutInit = onLayoutInit;
@@ -70,7 +70,9 @@ on_got_focus = function() {
 }
 
 on_lost_focus = function() {
-	input_string_submit();
+	if yui_element.props.commit_on_lost_focus {
+		input_string_submit();
+	}
 	input_string_set();
 	if content_item && instance_exists(content_item) {
 		content_item.override_text = undefined;

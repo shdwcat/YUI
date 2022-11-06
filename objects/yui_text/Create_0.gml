@@ -92,15 +92,24 @@ arrange = function(available_size, viewport_size) {
 
 	var new_bbox = scribble_element.get_bbox(x, y, padding.left, padding.top, padding.right, padding.bottom);
 	
-	text_surface_w = new_bbox.width + padding.w;
+	
+	var old_font = draw_get_font();
+	draw_set_font(font);
+	
+	var render_width = new_bbox.width;
+	var render_height = max(new_bbox.height, string_height("bq"));
+	
+	draw_set_font(old_font);
+	
+	text_surface_w = render_width + padding.w;
 	
 	// can't use string_height_ext because it doesn't account for letters like pqyg
 	text_surface_h = new_bbox.height + padding.h;
 	
 	// update draw size
 	var draw_width = layout_props.halign
-		|| scribble_element.get_wrapped() ? available_size.w : new_bbox.width;
-	var draw_height = layout_props.valign ? available_size.h : new_bbox.height;
+		|| scribble_element.get_wrapped() ? available_size.w : render_width;
+	var draw_height = layout_props.valign ? available_size.h : render_height;
 	
 	var drawn_size = yui_apply_element_size(layout_props.size, available_size, {
 		w: draw_width + padding.w,
