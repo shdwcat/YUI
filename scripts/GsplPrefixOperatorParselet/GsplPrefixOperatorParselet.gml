@@ -5,7 +5,7 @@ function GsplPrefixOperatorParselet(precedence) : GsplPrefixParselet() construct
 	
 	static parse = function(parser, token) {
 		var right_expr = parser.parseExpression(precedence);
-		return new parser.PrefixOperator(token._type, right_expr);
+		return new parser.PrefixOperator(token, right_expr);
 	}
 	
 }
