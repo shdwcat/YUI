@@ -5,3 +5,4 @@ if focused {
 	after_caret = "";
 }
 
+

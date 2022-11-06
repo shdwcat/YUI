@@ -32,6 +32,11 @@ border_arrange = arrange;
 arrange = function(available_size, viewport_size) {
 	var size = border_arrange(available_size, viewport_size);
 	
+	var old_font = draw_get_font();
+	draw_set_font(content_item.font);
+	caret_x = content_item.draw_size.x + string_width(input_string_get());
+	draw_set_font(old_font);
+	
 	caret_y = content_item.draw_size.y;
 	caret_h = content_item.draw_size.h;
 	
@@ -75,6 +80,7 @@ on_lost_focus = function() {
 	original_text = undefined;
 	update = false;
 }
+
 
 
 

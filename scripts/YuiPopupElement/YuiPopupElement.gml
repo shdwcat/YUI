@@ -16,7 +16,7 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	baseInit(props);
 	
-	props.placement = yui_bind(props.placement, resources, slot_values);
+	props.placement = yui_read_placement_mode(yui_bind(props.placement, resources, slot_values));
 	
 	resolveBackgroundAndBorder()
 	

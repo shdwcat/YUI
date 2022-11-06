@@ -148,9 +148,6 @@ function YuiDragAndDrop(_props, _resources) constructor {
 			cursor: cursor,
 		};
 		
-		// TODO: factor the participation stuff into base class or helper functions!
-		// it's way too clunky currently
-		
 		// evaluate the instances in the 'drop' role
 		var targets = yui_get_interaction_participants(drop_hash_id);
 		var i = 0; repeat array_length(targets) {
@@ -251,9 +248,12 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		drop_target.can_drop = canDrop(interaction_data);
 		
 		// only set this for the interaction when the drop is valid
-		if drop_target.can_drop && drop_target.hover {
+		if drop_target.hover {
+			target.hover = true
 			target.data = drop_data;
-			target.can_drop = true;
+			if drop_target.can_drop {
+				target.can_drop = true;
+			}
 		}
 	}
 	
@@ -267,8 +267,8 @@ function YuiDragAndDrop(_props, _resources) constructor {
 	
 	static resetFrame = function() {
 		target.data = undefined;
-		target.hover = undefined;
-		target.can_drop = undefined;
+		target.hover = false;
+		target.can_drop = false;
 	}
 	
 	static finish = function() {

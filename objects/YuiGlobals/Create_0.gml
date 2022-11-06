@@ -19,6 +19,7 @@ element_map = {
 screens = {};
 interactions = {};
 themes = {};
+resources = {};
 
 var yui_file_customizer = function(cabinet_file) {
 	
@@ -45,6 +46,7 @@ var yui_file_customizer = function(cabinet_file) {
 			break;
 			
 		case "resources":
+			resources[$ cabinet_file.file_id] = cabinet_file;
 			break;
 	}
 }
@@ -75,3 +77,4 @@ var yui_data_folder = YUI_LOCAL_PROJECT_DATA_FOLDER + YUI_DATA_SUBFOLDER;
 yui_cabinet = new Cabinet(yui_data_folder, ".yui", options);
 
 yui_log("YuiGlobals: loaded");
+

@@ -139,9 +139,11 @@ arrange = function(available_size, viewport_size) {
 move = function(xoffset, yoffset) {
 	x += xoffset;
 	draw_size.x += xoffset;
+	draw_rect.x += xoffset;
 	padded_rect.x += xoffset;
 	y += yoffset;
 	draw_size.y += yoffset;
+	draw_rect.y += yoffset;
 	padded_rect.y += yoffset;
 	
 	if viewport_size {
@@ -239,6 +241,8 @@ isPointVisible = function(x, y) {
 		return true;
 	}
 }
+
+
 
 
 

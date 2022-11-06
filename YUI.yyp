@@ -325,6 +325,7 @@
     {"id":{"name":"scribble_font_get_glyph_ranges","path":"scripts/scribble_font_get_glyph_ranges/scribble_font_get_glyph_ranges.yy",},"order":7,},
     {"id":{"name":"gspl_set_runner_instruction","path":"scripts/gspl_set_runner_instruction/gspl_set_runner_instruction.yy",},"order":2,},
     {"id":{"name":"scribble_font_set_default","path":"scripts/scribble_font_set_default/scribble_font_set_default.yy",},"order":11,},
+    {"id":{"name":"yui_read_enums","path":"scripts/yui_read_enums/yui_read_enums.yy",},"order":15,},
     {"id":{"name":"snap_to_yaml","path":"scripts/snap_to_yaml/snap_to_yaml.yy",},"order":1,},
     {"id":{"name":"scribble_font_bake_outline_8dir","path":"scripts/scribble_font_bake_outline_8dir/scribble_font_bake_outline_8dir.yy",},"order":1,},
     {"id":{"name":"__yui_init_globals","path":"scripts/__yui_init_globals/__yui_init_globals.yy",},"order":19,},
