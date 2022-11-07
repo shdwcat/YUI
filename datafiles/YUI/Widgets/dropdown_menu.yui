@@ -78,7 +78,7 @@ resources:
             background: #00000000
             border_thickness: 0
             visible: $can_clear_value and ($selected_item != undefined or $selection_scope.selected_index >= 0)
-            on_click: e => yui_invoke_event(e.source, item_selected, undefined)
+            on_click: @@ e => yui_invoke_event(e.source, item_selected, undefined)
 
           // down arrow (to indicate this is a dropdown)
           - type: image
@@ -102,6 +102,6 @@ resources:
             content: $item_template
             on_click:
               // invoke the item_selected event on the root widget
-              - e => yui_invoke_event(e.source, item_selected, @)
+              - @@ e => yui_invoke_event(e.source, item_selected, @)
               // close the popup
-              - e => e.source.closePopup()
+              - @@ e => e.source.closePopup()
