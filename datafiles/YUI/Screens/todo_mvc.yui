@@ -55,7 +55,9 @@ root:
                 - @@ text => @new_task.label = text
                 - @@ text => array_push(@tasks, snap_deep_copy(@new_task))
                 - @@ text => @new_task.label = ''
+                - @@ text => input_string_set('')
 
+          // panel to display the tasks
           - type: panel
             size: { w: 400 }
             spacing: 1
@@ -71,6 +73,7 @@ root:
 
               elements:
 
+                // checkbox to control if the task is done
                 - type: checkbox
                   padding: 0
                   size: { w: 370 }
@@ -88,6 +91,7 @@ root:
                       on_text_changed:
                         - @@ text => $label = text
 
+                // button to delete the task from the list
                 - type: button
                   padding: 5
                   size: 33
@@ -103,6 +107,7 @@ root:
                     color: $theme.resources.negative_color
                     text: X
 
+          // bottom panel with done count and filter buttons
           - type: panel
             layout: horizontal
             spacing: 0
