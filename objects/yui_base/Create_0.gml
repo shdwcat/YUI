@@ -103,6 +103,11 @@ bind_values = function yui_base__bind_values() {
 		if visible {
 			visible = false;
 			
+			// TODO: make this kick focus up the stack
+			if focused {
+				YuiCursorManager.setFocus(undefined);
+			}
+			
 			// trigger parent re-layout since we might have been taking up space
 			if parent and bound_values {
 				parent.onChildLayoutComplete(self);
