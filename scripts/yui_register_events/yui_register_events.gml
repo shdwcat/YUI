@@ -53,4 +53,32 @@ function yui_register_events(events) {
 			yui_call_handler(events.on_hover_changed, [args], data_context);
 		}
 	}
+	
+	if events.on_got_focus != undefined {
+		base_on_got_focus = on_got_focus;
+		on_got_focus = function() {
+			var source = self;
+			var args = {
+				source: source,
+			};
+			yui_call_handler(events.on_got_focus, [args], data_context);
+			
+			// call base handler
+			if base_on_got_focus base_on_got_focus();
+		}
+	}
+	
+	if events.on_lost_focus != undefined {
+		base_on_lost_focus = on_lost_focus;
+		on_lost_focus = function() {
+			var source = self;
+			var args = {
+				source: source,
+			};
+			yui_call_handler(events.on_lost_focus, [args], data_context);
+			
+			// call base handler
+			if base_on_lost_focus base_on_lost_focus();
+		}
+	}
 }
