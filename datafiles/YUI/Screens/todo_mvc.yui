@@ -13,18 +13,22 @@ resources:
     new_task:
       checked: false
       hover: false
+      editable: false
       label: "test"
     filter_mode: all // all | active | completed
     done_count: 0
     tasks:
       - checked: false
         hover: false
+        editable: false
         label: YUI is cool
       - checked: false
         hover: false
+        editable: false
         label: you should use it
       - checked: false
         hover: false
+        editable: false
         label: thanks @shdwcat
 
 root:
@@ -82,14 +86,29 @@ root:
                   on_checked_changed: 
                     - @@ checked => @checked = checked
                     - @@ checked => &state.done_count = &state.done_count + (checked then 1 else -1)
+
+                  // use a switch to display the plain text by default, and text_input when editable
                   content_template:
-                    type: text_input
-                    size: { w: stretch }
-                    text: $label
-                    color: @checked then grey else white
-                    events:
-                      on_text_changed:
-                        - @@ text => $label = text
+                    type: switch
+                    trace: true
+                    switch_on: @editable
+                    cases:
+                      false:
+                        type: text
+                        size: { w: stretch, h: 33 }
+                        padding: 7
+                        text: $label
+                        color: @checked then grey else white
+                        events:
+                          on_double_click: @editable = true
+                      true:
+                        type: text_input
+                        size: { w: stretch, h: 33 }
+                        text: $label
+                        autofocus: true
+                        events:
+                          on_lost_focus: @editable = false
+                          on_text_changed: @@ text => $label = text
 
                 // button to delete the task from the list
                 - type: button
