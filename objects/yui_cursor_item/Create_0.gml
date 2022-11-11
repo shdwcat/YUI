@@ -23,9 +23,11 @@ is_cursor_layer = false;
 // TODO: convert to cursor_click?
 left_pressed = undefined;
 left_click = undefined;
+left_double_click = undefined;
 
 right_pressed = undefined;
 right_click = undefined;
+right_double_click = undefined;
 
 cursor_hover = undefined;
 

@@ -15,6 +15,9 @@ visual_item = undefined;
 cursor_offset_x = 0;
 cursor_offset_y = 0;
 
+click_start_time = 0
+click_count = 0;
+
 finishInteraction = function() {
 	yui_log("interaction", active_interaction.props.type, "complete");
 	if visual_item {
@@ -137,3 +140,27 @@ trackMouseDownItems = function(button) {
 isCursorOnVisiblePart = function(item) {
 	return item.isPointVisible(mouse_x + cursor_offset_x, mouse_y + cursor_offset_y);
 }
+
+// track delayed events like double click
+queued_event = undefined;
+queued_target = undefined;
+queued_method = undefined;
+
+queueEvent = function(name, target, method, delay_ms) {
+	queued_event = name;
+	queued_target = target;
+	queued_method = method;
+	
+	// convert milliseconds to game steps
+	// room_speed = steps per second
+	var steps = room_speed * (delay_ms / 1000);
+	yui_log("alarm 0 set to", steps);
+	alarm_set(0, steps);
+}
+
+clearQueuedEvent = function() {
+	queued_event = undefined;
+	queued_target = undefined;
+	queued_method = undefined;
+}
+

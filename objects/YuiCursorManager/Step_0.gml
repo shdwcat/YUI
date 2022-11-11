@@ -4,6 +4,14 @@
 var mouse_gui_x = device_mouse_x_to_gui(device_index);
 var mouse_gui_y = device_mouse_y_to_gui(device_index);
 
+// reset click count if interval has expired
+if click_count > 0 {
+	var click_elapsed = current_time - click_start_time;
+	if click_elapsed > double_click_interval_ms {
+		click_count = 0;
+	}
+}
+
 // ===== run mouse hover logic =====
 
 if !ds_list_empty(hover_list) {

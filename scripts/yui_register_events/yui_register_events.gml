@@ -10,6 +10,7 @@ function yui_register_events(events) {
 			yui_call_handler(events.on_mouse_down, [args], data_context);
 		}
 	}
+	
 	if events.on_mouse_up != undefined {
 		left_click = function() {
 			var source = self;
@@ -18,6 +19,29 @@ function yui_register_events(events) {
 				button: "left",
 			};
 			yui_call_handler(events.on_mouse_up, [args], data_context);
+		}
+	}
+	
+	if events.on_click != undefined {
+		left_click = function() {
+			var source = self;
+			var args = {
+				source: source,
+				button: "left",
+			};
+			yui_call_handler(events.on_click, [args], data_context);
+		}
+	}
+	
+	if events.on_double_click != undefined {
+		left_double_click = function() {
+			var source = self;
+			var args = {
+				source: source,
+				button: "left",
+				clicks: 2,
+			};
+			yui_call_handler(events.on_double_click, [args], data_context);
 		}
 	}
 	
