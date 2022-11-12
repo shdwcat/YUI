@@ -15,9 +15,6 @@ visual_item = undefined;
 cursor_offset_x = 0;
 cursor_offset_y = 0;
 
-click_start_time = 0
-click_count = 0;
-
 finishInteraction = function() {
 	yui_log("interaction", active_interaction.props.type, "complete");
 	if visual_item {
@@ -142,6 +139,10 @@ isCursorOnVisiblePart = function(item) {
 }
 
 // track delayed events like double click
+
+double_click_start_time = 0;
+click_count = 0;
+
 queued_event = undefined;
 queued_target = undefined;
 queued_method = undefined;
@@ -153,14 +154,17 @@ queueEvent = function(name, target, method, delay_ms) {
 	
 	// convert milliseconds to game steps
 	// room_speed = steps per second
-	var steps = room_speed * (delay_ms / 1000);
-	yui_log("alarm 0 set to", steps);
+	var steps = ceil(room_speed * (delay_ms / 1000));
+	yui_log("queueing event", name, "with delay ms", delay_ms);
 	alarm_set(0, steps);
 }
 
 clearQueuedEvent = function() {
+	double_click_start_time = 0;
+	click_count = 0;
 	queued_event = undefined;
 	queued_target = undefined;
 	queued_method = undefined;
+	alarm_set(0, -1)
 }
 

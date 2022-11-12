@@ -1,7 +1,5 @@
 /// @description find and run right_pressed handler
 
-click_start_time = current_time;
-
 right_pressed_consumed = false;
 var i = hover_count - 1; repeat hover_count {
 	var next = hover_list[| i];

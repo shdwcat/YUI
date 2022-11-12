@@ -6,9 +6,10 @@ var mouse_gui_y = device_mouse_y_to_gui(device_index);
 
 // reset click count if interval has expired
 if click_count > 0 {
-	var click_elapsed = current_time - click_start_time;
+	var click_elapsed = current_time - double_click_start_time;
 	if click_elapsed > double_click_interval_ms {
 		click_count = 0;
+		double_click_start_time = 0;
 	}
 }
 
