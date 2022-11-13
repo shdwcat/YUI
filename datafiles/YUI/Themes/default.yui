@@ -85,6 +85,11 @@ theme:
       toggle_background: &control_bg
       toggle_border_color: &control_border
 
+    listbox:
+      background: &control_bg
+      border_color: &control_border
+      selected_item_background: &subpanel_bg
+
     switcher:
       background: &control_bg
       border_color: &control_border

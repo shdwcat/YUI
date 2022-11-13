@@ -545,6 +545,7 @@
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Screens","resourceVersion":"1.0","name":"viewport_example.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"dropdown_menu.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Screens","resourceVersion":"1.0","name":"todo_mvc.yui","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"listbox.yui","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
     "IDEVersion": "2022.300.0.499",

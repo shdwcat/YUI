@@ -1,0 +1,85 @@
+file_type: resources
+
+resources:
+
+  // default template for displaying the item value
+  listbox_item_template:
+    type: text
+    text: @
+    padding: [10, 5]
+    color: $foreground
+
+  listbox:
+    type: template
+    
+    slots:
+      // the selection scope that manages selection state
+      selection_scope: null // type: YuiSelectionScope
+
+      selected_item: null
+
+      // array of items to select from
+      items: []
+
+      // template to use when rendering items in dropdown
+      item_template: &listbox_item_template
+
+      item_background: null
+      selected_item_background: null
+
+      // additional handler executed after item is selected
+      on_item_selected: null 
+
+      foreground: null
+
+    events:
+      item_selected:
+        // select the item
+        - @@ item => $selection_scope then $selection_scope.select(item) else false
+        // invoke the user handler
+        - @@ item => $on_item_selected(item)
+
+    template:
+      // can't be scrollbox because there's a bug in yui_resolve_element when the root of 
+      // a template is another template. Ideal fix would be to do the DCS template definition
+      // system for YUI, but could be a lot of bugs!
+
+      type: border
+      content:
+
+        // trying to nest scrollbox inside here just causes another bug where the 
+        // scrollbox size becomes infinite or something and eventually crashes GM
+
+        type: panel
+        padding: 5
+        spacing: 0
+        size: { w: 120 }
+        alignment: { h: stretch }
+        elements: $items
+
+        // allows items to get the slot value in the scope of this panel instead of the item
+        bind_slot_scope:
+          selected_item: $selected_item
+          selection_scope: $selection_scope
+
+        alignment: { h: stretch }
+        template:
+        
+          type: button
+          border_thickness: 0
+          padding: 0
+          size: { w: stretch }
+          // background: @@ @ == ($selected_item ?? $selection_scope.selected_item) then $selected_item_background else $item_background
+          content:
+            type: panel
+            size: { w: 110, h: 30 }
+            layout: canvas
+            elements: 
+              - $item_template
+
+              - type: image
+                size: { w: 110, h: 30 }
+                sprite: yui_white_pixel
+                blend_color: @@ @ == ($selected_item ?? $selection_scope.selected_item) then $selected_item_background else #00000000
+          // invoke the item_selected event on the root widget
+          on_click: @@ e => yui_invoke_event(e.source, item_selected, @)
