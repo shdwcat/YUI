@@ -140,6 +140,10 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			// single template element for bound data_items
 			var source_items = is_elements_bound ? props.elements.resolve(data) : props.elements;
 			
+			if !is_array(source_items) {
+				throw yui_error("source_items must resolve to an array");
+			}
+			
 			// we need to copy the array for diff detection to work
 			var child_count = array_length(source_items);
 			var data_items = array_create(child_count);
