@@ -328,6 +328,7 @@
     {"id":{"name":"yui_read_enums","path":"scripts/yui_read_enums/yui_read_enums.yy",},"order":15,},
     {"id":{"name":"snap_to_yaml","path":"scripts/snap_to_yaml/snap_to_yaml.yy",},"order":1,},
     {"id":{"name":"scribble_font_bake_outline_8dir","path":"scripts/scribble_font_bake_outline_8dir/scribble_font_bake_outline_8dir.yy",},"order":1,},
+    {"id":{"name":"YuiScopeBinding","path":"scripts/YuiScopeBinding/YuiScopeBinding.yy",},"order":16,},
     {"id":{"name":"__yui_init_globals","path":"scripts/__yui_init_globals/__yui_init_globals.yy",},"order":19,},
     {"id":{"name":"yui_draw_alpha_surface_part","path":"scripts/yui_draw_alpha_surface_part/yui_draw_alpha_surface_part.yy",},"order":1,},
     {"id":{"name":"YuiSetValue","path":"scripts/YuiSetValue/YuiSetValue.yy",},"order":3,},

@@ -26,9 +26,29 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		// option B: bind the element list to data, and use a template to render each element
 		path: undefined, // defines the source path for the element list
 		template: undefined, // the template to use when rendering elements from the path
+		
+		// allows binding slots at panel scope instead of item scope
+		bind_slot_scope: undefined,
 	};
 	
 	props = yui_apply_element_props(_props);
+	
+	has_scoped_slots = props.bind_slot_scope != undefined;
+	if has_scoped_slots {
+		slot_values = yui_shallow_copy(slot_values);
+		var bound_slot_names = variable_struct_get_names(props.bind_slot_scope);
+		var i = 0; repeat array_length(bound_slot_names) {
+			var slot_name = bound_slot_names[i++];
+			var binding = slot_values[$ slot_name];
+			
+			if instanceof(binding) == "YuiScopeBinding" {
+				throw yui_error("binding scope multiple times");
+			}
+			
+			var scoped_binding = new YuiScopeBinding(binding);
+			slot_values[$ slot_name] = scoped_binding;
+		}
+	}
 	
 	baseInit(props);
 	
@@ -97,6 +117,16 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	static getBoundValues = function YuiPanelElement_getBoundValues(data, prev) {
 		if data_source != undefined {
 			data = is_data_source_bound ? data_source.resolve(data) : data_source;
+		}
+		
+		// update scoped bindings if needed
+		if has_scoped_slots && (!prev || data != prev.data_source) {
+			var bound_slot_names = variable_struct_get_names(props.bind_slot_scope);
+			var i = 0; repeat array_length(bound_slot_names) {
+				var slot_name = bound_slot_names[i++];
+				var binding = slot_values[$ slot_name];
+				binding.updateScope(data);
+			}
 		}
 		
 		var is_visible = is_visible_live ? props.visible.resolve(data) : props.visible;

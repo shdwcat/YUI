@@ -3,6 +3,7 @@ function YuiExpr() constructor {
 	static is_call = false;
 	static is_lambda = false;
 	static is_assign = false;
+	static trace = false;
 	
 	static checkType = function() {
 		return undefined;
