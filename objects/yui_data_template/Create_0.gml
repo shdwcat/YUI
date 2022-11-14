@@ -30,7 +30,7 @@ arrange = function(available_size, viewport_size) {
 	draw_rect = available_size
 	if template_item {
 		template_item.arrange(available_size, viewport_size);
-		yui_resize_instance(case_item.draw_size.w, case_item.draw_size.h)
+		yui_resize_instance(template_item.draw_size.w, template_item.draw_size.h)
 		
 		if viewport_size {
 			updateViewport();
