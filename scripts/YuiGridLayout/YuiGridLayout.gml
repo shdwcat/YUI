@@ -62,7 +62,7 @@ function YuiGridLayout(alignment, spacing) constructor {
 		return draw_size;
 	}
 	
-	static getAvailableSizeForItem = function(index) {		
+	static getAvailableSizeForItem = function(index) {
 		switch left_to_right {
 			case true:
 				var column = index mod columns;

@@ -19,6 +19,10 @@ function YuiExampleManager() constructor {
 		}
 	}
 	
+	layouts = {
+		active_tab_index: 0
+	};
+	
 	var items_file = string_from_file("Example Data/inventory.yaml")
 	var inventory = snap_from_yaml(items_file);
 	

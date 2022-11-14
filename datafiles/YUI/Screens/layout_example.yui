@@ -5,9 +5,12 @@ import:
   - "../Templates/screen_base.yui"
   - "../Templates/main_panel.yui"
   - "../Templates/back_button.yui"
+  - "../Widgets/tab_panel.yui"
+  - "Layouts/examples.yui"
 
 root:
   type: screen_base
+  content_layout: horizontal
   
   items:
     - type: panel
@@ -17,259 +20,21 @@ root:
           text_style: title
           text: Layout Examples
 
-    - type: panel
-      layout: grid
-      grid:
-        rows: 2
-        columns: 3
-        row_spacing: 15
-        column_spacing: 15
-      elements:
-
-        - type: panel
-          padding: 10
-          background: $theme.resources.subpanel_bg
-          size: stretch
-          alignment: { h: stretch }
-          elements:
-
-            - type: text
-              text: Vertical (Default)
-              size: { w: stretch }
-              text_style: subtitle
-
-            - type: panel
-              flex: true
-              spacing: 5
-              padding: 10
-              border_color: $theme.resources.control_border
-              background: $theme.resources.control_bg
-              alignment: { h: stretch }
-              //trace: true
-
-              elements:
-                - type: border
-                  padding: 5
-                  content: Flex = 1
-                  border_color: $theme.resources.control_bg_light
-                  background: $theme.resources.panel_bg
-                  flex: true
-
-                - type: border
-                  padding: 5
-                  content: Auto Sized
-                  border_color: $theme.resources.control_bg_light
-                  background: $theme.resources.panel_bg
-                  
-                - type: border
-                  padding: 5
-                  content: Flex = 2
-                  border_color: $theme.resources.control_bg_light
-                  background: $theme.resources.panel_bg
-                  flex: 2
-
-                - type: border
-                  padding: 5
-                  content: Auto Sized
-                  border_color: $theme.resources.control_bg_light
-                  background: $theme.resources.panel_bg
-
-        - type: panel
-          padding: 10
-          background: $theme.resources.subpanel_bg
-          elements:
-
-            - type: text
-              text: Horizontal
-              text_style: subtitle
-
-            - type: panel
-              flex: true
-              layout: horizontal
-              padding: 10
-              border_color: $theme.resources.control_border
-              background: $theme.resources.control_bg
-              alignment: { v: stretch }
-              //trace: true
-
-              elements:
-                - type: border
-                  padding: 5
-                  content: Flex = 1
-                  border_color: $theme.resources.control_bg_light
-                  background: $theme.resources.panel_bg
-                  flex: true
-
-                - type: border
-                  padding: 5
-                  content: Auto
-                  border_color: $theme.resources.control_bg_light
-                  background: $theme.resources.panel_bg
-                  
-                - type: border
-                  padding: 5
-                  content: Flex = 2
-                  border_color: $theme.resources.control_bg_light
-                  background: $theme.resources.panel_bg
-                  flex: 2
-
-                - type: border
-                  padding: 5
-                  content: Auto
-                  border_color: $theme.resources.control_bg_light
-                  background: $theme.resources.panel_bg
-
-        - type: panel
-          padding: 10
-          background: $theme.resources.subpanel_bg
-          elements:
-
-            - type: text
-              text: Grid
-              text_style: subtitle
-
-            - type: panel
-              flex: true
-              layout: grid
-              grid:
-                rows: 2
-                columns: 2
-                row_spacing: 10
-                column_spacing: 10
-              padding: 10
-              border_color: $theme.resources.control_border
-              background: $theme.resources.control_bg
-              //alignment: { v: stretch }
-              //trace: true
-
-              elements:
-                - type: border
-                  padding: 5
-                  size: stretch
-                  content: Item 1
-                  border_color: $theme.resources.control_bg_light
-                  background: $theme.resources.panel_bg
-
-                - type: border
-                  padding: 5
-                  size: stretch
-                  content: Item 2
-                  border_color: $theme.resources.control_bg_light
-                  background: $theme.resources.panel_bg
-                  
-                - type: border
-                  padding: 5
-                  size: stretch
-                  content: Item 3
-                  border_color: $theme.resources.control_bg_light
-                  background: $theme.resources.panel_bg
-
-                - type: border
-                  padding: 5
-                  size: stretch
-                  content: Item 4
-                  border_color: $theme.resources.control_bg_light
-                  background: $theme.resources.panel_bg
-
-        - type: panel
-          padding: 10
-          background: $theme.resources.subpanel_bg
-          elements:
-
-            - type: text
-              text: Canvas
-              text_style: subtitle
-
-            - type: panel
-              flex: true
-              layout: canvas
-              padding: 10
-              border_color: $theme.resources.control_border
-              background: $theme.resources.control_bg
-              //alignment: { v: stretch }
-              //trace: true
-
-              elements:
-                - type: border
-                  padding: 5
-                  canvas:
-                    top: 25
-                    left: 25
-                  content: "25 from Top and Left"
-                  border_color: $theme.resources.control_bg_light
-                  background: $theme.resources.panel_bg
-
-                - type: border
-                  padding: 5
-                  canvas:
-                    bottom: 0
-                    center: h
-                  content: Bottom Center
-                  border_color: $theme.resources.control_bg_light
-                  background: $theme.resources.panel_bg
-                  
-                - type: border
-                  padding: 5
-                  canvas:
-                    center: true
-                  content: Full Center
-                  border_color: $theme.resources.control_bg_light
-                  background: $theme.resources.panel_bg
-
-                - type: border
-                  padding: 5
-                  canvas:
-                    right: 30
-                  content: "30 from Right"
-                  border_color: $theme.resources.control_bg_light
-                  background: $theme.resources.panel_bg
-
-        - type: panel
-          padding: 10
-          background: $theme.resources.subpanel_bg
-          size: stretch
-          elements:
-
-            - type: text
-              text: Radial
-              text_style: subtitle
-
-            - type: panel
-              border_color: $theme.resources.control_border
-              background: $theme.resources.control_bg
-              layout: radial
-              size: stretch // NOTE: Radial layout will fill the space given to it
-              radial:
-                // radial layout requires a fixed item size
-                // can also be { w: <number>, h: <number> }
-                item_size: 30
-
-                // how many degrees of the circle to use for the items
-                // if unspecified, items will be laid out in the full circle
-                // NOTE: a negative value will place items in the opposite direction (counter-clockwise)
-                arc: 270
-
-                // angle where the items should start
-                // NOTE: in GMS 2, 0 is right, 90 is up, 180 is left, and 270 is down          
-                direction: 90
-
-                // when true, all items will be rotate 'back' by half the arc amount 
-                // so that the 'center' of the arc faces the direction specified above
-                center_arc: false 
-
-              template:
-                type: border
-                padding: [10, 5]
-                size: 30
-                border_color: $theme.resources.control_bg_light
-                background: $theme.resources.panel_bg
-                content: @
-
-              elements:
-                - "1"
-                - "2"
-                - "3"
-                - "4"
-                - "5"
-                - "6"
-                - "7"
+        - type: tab_panel
+          active_tab: @layouts.active_tab
+          on_tab_selected: @@ item => @layouts.active_tab = item
+          content_size: stretch
+          tab_content_binding: @content
+          tab_items:
+            - header: Examples
+              content: &examples
+            - header: Vertical
+              content: this is tab two
+            - header: Horizontal
+              content: this is tab 3
+            - header: Grid
+              content: this is tab 4
+            - header: Canvas
+              content: this is tab 5
+            - header: Radial
+              content: this is tab 6

@@ -12,23 +12,19 @@ resources:
 
     slots:
       items: []
+      content_layout: null
 
     template:
       type: panel
-      layout: canvas
+      padding: 30
+      spacing: 20
       elements:
 
         - type: back_button
-          canvas:
-            top: 30
-            left: 30
 
-        - type: main_panel 
-          canvas:
-            top: 80
-            left: 30
-            bottom: 30
-            right: 30
+        - type: main_panel
+          layout: $content_layout ?? 'vertical'
+          size: stretch
           padding: 20
           spacing: 10
           elements: $items
