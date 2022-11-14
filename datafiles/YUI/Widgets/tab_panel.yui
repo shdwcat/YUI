@@ -1,0 +1,78 @@
+file_type: resources
+
+resources:
+
+  tab_panel:
+    type: template
+    
+    slots:
+      // array of items to display tabs for
+      tab_items: []
+
+      tab_content: null
+
+      // template to display in the header for each tab
+      tab_header_template: &tab_panel_header_template
+
+      // template to display in the main panel
+      tab_content_binding: @
+
+      // which item to display in the tab content area
+      active_tab: null
+
+      // which index to display in the main panel if active_tab is not set
+      active_tab_index: 0
+
+      // handler for when a tab is clicked
+      on_tab_selected: null
+
+      content_size: null
+
+    events:
+      tab_selected:
+        // select the item
+        //- @@ item => $selection_scope then $selection_scope.select(item) else false
+        // invoke the user handler
+        - @@ item => $on_tab_selected(item)
+
+    template:
+      type: panel
+      spacing: -1
+      elements:
+        - type: panel
+          layout: horizontal
+          spacing: 0
+          elements: $tab_items
+          bind_slot_scope:
+            active_tab: "$active_tab ?? $tab_items[$active_tab_index]" // little trick to simplify referring to the active tab in the header template
+            active_tab_index: $active_tab_index
+          template: 
+            type: tab_header
+            content: $tab_header_template
+
+        - type: tab_panel_content
+          data_source: "$active_tab ?? $tab_items[$active_tab_index]"
+          size: $content_size
+          content: 
+            // because the tab content is coming from a binding, we need to use dynamic
+            // in order to render an actual template instead of the content as a string
+            type: dynamic
+            content: $tab_content_binding
+
+  // define the headers and content as fragments so that they're themable
+  tab_header:
+    type: fragment
+    content:
+      type: button
+      on_click: @@ e => yui_invoke_event(e.source, 'tab_selected', @)
+
+  tab_panel_content:
+    type: fragment
+    content:
+      type: border
+    
+  // default template for displaying the item value
+  tab_panel_header_template:
+    type: text    
+    color: @header == $active_tab.header then white else #AAAAAA
+    text: @header
