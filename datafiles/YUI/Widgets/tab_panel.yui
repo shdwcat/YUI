@@ -9,8 +9,6 @@ resources:
       // array of items to display tabs for
       tab_items: []
 
-      tab_content: null
-
       // template to display in the header for each tab
       tab_header_template: &tab_panel_header_template
 
@@ -26,6 +24,7 @@ resources:
       // handler for when a tab is clicked
       on_tab_selected: null
 
+      // the size applied to the content below the tab header
       content_size: null
 
     events:
@@ -49,6 +48,7 @@ resources:
           template: 
             type: tab_header
             content: $tab_header_template
+            on_click: @@ e => yui_invoke_event(e.source, 'tab_selected', @)
 
         - type: tab_panel_content
           data_source: "$active_tab ?? $tab_items[$active_tab_index]"
@@ -64,7 +64,6 @@ resources:
     type: fragment
     content:
       type: button
-      on_click: @@ e => yui_invoke_event(e.source, 'tab_selected', @)
 
   tab_panel_content:
     type: fragment

@@ -10,7 +10,7 @@ type: drag_and_drop
 drag:
   // The 'condition' property controls whether an element can currently participate in the role.
   // In this case, it determines if the user can begin dragging this element.
-  condition: "@['is_equipped'] != true"
+  condition: @is_equipped != true // NOTE - is_equipped isn't actually implemented yet...
 
   visual:
     // NOTE: import does not work in interactions yet :(
@@ -67,9 +67,9 @@ drop:
   // here we define the 'action' which is the script to execute when a valid drop occurs
   // and the parameters to pass to it
   // TODO: use assignment once implemented
-  action: yui_example_equip_item(@source.data /* the item */, @target.data /* the slot */)
+  action: @@ yui_example_equip_item(@source.data /* the item */, @target.data /* the slot */)
 
 // lastly, you can also define an action to take if the drop is cancelled
 // (aka the dragged item is released over something which is not a drop target
 // or is not a *valid* drop target)
-on_cancel: yui_log(`interaction 'equip_item' was cancelled`)
+on_cancel: @@ yui_log(`interaction 'equip_item' was cancelled`)
