@@ -14,6 +14,7 @@ element_map = {
 	data_template: YuiDataTemplateElement,
 	viewport: YuiViewportElement,
 	text_input: YuiTextInputElement,
+	dynamic: YuiDynamicElement,
 };
 
 screens = {};

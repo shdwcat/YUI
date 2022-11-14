@@ -1,6 +1,6 @@
 {
   "resources": [
-    {"id":{"name":"yui_get_item_parent_map","path":"scripts/yui_get_item_parent_map/yui_get_item_parent_map.yy",},"order":18,},
+    {"id":{"name":"yui_get_item_parent_map","path":"scripts/yui_get_item_parent_map/yui_get_item_parent_map.yy",},"order":19,},
     {"id":{"name":"yui_arrays_equal","path":"scripts/yui_arrays_equal/yui_arrays_equal.yy",},"order":8,},
     {"id":{"name":"yui_apply_slot_definitions","path":"scripts/yui_apply_slot_definitions/yui_apply_slot_definitions.yy",},"order":0,},
     {"id":{"name":"snap_from_yaml","path":"scripts/snap_from_yaml/snap_from_yaml.yy",},"order":0,},
@@ -28,6 +28,7 @@
     {"id":{"name":"__scribble_gen_1_model_limits_and_bezier_curves","path":"scripts/__scribble_gen_1_model_limits_and_bezier_curves/__scribble_gen_1_model_limits_and_bezier_curves.yy",},"order":0,},
     {"id":{"name":"yui_get_runner_temp_folder","path":"scripts/yui_get_runner_temp_folder/yui_get_runner_temp_folder.yy",},"order":3,},
     {"id":{"name":"input_string","path":"scripts/input_string/input_string.yy",},"order":0,},
+    {"id":{"name":"YuiDynamicElement","path":"scripts/YuiDynamicElement/YuiDynamicElement.yy",},"order":17,},
     {"id":{"name":"yui_restore_surface_target","path":"scripts/yui_restore_surface_target/yui_restore_surface_target.yy",},"order":9,},
     {"id":{"name":"GsplTimeSpanIterator","path":"scripts/GsplTimeSpanIterator/GsplTimeSpanIterator.yy",},"order":5,},
     {"id":{"name":"gspl_define_clock","path":"scripts/gspl_define_clock/gspl_define_clock.yy",},"order":3,},
@@ -78,7 +79,7 @@
     {"id":{"name":"GsplTokenDefinition","path":"scripts/GsplTokenDefinition/GsplTokenDefinition.yy",},"order":1,},
     {"id":{"name":"gspl_log","path":"scripts/gspl_log/gspl_log.yy",},"order":10,},
     {"id":{"name":"yui_world_to_gui_y","path":"scripts/yui_world_to_gui_y/yui_world_to_gui_y.yy",},"order":6,},
-    {"id":{"name":"yui_trim_rect_to_viewport","path":"scripts/yui_trim_rect_to_viewport/yui_trim_rect_to_viewport.yy",},"order":19,},
+    {"id":{"name":"yui_trim_rect_to_viewport","path":"scripts/yui_trim_rect_to_viewport/yui_trim_rect_to_viewport.yy",},"order":20,},
     {"id":{"name":"YuiPanCamera","path":"scripts/YuiPanCamera/YuiPanCamera.yy",},"order":8,},
     {"id":{"name":"YuiBorderElement","path":"scripts/YuiBorderElement/YuiBorderElement.yy",},"order":9,},
     {"id":{"name":"yui_text_input","path":"objects/yui_text_input/yui_text_input.yy",},"order":7,},
@@ -285,6 +286,7 @@
     {"id":{"name":"YsDirectiveParselet","path":"scripts/YsDirectiveParselet/YsDirectiveParselet.yy",},"order":2,},
     {"id":{"name":"KnitToken","path":"scripts/KnitToken/KnitToken.yy",},"order":1,},
     {"id":{"name":"scribble_flush_everything","path":"scripts/scribble_flush_everything/scribble_flush_everything.yy",},"order":3,},
+    {"id":{"name":"yui_dynamic_item","path":"objects/yui_dynamic_item/yui_dynamic_item.yy",},"order":18,},
     {"id":{"name":"YsScanner","path":"scripts/YsScanner/YsScanner.yy",},"order":4,},
     {"id":{"name":"yui_color_shift_hue","path":"scripts/yui_color_shift_hue/yui_color_shift_hue.yy",},"order":0,},
     {"id":{"name":"YsBindingParselet","path":"scripts/YsBindingParselet/YsBindingParselet.yy",},"order":1,},

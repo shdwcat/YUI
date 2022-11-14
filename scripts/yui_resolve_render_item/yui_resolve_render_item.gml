@@ -18,6 +18,7 @@ function yui_resolve_render_item(type, element_props) {
 		case "switch": return yui_switch;
 		case "data_template": return yui_data_template;
 		case "viewport": return yui_viewport;
+		case "dynamic": return yui_dynamic_item;
 		default: return undefined;
 	}
 }
