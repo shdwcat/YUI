@@ -11,6 +11,6 @@ function YuiScopeBinding(binding) : YuiExpr() constructor {
 	}
 	
 	static resolve = function(data) {
-		return binding.resolve(scope);
+		return yui_is_live_binding(binding) ? binding.resolve(scope) : binding;
 	}
 }
