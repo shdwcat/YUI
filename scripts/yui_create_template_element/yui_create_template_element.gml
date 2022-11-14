@@ -71,12 +71,15 @@ function yui_create_template_element(instance_props, template_definition, resour
 		}
 	}
 	
+	var result;
+	
 	var element_constructor = YuiGlobals.element_map[$ instance_props.type];
 	if element_constructor != undefined {
-		var template_element = new element_constructor(instance_props, resources, slot_values);
-		return template_element;
+		result = new element_constructor(instance_props, resources, slot_values);
 	}
 	else {
-		return yui_resolve_element(instance_props, resources, slot_values);
+		result = yui_resolve_element(instance_props, resources, slot_values);
 	}
+	
+	return result;
 }
