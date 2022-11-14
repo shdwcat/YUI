@@ -55,5 +55,8 @@ setHighlight = function(highlight) {
 	}
 }
 
+focus = function() {
+	YuiCursorManager.setFocus(id);
+}
 
 
