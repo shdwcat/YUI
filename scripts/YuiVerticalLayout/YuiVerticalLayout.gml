@@ -132,7 +132,7 @@ function YuiVerticalLayout(alignment, spacing) constructor {
 		};
 		
 		if alignment.h == "center" {
-			var offset = (available_size.w - max_w) / 2
+			var offset = floor((available_size.w - max_w) / 2);
 			i = 0; repeat count {
 				items[i++].move(offset, 0);
 			}
@@ -146,7 +146,7 @@ function YuiVerticalLayout(alignment, spacing) constructor {
 		}
 		
 		if !is_flex_panel && alignment.v == "center" {
-			var offset = (available_size.h - yoffset) / 2;
+			var offset = floor((available_size.h - yoffset) / 2);
 			i = 0; repeat count {
 				items[i++].move(0, offset);
 			}
@@ -156,7 +156,7 @@ function YuiVerticalLayout(alignment, spacing) constructor {
 		return draw_size;
 	}
 	
-	static getAvailableSizeForItem = function(index, yoffset, allotted_h = undefined) {		
+	static getAvailableSizeForItem = function(index, yoffset, allotted_h = undefined) {
 		return {
 			x: available_size.x,
 			y: available_size.y + yoffset,

@@ -132,14 +132,14 @@ function YuiHorizontalLayout(alignment, spacing) constructor {
 		};
 
 		if !is_flex_panel && alignment.h == "center" {
-			var offset = (available_size.w - xoffset) / 2
+			var offset = floor((available_size.w - xoffset) / 2);
 			i = 0; repeat count {
 				items[i++].move(offset, 0);
 			}
 			draw_size.w = available_size.w;
 		}
 		if alignment.v == "center" {
-			var offset = (available_size.h - max_h) / 2;
+			var offset = floor((available_size.h - max_h) / 2);
 			i = 0; repeat count {
 				items[i++].move(0, offset);
 			}
