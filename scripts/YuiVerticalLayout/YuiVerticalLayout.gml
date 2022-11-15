@@ -132,8 +132,9 @@ function YuiVerticalLayout(alignment, spacing) constructor {
 		};
 		
 		if alignment.h == "center" {
-			var offset = floor((available_size.w - max_w) / 2);
 			i = 0; repeat count {
+				var item_size = real_sizes[i];
+				var offset = floor((available_size.w - item_size.w) / 2);
 				items[i++].move(offset, 0);
 			}
 			draw_size.w = available_size.w;
@@ -143,6 +144,7 @@ function YuiVerticalLayout(alignment, spacing) constructor {
 				var item = items[i++];
 				item.resize(draw_size.w, item.draw_size.h);
 			}
+			//draw_size.w = available_size.w;
 		}
 		
 		if !is_flex_panel && alignment.v == "center" {

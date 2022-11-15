@@ -139,8 +139,9 @@ function YuiHorizontalLayout(alignment, spacing) constructor {
 			draw_size.w = available_size.w;
 		}
 		if alignment.v == "center" {
-			var offset = floor((available_size.h - max_h) / 2);
 			i = 0; repeat count {
+				var item_size = real_sizes[i];
+				var offset = floor((available_size.h - item_size.h) / 2);
 				items[i++].move(0, offset);
 			}
 			draw_size.h = available_size.h;
