@@ -1,0 +1,28 @@
+file_type: resources
+
+resources:
+  layout_example_section:
+    type: template
+    slots:
+      header: null
+      content: null
+    template:
+      type: panel
+      padding: 10
+      background: $theme.resources.subpanel_bg
+      size: stretch
+      alignment: { h: stretch }
+      elements:
+        - type: text
+          text: $header
+          size: { w: stretch }
+          text_style: subtitle
+        - $content
+
+  layout_example_item:
+    type: fragment
+    content:
+      type: border
+      padding: 5
+      border_color: $theme.resources.control_bg_light
+      background: $theme.resources.panel_bg

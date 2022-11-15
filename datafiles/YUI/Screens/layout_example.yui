@@ -2,11 +2,12 @@ id: layout_example
 file_type: screen
 
 import:
-  - "../Templates/screen_base.yui"
-  - "../Templates/main_panel.yui"
-  - "../Templates/back_button.yui"
-  - "../Widgets/tab_panel.yui"
-  - "Layouts/examples.yui"
+  - ../Templates/screen_base.yui
+  - ../Templates/main_panel.yui
+  - ../Templates/back_button.yui
+  - ../Widgets/tab_panel.yui
+  - Layouts/examples.yui
+  - Layouts/vertical.yui
 
 root:
   type: screen_base
@@ -29,7 +30,7 @@ root:
             - header: Examples
               content: &examples
             - header: Vertical
-              content: this is tab two
+              content: &vertical_examples
             - header: Horizontal
               content: this is tab 3
             - header: Grid

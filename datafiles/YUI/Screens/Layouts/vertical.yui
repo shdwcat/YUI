@@ -1,0 +1,181 @@
+file_type: resources
+
+import:
+  - shared.yui
+
+resources:
+
+  vertical_examples:
+    type: panel
+    layout: grid
+    grid:
+      rows: 2
+      columns: 3
+      row_spacing: 15
+      column_spacing: 15
+    elements:
+
+      - type: layout_example_section
+        header: "Horizontal Alignment: Stretch"
+        content:
+
+          type: panel
+          flex: true
+          spacing: 5
+          padding: 10
+          border_color: $theme.resources.control_border
+          background: $theme.resources.control_bg
+          alignment: { h: stretch }
+
+          elements:
+            - type: layout_example_item
+              content: Flex = 1
+              flex: true
+
+            - type: panel
+              layout: horizontal
+              border_color: $theme.resources.control_bg_light
+              background: $theme.resources.control_bg
+              elements:
+                - type: text
+                  padding: [10, 5]
+                  text: A nested horizontal panel
+                  //flex: true
+
+                - type: button
+                  border_color: $theme.resources.control_bg_light
+                  content: A button
+              
+            - type: layout_example_item
+              content: Flex = 2
+              flex: 2
+
+            - type: layout_example_item
+              content: Auto Sized
+
+      - type: layout_example_section
+        header: "Horizontal Alignment: Left"
+        content:
+
+          type: panel
+          alignment: { h: left }
+          spacing: 5
+          padding: 10
+          border_color: $theme.resources.control_border
+          background: $theme.resources.control_bg
+          //trace: true
+
+          elements:
+            - type: layout_example_item
+              content: Flex = 1
+              flex: true
+
+            - type: panel
+              layout: horizontal
+              border_color: $theme.resources.control_bg_light
+              background: $theme.resources.control_bg
+              elements:
+                - type: text
+                  padding: [10, 5]
+                  text: A nested horizontal panel
+                  //flex: true
+
+                - type: button
+                  border_color: $theme.resources.control_bg_light
+                  content: A button
+              
+            - type: layout_example_item
+              content: Flex = 2
+              flex: 2
+
+            - type: layout_example_item
+              content: Auto Sized
+
+      - type: layout_example_section
+        header: "Horizontal Alignment: Center"
+        content:
+
+          type: panel
+          alignment: { h: center }
+          spacing: 5
+          padding: 10
+          border_color: $theme.resources.control_border
+          background: $theme.resources.control_bg
+          //trace: true
+
+          elements:
+            - type: layout_example_item
+              content: Flex = 1
+              flex: true
+
+            - type: panel
+              layout: horizontal
+              border_color: $theme.resources.control_bg_light
+              background: $theme.resources.control_bg
+              elements:
+                - type: text
+                  padding: [10, 5]
+                  text: A nested horizontal panel
+                  //flex: true
+
+                - type: button
+                  border_color: $theme.resources.control_bg_light
+                  content: A button
+              
+            - type: layout_example_item
+              content: Flex = 2
+              flex: 2
+
+            - type: layout_example_item
+              content: Auto Sized
+
+      - type: layout_example_section
+        header: "Vertical Alignment: Top"
+        content:
+
+          type: panel
+          alignment: { v: top }
+          size: { h: stretch }
+          spacing: 5
+          padding: 10
+          border_color: $theme.resources.control_border
+          background: $theme.resources.control_bg
+          //trace: true
+
+          elements:
+            - type: layout_example_item
+              content:
+                type: text
+                scribble: true
+                text: One item\non two lines
+
+            - type: layout_example_item
+              content: one really long line that should wrap around to the next line 
+
+            - type: layout_example_item
+              content: Another item because why not
+
+      - type: layout_example_section
+        header: "Vertical Alignment: Center"
+        content:
+
+          type: panel
+          alignment: { v: center }
+          spacing: 5
+          padding: 10
+          border_color: $theme.resources.control_border
+          background: $theme.resources.control_bg
+          //trace: true
+
+          elements:
+            - type: layout_example_item
+              content:
+                type: text
+                scribble: true
+                text: One item\non two lines
+
+            - type: layout_example_item
+              content: one really long line that should wrap around to the next line 
+
+            - type: layout_example_item
+              content: Another item because why not
