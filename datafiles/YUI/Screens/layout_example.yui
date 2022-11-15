@@ -8,6 +8,7 @@ import:
   - ../Widgets/tab_panel.yui
   - Layouts/examples.yui
   - Layouts/vertical.yui
+  - Layouts/horizontal.yui
 
 root:
   type: screen_base
@@ -29,13 +30,13 @@ root:
           tab_items:
             - header: Examples
               content: &examples
-            - header: Vertical
+            - header: Vertical with Alignments
               content: &vertical_examples
-            - header: Horizontal
-              content: this is tab 3
-            - header: Grid
-              content: this is tab 4
-            - header: Canvas
-              content: this is tab 5
-            - header: Radial
-              content: this is tab 6
+            - header: Horizontal with Alignments
+              content: &horizontal_examples
+            // - header: Grid
+            //   content: this is tab 4
+            // - header: Canvas
+            //   content: this is tab 5
+            // - header: Radial
+            //   content: this is tab 6
