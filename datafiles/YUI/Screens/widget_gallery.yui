@@ -20,7 +20,7 @@ root:
 
   type: panel
   padding: 30
-  spacing: 10
+  spacing: 20
   //theme: pink!
   
   elements:
@@ -28,6 +28,7 @@ root:
 
     - type: scrollbox
       // trace: true
+      content_w: fit
       background: $theme.resources.panel_bg
       padding: 0
       content:
@@ -63,7 +64,6 @@ root:
                 text_style: subtitle
 
               - type: scrollbox
-                //trace: true
                 size: { w: 300, h: 100 }
                 content_w: fit
                 //content_w: 400
@@ -136,16 +136,29 @@ root:
                 background: white
                 meter_blend_color: blue
 
-          - type: panel
-            padding: 15
-            spacing: 10
+          // - type: panel
+          //   padding: 15
+          //   spacing: 10
 
-            elements:
-              - type: text
-                text: "Listbox - NOTE: Prototype only! Not fully functional"
-                text_style: subtitle
+          //   elements:
+          //     - type: text
+          //       text: "Listbox - NOTE: Prototype only! Not fully functional"
+          //       text_style: subtitle
 
-              - type: listbox
-                items: @switcher_items
-                selection_scope: @switcher_selector
-                selected_item: @switcher_selector.selected_item | trace
+          //     - type: listbox
+          //       items: @switcher_items
+          //       selection_scope: @switcher_selector
+          //       selected_item: @switcher_selector.selected_item
+
+          //     - type: scrollbox
+          //       //trace: true
+          //       //size: { w: 300, h: 100 }
+          //       content_w: fit
+          //       content_h: fit
+          //       //content_w: 400
+          //       //content_h: 700
+          //       content: 
+          //         type: text
+          //         //size: { w: 400 }
+          //         padding: 5
+          //         text: Lorem ipsum dolor sit amet

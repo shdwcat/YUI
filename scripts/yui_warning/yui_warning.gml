@@ -17,11 +17,9 @@ function yui_warning() {
 		i++;
 	}
 
+	// TODO: log to errors.txt
 	show_debug_message(message);
-
-	// TODO: log to warnings.txt
-
-
+	return message;
 }
 
 function yui_error() {
@@ -45,3 +43,4 @@ function yui_error() {
 	show_debug_message(message);
 	return message;
 }
+

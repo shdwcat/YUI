@@ -60,6 +60,7 @@ resources:
             content: $tab_content_binding
 
   // define the headers and content as fragments so that they're themable
+  // note: can get rid of these if/when we implement a `styles` prop
   tab_header:
     type: fragment
     content:

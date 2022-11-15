@@ -8,7 +8,7 @@ function YsResourceParselet() : GsplPrefixParselet() constructor {
 		var path_parts = yui_string_split(path, ".", 2);
 
 		if !variable_struct_exists(parser.resources, path_parts[0]) {
-			// TODO: only throw in debug mode
+			// TODO: only throw in debug mode (?)
 			throw yui_warning("Could not find resource with name: " + path_parts[0]);
 		}
 

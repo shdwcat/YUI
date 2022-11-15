@@ -8,14 +8,18 @@ import:
 root:
   type: screen_base
   items:
-    - This example demonstrates how keyboard/gamepad navigation works.\nCheck kb_navigation_example.yui to see how submenus etc are configured
+    - type: text
+      scribble: true
+      text: This example demonstrates how keyboard/gamepad navigation works.\nCheck kb_navigation_example.yui to see how submenus etc are configured
 
     - type: panel
       layout: horizontal
       spacing: 100
+      padding: 50
       elements:
 
         - type: panel
+          alignment: { h: stretch }
           elements:
 
             - type: button
@@ -36,7 +40,8 @@ root:
             - type: button
               content: Credits
 
-        - type: main_panel
+        - type: panel
+          alignment: { h: stretch }
           elements:
             
             - type: button
