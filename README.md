@@ -10,6 +10,9 @@ Notable features:
 - [Template](https://github.com/shdwcat/YUI/wiki/Templates) system lets you design and re-use [custom widgets](https://github.com/shdwcat/YUI/wiki/Custom-Widgets)
 - [Theme](https://github.com/shdwcat/YUI/wiki/Themes) system and widget styles
 - Powerful [Drag and Drop](https://github.com/shdwcat/YUI/wiki/Drag-and-Drop) feature built in (no coding!)
+- VS Code syntax highlighting extension:  
+  https://marketplace.visualstudio.com/items?itemName=shdwcat.yui-vs-code-support  
+  ![syntax highlighting example image](https://github.com/shdwcat/yui-vs-code-support/raw/HEAD/images/highlighting.png)
 
 Future features:
 - Animation (slide/fade/etc)
