@@ -74,8 +74,7 @@ var options = {
 	file_value_generator: yui_file_generator,
 };
 
-var yui_data_folder = YUI_LOCAL_PROJECT_DATA_FOLDER + YUI_DATA_SUBFOLDER;
-yui_cabinet = new Cabinet(yui_data_folder, ".yui", options);
+yui_cabinet = new Cabinet(YUI_LOCAL_PROJECT_DATA_FOLDER, ".yui", options);
 
 yui_log("YuiGlobals: loaded");
 
