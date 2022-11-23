@@ -5,7 +5,7 @@ import:
   - ../Templates/main_panel.yui
   - ../Templates/back_button.yui
   
-  - ../Widgets/fib.yui
+  - /YUI/Widgets/fib.yui
 
 resources:
   widget_wrapper:

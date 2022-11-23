@@ -3,7 +3,7 @@ file_type: screen
 
 import:
   // import all resources from main_panel.yui
-  - "../Templates/main_panel.yui"
+  - ../Templates/main_panel.yui
 
 root:
   type: panel // panel is used to layout and arrange child elements

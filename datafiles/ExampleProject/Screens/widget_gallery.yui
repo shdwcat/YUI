@@ -6,15 +6,15 @@ import:
   - ../Templates/back_button.yui
   
 // TODO: /Widgets/*
-  - ../Widgets/switcher.yui
-  - ../Widgets/checkbox.yui
-  - ../Widgets/listbox.yui
-  - ../Widgets/dropdown_menu.yui
-  - ../Widgets/menu.yui
-  - ../Widgets/slider.yui
-  - ../Widgets/slide_toggle.yui
-  - ../Widgets/meter_bar.yui
-  - ../Widgets/scrollbox.yui
+  - /YUI/Widgets/switcher.yui
+  - /YUI/Widgets/checkbox.yui
+  - /YUI/Widgets/listbox.yui
+  - /YUI/Widgets/dropdown_menu.yui
+  - /YUI/Widgets/menu.yui
+  - /YUI/Widgets/slider.yui
+  - /YUI/Widgets/slide_toggle.yui
+  - /YUI/Widgets/meter_bar.yui
+  - /YUI/Widgets/scrollbox.yui
 
 root:
 

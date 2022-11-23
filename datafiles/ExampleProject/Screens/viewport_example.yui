@@ -2,10 +2,10 @@ id: viewport_example
 file_type: screen
 
 import:
-  - "../Templates/main_panel.yui"
-  - "../Templates/back_button.yui"
-  - "../Widgets/slider.yui"
-  - "../Widgets/slide_toggle.yui"
+  - ../Templates/main_panel.yui
+  - ../Templates/back_button.yui
+  - /YUI/Widgets/slider.yui
+  - /YUI/Widgets/slide_toggle.yui
 
   resources:
     textt:

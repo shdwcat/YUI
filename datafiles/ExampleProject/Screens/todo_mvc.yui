@@ -3,7 +3,7 @@ file_type: screen
 
 import:
   - ../Templates/screen_base.yui
-  - ../Widgets/checkbox.yui
+  - /YUI/Widgets/checkbox.yui
 
 resources:
 

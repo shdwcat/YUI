@@ -4,8 +4,8 @@ file_type: screen
 import:
   - ../Templates/main_panel.yui
   - ../Templates/screen_base.yui
-  - ../Widgets/child_window.yui
-  - ../Widgets/checkbox.yui
+  - /YUI/Widgets/child_window.yui
+  - /YUI/Widgets/checkbox.yui
 
 root:
   type: screen_base
