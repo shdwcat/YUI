@@ -1,9 +1,11 @@
 /// @description here
-function YuiHorizontalLayout(alignment, spacing) constructor {
+function YuiHorizontalLayout(alignment, spacing, panel_size) constructor {
 	static is_live = false;
 	
 	self.alignment = alignment;
 	self.spacing = spacing;
+	
+	self.fill_h = panel_size.h != "auto";
 	
 	static init = function(items, available_size, viewport_size, panel_props) {
 		self.items = items;
@@ -128,7 +130,7 @@ function YuiHorizontalLayout(alignment, spacing) constructor {
 			x: available_size.x,
 			y: available_size.y,
 			w: is_flex_panel ? available_size.w : xoffset, // flex uses the full space
-			h: max_h,
+			h: fill_h ? available_size.h : max_h,
 		};
 
 		if !is_flex_panel && alignment.h == "center" {
@@ -141,10 +143,9 @@ function YuiHorizontalLayout(alignment, spacing) constructor {
 		if alignment.v == "center" {
 			i = 0; repeat count {
 				var item_size = real_sizes[i];
-				var offset = floor((available_size.h - item_size.h) / 2);
+				var offset = floor((draw_size.h - item_size.h) / 2);
 				items[i++].move(0, offset);
 			}
-			draw_size.h = available_size.h;
 		}
 		else if alignment.v == "stretch" {
 			i = 0; repeat count {

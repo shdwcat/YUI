@@ -1,9 +1,10 @@
 /// @description here
-function YuiVerticalLayout(alignment, spacing) constructor {
+function YuiVerticalLayout(alignment, spacing, panel_size) constructor {
 	static is_live = false;
 	
 	self.alignment = alignment;
 	self.spacing = spacing;
+	self.fill_w = panel_size.w != "auto";
 	
 	static init = function(items, available_size, viewport_size, panel_props) {
 		self.items = items;
@@ -127,24 +128,22 @@ function YuiVerticalLayout(alignment, spacing) constructor {
 		draw_size = {
 			x: available_size.x,
 			y: available_size.y,
-			w: max_w,
+			w: fill_w ? available_size.w : max_w,
 			h: is_flex_panel ? available_size.h : yoffset, // flex uses the full space,
 		};
 		
 		if alignment.h == "center" {
 			i = 0; repeat count {
 				var item_size = real_sizes[i];
-				var offset = floor((available_size.w - item_size.w) / 2);
+				var offset = floor((draw_size.w - item_size.w) / 2);
 				items[i++].move(offset, 0);
 			}
-			draw_size.w = available_size.w;
 		}
 		else if alignment.h == "stretch" {
 			i = 0; repeat count {
 				var item = items[i++];
 				item.resize(draw_size.w, item.draw_size.h);
 			}
-			//draw_size.w = available_size.w;
 		}
 		
 		if !is_flex_panel && alignment.v == "center" {
