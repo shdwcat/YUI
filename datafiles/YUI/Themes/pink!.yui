@@ -1,0 +1,66 @@
+file_type: theme
+
+resources:
+  input_border_color: #f2bacb
+  input_border_focus_color: white
+  button_bg: pink_button_cc0
+  //button_bg: #ea7ca5
+
+  panel_bg: #ea7ca5
+  panel_border_color: #f2bacb
+  control_bg: #ca4d77
+  control_border: #f2bacb
+
+  input_border_thickness: 1
+
+theme:
+  
+  // overrides default values for the specified element
+  elements:
+
+    checkbox:
+      foreground: &panel_bg
+
+    main_panel:
+      background: &panel_bg
+      border_color: #ca4d77
+      border_thickness: 2
+
+    text_input:
+      background: #252525
+      border_color: &input_border_color
+      border_focus_color: white
+      border_thickness: &input_border_thickness
+      padding: 7
+    
+    panel:
+      spacing: 5
+    
+    button:
+      background: &button_bg
+      border_color: &input_border_color
+      border_focus_color: &input_border_focus_color
+      border_thickness: 0 //&input_border_thickness
+      padding: [10, 10]
+    
+    popup:
+      background: #ca4d77
+      border_color: &input_border_color
+      border_thickness: &input_border_thickness
+      padding: 5
+
+  // used for text.text_style (or text_input.text_style) to set the font and color
+  // this enables you to adjust style values in one place rather than in each text element
+  text_styles:
+
+    title:
+      font: fnt_comic_sans_20
+      color: white
+
+    subtitle:
+      font: fnt_comic_sans_16
+      color: white
+
+    body:
+      font: fnt_comic_sans_12
+      color: white
