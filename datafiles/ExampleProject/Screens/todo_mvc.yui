@@ -45,6 +45,7 @@ root:
         data_source: &state
         spacing: 1
         padding: [0, 80, 0, 0]
+        size: { w: stretch }
         alignment: { h: center }
         elements:
 
@@ -79,7 +80,7 @@ root:
 
                 // checkbox to control if the task is done
                 - type: checkbox
-                  padding: 0
+                  padding: [5, 0]
                   size: { w: 370 }
                   label: @label
                   is_checked: @checked

@@ -51,6 +51,8 @@ root:
 
           content:
             type: panel
+            padding: 5
+            size: { w: stretch }
             alignment: { h: stretch }
             elements:
               - type: button
@@ -85,6 +87,8 @@ root:
 
           content:
             type: panel
+            padding: 5
+            size: { w: stretch }
             alignment: { h: stretch }
             elements:
               
@@ -116,6 +120,8 @@ root:
 
           content:
             type: panel
+            padding: 5
+            size: { w: stretch }
             alignment: { h: stretch }
             elements:
               

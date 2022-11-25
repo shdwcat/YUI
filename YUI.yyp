@@ -550,6 +550,10 @@
     {"CopyToMask":-1,"filePath":"datafiles/ExampleProject/Templates","resourceVersion":"1.0","name":"back_button.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/ExampleProject/Templates","resourceVersion":"1.0","name":"screen_base.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/ExampleProject/Templates","resourceVersion":"1.0","name":"main_panel.yui","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens/Layouts","resourceVersion":"1.0","name":"shared.yui","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens/Layouts","resourceVersion":"1.0","name":"horizontal.yui","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens/Layouts","resourceVersion":"1.0","name":"examples.yui","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens/Layouts","resourceVersion":"1.0","name":"vertical.yui","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
     "IDEVersion": "2022.300.0.499",

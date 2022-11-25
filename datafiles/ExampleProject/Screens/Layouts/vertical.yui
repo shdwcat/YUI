@@ -25,6 +25,7 @@ resources:
           padding: 10
           border_color: $theme.resources.control_border
           background: $theme.resources.control_bg
+          //size: stretch
           alignment: { h: stretch }
 
           elements:
@@ -34,11 +35,12 @@ resources:
 
             - type: panel
               layout: horizontal
+              spacing: 0
               border_color: $theme.resources.control_bg_light
               background: $theme.resources.control_bg
               elements:
                 - type: text
-                  padding: [10, 5]
+                  padding: 5
                   text: A nested horizontal panel
                   //flex: true
 
@@ -96,12 +98,12 @@ resources:
         content:
 
           type: panel
+          size: { w: stretch }
           alignment: { h: center }
           spacing: 5
           padding: 10
           border_color: $theme.resources.control_border
           background: $theme.resources.control_bg
-          //trace: true
 
           elements:
             - type: layout_example_item
@@ -116,7 +118,6 @@ resources:
                 - type: text
                   padding: [10, 5]
                   text: A nested horizontal panel
-                  //flex: true
 
                 - type: button
                   border_color: $theme.resources.control_bg_light

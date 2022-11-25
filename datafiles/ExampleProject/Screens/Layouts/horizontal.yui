@@ -41,7 +41,7 @@ resources:
               border_color: $theme.resources.control_bg_light
               background: $theme.resources.control_bg
               padding: [10, 5]
-              alignment: { h: stretch }
+              alignment: { h: center }
               elements:
                 - type: text
                   layout: vertical
@@ -120,6 +120,7 @@ resources:
 
           type: panel
           layout: horizontal
+          size: { h: stretch }
           alignment: { v: center }
           spacing: 5
           padding: 10

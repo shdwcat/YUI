@@ -41,6 +41,7 @@ resources:
       dropdown_placement: bottom_left
 
       foreground: null
+      unselected_color: #AAAAAA
 
       arrow_icon: yui_down_arrow_64
       arrow_icon_frame: 0

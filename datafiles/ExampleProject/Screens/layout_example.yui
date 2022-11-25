@@ -5,7 +5,7 @@ import:
   - ../Templates/screen_base.yui
   - ../Templates/main_panel.yui
   - ../Templates/back_button.yui
-  - ../Widgets/tab_panel.yui
+  - /YUI/Widgets/tab_panel.yui
   - Layouts/examples.yui
   - Layouts/vertical.yui
   - Layouts/horizontal.yui

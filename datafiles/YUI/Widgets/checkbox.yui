@@ -47,6 +47,7 @@ resources:
 
         type: panel
         layout: horizontal
+        alignment: { v: center }
         elements:
 
           - type: border
