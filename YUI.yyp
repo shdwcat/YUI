@@ -519,7 +519,6 @@
   "IncludedFiles": [
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Interactions","resourceVersion":"1.0","name":"slider_drag.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens","resourceVersion":"1.0","name":"layout_example.yui","resourceType":"GMIncludedFile",},
-    {"CopyToMask":-1,"filePath":"datafiles/YUI","resourceVersion":"1.0","name":".gitattributes","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles","resourceVersion":"1.0","name":"crash.txt","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"switcher.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"fib.yui","resourceType":"GMIncludedFile",},
@@ -554,6 +553,7 @@
     {"CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens/Layouts","resourceVersion":"1.0","name":"horizontal.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens/Layouts","resourceVersion":"1.0","name":"examples.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens/Layouts","resourceVersion":"1.0","name":"vertical.yui","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles","resourceVersion":"1.0","name":".gitattributes","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
     "IDEVersion": "2022.300.0.499",
