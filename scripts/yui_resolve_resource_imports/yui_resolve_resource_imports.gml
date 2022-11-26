@@ -1,5 +1,5 @@
 /// @description resolves the imports of a yui_document with the declared resources
-function yui_resolve_resource_imports(resources, imports, yui_folder) {
+function yui_resolve_resource_imports(resources, imports, base_folder, cabinet) {
 	
 	var merged_resources = {};
 	
@@ -7,9 +7,16 @@ function yui_resolve_resource_imports(resources, imports, yui_folder) {
 	var import_count = array_length(imports);
 	var i = 0; repeat import_count {
 		var import_item = imports[i]; 
-		var resource_filepath = yui_folder + "/" + import_item;
+		
+		if string_char_at(import_item, 1) == "/" {
+			// paths like '/Cards/foo.dcs' should resolve against the cabinet's root folder
+			var resource_filepath = cabinet.folder_path + string_delete(import_item, 1, 1);
+		}
+		else {
+			var resource_filepath = base_folder + "/" + import_item;
+		}
 
-		var resource_file = YuiGlobals.yui_cabinet.file(resource_filepath);
+		var resource_file = cabinet.file(resource_filepath);
 		if resource_file == undefined {
 			throw yui_error("File not found! " + resource_filepath);
 		}
@@ -36,7 +43,11 @@ function yui_resolve_resource_imports(resources, imports, yui_folder) {
 			
 			var resource_file_resources = resource_data[$ "resources"] ?? {};
 			
-			var inner_resources = yui_resolve_resource_imports(resource_file_resources, resource_data.import, relative_folder);
+			var inner_resources = yui_resolve_resource_imports(
+				resource_file_resources,
+				resource_data.import,
+				relative_folder,
+				cabinet);
 			yui_log("loaded file", resource_filepath)
 		}
 		else {

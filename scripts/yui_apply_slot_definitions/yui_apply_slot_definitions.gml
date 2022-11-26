@@ -31,6 +31,7 @@ function yui_apply_slot_definitions(
 		var input_key = input_keys[i++];
 		
 		if input_key == "type"
+		|| input_key == "yui_type"
 		
 		// these have to do with data templates
 		// TODO: should change the data template to define the element in a subprop, to avoid this

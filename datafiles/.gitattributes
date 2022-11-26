@@ -1,1 +1,2 @@
 *.yui linguist-language=YAML
+*.yui text eol=crlf

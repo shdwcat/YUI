@@ -200,11 +200,12 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 } 
 
 /// @description
-function YuiPrefixOperatorBinding(operator, right) : YuiExpr() constructor {
+function YuiPrefixOperatorBinding(operatorToken, right) : YuiExpr() constructor {
 	static is_yui_binding = true;
 	static is_yui_live_binding = true;
 
-	self.operator = operator;
+	self.token = operatorToken
+	self.operator = operatorToken._type;
 	self.right = right;
 	
 	static resolve = function(data)
@@ -216,9 +217,11 @@ function YuiPrefixOperatorBinding(operator, right) : YuiExpr() constructor {
 			// NOTE: order is roughly in expected frequency
 			case YS_TOKEN.NOT:
 				return !right_val;
+			case YS_TOKEN.MINUS:
+				return -right_val;
 				
 			default:
-				throw gspl_log("Unknown operator: " + operator.getTokenName());
+				throw gspl_log("Unknown operator: " + token.getTokenName());
 		}
 	}
 

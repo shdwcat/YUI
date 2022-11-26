@@ -47,9 +47,6 @@ arrange = function(available_size, viewport_size) {
 		return sizeToDefault(available_size);
 	}
 	
-	// position at the padded rect corner so we can just draw at x/y
-	x = padded_rect.x;
-	y = padded_rect.y;
 	
 	if layout_props.size.w_type == YUI_LENGTH_TYPE.Proportional {
 		// assume we want to stretch the sprite to fit the proportional space
@@ -115,6 +112,10 @@ arrange = function(available_size, viewport_size) {
 	});
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
+	
+	// position at the padded rect corner so we can just draw at x/y
+	x = padded_rect.x;
+	y = padded_rect.y;
 	
 	if viewport_size {
 		updateViewport();

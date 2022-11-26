@@ -7,6 +7,12 @@
 // whether live reload is enabled
 #macro YUI_LIVE_RELOAD_ENABLED global.__yui_live_reload_enabled
 
+
+// move this to configure-me folder if/when compiler is actually useful
+// whether to enable compiling bindings to GML (requires Live Reload to be configured)
+#macro YUI_ENABLE_COMPILER false
+
+
 #macro YUI_COMPILER_ENABLED YUI_ENABLE_COMPILER && YUI_LIVE_RELOAD_ENABLED
 
 enum YUI_LIVE_RELOAD_STATES {
@@ -58,4 +64,5 @@ function __yui_get_backup_data_folder() {
 		return backup_folder;
 	}
 }
+
 

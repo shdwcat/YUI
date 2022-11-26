@@ -12,5 +12,5 @@ enum YUI_PLACEMENT_MODE {
 	BottomRight = 8,
 	RightTop = 9,
 	RightCenter = 10,
-	RightBottom = 11,	
+	RightBottom = 11,
 }

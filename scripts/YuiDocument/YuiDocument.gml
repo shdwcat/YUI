@@ -1,17 +1,15 @@
 /// @description creates a top level YUI document
-function YuiDocument(_yui_file) constructor {
+function YuiDocument(_yui_file, cabinet) constructor {
 	yui_file = _yui_file;
-			
-	previous_animation_states = {};
-	next_animation_states = {};
-		
+	self.cabinet = cabinet;
+	
 	load_error = undefined;
 	
 	// for the loaded document
 	static default_props = {
 		id: undefined,
 		data_type: undefined,
-		import: [], // list of .resource.yui filepaths relative to the yui_folder
+		import: [], // list of .yui filepaths relative to the yui_file
 		resources: {},
 		root: undefined,
 		trace: false,
@@ -31,26 +29,27 @@ function YuiDocument(_yui_file) constructor {
 			return;
 		}
 		
-		var cabinet_file = YuiGlobals.yui_cabinet.file(yui_filepath);
+		var cabinet_file = cabinet.file(yui_filepath);
 		
 		// load the file data (possibly cached)
 		yui_log("loading yui_file:", yui_filepath);
 		var file_data = cabinet_file.tryRead();
 		
 		// apply default props
-		document = yui_apply_props(file_data);
+		var document_data = yui_apply_props(file_data);
 		
-		if document.trace 
+		if document_data.trace 
 			DEBUG_BREAK_YUI
 		
 		// resolve imports
 		var yui_folder = filename_dir(yui_filepath);
 		resources = yui_resolve_resource_imports(
-			document.resources,
-			document.import,
-			yui_folder);
+			document_data.resources,
+			document_data.import,
+			yui_folder,
+			cabinet);
 		
 		// resolve root element
-		root_element = yui_resolve_element(document.root, resources, undefined, document.id);
+		root_element = yui_resolve_element(document_data.root, resources, undefined, document_data.id);
 	}
 }

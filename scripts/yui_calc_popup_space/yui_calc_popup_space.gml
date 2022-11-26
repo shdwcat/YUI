@@ -12,15 +12,13 @@ function yui_calc_popup_space(placement, parent_size) {
 		// but aligned to the left edge of the parent
 		
 		case YUI_PLACEMENT_MODE.TopLeft:
-		case "top_left":
 			return {
 				x: parent_size.x,
 				w: screen_w - parent_size.x,
 				y: 0,
-				h: parent_size.y,
+				h: parent_size.y, // top of parent
 			};
 		case YUI_PLACEMENT_MODE.LeftTop:
-		case "left_top":
 			return {
 				x: 0,
 				w: parent_size.x,
@@ -29,7 +27,6 @@ function yui_calc_popup_space(placement, parent_size) {
 			};
 			
 		case YUI_PLACEMENT_MODE.TopRight:
-		case "top_right":
 			return {
 				x: 0,
 				w: parent_size.x + parent_size.w, // right edge of parent
@@ -37,16 +34,22 @@ function yui_calc_popup_space(placement, parent_size) {
 				h: parent_size.y, // top of parent
 			};
 		case YUI_PLACEMENT_MODE.RightTop:
-		case "right_top":
 			return {
 				x: parent_size.x + parent_size.w, // right edge of parent
 				w: screen_w - (parent_size.x + parent_size.w),
 				y: parent_size.y,
 				h: screen_h - parent_size.y,
 			};
+		
+		case YUI_PLACEMENT_MODE.TopCenter:
+			return {
+				x: 0,
+				w: screen_w,
+				y: 0,
+				h: parent_size.y, // top of parent
+			};
 			
 		case YUI_PLACEMENT_MODE.BottomLeft:
-		case "bottom_left":
 			return {
 				x: parent_size.x,
 				w: screen_w - parent_size.x,
@@ -54,7 +57,6 @@ function yui_calc_popup_space(placement, parent_size) {
 				h: screen_h - (parent_size.y + parent_size.h),
 			};
 		case YUI_PLACEMENT_MODE.BottomRight:
-		case "bottom_right":
 			return { 
 				x: 0, 
 				w: parent_size.x + parent_size.w,

@@ -1,0 +1,185 @@
+file_type: resources
+
+import:
+  - shared.yui
+
+resources:
+
+  examples:
+    type: panel
+    layout: grid
+    grid:
+      rows: 2
+      columns: 3
+      row_spacing: 15
+      column_spacing: 15
+    elements:
+
+      - type: layout_example_section
+        header: Vertical (Default)
+        content:
+
+          type: panel
+          flex: true
+          spacing: 5
+          padding: 10
+          border_color: $theme.resources.control_border
+          background: $theme.resources.control_bg
+          alignment: { h: stretch }
+          //trace: true
+
+          elements:
+            - type: layout_example_item
+              content: Flex = 1
+              flex: true
+
+            - type: layout_example_item
+              content: Auto Sized
+              
+            - type: layout_example_item
+              content: Flex = 2
+              flex: 2
+
+            - type: layout_example_item
+              content: Auto Sized
+
+      - type: layout_example_section
+        header: Horizontal
+        content:
+          type: panel
+          flex: true
+          layout: horizontal
+          padding: 10
+          border_color: $theme.resources.control_border
+          background: $theme.resources.control_bg
+          alignment: { v: stretch }
+          //trace: true
+
+          elements:
+            - type: layout_example_item
+              content: Flex = 1
+              flex: true
+
+            - type: layout_example_item
+              content: Auto
+              
+            - type: layout_example_item
+              content: Flex = 2
+              flex: 2
+
+            - type: layout_example_item
+              content: Auto
+
+      - type: layout_example_section
+        header: Grid
+        id: grid-example
+        content:
+          type: panel
+          flex: true
+          layout: grid
+          grid:
+            rows: 2
+            columns: 2
+            row_spacing: 10
+            column_spacing: 10
+          padding: 10
+          border_color: $theme.resources.control_border
+          background: $theme.resources.control_bg
+          //alignment: { v: stretch }
+          //trace: true
+
+          elements:
+            - type: layout_example_item
+              size: stretch
+              content: Item 1
+
+            - type: layout_example_item
+              size: stretch
+              content: Item 2
+              
+            - type: layout_example_item
+              size: stretch
+              content: Item 3
+
+            - type: layout_example_item
+              size: stretch
+              content: Item 4
+
+      - type: layout_example_section
+        header: Canvas
+        id: canvas-example
+        content:
+
+          type: panel
+          flex: true
+          layout: canvas
+          padding: 10
+          border_color: $theme.resources.control_border
+          background: $theme.resources.control_bg
+          //alignment: { v: stretch }
+          //trace: true
+
+          elements:
+            - type: layout_example_item
+              canvas:
+                top: 25
+                left: 25
+              content: "25 from Top and Left"
+
+            - type: layout_example_item
+              canvas:
+                bottom: 0
+                center: h
+              content: Bottom Center
+              
+            - type: layout_example_item
+              canvas:
+                center: true
+              content: Full Center
+
+            - type: layout_example_item
+              canvas:
+                right: 30
+              content: "30 from Right"
+
+      - type: layout_example_section
+        header: Radial
+        content:
+
+          type: panel
+          border_color: $theme.resources.control_border
+          background: $theme.resources.control_bg
+          layout: radial
+          size: stretch // NOTE: Radial layout will fill the space given to it
+          radial:
+            // radial layout requires a fixed item size
+            // can also be { w: <number>, h: <number> }
+            item_size: 30
+
+            // how many degrees of the circle to use for the items
+            // if unspecified, items will be laid out in the full circle
+            // NOTE: a negative value will place items in the opposite direction (counter-clockwise)
+            arc: 270
+
+            // angle where the items should start
+            // NOTE: in GMS 2, 0 is right, 90 is up, 180 is left, and 270 is down          
+            direction: 90
+
+            // when true, all items will be rotate 'back' by half the arc amount 
+            // so that the 'center' of the arc faces the direction specified above
+            center_arc: false 
+
+          template:
+            type: layout_example_item
+            padding: [10, 5]
+            size: 30
+            content: @
+
+          elements:
+            - "1"
+            - "2"
+            - "3"
+            - "4"
+            - "5"
+            - "6"
+            - "7"

@@ -11,6 +11,7 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 		enabled: true, // can be bound
 		max_chars: YUI_MAX_INPUT_CHARS,
 		highlight_color: $FFFFFFFF,
+		commit_on_lost_focus: true,
 		
 		// border props
 		background: undefined,
@@ -94,6 +95,7 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 		
 		// diff
 		if prev
+			&& data == prev.data_source
 			&& opacity == prev.opacity
 			&& xoffset == prev.xoffset
 			&& yoffset == prev.yoffset
@@ -112,5 +114,6 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 		};
 	}
 }
+
 
 

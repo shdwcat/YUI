@@ -18,7 +18,7 @@ border_move = move;
 move = function(xoffset, yoffset) {
 	border_move(xoffset, yoffset);
 	if popup_item {
-		positionPopup(popup_item.bound_values.placement, popup_item.parent.draw_size);
+		positionPopup(popup_item.parent.draw_size);
 	}
 }
 
@@ -62,11 +62,12 @@ openPopup = function() {
 	
 	popup_item = yui_make_render_instance(bound_values.popup_element, bound_values.data_source, , 100);
 	
-	positionPopup(popup_item.bound_values.placement, popup_item.parent.draw_size);
+	positionPopup(draw_size);
 }
 
-positionPopup = function(placement, parent_size) {
+positionPopup = function(parent_size) {
 	if popup_item && instance_exists(popup_item) {
+		var placement = popup_item.bound_values.placement;
 		var popup_space = yui_calc_popup_space(placement, parent_size);
 		popup_item.arrange(popup_space);
 	}
@@ -84,6 +85,3 @@ closePopup = function(close_parent = false) {
 		parent.closePopup(true);
 	}
 }
-
-
-

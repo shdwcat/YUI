@@ -3,7 +3,7 @@ file_type: screen
 
 import:
   // import all resources from main_panel.yui
-  - "../Templates/main_panel.yui"
+  - ../Templates/main_panel.yui
 
 root:
   type: panel // panel is used to layout and arrange child elements
@@ -70,6 +70,10 @@ root:
             - type: button
               content: Widget Gallery
               on_click: @@ e => yui_change_screen(widget_gallery, e.source)
+
+            - type: button
+              content: TodoMVC
+              on_click: @@ e => yui_change_screen(todo_mvc, e.source)
 
             - type: button
               content: "Drag and Drop: Inventory Screen"

@@ -122,17 +122,19 @@ function YuiCanvasLayout(alignment, spacing) constructor {
 			// do post-arrange alignment
 			var xoffset = 0;
 			var yoffset = 0;
-			if canvas.right_aligned {
-				xoffset = available_size.w - item_size.w - right;
-			}
-			if canvas.bottom_aligned {
-				yoffset = available_size.h - item_size.h - bottom;
-			}
-			if canvas.center_h {
-				xoffset = floor(available_size.w / 2 - (item_size.w / 2));
-			}
-			if canvas.center_v {
-				yoffset = floor(available_size.h / 2 - (item_size.h / 2));
+			if item_size {
+				if canvas.right_aligned {
+					xoffset = available_size.w - item_size.w - right;
+				}
+				if canvas.bottom_aligned {
+					yoffset = available_size.h - item_size.h - bottom;
+				}
+				if canvas.center_h {
+					xoffset = floor(available_size.w / 2 - (item_size.w / 2));
+				}
+				if canvas.center_v {
+					yoffset = floor(available_size.h / 2 - (item_size.h / 2));
+				}
 			}
 			
 			if xoffset != 0 || yoffset != 0 {
@@ -175,13 +177,6 @@ function YuiCanvasPosition(canvas_position = {}, resources, slot_values, item_id
 	
 	right_aligned = right != undefined && left == undefined;
 	bottom_aligned = bottom != undefined && top == undefined;
-	
-	if center_h && (left != undefined || right != undefined) {
-		throw "Cannot center horizontally AND left/right align";
-	}
-	if center_v && (top != undefined || bottom != undefined) {
-		throw "Cannot center vertically AND top/bottom align";
-	}
 	
 	left ??= 0;
 	top ??= 0;

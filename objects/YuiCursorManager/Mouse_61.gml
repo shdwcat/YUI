@@ -5,7 +5,7 @@ var i = hover_count - 1; repeat hover_count {
 	var next = hover_list[| i];
 	//yui_log("pressed instance", i, "is", next.id, "type", object_get_name(next.object_index));
 	
-	if instance_exists(next) {
+	if instance_exists(next) && isCursorOnVisiblePart(next) {
 		if next.on_mouse_wheel_down {
 			//yui_log("pressed instance", i, "is", next.id, "type", object_get_name(next.object_index));
 			wheel_down_consumed = next.on_mouse_wheel_down() != false;
@@ -23,3 +23,8 @@ var i = hover_count - 1; repeat hover_count {
 	
 	i--;
 }
+
+if i < 0 && global_wheel_down {
+	global_wheel_down();
+}
+

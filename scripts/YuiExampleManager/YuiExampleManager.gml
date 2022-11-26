@@ -19,7 +19,11 @@ function YuiExampleManager() constructor {
 		}
 	}
 	
-	var items_file = string_from_file("Example Data/inventory.yaml")
+	layouts = {
+		active_tab_index: 0
+	};
+	
+	var items_file = string_from_file("ExampleProject/Data/inventory.yaml")
 	var inventory = snap_from_yaml(items_file);
 	
 	slots = inventory.slots;
@@ -33,10 +37,12 @@ function YuiExampleManager() constructor {
 	
 	// windows demo
 	windows = {
-		"default": new YuiWindowItem("default"),
-		"pink": new YuiWindowItem("pink", , 300),
-		"more": new YuiWindowItem("more", , 600),
+		"default": new YuiWindowItem("buttons"),
+		"pink": new YuiWindowItem("more buttons", , 300),
+		"more": new YuiWindowItem("even more buttons", , 600),
 	}
+	
+	window_list = [windows[$ "default"], windows.pink, windows.more];
 	
 	// for viewport demo
 	scroll_x = 0;

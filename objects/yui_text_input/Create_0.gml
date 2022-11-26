@@ -10,8 +10,8 @@ update = false;
 live_text = undefined;
 after_caret = "";
 caret_color = c_white;
-caret_x = undefined;
-caret_y = undefined;
+caret_x =0;// undefined;
+caret_y =0;// undefined;
 caret_h = undefined;
 
 border_onLayoutInit = onLayoutInit;
@@ -31,6 +31,11 @@ build = function() {
 border_arrange = arrange;
 arrange = function(available_size, viewport_size) {
 	var size = border_arrange(available_size, viewport_size);
+	
+	var old_font = draw_get_font();
+	draw_set_font(content_item.font);
+	caret_x = content_item.draw_size.x + string_width(input_string_get());
+	draw_set_font(old_font);
 	
 	caret_y = content_item.draw_size.y;
 	caret_h = content_item.draw_size.h;
@@ -65,7 +70,9 @@ on_got_focus = function() {
 }
 
 on_lost_focus = function() {
-	input_string_submit();
+	if yui_element.props.commit_on_lost_focus {
+		input_string_submit();
+	}
 	input_string_set();
 	if content_item && instance_exists(content_item) {
 		content_item.override_text = undefined;
@@ -75,6 +82,7 @@ on_lost_focus = function() {
 	original_text = undefined;
 	update = false;
 }
+
 
 
 

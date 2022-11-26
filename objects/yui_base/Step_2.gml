@@ -5,9 +5,9 @@ if layout_props == undefined {
 	initLayout();
 }
 
-// hide self if parent is not visible
+// hide self if marked hidden, or parent is not visible
 // (depth order ensures further children will get hidden in the same frame)
-if parent && !parent.visible {
+if hidden || parent && !parent.visible {
 	visible = false;
 	rebuild = false;
 	exit;
@@ -17,7 +17,7 @@ if trace
 	DEBUG_BREAK_YUI;
 
 // NOTE: this will be false if no bindings are live
-if is_binding_active || !visible {
+if is_binding_active || !visible || rebuild {
 
 	// check if any bindings require rebuilding UI state
 	rebuild = bind_values();
@@ -35,3 +35,4 @@ if is_binding_active || !visible {
 		}
 	}
 }
+

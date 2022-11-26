@@ -41,9 +41,11 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		on_mouse_wheel_up: undefined,
 		on_mouse_wheel_down: undefined,
 		on_click: undefined,
+		on_double_click: undefined,
 		on_arrange: undefined,
 		on_got_focus: undefined,
 		on_lost_focus: undefined,
+		on_hover_changed: undefined,
 	};
 	
 	// this is the type from the .yui declaration which may be a template or fragment name
@@ -80,7 +82,11 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		props.events.on_mouse_wheel_up = yui_bind_handler(props.events.on_mouse_wheel_up, resources, slot_values);
 		props.events.on_mouse_wheel_down = yui_bind_handler(props.events.on_mouse_wheel_down, resources, slot_values);
 		props.events.on_click = yui_bind_handler(props.events.on_click, resources, slot_values);
+		props.events.on_double_click = yui_bind_handler(props.events.on_double_click, resources, slot_values);
 		props.events.on_arrange = yui_bind_handler(props.events.on_arrange, resources, slot_values);
+		props.events.on_got_focus = yui_bind_handler(props.events.on_got_focus, resources, slot_values);
+		props.events.on_lost_focus = yui_bind_handler(props.events.on_lost_focus, resources, slot_values);
+		props.events.on_hover_changed = yui_bind_handler(props.events.on_hover_changed, resources, slot_values);
 	
 		YuiCursorManager.participation_hash.hashArray(props.interactions);
 	
@@ -122,7 +128,10 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 			|| is_yoffset_live;
 	
 		tooltip_element = undefined;
-		if props.tooltip != undefined {
+	}
+	
+	static createTooltip = function() {
+		if tooltip_element == undefined && props.tooltip != undefined {
 			var tooltip_props = {
 				type: "popup",
 				yui_type: "popup",
@@ -134,6 +143,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 			// TODO: set yui_type: tooltip and use yui_resolve_element so that we can apply theme to this
 			tooltip_element = new YuiPopupElement(tooltip_props, resources, slot_values);
 		}
+		return tooltip_element;
 	}
 	
 	// logic shared by some control

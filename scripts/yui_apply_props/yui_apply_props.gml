@@ -45,7 +45,7 @@ function yui_apply_element_props(instance_data) {
 	
 	// maybe the trick is to squash it into the template theme definition? (assuming there is one)
 	// except we don't know the loaded widgets at the point...
-	// maybe the theme file is there you import the widgets you want?
+	// maybe the theme file is where you import the widgets you want?
 	// at least the ones you want to theme...
 	// though that gets tricky if I want to allow private resources...
 	
@@ -67,6 +67,3 @@ function yui_apply_element_props(instance_data) {
 	
 	return yui_apply_props(instance_data, element_theme, default_props, base_props);
 }
-
-
-

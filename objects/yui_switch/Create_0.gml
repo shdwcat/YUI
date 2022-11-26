@@ -25,7 +25,7 @@ build = function() {
 			var key = string(bound_values.switch_value);
 		}
 		
-		var case_element = yui_element.getCaseElement(key);		
+		var case_element = yui_element.getCaseElement(key);
 		if case_element {
 			case_item = yui_make_render_instance(case_element, data_context);
 		}
@@ -40,9 +40,15 @@ arrange = function(available_size, viewport_size) {
 	
 	if case_item {
 		case_item.arrange(available_size, viewport_size);
-		draw_size = case_item.draw_size;
+		
+		yui_resize_instance(case_item.draw_size.w, case_item.draw_size.h)
+		
 		if viewport_size {
 			updateViewport();
+		}
+		
+		if case_item.is_size_changed {
+			is_size_changed = true;
 		}
 	}
 	

@@ -13,7 +13,14 @@ var i = hover_count - 1; repeat hover_count {
 	//yui_log("pressed instance", i, "is", next.id, "type", object_get_name(next.object_index));
 	
 	if instance_exists(next) {
-		if next.left_pressed {
+		
+		// track the start of a double click
+		if next.left_double_click && click_count == 0 {
+			yui_log("tracking double click");
+			double_click_start_time = current_time;
+		}
+		
+		if next.left_pressed && isCursorOnVisiblePart(next) {
 			yui_log("pressed instance", i, "is", next.id, "type", object_get_name(next.object_index));
 			left_pressed_consumed = next.left_pressed() != false;
 			if left_pressed_consumed {

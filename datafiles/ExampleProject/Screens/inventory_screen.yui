@@ -75,7 +75,9 @@ resources:
           // the text element accepts an array, which can be a mix of strings and bindings.
           // This is more performant than using multiple text elements, so take advantage of it!
           - type: text
-            text: ["Slot: ", @slot]
+            text:
+              - "Slot: "
+              - @slot
 
 root:
   type: panel

@@ -9,8 +9,7 @@ function yui_align_item(item, alignment) {
 			xoffset = item.draw_rect.w - item.draw_size.w;
 			break;
 		case fa_center:
-		case "center":
-			xoffset = (item.draw_rect.w - item.draw_size.w) / 2;
+			xoffset = item.parent.draw_size.x - item.x - item.draw_size.w / 2;
 			break;
 	}
 	
@@ -19,10 +18,9 @@ function yui_align_item(item, alignment) {
 			yoffset = item.draw_rect.h - item.draw_size.h;
 			break;
 		case fa_middle:
-		case "center":
 			yoffset = (item.draw_rect.h - item.draw_size.h) / 2;
 			break;
 	}
 	
-	item.move(xoffset, yoffset);
+	item.move(floor(xoffset), floor(yoffset));
 }

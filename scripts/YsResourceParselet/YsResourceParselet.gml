@@ -7,6 +7,11 @@ function YsResourceParselet() : GsplPrefixParselet() constructor {
 		// given 'foo.bar.baz' get 'foo' and 'bar.baz'
 		var path_parts = yui_string_split(path, ".", 2);
 
+		if !variable_struct_exists(parser.resources, path_parts[0]) {
+			// TODO: only throw in debug mode (?)
+			throw yui_warning("Could not find resource with name: " + path_parts[0]);
+		}
+
 		var resource = parser.resources[$ path_parts[0]];
 		
 		var sub_path = array_length(path_parts) > 1

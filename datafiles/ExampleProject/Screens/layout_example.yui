@@ -1,0 +1,42 @@
+id: layout_example
+file_type: screen
+
+import:
+  - ../Templates/screen_base.yui
+  - ../Templates/main_panel.yui
+  - ../Templates/back_button.yui
+  - /YUI/Widgets/tab_panel.yui
+  - Layouts/examples.yui
+  - Layouts/vertical.yui
+  - Layouts/horizontal.yui
+
+root:
+  type: screen_base
+  content_layout: horizontal
+  
+  items:
+    - type: panel
+      spacing: 11
+      elements: 
+        - type: text
+          text_style: title
+          text: Layout Examples
+
+        - type: tab_panel
+          active_tab: @layouts.active_tab
+          on_tab_selected: @@ item => @layouts.active_tab = item
+          content_size: stretch
+          tab_content_binding: @content
+          tab_items:
+            - header: Examples
+              content: &examples
+            - header: Vertical with Alignments
+              content: &vertical_examples
+            - header: Horizontal with Alignments
+              content: &horizontal_examples
+            // - header: Grid
+            //   content: this is tab 4
+            // - header: Canvas
+            //   content: this is tab 5
+            // - header: Radial
+            //   content: this is tab 6

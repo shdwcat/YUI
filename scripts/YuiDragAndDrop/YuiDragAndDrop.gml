@@ -5,6 +5,10 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		id: undefined,
 		type: "drag_and_drop",
 		trace: false,
+		hide_source: false,
+		
+		// whether to use the XY of the source item for cursor hit testing
+		hit_test_source_position: false,
 		
 		drag: {
 			condition: undefined,
@@ -95,6 +99,24 @@ function YuiDragAndDrop(_props, _resources) constructor {
 			relative_world_y: mouse_y - source_item.y,
 		};
 		
+		if props.hit_test_source_position {
+			// adjust cursor checks to use the x y of the dragged item
+			var is_gui_item = object_is_ancestor(source_item.object_index, yui_base)
+			if is_gui_item {
+				YuiCursorManager.cursor_offset_x -= cursor.relative_x;
+				YuiCursorManager.cursor_offset_y -= cursor.relative_y;
+			}
+			else {
+				YuiCursorManager.cursor_offset_x -= cursor.relative_world_x;
+				YuiCursorManager.cursor_offset_y -= cursor.relative_world_y;
+			}
+		}
+		
+		self.source_item = source_item;
+		if props.hide_source {
+			source_item.hidden = true;
+		}
+		
 		// call start handler if defined
 		if props.drag.start != undefined {
 			var interaction_data = {
@@ -126,9 +148,6 @@ function YuiDragAndDrop(_props, _resources) constructor {
 			cursor: cursor,
 		};
 		
-		// TODO: factor the participation stuff into base class or helper functions!
-		// it's way too clunky currently
-		
 		// evaluate the instances in the 'drop' role
 		var targets = yui_get_interaction_participants(drop_hash_id);
 		var i = 0; repeat array_length(targets) {
@@ -145,6 +164,10 @@ function YuiDragAndDrop(_props, _resources) constructor {
 				// center result on cursor
 				xdiff -= visual_item.draw_size.w / 2;
 				ydiff -= visual_item.draw_size.h / 2;
+			}
+			else {
+				xdiff -= cursor.relative_x;
+				ydiff -= cursor.relative_y;
 			}
 			
 			visual_item.move(xdiff, ydiff);
@@ -197,11 +220,16 @@ function YuiDragAndDrop(_props, _resources) constructor {
 			with drop_item {
 				interaction_item = yui_make_render_instance(other.drop_element, interaction_data, , 100);
 				
-				// align drop visual to game position
 				if !is_gui_item {
-					var xdiff = yui_world_to_gui_x(x) - interaction_item.x;
-					var ydiff = yui_world_to_gui_y(y) - interaction_item.y;
-					interaction_item.move(xdiff, ydiff);
+					// align drop visual to game position
+					// TODO: move this to yui_game_item
+					var size = {
+						x: x + yui_world_to_gui_x(x) - interaction_item.x,
+						y: y + yui_world_to_gui_y(y) - interaction_item.y,
+						w: infinity,
+						h: infinity,
+					};
+					interaction_item.arrange(size);
 				}
 				else {
 					interaction_item.arrange(drop_item.draw_size);
@@ -211,6 +239,7 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		else {
 			// grab the interaction_data from the interaction_visual's data_context
 			interaction_data = drop_item.interaction_item.data_context;
+			interaction_data.target = drop_target;
 		}
 		
 		// TODO: move the visual to the target?? only matters if the target is moving
@@ -219,9 +248,12 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		drop_target.can_drop = canDrop(interaction_data);
 		
 		// only set this for the interaction when the drop is valid
-		if drop_target.can_drop && drop_target.hover {			
-			target.data = drop_data;	
-			target.can_drop = true;		
+		if drop_target.hover {
+			target.hover = true
+			target.data = drop_data;
+			if drop_target.can_drop {
+				target.can_drop = true;
+			}
 		}
 	}
 	
@@ -233,10 +265,10 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		return can_drop;
 	}
 	
-	static resetFrame = function() {		
-		target.data = undefined;		
-		target.hover = undefined;
-		target.can_drop = undefined;
+	static resetFrame = function() {
+		target.data = undefined;
+		target.hover = false;
+		target.can_drop = false;
 	}
 	
 	static finish = function() {
@@ -248,7 +280,12 @@ function YuiDragAndDrop(_props, _resources) constructor {
 			drop_item.interaction_item = undefined;
 		}
 		
+		if props.hide_source {
+			source_item.hidden = false;
+		}
+		
 		YuiCursorManager.finishInteraction();
+		source_item = undefined;
 		source = undefined;
 		target = undefined;
 		cursor = undefined;

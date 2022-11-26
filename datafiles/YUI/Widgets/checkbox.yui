@@ -2,6 +2,11 @@ file_type: resources
 
 resources:
 
+  checkbox_content_template:
+    type: text
+    text: $label
+    color: $foreground
+
   checkbox:
     type: template
 
@@ -30,6 +35,9 @@ resources:
       // label for the checkbox
       label: null
 
+      // template to display the label
+      content_template: &checkbox_content_template
+
     template:
 
       type: button
@@ -39,6 +47,7 @@ resources:
 
         type: panel
         layout: horizontal
+        alignment: { v: center }
         elements:
 
           - type: border
@@ -55,6 +64,4 @@ resources:
               sprite: $check_icon
               size: $check_icon_size
 
-          - type: text
-            text: $label
-            color: $foreground
+          - $content_template

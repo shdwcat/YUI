@@ -26,8 +26,11 @@ function YuiStringHashMap(name) constructor {
 	// converts an array of strings into an array of string hash ids
 	static hashArray = function(array) {
 		var i = 0; repeat array_length(array) {
-			var hash_id = getStringId(array[i]);
-			array[@ i] = hash_id;
+			var item = array[i]
+			if is_string(item) {
+				var hash_id = getStringId(item);
+				array[@ i] = hash_id;
+			}
 			i++;
 		}
 	}

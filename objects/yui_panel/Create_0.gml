@@ -23,39 +23,58 @@ build = function yui_panel__build() {
 	
 	// resync our internal children to the bound children
 	
-	var previous_count = array_length(internal_children);	
-	var excess_count = previous_count - bound_values.child_count;
+	var child_count = bound_values.child_count;
+	var display_count = layout_props.count
+		? min(child_count, layout_props.count)
+		: child_count;
+	
+	var previous_count = array_length(internal_children);
+	var excess_count = previous_count - display_count;
+	
+	//if trace
+	//	DEBUG_BREAK_YUI
 	
 	// resize the array if we need more room
-	if bound_values.child_count > previous_count {
+	if display_count > previous_count {
 		// TODO: this needs to cleanup the excess items or they will be orphaned
-		array_resize(internal_children, bound_values.child_count);
+		array_resize(internal_children, display_count);
 	}
-	
-	var i = 0; repeat bound_values.child_count {
+	var i = 0; repeat display_count {
 				
 		var child = internal_children[i];
 		var exists = child != 0;
 		
+		var data_index = layout_props.reverse ? child_count - i - 1 : i;
+		
 		if exists {
-			// TODO: if the render item doesn't match, we need to recreate
+			// TODO: if the render item type doesn't match, we need to recreate
 			// currently that's not possible so we won't worry about it
-			child.data_context = yui_element.uses_template
-				? bound_values.data_items[i]
+			var new_data = yui_element.uses_template
+				? bound_values.data_items[data_index]
 				: bound_values.data_items;
+				
+			// check if we need to rebuild
+			child.rebuild = child.data_context != new_data;
+			if child.rebuild {
+				child.data_context = new_data;
+			}
+			//tracelog("replacing child at", i, old.id, "with", child.data_context.id);
 		}
 		else {
 			if yui_element.uses_template {
 				var item_element =  yui_element.item_element;
-				var data = bound_values.data_items[i];
+				var data = bound_values.data_items[data_index];
 			}
 			else {
-				var item_element =  yui_element.item_elements[i];
+				var item_element =  yui_element.item_elements[data_index];
 				var data = bound_values.data_items;
 			}
 			
 			// create the child render object
 			var child = yui_make_render_instance(item_element, data, i);
+			
+			
+			//tracelog("creating child at", i, child.data_context[$"id"], "id:", child.id);
 
 			// track it in our internal children array
 			internal_children[i] = child;
@@ -67,11 +86,12 @@ build = function yui_panel__build() {
 	if excess_count > 0 {
 		repeat excess_count {
 			var excess_child = internal_children[i++];
+			//tracelog("destroying excess child at", i, excess_child.data_context.id, "id: ", excess_child.id);
 			instance_destroy(excess_child);
 		}
 		
 		// resize the array to the new count
-		array_resize(internal_children, bound_values.child_count);
+		array_resize(internal_children, display_count);
 	}
 }
 

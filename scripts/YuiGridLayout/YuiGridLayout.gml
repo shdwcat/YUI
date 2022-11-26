@@ -62,14 +62,14 @@ function YuiGridLayout(alignment, spacing) constructor {
 		return draw_size;
 	}
 	
-	static getAvailableSizeForItem = function(index) {		
+	static getAvailableSizeForItem = function(index) {
 		switch left_to_right {
 			case true:
 				var column = index mod columns;
 				var row = floor(index / columns);
 				return {
-					x: available_size.x + (column * (column_width + column_spacing)),
-					y: available_size.y + (row * (row_height + row_spacing)),
+					x: floor(available_size.x + (column * (column_width + column_spacing))),
+					y: floor(available_size.y + (row * (row_height + row_spacing))),
 					w: column_width,
 					h: row_height,
 				};

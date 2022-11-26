@@ -1,0 +1,154 @@
+id: todo_mvc
+file_type: screen
+
+import:
+  - ../Templates/screen_base.yui
+  - /YUI/Widgets/checkbox.yui
+
+resources:
+
+  // Normally this state would come from the 'game' data, rather than define it here,
+  // but it's convenient to do it this way for the example.
+  state:
+    new_task:
+      checked: false
+      hover: false
+      editable: false
+      label: "test"
+    filter_mode: all // all | active | completed
+    done_count: 0
+    tasks:
+      - checked: false
+        hover: false
+        editable: false
+        label: YUI is cool
+      - checked: false
+        hover: false
+        editable: false
+        label: you should use it
+      - checked: false
+        hover: false
+        editable: false
+        label: thanks @shdwcat
+
+root:
+  type: screen_base
+  items:
+    - This example implements the famous TodoMVC app
+
+    - type: border
+      size: stretch
+      background: $theme.resources.control_bg
+      border_color: $theme.resources.control_border
+      content:
+        type: panel
+        data_source: &state
+        spacing: 1
+        padding: [0, 80, 0, 0]
+        size: { w: stretch }
+        alignment: { h: center }
+        elements:
+
+          // text box for entering new TODO items
+          - type: text_input
+            autofocus: true
+            text: @new_task.label
+            size: { min_w: 400 }
+            commit_on_lost_focus: false
+            events:
+              on_text_changed:
+                - @@ text => @new_task.label = text
+                - @@ text => array_push(@tasks, snap_deep_copy(@new_task))
+                - @@ text => @new_task.label = ''
+                - @@ text => input_string_set('')
+
+          // panel to display the tasks
+          - type: panel
+            size: { w: 400 }
+            spacing: 1
+            elements: @tasks
+            template:
+              type: panel
+              spacing: 0
+              layout: horizontal
+              background: $theme.resources.panel_bg
+              visible: &state.filter_mode == 'all' or (not @checked and &state.filter_mode == 'active') or (@checked and &state.filter_mode == 'completed')
+              events:
+                on_hover_changed: @@ e => @hover = e.hover
+
+              elements:
+
+                // checkbox to control if the task is done
+                - type: checkbox
+                  padding: [5, 0]
+                  size: { w: 370 }
+                  label: @label
+                  is_checked: @checked
+                  on_checked_changed: 
+                    - @@ checked => @checked = checked
+                    - @@ checked => &state.done_count = &state.done_count + (checked then 1 else -1)
+
+                  // use a switch to display the plain text by default, and text_input when editable
+                  content_template:
+                    type: switch
+                    trace: true
+                    switch_on: @editable
+                    cases:
+                      false:
+                        type: text
+                        size: { w: stretch, h: 33 }
+                        padding: 7
+                        text: $label
+                        color: @checked then grey else white
+                        events:
+                          on_double_click: @editable = true
+                      true:
+                        type: text_input
+                        size: { w: stretch, h: 33 }
+                        text: $label
+                        autofocus: true
+                        events:
+                          on_lost_focus: @editable = false
+                          on_text_changed: @@ text => $label = text
+
+                // button to delete the task from the list
+                - type: button
+                  padding: 5
+                  size: 33
+                  background: #00000000
+                  border_thickness: 0
+                  visible: @hover
+                  on_click:
+                    - @@ e => &state.done_count = &state.done_count - @checked
+                    - @@ e => array_delete(&state.tasks, yui_array_find_index(&state.tasks, @), 1)
+                  content:
+                    type: text // TODO X sprite
+                    padding: [5, 2, 5, 0]
+                    color: $theme.resources.negative_color
+                    text: X
+
+          // bottom panel with done count and filter buttons
+          - type: panel
+            layout: horizontal
+            spacing: 0
+            size: { w: 400 }
+            background: $theme.resources.panel_bg
+            elements:
+              - type: text
+                text: @@ (array_length(@tasks) - @done_count) + ' items left'
+                padding: 5
+
+              - type: checkbox
+                label: All
+                is_checked: @filter_mode == 'all'
+                on_checked_changed: @@ checked => checked then @filter_mode = 'all' else false
+
+              - type: checkbox
+                label: Active
+                is_checked: @filter_mode == 'active'
+                on_checked_changed: @@ checked => checked then @filter_mode = 'active' else false
+
+              - type: checkbox
+                label: Completed
+                is_checked: @filter_mode == 'completed'
+                on_checked_changed: @@ checked => checked then @filter_mode = 'completed' else false

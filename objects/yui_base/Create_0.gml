@@ -7,6 +7,9 @@ default_props = {};
 // the YuiElement for this render object
 yui_element = undefined;
 
+// whether we need to rebuild due to data changes
+rebuild = false;
+
 // the index of this item within its parent's children, if any
 item_index = undefined;
 
@@ -20,6 +23,7 @@ is_binding_active = true;
 bound_values = undefined;
 
 enabled = true;
+hidden = false;
 opacity = 1;
 
 // this only applies alpha for bg_color set on an element placed in the room editor
@@ -67,7 +71,7 @@ initLayout = function() {
 	default_h = yui_element.size.default_h;
 	canvas = yui_element.canvas;
 	flex = yui_element.flex;
-	tooltip_element = yui_element.tooltip_element;
+	has_tooltip = yui_element.props.tooltip != undefined;
 	
 	events = yui_element.props.events;
 	yui_register_events(events);
@@ -98,6 +102,15 @@ bind_values = function yui_base__bind_values() {
 	if new_values == false {
 		if visible {
 			visible = false;
+			
+			if focused {
+				YuiCursorManager.clearFocus();
+			}
+			
+			// trigger parent re-layout since we might have been taking up space
+			if parent and bound_values {
+				parent.onChildLayoutComplete(self);
+			}
 		
 			// need to reset these, as values may change while the element
 			// is not visible, which means the diffing will be out of date
@@ -138,9 +151,11 @@ arrange = function(available_size, viewport_size) {
 move = function(xoffset, yoffset) {
 	x += xoffset;
 	draw_size.x += xoffset;
+	//draw_rect.x += xoffset;
 	padded_rect.x += xoffset;
 	y += yoffset;
 	draw_size.y += yoffset;
+	//draw_rect.y += yoffset;
 	padded_rect.y += yoffset;
 	
 	if viewport_size {
@@ -201,13 +216,14 @@ closePopup = function(close_parent = false) {
 	}
 }
 base_setHighlight = setHighlight;
-setHighlight = function (highlight) {
+setHighlight = function(highlight) {
 	
 	base_setHighlight(highlight)
 	
-	if tooltip_element {
+	if has_tooltip {
 		if highlight {
-			if tooltip_item == undefined {	
+			tooltip_element ??= yui_element.createTooltip();
+			if tooltip_item == undefined {
 				tooltip_item = yui_make_render_instance(
 					tooltip_element,
 					bound_values.data_source, 
@@ -224,6 +240,24 @@ setHighlight = function (highlight) {
 		}
 	}
 }
+
+// NOTE: assumes the point has already been tested via something like instance_position()
+isPointVisible = function(x, y) {
+	if viewport_part != undefined {
+		return point_in_rectangle(
+				x, y,
+				viewport_part.x,
+				viewport_part.y,
+				viewport_part.x + viewport_part.w,
+				viewport_part.y + viewport_part.h);
+	}
+	else {
+		return visible;
+	}
+}
+
+
+
 
 
 

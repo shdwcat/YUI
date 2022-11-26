@@ -11,11 +11,17 @@ participation_map = ds_map_create();
 active_interaction = undefined;
 visual_item = undefined;
 
+// offset of actual cursor from point to check (e.g. when dragging an item)
+cursor_offset_x = 0;
+cursor_offset_y = 0;
+
 finishInteraction = function() {
 	yui_log("interaction", active_interaction.props.type, "complete");
 	if visual_item {
 		yui_log("destroying interaction visual", visual_item);
 		instance_destroy(visual_item);
+		cursor_offset_x = 0;
+		cursor_offset_y = 0;
 		visual_item = undefined;
 	}
 	active_interaction = undefined;
@@ -59,9 +65,12 @@ mouse_down_array[mb_side2] = [];
 left_pressed_consumed = false;
 left_click_consumed = false;
 
-// hack to make o_camera_panner work
+// events to handle mouse interaction if YUI screen has not handled it
 // NOTE: only supports one subscriber!
 global_left_pressed = undefined;
+global_wheel_up = undefined
+global_wheel_down = undefined
+// TODO: global versions of all events
 
 setFocus = function(focus_item, new_scope = undefined) {
 	
@@ -104,8 +113,14 @@ moveFocus = function(direction = YUI_FOCUS_DIRECTION.DOWN) {
 		moveFocus(YUI_FOCUS_DIRECTION.UP);
 	}
 	else {
-		setFocus(undefined);
+		clearFocus();
 	}
+}
+
+clearFocus = function() {
+	// TODO: this should try to find the previous focus item in scope,
+	// or kick up the focus stack
+	setFocus(undefined);
 }
 
 trackMouseDownItems = function(button) {
@@ -113,14 +128,43 @@ trackMouseDownItems = function(button) {
 	var i = hover_count - 1; repeat hover_count {
 		var item = hover_list[|i];
 		var type = object_get_name(item.object_index);
-		yui_log("mouse down on:", item, " - ", type, " - ", item[$" _id"]);
+		//yui_log("mouse down on:", item, " - ", type, " - ", item[$" _id"]);
 		mouse_down_array[button][i] = item;
 		i--;
 	}
 }
 
+isCursorOnVisiblePart = function(item) {
+	return item.isPointVisible(mouse_x + cursor_offset_x, mouse_y + cursor_offset_y);
+}
 
+// track delayed events like double click
 
+double_click_start_time = 0;
+click_count = 0;
 
+queued_event = undefined;
+queued_target = undefined;
+queued_method = undefined;
 
+queueEvent = function(name, target, method, delay_ms) {
+	queued_event = name;
+	queued_target = target;
+	queued_method = method;
+	
+	// convert milliseconds to game steps
+	// room_speed = steps per second
+	var steps = ceil(room_speed * (delay_ms / 1000));
+	yui_log("queueing event", name, "with delay ms", delay_ms);
+	alarm_set(0, steps);
+}
+
+clearQueuedEvent = function() {
+	double_click_start_time = 0;
+	click_count = 0;
+	queued_event = undefined;
+	queued_target = undefined;
+	queued_method = undefined;
+	alarm_set(0, -1)
+}
 

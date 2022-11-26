@@ -55,12 +55,19 @@ build = function() {
 		&& layout_props.content_element != undefined
 
 	if make_content_item {
-		content_item = yui_make_render_instance(layout_props.content_element, data_context);
+		if trace
+			DEBUG_BREAK_YUI
+		content_item = yui_make_render_instance(layout_props.content_element, bound_values.data_source);
 	}
 	
 	if content_item {
-		content_item.data_context = bound_values.data_source;
-		// will trigger build() as child runs after this
+		// check if we need to rebuild
+		content_item.rebuild = content_item.data_context != bound_values.data_source;
+		if content_item.rebuild {
+			// update child data context
+			content_item.data_context = bound_values.data_source;
+			// will trigger build() as child runs after this
+		}
 	}
 }
 

@@ -71,7 +71,7 @@ resources:
                 - type: image
                   size: 24
                   image: @icon_sprite
-                  visible: $is_submenu
+                  //visible: $is_submenu
                 - $item_template
             on_click:
               - @command()

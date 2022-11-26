@@ -98,6 +98,11 @@ function YuiCallFunction(func_name, args) : YuiExpr() constructor {
 			return;
 		}
 		
+		// handle calling arrays
+		if is_array(func_ref) {
+			return yui_call_handler(func_ref, resolved_args, data);
+		}
+		
 		if instanceof(func_ref) == "YuiLambda" {
 			return func_ref.call(data, resolved_args);
 		}
