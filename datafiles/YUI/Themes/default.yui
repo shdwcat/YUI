@@ -66,9 +66,14 @@ theme:
       border_color: &accent_color
 
     dropdown_menu:
-      item_background: &control_border
+      item_bg_color: &control_border
+      selected_bg_color: &control_bg_light
       item_highlight_alpha: 0.4
 
+    listbox:
+      background: &control_bg
+      border_color: &control_border
+      selected_item_background: &subpanel_bg
 
     menu:
       spacing: 0
@@ -85,11 +90,6 @@ theme:
       toggle_background: &control_bg
       toggle_border_color: &control_border
 
-    listbox:
-      background: &control_bg
-      border_color: &control_border
-      selected_item_background: &subpanel_bg
-
     switcher:
       background: &control_bg
       border_color: &control_border
@@ -102,6 +102,18 @@ theme:
     scrollbox:
       background: &control_bg
       thumb_background: &focus_border // move to scrollbar style somewhere?
+
+    tab_panel_content:
+      background: &control_bg
+      border_color: &control_border
+      padding: 5
+      size: { min_w: 200, min_h: 100 }
+
+    tab_header:
+      bg_color: &subpanel_bg
+      selected_color: &control_bg_light
+      border_color: &control_border
+      padding: [10,5]
 
     // === elements ===
 
@@ -129,17 +141,6 @@ theme:
       border_color: &focus_border
       border_thickness: 1
       padding: 2
-
-    tab_panel_content:
-      background: &control_bg
-      border_color: &control_border
-      padding: 5
-      size: { min_w: 200, min_h: 100 }
-
-    tab_header:
-      background: &subpanel_bg
-      border_color: &control_border
-      padding: [10,5]
 
   // used for text.text_style (or text_input.text_style) to set the font and color
   // this enables you to adjust style values in one place rather than in each text element
