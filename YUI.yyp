@@ -541,7 +541,6 @@
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Themes","resourceVersion":"1.0","name":"default.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Interactions","resourceVersion":"1.0","name":"window_move.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens","resourceVersion":"1.0","name":"viewport_example.yui","resourceType":"GMIncludedFile",},
-    {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"dropdown_menu.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens","resourceVersion":"1.0","name":"todo_mvc.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"listbox.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"tab_panel.yui","resourceType":"GMIncludedFile",},
@@ -554,6 +553,7 @@
     {"CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens/Layouts","resourceVersion":"1.0","name":"examples.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens/Layouts","resourceVersion":"1.0","name":"vertical.yui","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles","resourceVersion":"1.0","name":".gitattributes","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","resourceVersion":"1.0","name":"dropdown_menu.yui","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
     "IDEVersion": "2022.300.0.499",

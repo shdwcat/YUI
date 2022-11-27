@@ -42,16 +42,15 @@ resources:
       dropdown_placement: bottom_left
 
       foreground: null
-      unselected_color: #AAAAAA
 
-      dropdown_indicator_template: &dropdown_indicator_template
+      indicator_template: &dropdown_indicator_template
 
     events:
       item_selected:
         // select the item
-        - item => $selection_scope then $selection_scope.select(item) else false
+        - @@ item => $selection_scope then $selection_scope.select(item) else false
         // invoke the user handler
-        - item => $on_item_selected(item)
+        - @@ item => $on_item_selected(item)
 
     template:
       type: button
@@ -80,7 +79,7 @@ resources:
             visible: $can_clear_value and ($selected_item != undefined or $selection_scope.selected_index >= 0)
             on_click: @@ e => yui_invoke_event(e.source, item_selected, undefined)
 
-          - $dropdown_indicator_template
+          - $indicator_template
 
       popup:
         placement: $dropdown_placement
@@ -92,7 +91,7 @@ resources:
             selected_item: $selected_item ?? $selection_scope.selected_item // little trick to simplify referring to the selected item
           elements: $items
           template:
-            type: border
+            type: button
             border_thickness: 0
             padding: 5
             background:

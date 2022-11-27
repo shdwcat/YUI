@@ -71,9 +71,10 @@ theme:
       item_highlight_alpha: 0.4
 
     listbox:
-      background: &control_bg
+      background: &control_border
       border_color: &control_border
-      selected_item_background: &subpanel_bg
+      item_bg_color: &control_bg
+      selected_bg_color: &control_bg_light
 
     menu:
       spacing: 0

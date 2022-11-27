@@ -6,7 +6,6 @@ resources:
   listbox_item_template:
     type: text
     text: @
-    padding: [10, 5]
     color: $foreground
 
   listbox:
@@ -24,11 +23,11 @@ resources:
       // template to use when rendering items in dropdown
       item_template: &listbox_item_template
 
-      item_background: null
-      selected_item_background: null
+      item_bg_color: null
+      selected_bg_color: null
 
       // additional handler executed after item is selected
-      on_item_selected: null 
+      on_item_selected: null
 
       foreground: null
 
@@ -44,42 +43,30 @@ resources:
       // a template is another template. Ideal fix would be to do the DCS template definition
       // system for YUI, but could be a lot of bugs!
 
-      type: border
-      content:
+      // type: border
+      // content:
 
         // trying to nest scrollbox inside here just causes another bug where the 
         // scrollbox size becomes infinite or something and eventually crashes GM
 
         type: panel
-        padding: 5
-        spacing: 0
-        size: { w: 120 }
+        padding: 1
+        spacing: 1
         alignment: { h: stretch }
         elements: $items
 
         // allows items to get the slot value in the scope of this panel instead of the item
         bind_slot_scope:
-          selected_item: $selected_item
-          selection_scope: $selection_scope
+          selected_item: $selected_item ?? $selection_scope.selected_item // little trick to simplify referring to the selected item
 
-        alignment: { h: stretch }
         template:
         
           type: button
           border_thickness: 0
-          padding: 0
-          size: { w: stretch }
-          // background: @@ @ == ($selected_item ?? $selection_scope.selected_item) then $selected_item_background else $item_background
-          content:
-            type: panel
-            size: { w: 110, h: 30 }
-            layout: canvas
-            elements: 
-              - $item_template
+          padding: [6, 5]
+          background:
+            color: @ == $selected_item then $selected_bg_color else $item_bg_color
+          content: $item_template
 
-              - type: image
-                size: { w: 110, h: 30 }
-                sprite: yui_white_pixel
-                blend_color: @@ @ == ($selected_item ?? $selection_scope.selected_item) then $selected_item_background else #00000000
           // invoke the item_selected event on the root widget
           on_click: @@ e => yui_invoke_event(e.source, item_selected, @)
