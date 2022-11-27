@@ -83,6 +83,8 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		
 		var opacity = (is_opacity_live ? props.opacity.resolve(data) : props.opacity)
 			?? draw_get_alpha();
+		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
+		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
 			
 		if props.trace {
 			DEBUG_BREAK_YUI;
@@ -98,6 +100,8 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			&& angle == prev.angle
 			&& blend_color == prev.blend_color
 			&& opacity == prev.opacity
+			&& xoffset == prev.xoffset
+			&& yoffset == prev.yoffset
 			&& w == prev.w
 			&& h == prev.h
 		{
@@ -112,6 +116,8 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			angle: angle,
 			blend_color: blend_color,
 			opacity: opacity,
+			xoffset: xoffset,
+			yoffset: yoffset,
 			w: w,
 			h: h,
 		};

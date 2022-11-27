@@ -118,6 +118,10 @@ arrange = function(available_size, viewport_size) {
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
 	
+	if bound_values && (bound_values.xoffset != 0 || bound_values.yoffset != 0) {
+		move(bound_values.xoffset, bound_values.yoffset);
+	}
+	
 	use_text_surface = font >= 0 && !use_scribble;
 	if use_text_surface {
 		
