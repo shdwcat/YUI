@@ -155,17 +155,13 @@ function YsScanner(source, token_definition) : GsplScanner(source, token_definit
 	
 	static matchVarPath = function() {
 		var matched = false;
-		while isAlphaNumeric(peek()) || peek() == "." {
+		while isAlphaNumeric(prev()) || prev() == "." {
 			advance();
 			matched = true;
 		}
 		
-		if !matched {
-			// if we didn't match any chars, backtrack and return empty path
-			// (e.g. using @ by itself)
-			_current--;
-			return "";
-		}
+		// need to backtrack one because the advance loop will have gone slightly too far
+		_current--;
 		
 		var path = gspl_string_substring(_source, _start, _current);
 		return path;
