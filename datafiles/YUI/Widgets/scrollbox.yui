@@ -29,7 +29,10 @@ resources:
       thumb_background: grey
       thumb_size: 20
 
+      // ratio of total content to scroll per wheel tick
       wheel_scroll_ratio: .05
+      // minimum pixels to scroll per wheel tick
+      wheel_scroll_min: 10
 
       scroll_state:
         x: 0
@@ -50,8 +53,8 @@ resources:
       padding: 1
       layout: canvas
       events:
-        on_mouse_wheel_up: $scroll_state.y = max($scroll_state.y - $scroll_state.info.y_max * $wheel_scroll_ratio, 0) >> round()
-        on_mouse_wheel_down: $scroll_state.y = min($scroll_state.y + $scroll_state.info.y_max * $wheel_scroll_ratio, $scroll_state.info.y_max) >> round()
+        on_mouse_wheel_up: $scroll_state.y = max($scroll_state.y - max($wheel_scroll_min, $scroll_state.info.y_max * $wheel_scroll_ratio), 0) >> round()
+        on_mouse_wheel_down: $scroll_state.y = min($scroll_state.y + max($wheel_scroll_min, $scroll_state.info.y_max * $wheel_scroll_ratio), $scroll_state.info.y_max) >> round()
       elements:
 
         // - type: panel
