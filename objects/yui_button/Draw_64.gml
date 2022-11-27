@@ -21,10 +21,18 @@ if show_highlight {
 	if alpha > 0 {
 		if viewport_size {
 			if viewport_part.visible {
-				draw_sprite_ext(
-					yui_white_pixel, 0,
-					viewport_part.x, viewport_part.y, viewport_part.w, viewport_part.h,
-					0, highlight_color, alpha);
+				if viewport_part.clipped {
+					draw_sprite_ext(
+						yui_white_pixel, 0,
+						viewport_part.x, viewport_part.y, viewport_part.w, viewport_part.h,
+						0, highlight_color, alpha);
+				}
+				else {
+					draw_sprite_ext(
+						yui_white_pixel, 0,
+						draw_size.x, draw_size.y, draw_size.w, draw_size.h,
+						0, highlight_color, alpha);
+				}
 			}
 		}
 		else {
@@ -41,3 +49,4 @@ if show_highlight {
 //  // except that doesn't handle hovering over the button but not the context (due to padding)
 //	content_item.highlight = highlight;
 //}
+
