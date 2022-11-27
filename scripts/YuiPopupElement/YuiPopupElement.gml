@@ -25,6 +25,8 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	content_element = yui_resolve_element(props.content, resources, slot_values);
 
 	is_bound = base_is_bound
+		|| is_bg_sprite_live
+		|| is_bg_color_live
 		|| yui_is_live_binding(props.placement);
 	
 	// ===== functions =====
@@ -36,6 +38,7 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			size: size,
 			content_element: content_element,
 			// border
+			is_bg_live: is_bg_sprite_live || is_bg_color_live,
 			bg_sprite: bg_sprite,
 			bg_color: bg_color,
 			border_color: border_color,
@@ -58,6 +61,9 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		var xoffset = yui_resolve_binding(props.xoffset, data);
 		var yoffset = yui_resolve_binding(props.yoffset, data);
 		
+		var bg_sprite = is_bg_sprite_live ? yui_resolve_sprite_by_name(bg_sprite_binding.resolve(data)) : undefined;
+		var bg_color = is_bg_color_live ? yui_resolve_color(bg_color_binding.resolve(data)) : undefined;
+		
 		// diff
 		if prev
 			&& data == prev.data_source
@@ -65,6 +71,8 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			&& placement == prev.placement
 			&& xoffset == prev.xoffset
 			&& yoffset == prev.yoffset
+			&& bg_sprite == prev.bg_sprite
+			&& bg_color == prev.bg_color
 		{
 			return true;
 		}
@@ -77,6 +85,9 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			placement: placement,
 			xoffset: xoffset,
 			yoffset: yoffset,
+			// live versions
+			bg_sprite: bg_sprite,
+			bg_color: bg_color,
 		};
 	}
 }

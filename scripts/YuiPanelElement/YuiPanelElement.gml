@@ -92,6 +92,8 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	is_elements_bound = yui_is_live_binding(props.elements);
 	
 	is_bound = base_is_bound
+		|| is_bg_sprite_live
+		|| is_bg_color_live
 		|| is_elements_bound;
 		
 	// ===== functions =====
@@ -106,6 +108,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			reverse: props.reverse,
 			count: props.count,
 			// border
+			is_bg_live: is_bg_sprite_live || is_bg_color_live,
 			bg_sprite: bg_sprite,
 			bg_color: bg_color,
 			border_color: border_color,
@@ -136,6 +139,9 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
 		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
 		
+		var bg_sprite = is_bg_sprite_live ? yui_resolve_sprite_by_name(bg_sprite_binding.resolve(data)) : undefined;
+		var bg_color = is_bg_color_live ? yui_resolve_color(bg_color_binding.resolve(data)) : undefined;
+		
 		if uses_template {
 			// single template element for bound data_items
 			var source_items = is_elements_bound ? props.elements.resolve(data) : props.elements;
@@ -165,6 +171,8 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			&& opacity == prev.opacity
 			&& xoffset == prev.xoffset
 			&& yoffset == prev.yoffset
+			&& bg_sprite == prev.bg_sprite
+			&& bg_color == prev.bg_color
 			&& child_count == prev.child_count
 			&& (uses_template
 				? array_equals(data_items, prev.data_items)
@@ -181,6 +189,9 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			opacity: opacity,
 			xoffset: xoffset,
 			yoffset: yoffset,
+			// live versions
+			bg_sprite: bg_sprite,
+			bg_color: bg_color,
 			// panel
 			child_count: child_count,
 			data_items: data_items,

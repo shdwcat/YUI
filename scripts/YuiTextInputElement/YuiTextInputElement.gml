@@ -56,7 +56,9 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 	is_enabled_live = yui_is_live_binding(props.enabled);
 	
 	is_bound = base_is_bound
-		|| yui_is_live_binding(props.enabled);
+		|| is_bg_sprite_live
+		|| is_bg_color_live
+		|| is_enabled_live;
 	
 	// ===== functions =====
 	
@@ -68,6 +70,7 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 			size: size,
 			// border
 			content_element: content_element,
+			is_bg_live: is_bg_sprite_live || is_bg_color_live,
 			bg_sprite: bg_sprite,
 			bg_color: bg_color,
 			border_color: border_color,
@@ -93,12 +96,17 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 		
 		var enabled = is_enabled_live ? props.enabled.resolve(data) : props.enabled;
 		
+		var bg_sprite = is_bg_sprite_live ? yui_resolve_sprite_by_name(bg_sprite_binding.resolve(data)) : undefined;
+		var bg_color = is_bg_color_live ? yui_resolve_color(bg_color_binding.resolve(data)) : undefined;
+		
 		// diff
 		if prev
 			&& data == prev.data_source
 			&& opacity == prev.opacity
 			&& xoffset == prev.xoffset
 			&& yoffset == prev.yoffset
+			&& bg_sprite == prev.bg_sprite
+			&& bg_color == prev.bg_color
 			&& enabled == prev.enabled
 		{
 			return true;
@@ -111,6 +119,9 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 			xoffset: xoffset,
 			yoffset: yoffset,
 			enabled: enabled,
+			// live versions
+			bg_sprite: bg_sprite,
+			bg_color: bg_color,
 		};
 	}
 }
