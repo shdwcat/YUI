@@ -1,0 +1,49 @@
+id: quick_start_ccreen
+file_type: screen
+
+// 'root' defineds the root element for the screen, which will generally be a panel or border with the screen content inside of it
+root:
+
+  // a panel is used to position multiple child elements inside of it
+  type: panel
+
+  // the canvas layout is used to position elements relative to the containing space, which in this case is the entire screen
+  // other possible layouts are: vertical, horizontal, grid, and radial
+  layout: canvas
+
+  // here is where you add more elements to put inside the panel
+  elements:
+
+    - type: panel
+
+      // this sets the size of this panel
+      size: { w: 640, h: 280 }
+
+      // this describes where to position the panel inside the outer canvas panel
+      canvas:
+        top: 150
+        center: h // 'h' means center horizontally -- it can also be 'v' for vertical, or 'true' for both
+
+      // sets the background to use the included 'yui_panel_bg' sprite (9-sliced)
+      // can also be set to a color value using web format e.g. #3f3f3f
+      background: yui_panel_bg
+
+      // padding is the number space to leave between the border and the content
+      padding: 10
+
+      elements:
+
+        // you can use the 'text' element to display text
+        - type: text
+          text_style: subtitle
+          text: This is the YUI Quick Start Screen!
+
+        // note that you can also just put a string directly as an element
+        // YUI will automatically make a 'text' element in its place
+        - "The file for this screen is located at:"
+
+        - "    datafiles/YUI-Quick-Start/quick_start_screen.yui"
+
+        - If you open the file in a text editor you can start editing it to build your first YUI screen.
+
+        - You can also edit the 'yui_file' variable on the yui_document instance to point it at your own file
