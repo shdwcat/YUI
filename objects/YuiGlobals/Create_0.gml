@@ -17,6 +17,10 @@ element_map = {
 	dynamic: YuiDynamicElement,
 };
 
+if !instance_exists(YuiCursorManager) {
+	instance_create_depth(0, 0, depth, YuiCursorManager);
+}
+
 screens = {};
 interactions = {};
 themes = {};
