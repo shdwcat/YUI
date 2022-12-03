@@ -129,7 +129,7 @@ function YuiVerticalLayout(alignment, spacing, panel_size) constructor {
 		draw_size = {
 			x: available_size.x,
 			y: available_size.y,
-			w: fill_w ? available_size.w : max(min_w, max_w),
+			w: fill_w ? available_size.w : max(min_w ?? 0, max_w),
 			h: is_flex_panel ? available_size.h : yoffset, // flex uses the full space,
 		};
 		

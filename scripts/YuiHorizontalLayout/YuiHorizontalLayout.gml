@@ -130,7 +130,7 @@ function YuiHorizontalLayout(alignment, spacing, panel_size) constructor {
 			x: available_size.x,
 			y: available_size.y,
 			w: is_flex_panel ? available_size.w : xoffset, // flex uses the full space
-			h: fill_h ? available_size.h : max(min_h, max_h),
+			h: fill_h ? available_size.h : max(min_h ?? 0, max_h),
 		};
 
 		if !is_flex_panel && alignment.h == "center" {
