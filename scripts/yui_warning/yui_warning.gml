@@ -2,7 +2,7 @@
 /// @arg values...
 function yui_warning() {
 
-	var message = argument[0];
+	var message = "YUI WARNING: " + string(argument[0]);
 
 
 	var i = 1; repeat argument_count - 1 {
@@ -24,7 +24,7 @@ function yui_warning() {
 
 function yui_error() {
 
-	var message = argument[0];
+	var message = "YUI ERROR: " + string(argument[0]);
 
 
 	var i = 1; repeat argument_count - 1 {
@@ -43,4 +43,5 @@ function yui_error() {
 	show_debug_message(message);
 	return message;
 }
+
 
