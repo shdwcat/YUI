@@ -5,13 +5,13 @@ event_inherited();
 default_props = {};
 
 // the YuiElement for this render object
-yui_element = undefined;
+yui_element ??= undefined;
+
+// the index of this item within its parent's children, if any
+item_index ??= undefined;
 
 // whether we need to rebuild due to data changes
 rebuild = false;
-
-// the index of this item within its parent's children, if any
-item_index = undefined;
 
 // the map of values that control layout;
 layout_props = undefined;

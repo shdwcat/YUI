@@ -8,16 +8,17 @@ function yui_make_render_instance(yui_element, data, index = 0, depth_offset = 0
 	
 	depth_offset += yui_element.props.layer;
 	
-	// NOTE: expects to be called from an yui_base-derived object
+	// NOTE: expects to be called from a yui_base-derived object
+	var parent = self;
+	
+	var child = instance_create_depth(x, y, depth - (1 + depth_offset), render_object, {
+		data_context: data,
+		parent: parent,
+		item_index: index,
+		yui_element: yui_element,
+		persistent: persistent,
+	});
 
-	var child = instance_create_depth(x, y, depth - (1 + depth_offset), render_object);
-	child.data_context = data
-	child.parent = self;
-	child.item_index = index;
-	child.yui_element = yui_element;
-	child.persistent = persistent;
-
-	// TODO: move to child.init() ?
 	child.initLayout();
 	child.bind_values();
 	if child.visible {
