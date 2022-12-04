@@ -103,7 +103,7 @@ resources:
             type: button
             background: $item_background
             highlight_alpha: $item_highlight_alpha
-            padding: [29, 5, 5, 5]
+            padding: [34, 5, 5, 5]
             content: $item_template
             popup:
               placement: $menu_placement

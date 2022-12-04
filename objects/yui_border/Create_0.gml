@@ -47,6 +47,17 @@ build = function() {
 	
 	opacity = bound_values.opacity * parent.opacity * 1 - (!enabled * 0.5);
 	
+	if layout_props.is_bg_live {
+		if bound_values.bg_sprite != undefined {
+			bg_sprite = bound_values.bg_sprite;
+			bg_alpha = 1;
+		}
+		else if bound_values.bg_color != undefined {
+			bg_color = bound_values.bg_color;
+			bg_alpha = ((bg_color & 0xFF000000) >> 24) / 255; // extract alpha
+		}
+	}
+	
 	// create the content item instance if there should be one
 	// NOTE: have to do this after opacity is updated
 	var make_content_item = 

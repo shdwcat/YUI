@@ -62,9 +62,14 @@ resources:
   // define the headers and content as fragments so that they're themable
   // note: can get rid of these if/when we implement a `styles` prop
   tab_header:
-    type: fragment
-    content:
+    type: template
+    slots:
+      bg_color: $theme.resources.subpanel_bg
+      selected_color: $theme.resources.control_bg_light
+    template:
       type: button
+      background:
+        color: @header == $active_tab.header then $selected_color else $bg_color
 
   tab_panel_content:
     type: fragment
@@ -73,6 +78,6 @@ resources:
     
   // default template for displaying the item value
   tab_panel_header_template:
-    type: text    
+    type: text
     color: @header == $active_tab.header then white else #AAAAAA
     text: @header

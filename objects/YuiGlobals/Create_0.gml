@@ -17,6 +17,10 @@ element_map = {
 	dynamic: YuiDynamicElement,
 };
 
+if !instance_exists(YuiCursorManager) {
+	instance_create_depth(0, 0, depth, YuiCursorManager);
+}
+
 screens = {};
 interactions = {};
 themes = {};
@@ -27,7 +31,12 @@ var yui_file_customizer = function(cabinet_file) {
 	// scan the file type
 	var file_type = cabinet_file.tryScanLines(function (line) {
 		if string_pos("file_type: ", line) == 1 {
-			return string_copy(line, 12, string_length(line) - 13);
+			var file_type = string_copy(line, 12, string_length(line) - 12);
+			
+			// trims any dangling carriage returns
+			file_type = string_replace(file_type, chr(13), "");
+			
+			return file_type;
 		}
 	});
 	

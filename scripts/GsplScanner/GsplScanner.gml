@@ -67,6 +67,11 @@ function GsplScanner(source, token_definition) constructor {
 		return string_char_at(_source, _current + 1);
 	}
 	
+	static prev = function() {
+		if _current == 0 return undefined
+		return string_char_at(_source, _current - 1);
+	}
+	
 	static addToken = function(type, literal = undefined) {
 		var text = gspl_string_substring(_source, _start, _current);
 		array_push(_tokens, new TokenType(type, text, literal, _line));

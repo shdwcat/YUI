@@ -25,6 +25,9 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		on_click: undefined,
 	}
 	
+	if _props[$ "trace"] == true
+		DEBUG_BREAK_YUI
+	
 	props = yui_apply_element_props(_props);
 	
 	baseInit(props);
@@ -52,7 +55,9 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	is_enabled_live = yui_is_live_binding(props.enabled);
 	
 	is_bound = base_is_bound
-		|| yui_is_live_binding(props.enabled);
+		|| is_bg_sprite_live
+		|| is_bg_color_live
+		|| is_enabled_live;
 		
 	// ===== functions =====
 	
@@ -70,6 +75,7 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 			pressed_alpha: props.pressed_alpha,
 			// border
 			content_element: content,
+			is_bg_live: is_bg_sprite_live || is_bg_color_live,
 			bg_sprite: bg_sprite,
 			bg_color: bg_color,
 			border_color: border_color,
@@ -92,6 +98,12 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		
 		var enabled = is_enabled_live ? props.enabled.resolve(data) : props.enabled;
 		
+		//if props.trace
+		//	DEBUG_BREAK_YUI
+		
+		var bg_sprite = is_bg_sprite_live ? yui_resolve_sprite_by_name(bg_sprite_binding.resolve(data)) : undefined;
+		var bg_color = is_bg_color_live ? yui_resolve_color(bg_color_binding.resolve(data)) : undefined;
+		
 		// diff
 		if prev
 			&& data == prev.data_source
@@ -99,6 +111,8 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 			&& opacity == prev.opacity
 			&& xoffset == prev.xoffset
 			&& yoffset == prev.yoffset
+			&& bg_sprite == prev.bg_sprite
+			&& bg_color == prev.bg_color
 		{
 			return true;
 		}
@@ -113,6 +127,9 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 			xoffset: xoffset,
 			yoffset: yoffset,
 			enabled: enabled,
+			// live versions
+			bg_sprite: bg_sprite,
+			bg_color: bg_color,
 		};
 		
 		if props.popup {

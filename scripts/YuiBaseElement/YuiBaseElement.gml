@@ -146,21 +146,46 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		return tooltip_element;
 	}
 	
-	// logic shared by some control
+	// logic shared by many controls like border/panel/button/text_input
 	
 	static resolveBackgroundAndBorder = function() {
 	
+		// don't bind values directly by default
+		bg_sprite_binding = undefined;
+		is_bg_sprite_live = false;
+		bg_color_binding = undefined;
+		is_bg_color_live = false;
+		
+		if props.trace
+			DEBUG_BREAK_YUI
+				
 		// resolve background
 		var background_expr = yui_bind_and_resolve(props.background, resources, slot_values);
 		if background_expr != undefined {
-			var bg_spr = yui_resolve_sprite_by_name(background_expr);
-			if bg_spr != undefined {
-				bg_sprite = bg_spr;
+			
+			if is_struct(background_expr) {
+				// a struct is used when we want to bind the background dynamically,
+				// in order to differentiate between sprite indexes (which are numbers)
+				// and color values (which are also numbers :()
+				bg_sprite_binding = yui_bind(background_expr[$"sprite"], resources, slot_values);
+				is_bg_sprite_live = bg_sprite_binding != undefined;
+				bg_sprite = undefined;
+				bg_color_binding = yui_bind(background_expr[$"color"], resources, slot_values);
+				is_bg_color_live = bg_color_binding != undefined;
 				bg_color = undefined;
 			}
 			else {
-				bg_color = yui_resolve_color(background_expr);
-				bg_sprite = undefined;
+				// otherwise first see if the resolved value is a sprite,
+				// then try as a color value if it wasn't a sprite
+				var bg_spr = yui_resolve_sprite_by_name(background_expr);
+				if bg_spr != undefined {
+					bg_sprite = bg_spr;
+					bg_color = undefined;
+				}
+				else {
+					bg_color = yui_resolve_color(background_expr);
+					bg_sprite = undefined;
+				}
 			}
 		}
 		else {

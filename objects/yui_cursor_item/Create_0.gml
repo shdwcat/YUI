@@ -45,6 +45,9 @@ opacity = 1;
 onChildLayoutComplete = function(child) {
 	// this is just here to make the recursive call simpler in yui_elements
 }
+isPointVisible = function(x, y) {
+	return true;
+}
 
 setHighlight = function(highlight) {
 	var changed = self.highlight != highlight;

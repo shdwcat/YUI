@@ -36,7 +36,7 @@ arrange = function(available_size, viewport_size) {
 			updateViewport();
 		}
 		
-		if case_item.is_size_changed {
+		if template_item.is_size_changed {
 			is_size_changed = true;
 		}
 	}
