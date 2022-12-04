@@ -1,4 +1,4 @@
-# YUI 0.3.0
+# YUI 0.4.0
 ## A UI system for GMS2 by [@shdwcat](https://github.com/shdwcat)
 
 ### Why YUI?
