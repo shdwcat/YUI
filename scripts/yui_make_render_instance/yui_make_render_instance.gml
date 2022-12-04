@@ -18,7 +18,7 @@ function yui_make_render_instance(yui_element, data, index = 0, depth_offset = 0
 		yui_element: yui_element,
 		persistent: persistent,
 	});
-
+	
 	child.initLayout();
 	child.bind_values();
 	if child.visible {
