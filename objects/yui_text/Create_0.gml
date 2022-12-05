@@ -24,6 +24,7 @@ override_text = undefined;
 onLayoutInit = function() {
 	highlight_color = layout_props.highlight_color;
 	use_scribble = layout_props.use_scribble;
+	opacity_value = layout_props.opacity_value;
 }
 
 build = function() {
@@ -31,7 +32,7 @@ build = function() {
 	
 	// used in Draw GUI
 	text_color = bound_values.color;
-	opacity = bound_values.opacity * parent.opacity;
+	//opacity = bound_values.opacity * parent.opacity;
 	
 	var text = override_text ?? bound_values.text;
 		

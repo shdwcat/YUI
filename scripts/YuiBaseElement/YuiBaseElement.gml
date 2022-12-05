@@ -135,7 +135,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		opacity_value = new YuiBindableValue(props.opacity);
 		
 		if props.animate {
-			opacity_animation = props.animate[$"opacity"];
+			var opacity_animation = props.animate[$"opacity"];
 			if opacity_animation {
 				opacity_value = new YuiAnimatedValue(opacity_value, opacity_animation);
 			}

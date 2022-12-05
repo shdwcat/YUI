@@ -14,10 +14,10 @@ if bg_alpha > 0 {
 
 if use_scribble {
 	if highlight && highlight_color != undefined {
-		scribble_element.blend(highlight_color, opacity);
+		scribble_element.blend(highlight_color, opacity_value.value);
 	}
 	else {
-		scribble_element.blend(text_color, opacity);
+		scribble_element.blend(text_color, opacity_value.value);
 	}
 
 	// draw the scribble element
