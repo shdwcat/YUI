@@ -119,6 +119,16 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		is_tooltip_live = yui_is_live_binding(props.tooltip);
 		is_xoffset_live = yui_is_live_binding(props.xoffset);
 		is_yoffset_live = yui_is_live_binding(props.yoffset);
+		
+		opacity_value = new YuiBindableValue(props.opacity);
+		
+		if props.animate {
+			var opacity_animation = props.animate[$"opacity"];
+			if opacity_animation {
+				opacity_value = new YuiAnimatedValue(opacity_value, opacity_animation);
+				is_opacity_live = true;
+			}
+		}
 	
 		base_is_bound = yui_is_live_binding(data_source)
 			|| is_visible_live
@@ -131,15 +141,6 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 			|| is_yoffset_live;
 	
 		tooltip_element = undefined;
-		
-		opacity_value = new YuiBindableValue(props.opacity);
-		
-		if props.animate {
-			var opacity_animation = props.animate[$"opacity"];
-			if opacity_animation {
-				opacity_value = new YuiAnimatedValue(opacity_value, opacity_animation);
-			}
-		}
 	}
 	
 	static createTooltip = function() {

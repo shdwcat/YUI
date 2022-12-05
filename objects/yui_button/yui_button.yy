@@ -1,10 +1,14 @@
 {
+  "resourceType": "GMObject",
+  "resourceVersion": "1.0",
+  "name": "yui_button",
   "spriteId": {
     "name": "yui_icon_64",
     "path": "sprites/yui_icon_64/yui_icon_64.yy",
   },
   "solid": false,
   "visible": true,
+  "managed": true,
   "spriteMaskId": null,
   "persistent": false,
   "parentObjectId": {
@@ -24,26 +28,22 @@
   "physicsKinematic": false,
   "physicsShapePoints": [],
   "eventList": [
-    {"isDnD":false,"eventNum":64,"eventType":8,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
-    {"isDnD":false,"eventNum":0,"eventType":6,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
-    {"isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
-    {"isDnD":false,"eventNum":56,"eventType":6,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":64,"eventType":8,"collisionObjectId":null,},
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":6,"collisionObjectId":null,},
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,},
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":56,"eventType":6,"collisionObjectId":null,},
   ],
   "properties": [
-    {"varType":7,"value":"$FFFFFFFF","rangeEnabled":false,"rangeMin":0.0,"rangeMax":10.0,"listItems":[],"multiselect":false,"filters":[],"resourceVersion":"1.0","name":"highlight_color","tags":[],"resourceType":"GMObjectProperty",},
-    {"varType":0,"value":"0.2","rangeEnabled":true,"rangeMin":0.0,"rangeMax":1.0,"listItems":[],"multiselect":false,"filters":[],"resourceVersion":"1.0","name":"highlight_alpha","tags":[],"resourceType":"GMObjectProperty",},
-    {"varType":0,"value":"0.4","rangeEnabled":true,"rangeMin":0.0,"rangeMax":1.0,"listItems":[],"multiselect":false,"filters":[],"resourceVersion":"1.0","name":"pressed_alpha","tags":[],"resourceType":"GMObjectProperty",},
+    {"resourceType":"GMObjectProperty","resourceVersion":"1.0","name":"highlight_color","varType":7,"value":"$FFFFFFFF","rangeEnabled":false,"rangeMin":0.0,"rangeMax":10.0,"listItems":[],"multiselect":false,"filters":[],},
+    {"resourceType":"GMObjectProperty","resourceVersion":"1.0","name":"highlight_alpha","varType":0,"value":"0.2","rangeEnabled":true,"rangeMin":0.0,"rangeMax":1.0,"listItems":[],"multiselect":false,"filters":[],},
+    {"resourceType":"GMObjectProperty","resourceVersion":"1.0","name":"pressed_alpha","varType":0,"value":"0.4","rangeEnabled":true,"rangeMin":0.0,"rangeMax":1.0,"listItems":[],"multiselect":false,"filters":[],},
   ],
   "overriddenProperties": [
-    {"propertyId":{"name":"element_constructor","path":"objects/yui_base/yui_base.yy",},"objectId":{"name":"yui_base","path":"objects/yui_base/yui_base.yy",},"value":"YuiButtonElement","resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMOverriddenProperty",},
-    {"propertyId":{"name":"bg_color","path":"objects/yui_base/yui_base.yy",},"objectId":{"name":"yui_base","path":"objects/yui_base/yui_base.yy",},"value":"$FF4D4D4D","resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMOverriddenProperty",},
+    {"resourceType":"GMOverriddenProperty","resourceVersion":"1.0","name":"","propertyId":{"name":"element_constructor","path":"objects/yui_base/yui_base.yy",},"objectId":{"name":"yui_base","path":"objects/yui_base/yui_base.yy",},"value":"YuiButtonElement",},
+    {"resourceType":"GMOverriddenProperty","resourceVersion":"1.0","name":"","propertyId":{"name":"bg_color","path":"objects/yui_base/yui_base.yy",},"objectId":{"name":"yui_base","path":"objects/yui_base/yui_base.yy",},"value":"$FF4D4D4D",},
   ],
   "parent": {
     "name": "Render Items",
     "path": "folders/Packages - YUI/Render Items.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "yui_button",
-  "tags": [],
-  "resourceType": "GMObject",
 }

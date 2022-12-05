@@ -135,7 +135,6 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		var is_visible = is_visible_live ? props.visible.resolve(data) : props.visible;
 		if !is_visible return false;
 		
-		var opacity = is_opacity_live ? props.opacity.resolve(data) : props.opacity;
 		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
 		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
 		
@@ -168,7 +167,6 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		// diff
 		if prev
 			&& data == prev.data_source
-			&& opacity == prev.opacity
 			&& xoffset == prev.xoffset
 			&& yoffset == prev.yoffset
 			&& bg_sprite == prev.bg_sprite
@@ -186,7 +184,6 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			is_live: is_bound || layout.is_live,
 			// border
 			data_source: data,
-			opacity: opacity,
 			xoffset: xoffset,
 			yoffset: yoffset,
 			// live versions

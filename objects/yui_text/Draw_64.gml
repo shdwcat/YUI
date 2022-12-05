@@ -14,10 +14,10 @@ if bg_alpha > 0 {
 
 if use_scribble {
 	if highlight && highlight_color != undefined {
-		scribble_element.blend(highlight_color, opacity_value.value);
+		scribble_element.blend(highlight_color, opacity);
 	}
 	else {
-		scribble_element.blend(text_color, opacity_value.value);
+		scribble_element.blend(text_color, opacity);
 	}
 
 	// draw the scribble element
@@ -30,7 +30,7 @@ else {
 	}
 
 	if use_text_surface {
-
+		// TODO: opacity parameters here don't actually work
 		if viewport_size {
 			
 			if viewport_part.visible {
@@ -44,7 +44,8 @@ else {
 					viewport_part.l, viewport_part.t,
 					viewport_part.w,// text_surface_w),
 					viewport_part.h,// text_surface_h),
-					viewport_part.x, viewport_part.y);
+					viewport_part.x, viewport_part.y,
+					opacity);
 			}
 		}
 		else {
@@ -53,7 +54,7 @@ else {
 				buildTextSurface();
 			}
 			if text_surface {
-				yui_draw_alpha_surface(text_surface, x, y);
+				yui_draw_alpha_surface(text_surface, x, y, opacity);
 			}
 		}
 	}

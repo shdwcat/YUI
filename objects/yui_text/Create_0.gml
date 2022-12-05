@@ -24,7 +24,6 @@ override_text = undefined;
 onLayoutInit = function() {
 	highlight_color = layout_props.highlight_color;
 	use_scribble = layout_props.use_scribble;
-	opacity_value = layout_props.opacity_value;
 }
 
 build = function() {
@@ -32,7 +31,6 @@ build = function() {
 	
 	// used in Draw GUI
 	text_color = bound_values.color;
-	//opacity = bound_values.opacity * parent.opacity;
 	
 	var text = override_text ?? bound_values.text;
 		
@@ -163,7 +161,8 @@ buildTextSurface = function() {
 			text_surface_w, text_surface_h,
 			text,
 			text_surface_w - layout_props.padding.w,
-			text_color ?? c_white, opacity,
+			text_color ?? c_white,
+			1, // opacity is handled when drawing the surface
 			layout_props.halign, layout_props.valign,
 			font, text_surface);
 	}

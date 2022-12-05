@@ -56,7 +56,6 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		var is_visible = yui_resolve_binding(props.visible, data);
 		if !is_visible return false;
 		
-		var opacity = yui_resolve_binding(props.opacity, data);
 		var placement = yui_resolve_binding(props.placement, data);
 		var xoffset = yui_resolve_binding(props.xoffset, data);
 		var yoffset = yui_resolve_binding(props.yoffset, data);
@@ -67,7 +66,6 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		// diff
 		if prev
 			&& data == prev.data_source
-			&& opacity == prev.opacity
 			&& placement == prev.placement
 			&& xoffset == prev.xoffset
 			&& yoffset == prev.yoffset
@@ -81,7 +79,6 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			is_live: is_bound,
 			data_source: data,
 			// popup
-			opacity: opacity,
 			placement: placement,
 			xoffset: xoffset,
 			yoffset: yoffset,

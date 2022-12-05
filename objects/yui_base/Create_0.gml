@@ -89,6 +89,8 @@ initLayout = function() {
 		YuiCursorManager.setFocus(id);
 	}
 	
+	opacity_value = yui_element.opacity_value;
+	
 	layout_props = yui_element.getLayoutProps();
 	onLayoutInit();
 }

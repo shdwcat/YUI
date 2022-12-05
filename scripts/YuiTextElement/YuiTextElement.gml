@@ -84,7 +84,6 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			valign: valign,
 			highlight_color: highlight_color,
 			use_scribble: props.scribble,
-			opacity_value: opacity_value,
 		};
 	}
 	
@@ -105,8 +104,6 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			? yui_resolve_color(self.color.resolve(data))
 			: self.color;
 		
-		var opacity_changed = opacity_value.update(data, current_time);
-		//var opacity = is_opacity_live ? props.opacity.resolve(data) : props.opacity;
 		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
 		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
 		
@@ -134,7 +131,6 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		if prev
 			&& text == prev.text
 			&& xoffset == prev.xoffset
-			//&& !opacity_changed
 			&& yoffset == prev.yoffset
 			&& color == prev.color
 			&& typist == prev.typist
@@ -147,7 +143,6 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			data_source: data,
 			text: text,
 			font: font,
-			//opacity: opacity_value.value,
 			xoffset: xoffset,
 			yoffset: yoffset,
 			color: color,

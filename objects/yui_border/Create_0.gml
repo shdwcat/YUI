@@ -45,8 +45,6 @@ onLayoutInit = function() {
 
 build = function() {
 	
-	opacity = bound_values.opacity * parent.opacity * 1 - (!enabled * 0.5);
-	
 	if layout_props.is_bg_live {
 		if bound_values.bg_sprite != undefined {
 			bg_sprite = bound_values.bg_sprite;

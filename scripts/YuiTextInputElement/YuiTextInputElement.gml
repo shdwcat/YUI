@@ -90,7 +90,6 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 		var is_visible = is_visible_live ? props.visible.resolve(data) : props.visible;
 		if !is_visible return false;
 		
-		var opacity = is_opacity_live ? props.opacity.resolve(data) : props.opacity;
 		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
 		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
 		
@@ -102,7 +101,6 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 		// diff
 		if prev
 			&& data == prev.data_source
-			&& opacity == prev.opacity
 			&& xoffset == prev.xoffset
 			&& yoffset == prev.yoffset
 			&& bg_sprite == prev.bg_sprite
@@ -115,7 +113,6 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 		return {
 			is_live: is_bound,
 			data_source: data,
-			opacity: opacity,
 			xoffset: xoffset,
 			yoffset: yoffset,
 			enabled: enabled,

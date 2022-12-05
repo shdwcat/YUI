@@ -542,7 +542,6 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"child_window.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Widgets",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"pink!.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Themes",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"scrollbox.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Widgets",},
-    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"welcome_screen.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"windows_example.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"kb_navigation_example.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"default.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Themes",},
@@ -562,6 +561,7 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"vertical.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens/Layouts",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":".gitattributes","CopyToMask":-1,"filePath":"datafiles",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"dropdown_menu.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Widgets",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"welcome_screen.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens",},
   ],
   "MetaData": {
     "IDEVersion": "2022.11.0.54",

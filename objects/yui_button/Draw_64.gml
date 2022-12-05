@@ -17,7 +17,7 @@ var show_highlight = (highlight || YuiCursorManager.focused_item == id)
 	&& bound_values.enabled;
 	
 if show_highlight {
-	var alpha = button_pressed ? pressed_alpha : highlight_alpha;
+	var alpha = (button_pressed ? pressed_alpha : highlight_alpha) * opacity;
 	if alpha > 0 {
 		if viewport_size {
 			if viewport_part.visible {
