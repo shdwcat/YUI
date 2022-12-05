@@ -33,6 +33,8 @@ root:
           elements: 
             - type: text // 'type: text' is how we draw text! simple
               text_style: title // this applies one of the text styles defined in the active theme
+              opacity: @test_opacity
+              scribble: true
               text: "Welcome to the YUI Example Project!" // and here we set the text itself
 
               // You can also just put a string as a child and it will automatically be converted to a 'text' element. Easy!
@@ -83,7 +85,14 @@ root:
         // - type: button
         //   content: Dev Sandbox
         //   tooltip: In development work (may crash!)
-        //   on_click: @@ e => yui_change_screen(sandbox, e.source)
+        //   on_click: @@ e => yui_change_screen(sandbox, e.source)    - type: button
+
+    - type: button
+      content: Toggle Opacity
+      canvas:
+        top: 10
+        right: 300
+      on_click: @toggleOpacity()
 
     - type: button
       content: Toggle Theme
