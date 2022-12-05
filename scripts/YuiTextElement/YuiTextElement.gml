@@ -104,7 +104,8 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			? yui_resolve_color(self.color.resolve(data))
 			: self.color;
 		
-		var opacity = is_opacity_live ? props.opacity.resolve(data) : props.opacity;
+		var opacity_changed = opacity_value.update(data, current_time);
+		//var opacity = is_opacity_live ? props.opacity.resolve(data) : props.opacity;
 		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
 		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
 		
@@ -125,10 +126,13 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		
 		var typist = is_typist_live ? props.typist.resolve(data) : props.typist;
 		
+		if props.trace
+			DEBUG_BREAK_YUI
+		
 		// diff
 		if prev
 			&& text == prev.text
-			&& opacity == prev.opacity
+			&& !opacity_changed
 			&& xoffset == prev.xoffset
 			&& yoffset == prev.yoffset
 			&& color == prev.color
@@ -137,17 +141,19 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			return true;
 		}
 		
-		return {
+		var values = {
 			is_live: is_bound,
 			data_source: data,
 			text: text,
 			font: font,
-			opacity: opacity,
+			opacity: opacity_value.value,
 			xoffset: xoffset,
 			yoffset: yoffset,
 			color: color,
 			autotype: props.autotype,
 			typist: typist,
 		};
+		
+		return values
 	}
 }

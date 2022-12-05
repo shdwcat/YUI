@@ -30,6 +30,9 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		
 		events: undefined,
 		
+		// placeholder for animation info
+		animate: undefined,
+		
 		// array of interaction.role participation
 		interactions: [], // these are defined in data!
 	};
@@ -128,6 +131,15 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 			|| is_yoffset_live;
 	
 		tooltip_element = undefined;
+		
+		opacity_value = new YuiBindableValue(props.opacity);
+		
+		if props.animate {
+			opacity_animation = props.animate[$"opacity"];
+			if opacity_animation {
+				opacity_value = new YuiAnimatedValue(opacity_value, opacity_animation);
+			}
+		}
 	}
 	
 	static createTooltip = function() {

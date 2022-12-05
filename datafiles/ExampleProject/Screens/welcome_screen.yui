@@ -36,6 +36,12 @@ root:
               opacity: @test_opacity
               scribble: true
               text: "Welcome to the YUI Example Project!" // and here we set the text itself
+              animate:
+                opacity:
+                  type: curve
+                  curve: yui_wave_curve
+                  repeat: true
+                  period: 3000
 
               // You can also just put a string as a child and it will automatically be converted to a 'text' element. Easy!
             - This screen is defined in datafiles/YUI/Screens/welcome_screen.yui
@@ -85,7 +91,7 @@ root:
         // - type: button
         //   content: Dev Sandbox
         //   tooltip: In development work (may crash!)
-        //   on_click: @@ e => yui_change_screen(sandbox, e.source)    - type: button
+        //   on_click: @@ e => yui_change_screen(sandbox, e.source)
 
     - type: button
       content: Toggle Opacity
