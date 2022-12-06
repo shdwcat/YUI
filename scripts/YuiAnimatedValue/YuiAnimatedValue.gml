@@ -1,18 +1,8 @@
-enum YUI_ANIMATION_BLEND_MODE {
-	MULTIPLY,
-	ADD,
-}
-	
-
 /// @description here
 function YuiAnimatedValue(bindable_value, animation_props) constructor {
-	
-	static mode_map = {
-		multiply: YUI_ANIMATION_BLEND_MODE.MULTIPLY,
-		add: YUI_ANIMATION_BLEND_MODE.ADD,
-	};
-	
+		
 	self._time = undefined;
+	self.value = undefined;
 	self.bindable_value = bindable_value;
 	
 	self.animation_type = animation_props.type;
@@ -26,9 +16,9 @@ function YuiAnimatedValue(bindable_value, animation_props) constructor {
 		};
 		
 		period = animation_props.period;
-		scale = animation_props[$"scale"] ?? 1;
 		continuous = animation_props[$"repeat"] ?? false;
-		blend_mode = mode_map[$ animation_props[$"blend_mode"] ?? "multiply"];
+		start = animation_props[$"start"] ?? 0;
+		stop = animation_props[$"end"] ?? 1;
 	}
 	
 	static update = function(data, time) {
@@ -38,22 +28,16 @@ function YuiAnimatedValue(bindable_value, animation_props) constructor {
 		var curve_value = animcurve_channel_evaluate(value_channel, pos);
 		
 		// assume the curve_value is normalized...
-		var scaled_value = curve_value * scale;
+		var newValue = lerp(start, stop, curve_value);
 		
-		if _time != time && scaled_value != 1 {
-			//yui_log("animation value at time", time, "is", scaled_value);
+		var changed = newValue != value;
+		value = newValue;
+		
+		if _time != time && value != 1 {
+			//yui_log("animation value at time", time, "is", value);
 			_time = time;
 		}
 		
-		
-		switch blend_mode {
-			case YUI_ANIMATION_BLEND_MODE.MULTIPLY:
-				value = bindable_value.value * scaled_value;
-				break;
-			case YUI_ANIMATION_BLEND_MODE.ADD:
-				value = bindable_value.value + scaled_value;
-				break;
-		}
-		return true;
+		return changed;
 	}
 }
