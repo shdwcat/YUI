@@ -24,7 +24,7 @@ onLayoutInit = function() {
 border_build = build;
 build = function() {
 	enabled = bound_values.enabled;
-	focusable = bound_values.enabled;
+	focusable = bound_values.enabled ? yui_element.props.focusable : false;
 	border_build();
 }
 

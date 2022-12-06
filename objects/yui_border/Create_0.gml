@@ -57,7 +57,6 @@ build = function() {
 	}
 	
 	// create the content item instance if there should be one
-	// NOTE: have to do this after opacity is updated
 	var make_content_item = 
 		has_content_item
 		&& content_item == undefined
