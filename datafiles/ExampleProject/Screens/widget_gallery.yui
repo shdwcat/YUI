@@ -21,6 +21,11 @@ root:
   type: panel
   padding: 30
   spacing: 20
+  animate:
+    opacity:
+      type: curve
+      curve: curveExpoInv
+      period: 2000
   //theme: pink!
   
   elements:

@@ -83,6 +83,11 @@ root:
   type: panel
   padding: 30
   layout: canvas 
+  animate:
+    opacity:
+      type: curve
+      curve: curveExpoInv
+      period: 2000
   elements:
     - type: back_button
 

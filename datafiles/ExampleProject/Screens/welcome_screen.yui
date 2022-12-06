@@ -9,6 +9,11 @@ root:
   type: panel // panel is used to layout and arrange child elements
   layout: canvas // canvas can be used to position elements arbitrarily within the panel, or along the edges
   //theme: pink!
+  animate:
+    opacity:
+      type: curve
+      curve: curveExpoInv
+      period: 2000
   elements: // this defines the child elements of the canvas
 
     // helper message about live reload state
@@ -34,14 +39,8 @@ root:
             - type: text // 'type: text' is how we draw text! simple
               text_style: title // this applies one of the text styles defined in the active theme
               opacity: @test_opacity
-              scribble: true
+              //scribble: true
               text: "Welcome to the YUI Example Project!" // and here we set the text itself
-              animate:
-                opacity:
-                  type: curve
-                  curve: yui_wave_curve
-                  repeat: true
-                  period: 3000
 
               // You can also just put a string as a child and it will automatically be converted to a 'text' element. Easy!
             - This screen is defined in datafiles/YUI/Screens/welcome_screen.yui
@@ -55,7 +54,10 @@ root:
           elements:
 
             - type: button
-              content: Widget Gallery
+              content:
+                type: text
+                text: Widget Gallery
+                //trace: true
               on_click: @@ e => yui_change_screen(widget_gallery, e.source)
 
             - type: button
