@@ -85,10 +85,6 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	}
 	
 	static getBoundValues = function YuiButtonElement_getBoundValues(data, prev) {
-		if data_source != undefined {
-			data = yui_resolve_binding(data_source, data);
-		}
-		
 		var is_visible = is_visible_live ? props.visible.resolve(data) : props.visible;
 		if !is_visible return false;
 		

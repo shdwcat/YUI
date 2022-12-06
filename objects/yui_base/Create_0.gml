@@ -89,6 +89,8 @@ initLayout = function() {
 		YuiCursorManager.setFocus(id);
 	}
 	
+	data_source_value = yui_element.data_source_value;
+	visible_value = yui_element.visible_value;
 	opacity_value = yui_element.opacity_value;
 	
 	layout_props = yui_element.getLayoutProps();
@@ -100,7 +102,18 @@ onLayoutInit = function() {
 }
 
 bind_values = function yui_base__bind_values() {
-	var new_values = yui_element.getBoundValues(data_context, bound_values)
+	if data_source_value.binding {
+		data_source_value.update(data_context, current_time);
+		data_source = data_source_value.value;
+	}
+	else {
+		data_source = data_context;
+	}
+		
+	visible_value.update(data_source, current_time);
+	
+	
+	var new_values = yui_element.getBoundValues(data_source, bound_values)
 	if new_values == false {
 		if visible {
 			visible = false;

@@ -73,10 +73,6 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 	}
 	
 	static getBoundValues = function YuiViewportElement_getBoundValues(data, prev) {
-		if data_source != undefined {
-			data = yui_resolve_binding(data_source, data);
-		}
-		
 		var is_visible = is_visible_live ? props.visible.resolve(data) : props.visible;
 		if !is_visible return false;
 		

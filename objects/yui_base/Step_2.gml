@@ -37,7 +37,7 @@ if is_binding_active || !visible || rebuild {
 }
 	
 if visible {
-	opacity_value.update(bound_values.data_source, current_time);
+	opacity_value.update(data_source, current_time);
 		
 	// gotta update this every frame since it could be animated
 	opacity = opacity_value.value * (parent ? parent.opacity : 1) * (1 - (!enabled * 0.5))
