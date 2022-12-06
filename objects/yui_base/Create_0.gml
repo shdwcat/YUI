@@ -27,7 +27,11 @@ bound_values = undefined;
 
 enabled = true;
 hidden = false;
-opacity = 1;
+
+// defaulting to 0 allows animations to control fade in before opacity gets calculated
+// (this mostly matters with yui_change_screen which can rebuild the UI outside of the
+// normal event order logic)
+opacity = 0;
 
 // this only applies alpha for bg_color set on an element placed in the room editor
 bg_alpha = ((bg_color & 0xFF000000) >> 24) / 255;
@@ -66,6 +70,11 @@ viewport_size = undefined;
 
 // the part of this element that is visible within the viewport
 viewport_part = undefined;
+
+opacity_changed = false;
+
+// event times for animations
+visible_time = undefined;
 
 initLayout = function() {
 	_id = yui_element.props.id;
@@ -155,6 +164,9 @@ bind_values = function yui_base__bind_values() {
 	// ensure that we're now visible
 	var was_visible = visible;
 	visible = true;
+	
+	if !was_visible || visible_time == undefined
+		visible_time = current_time;
 		
 	// if bound values are same as before exit early
 	if new_values == true {
@@ -179,6 +191,21 @@ build = function() {
 
 arrange = function(available_size, viewport_size) {
 	throw "arrange not implemented on this type";
+}
+
+process = function() {
+	opacity_value.update(data_source, current_time - visible_time);
+		
+	var old_opacity = opacity;
+	
+	// gotta update this every frame since it could be animated, including from the parent!
+	opacity = opacity_value.value * (parent ? parent.opacity : 1) * (1 - (!enabled * 0.5))
+	
+	// referenced by anything that needs to rebuild when opacity changes (e.g. text element)
+	opacity_changed = opacity != old_opacity;
+	
+	if opacity_changed
+		DEBUG_BREAK_YUI
 }
 
 move = function(xoffset, yoffset) {
