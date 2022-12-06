@@ -22,7 +22,7 @@ resources:
         opacity:
           type: curve
           curve: curveExpoInv
-          period: 2000
+          duration: 2000
       elements:
 
         - type: back_button

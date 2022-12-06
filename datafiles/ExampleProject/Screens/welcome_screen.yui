@@ -13,7 +13,7 @@ root:
     opacity:
       type: curve
       curve: curveExpoInv
-      period: 2000
+      duration: 2000
   elements: // this defines the child elements of the canvas
 
     // helper message about live reload state

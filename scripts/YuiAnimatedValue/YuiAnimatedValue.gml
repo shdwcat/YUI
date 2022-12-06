@@ -15,7 +15,7 @@ function YuiAnimatedValue(bindable_value, animation_props) constructor {
 			value_channel = animcurve_get_channel(curve, "curve1")
 		};
 		
-		period = animation_props.period;
+		duration = animation_props.duration;
 		continuous = animation_props[$"repeat"] ?? false;
 		start = animation_props[$"start"] ?? 0;
 		stop = animation_props[$"end"] ?? 1;
@@ -23,8 +23,8 @@ function YuiAnimatedValue(bindable_value, animation_props) constructor {
 	
 	static update = function(data, time) {
 		bindable_value.update(data);
-		var period_time = continuous ? (time mod period) : time;
-		var pos = period_time / period;
+		var period_time = continuous ? (time mod duration) : time;
+		var pos = period_time / duration;
 		var curve_value = animcurve_channel_evaluate(value_channel, pos);
 		
 		// assume the curve_value is normalized...
