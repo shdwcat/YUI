@@ -120,7 +120,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		is_xoffset_live = yui_is_live_binding(props.xoffset);
 		is_yoffset_live = yui_is_live_binding(props.yoffset);
 		
-		data_source_value = new YuiBindableValue(props.data_source);
+		data_source_value = new YuiBindableValue(data_source);
 		visible_value = new YuiBindableValue(props.visible);
 		opacity_value = new YuiBindableValue(props.opacity);
 		
@@ -131,8 +131,9 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 				is_opacity_live = true;
 			}
 		}
-	
-		base_is_bound = yui_is_live_binding(data_source)
+			
+		base_is_bound =
+			is_data_source_live
 			|| is_visible_live
 			|| is_opacity_live
 			|| is_tooltip_live

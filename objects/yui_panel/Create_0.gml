@@ -143,8 +143,7 @@ arrange = function yui_panel__arrange(available_size, viewport_size) {
 	};
 	
 	if events.on_arrange != undefined {
-		var data = bound_values ? bound_values.data_source : undefined;
-		yui_call_handler(events.on_arrange, [used_size], data);
+		yui_call_handler(events.on_arrange, [used_size], data_source);
 	}
 	
 	return used_size;

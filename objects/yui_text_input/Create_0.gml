@@ -59,7 +59,7 @@ left_click = function() {
 on_submit = function() {
 	var submit_text = input_string_get() + after_caret;
 	if events.on_text_changed != undefined {
-		yui_call_handler(events.on_text_changed, [submit_text], bound_values.data_source);
+		yui_call_handler(events.on_text_changed, [submit_text], data_source);
 	}
 	yui_log("submitted: " + submit_text);
 }

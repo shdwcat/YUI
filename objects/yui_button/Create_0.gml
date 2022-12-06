@@ -34,7 +34,7 @@ left_click = function() {
 			button: "left",
 		};
 		
-		yui_call_handler(yui_element.props.on_click, [args], bound_values.data_source);
+		yui_call_handler(yui_element.props.on_click, [args], data_source);
 	}
 }
 

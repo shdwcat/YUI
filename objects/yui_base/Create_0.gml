@@ -19,6 +19,9 @@ layout_props = undefined;
 // whether there are any UI values that are actively bound in a YuiScript expression
 is_binding_active = true;
 
+// the resolved data_source after element.data_source has been resolved
+data_source = undefined;
+
 // the map of values that depend on the data context
 bound_values = undefined;
 
@@ -89,6 +92,9 @@ initLayout = function() {
 		YuiCursorManager.setFocus(id);
 	}
 	
+	// any data_source value means we have to evaluate it 
+	has_data_source = yui_element.data_source != undefined;
+	
 	data_source_value = yui_element.data_source_value;
 	visible_value = yui_element.visible_value;
 	opacity_value = yui_element.opacity_value;
@@ -121,8 +127,9 @@ hide_element = function() {
 }
 
 bind_values = function yui_base__bind_values() {
-	if data_source_value.binding {
-		data_source_value.update(data_context, current_time);
+	var data_source_changed = false;
+	if has_data_source {
+		data_source_changed = data_source_value.update(data_context, current_time);
 		data_source = data_source_value.value;
 	}
 	else {
@@ -252,7 +259,7 @@ setHighlight = function(highlight) {
 			if tooltip_item == undefined {
 				tooltip_item = yui_make_render_instance(
 					tooltip_element,
-					bound_values.data_source, 
+					data_source, 
 					/* no index */,
 					1000); // ensures tooltips appear above popup layers
 	

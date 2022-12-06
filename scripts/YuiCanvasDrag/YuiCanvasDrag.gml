@@ -107,7 +107,7 @@ function YuiElementDrag(_props, _resources) constructor {
 			yui_log(event);
 		}
 
-		yui_call_handler(on_position_changed, [event], target.bound_values.data_source);
+		yui_call_handler(on_position_changed, [event], target.data_source);
 		
 		if mouse_check_button_released(button) {
 			finish();
