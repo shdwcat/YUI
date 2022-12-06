@@ -2,6 +2,8 @@ id: inventory_screen
 file_type: screen
 
 import:
+  - /YUI/Animations/transitions.yui
+  
   - "../Templates/main_panel.yui"
   - "../Templates/back_button.yui"
 
@@ -84,10 +86,8 @@ root:
   padding: 30
   layout: canvas 
   animate:
-    opacity:
-      type: curve
-      curve: curveExpoInv
-      duration: 2000
+    on_visible:
+      opacity: &fade_in
   elements:
     - type: back_button
 

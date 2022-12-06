@@ -5,6 +5,8 @@ import:
   - ../Templates/main_panel.yui
   - ../Templates/back_button.yui
   
+  - /YUI/Animations/transitions.yui
+  
 // TODO: /Widgets/*
   - /YUI/Widgets/switcher.yui
   - /YUI/Widgets/checkbox.yui
@@ -22,10 +24,8 @@ root:
   padding: 30
   spacing: 20
   animate:
-    opacity:
-      type: curve
-      curve: curveExpoInv
-      duration: 2000
+    on_visible:
+      opacity: &fade_in
   //theme: pink!
   
   elements:

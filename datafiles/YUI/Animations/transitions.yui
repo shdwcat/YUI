@@ -1,0 +1,7 @@
+file_type: resources
+
+resources:
+  fade_in:
+    type: curve
+    curve: curveExpoInv
+    duration: 2000

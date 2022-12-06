@@ -1,9 +1,9 @@
 file_type: resources
 
 import:
-  // import all resources from main_panel.yui
   - "../Templates/back_button.yui"
   - "../Templates/main_panel.yui"
+  - /YUI/Animations/transitions.yui
 
 resources:
 
@@ -19,10 +19,8 @@ resources:
       padding: 30
       spacing: 20
       animate:
-        opacity:
-          type: curve
-          curve: curveExpoInv
-          duration: 2000
+        on_visible:
+          opacity: &fade_in
       elements:
 
         - type: back_button

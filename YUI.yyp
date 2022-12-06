@@ -596,6 +596,7 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":".gitattributes","CopyToMask":-1,"filePath":"datafiles",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"dropdown_menu.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Widgets",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"welcome_screen.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"transitions.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Animations",},
   ],
   "MetaData": {
     "IDEVersion": "2022.11.0.54",
