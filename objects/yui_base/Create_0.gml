@@ -104,6 +104,7 @@ initLayout = function() {
 	// any data_source value means we have to evaluate it 
 	has_data_source = yui_element.data_source != undefined;
 	
+	// TODO: should the BindableValues be created here so that they're unique to the element?
 	data_source_value = yui_element.data_source_value;
 	visible_value = yui_element.visible_value;
 	opacity_value = yui_element.opacity_value;
@@ -144,8 +145,8 @@ bind_values = function yui_base__bind_values() {
 	else {
 		data_source = data_context;
 	}
-		
-	visible_value.update(data_source, current_time);
+	
+	visible_value.update(data_source, visible_time);
 	if visible_value.value == false {
 		hide_element();
 		exit;
@@ -165,8 +166,10 @@ bind_values = function yui_base__bind_values() {
 	var was_visible = visible;
 	visible = true;
 	
-	if !was_visible || visible_time == undefined
+	if !was_visible || visible_time == undefined {
 		visible_time = current_time;
+		if yui_element.on_visible_anim yui_element.on_visible_anim();
+	}
 		
 	// if bound values are same as before exit early
 	if new_values == true {

@@ -10,10 +10,18 @@ root:
   layout: canvas // canvas can be used to position elements arbitrarily within the panel, or along the edges
   //theme: pink!
   animate:
-    opacity:
-      type: curve
-      curve: curveExpoInv
-      duration: 2000
+
+    on_visible:
+      opacity:
+        type: curve
+        curve: curveExpoInv
+        duration: 2000
+
+    // opacity:
+    //   type: curve
+    //   curve: curveExpoInv
+    //   duration: 2000
+
   elements: // this defines the child elements of the canvas
 
     // helper message about live reload state

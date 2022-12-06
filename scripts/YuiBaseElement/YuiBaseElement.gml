@@ -124,11 +124,22 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		visible_value = new YuiBindableValue(props.visible);
 		opacity_value = new YuiBindableValue(props.opacity);
 		
+		on_visible_anim = undefined;
 		if props.animate {
 			var opacity_animation = props.animate[$"opacity"];
 			if opacity_animation {
 				opacity_value = new YuiAnimatedValue(opacity_value, opacity_animation);
 				is_opacity_live = true;
+			}
+			
+			var on_visible_animation = props.animate[$"on_visible"];
+			if on_visible_animation {
+				// hack
+				var opacity_animation_props = on_visible_animation[$"opacity"];
+				self.opacity_animation = new YuiCurveAnimation(opacity_animation_props, resources, slot_values);
+				on_visible_anim = function() {
+					opacity_value.beginAnimation(opacity_animation);
+				}
 			}
 		}
 			
