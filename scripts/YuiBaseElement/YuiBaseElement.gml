@@ -134,18 +134,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		if props.animate {
 			var on_visible_animation = props.animate[$"on_visible"];
 			if on_visible_animation {
-								
-				// resolve the animation value for each animatable property
-				// and copy to new struct to avoid shared resource modification
-				on_visible_anim = {};
-				var names = variable_struct_get_names(on_visible_animation);
-				var i = 0; repeat array_length(names) {
-					var name = names[i];
-					var anim_props = on_visible_animation[$ name];
-					var anim = yui_resolve_animation(anim_props, resources, slot_values);
-					on_visible_anim[$ name] = anim;
-					i++;
-				}
+				on_visible_anim = yui_resolve_animation_group(on_visible_animation, resources, slot_values);
 			}
 		}
 			
