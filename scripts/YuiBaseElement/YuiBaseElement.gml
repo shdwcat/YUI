@@ -113,7 +113,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	
 		data_source = yui_bind(props.data_source, resources, slot_values);
 	
-		is_data_source_bound = yui_is_live_binding(data_source);
+		is_data_source_live= yui_is_live_binding(data_source);
 		is_visible_live = yui_is_live_binding(props.visible);
 		is_opacity_live = yui_is_live_binding(props.opacity);
 		is_tooltip_live = yui_is_live_binding(props.tooltip);

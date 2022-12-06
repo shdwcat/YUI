@@ -119,7 +119,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	static getBoundValues = function YuiPanelElement_getBoundValues(data, prev) {
 		if data_source != undefined {
-			data = is_data_source_bound ? data_source.resolve(data) : data_source;
+			data = is_data_source_live ? data_source.resolve(data) : data_source;
 		}
 		
 		// update scoped bindings if needed
