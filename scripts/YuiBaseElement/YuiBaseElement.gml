@@ -124,21 +124,27 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		visible_value = new YuiBindableValue(props.visible);
 		opacity_value = new YuiBindableValue(props.opacity);
 		
+		// map of animatable properties to the YuiBindableValues
+		animatable = {
+			opacity: opacity_value,
+			visible: visible_value,
+		};
+		
 		on_visible_anim = undefined;
 		if props.animate {
-			var opacity_animation = props.animate[$"opacity"];
-			if opacity_animation {
-				opacity_value = new YuiAnimatedValue(opacity_value, opacity_animation);
-				is_opacity_live = true;
-			}
-			
 			var on_visible_animation = props.animate[$"on_visible"];
 			if on_visible_animation {
-				// hack
-				var opacity_animation_props = on_visible_animation[$"opacity"];
-				self.opacity_animation = new YuiCurveAnimation(opacity_animation_props, resources, slot_values);
-				on_visible_anim = function() {
-					opacity_value.beginAnimation(opacity_animation);
+								
+				// resolve the animation value for each animatable property
+				// and copy to new struct to avoid shared resource modification
+				on_visible_anim = {};
+				var names = variable_struct_get_names(on_visible_animation);
+				var i = 0; repeat array_length(names) {
+					var name = names[i];
+					var anim_props = on_visible_animation[$ name];
+					var anim = yui_resolve_animation(anim_props, resources, slot_values);
+					on_visible_anim[$ name] = anim;
+					i++;
 				}
 			}
 		}

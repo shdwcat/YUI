@@ -1,7 +1,7 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "YuiAnimatedValue",
+  "name": "yui_resolve_animation",
   "isDnD": false,
   "isCompatibility": false,
   "parent": {

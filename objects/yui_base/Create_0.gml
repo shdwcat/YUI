@@ -109,6 +109,8 @@ initLayout = function() {
 	visible_value = yui_element.visible_value;
 	opacity_value = yui_element.opacity_value;
 	
+	animatable = yui_element.animatable;
+	
 	layout_props = yui_element.getLayoutProps();
 	onLayoutInit();
 }
@@ -168,7 +170,7 @@ bind_values = function yui_base__bind_values() {
 	
 	if !was_visible || visible_time == undefined {
 		visible_time = current_time;
-		if yui_element.on_visible_anim yui_element.on_visible_anim();
+		if yui_element.on_visible_anim beginAnimationGroup(yui_element.on_visible_anim);
 	}
 		
 	// if bound values are same as before exit early
@@ -316,6 +318,18 @@ isPointVisible = function(x, y) {
 	}
 	else {
 		return visible;
+	}
+}
+
+beginAnimationGroup = function(animation_group) {
+	// begin the animation for each property in the group
+	var names = variable_struct_get_names(animation_group);
+	var i = 0; repeat array_length(names) {
+		var name = names[i];
+		var anim = animation_group[$ name];
+		target = animatable[$ name];
+		target.beginAnimation(anim);
+		i++;
 	}
 }
 
