@@ -39,8 +39,13 @@ if is_binding_active || !visible || rebuild {
 if visible {
 	opacity_value.update(data_source, current_time);
 		
-	// gotta update this every frame since it could be animated
+	var old_opacity = opacity;
+	
+	// gotta update this every frame since it could be animated, including from the parent!
 	opacity = opacity_value.value * (parent ? parent.opacity : 1) * (1 - (!enabled * 0.5))
+	
+	// referenced by anything that needs to rebuild when opacity changes (e.g. text element)
+	opacity_changed = opacity != old_opacity;
 }
 
 

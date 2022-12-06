@@ -162,7 +162,7 @@ buildTextSurface = function() {
 			text,
 			text_surface_w - layout_props.padding.w,
 			text_color ?? c_white,
-			1, // opacity is handled when drawing the surface
+			opacity,
 			layout_props.halign, layout_props.valign,
 			font, text_surface);
 	}
