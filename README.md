@@ -4,7 +4,7 @@
 ### Why YUI?
 Writing UI code is annoying and tedious! Why write UI code when you can edit readable text files instead?
 
-Notable features:
+#### Notable features
 - [Live Reload](https://github.com/shdwcat/YUI/wiki/Live-Reload) while the game is running!
 - Flexible and powerful [Data Binding](https://github.com/shdwcat/YUI/wiki/Data-Binding) and [Embedded Scripting](https://github.com/shdwcat/YUI/wiki/YuiScript) system to get your game data into the UI
 - [Template](https://github.com/shdwcat/YUI/wiki/Templates) system lets you design and re-use [custom widgets](https://github.com/shdwcat/YUI/wiki/Custom-Widgets)
@@ -14,9 +14,11 @@ Notable features:
   https://marketplace.visualstudio.com/items?itemName=shdwcat.yui-vs-code-support  
   ![syntax highlighting example image](https://github.com/shdwcat/yui-vs-code-support/raw/HEAD/images/highlighting.png)
 
-Future features:
-- Animation (slide/fade/etc)
-- In Game Editor (?)
+#### Upcoming Features
+- v0.5.0
+  - Animation System (slide/fade/etc)
+- Future
+  - In Game Editor (?)
 
 ### OK, where do I start?
 You can either clone the Example Project (this repo) to play around with it, or import the latest package from the [Releases](https://github.com/shdwcat/YUI/releases) page.
