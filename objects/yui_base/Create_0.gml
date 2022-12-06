@@ -101,6 +101,25 @@ onLayoutInit = function() {
 	// virtual
 }
 
+hide_element = function() {
+	if visible {
+		visible = false;
+			
+		if focused {
+			YuiCursorManager.clearFocus();
+		}
+			
+		// trigger parent re-layout since we might have been taking up space
+		if parent and bound_values {
+			parent.onChildLayoutComplete(self);
+		}
+		
+		// need to reset these, as values may change while the element
+		// is not visible, which means the diffing will be out of date
+		bound_values = undefined;
+	}
+}
+
 bind_values = function yui_base__bind_values() {
 	if data_source_value.binding {
 		data_source_value.update(data_context, current_time);
@@ -111,26 +130,18 @@ bind_values = function yui_base__bind_values() {
 	}
 		
 	visible_value.update(data_source, current_time);
+	if visible_value.value == false {
+		hide_element();
+		exit;
+	}
 	
-	
+	// get new values
 	var new_values = yui_element.getBoundValues(data_source, bound_values)
+	
+	// handle custom cases where we might want to not be visible 
+	// e.g. text element text is undefined
 	if new_values == false {
-		if visible {
-			visible = false;
-			
-			if focused {
-				YuiCursorManager.clearFocus();
-			}
-			
-			// trigger parent re-layout since we might have been taking up space
-			if parent and bound_values {
-				parent.onChildLayoutComplete(self);
-			}
-		
-			// need to reset these, as values may change while the element
-			// is not visible, which means the diffing will be out of date
-			bound_values = undefined;
-		}
+		hide_element();
 		exit;
 	}
 	

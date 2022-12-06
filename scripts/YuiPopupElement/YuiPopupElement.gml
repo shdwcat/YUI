@@ -49,9 +49,6 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	}
 	
 	static getBoundValues = function YuiPopupElement_getBoundValues(data, prev) {
-		var is_visible = yui_resolve_binding(props.visible, data);
-		if !is_visible return false;
-		
 		var placement = yui_resolve_binding(props.placement, data);
 		var xoffset = yui_resolve_binding(props.xoffset, data);
 		var yoffset = yui_resolve_binding(props.yoffset, data);

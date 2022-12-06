@@ -33,10 +33,7 @@ function YuiSwitchElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		};
 	}
 	
-	static getBoundValues = function YuiSwitchElement_getBoundValues(data, prev) {		
-		var is_visible = yui_resolve_binding(props.visible, data);
-		if !is_visible return false;		
-		
+	static getBoundValues = function YuiSwitchElement_getBoundValues(data, prev) {
 		var switch_value = yui_resolve_binding(props.switch_on, data);
 		
 		// diff

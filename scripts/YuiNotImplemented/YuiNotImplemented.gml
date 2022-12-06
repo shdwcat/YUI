@@ -18,9 +18,6 @@ function YuiNotImplemented(_props, _resources, _slot_values) : YuiBaseElement(_p
 	}
 	
 	static getBoundValues = function(data, prev) {
-		var is_visible = yui_resolve_binding(props.visible, data);
-		if !is_visible return false;
-		
 		return {
 			// resolved bound values
 		}

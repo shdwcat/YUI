@@ -128,9 +128,6 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			}
 		}
 		
-		var is_visible = is_visible_live ? props.visible.resolve(data) : props.visible;
-		if !is_visible return false;
-		
 		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
 		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
 		

@@ -57,9 +57,6 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	}
 	
 	static getBoundValues = function YuiImageElement_getBoundValues(data, prev) {
-		var is_visible = is_visible_live ? props.visible.resolve(data) : props.visible;
-		if !is_visible return false;
-		
 		var sprite = is_sprite_live ? props.sprite.resolve(data) : self.sprite;
 		
 		if is_sprite_live {

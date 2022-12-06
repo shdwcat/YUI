@@ -87,10 +87,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		};
 	}
 	
-	static getBoundValues = function YuiTextElement_getBoundValues(data, prev) {	
-		var is_visible = is_visible_live ? props.visible.resolve(data) : props.visible;
-		if !is_visible return false;
-				
+	static getBoundValues = function YuiTextElement_getBoundValues(data, prev) {
 		var text = is_text_live && !is_array(props.text) ? props.text.resolve(data) : props.text;
 		if text == undefined {
 			return false;
@@ -137,7 +134,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		var values = {
 			is_live: is_bound,
 			data_source: data,
-			text: text,
+			text: text,// ?? "",
 			font: font,
 			xoffset: xoffset,
 			yoffset: yoffset,

@@ -30,9 +30,6 @@ function YuiLineElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	}
 	
 	static getBoundValues = function YuiLineElement_getBoundValues(data, prev) {
-		var is_visible = yui_resolve_binding(props.visible, data);
-		if !is_visible return false;
-		
 		var line_end = yui_resolve_binding(props.line_end, data);
 		if !line_end return false;
 		
