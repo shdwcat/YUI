@@ -28,6 +28,9 @@ bound_values = undefined;
 enabled = true;
 hidden = false;
 
+// default to false so that first load triggers on_visible
+visible = false;
+
 // defaulting to 0 allows animations to control fade in before opacity gets calculated
 // (this mostly matters with yui_change_screen which can rebuild the UI outside of the
 // normal event order logic)
