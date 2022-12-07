@@ -10,10 +10,9 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		border_thickness: 1,
 		border_focus_color: undefined,
 		
-		padding: undefined, // default to theme value
+		padding: undefined,
 		
 		content: undefined,
-		scale_mode: "slice", // stretch/tile/clip/none/etc
 		
 		popup: undefined, // setting popup will show a popup in an overlay
 		

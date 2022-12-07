@@ -115,7 +115,6 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	
 		is_data_source_live = yui_is_live_binding(data_source);
 		is_visible_live = yui_is_live_binding(props.visible);
-		is_opacity_live = yui_is_live_binding(props.opacity);
 		is_tooltip_live = yui_is_live_binding(props.tooltip);
 		is_xoffset_live = yui_is_live_binding(props.xoffset);
 		is_yoffset_live = yui_is_live_binding(props.yoffset);
@@ -141,7 +140,6 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		base_is_bound =
 			is_data_source_live
 			|| is_visible_live
-			|| is_opacity_live
 			|| is_tooltip_live
 			|| yui_is_live_binding(props.size)
 			|| yui_is_live_binding(size.w)

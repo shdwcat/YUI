@@ -3,7 +3,6 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	static default_props = {
 		type: "image",
 		padding: 0,
-		scale_mode: "slice", // stretch/tile/clip/none/etc
 		center: false,
 		
 		sprite: undefined,
