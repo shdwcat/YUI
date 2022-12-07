@@ -9,6 +9,7 @@ default_props = {
 	content: "This is a test! Big Test! This is a test! Big Test!This is a test! Big Test!This is a test! Big Test!",
 }
 
+is_arranging = false;
 has_content_item = true; // yui_panel sets this to false
 content_item = undefined;
 
@@ -97,7 +98,9 @@ arrange = function(available_size, viewport_size) {
 	
 	var content_size = undefined;
 	if content_item {
+		is_arranging = true;
 		content_size = content_item.arrange(padded_rect, viewport_size);
+		is_arranging = false;
 	}
 	else {
 		content_size = { x: padded_rect.x, y: padded_rect.y, w: 0, h: 0 };
@@ -126,9 +129,11 @@ arrange = function(available_size, viewport_size) {
 }
 
 onChildLayoutComplete = function(child) {
-	arrange(draw_rect);
-	if parent {
-		parent.onChildLayoutComplete(self);
+	if !is_arranging {
+		arrange(draw_rect);
+		if parent {
+			parent.onChildLayoutComplete(self);
+		}
 	}
 }
 
