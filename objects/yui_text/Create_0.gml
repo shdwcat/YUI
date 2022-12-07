@@ -152,10 +152,11 @@ arrange = function(available_size, viewport_size) {
 buildTextSurface = function() {
 	
 	if !bound_values return;
-
-	var text = override_text ?? bound_values.text;
 	
 	if (text_surface_w > 0 && text_surface_h > 0) {
+
+		var text = override_text ?? bound_values.text;
+	
 		text_surface = yui_draw_text_to_surface(
 			element_xoffset, element_yoffset,
 			text_surface_w, text_surface_h,
@@ -164,7 +165,8 @@ buildTextSurface = function() {
 			text_color ?? c_white,
 			opacity,
 			layout_props.halign, layout_props.valign,
-			font, text_surface);
+			font,
+			text_surface);
 	}
 }
 

@@ -8,6 +8,8 @@ if trace
 event_inherited();
 
 
-if !use_scribble && opacity_changed && !rebuild {
-	buildTextSurface();
+if !use_scribble && !rebuild {
+	if opacity_changed {
+		buildTextSurface();
+	}
 }
