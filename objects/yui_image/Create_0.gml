@@ -9,6 +9,7 @@ event_inherited();
 onLayoutInit = function() {
 	frame_value = yui_element.frame_value;
 	angle_value = yui_element.angle_value;
+	blend_color_value = yui_element.blend_color_value;
 }
 
 build = function() {
@@ -20,8 +21,6 @@ build = function() {
 	else {
 		visible = false;
 	}
-	
-	blend_color = bound_values.blend_color;
 	
 	if trace {
 		DEBUG_BREAK_YUI;

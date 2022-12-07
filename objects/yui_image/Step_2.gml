@@ -16,3 +16,5 @@ if frame != undefined {
 
 angle_value.update(data_source);
 image_angle = angle_value.value;
+
+blend_color_value.update(data_source);

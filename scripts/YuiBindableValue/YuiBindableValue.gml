@@ -3,8 +3,11 @@ function YuiBindableValue(binding) constructor {
 	
 	self.animation = undefined;
 	self.animation_start_time = undefined;
+	self.animation_start_value = undefined;
+	
 	self.prev_animation = undefined;
 	self.prev_animation_start_time = undefined;
+	self.prev_animation_start_value = undefined;
 	
 	update = undefined;
 	
@@ -22,9 +25,11 @@ function YuiBindableValue(binding) constructor {
 	static beginAnimation = function(animation) {
 		prev_animation = self.animation;
 		prev_animation_start_time = animation_start_time;
+		prev_animation_start_value = animation_start_value;
 		
 		self.animation = animation;
 		animation_start_time = current_time;
+		animation_start_value = value;
 	}
 }
 
@@ -54,6 +59,8 @@ function YuiBindableValue__updateRawValue(data) {
 		// clear animation when complete
 		if animation.isComplete(animation_start_time) {
 			animation = undefined;
+			animation_start_time = undefined;
+			animation_start_value = undefined;
 		}
 		
 		// TODO lerp between anim_value and prev animation value

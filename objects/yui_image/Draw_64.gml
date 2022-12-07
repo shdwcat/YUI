@@ -5,6 +5,9 @@
 
 // todo: 9-slicing?
 
+var color = blend_color_value.value;
+if is_string(color) color = yui_resolve_color(color);
+
 if sprite_index >= 0 {
 	if viewport_size {
 		if viewport_part.visible
@@ -21,7 +24,7 @@ if sprite_index >= 0 {
 				viewport_part.y + sprite_yoffset,
 				image_xscale, image_yscale,
 				image_angle,
-				blend_color, blend_color, blend_color, blend_color,
+				color, color, color, color,
 				image_alpha);
 		}
 	}
@@ -31,6 +34,6 @@ if sprite_index >= 0 {
 			x + sprite_xoffset,
 			y + sprite_yoffset,
 			image_xscale, image_yscale,
-			image_angle, blend_color, image_alpha);
+			image_angle, color, image_alpha);
 	}
 }

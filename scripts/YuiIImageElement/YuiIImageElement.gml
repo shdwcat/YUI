@@ -42,7 +42,7 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	animatable.frame = frame_value;
 	animatable.angle = angle_value;
-	// todo color animation!
+	animatable.blend_color = blend_color_value;
 	
 	is_bound = base_is_bound
 		|| yui_is_live_binding(props.sprite)
@@ -69,6 +69,8 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			}
 		}
 		
+		// can't remove this yet due to ability to use color words in expressions
+		// can simplify this a lot if that's no longer allowed
 		var blend_color = is_blend_color_live
 			? yui_resolve_color(props.blend_color.resolve(data))
 			: props.blend_color;
