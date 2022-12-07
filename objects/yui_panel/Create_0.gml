@@ -97,8 +97,8 @@ build = function yui_panel__build() {
 
 arrange = function yui_panel__arrange(available_size, viewport_size) {
 		
-	x = available_size.x;
-	y = available_size.y;
+	target_x = available_size.x;
+	target_y = available_size.y;
 	draw_rect = available_size;
 	self.viewport_size = viewport_size;
 	

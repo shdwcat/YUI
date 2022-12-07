@@ -66,6 +66,10 @@ draw_size = {
 
 is_size_changed = false;
 
+// x and y for where the layout system thinks this should go
+target_x = x;
+target_y = y;
+
 padded_rect = { x: x, y: y, w: 0, h: 0 };
 
 // if defined, the size of the viewport containing this element
@@ -214,19 +218,21 @@ process = function() {
 }
 
 move = function(xoffset, yoffset) {
-	x += xoffset;
+	target_x += xoffset;
+	target_y += yoffset;
+	
 	draw_size.x += xoffset;
-	//draw_rect.x += xoffset;
-	padded_rect.x += xoffset;
-	y += yoffset;
 	draw_size.y += yoffset;
-	//draw_rect.y += yoffset;
+	
+	padded_rect.x += xoffset;
 	padded_rect.y += yoffset;
+	
+	//draw_rect.x += xoffset;
+	//draw_rect.y += yoffset;
 	
 	if viewport_size {
 		updateViewport();
 	}
-	
 	
 	if tooltip_item {
 		tooltip_item.move(xoffset, yoffset);
@@ -247,7 +253,7 @@ updateViewport = function() {
 			viewport_size.parent)
 		: viewport_size;
 			
-	viewport_part =	yui_trim_rect_to_viewport(x, y, draw_size.w, draw_size.h, vp_size);
+	viewport_part =	yui_trim_rect_to_viewport(target_x, target_y, draw_size.w, draw_size.h, vp_size);
 }
 
 resize = yui_resize_instance;

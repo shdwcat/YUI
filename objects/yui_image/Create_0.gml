@@ -115,8 +115,8 @@ arrange = function(available_size, viewport_size) {
 	}
 	
 	// position at the padded rect corner so we can just draw at x/y
-	x = padded_rect.x;
-	y = padded_rect.y;
+	target_x = padded_rect.x;
+	target_y = padded_rect.y;
 	
 	if viewport_size {
 		updateViewport();

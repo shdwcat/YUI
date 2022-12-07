@@ -110,7 +110,7 @@ function YuiVerticalLayout(alignment, spacing, panel_size) constructor {
 			var new_y = available_size.y;
 			var i = 0; repeat count {
 				var item = items[i];
-				var diff = new_y - item.y;
+				var diff = new_y - item.target_y;
 				item.move(0, diff);
 				
 				// TODO: wouldn't have to this real sizes thing if arrange also stored the layout size

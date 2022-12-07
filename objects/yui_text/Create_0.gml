@@ -63,8 +63,8 @@ arrange = function(available_size, viewport_size) {
 	if !scribble_element 
 		return sizeToDefault(available_size);
 	
-	x = available_size.x;
-	y = available_size.y;
+	target_x = available_size.x;
+	target_y = available_size.y;
 	draw_rect = available_size;
 	self.viewport_size = viewport_size;
 	
