@@ -9,6 +9,8 @@ if sprite_index >= 0 {
 	if viewport_size {
 		if viewport_part.visible
 		{
+			// TODO clipping logic is ignoring scale/angle
+			// probably need a shader to solve that!
 			draw_sprite_general(
 				sprite_index, image_index,
 				viewport_part.l / image_xscale,

@@ -6,6 +6,11 @@ sprite_index = -1;
 // Inherit the parent event
 event_inherited();
 
+onLayoutInit = function() {
+	frame_value = yui_element.frame_value;
+	angle_value = yui_element.angle_value;
+}
+
 build = function() {
 	trace = yui_element.props.trace; // hack
 	
@@ -14,14 +19,8 @@ build = function() {
 	}
 	else {
 		visible = false;
-	}	
-	
-	if bound_values.frame != undefined {
-		image_index = bound_values.frame;
-		image_speed = 0;
 	}
 	
-	image_angle = bound_values.angle;
 	blend_color = bound_values.blend_color;
 	
 	if trace {
