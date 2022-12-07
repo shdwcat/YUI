@@ -71,10 +71,8 @@ viewport_size = undefined;
 // the part of this element that is visible within the viewport
 viewport_part = undefined;
 
+// hack so that text element knows to rebuild
 opacity_changed = false;
-
-// event times for animations
-visible_time = undefined;
 
 initLayout = function() {
 	_id = yui_element.props.id;
@@ -148,7 +146,7 @@ bind_values = function yui_base__bind_values() {
 		data_source = data_context;
 	}
 	
-	visible_value.update(data_source, visible_time);
+	visible_value.update(data_source);
 	if visible_value.value == false {
 		hide_element();
 		exit;
@@ -168,8 +166,7 @@ bind_values = function yui_base__bind_values() {
 	var was_visible = visible;
 	visible = true;
 	
-	if !was_visible || visible_time == undefined {
-		visible_time = current_time;
+	if !was_visible {
 		if yui_element.on_visible_anim beginAnimationGroup(yui_element.on_visible_anim);
 	}
 		
@@ -199,7 +196,7 @@ arrange = function(available_size, viewport_size) {
 }
 
 process = function() {
-	opacity_value.update(data_source, current_time - visible_time);
+	opacity_value.update(data_source);
 		
 	var old_opacity = opacity;
 	
