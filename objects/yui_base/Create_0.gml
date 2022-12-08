@@ -116,6 +116,7 @@ initLayout = function() {
 	
 	animatable = yui_element.animatable;
 	
+	on_arrange_anim = yui_element.on_arrange_anim;
 	layout_props = yui_element.getLayoutProps();
 	onLayoutInit();
 }

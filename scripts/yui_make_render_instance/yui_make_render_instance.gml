@@ -23,6 +23,8 @@ function yui_make_render_instance(yui_element, data, index = 0, depth_offset = 0
 	child.bind_values();
 	if child.visible {
 		child.build();
+		if child.on_arrange_anim
+			child.beginAnimationGroup(child.on_arrange_anim);
 	}
 	
 	return child;

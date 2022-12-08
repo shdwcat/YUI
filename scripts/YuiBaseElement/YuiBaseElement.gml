@@ -130,10 +130,15 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		};
 		
 		on_visible_anim = undefined;
+		on_arrange_anim = undefined;
 		if props.animate {
 			var on_visible_animation = props.animate[$"on_visible"];
 			if on_visible_animation {
 				on_visible_anim = yui_resolve_animation_group(on_visible_animation, resources, slot_values);
+			}
+			var on_arrange_animation = props.animate[$"on_arrange"];
+			if on_arrange_animation {
+				on_arrange_anim = yui_resolve_animation_group(on_arrange_animation, resources, slot_values);
 			}
 		}
 			

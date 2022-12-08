@@ -33,6 +33,9 @@ if is_binding_active || !visible || rebuild {
 		if is_size_changed && parent {
 			parent.onChildLayoutComplete(self);
 		}
+		
+		if on_arrange_anim
+			beginAnimationGroup(on_arrange_anim);
 	}
 }
 	
