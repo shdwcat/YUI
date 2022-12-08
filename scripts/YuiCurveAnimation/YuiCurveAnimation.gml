@@ -13,6 +13,7 @@ function YuiCurveAnimation(props, resources, slot_values) constructor {
 	// store for diagnostics
 	self.props = props;
 	
+	enabled = props[$"enabled"] ?? true;
 	curve = asset_get_index(props.curve);
 	channel_name_or_index = props[$"channel"] ?? 0;
 

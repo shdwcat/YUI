@@ -3,6 +3,8 @@ function YuiColorCurveAnimation(props, resources, slot_values) constructor {
 	
 	// store for diagnostics
 	self.props = props;
+	
+	enabled = props[$"enabled"] ?? true;
 		
 	duration = props[$"duration"] ?? 1000; // TODO error on zero or negative duration
 	continuous = props[$"repeat"] ?? false;
