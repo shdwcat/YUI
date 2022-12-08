@@ -19,8 +19,6 @@ border_build = build;
 build = function yui_panel__build() {
 	border_build();
 	
-	trace = yui_element.props.trace; // hack
-	
 	// resync our internal children to the bound children
 	
 	var child_count = bound_values.child_count;

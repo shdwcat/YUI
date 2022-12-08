@@ -83,6 +83,7 @@ opacity_changed = false;
 
 initLayout = function() {
 	_id = yui_element.props.id;
+	trace = yui_element.props.trace;
 	
 	default_w = yui_element.size.default_w;
 	default_h = yui_element.size.default_h;

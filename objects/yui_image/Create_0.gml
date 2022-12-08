@@ -13,8 +13,6 @@ onLayoutInit = function() {
 }
 
 build = function() {
-	trace = yui_element.props.trace; // hack
-	
 	if bound_values.sprite >= 0 {
 		sprite_index = bound_values.sprite;
 	}

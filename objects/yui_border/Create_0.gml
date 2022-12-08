@@ -16,7 +16,6 @@ content_item = undefined;
 draw_border = false;
 
 onLayoutInit = function() {	
-	trace = yui_element.props.trace; // hack
 		
 	if layout_props.bg_color != undefined {
 		bg_color = layout_props.bg_color;

@@ -27,7 +27,6 @@ onLayoutInit = function() {
 }
 
 build = function() {
-	trace = yui_element.props.trace; // hack
 	
 	// used in Draw GUI
 	text_color = bound_values.color;
