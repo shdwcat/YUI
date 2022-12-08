@@ -113,10 +113,14 @@ initLayout = function() {
 	data_source_value = yui_element.data_source_value;
 	visible_value = yui_element.visible_value;
 	opacity_value = yui_element.opacity_value;
+	xoffset_value = yui_element.xoffset_value;
+	yoffset_value = yui_element.yoffset_value;
 	
 	animatable = yui_element.animatable;
 	
+	on_visible_anim = yui_element.on_visible_anim;
 	on_arrange_anim = yui_element.on_arrange_anim;
+	
 	layout_props = yui_element.getLayoutProps();
 	onLayoutInit();
 }
@@ -175,7 +179,8 @@ bind_values = function yui_base__bind_values() {
 	visible = true;
 	
 	if !was_visible {
-		if yui_element.on_visible_anim beginAnimationGroup(yui_element.on_visible_anim);
+		if on_visible_anim
+			beginAnimationGroup(on_visible_anim);
 	}
 		
 	// if bound values are same as before exit early

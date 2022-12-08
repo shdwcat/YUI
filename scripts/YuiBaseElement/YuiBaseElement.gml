@@ -122,11 +122,15 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		data_source_value = new YuiBindableValue(data_source);
 		visible_value = new YuiBindableValue(props.visible);
 		opacity_value = new YuiBindableValue(props.opacity);
+		xoffset_value = new YuiBindableValue(props.xoffset);
+		yoffset_value = new YuiBindableValue(props.yoffset);
 		
 		// map of animatable properties to the YuiBindableValues
 		animatable = {
 			opacity: opacity_value,
 			visible: visible_value,
+			xoffset: xoffset_value,
+			yoffset: yoffset_value,
 		};
 		
 		on_visible_anim = undefined;
