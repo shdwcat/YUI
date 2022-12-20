@@ -12,25 +12,25 @@ if bg_alpha > 0 {
 		0, bg_color, bg_alpha * opacity);
 }
 
+var color_changed = color_value.update(data_source);
+var color = color_value.value ?? c_white;
+if highlight && highlight_color != undefined {
+	color = highlight_color;
+}
+
+if is_string(color) color = yui_resolve_color(color);
+
 if use_scribble {
-	if highlight && highlight_color != undefined {
-		scribble_element.blend(highlight_color, opacity);
-	}
-	else {
-		scribble_element.blend(text_color, opacity);
-	}
+	scribble_element.blend(color, opacity);
 
 	// draw the scribble element
 	scribble_element.draw(x + element_xoffset, y + element_yoffset, typist);
 }
 else {
-	var color = text_color ?? c_white;
-	if highlight && highlight_color != undefined {
-		color = highlight_color;
-	}
 
 	if use_text_surface {
 		// TODO: opacity parameters here don't actually work
+		// need to make custom shader per Juju
 		if viewport_size {
 			
 			if viewport_part.visible {
@@ -45,7 +45,8 @@ else {
 					viewport_part.w,// text_surface_w),
 					viewport_part.h,// text_surface_h),
 					viewport_part.x, viewport_part.y,
-					opacity);
+					opacity,
+					color);
 			}
 		}
 		else {
@@ -54,7 +55,7 @@ else {
 				buildTextSurface();
 			}
 			if text_surface {
-				yui_draw_alpha_surface(text_surface, x, y, opacity);
+				yui_draw_alpha_surface(text_surface, x, y, opacity, color);
 			}
 		}
 	}
@@ -62,6 +63,7 @@ else {
 
 
 if (trace) {
+		
 	yui_draw_trace_rect(true, padded_rect, yui_padding_color);
 	yui_draw_trace_rect(true, draw_rect, yui_draw_rect_color);
 

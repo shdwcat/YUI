@@ -22,14 +22,12 @@ text_surface_h = 0;
 override_text = undefined;
 
 onLayoutInit = function() {
+	color_value = yui_element.color_value;
 	highlight_color = layout_props.highlight_color;
 	use_scribble = layout_props.use_scribble;
 }
 
 build = function() {
-	
-	// used in Draw GUI
-	text_color = bound_values.color;
 	
 	var text = override_text ?? bound_values.text;
 		
@@ -156,7 +154,7 @@ buildTextSurface = function() {
 			text_surface_w, text_surface_h,
 			text,
 			text_surface_w - layout_props.padding.w,
-			text_color ?? c_white,
+			c_white, // color blending happens on surface draw
 			opacity,
 			layout_props.halign, layout_props.valign,
 			font,

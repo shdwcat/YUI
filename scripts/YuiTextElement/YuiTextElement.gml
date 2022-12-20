@@ -35,6 +35,10 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		color = yui_resolve_color(color);
 	}
 	
+	color_value = new YuiBindableValue(color);
+	
+	animatable.color = color_value;
+	
 	highlight_color = yui_resolve_color(yui_bind(props.highlight_color, resources, slot_values));
 	
 	font = props.font ?? text_style.font;
@@ -93,10 +97,6 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			return false;
 		}
 		
-		var color = is_color_live
-			? yui_resolve_color(self.color.resolve(data))
-			: self.color;
-		
 		// handle text array by joining the values		
 		if is_array(text) {
 			var joined_text = "";
@@ -120,7 +120,6 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		// diff
 		if prev
 			&& text == prev.text
-			&& color == prev.color
 			&& typist == prev.typist
 		{
 			return true;
@@ -130,7 +129,6 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			is_live: is_bound,
 			text: text,// ?? "",
 			font: font,
-			color: color,
 			autotype: props.autotype,
 			typist: typist,
 		};
