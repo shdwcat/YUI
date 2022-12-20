@@ -15,9 +15,10 @@ root:
   
   animate:
     on_visible:
-      opacity: &fade_in
+      //opacity: &fade_in
       xoffset:
         type: curve
+        enabled: false
         curve: curveExpoInv
         duration: 2000
         start: 300
@@ -48,7 +49,11 @@ root:
             - type: text // 'type: text' is how we draw text! simple
               text_style: title // this applies one of the text styles defined in the active theme
               opacity: @test_opacity
-              //scribble: true
+              //trace: true
+              // animate:
+              //   on_visible:
+              //     opacity: &fade_in
+              scribble: true
               text: "Welcome to the YUI Example Project!" // and here we set the text itself
 
               // You can also just put a string as a child and it will automatically be converted to a 'text' element. Easy!
