@@ -9,14 +9,31 @@ function YuiColorCurveAnimation(props, resources, slot_values) constructor {
 	duration = props[$"duration"] ?? 1000; // TODO error on zero or negative duration
 	continuous = props[$"repeat"] ?? false;
 	
-	red_start = (props[$"red_start"] ?? props[$"start"]);
-	red_stop = props[$"red_end"] ?? props[$"end"];
+	from = props[$"from"];
+	if from != undefined {
+		var color = yui_resolve_color(from);
+		red_start = color_get_red(color);
+		green_start = color_get_green(color);
+		blue_start = color_get_blue(color);
+	}
+	else {
+		red_start = props[$"red_start"];
+		green_start = props[$"green_start"];
+		blue_start = props[$"blue_start"];
+	}
 	
-	green_start = (props[$"green_start"] ?? props[$"start"]);
-	green_stop = props[$"green_end"] ?? props[$"end"];
-	
-	blue_start = (props[$"blue_start"] ?? props[$"start"]);
-	blue_stop = props[$"blue_end"] ?? props[$"end"];
+	to = props[$"to"];
+	if to != undefined {
+		var color = yui_resolve_color(to);
+		red_stop = color_get_red(color);
+		green_stop = color_get_green(color);
+		blue_stop = color_get_blue(color);
+	}
+	else {
+		red_stop = props[$"red_end"];
+		green_stop = props[$"green_end"];
+		blue_stop = props[$"blue_end"];
+	}
 	
 	// one curve to drive RGB
 	var curve_id = props[$"curve"];

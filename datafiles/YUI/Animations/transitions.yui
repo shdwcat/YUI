@@ -8,15 +8,12 @@ resources:
     duration: 2000
 
   fade_white_to_blue:
+    // color from white to blue in 2s by curveExpoInv
     type: color_curve
     curve: curveExpoInv
     duration: 2000
-    red_start: 255
-    red_end: 0
-    green_start: 255
-    green_end: 0
-    blue_start: 255
-    blue_end: 255
+    from: white
+    to: blue
 
   slide_in:
     type: curve
