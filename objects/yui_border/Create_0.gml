@@ -78,8 +78,8 @@ build = function() {
 }
 
 arrange = function(available_size, viewport_size) {
-	target_x = available_size.x;
-	target_y = available_size.y;
+	x = available_size.x;
+	y = available_size.y;
 	draw_rect = available_size;
 	self.viewport_size = viewport_size;
 	

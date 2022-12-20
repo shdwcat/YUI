@@ -462,9 +462,9 @@
   "Options": [
     {"name":"Linux","path":"options/linux/options_linux.yy",},
     {"name":"macOS","path":"options/mac/options_mac.yy",},
-    {"name":"Main","path":"options/main/options_main.yy",},
     {"name":"Windows","path":"options/windows/options_windows.yy",},
     {"name":"operagx","path":"options/operagx/options_operagx.yy",},
+    {"name":"Main","path":"options/main/options_main.yy",},
   ],
   "defaultScriptType": 1,
   "isEcma": false,
@@ -581,6 +581,7 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"scrollbox.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Widgets",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"windows_example.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"kb_navigation_example.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"default.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Themes",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"window_move.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Interactions",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"viewport_example.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"todo_mvc.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens",},
@@ -599,9 +600,8 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"dropdown_menu.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Widgets",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"transitions.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Animations",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"welcome_screen.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens",},
-    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"default.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Themes",},
   ],
   "MetaData": {
-    "IDEVersion": "2022.11.0.54",
+    "IDEVersion": "2022.11.1.56",
   },
 }

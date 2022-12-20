@@ -110,7 +110,7 @@ function YuiHorizontalLayout(alignment, spacing, panel_size) constructor {
 			var new_x = available_size.x;
 			var i = 0; repeat count {
 				var item = items[i];
-				var diff = new_x - item.target_x;
+				var diff = new_x - item.x;
 				item.move(diff, 0);
 				
 				// TODO: wouldn't have to this real sizes thing if arrange also stored the layout size

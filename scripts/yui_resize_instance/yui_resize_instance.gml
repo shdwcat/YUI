@@ -2,14 +2,14 @@
 function yui_resize_instance(width, height) {
 	
 	is_size_changed =
-		draw_size.x != target_x
-		|| draw_size.y != target_y
+		draw_size.x != x
+		|| draw_size.y != y
 		|| draw_size.w != width
 		|| draw_size.h != height;
 		
 	if is_size_changed {
-		draw_size.x = target_x;
-		draw_size.y = target_y;
+		draw_size.x = x;
+		draw_size.y = y;
 		draw_size.w = width;
 		draw_size.h = height;
 		image_xscale = width / sprite_get_width(sprite_index);
