@@ -68,12 +68,6 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 				sprite = undefined; // TODO pink placeholder warning sprite?
 			}
 		}
-		
-		// can't remove this yet due to ability to use color words in expressions
-		// can simplify this a lot if that's no longer allowed
-		var blend_color = is_blend_color_live
-			? yui_resolve_color(props.blend_color.resolve(data))
-			: props.blend_color;
 
 		if props.trace
 			DEBUG_BREAK_YUI;
@@ -84,7 +78,6 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		// diff
 		if prev
 			&& sprite == prev.sprite
-			&& blend_color == prev.blend_color
 			&& w == prev.w
 			&& h == prev.h
 		{
@@ -95,7 +88,6 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			is_live: is_bound,
 			data_source: data,
 			sprite: sprite,
-			blend_color: blend_color,
 			w: w,
 			h: h,
 		};
