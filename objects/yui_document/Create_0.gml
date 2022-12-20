@@ -25,6 +25,8 @@ opacity = 1;
 
 // the space we were given to draw in
 if is_full_screen {
+	x = 0;
+	y = 0;
 	draw_rect = {
 		x: 0,
 		y: 0,

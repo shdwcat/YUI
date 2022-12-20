@@ -209,7 +209,7 @@ arrange = function(available_size, viewport_size) {
 	throw "arrange not implemented on this type";
 }
 
-process = function() {
+process = function yui_base__process() {
 	opacity_value.update(data_source);
 		
 	var old_opacity = opacity;
@@ -260,7 +260,7 @@ updateViewport = function() {
 			viewport_size.parent)
 		: viewport_size;
 			
-	viewport_part =	yui_trim_rect_to_viewport(target_x, target_y, draw_size.w, draw_size.h, vp_size);
+	viewport_part = yui_trim_rect_to_viewport(x, y, draw_size.w, draw_size.h, vp_size);
 }
 
 resize = yui_resize_instance;

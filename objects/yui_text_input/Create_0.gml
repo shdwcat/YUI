@@ -10,8 +10,8 @@ update = false;
 live_text = undefined;
 after_caret = "";
 caret_color = c_white;
-caret_x =0;// undefined;
-caret_y =0;// undefined;
+caret_x = 0;// undefined;
+caret_y = 0;// undefined;
 caret_h = undefined;
 
 border_onLayoutInit = onLayoutInit;

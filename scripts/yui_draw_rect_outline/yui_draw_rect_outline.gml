@@ -3,6 +3,7 @@
 function yui_draw_rect_outline(x, y, w, h, t, color, alpha) {
 	var x2 = x + w;
 	var y2 = y + h;
+	var old_color = draw_get_color();
 	draw_set_color(color);
 	draw_set_alpha(alpha);
 	draw_primitive_begin(pr_trianglestrip);
@@ -17,6 +18,7 @@ function yui_draw_rect_outline(x, y, w, h, t, color, alpha) {
 		draw_vertex(x, y);
 		draw_vertex(x+t, y+t);
 	draw_primitive_end();
+	draw_set_color(old_color);
 }
 
 function yui_draw_rect_outline_clipped(x, y, w, h, cx1, cy1, cx2, cy2, t, color, alpha) {
