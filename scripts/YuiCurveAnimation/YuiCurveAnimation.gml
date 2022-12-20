@@ -8,6 +8,7 @@ function YuiCurveAnimation(props, resources, slot_values) constructor {
 		"end": 1,
 		"repeat": false,
 		duration: 1000, // 1000 milliseconds = 1 second
+		delay: 0, // milliseconds
 	}
 	
 	// store for diagnostics
@@ -20,6 +21,7 @@ function YuiCurveAnimation(props, resources, slot_values) constructor {
 	value_channel = animcurve_get_channel(curve, channel_name_or_index) 
 		
 	duration = props[$"duration"] ?? 1000; // TODO error on zero or negative duration
+	delay = props[$"delay"] ?? 0; // TODO error on negative delay
 	start = props[$"start"] ?? 0;
 	stop = props[$"end"] ?? 1;
 	continuous = props[$"repeat"] ?? false;
@@ -27,7 +29,7 @@ function YuiCurveAnimation(props, resources, slot_values) constructor {
 	static compute = function(raw_value, start_time) {
 		
 		// calculate the current position along the curve based on start time
-		var time = current_time - start_time;
+		var time = max(current_time - start_time - delay, 0);
 		var period_time = continuous ? (time mod duration) : time;
 		var pos = period_time / duration;
 		
@@ -41,6 +43,6 @@ function YuiCurveAnimation(props, resources, slot_values) constructor {
 	
 	static isComplete = function(start_time) {
 		return !continuous
-			&& current_time - start_time > duration;
+			&& current_time - start_time - delay > duration;
 	}
 }
