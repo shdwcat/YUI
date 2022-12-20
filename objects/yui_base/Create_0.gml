@@ -315,7 +315,7 @@ setHighlight = function(highlight) {
 
 // NOTE: assumes the point has already been tested via something like instance_position()
 isPointVisible = function(x, y) {
-	if viewport_part != undefined {
+	if viewport_part != undefined && viewport_part.clipped {
 		return point_in_rectangle(
 				x, y,
 				viewport_part.x,
