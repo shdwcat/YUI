@@ -90,7 +90,6 @@ arrange = function(available_size, viewport_size) {
 
 	var new_bbox = scribble_element.get_bbox(x, y, padding.left, padding.top, padding.right, padding.bottom);
 	
-	
 	var old_font = draw_get_font();
 	draw_set_font(font);
 	
@@ -115,10 +114,6 @@ arrange = function(available_size, viewport_size) {
 	});
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
-	
-	if bound_values && (bound_values.xoffset != 0 || bound_values.yoffset != 0) {
-		move(bound_values.xoffset, bound_values.yoffset);
-	}
 	
 	use_text_surface = font >= 0 && !use_scribble;
 	if use_text_surface {

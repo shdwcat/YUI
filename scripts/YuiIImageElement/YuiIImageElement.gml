@@ -74,10 +74,7 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		var blend_color = is_blend_color_live
 			? yui_resolve_color(props.blend_color.resolve(data))
 			: props.blend_color;
-			
-		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
-		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
-			
+
 		if props.trace
 			DEBUG_BREAK_YUI;
 			
@@ -88,8 +85,6 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		if prev
 			&& sprite == prev.sprite
 			&& blend_color == prev.blend_color
-			&& xoffset == prev.xoffset
-			&& yoffset == prev.yoffset
 			&& w == prev.w
 			&& h == prev.h
 		{
@@ -101,8 +96,6 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			data_source: data,
 			sprite: sprite,
 			blend_color: blend_color,
-			xoffset: xoffset,
-			yoffset: yoffset,
 			w: w,
 			h: h,
 		};

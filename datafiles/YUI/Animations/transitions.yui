@@ -1,7 +1,64 @@
 file_type: resources
 
 resources:
+
   fade_in:
     type: curve
     curve: curveExpoInv
     duration: 2000
+
+  slide_in:
+    type: curve
+    curve: curveExpoInv
+    duration: 2000
+    start: -300
+    end: 0
+
+  slide_in2:
+    type: curve
+    curve: curveExpoInv
+    duration: 2000
+    delay: 100
+    start: -300
+    end: 0
+
+  slide_in3:
+    type: curve
+    curve: curveExpoInv
+    duration: 2000
+    delay: 200
+    start: -300
+    end: 0
+
+  slide_in4:
+    type: curve
+    curve: curveExpoInv
+    duration: 2000
+    delay: 300
+    start: -300
+    end: 0
+
+  slide_in5:
+    type: curve
+    curve: curveExpoInv
+    duration: 2000
+    delay: 400
+    start: -300
+    end: 0
+
+  slide_in6:
+    type: curve
+    curve: curveExpoInv
+    duration: 2000
+    delay: 500
+    start: -300
+    end: 0
+
+  slide_in7:
+    type: curve
+    curve: curveExpoInv
+    duration: 2000
+    delay: 600
+    start: -300
+    end: 0
+

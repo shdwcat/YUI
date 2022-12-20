@@ -45,9 +45,6 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	}
 	
 	static getBoundValues = function YuiBorderElement_getBoundValues(data, prev) {
-		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
-		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
-		
 		if props.trace
 			DEBUG_BREAK_YUI
 		
@@ -57,8 +54,6 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		// diff
 		if prev
 			&& data == prev.data_source
-			&& xoffset == prev.xoffset
-			&& yoffset == prev.yoffset
 			&& bg_sprite == prev.bg_sprite
 			&& bg_color == prev.bg_color
 		{
@@ -68,8 +63,6 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		return {
 			is_live: is_bound,
 			data_source: data,
-			xoffset: xoffset,
-			yoffset: yoffset,
 			// live versions
 			bg_sprite: bg_sprite,
 			bg_color: bg_color,

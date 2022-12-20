@@ -84,9 +84,6 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	}
 	
 	static getBoundValues = function YuiButtonElement_getBoundValues(data, prev) {
-		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
-		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
-		
 		var enabled = is_enabled_live ? props.enabled.resolve(data) : props.enabled;
 		
 		//if props.trace
@@ -99,8 +96,6 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		if prev
 			&& data == prev.data_source
 			&& enabled == prev.enabled
-			&& xoffset == prev.xoffset
-			&& yoffset == prev.yoffset
 			&& bg_sprite == prev.bg_sprite
 			&& bg_color == prev.bg_color
 		{
@@ -113,8 +108,6 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		var result = {
 			is_live: is_bound,
 			data_source: data,
-			xoffset: xoffset,
-			yoffset: yoffset,
 			enabled: enabled,
 			// live versions
 			bg_sprite: bg_sprite,

@@ -128,9 +128,6 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			}
 		}
 		
-		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
-		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
-		
 		var bg_sprite = is_bg_sprite_live ? yui_resolve_sprite_by_name(bg_sprite_binding.resolve(data)) : undefined;
 		var bg_color = is_bg_color_live ? yui_resolve_color(bg_color_binding.resolve(data)) : undefined;
 		
@@ -160,8 +157,6 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		// diff
 		if prev
 			&& data == prev.data_source
-			&& xoffset == prev.xoffset
-			&& yoffset == prev.yoffset
 			&& bg_sprite == prev.bg_sprite
 			&& bg_color == prev.bg_color
 			&& child_count == prev.child_count
@@ -177,8 +172,6 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			is_live: is_bound || layout.is_live,
 			// border
 			data_source: data,
-			xoffset: xoffset,
-			yoffset: yoffset,
 			// live versions
 			bg_sprite: bg_sprite,
 			bg_color: bg_color,

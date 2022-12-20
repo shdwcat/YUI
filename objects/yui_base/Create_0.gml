@@ -64,6 +64,10 @@ draw_size = {
 	h: bbox_bottom - bbox_top,
 };
 
+// offsets from the measured position, used in animation, etc
+xoffset = 0;
+yoffset = 0;
+
 is_size_changed = false;
 
 padded_rect = { x: x, y: y, w: 0, h: 0 };

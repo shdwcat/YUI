@@ -3,25 +3,23 @@
 // applying this in pre-draw assures that all arrange() calls as
 // a result of step logic will have been completed at this point
 
-var xoffset_changed = xoffset_value.update(data_source);
-var yoffset_changed = yoffset_value.update(data_source);
+var xxv = xoffset_value;
+var yxv = yoffset_value
 
-// TODO compute target_x/y from parent and relative placement
+xxv.update(data_source);
+yxv.update(data_source);
 
-x = target_x + xoffset_value.value;
-y = target_y + yoffset_value.value;
-
-if xoffset_changed {
-	draw_size.x = x;
-	draw_rect.x = x;
-	padded_rect.x = x;
+if parent {
+	xoffset = xxv.value + parent.xoffset;
+	yoffset = yxv.value + parent.yoffset;
+}
+else {
+	xoffset = xxv.value;
+	yoffset = yxv.value;
 }
 
-if yoffset_changed {
-	draw_size.y = y;
-	draw_rect.y = y;
-	padded_rect.y = y;
-}
-
-
-// TODO update viewport here?
+if xoffset != 0
+	x = draw_size.x + xoffset;
+	
+if yoffset != 0
+	y = draw_size.y + yoffset;

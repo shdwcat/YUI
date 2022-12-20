@@ -73,9 +73,6 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 	}
 	
 	static getBoundValues = function YuiViewportElement_getBoundValues(data, prev) {
-		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
-		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
-		
 		var bg_sprite = is_bg_sprite_live ? yui_resolve_sprite_by_name(bg_sprite_binding.resolve(data)) : undefined;
 		var bg_color = is_bg_color_live ? yui_resolve_color(bg_color_binding.resolve(data)) : undefined;
 		
@@ -84,8 +81,6 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 		
 		// diff
 		if prev
-			&& xoffset == prev.xoffset
-			&& yoffset == prev.yoffset
 			&& bg_sprite == prev.bg_sprite
 			&& bg_color == prev.bg_color
 			&& viewport_x == prev.viewport_x
@@ -97,8 +92,6 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 		return {
 			is_live: is_bound,
 			data_source: data,
-			xoffset: xoffset,
-			yoffset: yoffset,
 			// live versions
 			bg_sprite: bg_sprite,
 			bg_color: bg_color,

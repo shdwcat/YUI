@@ -97,9 +97,6 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			? yui_resolve_color(self.color.resolve(data))
 			: self.color;
 		
-		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
-		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
-		
 		// handle text array by joining the values		
 		if is_array(text) {
 			var joined_text = "";
@@ -123,8 +120,6 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		// diff
 		if prev
 			&& text == prev.text
-			&& xoffset == prev.xoffset
-			&& yoffset == prev.yoffset
 			&& color == prev.color
 			&& typist == prev.typist
 		{
@@ -133,11 +128,8 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		
 		var values = {
 			is_live: is_bound,
-			data_source: data,
 			text: text,// ?? "",
 			font: font,
-			xoffset: xoffset,
-			yoffset: yoffset,
 			color: color,
 			autotype: props.autotype,
 			typist: typist,

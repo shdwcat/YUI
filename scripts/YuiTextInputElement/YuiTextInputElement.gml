@@ -83,9 +83,6 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 	}
 	
 	static getBoundValues = function YuiTextElement_getBoundValues(data, prev) {
-		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
-		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
-		
 		var enabled = is_enabled_live ? props.enabled.resolve(data) : props.enabled;
 		
 		var bg_sprite = is_bg_sprite_live ? yui_resolve_sprite_by_name(bg_sprite_binding.resolve(data)) : undefined;
@@ -94,8 +91,6 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 		// diff
 		if prev
 			&& data == prev.data_source
-			&& xoffset == prev.xoffset
-			&& yoffset == prev.yoffset
 			&& bg_sprite == prev.bg_sprite
 			&& bg_color == prev.bg_color
 			&& enabled == prev.enabled
@@ -106,8 +101,6 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 		return {
 			is_live: is_bound,
 			data_source: data,
-			xoffset: xoffset,
-			yoffset: yoffset,
 			enabled: enabled,
 			// live versions
 			bg_sprite: bg_sprite,
