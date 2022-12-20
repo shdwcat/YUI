@@ -30,7 +30,7 @@ if show_highlight {
 				else {
 					draw_sprite_ext(
 						yui_white_pixel, 0,
-						draw_size.x, draw_size.y, draw_size.w, draw_size.h,
+						x, y, draw_size.w, draw_size.h,
 						0, highlight_color, alpha);
 				}
 			}
@@ -38,7 +38,7 @@ if show_highlight {
 		else {
 			draw_sprite_ext(
 				yui_white_pixel, 0,
-				draw_size.x, draw_size.y, draw_size.w, draw_size.h,
+				x, y, draw_size.w, draw_size.h,
 				0, highlight_color, alpha);
 		}
 	}
