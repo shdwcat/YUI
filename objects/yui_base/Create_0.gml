@@ -100,6 +100,7 @@ initLayout = function() {
 	focusable = yui_element.props.focusable;
 	is_cursor_layer = yui_element.props.is_cursor_layer;
 	
+	// TODO: this bypasses enabled, should probably move to first build
 	// set initial focus if needed
 	if focusable 
 		&& ((YuiCursorManager.focused_item == undefined || !instance_exists(YuiCursorManager.focused_item))
@@ -112,10 +113,14 @@ initLayout = function() {
 	
 	// TODO: should the BindableValues be created here so that they're unique to the element?
 	data_source_value = yui_element.data_source_value;
+	enabled_value = yui_element.enabled_value;
 	visible_value = yui_element.visible_value;
 	opacity_value = yui_element.opacity_value;
 	xoffset_value = yui_element.xoffset_value;
 	yoffset_value = yui_element.yoffset_value;
+	
+	is_enabled_live = enabled_value.binding != undefined;
+	if !is_enabled_live enabled = yui_element.props.enabled;
 	
 	animatable = yui_element.animatable;
 	
@@ -213,6 +218,17 @@ process = function yui_base__process() {
 	opacity_value.update(data_source);
 		
 	var old_opacity = opacity;
+	
+	enabled_value.update(data_source);
+	if is_enabled_live 
+	{
+		enabled = enabled_value.value;
+	
+		focusable = enabled ? yui_element.props.focusable : false;
+		if focused && !focusable {
+			YuiCursorManager.clearFocus();
+		}
+	}
 	
 	// gotta update this every frame since it could be animated, including from the parent!
 	opacity = opacity_value.value * (parent ? parent.opacity : 1) * (1 - (!enabled * 0.5))

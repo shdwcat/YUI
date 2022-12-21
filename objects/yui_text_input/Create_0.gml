@@ -21,13 +21,6 @@ onLayoutInit = function() {
 	highlight_color = layout_props.highlight_color;
 }
 
-border_build = build;
-build = function() {
-	enabled = bound_values.enabled;
-	focusable = bound_values.enabled ? yui_element.props.focusable : false;
-	border_build();
-}
-
 border_arrange = arrange;
 arrange = function(available_size, viewport_size) {
 	var size = border_arrange(available_size, viewport_size);

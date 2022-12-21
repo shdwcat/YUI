@@ -1,6 +1,6 @@
 function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	static base_props = {
-		id: "", // unique ID for this element, required to enabled animations and other effects
+		id: "", // unique ID for this element
 		item_key: undefined, // identifies an element in an array (must bind to unique value on data!)
 		
 		theme: undefined,
@@ -12,6 +12,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		
 		data_source: undefined, // enables overriding the data context with something else
 		
+		enabled: true, // can be bound
 		visible: true,
 		opacity: 1, // 0-1, like alpha
 		size: "auto", // can also be { w: val, h: val } where val can be a number or "auto" | "content"
@@ -77,7 +78,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	// get the theme props for our element type
 	element_theme = theme.elements[$ _props.type];
 	
-	static baseInit = function(props, default_events = undefined) {
+	static baseInit = function YuiBaseElement__baseInit(props, default_events = undefined) {
 	
 		props.events = yui_apply_props(props.events, default_events, base_events);
 		props.events.on_mouse_down = yui_bind_handler(props.events.on_mouse_down, resources, slot_values);
@@ -103,6 +104,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		// TODO: move this to YuiPanelElement?
 		alignment = new YuiElementAlignment(yui_bind(props.alignment, resources, slot_values));
 		
+		props.enabled = yui_bind(props.enabled, resources, slot_values);
 		props.visible = yui_bind(props.visible, resources, slot_values);
 		props.opacity = yui_bind(props.opacity, resources, slot_values);
 		props.item_key = yui_bind(props.item_key, resources, slot_values);
@@ -118,6 +120,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		is_tooltip_live = yui_is_live_binding(props.tooltip);
 		
 		data_source_value = new YuiBindableValue(data_source);
+		enabled_value = new YuiBindableValue(props.enabled);
 		visible_value = new YuiBindableValue(props.visible);
 		opacity_value = new YuiBindableValue(props.opacity);
 		xoffset_value = new YuiBindableValue(props.xoffset);

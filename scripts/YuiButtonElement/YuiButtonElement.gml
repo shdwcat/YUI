@@ -31,8 +31,6 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	
 	baseInit(props);
 	
-	props.enabled = yui_bind(props.enabled, resources, slot_values);
-	
 	props.padding = yui_resolve_padding(yui_bind(props.padding, resources, slot_values));
 	
 	content_element = yui_resolve_element(props.content, resources, slot_values);
@@ -51,12 +49,9 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	
 	props.on_click = yui_bind_handler(props.on_click, resources, slot_values);
 	
-	is_enabled_live = yui_is_live_binding(props.enabled);
-	
 	is_bound = base_is_bound
 		|| is_bg_sprite_live
-		|| is_bg_color_live
-		|| is_enabled_live;
+		|| is_bg_color_live;
 		
 	// ===== functions =====
 	
@@ -84,8 +79,6 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	}
 	
 	static getBoundValues = function YuiButtonElement_getBoundValues(data, prev) {
-		var enabled = is_enabled_live ? props.enabled.resolve(data) : props.enabled;
-		
 		//if props.trace
 		//	DEBUG_BREAK_YUI
 		
@@ -95,7 +88,6 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		// diff
 		if prev
 			&& data == prev.data_source
-			&& enabled == prev.enabled
 			&& bg_sprite == prev.bg_sprite
 			&& bg_color == prev.bg_color
 		{
@@ -108,7 +100,6 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		var result = {
 			is_live: is_bound,
 			data_source: data,
-			enabled: enabled,
 			// live versions
 			bg_sprite: bg_sprite,
 			bg_color: bg_color,
