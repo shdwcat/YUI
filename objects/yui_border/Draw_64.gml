@@ -1,5 +1,21 @@
 /// @description
 
+// check live bg - TODO: move to process() override to keep code organized?
+if is_bg_sprite_live {
+	bg_sprite_value.update(data_source);
+	if bg_sprite_value.value != undefined {
+		bg_sprite = bg_sprite_value.value;
+		bg_alpha = 1;
+	}
+}
+else if is_bg_color_live {
+	bg_color_value.update(data_source);
+	if bg_color_value.value != undefined {
+		bg_color = bg_color_value.value;
+		bg_alpha = ((bg_color & 0xFF000000) >> 24) / 255; // extract alpha
+	}
+}
+
 // draw background
 if bg_alpha > 0 {
 	

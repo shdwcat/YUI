@@ -81,15 +81,10 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 	}
 	
 	static getBoundValues = function YuiTextElement_getBoundValues(data, prev) {
-		
-		var bg_sprite = is_bg_sprite_live ? yui_resolve_sprite_by_name(bg_sprite_binding.resolve(data)) : undefined;
-		var bg_color = is_bg_color_live ? yui_resolve_color(bg_color_binding.resolve(data)) : undefined;
-		
+
 		// diff
 		if prev
 			&& data == prev.data_source
-			&& bg_sprite == prev.bg_sprite
-			&& bg_color == prev.bg_color
 		{
 			return true;
 		}
@@ -97,9 +92,6 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 		return {
 			is_live: is_bound,
 			data_source: data,
-			// live versions
-			bg_sprite: bg_sprite,
-			bg_color: bg_color,
 		};
 	}
 }

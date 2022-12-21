@@ -195,11 +195,15 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 				// a struct is used when we want to bind the background dynamically,
 				// in order to differentiate between sprite indexes (which are numbers)
 				// and color values (which are also numbers :()
+				
 				bg_sprite_binding = yui_bind(background_expr[$"sprite"], resources, slot_values);
 				is_bg_sprite_live = bg_sprite_binding != undefined;
+				bg_sprite_value = new YuiBindableValue(bg_sprite_binding);
 				bg_sprite = undefined;
+				
 				bg_color_binding = yui_bind(background_expr[$"color"], resources, slot_values);
 				is_bg_color_live = bg_color_binding != undefined;
+				bg_color_value = new YuiBindableValue(bg_color_binding);
 				bg_color = undefined;
 			}
 			else {

@@ -32,6 +32,12 @@ onLayoutInit = function() {
 		bg_alpha = 1;
 	}
 	
+	is_bg_sprite_live = yui_element.is_bg_sprite_live;
+	if is_bg_sprite_live bg_sprite_value = yui_element.bg_sprite_value;
+		
+	is_bg_color_live = yui_element.is_bg_color_live;
+	if is_bg_color_live bg_color_value = yui_element.bg_color_value;
+	
 	border_focus_color = layout_props.border_focus_color ?? border_color;
 	
 	if border_color != undefined {
@@ -44,17 +50,6 @@ onLayoutInit = function() {
 }
 
 build = function() {
-	
-	if layout_props.is_bg_live {
-		if bound_values.bg_sprite != undefined {
-			bg_sprite = bound_values.bg_sprite;
-			bg_alpha = 1;
-		}
-		else if bound_values.bg_color != undefined {
-			bg_color = bound_values.bg_color;
-			bg_alpha = ((bg_color & 0xFF000000) >> 24) / 255; // extract alpha
-		}
-	}
 	
 	// create the content item instance if there should be one
 	var make_content_item = 

@@ -50,16 +50,11 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	static getBoundValues = function YuiPopupElement_getBoundValues(data, prev) {
 		var placement = yui_resolve_binding(props.placement, data);
-		
-		var bg_sprite = is_bg_sprite_live ? yui_resolve_sprite_by_name(bg_sprite_binding.resolve(data)) : undefined;
-		var bg_color = is_bg_color_live ? yui_resolve_color(bg_color_binding.resolve(data)) : undefined;
-		
+
 		// diff
 		if prev
 			&& data == prev.data_source
 			&& placement == prev.placement
-			&& bg_sprite == prev.bg_sprite
-			&& bg_color == prev.bg_color
 		{
 			return true;
 		}
@@ -69,9 +64,6 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			data_source: data,
 			// popup
 			placement: placement,
-			// live versions
-			bg_sprite: bg_sprite,
-			bg_color: bg_color,
 		};
 	}
 }

@@ -128,9 +128,6 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			}
 		}
 		
-		var bg_sprite = is_bg_sprite_live ? yui_resolve_sprite_by_name(bg_sprite_binding.resolve(data)) : undefined;
-		var bg_color = is_bg_color_live ? yui_resolve_color(bg_color_binding.resolve(data)) : undefined;
-		
 		if uses_template {
 			// single template element for bound data_items
 			var source_items = is_elements_bound ? props.elements.resolve(data) : props.elements;
@@ -157,8 +154,6 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		// diff
 		if prev
 			&& data == prev.data_source
-			&& bg_sprite == prev.bg_sprite
-			&& bg_color == prev.bg_color
 			&& child_count == prev.child_count
 			&& (uses_template
 				? array_equals(data_items, prev.data_items)
@@ -172,9 +167,6 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			is_live: is_bound || layout.is_live,
 			// border
 			data_source: data,
-			// live versions
-			bg_sprite: bg_sprite,
-			bg_color: bg_color,
 			// panel
 			child_count: child_count,
 			data_items: data_items,
