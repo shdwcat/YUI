@@ -58,8 +58,6 @@ arrange = function(available_size, viewport_size) {
 		y: y,
 		w: 0,
 		h: 0,
-		vx: viewport_x,
-		vy: viewport_y,
 		parent: viewport_size,
 	});
 	
@@ -121,6 +119,4 @@ move = function(xoffset, yoffset) {
 	}
 	
 	border_move(xoffset, yoffset);
-	
 }
-
