@@ -146,7 +146,7 @@ arrange = function yui_panel__arrange(available_size, viewport_size) {
 onChildLayoutComplete = function(child) {
 	if !is_arranging {
 		arrange(draw_rect);
-		if parent {
+		if is_size_changed && parent {
 			parent.onChildLayoutComplete(self);
 		}
 	}
