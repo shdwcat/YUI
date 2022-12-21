@@ -88,6 +88,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			valign: valign,
 			highlight_color: highlight_color,
 			use_scribble: props.scribble,
+			autotype: props.autotype,
 		};
 	}
 	
@@ -129,7 +130,6 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			is_live: is_bound,
 			text: text,// ?? "",
 			font: font,
-			autotype: props.autotype,
 			typist: typist,
 		};
 		

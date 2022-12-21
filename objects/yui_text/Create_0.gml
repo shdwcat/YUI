@@ -39,9 +39,9 @@ build = function() {
 		typist = bound_values.typist;
 		typist.__associate(scribble_element);
 	}
-	else if bound_values.autotype != undefined {
+	else if layout_props.autotype != undefined {
 		typist = scribble_typist();
-		var autotype = bound_values.autotype;
+		var autotype = layout_props.autotype;
 		if autotype == true {
 			typist.in(0.15, 0);
 		}
@@ -49,7 +49,8 @@ build = function() {
 			typist.in(autotype.speed, autotype.smoothness);
 		}
 		else {
-			throw "invalid autotype value";
+			// TODO validate this in YuiTextElement
+			throw yui_error("invalid autotype value");
 		}
 	}	
 	
