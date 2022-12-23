@@ -349,15 +349,7 @@ isPointVisible = function(x, y) {
 }
 
 beginAnimationGroup = function(animation_group) {
-	// begin the animation for each property in the group
-	var names = variable_struct_get_names(animation_group);
-	var i = 0; repeat array_length(names) {
-		var name = names[i];
-		var anim = animation_group[$ name];
-		target = animatable[$ name];
-		target.beginAnimation(anim);
-		i++;
-	}
+	animation_group.start(animatable);
 }
 
 
