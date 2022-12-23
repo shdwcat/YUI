@@ -54,7 +54,7 @@ function YuiBindableValue__updateBinding(data) {
 function YuiBindableValue__updateRawValue(data) {
 	
 	if animation && animation.enabled {
-		var anim_value = animation.compute(raw_value, animation_start_time);
+		var anim_value = animation.compute(raw_value, animation_start_value, animation_start_time);
 		
 		// clear animation when complete
 		if animation.isComplete(animation_start_time) {

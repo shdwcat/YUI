@@ -36,9 +36,9 @@ function YuiColorCurveAnimation(props, resources, slot_values) constructor {
 		blue_start = color_get_blue(color);
 	}
 	else {
-		red_start = 0;
-		blue_start = 0;
-		green_start = 0;
+		red_start = undefined;
+		blue_start = undefined;
+		green_start = undefined;
 	}
 	
 	to = yui_bind_and_resolve(props[$"to"], resources, slot_values);
@@ -54,7 +54,7 @@ function YuiColorCurveAnimation(props, resources, slot_values) constructor {
 		green_stop = undefined;
 	}
 
-	static compute = function(raw_color, start_time) {
+	static compute = function(raw_color, start_value, start_time) {
 				
 		// calculate the current position along the curve based on start time
 		var time = max(current_time - start_time - delay, 0);
@@ -63,10 +63,10 @@ function YuiColorCurveAnimation(props, resources, slot_values) constructor {
 		
 		var curve_value = animcurve_channel_evaluate(value_channel, pos);
 		
-		// default behavior when from/to aren't present is to lerp from the initial value to the raw color
-		var lerp_r = lerp(red_start, red_stop ?? color_get_red(raw_color), curve_value);
-		var lerp_g = lerp(green_start, green_stop ?? color_get_green(raw_color), curve_value);
-		var lerp_b = lerp(blue_start, blue_stop ?? color_get_blue(raw_color), curve_value);
+		// default behavior when from/to aren't present is to lerp from the previous value to the raw color
+		var lerp_r = lerp(red_start ?? color_get_red(start_value), red_stop ?? color_get_red(raw_color), curve_value);
+		var lerp_g = lerp(green_start ?? color_get_green(start_value), green_stop ?? color_get_green(raw_color), curve_value);
+		var lerp_b = lerp(blue_start ?? color_get_blue(start_value), blue_stop ?? color_get_blue(raw_color), curve_value);
 		
 		var color = make_color_rgb(lerp_r, lerp_g, lerp_b);
 		

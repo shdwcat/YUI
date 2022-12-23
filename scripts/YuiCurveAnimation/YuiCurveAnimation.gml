@@ -29,7 +29,7 @@ function YuiCurveAnimation(props, resources, slot_values) constructor {
 	stop = yui_bind_and_resolve(props[$"end"], resources, slot_values) ?? 1;
 	continuous = yui_bind_and_resolve(props[$"repeat"], resources, slot_values) ?? false;
 
-	static compute = function(raw_value, start_time) {
+	static compute = function(raw_value, start_value, start_time) {
 		
 		// calculate the current position along the curve based on start time
 		var time = max(current_time - start_time - delay, 0);
