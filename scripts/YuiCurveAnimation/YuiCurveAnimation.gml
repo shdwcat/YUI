@@ -14,17 +14,20 @@ function YuiCurveAnimation(props, resources, slot_values) constructor {
 	// store for diagnostics
 	self.props = props;
 	
-	enabled = props[$"enabled"] ?? true;
-	curve = asset_get_index(props.curve);
-	channel_name_or_index = props[$"channel"] ?? 0;
+	curve = yui_bind_and_resolve(props.curve, resources, slot_values);
+	if is_string(curve)
+		curve = asset_get_index(curve);
+	
+	enabled = yui_bind_and_resolve(props[$"enabled"], resources, slot_values) ?? true;
+	channel_name_or_index = yui_bind_and_resolve(props[$"channel"], resources, slot_values) ?? 0;
 
 	value_channel = animcurve_get_channel(curve, channel_name_or_index) 
 		
-	duration = props[$"duration"] ?? 1000; // TODO error on zero or negative duration
-	delay = props[$"delay"] ?? 0; // TODO error on negative delay
-	start = props[$"start"] ?? 0;
-	stop = props[$"end"] ?? 1;
-	continuous = props[$"repeat"] ?? false;
+	duration = yui_bind_and_resolve(props[$"duration"], resources, slot_values) ?? 1000; // TODO error on zero or negative duration
+	delay = yui_bind_and_resolve(props[$"delay"], resources, slot_values) ?? 0; // TODO error on negative delay
+	start = yui_bind_and_resolve(props[$"start"], resources, slot_values) ?? 0;
+	stop = yui_bind_and_resolve(props[$"end"], resources, slot_values) ?? 1;
+	continuous = yui_bind_and_resolve(props[$"repeat"], resources, slot_values) ?? false;
 
 	static compute = function(raw_value, start_time) {
 		

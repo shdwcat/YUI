@@ -2,6 +2,9 @@ file_type: resources
 
 resources:
 
+  slide_in_duration: 1000
+  fade_in_color: blue
+
   fade_in:
     type: curve
     curve: curveExpoInv
@@ -13,19 +16,19 @@ resources:
     curve: curveExpoInv
     duration: 2000
     from: white
-    to: blue
+    to: &fade_in_color
 
   slide_in:
     type: curve
     curve: curveExpoInv
-    duration: 2000
+    duration: &slide_in_duration
     start: -300
     end: 0
 
   slide_in2:
     type: curve
     curve: curveExpoInv
-    duration: 2000
+    duration: &slide_in_duration
     delay: 100
     start: -300
     end: 0
@@ -33,7 +36,7 @@ resources:
   slide_in3:
     type: curve
     curve: curveExpoInv
-    duration: 2000
+    duration: &slide_in_duration
     delay: 200
     start: -300
     end: 0
@@ -41,7 +44,7 @@ resources:
   slide_in4:
     type: curve
     curve: curveExpoInv
-    duration: 2000
+    duration: &slide_in_duration
     delay: 300
     start: -300
     end: 0
@@ -49,7 +52,7 @@ resources:
   slide_in5:
     type: curve
     curve: curveExpoInv
-    duration: 2000
+    duration: &slide_in_duration
     delay: 400
     start: -300
     end: 0
@@ -57,7 +60,7 @@ resources:
   slide_in6:
     type: curve
     curve: curveExpoInv
-    duration: 2000
+    duration: &slide_in_duration
     delay: 500
     start: -300
     end: 0
@@ -65,7 +68,7 @@ resources:
   slide_in7:
     type: curve
     curve: curveExpoInv
-    duration: 2000
+    duration: &slide_in_duration
     delay: 600
     start: -300
     end: 0

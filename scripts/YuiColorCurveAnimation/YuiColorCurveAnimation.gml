@@ -1,15 +1,34 @@
 /// @description here
 function YuiColorCurveAnimation(props, resources, slot_values) constructor {
 	
+	static default_props = {
+		curve: undefined,
+		channel: 0,
+		from: undefined,
+		to: undefined,
+		duration: 1000,
+		"repeat": false,
+		enabled: true,
+		delay: 0, // milliseconds
+	}
+	
 	// store for diagnostics
 	self.props = props;
 	
-	enabled = props[$"enabled"] ?? true;
+	curve = yui_bind_and_resolve(props.curve, resources, slot_values);
+	if is_string(curve)
+		curve = asset_get_index(curve);
 		
-	duration = props[$"duration"] ?? 1000; // TODO error on zero or negative duration
-	continuous = props[$"repeat"] ?? false;
+	channel_name_or_index = yui_bind_and_resolve(props[$"channel"], resources, slot_values) ?? 0;
+	value_channel = animcurve_get_channel(curve, channel_name_or_index) 
 	
-	from = props[$"from"];
+	enabled = yui_bind_and_resolve(props[$"enabled"], resources, slot_values) ?? true;
+		
+	duration = yui_bind_and_resolve(props[$"duration"], resources, slot_values) ?? 1000; // TODO error on zero or negative duration
+	continuous = yui_bind_and_resolve(props[$"repeat"], resources, slot_values) ?? false;
+	delay = yui_bind_and_resolve(props[$"delay"], resources, slot_values) ?? 0;
+	
+	from = yui_bind_and_resolve(props[$"from"], resources, slot_values);
 	if from != undefined {
 		var color = yui_resolve_color(from);
 		red_start = color_get_red(color);
@@ -17,12 +36,12 @@ function YuiColorCurveAnimation(props, resources, slot_values) constructor {
 		blue_start = color_get_blue(color);
 	}
 	else {
-		red_start = props[$"red_start"];
-		green_start = props[$"green_start"];
-		blue_start = props[$"blue_start"];
+		red_start = 0;
+		blue_start = 0;
+		green_start = 0;
 	}
 	
-	to = props[$"to"];
+	to = yui_bind_and_resolve(props[$"to"], resources, slot_values);
 	if to != undefined {
 		var color = yui_resolve_color(to);
 		red_stop = color_get_red(color);
@@ -30,72 +49,24 @@ function YuiColorCurveAnimation(props, resources, slot_values) constructor {
 		blue_stop = color_get_blue(color);
 	}
 	else {
-		red_stop = props[$"red_end"];
-		green_stop = props[$"green_end"];
-		blue_stop = props[$"blue_end"];
-	}
-	
-	// one curve to drive RGB
-	var curve_id = props[$"curve"];
-	curve = curve_id != undefined ? asset_get_index(curve_id) : undefined;
-	if curve {
-		// single curve with either rgb color channels OR one channel to drive rgb together
-		var curve_struct = animcurve_get(curve);
-		var channel_count = array_length(curve_struct.channels);
-		
-		if channel_count >= 3 {
-			var red_channel_id = props[$"red_channel"] ?? 0;
-			var green_channel_id = props[$"green_channel"] ?? 1;
-			var blue_channel_id = props[$"blue_channel"] ?? 2;
-			// TODO alpha channel?
-		}
-		else {
-			var red_channel_id = props[$"red_channel"] ?? 0;
-			var green_channel_id = props[$"green_channel"] ?? 0;
-			var blue_channel_id = props[$"blue_channel"] ?? 0;
-		}
-		
-		red_channel = animcurve_get_channel(curve, red_channel_id);
-		green_channel = animcurve_get_channel(curve, green_channel_id);
-		blue_channel = animcurve_get_channel(curve, blue_channel_id);
-	}
-	else {
-		// alternately can specify curves per channel
-		var red_curve_id = props[$"red_curve"];
-		red_curve = red_curve_id != undefined ? asset_get_index(red_curve_id) : undefined;
-		var green_curve_id = props[$"green_curve"];
-		green_curve = green_curve_id != undefined ? asset_get_index(green_curve_id) : undefined;
-		var blue_curve_id = props[$"blue_curve"];
-		blue_curve = blue_curve_id != undefined ? asset_get_index(blue_curve_id) : undefined;
-		
-		// assume the curves exist and that we should use the first channel
-		red_channel = animcurve_get_channel(red_curve, 0);
-		green_channel = animcurve_get_channel(green_curve, 0);
-		blue_channel = animcurve_get_channel(blue_curve, 0);
+		red_stop = undefined;
+		blue_stop = undefined;
+		green_stop = undefined;
 	}
 
 	static compute = function(raw_color, start_time) {
-		
-		// current color animation logic is very weird and seems non-intuitive
-		// perhaps the animation specifies the target color and
-		// the logic then just applies curve(s) to the rgb to go
-		// from the raw_color to the target?
-		// that seems to match what I would want to do, e.g,
-		// animate a color from gray to pink when an item is focused etc
 				
 		// calculate the current position along the curve based on start time
-		var time = current_time - start_time;
+		var time = max(current_time - start_time - delay, 0);
 		var period_time = continuous ? (time mod duration) : time;
 		var pos = period_time / duration;
 		
-		var curve_r = animcurve_channel_evaluate(red_channel, pos);
-		var curve_g = animcurve_channel_evaluate(green_channel, pos);
-		var curve_b = animcurve_channel_evaluate(blue_channel, pos);
+		var curve_value = animcurve_channel_evaluate(value_channel, pos);
 		
-		// default behavior when start/stop aren't present is to lerp from black to the raw color
-		var lerp_r = lerp(red_start ?? color_get_red(raw_color), red_stop ?? color_get_red(raw_color), curve_r);
-		var lerp_g = lerp(green_start ?? color_get_green(raw_color), green_stop ?? color_get_green(raw_color), curve_g);
-		var lerp_b = lerp(blue_start ?? color_get_blue(raw_color), blue_stop ?? color_get_blue(raw_color), curve_b);
+		// default behavior when from/to aren't present is to lerp from the initial value to the raw color
+		var lerp_r = lerp(red_start, red_stop ?? color_get_red(raw_color), curve_value);
+		var lerp_g = lerp(green_start, green_stop ?? color_get_green(raw_color), curve_value);
+		var lerp_b = lerp(blue_start, blue_stop ?? color_get_blue(raw_color), curve_value);
 		
 		var color = make_color_rgb(lerp_r, lerp_g, lerp_b);
 		
@@ -104,6 +75,6 @@ function YuiColorCurveAnimation(props, resources, slot_values) constructor {
 	
 	static isComplete = function(start_time) {
 		return !continuous
-			&& current_time - start_time > duration;
+			&& current_time - start_time - delay > duration;
 	}
 }
