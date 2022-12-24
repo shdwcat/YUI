@@ -349,7 +349,7 @@ isPointVisible = function(x, y) {
 }
 
 beginAnimationGroup = function(animation_group) {
-	animation_group.start(animatable);
+	animation_group.start(animatable, self);
 }
 
 

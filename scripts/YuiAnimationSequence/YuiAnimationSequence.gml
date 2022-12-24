@@ -32,18 +32,23 @@ function YuiAnimationSequence(props, resources, slot_values) constructor {
 		animations[i++] = anim_group;
 	}
 	
-	static start = function(animatable) {
-		startAnimStep(self, animatable, 0);
+	static start = function(animatable, owner) {
+		var owner_ref = weak_ref_create(owner);
+		startAnimStep(self, animatable, owner_ref, 0);
 	}
 	
-	static startAnimStep = function(sequence, animatable, index, previous_time_source = undefined) {
+	static startAnimStep = function(sequence, animatable, owner_ref, index, previous_time_source = undefined) {
+		
+		// clean up previous time source (or framerate will suffer)
 		if previous_time_source
 			time_source_destroy(previous_time_source);
 		
 		with sequence {
+			// start the current animation step
 			var anim_group = animations[index];
 			anim_group.start(animatable);
 			
+			// check if we're out of further animations
 			var finished = ++index >= anim_count;
 			
 			// reset to start if the animation should repeat
@@ -51,6 +56,12 @@ function YuiAnimationSequence(props, resources, slot_values) constructor {
 				finished = false;
 				index = 0;
 			}
+			
+			finished |= weak_ref_alive(owner_ref) == false;
+			
+			if !weak_ref_alive(owner_ref)
+				yui_log("owner no longer alive, ending animation sequence");
+			
 			
 			if !finished {
 				
@@ -68,7 +79,7 @@ function YuiAnimationSequence(props, resources, slot_values) constructor {
 					time_source_id,
 					duration_seconds,
 					time_source_units_seconds,
-					startAnimStep, [sequence, animatable, index, time_source_id],
+					startAnimStep, [sequence, animatable, owner_ref, index, time_source_id],
 					1, // run once
 					time_source_expire_after);
 					
