@@ -1,11 +1,11 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "yui_resolve_element",
+  "name": "YuiAnimationSequence",
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Elements",
-    "path": "folders/Packages - YUI/Elements.yy",
+    "name": "Animation",
+    "path": "folders/Packages - YUI/Binding/Animation.yy",
   },
 }
