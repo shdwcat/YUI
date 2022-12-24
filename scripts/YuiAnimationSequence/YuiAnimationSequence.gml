@@ -36,7 +36,10 @@ function YuiAnimationSequence(props, resources, slot_values) constructor {
 		startAnimStep(self, animatable, 0);
 	}
 	
-	static startAnimStep = function(sequence, animatable, index) {
+	static startAnimStep = function(sequence, animatable, index, previous_time_source = undefined) {
+		if previous_time_source
+			time_source_destroy(previous_time_source);
+		
 		with sequence {
 			var anim_group = animations[index];
 			anim_group.start(animatable);
@@ -50,16 +53,26 @@ function YuiAnimationSequence(props, resources, slot_values) constructor {
 			}
 			
 			if !finished {
-				var ts = time_source_create(
+				
+				var duration_seconds = anim_group.duration / 1000;
+				
+				// create the time souce
+				var time_source_id = time_source_create(
 					time_source,
-					anim_group.duration / 1000,
+					duration_seconds,
 					time_source_units_seconds,
-					startAnimStep,
-					[sequence, animatable, index],
+					startAnimStep);
+				
+				// reconfigure it so that we can pass the time source ID to the callback
+				time_source_reconfigure(
+					time_source_id,
+					duration_seconds,
+					time_source_units_seconds,
+					startAnimStep, [sequence, animatable, index, time_source_id],
 					1, // run once
 					time_source_expire_after);
 					
-				time_source_start(ts);
+				time_source_start(time_source_id);
 			}
 		}
 	}
