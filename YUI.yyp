@@ -295,7 +295,7 @@
     {"id":{"name":"YuiHorizontalLayout","path":"scripts/YuiHorizontalLayout/YuiHorizontalLayout.yy",},"order":10,},
     {"id":{"name":"yui_copy_rect","path":"scripts/yui_copy_rect/yui_copy_rect.yy",},"order":2,},
     {"id":{"name":"yui_document","path":"objects/yui_document/yui_document.yy",},"order":22,},
-    {"id":{"name":"YuiColorCurveAnimation","path":"scripts/YuiColorCurveAnimation/YuiColorCurveAnimation.yy",},"order":4,},
+    {"id":{"name":"YuiRGBCurveAnimation","path":"scripts/YuiRGBCurveAnimation/YuiRGBCurveAnimation.yy",},"order":4,},
     {"id":{"name":"yui_create_template_element","path":"scripts/yui_create_template_element/yui_create_template_element.yy",},"order":2,},
     {"id":{"name":"yui_call_handler","path":"scripts/yui_call_handler/yui_call_handler.yy",},"order":1,},
     {"id":{"name":"YS_PRECEDENCE","path":"scripts/YS_PRECEDENCE/YS_PRECEDENCE.yy",},"order":0,},

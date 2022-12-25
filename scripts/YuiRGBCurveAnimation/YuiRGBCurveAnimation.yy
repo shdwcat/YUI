@@ -1,7 +1,7 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "YuiColorCurveAnimation",
+  "name": "YuiRGBCurveAnimation",
   "isDnD": false,
   "isCompatibility": false,
   "parent": {

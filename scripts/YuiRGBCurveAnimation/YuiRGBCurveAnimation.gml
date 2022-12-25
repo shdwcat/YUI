@@ -1,7 +1,8 @@
 /// @description here
-function YuiColorCurveAnimation(props, resources, slot_values) constructor {
+function YuiRGBCurveAnimation(props, resources, slot_values) constructor {
 	
 	static default_props = {
+		type: "rgb_curve",
 		curve: undefined,
 		channel: 0,
 		from: undefined,
@@ -37,8 +38,8 @@ function YuiColorCurveAnimation(props, resources, slot_values) constructor {
 	}
 	else {
 		red_start = undefined;
-		blue_start = undefined;
 		green_start = undefined;
+		blue_start = undefined;
 	}
 	
 	to = yui_bind_and_resolve(props[$"to"], resources, slot_values);
@@ -50,8 +51,8 @@ function YuiColorCurveAnimation(props, resources, slot_values) constructor {
 	}
 	else {
 		red_stop = undefined;
-		blue_stop = undefined;
 		green_stop = undefined;
+		blue_stop = undefined;
 	}
 
 	static compute = function(raw_color, start_value, start_time) {
