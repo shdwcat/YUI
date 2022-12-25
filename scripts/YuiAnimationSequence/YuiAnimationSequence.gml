@@ -57,11 +57,8 @@ function YuiAnimationSequence(props, resources, slot_values) constructor {
 				index = 0;
 			}
 			
+			// ensure we're finished if the owner is no longer alive 
 			finished |= weak_ref_alive(owner_ref) == false;
-			
-			if !weak_ref_alive(owner_ref)
-				yui_log("owner no longer alive, ending animation sequence");
-			
 			
 			if !finished {
 				

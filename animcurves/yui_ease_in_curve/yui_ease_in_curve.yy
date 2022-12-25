@@ -11,6 +11,6 @@
   ],
   "parent": {
     "name": "Animation",
-    "path": "folders/Packages - YUI/Binding/Animation.yy",
+    "path": "folders/Packages - YUI/Animation.yy",
   },
 }
