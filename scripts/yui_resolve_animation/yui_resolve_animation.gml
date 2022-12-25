@@ -13,6 +13,10 @@ function yui_resolve_animation(anim_props, resources, slot_values) {
 			var anim = new YuiColorCurveAnimation(anim_props, resources, slot_values);
 			return anim;
 		}
+		else if anim_props.type == "hsv_curve" {
+			var anim = new YuiHSVCurveAnimation(anim_props, resources, slot_values);
+			return anim;
+		}
 		else if yui_is_binding(anim_props) {
 			throw yui_error("data binding animation values is not supported", anim_props.type);
 		}
