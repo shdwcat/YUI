@@ -1,3 +1,5 @@
+// adapted and renamed from the original SNAP version
+
 /// @returm Copy of the given struct/array, including a copy of any nested structs and arrays
 /// 
 /// This function is designed to copy simple tree-like structures that have been imported from 
@@ -6,12 +8,12 @@
 /// 
 /// @jujuadams 2021-02-14
 
-function snap_deep_copy(_value)
+function yui_deep_copy(_value)
 {
-    return (new __snap_deep_copy(_value)).copy;
+    return (new __yui_deep_copy(_value)).copy;
 }
 
-function __snap_deep_copy(_value) constructor
+function __yui_deep_copy(_value) constructor
 {
     source = _value;
     copy = undefined;
@@ -47,7 +49,7 @@ function __snap_deep_copy(_value) constructor
                 else if (_self != undefined)
                 {
                     //If the scope of the method isn't <undefined> (global) then spit out a warning
-                    show_debug_message("snap_deep_copy(): Warning! Deep copy found a method reference that could not be appropriately handled");
+                    show_debug_message("yui_deep_copy(): Warning! Deep copy found a method reference that could not be appropriately handled");
                 }
             }
             

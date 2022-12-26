@@ -6,7 +6,7 @@ function ys_test(test_file, log_tokens = true) {
 	// find the real data file
 	var project_test_file = YUI_LOCAL_PROJECT_DATA_FOLDER + test_file;
 	
-	var source = string_from_file(project_test_file);
+	var source = yui_string_from_file(project_test_file);
 	
 	var token_def = new YsTokenDefinition();
 	var scanner = new YsScanner(source, token_def);

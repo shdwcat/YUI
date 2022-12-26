@@ -7,7 +7,7 @@ function yui_create_template_element(instance_props, template_definition, resour
 	// the props for the element we will create
 	// need to copy the definition since we'll be updating the values
 	// with the customized props from the instance_props
-	var template_element_props = snap_deep_copy(template_definition.template);
+	var template_element_props = yui_deep_copy(template_definition.template);
 	
 	// if we're evaluating recursive templates, we need to consider the outer template 
 	// as a source of slot values (e.g. context_menu overriding menu slot values)

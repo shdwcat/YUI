@@ -32,7 +32,7 @@ function yui_resolve_animation(anim_props, resources, slot_values) {
 			// if the result is not a binding, copy the resolved values to ensure we're not sharing state incorrectly
 			if !yui_is_binding(resolved_anim_props)
 			&& (is_struct(resolved_anim_props) || is_array(resolved_anim_props)) {
-				resolved_anim_props = snap_deep_copy(resolved_anim_props)
+				resolved_anim_props = yui_deep_copy(resolved_anim_props)
 			}
 			
 			// The result might be something like a slot or resource, or 'raw' anim props.

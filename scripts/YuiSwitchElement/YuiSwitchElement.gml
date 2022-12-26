@@ -15,7 +15,7 @@ function YuiSwitchElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	props.switch_on = yui_bind(props.switch_on, resources, slot_values);
 	
 	// init case elements
-	case_elements = snap_deep_copy(props.cases);
+	case_elements = yui_deep_copy(props.cases);
 	
 	if props.default_case != undefined {
 		default_element = yui_resolve_element(props.default_case, resources, slot_values);

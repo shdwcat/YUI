@@ -11,15 +11,15 @@ function YuiExampleManager() constructor {
 		active_tab_index: 0
 	};
 	
-	var items_file = string_from_file("ExampleProject/Data/inventory.yaml")
-	var inventory = snap_from_yaml(items_file);
+	var items_file = yui_string_from_file("ExampleProject/Data/inventory.yaml")
+	var inventory = snap_from_yui(items_file);
 	
 	slots = inventory.slots;
 	items = inventory.items;
 	
-	foreach(slots, function(slot) {
-			slot.equipped_item = { name: undefined, sprite: undefined }
-		});
+	array_foreach(slots, function(slot) {
+		slot.equipped_item = { name: undefined, sprite: undefined }
+	});
 	
 	widget_data = new WidgetGalleryData();
 	
