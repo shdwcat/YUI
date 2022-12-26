@@ -599,10 +599,10 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"vertical.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens/Layouts",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":".gitattributes","CopyToMask":-1,"filePath":"datafiles",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"dropdown_menu.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Widgets",},
-    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"transitions.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Animations",},
-    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"welcome_screen.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"scrollbox.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Widgets",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"slider.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Widgets",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"welcome_screen.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"transitions.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Animations",},
   ],
   "MetaData": {
     "IDEVersion": "2022.11.1.56",

@@ -40,6 +40,7 @@ root:
               // also supports: bottom, right, center: true, center: h, center: v
         top: 50
         left: 50
+      //enabled: @test_opacity == 1
       padding: 20
       spacing: 10 // spacing controls the distance between child elements of a panel
       elements:
@@ -48,16 +49,24 @@ root:
           elements: 
             - type: text // 'type: text' is how we draw text! simple
               text_style: title // this applies one of the text styles defined in the active theme
-              opacity: @test_opacity
+              //opacity: @test_opacity
+              //enabled: false
+              //color: green
               //trace: true
-              // animate:
-              //   on_visible:
-              //     opacity: &fade_in
-              scribble: true
+              animate:
+                on_visible:
+                  type: anim_sequence
+                  repeat: true
+                  animations:
+                    - color: &fade_to_accent_color
+                      xoffset: &slide_right
+                    - color: &fade_to_green
+                      xoffset: &slide_left
+              //scribble: true
               text: "Welcome to the YUI Example Project!" // and here we set the text itself
 
               // You can also just put a string as a child and it will automatically be converted to a 'text' element. Easy!
-            - This screen is defined in datafiles/YUI/Screens/welcome_screen.yui
+            - This screen is defined in datafiles/ExampleProject/Screens/welcome_screen.yui
             - You can edit this file while the game is running! Press F5 to reload after making changes
             //- @app_name
             - " " // inserts a blank line
@@ -65,12 +74,13 @@ root:
 
         - type: panel
           alignment: { h: stretch }
+          //indexed: true
           elements:
 
             - type: button
               animate:
                 on_visible:
-                  xoffset: &slide_in
+                  xoffset: &cascade_slide_in
               content:
                 type: text
                 text: Widget Gallery
@@ -79,14 +89,14 @@ root:
             - type: button
               animate:
                 on_visible:
-                  xoffset: &slide_in2
+                  xoffset: &cascade_slide_in
               content: TodoMVC Example
               on_click: @@ e => yui_change_screen(todo_mvc, e.source)
 
             - type: button
               animate:
                 on_visible:
-                  xoffset: &slide_in3
+                  xoffset: &cascade_slide_in
               content: "Drag and Drop: Inventory Screen"
               tooltip: Demonstrates an inventory screen where you can drag and drop items onto equipment slots for a character
               on_click: @@ e => yui_change_screen(inventory_screen, e.source)
@@ -101,28 +111,28 @@ root:
               on_click: @@ e => yui_change_screen(layout_example, e.source)
               animate:
                 on_visible:
-                  xoffset: &slide_in4
+                  xoffset: &cascade_slide_in
 
             - type: button
               content: Windows Example
               on_click: @@ e => yui_change_screen(windows_example, e.source)
               animate:
                 on_visible:
-                  xoffset: &slide_in5
+                  xoffset: &cascade_slide_in
 
             - type: button
               content: Keyboard Navigation
               on_click: @@ e => yui_change_screen(kb_navigation_example, e.source)
               animate:
                 on_visible:
-                  xoffset: &slide_in6
+                  xoffset: &cascade_slide_in
 
             - type: button
               content: Viewport/Scrolling WIP
               on_click: @@ e => yui_change_screen(viewport_example, e.source)
               animate:
                 on_visible:
-                  xoffset: &slide_in7
+                  xoffset: &cascade_slide_in
 
         // - type: button
         //   content: Dev Sandbox

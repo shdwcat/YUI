@@ -27,6 +27,10 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		path: undefined, // defines the source path for the element list
 		template: undefined, // the template to use when rendering elements from the path
 		
+		// child elements (and sub-children will be indexed by their positiin in this panel
+		// NOTE: setting 'indexed: true' on a sub-panel will replace this index
+		indexed: false,
+		
 		// allows binding slots at panel scope instead of item scope
 		bind_slot_scope: undefined,
 	};
@@ -80,7 +84,20 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		var i = 0; repeat array_length(props.elements) {
 			var element = props.elements[i];
 			var panel_item_id = props.id + "[" + string(i) + "]";
-			item_elements[i] = yui_resolve_element(element, resources, slot_values, panel_item_id);
+			var item_slot_values = slot_values;
+			
+			// when indexing is enabled, set the $panel_index slot
+			if props.indexed {
+				item_slot_values = yui_shallow_copy(slot_values);
+				item_slot_values.panel_index = i;
+			}
+			
+			item_elements[i] = yui_resolve_element(
+				element,
+				resources,
+				item_slot_values,
+				panel_item_id);
+				
 			i++;
 		}
 		element_count = i;

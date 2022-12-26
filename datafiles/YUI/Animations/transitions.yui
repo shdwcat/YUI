@@ -2,74 +2,49 @@ file_type: resources
 
 resources:
 
-  slide_in_duration: 1000
-  fade_in_color: blue
-
   fade_in:
     type: curve
     curve: curveExpoInv
     duration: 2000
 
-  fade_white_to_blue:
-    // color from white to blue in 2s by curveExpoInv
-    type: color_curve
-    curve: curveExpoInv
-    duration: 2000
-    from: white
-    to: &fade_in_color
+  // possible short syntax:
+  // hsv_curve from white to blue in 2s by curveSine
 
-  slide_in:
+  fade_color_duration: 800
+
+  fade_to_accent_color:
+    type: hsv_curve
+    curve: curveLinear
+    duration: &fade_color_duration
+    to: $theme.resources.accent_color
+
+  fade_to_green:
+    type: hsv_curve
+    curve: curveLinear
+    duration: &fade_color_duration
+    to: #00ee00
+
+  cascade_slide_in:
     type: curve
     curve: curveExpoInv
-    duration: &slide_in_duration
+    duration: 1000
+    delay: $panel_index ?? 0 * 100
     start: -300
     end: 0
 
-  slide_in2:
-    type: curve
-    curve: curveExpoInv
-    duration: &slide_in_duration
-    delay: 100
-    start: -300
-    end: 0
+  slide_duration: 1500
 
-  slide_in3:
+  slide_right:
     type: curve
     curve: curveExpoInv
-    duration: &slide_in_duration
-    delay: 200
-    start: -300
-    end: 0
+    duration: &slide_duration
+    start: 0
+    end: 30
 
-  slide_in4:
+  slide_left:
     type: curve
     curve: curveExpoInv
-    duration: &slide_in_duration
-    delay: 300
-    start: -300
-    end: 0
-
-  slide_in5:
-    type: curve
-    curve: curveExpoInv
-    duration: &slide_in_duration
-    delay: 400
-    start: -300
-    end: 0
-
-  slide_in6:
-    type: curve
-    curve: curveExpoInv
-    duration: &slide_in_duration
-    delay: 500
-    start: -300
-    end: 0
-
-  slide_in7:
-    type: curve
-    curve: curveExpoInv
-    duration: &slide_in_duration
-    delay: 600
-    start: -300
+    duration: &slide_duration
+    start: 30
     end: 0
 
