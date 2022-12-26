@@ -8,7 +8,7 @@
 // e.g. "D:/Projects/Game Design/YUI/datafiles/"
 #macro YUI_USER_PROJECT_DATA_FOLDER undefined
 
-
+#macro DEFAULT_THEME_NAME "default"
 
 
 // actually do the init - DO NOT DELETE THIS!

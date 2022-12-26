@@ -49,30 +49,12 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	}
 	
 	static getBoundValues = function YuiPopupElement_getBoundValues(data, prev) {
-		if data_source != undefined {
-			data = yui_resolve_binding(data_source, data);
-		}
-		
-		var is_visible = yui_resolve_binding(props.visible, data);
-		if !is_visible return false;
-		
-		var opacity = yui_resolve_binding(props.opacity, data);
 		var placement = yui_resolve_binding(props.placement, data);
-		var xoffset = yui_resolve_binding(props.xoffset, data);
-		var yoffset = yui_resolve_binding(props.yoffset, data);
-		
-		var bg_sprite = is_bg_sprite_live ? yui_resolve_sprite_by_name(bg_sprite_binding.resolve(data)) : undefined;
-		var bg_color = is_bg_color_live ? yui_resolve_color(bg_color_binding.resolve(data)) : undefined;
-		
+
 		// diff
 		if prev
 			&& data == prev.data_source
-			&& opacity == prev.opacity
 			&& placement == prev.placement
-			&& xoffset == prev.xoffset
-			&& yoffset == prev.yoffset
-			&& bg_sprite == prev.bg_sprite
-			&& bg_color == prev.bg_color
 		{
 			return true;
 		}
@@ -81,13 +63,7 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			is_live: is_bound,
 			data_source: data,
 			// popup
-			opacity: opacity,
 			placement: placement,
-			xoffset: xoffset,
-			yoffset: yoffset,
-			// live versions
-			bg_sprite: bg_sprite,
-			bg_color: bg_color,
 		};
 	}
 }

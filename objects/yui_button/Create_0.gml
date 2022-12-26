@@ -14,19 +14,12 @@ onLayoutInit = function() {
 	pressed_alpha = layout_props.pressed_alpha;
 }
 
-border_build = build;
-build = function() {
-	enabled = bound_values.enabled;
-	focusable = bound_values.enabled;
-	border_build();
-}
-
 left_pressed = function() {
 	// scoop this up to prevent drag drop initiation through buttons
 }
 
 left_click = function() {
-	if !bound_values.enabled return;
+	if !enabled return;
 	if yui_element.props.on_click != undefined {
 		var element = self;
 		var args = {
@@ -34,7 +27,7 @@ left_click = function() {
 			button: "left",
 		};
 		
-		yui_call_handler(yui_element.props.on_click, [args], bound_values.data_source);
+		yui_call_handler(yui_element.props.on_click, [args], data_source);
 	}
 }
 

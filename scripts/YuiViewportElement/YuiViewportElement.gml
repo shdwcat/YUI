@@ -73,30 +73,11 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 	}
 	
 	static getBoundValues = function YuiViewportElement_getBoundValues(data, prev) {
-		if data_source != undefined {
-			data = yui_resolve_binding(data_source, data);
-		}
-		
-		var is_visible = is_visible_live ? props.visible.resolve(data) : props.visible;
-		if !is_visible return false;
-		
-		var opacity = is_opacity_live ? props.opacity.resolve(data) : props.opacity;
-		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
-		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
-		
-		var bg_sprite = is_bg_sprite_live ? yui_resolve_sprite_by_name(bg_sprite_binding.resolve(data)) : undefined;
-		var bg_color = is_bg_color_live ? yui_resolve_color(bg_color_binding.resolve(data)) : undefined;
-		
 		var viewport_x = is_viewport_x_bound ? props.viewport_x.resolve(data) : props.viewport_x;
 		var viewport_y = is_viewport_y_bound ? props.viewport_y.resolve(data) : props.viewport_y;
 		
 		// diff
 		if prev
-			&& opacity == prev.opacity
-			&& xoffset == prev.xoffset
-			&& yoffset == prev.yoffset
-			&& bg_sprite == prev.bg_sprite
-			&& bg_color == prev.bg_color
 			&& viewport_x == prev.viewport_x
 			&& viewport_y == prev.viewport_y
 		{
@@ -106,12 +87,6 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 		return {
 			is_live: is_bound,
 			data_source: data,
-			opacity: opacity,
-			xoffset: xoffset,
-			yoffset: yoffset,
-			// live versions
-			bg_sprite: bg_sprite,
-			bg_color: bg_color,
 			// viewport
 			viewport_x: viewport_x,
 			viewport_y: viewport_y,

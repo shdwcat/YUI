@@ -24,8 +24,6 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	resolveBackgroundAndBorder()
 	
 	is_bound = base_is_bound
-		|| is_bg_sprite_live
-		|| is_bg_color_live;
 		
 	// ===== functions =====
 		
@@ -36,6 +34,8 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 			size: size,
 			content_element: content_element,
 			is_bg_live: is_bg_sprite_live || is_bg_color_live,
+			is_bg_sprite_live: is_bg_sprite_live,
+			is_bg_color_live: is_bg_color_live,
 			bg_sprite: bg_sprite,
 			bg_color: bg_color,
 			border_color: border_color,
@@ -45,31 +45,12 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	}
 	
 	static getBoundValues = function YuiBorderElement_getBoundValues(data, prev) {
-		if data_source != undefined {
-			data = yui_resolve_binding(data_source, data);
-		}
-		
-		var is_visible = is_visible_live ? props.visible.resolve(data) : props.visible;
-		if !is_visible return false;
-		
-		var opacity = is_opacity_live ? props.opacity.resolve(data) : props.opacity;
-		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
-		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
-		
 		if props.trace
 			DEBUG_BREAK_YUI
-		
-		var bg_sprite = is_bg_sprite_live ? yui_resolve_sprite_by_name(bg_sprite_binding.resolve(data)) : undefined;
-		var bg_color = is_bg_color_live ? yui_resolve_color(bg_color_binding.resolve(data)) : undefined;
 		
 		// diff
 		if prev
 			&& data == prev.data_source
-			&& opacity == prev.opacity
-			&& xoffset == prev.xoffset
-			&& yoffset == prev.yoffset
-			&& bg_sprite == prev.bg_sprite
-			&& bg_color == prev.bg_color
 		{
 			return true;
 		}
@@ -77,12 +58,6 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		return {
 			is_live: is_bound,
 			data_source: data,
-			opacity: opacity,
-			xoffset: xoffset,
-			yoffset: yoffset,
-			// live versions
-			bg_sprite: bg_sprite,
-			bg_color: bg_color,
 		};
 	}
 }

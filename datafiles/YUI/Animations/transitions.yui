@@ -1,0 +1,50 @@
+file_type: resources
+
+resources:
+
+  fade_in:
+    type: curve
+    curve: curveExpoInv
+    duration: 2000
+
+  // possible short syntax:
+  // hsv_curve from white to blue in 2s by curveSine
+
+  fade_color_duration: 800
+
+  fade_to_accent_color:
+    type: hsv_curve
+    curve: curveLinear
+    duration: &fade_color_duration
+    to: $theme.resources.accent_color
+
+  fade_to_green:
+    type: hsv_curve
+    curve: curveLinear
+    duration: &fade_color_duration
+    to: #00ee00
+
+  cascade_slide_in:
+    type: curve
+    curve: curveExpoInv
+    duration: 1000
+    delay: $panel_index ?? 0 * 100
+    start: -300
+    end: 0
+
+  slide_duration: 1500
+
+  slide_right:
+    type: curve
+    curve: curveExpoInv
+    duration: &slide_duration
+    start: 0
+    end: 30
+
+  slide_left:
+    type: curve
+    curve: curveExpoInv
+    duration: &slide_duration
+    start: 30
+    end: 0
+

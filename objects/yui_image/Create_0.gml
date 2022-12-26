@@ -6,24 +6,19 @@ sprite_index = -1;
 // Inherit the parent event
 event_inherited();
 
+onLayoutInit = function() {
+	frame_value = yui_element.frame_value;
+	angle_value = yui_element.angle_value;
+	blend_color_value = yui_element.blend_color_value;
+}
+
 build = function() {
-	trace = yui_element.props.trace; // hack
-	
 	if bound_values.sprite >= 0 {
 		sprite_index = bound_values.sprite;
 	}
 	else {
 		visible = false;
-	}	
-	
-	if bound_values.frame != undefined {
-		image_index = bound_values.frame;
-		image_speed = 0;
 	}
-	
-	image_angle = bound_values.angle;
-	image_alpha = bound_values.opacity * parent.opacity;
-	blend_color = bound_values.blend_color;
 	
 	if trace {
 		DEBUG_BREAK_YUI;
@@ -112,10 +107,6 @@ arrange = function(available_size, viewport_size) {
 	});
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
-	
-	if bound_values && (bound_values.xoffset != 0 || bound_values.yoffset != 0) {
-		move(bound_values.xoffset, bound_values.yoffset);
-	}
 	
 	// position at the padded rect corner so we can just draw at x/y
 	x = padded_rect.x;

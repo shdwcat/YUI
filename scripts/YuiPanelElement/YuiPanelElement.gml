@@ -27,6 +27,10 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		path: undefined, // defines the source path for the element list
 		template: undefined, // the template to use when rendering elements from the path
 		
+		// child elements (and sub-children will be indexed by their positiin in this panel
+		// NOTE: setting 'indexed: true' on a sub-panel will replace this index
+		indexed: false,
+		
 		// allows binding slots at panel scope instead of item scope
 		bind_slot_scope: undefined,
 	};
@@ -80,7 +84,20 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		var i = 0; repeat array_length(props.elements) {
 			var element = props.elements[i];
 			var panel_item_id = props.id + "[" + string(i) + "]";
-			item_elements[i] = yui_resolve_element(element, resources, slot_values, panel_item_id);
+			var item_slot_values = slot_values;
+			
+			// when indexing is enabled, set the $panel_index slot
+			if props.indexed {
+				item_slot_values = yui_shallow_copy(slot_values);
+				item_slot_values.panel_index = i;
+			}
+			
+			item_elements[i] = yui_resolve_element(
+				element,
+				resources,
+				item_slot_values,
+				panel_item_id);
+				
 			i++;
 		}
 		element_count = i;
@@ -118,10 +135,6 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	}
 	
 	static getBoundValues = function YuiPanelElement_getBoundValues(data, prev) {
-		if data_source != undefined {
-			data = is_data_source_bound ? data_source.resolve(data) : data_source;
-		}
-		
 		// update scoped bindings if needed
 		if has_scoped_slots && (!prev || data != prev.data_source) {
 			var bound_slot_names = variable_struct_get_names(props.bind_slot_scope);
@@ -131,16 +144,6 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 				binding.updateScope(data);
 			}
 		}
-		
-		var is_visible = is_visible_live ? props.visible.resolve(data) : props.visible;
-		if !is_visible return false;
-		
-		var opacity = is_opacity_live ? props.opacity.resolve(data) : props.opacity;
-		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
-		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
-		
-		var bg_sprite = is_bg_sprite_live ? yui_resolve_sprite_by_name(bg_sprite_binding.resolve(data)) : undefined;
-		var bg_color = is_bg_color_live ? yui_resolve_color(bg_color_binding.resolve(data)) : undefined;
 		
 		if uses_template {
 			// single template element for bound data_items
@@ -168,11 +171,6 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		// diff
 		if prev
 			&& data == prev.data_source
-			&& opacity == prev.opacity
-			&& xoffset == prev.xoffset
-			&& yoffset == prev.yoffset
-			&& bg_sprite == prev.bg_sprite
-			&& bg_color == prev.bg_color
 			&& child_count == prev.child_count
 			&& (uses_template
 				? array_equals(data_items, prev.data_items)
@@ -186,12 +184,6 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			is_live: is_bound || layout.is_live,
 			// border
 			data_source: data,
-			opacity: opacity,
-			xoffset: xoffset,
-			yoffset: yoffset,
-			// live versions
-			bg_sprite: bg_sprite,
-			bg_color: bg_color,
 			// panel
 			child_count: child_count,
 			data_items: data_items,

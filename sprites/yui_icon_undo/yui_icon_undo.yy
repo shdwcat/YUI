@@ -1,4 +1,7 @@
 {
+  "resourceType": "GMSprite",
+  "resourceVersion": "1.0",
+  "name": "yui_icon_undo",
   "bboxMode": 0,
   "collisionKind": 1,
   "type": 0,
@@ -14,6 +17,7 @@
   "HTile": false,
   "VTile": false,
   "For3D": false,
+  "DynamicTexturePage": false,
   "width": 512,
   "height": 512,
   "textureGroupId": {
@@ -24,12 +28,12 @@
   "gridX": 0,
   "gridY": 0,
   "frames": [
-    {"compositeImage":{"FrameId":{"name":"2d973f74-095e-4871-a70c-234c8ea4d8d7","path":"sprites/yui_icon_undo/yui_icon_undo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
-        {"FrameId":{"name":"2d973f74-095e-4871-a70c-234c8ea4d8d7","path":"sprites/yui_icon_undo/yui_icon_undo.yy",},"LayerId":{"name":"d546ee8e-0d22-418e-8aeb-9ee2e5ecd301","path":"sprites/yui_icon_undo/yui_icon_undo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-      ],"parent":{"name":"yui_icon_undo","path":"sprites/yui_icon_undo/yui_icon_undo.yy",},"resourceVersion":"1.0","name":"2d973f74-095e-4871-a70c-234c8ea4d8d7","tags":[],"resourceType":"GMSpriteFrame",},
+    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"2d973f74-095e-4871-a70c-234c8ea4d8d7",},
   ],
   "sequence": {
-    "spriteId": {"name":"yui_icon_undo","path":"sprites/yui_icon_undo/yui_icon_undo.yy",},
+    "resourceType": "GMSequence",
+    "resourceVersion": "1.4",
+    "name": "yui_icon_undo",
     "timeUnits": 1,
     "playback": 1,
     "playbackSpeed": 30.0,
@@ -40,9 +44,9 @@
     "events": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore<MessageEventKeyframe>",},
     "moments": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore<MomentsEventKeyframe>",},
     "tracks": [
-      {"name":"frames","spriteId":null,"keyframes":{"Keyframes":[
+      {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","spriteId":null,"keyframes":{"Keyframes":[
             {"id":"03d82602-145e-4ea7-8d78-a5467465aa04","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"2d973f74-095e-4871-a70c-234c8ea4d8d7","path":"sprites/yui_icon_undo/yui_icon_undo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
-          ],"resourceVersion":"1.0","resourceType":"KeyframeStore<SpriteFrameKeyframe>",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"isCreationTrack":false,"resourceVersion":"1.0","tags":[],"resourceType":"GMSpriteFramesTrack","modifiers":[],},
+          ],"resourceVersion":"1.0","resourceType":"KeyframeStore<SpriteFrameKeyframe>",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"isCreationTrack":false,"modifiers":[],},
     ],
     "visibleRange": null,
     "lockOrigin": false,
@@ -58,22 +62,13 @@
     "yorigin": 0,
     "eventToFunction": {},
     "eventStubScript": null,
-    "parent": {"name":"yui_icon_undo","path":"sprites/yui_icon_undo/yui_icon_undo.yy",},
-    "resourceVersion": "1.4",
-    "name": "yui_icon_undo",
-    "tags": [],
-    "resourceType": "GMSequence",
   },
   "layers": [
-    {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"d546ee8e-0d22-418e-8aeb-9ee2e5ecd301","tags":[],"resourceType":"GMImageLayer",},
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"d546ee8e-0d22-418e-8aeb-9ee2e5ecd301","visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default",},
   ],
   "nineSlice": null,
   "parent": {
     "name": "delapouite",
     "path": "folders/Packages - YUI/Sprites/game-icons.net/delapouite.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "yui_icon_undo",
-  "tags": [],
-  "resourceType": "GMSprite",
 }

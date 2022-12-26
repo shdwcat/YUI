@@ -2,6 +2,8 @@ id: inventory_screen
 file_type: screen
 
 import:
+  - /YUI/Animations/transitions.yui
+  
   - "../Templates/main_panel.yui"
   - "../Templates/back_button.yui"
 
@@ -83,6 +85,9 @@ root:
   type: panel
   padding: 30
   layout: canvas 
+  animate:
+    on_visible:
+      opacity: &fade_in
   elements:
     - type: back_button
 

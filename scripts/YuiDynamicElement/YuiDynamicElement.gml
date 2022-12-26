@@ -16,7 +16,7 @@ function YuiDynamicElement(_props, _resources, _slot_values) : YuiBaseElement(_p
 	// ===== functions =====
 	
 	static getLayoutProps = function() {
-		return;
+		return {};
 	}
 	
 	static getBoundValues = function YuiDynamicElement_getBoundValues(data, prev) {

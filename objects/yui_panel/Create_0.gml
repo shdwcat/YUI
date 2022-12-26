@@ -19,8 +19,6 @@ border_build = build;
 build = function yui_panel__build() {
 	border_build();
 	
-	trace = yui_element.props.trace; // hack
-	
 	// resync our internal children to the bound children
 	
 	var child_count = bound_values.child_count;
@@ -126,10 +124,6 @@ arrange = function yui_panel__arrange(available_size, viewport_size) {
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
 	
-	if bound_values && (bound_values.xoffset != 0 || bound_values.yoffset != 0) {
-		move(bound_values.xoffset, bound_values.yoffset);
-	}
-	
 	if viewport_size {
 		updateViewport();
 	}
@@ -143,8 +137,7 @@ arrange = function yui_panel__arrange(available_size, viewport_size) {
 	};
 	
 	if events.on_arrange != undefined {
-		var data = bound_values ? bound_values.data_source : undefined;
-		yui_call_handler(events.on_arrange, [used_size], data);
+		yui_call_handler(events.on_arrange, [used_size], data_source);
 	}
 	
 	return used_size;
@@ -153,7 +146,7 @@ arrange = function yui_panel__arrange(available_size, viewport_size) {
 onChildLayoutComplete = function(child) {
 	if !is_arranging {
 		arrange(draw_rect);
-		if parent {
+		if is_size_changed && parent {
 			parent.onChildLayoutComplete(self);
 		}
 	}

@@ -22,16 +22,12 @@ text_surface_h = 0;
 override_text = undefined;
 
 onLayoutInit = function() {
+	color_value = yui_element.color_value;
 	highlight_color = layout_props.highlight_color;
 	use_scribble = layout_props.use_scribble;
 }
 
 build = function() {
-	trace = yui_element.props.trace; // hack
-	
-	// used in Draw GUI
-	text_color = bound_values.color;
-	opacity = bound_values.opacity * parent.opacity;
 	
 	var text = override_text ?? bound_values.text;
 		
@@ -43,9 +39,9 @@ build = function() {
 		typist = bound_values.typist;
 		typist.__associate(scribble_element);
 	}
-	else if bound_values.autotype != undefined {
+	else if layout_props.autotype != undefined {
 		typist = scribble_typist();
-		var autotype = bound_values.autotype;
+		var autotype = layout_props.autotype;
 		if autotype == true {
 			typist.in(0.15, 0);
 		}
@@ -53,7 +49,8 @@ build = function() {
 			typist.in(autotype.speed, autotype.smoothness);
 		}
 		else {
-			throw "invalid autotype value";
+			// TODO validate this in YuiTextElement
+			throw yui_error("invalid autotype value");
 		}
 	}	
 	
@@ -92,7 +89,6 @@ arrange = function(available_size, viewport_size) {
 
 	var new_bbox = scribble_element.get_bbox(x, y, padding.left, padding.top, padding.right, padding.bottom);
 	
-	
 	var old_font = draw_get_font();
 	draw_set_font(font);
 	
@@ -117,10 +113,6 @@ arrange = function(available_size, viewport_size) {
 	});
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
-	
-	if bound_values && (bound_values.xoffset != 0 || bound_values.yoffset != 0) {
-		move(bound_values.xoffset, bound_values.yoffset);
-	}
 	
 	use_text_surface = font >= 0 && !use_scribble;
 	if use_text_surface {
@@ -153,18 +145,21 @@ arrange = function(available_size, viewport_size) {
 buildTextSurface = function() {
 	
 	if !bound_values return;
-
-	var text = override_text ?? bound_values.text;
 	
 	if (text_surface_w > 0 && text_surface_h > 0) {
+
+		var text = override_text ?? bound_values.text;
+	
 		text_surface = yui_draw_text_to_surface(
 			element_xoffset, element_yoffset,
 			text_surface_w, text_surface_h,
 			text,
 			text_surface_w - layout_props.padding.w,
-			text_color ?? c_white, opacity,
+			c_white, // color blending happens on surface draw
+			opacity,
 			layout_props.halign, layout_props.valign,
-			font, text_surface);
+			font,
+			text_surface);
 	}
 }
 

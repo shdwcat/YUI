@@ -3,7 +3,6 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	static default_props = {
 		type: "image",
 		padding: 0,
-		scale_mode: "slice", // stretch/tile/clip/none/etc
 		center: false,
 		
 		sprite: undefined,
@@ -36,14 +35,17 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	if !is_blend_color_live {
 		props.blend_color = yui_resolve_color(props.blend_color);
 	}
-		
-	is_frame_live = yui_is_live_binding(props.frame);
-	is_angle_live = yui_is_live_binding(props.angle);
+	
+	frame_value = new YuiBindableValue(props.frame);
+	angle_value = new YuiBindableValue(props.angle);
+	blend_color_value = new YuiBindableValue(props.blend_color);
+	
+	animatable.frame = frame_value;
+	animatable.angle = angle_value;
+	animatable.blend_color = blend_color_value;
 	
 	is_bound = base_is_bound
 		|| yui_is_live_binding(props.sprite)
-		|| yui_is_live_binding(props.frame)
-		|| yui_is_live_binding(props.angle)
 		|| yui_is_live_binding(props.blend_color);
 	
 	// ===== functions =====
@@ -57,13 +59,6 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	}
 	
 	static getBoundValues = function YuiImageElement_getBoundValues(data, prev) {
-		if data_source != undefined {
-			data = yui_resolve_binding(data_source, data);
-		}
-		
-		var is_visible = is_visible_live ? props.visible.resolve(data) : props.visible;
-		if !is_visible return false;
-		
 		var sprite = is_sprite_live ? props.sprite.resolve(data) : self.sprite;
 		
 		if is_sprite_live {
@@ -73,22 +68,9 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 				sprite = undefined; // TODO pink placeholder warning sprite?
 			}
 		}
-		
-		var frame = is_frame_live ? props.frame.resolve(data) : props.frame;
-		var angle = is_angle_live ? props.angle.resolve(data) : props.angle;
-		
-		var blend_color = is_blend_color_live
-			? yui_resolve_color(props.blend_color.resolve(data))
-			: props.blend_color;
-		
-		var opacity = (is_opacity_live ? props.opacity.resolve(data) : props.opacity)
-			?? draw_get_alpha();
-		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
-		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
-			
-		if props.trace {
+
+		if props.trace
 			DEBUG_BREAK_YUI;
-		}
 			
 		var w = yui_resolve_binding(size.w, data);
 		var h = yui_resolve_binding(size.h, data);
@@ -96,12 +78,6 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		// diff
 		if prev
 			&& sprite == prev.sprite
-			&& frame == prev.frame
-			&& angle == prev.angle
-			&& blend_color == prev.blend_color
-			&& opacity == prev.opacity
-			&& xoffset == prev.xoffset
-			&& yoffset == prev.yoffset
 			&& w == prev.w
 			&& h == prev.h
 		{
@@ -112,12 +88,6 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			is_live: is_bound,
 			data_source: data,
 			sprite: sprite,
-			frame: frame,
-			angle: angle,
-			blend_color: blend_color,
-			opacity: opacity,
-			xoffset: xoffset,
-			yoffset: yoffset,
 			w: w,
 			h: h,
 		};

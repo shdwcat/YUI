@@ -6,6 +6,7 @@ import:
   - ../Templates/back_button.yui
   - /YUI/Widgets/slider.yui
   - /YUI/Widgets/slide_toggle.yui
+  - /YUI/Animations/transitions.yui
 
   resources:
     textt:
@@ -18,6 +19,9 @@ root:
   type: panel
   padding: 30
   spacing: 10
+  animate:
+    on_visible:
+      opacity: &fade_in
   
   elements:
     - type: back_button

@@ -5,6 +5,8 @@ import:
   - ../Templates/main_panel.yui
   - ../Templates/back_button.yui
   
+  - /YUI/Animations/transitions.yui
+  
 // TODO: /Widgets/*
   - /YUI/Widgets/switcher.yui
   - /YUI/Widgets/checkbox.yui
@@ -21,6 +23,9 @@ root:
   type: panel
   padding: 30
   spacing: 20
+  animate:
+    on_visible:
+      opacity: &fade_in
   //theme: pink!
   
   elements:

@@ -24,7 +24,7 @@ move = function(xoffset, yoffset) {
 
 left_click = function() {
 	
-	if !bound_values.enabled return;
+	if !enabled return;
 	
 	// TODO do we need to call base?
 	// only if we support on_click in addition to popup toggle
@@ -60,7 +60,7 @@ openPopup = function() {
 	
 	// open the popup
 	
-	popup_item = yui_make_render_instance(bound_values.popup_element, bound_values.data_source, , 100);
+	popup_item = yui_make_render_instance(bound_values.popup_element, data_source, , 100);
 	
 	positionPopup(draw_size);
 }

@@ -19,12 +19,10 @@ document = undefined;
 // the actual render instance root
 root = undefined;
 
-// defining these makes 'visual ancestor' search code simpler
-parent = undefined;
-opacity = 1;
-
 // the space we were given to draw in
 if is_full_screen {
+	x = 0;
+	y = 0;
 	draw_rect = {
 		x: 0,
 		y: 0,
@@ -51,6 +49,8 @@ load = function() {
 	var element = document.root_element;
 
 	root = yui_make_render_instance(element, data_context);
+	root.parent = undefined;
+	root.document = self;
 	root.arrange(draw_rect);
 }
 
@@ -60,7 +60,3 @@ reload = function() {
 }
 
 load();
-
-onChildLayoutComplete = function(child) {
-	// this is just here to make the recursive call simpler in actual elements
-}

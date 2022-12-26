@@ -22,7 +22,7 @@ function yui_apply_slot_definitions(
 	var slot_keys = variable_struct_get_names(slot_definitions);
 	var i = 0; repeat array_length(slot_keys) {
 		var slot_key = slot_keys[i++];
-		slot_values[$ slot_key] = snap_deep_copy(template_theme[$ slot_key] ?? slot_definitions[$ slot_key]);
+		slot_values[$ slot_key] = yui_deep_copy(template_theme[$ slot_key] ?? slot_definitions[$ slot_key]);
 	}
 	
 	// loop through the values in template_instance_props and overlay them on the slot_values

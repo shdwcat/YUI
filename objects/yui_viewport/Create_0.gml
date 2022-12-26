@@ -58,8 +58,6 @@ arrange = function(available_size, viewport_size) {
 		y: y,
 		w: 0,
 		h: 0,
-		vx: viewport_x,
-		vy: viewport_y,
 		parent: viewport_size,
 	});
 	
@@ -108,7 +106,7 @@ arrange = function(available_size, viewport_size) {
 		viewport_info.y_ratio = viewport_y / viewport_y_max;
 		viewport_info.viewport_w = draw_size.w;
 		viewport_info.viewport_h = draw_size.h;
-		yui_call_handler(set_viewport_info, [viewport_info], bound_values.data_source);
+		yui_call_handler(set_viewport_info, [viewport_info], data_source);
 	}
 	
 	return draw_size;
@@ -121,6 +119,4 @@ move = function(xoffset, yoffset) {
 	}
 	
 	border_move(xoffset, yoffset);
-	
 }
-
