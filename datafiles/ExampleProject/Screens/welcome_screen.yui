@@ -138,10 +138,10 @@ root:
                 on_visible:
                   xoffset: &cascade_slide_in
 
-            - type: button
-              content: Dev Sandbox
-              tooltip: In development work (may crash!)
-              on_click: @@ e => yui_change_screen(sandbox, e.source)
+            // - type: button
+            //   content: Dev Sandbox
+            //   tooltip: In development work (may crash!)
+            //   on_click: @@ e => yui_change_screen(sandbox, e.source)
 
     - type: button
       content: Toggle Opacity
