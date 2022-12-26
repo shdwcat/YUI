@@ -81,9 +81,13 @@ root:
               animate:
                 on_visible:
                   xoffset: &cascade_slide_in
-              content:
-                type: text
-                text: Widget Gallery
+              content: Widget Gallery // the 'content' for a button can be a simple string like this, or a child element, which could be a panel containing more elements!
+
+              // on_click is how we tell the button what to do
+              // here we call the 'yui_change_screen' function and pass it 
+              // the name of the screen, and a reference to the visual element
+              // so that the function can determine which screen to change
+              tooltip: View examples of the widgets included with YUI
               on_click: @@ e => yui_change_screen(widget_gallery, e.source)
 
             - type: button
@@ -91,6 +95,7 @@ root:
                 on_visible:
                   xoffset: &cascade_slide_in
               content: TodoMVC Example
+              tooltip: Working example of the TodoMVC app (a basic todo list tracker)
               on_click: @@ e => yui_change_screen(todo_mvc, e.source)
 
             - type: button
@@ -102,12 +107,8 @@ root:
               on_click: @@ e => yui_change_screen(inventory_screen, e.source)
 
             - type: button // 'type: button' creates a clickable button!
-              content: Layout Examples // the 'content' for a button can be a simple string like this, or a child element, which could be a panel containing more elements!
-
-              // on_click is how we tell the button what to do
-              // here we call the 'yui_change_screen' function and pass it 
-              // the name of the screen, and a reference to the visual element
-              // so that the function can determine which screen to change
+              content: Layout Examples
+              tooltip: View examples of the various panel layout options as including alignment behavior
               on_click: @@ e => yui_change_screen(layout_example, e.source)
               animate:
                 on_visible:
@@ -115,6 +116,7 @@ root:
 
             - type: button
               content: Windows Example
+              tooltip: View an example of the child_window widget, which creates a draggable window on screen
               on_click: @@ e => yui_change_screen(windows_example, e.source)
               animate:
                 on_visible:
@@ -122,22 +124,24 @@ root:
 
             - type: button
               content: Keyboard Navigation
+              tooltip: Basic demo for how automatic keyboard navigation works
               on_click: @@ e => yui_change_screen(kb_navigation_example, e.source)
               animate:
                 on_visible:
                   xoffset: &cascade_slide_in
 
             - type: button
-              content: Viewport/Scrolling WIP
+              content: Viewport example
+              tooltip: Demo of the viewport element showcasing complex inner context
               on_click: @@ e => yui_change_screen(viewport_example, e.source)
               animate:
                 on_visible:
                   xoffset: &cascade_slide_in
 
-        // - type: button
-        //   content: Dev Sandbox
-        //   tooltip: In development work (may crash!)
-        //   on_click: @@ e => yui_change_screen(sandbox, e.source)
+            - type: button
+              content: Dev Sandbox
+              tooltip: In development work (may crash!)
+              on_click: @@ e => yui_change_screen(sandbox, e.source)
 
     - type: button
       content: Toggle Opacity
