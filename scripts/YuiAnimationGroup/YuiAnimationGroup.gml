@@ -17,7 +17,7 @@ function YuiAnimationGroup(anim_group_props, resources, slot_values) constructor
 		anim_properties[$ name] = anim;
 		
 		// track the max duration
-		duration = max(duration, anim.duration);
+		duration = max(duration, anim.duration + anim.delay);
 		
 		// track if it's continuous
 		continuous |= anim.continuous;
