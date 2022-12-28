@@ -17,8 +17,13 @@ function YuiHSVCurveAnimation(props, resources, slot_values) constructor {
 	self.props = props;
 	
 	curve = yui_bind_and_resolve(props.curve, resources, slot_values);
-	if is_string(curve)
-		curve = asset_get_index(curve);
+	if is_string(curve) {
+		var curve_asset = asset_get_index(curve);
+		if curve_asset == -1 {
+			throw yui_error("could not find find animation curve with name:", curve);
+		}
+		curve = curve_asset;
+	}
 		
 	channel_name_or_index = yui_bind_and_resolve(props[$"channel"], resources, slot_values) ?? 0;
 	value_channel = animcurve_get_channel(curve, channel_name_or_index) 
