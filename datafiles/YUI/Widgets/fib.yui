@@ -26,7 +26,6 @@ resources:
 
     template:
       type: panel
-      trace: true
       layout: horizontal
       elements:
         - type: text

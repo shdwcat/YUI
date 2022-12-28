@@ -15,7 +15,7 @@ root:
   
   animate:
     on_visible:
-      //opacity: &fade_in
+      opacity: &fade_in
       xoffset:
         type: curve
         enabled: false
@@ -23,6 +23,8 @@ root:
         duration: 2000
         start: 300
         end: 0
+    // on_unloading:
+    //   opacity: &fade_out
 
   elements: // this defines the child elements of the canvas
 
@@ -74,13 +76,10 @@ root:
 
         - type: panel
           alignment: { h: stretch }
-          //indexed: true
+          indexed: true
           elements:
 
             - type: button
-              animate:
-                on_visible:
-                  xoffset: &cascade_slide_in
               content: Widget Gallery // the 'content' for a button can be a simple string like this, or a child element, which could be a panel containing more elements!
 
               // on_click is how we tell the button what to do
@@ -89,22 +88,31 @@ root:
               // so that the function can determine which screen to change
               tooltip: View examples of the widgets included with YUI
               on_click: @@ e => yui_change_screen(widget_gallery, e.source)
-
-            - type: button
               animate:
                 on_visible:
                   xoffset: &cascade_slide_in
+                on_unloading:
+                  xoffset: &cascade_slide_out
+
+            - type: button
               content: TodoMVC Example
               tooltip: Working example of the TodoMVC app (a basic todo list tracker)
               on_click: @@ e => yui_change_screen(todo_mvc, e.source)
-
-            - type: button
               animate:
                 on_visible:
                   xoffset: &cascade_slide_in
+                on_unloading:
+                  xoffset: &cascade_slide_out
+
+            - type: button
               content: "Drag and Drop: Inventory Screen"
               tooltip: Demonstrates an inventory screen where you can drag and drop items onto equipment slots for a character
               on_click: @@ e => yui_change_screen(inventory_screen, e.source)
+              animate:
+                on_visible:
+                  xoffset: &cascade_slide_in
+                on_unloading:
+                  xoffset: &cascade_slide_out
 
             - type: button // 'type: button' creates a clickable button!
               content: Layout Examples
@@ -113,6 +121,8 @@ root:
               animate:
                 on_visible:
                   xoffset: &cascade_slide_in
+                on_unloading:
+                  xoffset: &cascade_slide_out
 
             - type: button
               content: Windows Example
@@ -121,6 +131,8 @@ root:
               animate:
                 on_visible:
                   xoffset: &cascade_slide_in
+                on_unloading:
+                  xoffset: &cascade_slide_out
 
             - type: button
               content: Keyboard Navigation
@@ -129,6 +141,8 @@ root:
               animate:
                 on_visible:
                   xoffset: &cascade_slide_in
+                on_unloading:
+                  xoffset: &cascade_slide_out
 
             - type: button
               content: Viewport example
@@ -137,11 +151,13 @@ root:
               animate:
                 on_visible:
                   xoffset: &cascade_slide_in
+                on_unloading:
+                  xoffset: &cascade_slide_out
 
-            // - type: button
-            //   content: Dev Sandbox
-            //   tooltip: In development work (may crash!)
-            //   on_click: @@ e => yui_change_screen(sandbox, e.source)
+            - type: button
+              content: Dev Sandbox
+              tooltip: In development work (may crash!)
+              on_click: @@ e => yui_change_screen(sandbox, e.source)
 
     - type: button
       content: Toggle Opacity

@@ -6,6 +6,14 @@ resources:
     type: curve
     curve: curveExpoInv
     duration: 2000
+    start: 0
+    end: 1
+
+  fade_out:
+    type: curve
+    curve: curveLinear
+    duration: 250
+    end: 0
 
   // possible short syntax:
   // hsv_curve from white to blue in 2s by curveSine
@@ -27,10 +35,18 @@ resources:
   cascade_slide_in:
     type: curve
     curve: curveExpoInv
-    duration: 1000
-    delay: $panel_index ?? 0 * 100
+    duration: 600
+    delay: @@ ($panel_index ?? 0) * 100
     start: -300
     end: 0
+
+  cascade_slide_out:
+    type: curve
+    curve: curveExpo
+    duration: 200
+    delay: @@ (($panel_count ?? 0) - ($panel_index ?? 0)) * 20
+    start: 0
+    end: -400
 
   slide_duration: 1500
 

@@ -88,6 +88,8 @@ root:
   animate:
     on_visible:
       opacity: &fade_in
+    on_unloading:
+      opacity: &fade_out
   elements:
     - type: back_button
 
