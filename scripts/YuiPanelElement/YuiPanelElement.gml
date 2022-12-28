@@ -24,11 +24,11 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		elements: undefined,
 		
 		// option B: bind the element list to data, and use a template to render each element
-		path: undefined, // defines the source path for the element list
 		template: undefined, // the template to use when rendering elements from the path
 		
 		// child elements (and sub-children will be indexed by their positiin in this panel
 		// NOTE: setting 'indexed: true' on a sub-panel will replace this index
+		// NOTE: does not work for template mode
 		indexed: false,
 		
 		// allows binding slots at panel scope instead of item scope
@@ -81,15 +81,16 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	else {
 		// generate item_elements if we have explicit elements
 		item_elements = [];
-		var i = 0; repeat array_length(props.elements) {
+		var i = 0; var panel_count = array_length(props.elements); repeat panel_count {
 			var element = props.elements[i];
 			var panel_item_id = props.id + "[" + string(i) + "]";
 			var item_slot_values = slot_values;
 			
-			// when indexing is enabled, set the $panel_index slot
+			// when indexing is enabled, set the $panel_index and $panel_count slots
 			if props.indexed {
 				item_slot_values = yui_shallow_copy(slot_values);
 				item_slot_values.panel_index = i;
+				item_slot_values.panel_count = panel_count;
 			}
 			
 			item_elements[i] = yui_resolve_element(
