@@ -19,12 +19,16 @@ function yui_make_render_instance(yui_element, data, index = 0, depth_offset = 0
 		persistent: persistent,
 	});
 	
-	child.initLayout();
-	child.bind_values();
-	if child.visible {
-		child.build();
-		if child.on_arrange_anim
-			child.beginAnimationGroup(child.on_arrange_anim);
+	with child {
+		initLayout();
+		bind_values();
+		if visible {
+			build();
+			
+			// NOTE: is this supposed to arrange? arrange will happen later...
+			if on_arrange_anim
+				beginAnimationGroup(on_arrange_anim);
+		}
 	}
 	
 	return child;

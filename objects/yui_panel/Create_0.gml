@@ -85,7 +85,7 @@ build = function yui_panel__build() {
 		repeat excess_count {
 			var excess_child = internal_children[i++];
 			//tracelog("destroying excess child at", i, excess_child.data_context.id, "id: ", excess_child.id);
-			instance_destroy(excess_child);
+			excess_child.unload();
 		}
 		
 		// resize the array to the new count
@@ -164,4 +164,21 @@ move = function(xoffset, yoffset) {
 		used_layout_size.x += xoffset;
 		used_layout_size.y += yoffset;
 	}
+}
+
+unload = function(unload_root = undefined) {
+	// use base unload, not border's unload
+	var unload_time = base_unload(unload_root);
+	
+	var i = 0; repeat array_length(internal_children) {
+		var child_item = internal_children[i];
+		//yui_log("unloading panel child (index ", i, ") visual", instance.id);
+		
+		var child_unload_time = child_item.unload(unload_root_item);
+		
+		unload_time = max(unload_time, child_unload_time);
+		i++;
+	}
+
+	return unload_time;
 }

@@ -111,6 +111,7 @@ arrange = function(available_size, viewport_size) {
 	
 	return draw_size;
 }
+
 border_move = move;
 move = function(xoffset, yoffset) {
 	if content_item {

@@ -1,9 +1,7 @@
-/// @description dispose
+/// @description unregister interactions
 
-event_inherited();
+//yui_log("destroying element with id", _id);
 
-if tooltip_item {
-	instance_destroy(tooltip_item);
-}
+// TODO: call on_unloaded element event
 
 yui_unregister_interactions(interactions);

@@ -28,6 +28,18 @@ bound_values = undefined;
 enabled = true;
 hidden = false;
 
+// whether this item is in the process of unloading (e.g. playing unload animation)
+unloading = false;
+
+// whether this item is finished unloading and should be destroyed
+unload_now = false;
+
+// if any part of a tree has an unloading animation, the unload_root_item for a given
+// element will be the topmost item that has one (which may be itself)
+// NOTE: this is because the children can't destroy themselves until all unload
+// animations within the unload_root_item tree have finished animating
+unload_root_item = undefined;
+
 // default to false so that first load triggers on_visible
 visible = false;
 
@@ -126,6 +138,7 @@ initLayout = function() {
 	
 	on_visible_anim = yui_element.on_visible_anim;
 	on_arrange_anim = yui_element.on_arrange_anim;
+	on_unloading_anim = yui_element.on_unloading_anim;
 	
 	layout_props = yui_element.getLayoutProps();
 	onLayoutInit();
@@ -327,7 +340,7 @@ setHighlight = function(highlight) {
 			}
 		}
 		else if tooltip_item != undefined {
-			instance_destroy(tooltip_item);
+			tooltip_item.unload();
 			tooltip_item = undefined;
 		}
 	}
@@ -352,10 +365,52 @@ beginAnimationGroup = function(animation_group) {
 	animation_group.start(animatable, self);
 }
 
-
-
-
-
-
-
-
+unload = function(unload_root = undefined) {
+	
+	unloading = true;
+	
+	// TODO: call on_unloading element event
+	
+	// if we're not visible, set unload_now and return zero immediately
+	if !visible {
+		unload_now = true;
+		return 0;
+	}
+	
+	// if there isn't already an unload root and this has an unload anim, this is the root
+	if unload_root == undefined and on_unloading_anim != undefined {
+		unload_root = self;
+	}
+	
+	// track the unload root item
+	unload_root_item ??= unload_root;
+	
+	// the unload time will be the max of our unload animation duration and any of our child items
+	var unload_time = on_unloading_anim ? on_unloading_anim.duration : 0;
+	if tooltip_item {
+		unload_time = max(unload_time, tooltip_item.unload(unload_root));
+	}
+	
+	// if there is no unload root and unload time is zero we can just mark unloaded now
+	if unload_time == 0 and unload_root == undefined {
+		unload_now = true;
+		return 0;
+	}
+	
+	// start the unloading anim
+	if on_unloading_anim {
+		beginAnimationGroup(on_unloading_anim);
+	}
+	
+	// if we're the unload root, set the timer to destroy ourselves at the end of the unload time
+	if unload_root == self {
+		with {} {
+			root = unload_root;
+			call_later(unload_time / 1000, time_source_units_seconds, function () {
+				root.unload_now = true;	
+			})
+		}
+	}
+	
+	return unload_time;
+}

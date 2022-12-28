@@ -5,6 +5,11 @@ if layout_props == undefined {
 	initLayout();
 }
 
+// ensure invsibile items destroy themselves since they won't run the Pre-Draw event
+if !visible && unload_now {
+	instance_destroy(self);
+}
+
 // hide self if marked hidden, or parent is not visible
 // (depth order ensures further children will get hidden in the same frame)
 if hidden || parent && !parent.visible {

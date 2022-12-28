@@ -136,6 +136,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		
 		on_visible_anim = undefined;
 		on_arrange_anim = undefined;
+		on_unloading_anim = undefined;
 		
 		if props.animate != undefined {
 			var on_visible_animation = props.animate[$"on_visible"];
@@ -145,6 +146,10 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 			var on_arrange_animation = props.animate[$"on_arrange"];
 			if on_arrange_animation != undefined {
 				on_arrange_anim = yui_resolve_animation_group(on_arrange_animation, resources, slot_values);
+			}
+			var on_unloading_animation = props.animate[$"on_unloading"];
+			if on_unloading_animation != undefined {
+				on_unloading_anim = yui_resolve_animation_group(on_unloading_animation, resources, slot_values);
 			}
 		}
 			

@@ -54,9 +54,23 @@ load = function() {
 	root.arrange(draw_rect);
 }
 
-reload = function() {
-	instance_destroy(root);
-	load();
+reload = function(destroy_now = false) {
+	if destroy_now {
+		// TODO force destroy with no animations
+		
+		throw "not implemented";
+	}
+	
+	var unload_time = root.unload();
+	
+	yui_log("document unload time is", unload_time);
+	
+	if unload_time > 0 {
+		call_later(unload_time / 1000, time_source_units_seconds, load);
+	}
+	else {
+		load();
+	}
 }
 
 load();

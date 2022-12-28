@@ -8,7 +8,7 @@ case_item = undefined;
 build = function() {
 	// clear out the old item;
 	if case_item {
-		instance_destroy(case_item);
+		case_item.unload();
 		case_item = undefined;
 	}
 	
@@ -73,4 +73,15 @@ onChildLayoutComplete = function(child) {
 	if parent {
 		parent.onChildLayoutComplete(self);
 	}
+}
+
+base_unload = unload;
+unload = function(unload_root = undefined) {
+	var unload_time = base_unload(unload_root);
+	
+	if case_item {
+		unload_time = max(unload_time, case_item.unload(unload_root_item));
+	}
+
+	return unload_time;
 }

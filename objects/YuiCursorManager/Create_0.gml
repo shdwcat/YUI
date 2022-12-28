@@ -18,8 +18,8 @@ cursor_offset_y = 0;
 finishInteraction = function() {
 	yui_log("interaction", active_interaction.props.type, "complete");
 	if visual_item {
-		yui_log("destroying interaction visual", visual_item);
-		instance_destroy(visual_item);
+		yui_log("unloading interaction visual", visual_item);
+		visual_item.unload();
 		cursor_offset_x = 0;
 		cursor_offset_y = 0;
 		visual_item = undefined;

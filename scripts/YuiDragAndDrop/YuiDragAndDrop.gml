@@ -276,7 +276,7 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		var targets = yui_get_interaction_participants(drop_hash_id);
 		var i = 0; repeat array_length(targets) {
 			var drop_item = targets[i++];
-			instance_destroy(drop_item.interaction_item);
+			drop_item.interaction_item.unload();
 			drop_item.interaction_item = undefined;
 		}
 		

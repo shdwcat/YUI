@@ -75,7 +75,3 @@ on_lost_focus = function() {
 	original_text = undefined;
 	update = false;
 }
-
-
-
-

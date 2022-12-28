@@ -162,9 +162,3 @@ buildTextSurface = function() {
 			text_surface);
 	}
 }
-
-
-
-
-
-

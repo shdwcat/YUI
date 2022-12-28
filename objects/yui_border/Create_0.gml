@@ -135,4 +135,14 @@ move = function(xoffset, yoffset) {
 		content_item.move(xoffset, yoffset);
 	}
 }
+
+base_unload = unload;
+unload = function(unload_root = undefined) {
+	var unload_time = base_unload(unload_root);
 	
+	if content_item {
+		unload_time = max(unload_time, content_item.unload(unload_root_item));
+	}
+
+	return unload_time;
+}

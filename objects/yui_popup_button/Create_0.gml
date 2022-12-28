@@ -26,15 +26,15 @@ left_click = function() {
 	
 	if !enabled return;
 	
-	// TODO do we need to call base?
-	// only if we support on_click in addition to popup toggle
+	// TODO: fix popup stickiness due to unload logic
+	// (clicking too fast creates multiple popup items somehow)
 	
 	is_popup_visible = !is_popup_visible;
 	if is_popup_visible {	
 		openPopup();
 	}
 	else {
-		instance_destroy(popup_item);
+		popup_item.unload();
 		popup_item = undefined;
 	}
 }
@@ -44,9 +44,10 @@ openPopup = function() {
 	
 	// make sure we don't orphan an existing item
 	if popup_item {
-		instance_destroy(popup_item);
+		popup_item.unload();
 	}
-		
+	
+	// TODO call this on any click in YuiCursorManager
 	// find any open popups and close them, unless they're a parent of this button
 	var parent_map = yui_get_item_parent_map(self);
 	with yui_popup {
@@ -77,11 +78,22 @@ closePopup = function(close_parent = false) {
 	is_popup_visible = false;
 	
 	if popup_item {
-		instance_destroy(popup_item);
+		popup_item.unload();
 		popup_item = undefined;
 	}
 	
 	if parent && close_parent {
 		parent.closePopup(true);
 	}
+}
+
+border_unload = unload;
+unload = function(unload_root = undefined) {
+	var unload_time = border_unload(unload_root);
+	
+	if popup_item {
+		unload_time = max(unload_time, popup_item.unload(unload_root_item));
+	}
+
+	return unload_time;
 }

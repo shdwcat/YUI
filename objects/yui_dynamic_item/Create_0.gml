@@ -12,7 +12,7 @@ build = function() {
 	
 	// make/update the child item
 	if content_item {
-		instance_destroy(content_item);
+		content_item.unload();
 		content_item = undefined;
 	}
 	if bound_values.content != undefined {
@@ -60,4 +60,15 @@ onChildLayoutComplete = function(child) {
 	if parent {
 		parent.onChildLayoutComplete(self);
 	}
+}
+
+base_unload = unload;
+unload = function(unload_root = undefined) {
+	var unload_time = base_unload(unload_root);
+	
+	if content_item {
+		unload_time = max(unload_time, content_item.unload(unload_root_item));
+	}
+
+	return unload_time;
 }
