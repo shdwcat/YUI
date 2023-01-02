@@ -30,8 +30,12 @@ function YuiBindableValue(binding) constructor {
 		self.animation = animation;
 		animation_start_time = current_time;
 		animation_start_value = value;
+		animation_step = 0;
+		animation_state = {};
 	}
 }
+
+// TODO support animation for bound values!
 
 // gets the initial value and then swaps over to the updateBinding function
 function YuiBindableValue__initValue(data) {
@@ -59,17 +63,30 @@ function YuiBindableValue__updateRawValue(data) {
 		var time = max(current_time - animation_start_time - animation.delay, 0);
 		var period_time = animation.continuous ? (time mod animation.duration) : time;
 		var curve_pos = period_time / animation.duration;
+		
+		if animation.step {
+			var step = period_time div animation.step;
+			if step == animation_step return false;
+			animation_step = step;
+		}
 
-		var anim_value = animation.compute(curve_pos, raw_value, animation_start_value, animation_start_time);
+		var anim_value = animation.compute(
+			curve_pos,
+			raw_value,
+			animation_start_value,
+			animation_start_time,
+			animation_state);
 		
 		// clear animation when complete
 		if animation.isComplete(animation_start_time) {
 			animation = undefined;
 			animation_start_time = undefined;
 			animation_start_value = undefined;
+			animation_step = undefined;
+			animation_state = undefined;
 		}
 		
-		// TODO lerp between anim_value and prev animation value
+		// TODO lerp between anim_value and prev animation value?
 		
 		var changed = anim_value != value;
 		value = anim_value;

@@ -1,7 +1,7 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "yui_reveal_string",
+  "name": "yui_unscramble_string",
   "isDnD": false,
   "isCompatibility": false,
   "parent": {

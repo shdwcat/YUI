@@ -37,11 +37,20 @@ function YuiCurveAnimation(props, resources, slot_values)
 		from ??= 0;
 		
 		self.effect = yui_bind(effect, resources, slot_values);
-		if !yui_is_call(self.effect) {
+		
+		// fallback if it's not a lambda
+		if is_string(self.effect) {
+			var script = asset_get_index(self.effect);
+			if script == -1 {
+				throw yui_error("Could not find script with name:", self.effect);
+			}
+			self.evalEffect = script;
+		}
+		else if !yui_is_lambda(self.effect) {
 			throw yui_error("curve effect must be a callable function (script, runtime function, or lambda function)");
 		}
 		
-		self.compute = compute_effect;
+		self.compute = computeEffect;
 	}
 
 	static compute = function(curve_pos, raw_value, start_value, start_time) {
@@ -59,9 +68,20 @@ function YuiCurveAnimation(props, resources, slot_values)
 			&& current_time - start_time - delay > duration;
 	}
 	
-	static compute_effect = function(raw_value, start_value, start_time) {
-		var curve_value = compute(raw_value, start_value, start_time);
-		var effect_value = effect.call(/* no data */, [raw_value, curve_value]);
+	// default lambda version
+	static evalEffect = function(raw_value, curve_value, state) {
+		return effect.call(/* no data */, [raw_value, curve_value, state])
+	}
+	
+	static computeEffect = function(curve_pos, raw_value, start_value, start_time, state) {
+		var curve_value = animcurve_channel_evaluate(value_channel, curve_pos);
+				
+		// lerp the curve value along the start/stop range
+		var lerp_value = lerp(from ?? start_value, to, curve_value);
+		
+		var effect_value = evalEffect(raw_value, lerp_value, state);
+		
+		//yui_log("effect value is:", effect_value);
 		return effect_value;
 	}
 }
