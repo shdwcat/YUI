@@ -39,7 +39,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	has_scoped_slots = props.bind_slot_scope != undefined;
 	if has_scoped_slots {
-		slot_values = yui_shallow_copy(slot_values);
+		slot_values = slot_values.inherit();
 		var bound_slot_names = variable_struct_get_names(props.bind_slot_scope);
 		var i = 0; repeat array_length(bound_slot_names) {
 			var slot_name = bound_slot_names[i++];
@@ -50,7 +50,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			}
 			
 			var scoped_binding = new YuiScopeBinding(binding);
-			slot_values[$ slot_name] = scoped_binding;
+			slot_values.set(slot_name, scoped_binding);
 		}
 	}
 	
@@ -88,9 +88,10 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			
 			// when indexing is enabled, set the $panel_index and $panel_count slots
 			if props.indexed {
-				item_slot_values = yui_shallow_copy(slot_values);
-				item_slot_values.panel_index = i;
-				item_slot_values.panel_count = panel_count;
+				item_slot_values = slot_values.inherit({
+					panel_index: i,
+					panel_count: panel_count,
+				});
 			}
 			
 			item_elements[i] = yui_resolve_element(
@@ -141,7 +142,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			var bound_slot_names = variable_struct_get_names(props.bind_slot_scope);
 			var i = 0; repeat array_length(bound_slot_names) {
 				var slot_name = bound_slot_names[i++];
-				var binding = slot_values[$ slot_name];
+				var binding = slot_values.get(slot_name);
 				binding.updateScope(data);
 			}
 		}

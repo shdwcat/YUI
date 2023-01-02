@@ -18,7 +18,7 @@ function yui_init_theme(theme_definition, name, folder_path) {
 		folder_path,
 		YuiGlobals.yui_cabinet);
 		
-	var slot_values = {};
+	var slot_values = new YuiChainedMap();
 	
 	// bind functions
 	// TODO we could avoid this if using snap field order so that values would be resolved in order

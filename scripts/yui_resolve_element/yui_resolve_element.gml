@@ -36,9 +36,9 @@ function yui_resolve_element(yui_data, resources, slot_values, parent_id = undef
 		// then resolve the theme and use it as the initial slot values
 		if slot_values == undefined {
 			var theme = yui_resolve_theme(yui_data[$ "theme"]);
-			slot_values = {
+			slot_values = new YuiChainedMap(/* no parent */, {
 				theme: theme,
-			}
+			});
 		}
 	
 		if yui_data[$ "id"] == undefined {
