@@ -1,12 +1,11 @@
 {
+  "resourceType": "GMScript",
+  "resourceVersion": "1.0",
+  "name": "yui_resolve_color",
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "resolve",
-    "path": "folders/Packages - YUI/scripts/resolve.yy",
+    "name": "color",
+    "path": "folders/Packages - YUI/scripts/color.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "yui_resolve_color",
-  "tags": [],
-  "resourceType": "GMScript",
 }

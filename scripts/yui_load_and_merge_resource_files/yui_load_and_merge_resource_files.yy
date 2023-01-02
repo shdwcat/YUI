@@ -1,7 +1,7 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "yui_resolve_resource_imports",
+  "name": "yui_load_and_merge_resource_files",
   "isDnD": false,
   "isCompatibility": false,
   "parent": {

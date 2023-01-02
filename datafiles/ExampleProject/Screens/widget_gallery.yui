@@ -6,17 +6,7 @@ import:
   - ../Templates/back_button.yui
   
   - /YUI/Animations/transitions.yui
-  
-// TODO: /Widgets/*
-  - /YUI/Widgets/switcher.yui
-  - /YUI/Widgets/checkbox.yui
-  - /YUI/Widgets/listbox.yui
-  - /YUI/Widgets/dropdown_menu.yui
-  - /YUI/Widgets/menu.yui
-  - /YUI/Widgets/slider.yui
-  - /YUI/Widgets/slide_toggle.yui
-  - /YUI/Widgets/meter_bar.yui
-  - /YUI/Widgets/scrollbox.yui
+  - /YUI/Widgets/
 
 root:
 
