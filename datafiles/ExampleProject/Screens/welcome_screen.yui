@@ -15,7 +15,7 @@ root:
   
   animate:
     on_visible:
-      opacity: &fade_in
+      //opacity: &fade_in
       xoffset:
         type: curve
         enabled: false
@@ -57,13 +57,17 @@ root:
               //trace: true
               animate:
                 on_visible:
-                  type: anim_sequence
-                  repeat: true
-                  animations:
-                    - color: &fade_to_accent_color
-                      xoffset: &slide_right
-                    - color: &fade_to_green
-                      xoffset: &slide_left
+                  text:
+                    type: curve
+                    curve: curveLinear
+                    effect: @@ yui_reveal_string
+                  // type: anim_sequence
+                  // repeat: true
+                  // animations:
+                  //   - color: &fade_to_accent_color
+                  //     xoffset: &slide_right
+                  //   - color: &fade_to_green
+                  //     xoffset: &slide_left
               //scribble: true
               text: "Welcome to the YUI Example Project!" // and here we set the text itself
 
