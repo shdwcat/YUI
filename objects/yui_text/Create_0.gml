@@ -22,6 +22,7 @@ text_surface_h = 0;
 override_text = undefined;
 
 onLayoutInit = function() {
+	text_value = yui_element.text_value;
 	color_value = yui_element.color_value;
 	highlight_color = layout_props.highlight_color;
 	use_scribble = layout_props.use_scribble;
@@ -142,13 +143,13 @@ arrange = function(available_size, viewport_size) {
 	return draw_size;
 }
 
-buildTextSurface = function() {
+buildTextSurface = function(text = undefined) {
 	
 	if !bound_values return;
 	
 	if (text_surface_w > 0 && text_surface_h > 0) {
 
-		var text = override_text ?? bound_values.text;
+		text ??= override_text ?? bound_values.text;
 	
 		text_surface = yui_draw_text_to_surface(
 			element_xoffset, element_yoffset,

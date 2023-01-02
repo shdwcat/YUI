@@ -35,8 +35,10 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		color = yui_resolve_color(color);
 	}
 	
+	text_value = new YuiBindableValue(props.text);
 	color_value = new YuiBindableValue(color);
 	
+	animatable.text = text_value;
 	animatable.color = color_value;
 	
 	highlight_color = yui_resolve_color(yui_bind(props.highlight_color, resources, slot_values));
