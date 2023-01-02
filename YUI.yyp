@@ -326,6 +326,7 @@
     {"id":{"name":"yui_bind_struct","path":"scripts/yui_bind_struct/yui_bind_struct.yy",},"order":4,},
     {"id":{"name":"steeltoe_boots","path":"sprites/steeltoe_boots/steeltoe_boots.yy",},"order":13,},
     {"id":{"name":"yui_is_binding_expr","path":"scripts/yui_is_binding_expr/yui_is_binding_expr.yy",},"order":6,},
+    {"id":{"name":"YuiAnimationBase","path":"scripts/YuiAnimationBase/YuiAnimationBase.yy",},"order":1,},
     {"id":{"name":"scribble_font_bake_outline_8dir_2px","path":"scripts/scribble_font_bake_outline_8dir_2px/scribble_font_bake_outline_8dir_2px.yy",},"order":2,},
     {"id":{"name":"__shd_scribble_bake_shadow","path":"shaders/__shd_scribble_bake_shadow/__shd_scribble_bake_shadow.yy",},"order":4,},
     {"id":{"name":"yui_apply_element_size","path":"scripts/yui_apply_element_size/yui_apply_element_size.yy",},"order":1,},

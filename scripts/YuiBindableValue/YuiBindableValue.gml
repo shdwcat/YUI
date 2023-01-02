@@ -54,7 +54,13 @@ function YuiBindableValue__updateBinding(data) {
 function YuiBindableValue__updateRawValue(data) {
 	
 	if animation && animation.enabled {
-		var anim_value = animation.compute(raw_value, animation_start_value, animation_start_time);
+		
+		// calculate the current position along the curve based on start time
+		var time = max(current_time - animation_start_time - animation.delay, 0);
+		var period_time = animation.continuous ? (time mod animation.duration) : time;
+		var curve_pos = period_time / animation.duration;
+
+		var anim_value = animation.compute(curve_pos, raw_value, animation_start_value, animation_start_time);
 		
 		// clear animation when complete
 		if animation.isComplete(animation_start_time) {

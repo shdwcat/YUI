@@ -1,5 +1,6 @@
 /// @description here
-function YuiRGBCurveAnimation(props, resources, slot_values) constructor {
+function YuiRGBCurveAnimation(props, resources, slot_values)
+	: YuiAnimationBase(props, resources, slot_values) constructor {
 	
 	static default_props = {
 		type: "rgb_curve",
@@ -28,12 +29,6 @@ function YuiRGBCurveAnimation(props, resources, slot_values) constructor {
 	channel_name_or_index = yui_bind_and_resolve(props[$"channel"], resources, slot_values) ?? 0;
 	value_channel = animcurve_get_channel(curve, channel_name_or_index) 
 	
-	enabled = yui_bind_and_resolve(props[$"enabled"], resources, slot_values) ?? true;
-		
-	duration = yui_bind_and_resolve(props[$"duration"], resources, slot_values) ?? 1000; // TODO error on zero or negative duration
-	continuous = yui_bind_and_resolve(props[$"repeat"], resources, slot_values) ?? false;
-	delay = yui_bind_and_resolve(props[$"delay"], resources, slot_values) ?? 0;
-	
 	from = yui_bind_and_resolve(props[$"from"], resources, slot_values);
 	if from != undefined {
 		var color = yui_resolve_color(from);
@@ -60,14 +55,9 @@ function YuiRGBCurveAnimation(props, resources, slot_values) constructor {
 		blue_stop = undefined;
 	}
 
-	static compute = function(raw_color, start_value, start_time) {
-				
-		// calculate the current position along the curve based on start time
-		var time = max(current_time - start_time - delay, 0);
-		var period_time = continuous ? (time mod duration) : time;
-		var pos = period_time / duration;
+	static compute = function(curve_pos, raw_color, start_value, start_time) {
 		
-		var curve_value = animcurve_channel_evaluate(value_channel, pos);
+		var curve_value = animcurve_channel_evaluate(value_channel, curve_pos);
 		
 		// default behavior when from/to aren't present is to lerp from the previous value to the raw color
 		var lerp_r = lerp(red_start ?? color_get_red(start_value), red_stop ?? color_get_red(raw_color), curve_value);
