@@ -4,8 +4,8 @@ function YuiCurveAnimation(props, resources, slot_values) constructor {
 		type: "curve",
 		curve: undefined,
 		channel: "value",
-		start: 0,
-		"end": 1,
+		from: 0,
+		to: 1,
 		"repeat": false,
 		duration: 1000, // 1000 milliseconds = 1 second
 		delay: 0, // milliseconds
@@ -31,8 +31,8 @@ function YuiCurveAnimation(props, resources, slot_values) constructor {
 		
 	duration = yui_bind_and_resolve(props[$"duration"], resources, slot_values) ?? 1000; // TODO error on zero or negative duration
 	delay = yui_bind_and_resolve(props[$"delay"], resources, slot_values) ?? 0; // TODO error on negative delay
-	start = yui_bind_and_resolve(props[$"start"], resources, slot_values);
-	stop = yui_bind_and_resolve(props[$"end"], resources, slot_values) ?? 1;
+	from = yui_bind_and_resolve(props[$"from"], resources, slot_values);
+	to = yui_bind_and_resolve(props[$"to"], resources, slot_values) ?? 1;
 	continuous = yui_bind_and_resolve(props[$"repeat"], resources, slot_values) ?? false;
 
 	static compute = function(raw_value, start_value, start_time) {
@@ -45,7 +45,7 @@ function YuiCurveAnimation(props, resources, slot_values) constructor {
 		var curve_value = animcurve_channel_evaluate(value_channel, pos);
 				
 		// lerp the curve value along the start/stop range
-		var value = lerp(start ?? start_value, stop, curve_value);
+		var value = lerp(from ?? start_value, to, curve_value);
 		
 		return value;
 	}
