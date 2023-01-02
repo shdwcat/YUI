@@ -9,6 +9,12 @@ function yui_resolve_resource_imports(resources, imports, base_folder, cabinet) 
 	var name_count = array_length(document_resource_names)
 	var n = 0; repeat name_count {
 		var name = document_resource_names[n];
+		
+		if variable_struct_exists(merged_resources, name)
+		&& merged_resources[$name] != document_resource[$name] {
+			yui_warning("Overwriting resource with name:", name);
+		}
+		
 		var document_resource = variable_struct_get(resources, name);
 		variable_struct_set(merged_resources, name, document_resource);
 			

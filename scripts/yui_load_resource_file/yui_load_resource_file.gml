@@ -56,6 +56,12 @@ function yui_load_resource_file(filepath, cabinet, base_folder) {
 		var file_resource_names = variable_struct_get_names(file_resources);
 		var j = 0; repeat array_length(file_resource_names) {
 			var resource_name = file_resource_names[j++];
+			
+			if variable_struct_exists(resource_map, resource_name)
+			&& resource_map[$resource_name] != file_resources[$resource_name] {
+				yui_warning("Overwriting resource with name:", resource_name);
+			}
+			
 			resource_map[$resource_name] = file_resources[$resource_name];
 		}
 	}

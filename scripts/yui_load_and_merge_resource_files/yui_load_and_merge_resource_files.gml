@@ -11,6 +11,12 @@ function yui_load_and_merge_resource_files(filepaths, cabinet, base_folder) {
 		var import_resource_names = variable_struct_get_names(import_resources);
 		var j = 0; repeat array_length(import_resource_names) {
 			var resource_name = import_resource_names[j++];
+			
+			if variable_struct_exists(resource_map, resource_name)
+			&& resource_map[$resource_name] != import_resources[$resource_name] {
+				yui_warning("Overwriting resource with name:", resource_name);
+			}
+			
 			resource_map[$resource_name] = import_resources[$resource_name];
 		}
 	}
