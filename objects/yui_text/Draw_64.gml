@@ -12,7 +12,7 @@ if bg_alpha > 0 {
 		0, bg_color, bg_alpha * opacity);
 }
 
-var color_changed = color_value.update(data_source);
+var color_changed = color_value.is_live && color_value.update(data_source);
 var color = color_value.value ?? c_white;
 if highlight && highlight_color != undefined {
 	color = highlight_color;

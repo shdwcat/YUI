@@ -22,8 +22,8 @@ if unload_now {
 var xxv = xoffset_value;
 var yxv = yoffset_value
 
-xxv.update(data_source);
-yxv.update(data_source);
+if xxv.is_live xxv.update(data_source);
+if yxv.is_live yxv.update(data_source);
 
 if parent {
 	xoffset = xxv.value + parent.xoffset;

@@ -33,6 +33,7 @@ function YuiCurveAnimation(props, resources, slot_values)
 	
 	var effect = props[$"effect"]
 	if effect != undefined {
+		has_effect = true;
 		// can't use start_value because the target may not be a number
 		from ??= 0;
 		

@@ -177,7 +177,7 @@ bind_values = function yui_base__bind_values() {
 		data_source = data_context;
 	}
 	
-	visible_value.update(data_source);
+	if visible_value.is_live visible_value.update(data_source);
 	if visible_value.value == false {
 		hide_element();
 		exit;
@@ -228,13 +228,12 @@ arrange = function(available_size, viewport_size) {
 }
 
 process = function yui_base__process() {
-	opacity_value.update(data_source);
+	if opacity_value.is_live opacity_value.update(data_source);
 		
 	var old_opacity = opacity;
 	
-	enabled_value.update(data_source);
-	if is_enabled_live 
-	{
+	if enabled_value.is_live enabled_value.update(data_source);
+	if is_enabled_live {
 		enabled = enabled_value.value;
 	
 		focusable = enabled ? yui_element.props.focusable : false;

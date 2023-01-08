@@ -6,4 +6,6 @@ function YuiAnimationBase(props, resources, slot_values) constructor {
 	delay = yui_bind_and_resolve(props[$"delay"], resources, slot_values) ?? 0; // TODO error on negative delay
 	continuous = yui_bind_and_resolve(props[$"repeat"], resources, slot_values) ?? false;
 	step = yui_bind_and_resolve(props[$"step"], resources, slot_values);
+	
+	has_effect = false;
 }

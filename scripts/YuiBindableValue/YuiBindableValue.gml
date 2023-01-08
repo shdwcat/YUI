@@ -1,9 +1,13 @@
 /// @description wraps a YuiExpr to store the value and check for changes
 function YuiBindableValue(binding) constructor {
 	
+	is_live = false;
+		
 	self.animation = undefined;
 	self.animation_start_time = undefined;
 	self.animation_start_value = undefined;
+	self.animation_step = undefined;
+	self.animation_state = undefined;
 	
 	self.prev_animation = undefined;
 	self.prev_animation_start_time = undefined;
@@ -14,6 +18,7 @@ function YuiBindableValue(binding) constructor {
 	if yui_is_binding(binding) {
 		self.binding = binding;
 		update = YuiBindableValue__initValue;
+		is_live = true;
 	}
 	else {
 		self.binding = undefined;
@@ -27,11 +32,14 @@ function YuiBindableValue(binding) constructor {
 		prev_animation_start_time = animation_start_time;
 		prev_animation_start_value = animation_start_value;
 		
+		is_live = true;
 		self.animation = animation;
 		animation_start_time = current_time;
 		animation_start_value = value;
 		animation_step = 0;
-		animation_state = {};
+		
+		if animation.has_effect
+			animation_state = {};
 	}
 }
 
@@ -79,6 +87,7 @@ function YuiBindableValue__updateRawValue(data) {
 		
 		// clear animation when complete
 		if animation.isComplete(animation_start_time) {
+			is_live = false;
 			animation = undefined;
 			animation_start_time = undefined;
 			animation_start_value = undefined;

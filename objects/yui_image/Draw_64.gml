@@ -1,10 +1,20 @@
 /// @description 
 
-// maybe just draw_self()?
-// currently we only need the custom call for blend_color (and ignoring sprite origin)
-
 // todo: 9-slicing?
 
+image_alpha = opacity ?? draw_get_alpha();
+
+if frame_value.is_live frame_value.update(data_source);
+var frame = frame_value.value;
+if frame != undefined {
+	image_index = frame_value.value;
+	image_speed = 0;
+}
+
+if angle_value.is_live angle_value.update(data_source);
+image_angle = angle_value.value;
+
+if blend_color_value.is_live blend_color_value.update(data_source);
 var color = blend_color_value.value;
 if is_string(color) color = yui_resolve_color(color);
 
