@@ -33,10 +33,12 @@ onLayoutInit = function() {
 	}
 	
 	is_bg_sprite_live = yui_element.is_bg_sprite_live;
-	if is_bg_sprite_live bg_sprite_value = yui_element.bg_sprite_value;
+	if is_bg_sprite_live
+		bg_sprite_value = new YuiBindableValue(yui_element.bg_sprite_binding);
 		
 	is_bg_color_live = yui_element.is_bg_color_live;
-	if is_bg_color_live bg_color_value = yui_element.bg_color_value;
+	if is_bg_color_live
+		bg_color_value = new YuiBindableValue(yui_element.bg_color_binding);
 	
 	border_focus_color = layout_props.border_focus_color ?? border_color;
 	

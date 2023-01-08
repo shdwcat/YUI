@@ -36,14 +36,6 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		props.blend_color = yui_resolve_color(props.blend_color);
 	}
 	
-	frame_value = new YuiBindableValue(props.frame);
-	angle_value = new YuiBindableValue(props.angle);
-	blend_color_value = new YuiBindableValue(props.blend_color);
-	
-	animatable.frame = frame_value;
-	animatable.angle = angle_value;
-	animatable.blend_color = blend_color_value;
-	
 	is_bound = base_is_bound
 		|| yui_is_live_binding(props.sprite)
 		|| yui_is_live_binding(props.blend_color);

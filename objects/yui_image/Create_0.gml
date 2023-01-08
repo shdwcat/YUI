@@ -7,9 +7,14 @@ sprite_index = -1;
 event_inherited();
 
 onLayoutInit = function() {
-	frame_value = yui_element.frame_value;
-	angle_value = yui_element.angle_value;
-	blend_color_value = yui_element.blend_color_value;
+	
+	frame_value = new YuiBindableValue(yui_element.props.frame);
+	angle_value = new YuiBindableValue(yui_element.props.angle);
+	blend_color_value = new YuiBindableValue(yui_element.props.blend_color);
+	
+	animatable.frame = frame_value;
+	animatable.angle = angle_value;
+	animatable.blend_color = blend_color_value;
 }
 
 build = function() {

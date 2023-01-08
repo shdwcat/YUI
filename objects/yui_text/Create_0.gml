@@ -22,8 +22,12 @@ text_surface_h = 0;
 override_text = undefined;
 
 onLayoutInit = function() {
-	text_value = yui_element.text_value;
-	color_value = yui_element.color_value;
+	text_value = new YuiBindableValue(yui_element.props.text);
+	animatable.text = text_value;
+	
+	color_value = new YuiBindableValue(yui_element.color);
+	animatable.color = color_value;
+	
 	highlight_color = layout_props.highlight_color;
 	use_scribble = layout_props.use_scribble;
 }
@@ -143,7 +147,7 @@ arrange = function(available_size, viewport_size) {
 	return draw_size;
 }
 
-buildTextSurface = function(text = undefined) {
+buildTextSurface = function yui_text__buildTextSurface(text = undefined) {
 	
 	if !bound_values return;
 	

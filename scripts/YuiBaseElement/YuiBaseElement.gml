@@ -120,21 +120,6 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		is_visible_live = yui_is_live_binding(props.visible);
 		is_tooltip_live = yui_is_live_binding(props.tooltip);
 		
-		data_source_value = new YuiBindableValue(data_source);
-		enabled_value = new YuiBindableValue(props.enabled);
-		visible_value = new YuiBindableValue(props.visible);
-		opacity_value = new YuiBindableValue(props.opacity);
-		xoffset_value = new YuiBindableValue(props.xoffset);
-		yoffset_value = new YuiBindableValue(props.yoffset);
-		
-		// map of animatable properties to the YuiBindableValues
-		animatable = {
-			opacity: opacity_value,
-			visible: visible_value,
-			xoffset: xoffset_value,
-			yoffset: yoffset_value,
-		};
-		
 		on_visible_anim = undefined;
 		on_arrange_anim = undefined;
 		on_unloading_anim = undefined;
@@ -205,12 +190,10 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 				
 				bg_sprite_binding = yui_bind(background_expr[$"sprite"], resources, slot_values);
 				is_bg_sprite_live = bg_sprite_binding != undefined;
-				bg_sprite_value = new YuiBindableValue(bg_sprite_binding);
 				bg_sprite = undefined;
 				
 				bg_color_binding = yui_bind(background_expr[$"color"], resources, slot_values);
 				is_bg_color_live = bg_color_binding != undefined;
-				bg_color_value = new YuiBindableValue(bg_color_binding);
 				bg_color = undefined;
 			}
 			else {

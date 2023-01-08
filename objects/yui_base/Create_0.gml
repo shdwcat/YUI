@@ -123,18 +123,22 @@ initLayout = function() {
 	// any data_source value means we have to evaluate it 
 	has_data_source = yui_element.data_source != undefined;
 	
-	// TODO: should the BindableValues be created here so that they're unique to the element?
-	data_source_value = yui_element.data_source_value;
-	enabled_value = yui_element.enabled_value;
-	visible_value = yui_element.visible_value;
-	opacity_value = yui_element.opacity_value;
-	xoffset_value = yui_element.xoffset_value;
-	yoffset_value = yui_element.yoffset_value;
+	data_source_value = new YuiBindableValue(yui_element.data_source);
+	enabled_value = new YuiBindableValue(yui_element.props.enabled);
+	visible_value = new YuiBindableValue(yui_element.props.visible);
+	opacity_value = new YuiBindableValue(yui_element.props.opacity);
+	xoffset_value = new YuiBindableValue(yui_element.props.xoffset);
+	yoffset_value = new YuiBindableValue(yui_element.props.yoffset);
 	
-	is_enabled_live = enabled_value.binding != undefined;
-	if !is_enabled_live enabled = yui_element.props.enabled;
+	// map of animatable properties to the YuiBindableValues
+	animatable = {
+		opacity: opacity_value,
+		visible: visible_value,
+		xoffset: xoffset_value,
+		yoffset: yoffset_value,
+	};
 	
-	animatable = yui_element.animatable;
+	if !enabled_value.is_live enabled = yui_element.props.enabled;
 	
 	on_visible_anim = yui_element.on_visible_anim;
 	on_arrange_anim = yui_element.on_arrange_anim;
@@ -232,8 +236,8 @@ process = function yui_base__process() {
 		
 	var old_opacity = opacity;
 	
-	if enabled_value.is_live enabled_value.update(data_source);
-	if is_enabled_live {
+	if enabled_value.is_live {
+		enabled_value.update(data_source);
 		enabled = enabled_value.value;
 	
 		focusable = enabled ? yui_element.props.focusable : false;
