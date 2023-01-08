@@ -19,22 +19,42 @@ if !ds_list_empty(hover_list) {
 	ds_list_clear(hover_list);
 }
 
-// first get yui_game_items from the room coordinates
-// NOTE: we do this first because we'll interate this list in reverse for top-down behavior
-hover_count = instance_position_list(
-	mouse_x + cursor_offset_x,
-	mouse_y + cursor_offset_y,
-	yui_game_item,
-	hover_list,
-	false);
+if cursor_offset_x != 0 || cursor_offset_y != 0 {
+	image_xscale = -cursor_offset_x;
+	image_yscale = -cursor_offset_y;
+
+	// first get yui_game_items from the room coordinates
+	// NOTE: we do this first because we'll interate this list in reverse for top-down behavior
+	hover_count = instance_place_list(
+		mouse_x + cursor_offset_x,
+		mouse_y + cursor_offset_y,
+		yui_game_item,
+		hover_list,
+		false);
 	
-// then get the yui items from the UI layer
-hover_count += instance_position_list(
-	mouse_gui_x + cursor_offset_x,
-	mouse_gui_y + cursor_offset_y,
-	yui_base,
-	hover_list,
-	false);
+	// then get the yui items from the UI layer
+	hover_count += instance_place_list(
+		mouse_gui_x + cursor_offset_x,
+		mouse_gui_y + cursor_offset_y,
+		yui_base,
+		hover_list,
+		false);
+}
+else {
+	hover_count = instance_position_list(
+		mouse_x + cursor_offset_x,
+		mouse_y + cursor_offset_y,
+		yui_game_item,
+		hover_list,
+		false);
+	
+	hover_count += instance_position_list(
+		mouse_gui_x + cursor_offset_x,
+		mouse_gui_y + cursor_offset_y,
+		yui_base,
+		hover_list,
+		false);
+}
 
 // copy to array for easier debugging
 array_resize(hover_array, hover_count);

@@ -1,5 +1,8 @@
 /// @description init
 
+// use single pixel + sizing with instance_place_list in step event
+sprite_index = yui_white_pixel
+
 // ===== interactions =====
 
 // hash of interaction.role strings to ids
