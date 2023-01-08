@@ -48,6 +48,13 @@ resources:
     from: 0
     to: -400
 
+  slide_out:
+    type: curve
+    curve: curveExpo
+    duration: 200
+    from: 0
+    to: -400
+
   slide_duration: 1500
 
   slide_right:
