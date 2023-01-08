@@ -16,35 +16,52 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 		self.is_yui_live_binding = false;
 	}
 	
-	static resolve = function(data)
-	{
-		var left_val = left.resolve(data);
-		
-		// NOTE: could set resolve specific to operator to avoid the switch at bind time
-		switch operator {
-			// NOTE: order is roughly in expected frequency
-			case YS_TOKEN.EQUAL_EQUAL:
-			case YS_TOKEN.EQUALS:
-				// TODO: per type logic here (arrays, structs, ?)
+	switch self.operator {
+		case YS_TOKEN.EQUAL_EQUAL:
+		case YS_TOKEN.EQUALS:
+			self.resolve = function ys_operator_equals(data) {
+				var left_val = left.resolve(data);
 				return left_val == right.resolve(data);
-				
-			case YS_TOKEN.QUESTION_QUESTION:
+			};
+			break;
+		case YS_TOKEN.QUESTION_QUESTION:
+			self.resolve = function ys_operator_null_coalesce(data) {
+				var left_val = left.resolve(data);
 				return left_val ?? right.resolve(data);
+			};
+			break;
 				
-			case YS_TOKEN.BANG_EQUAL:
+		case YS_TOKEN.BANG_EQUAL:
+			self.resolve = function ys_operator_not_equals(data) {
+				var left_val = left.resolve(data);
 				return left_val != right.resolve(data);
+			};
+			break;
 				
-			case YS_TOKEN.AND:
-				return left_val && right.resolve(data);
+		case YS_TOKEN.AND:
+			self.resolve = function ys_operator_and(data) {
+				var left_val = left.resolve(data);
+				return left_val and right.resolve(data);
+			};
+			break;
 				
-			case YS_TOKEN.OR:
-				return left_val || right.resolve(data);
-				return left_val && right.resolve(data);
+		case YS_TOKEN.OR:
+			self.resolve = function ys_operator_or(data) {
+				var left_val = left.resolve(data);
+			return left_val or right.resolve(data);
+			};
+			break;
 				
-			case YS_TOKEN.STRING_PLUS:
+		case YS_TOKEN.STRING_PLUS:
+			self.resolve = function ys_operator_concat(data) {
+				var left_val = left.resolve(data);
 				return string(left_val) + string(right.resolve(data));
+			};
+			break;
 				
-			case YS_TOKEN.PLUS:
+		case YS_TOKEN.PLUS:
+			self.resolve = function ys_operator_add(data) {
+				var left_val = left.resolve(data);
 				var right_val = right.resolve(data);
 				
 				if is_string(left_val)
@@ -53,31 +70,58 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 					return string(left_val) + right_val;
 				else
 					return left_val + right_val;
+				};
+			break;
 				
-			case YS_TOKEN.MINUS:
+		case YS_TOKEN.MINUS:
+			self.resolve = function ys_operator_subtract(data) {
+				var left_val = left.resolve(data);
 				return left_val - right.resolve(data);
+			};
+			break;
 				
-			case YS_TOKEN.STAR:
+		case YS_TOKEN.STAR:
+			self.resolve = function ys_operator_multiply(data) {
+				var left_val = left.resolve(data);
 				return left_val * right.resolve(data);
+			};
+			break;
 				
-			case YS_TOKEN.SLASH:
+		case YS_TOKEN.SLASH:
+			self.resolve = function ys_operator_divide(data) {
+				var left_val = left.resolve(data);
 				return left_val / right.resolve(data);
-				
-			case YS_TOKEN.GREATER:
+			};
+			break;
+		case YS_TOKEN.GREATER:
+			self.resolve = function ys_operator_greater_than(data) {
+				var left_val = left.resolve(data);
 				return left_val > right.resolve(data);
+			};
+			break;
 				
-			case YS_TOKEN.GREATER_EQUAL:
+		case YS_TOKEN.GREATER_EQUAL:
+			self.resolve = function ys_operator_greater_than_or_equal(data) {
+				var left_val = left.resolve(data);
 				return left_val >= right.resolve(data);
+			};
+			break;
 				
-			case YS_TOKEN.LESS:
+		case YS_TOKEN.LESS:
+			self.resolve = function ys_operator_less_than(data) {
+				var left_val = left.resolve(data);
 				return left_val < right.resolve(data);
+			};
+			break;
 				
-			case YS_TOKEN.LESS_EQUAL:
+		case YS_TOKEN.LESS_EQUAL:
+			self.resolve = function ys_operator_less_than_or_equal(data) {
+				var left_val = left.resolve(data);
 				return left_val <= right.resolve(data);
+			};
 				
-			default:
-				throw gspl_log("Unknown operator: " + operator.getTokenName());
-		}
+		default:
+			throw yui_error("Unknown operator: " + operator_name);
 	}
 	
 	static checkType = function() {
