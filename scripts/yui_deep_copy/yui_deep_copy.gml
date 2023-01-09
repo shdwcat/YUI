@@ -10,6 +10,9 @@
 
 function yui_deep_copy(_value)
 {
+	if yui_is_binding(_value)
+		throw yui_error("Attempting to deep copy a binding!");
+	
     return (new __yui_deep_copy(_value)).copy;
 }
 
