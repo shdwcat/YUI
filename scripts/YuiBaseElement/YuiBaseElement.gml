@@ -68,7 +68,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	if theme_override != undefined {
 		// grab new theme and override slot theme
 		theme = yui_resolve_theme(theme_override);
-		slot_values = slot_values.inherit({
+		slot_values = slot_values.extendWith({
 			theme: theme,
 		});
 	}
