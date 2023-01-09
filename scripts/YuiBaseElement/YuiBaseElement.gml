@@ -45,6 +45,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		on_mouse_wheel_up: undefined,
 		on_mouse_wheel_down: undefined,
 		on_click: undefined,
+		on_right_click: undefined,
 		on_double_click: undefined,
 		on_arrange: undefined,
 		on_got_focus: undefined,
@@ -87,6 +88,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		props.events.on_mouse_wheel_up = yui_bind_handler(props.events.on_mouse_wheel_up, resources, slot_values);
 		props.events.on_mouse_wheel_down = yui_bind_handler(props.events.on_mouse_wheel_down, resources, slot_values);
 		props.events.on_click = yui_bind_handler(props.events.on_click, resources, slot_values);
+		props.events.on_right_click = yui_bind_handler(props.events.on_right_click, resources, slot_values);
 		props.events.on_double_click = yui_bind_handler(props.events.on_double_click, resources, slot_values);
 		props.events.on_arrange = yui_bind_handler(props.events.on_arrange, resources, slot_values);
 		props.events.on_got_focus = yui_bind_handler(props.events.on_got_focus, resources, slot_values);

@@ -33,6 +33,17 @@ function yui_register_events(events) {
 		}
 	}
 	
+	if events.on_right_click != undefined {
+		right_click = function() {
+			var source = self;
+			var args = {
+				source: source,
+				button: "right",
+			};
+			yui_call_handler(events.on_right_click, [args], data_context);
+		}
+	}
+	
 	if events.on_double_click != undefined {
 		left_double_click = function() {
 			var source = self;
