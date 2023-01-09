@@ -121,6 +121,7 @@
     {"id":{"name":"YsStringLiteralParselet","path":"scripts/YsStringLiteralParselet/YsStringLiteralParselet.yy",},"order":8,},
     {"id":{"name":"__yui_init_live_reload","path":"scripts/__yui_init_live_reload/__yui_init_live_reload.yy",},"order":18,},
     {"id":{"name":"scribble_super_create","path":"scripts/scribble_super_create/scribble_super_create.yy",},"order":1,},
+    {"id":{"name":"YuiTemplateDef","path":"scripts/YuiTemplateDef/YuiTemplateDef.yy",},"order":19,},
     {"id":{"name":"WidgetGalleryData","path":"scripts/WidgetGalleryData/WidgetGalleryData.yy",},"order":7,},
     {"id":{"name":"knit_parse","path":"scripts/knit_parse/knit_parse.yy",},"order":7,},
     {"id":{"name":"yui_down_arrow_64","path":"sprites/yui_down_arrow_64/yui_down_arrow_64.yy",},"order":8,},

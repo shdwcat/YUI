@@ -17,7 +17,8 @@ function yui_init_theme(theme_definition, name, folder_path) {
 		props.import,
 		folder_path,
 		YuiGlobals.yui_cabinet);
-		
+	
+	// use empty slot values
 	var slot_values = new YuiChainedMap();
 	
 	// bind functions

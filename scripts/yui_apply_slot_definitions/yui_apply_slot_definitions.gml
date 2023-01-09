@@ -7,9 +7,6 @@ function yui_apply_slot_definitions(
 	resources
 	) {
 	
-	// ensure we have a slot definitions struct
-	slot_definitions ??= {};
-	
 	var instance_theme_name = template_instance_props[$ "theme"];
 	var theme = instance_theme_name != undefined
 		? yui_resolve_theme(instance_theme_name)
@@ -92,26 +89,6 @@ function yui_apply_slot_definitions(
 			// if so then we'd have to do background: $background if we wanted a background *slot* and apply to template root
 		}
 	}
-	
-	// now copy the parent slot values into the output slot values
-	// this way the instance props for an inner template can use $slot binding
-	// to access the slot values defined on an outer template
-	// (AKA using template instances inside the template definition of another template such as a checkbox in a menu)
-	//if parent_slot_values {
-	//	var parent_slot_names = variable_struct_get_names(parent_slot_values);
-	//	var i = 0; repeat array_length(parent_slot_names) {
-	//		var parent_slot_name = parent_slot_names[i++];
-			
-	//		var slot_overlaps = variable_struct_exists(slot_values, parent_slot_name);
-	//		if slot_overlaps {
-	//			// if the child has the same slot as the parent, leave the child slot alone
-	//			// an example where this can happen is a recursive template (see menu.yui)
-	//		}
-	//		else {
-	//			slot_values[$ parent_slot_name] = parent_slot_values[$ parent_slot_name];
-	//		}
-	//	}
-	//}
 	
 	return slot_values;
 }

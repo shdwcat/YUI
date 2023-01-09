@@ -55,24 +55,30 @@ function yui_resolve_element(yui_data, resources, slot_values, parent_id = undef
 			yui_data.yui_type = yui_data.type;
 		}
 	
-		var element_constructor = element_map[$ yui_data.type];
 		var element;
-	
-		// already resolved the template. just need to apply slots and construct
-		var slot_defs = yui_data[$ "slot_defs"];
-		if slot_defs != undefined {
-			var new_slot_values = yui_apply_slot_definitions(slot_defs, yui_data, , slot_values, resources)
-			var element = new element_constructor(yui_data, resources, new_slot_values);
-			return element;
-		}
-		else if is_undefined(element_constructor) {
-			// check for a template or fragment resource
+		var element_constructor = element_map[$ yui_data.type];
+
+		// if this isn't a core element, check for a template or fragment resource
+		if element_constructor == undefined {
 			var element_definition = resources[$ yui_data.type];
-			
-			if !is_undefined(element_definition) {
+			if element_definition != undefined {
 				var element_type = element_definition[$ "type"]
 				if element_type == "template" {
-					element = yui_create_template_element(yui_data, element_definition, resources, slot_values);
+					
+					// get or create the template definition
+					var template_type = instanceof(element_definition);
+					if template_type == "struct" {
+						element_definition = new YuiTemplateDef(yui_data.type, element_definition, resources);
+						
+						// update the resource entry so that we don't have to recreate it each time
+						resources[$yui_data.type] = element_definition;
+					}
+					else if template_type != "YuiTemplateDef" {
+						throw yui_error("Unexpected template type:", template_type);
+					}
+					
+					// create the element from the template_definition
+					element = element_definition.createElement(yui_data, resources, slot_values, /*parent*/ self);
 				}
 				else if element_type == "fragment" {
 					element = yui_create_fragment_element(yui_data, element_definition, resources, slot_values);
