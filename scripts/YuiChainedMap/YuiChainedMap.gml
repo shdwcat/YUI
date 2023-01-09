@@ -44,9 +44,14 @@ function YuiChainedMap(parent = undefined, values = undefined) constructor {
 		var keys = map ? variable_struct_get_names(map) : [];
 		
 		if parent {
-			keys = array_concat(keys, parent.getKeys());
+			keys = array_union(keys, parent.getKeys());
 		}
 		
 		return keys;
+	}
+	
+	static hasKey = function(key) {
+		return (map && variable_struct_exists(map, key))
+			|| (parent && parent.hasKey(key));
 	}
 }
