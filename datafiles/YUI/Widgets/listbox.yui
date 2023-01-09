@@ -43,15 +43,13 @@ resources:
       // a template is another template. Ideal fix would be to do the DCS template definition
       // system for YUI, but could be a lot of bugs!
 
-      // type: border
-      // content:
-
-        // trying to nest scrollbox inside here just causes another bug where the 
-        // scrollbox size becomes infinite or something and eventually crashes GM
+      type: scrollbox
+      content:
 
         type: panel
         padding: 1
         spacing: 1
+        size: { w: stretch }
         alignment: { h: stretch }
         elements: $items
 

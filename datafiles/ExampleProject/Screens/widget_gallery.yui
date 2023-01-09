@@ -125,55 +125,6 @@ root:
           spacing: 10
 
           elements:
-            - type: text
-              text: "Listbox - NOTE: Prototype only! Not fully functional"
-              text_style: subtitle
-
-            - type: scrollbox
-              size: { w: 150, max_h: 170 }
-              content_w: fit
-              content: 
-                type: listbox
-                size: { w: stretch }
-                selected_item: @selected_list_item
-                on_item_selected: @@ value => @selected_list_item = value
-                items:
-                  - one
-                  - two
-                  - three
-                  - four
-                  - five
-                  - six
-                  - seven
-                  - eight
-
-            // - type: listbox
-            //   //trace: true
-            //   size: { min_w: 150, max_h: 200 }
-            //   selected_item: @selected_list_item
-            //   on_item_selected: @@ value => @selected_list_item = value
-            //   items:
-            //     - one
-            //     - two
-            //     - three
-            //     - four
-            //     - five
-            //     - six
-            //     - seven
-            //     - eight
-
-        //     - type: scrollbox
-        //       //trace: true
-        //       //size: { w: 300, h: 100 }
-        //       content_w: fit
-        //       content_h: fit
-        //       //content_w: 400
-        //       //content_h: 700
-        //       content: 
-        //         type: text
-        //         //size: { w: 400 }
-        //         padding: 5
-        //         text: Lorem ipsum dolor sit amet
 
             - type: text
               text: Scrollbox
@@ -181,11 +132,29 @@ root:
 
             - type: scrollbox
               size: { w: 300, h: 100 }
-              content_w: fit
-              //content_w: 400
-              //content_h: 700
               content: 
                 type: text
-                //size: { w: 400 }
                 padding: 5
                 text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum dui orci, in venenatis ipsum elementum vitae. Integer sagittis neque in nibh mollis venenatis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed commodo ultricies dolor eget maximus. Duis non gravida nulla, vel tincidunt lectus. Vestibulum dapibus sapien a augue ultrices porttitor. Fusce ultrices lacus nisl. Vestibulum nisi velit, placerat sed lacus vel, tincidunt ultricies metus. Maecenas porta, justo in imperdiet iaculis, urna ipsum varius urna, porta bibendum enim lorem sit amet enim. Nullam mattis tincidunt augue, vitae ultrices magna faucibus vel. Nunc lorem nunc, commodo ut tincidunt id, sagittis sed ipsum. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+                events:
+                  on_right_click:
+                    - @@ clipboard_set_text(e.source.text_value.value)
+                    - @@ yui_log('copied text to clipboard')
+
+            - type: text
+              text: Listbox
+              text_style: subtitle
+
+            - type: listbox
+              size: { w: 150, max_h: 170 }
+              selected_item: @selected_list_item
+              on_item_selected: @@ value => @selected_list_item = value
+              items:
+                - one
+                - two
+                - three
+                - four
+                - five
+                - six
+                - seven
+                - eight

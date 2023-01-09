@@ -17,7 +17,7 @@ resources:
       scroll_y: 0
 
       // explicitly set width and/or height of scrollable content
-      content_w: null
+      content_w: fit
       content_h: null
 
       // scroll bar visibility - defaults to automatically visible if scrollable
