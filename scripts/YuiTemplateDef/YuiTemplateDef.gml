@@ -13,6 +13,7 @@ function YuiTemplateDef(name, template_props, resources) constructor {
 		throw yui_error("template definition must define 'content' property");
 	
 	content_type = content.type;
+	content_events = content[$"events"];
 	content_template = yui_get_or_init_template_def(resources, content_type);
 	
 	// TODO: convert back to regular map?
@@ -42,8 +43,16 @@ function YuiTemplateDef(name, template_props, resources) constructor {
 		element_props[$"template_type"] = name;
 		element_props[$"template_def"] = content;
 		
+		// resolve template events
 		if events
 			resolveEvents(element_props, outer_resources, slot_values);
+			
+		// merge content events with events from element props and outer template content
+		var outer_events = outer_template_content ? outer_template_content[$"events"] : undefined;
+		if outer_events || content_events {
+			// TODO: currently events will override on collision, could merge handlers into array of handlers?
+			element_props.events = yui_apply_props(element_props[$"events"], outer_events, content_events);
+		}
 		
 		if content_template {
 			var element = content_template.createElement(element_props, outer_resources, slot_values, parent_element, content);
