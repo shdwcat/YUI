@@ -15,16 +15,8 @@ function YuiTemplateDef(name, template_props, resources) constructor {
 	content_type = content.type;
 	content_template = yui_get_or_init_template_def(resources, content_type);
 	
-	var slots = template_props[$"slots"];
-
-	// if the content root is a template, extend its slots with our slots
-	if content_template {
-		slot_definitions = content_template.slot_definitions.extendWith(slots);
-	}
-	// otherwise just use our slots as the slot definitions
-	else {
-		slot_definitions = new YuiChainedMap(/* no parent*/, slots);
-	}
+	// TODO: convert back to regular map?
+	slot_definitions = new YuiChainedMap(/* no parent*/,  template_props[$"slots"]);
 	
 	events = template_props[$"events"];
 
@@ -35,34 +27,33 @@ function YuiTemplateDef(name, template_props, resources) constructor {
 		// apply slot definitions from this template to the outer slot values
 		var slot_values = applySlotValues(element_props, outer_slot_values);
 		
-		// merge the element props with the props from our template content
-		var merged_element_props = yui_shallow_copy(element_props);//yui_apply_props(element_props, content)
+		// copy the raw element props so we can update the type to pass to the next level
+		element_props = yui_shallow_copy(element_props);
 		
 		// set the type to the content type so that we don't recur back into this function
-		merged_element_props.type = content.type;
+		element_props.type = content.type;
 		
 		// NOTE: this is needed to get template styles in yui_apply_element_props
-		merged_element_props[$"template_type"] ??= name;
-		merged_element_props[$"template_def"] ??= content;
+		element_props[$"template_type"] = name;
+		element_props[$"template_def"] = content;
 		
 		if events
-			resolveEvents(merged_element_props, outer_resources, slot_values);
+			resolveEvents(element_props, outer_resources, slot_values);
 		
 		if content_template {
-			var element = content_template.createElement(merged_element_props, outer_resources, slot_values, parent_element);
+			var element = content_template.createElement(element_props, outer_resources, slot_values, parent_element);
 		}
 		else {
 			// NOTE: have to do this in the scope of the parent element because
-			// yui_resolve_element makes assumptions about what will be executing it
+			// yui_resolve_element makes assumptions about what scope it's called in
 			var template_slot_values = slot_values;
 			with parent_element {
-				var element = yui_resolve_element(merged_element_props, outer_resources, template_slot_values);
+				var element = yui_resolve_element(element_props, outer_resources, template_slot_values);
 			}
 		}
 		
 		// track which template created the element
 		element.__template = self;
-		
 		
 		return element;
 	}
@@ -78,7 +69,7 @@ function YuiTemplateDef(name, template_props, resources) constructor {
 			throw error
 		}
 		
-		var template_theme = theme.elements[$ element_props.yui_type] ?? {};
+		var template_theme = theme.elements[$ name] ?? {};
 		
 		// create a new slot map (inheriting from the outer slots if any)
 		var slot_values = new YuiChainedMap(outer_slot_values);
@@ -88,21 +79,41 @@ function YuiTemplateDef(name, template_props, resources) constructor {
 		var i = 0; repeat array_length(slot_keys) {
 			var slot_key = slot_keys[i++];
 			
-			// the slot value is going to be either:
-			// * the value from the element props, bound
-			// * the value from the theme, deep-copied
-			// * the default value from our slot definitions, deep-copied
+				if !slot_values.hasKey(slot_key) {
 			
-			var slot_value =
-				(yui_bind(element_props[$ slot_key], resources, outer_slot_values, /*bind_arrays*/ true)
-				?? yui_deep_copy(getThemeValue(template_theme, slot_key)))
-				?? yui_deep_copy(slot_definitions.get(slot_key));
+				// the slot value is going to be either:
+				// * the value from the element props, bound
+				// * the value from the theme, deep-copied
+				// * the default value from our slot definitions, deep-copied
+			
+				var slot_value =
+					(yui_bind(element_props[$ slot_key], resources, outer_slot_values, /*bind_arrays*/ true)
+					?? yui_deep_copy(getThemeValue(template_theme, slot_key)))
+					?? yui_deep_copy(slot_definitions.get(slot_key));
 				
-			slot_values.set(slot_key, slot_value);
+				slot_values.set(slot_key, slot_value);
+			}
 		}
 		
-		if name == "scrollbox"
-			DEBUG_BREAK_YUI
+		// TODO: would it be cleaner to pass down the outer template content?
+		
+		// if our content is a template, we need to fill its slot values from our content props
+		if content_template {
+			var content_slot_keys = content_template.slot_definitions.getKeys();
+			var i = 0; repeat array_length(content_slot_keys) {
+				var slot_key = content_slot_keys[i++];
+				var content_value = content[$slot_key];
+				
+				// if our content has a value for this slot and the slot doesn't already
+				// have a value then fill that slot with the value from our template content
+				if content_value && !slot_values.hasKey(slot_key) {
+					slot_values.set(slot_key, content_value);
+				}
+			}
+		}
+		
+		//if name == "scrollbox"
+		//	DEBUG_BREAK_YUI
 	
 		return slot_values;
 	}

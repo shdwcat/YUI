@@ -35,7 +35,6 @@ function yui_create_template_element(instance_props, template_definition, resour
 	// NOTE: this may be recursive so we need to merge a new template definition with an existing one
 	instance_props.template_type = instance_props.type;
 	instance_props.template_def = template_element_props;
-	instance_props.slot_defs = slot_definitions;
 	
 	// set the type to the definition root type to prevent recursion
 	instance_props.type = template_element_props.type;
