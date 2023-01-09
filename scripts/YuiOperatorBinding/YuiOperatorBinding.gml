@@ -119,6 +119,7 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 				var left_val = left.resolve(data);
 				return left_val <= right.resolve(data);
 			};
+			break;
 				
 		default:
 			throw yui_error("Unknown operator: " + operator_name);
