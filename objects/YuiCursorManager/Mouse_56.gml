@@ -51,7 +51,7 @@ var i = hover_count - 1; repeat hover_count {
 				break;
 			}
 			
-			yui_log("clicked instance", i, "is", next.id, "type", object_get_name(next.object_index));
+			//yui_log("clicked instance", i, "is", next.id, "type", object_get_name(next.object_index));
 			var handled = next.left_click();
 			if handled != false {
 				break;
