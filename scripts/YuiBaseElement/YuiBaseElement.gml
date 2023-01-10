@@ -100,12 +100,16 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		size = new YuiElementSize(yui_bind(props.size, resources, slot_values));
 		size.w = yui_bind(size.w, resources, slot_values);
 		size.h = yui_bind(size.h, resources, slot_values);
+		size.max_w = yui_bind(size.max_w, resources, slot_values);
+		size.max_h = yui_bind(size.max_h, resources, slot_values);
 	
 		canvas = new YuiCanvasPosition(props.canvas, resources, slot_values, props.id);
 		flex = new YuiFlexValue(props.flex);
 	
 		// TODO: move this to YuiPanelElement?
 		alignment = new YuiElementAlignment(yui_bind(props.alignment, resources, slot_values));
+		alignment.v = yui_bind(alignment.v, resources, slot_values);
+		alignment.h = yui_bind(alignment.h, resources, slot_values);
 		
 		props.enabled = yui_bind(props.enabled, resources, slot_values);
 		props.visible = yui_bind(props.visible, resources, slot_values);
