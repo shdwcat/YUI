@@ -27,7 +27,11 @@ resources:
       // array of items to select from
       items: []
 
+      // whether the value can be cleared
       can_clear_value: true
+
+      // whether to show a search field above the items
+      searchable: false
 
       // template to use when rendering items in dropdown
       item_template: &dropdown_item_template
@@ -40,6 +44,9 @@ resources:
 
       // where to place the dropdown
       dropdown_placement: bottom_left
+
+      // maximum height of the dropdown
+      max_dropdown_height: 300
 
       foreground: null
 
@@ -83,22 +90,41 @@ resources:
 
       popup:
         placement: $dropdown_placement
-        content:
-          type: panel
-          spacing: 0
-          alignment: { h: stretch }
-          bind_slot_scope:
-            selected_item: $selected_item ?? $selection_scope.selected_item // little trick to simplify referring to the selected item
-          elements: $items
-          template:
-            type: button
-            border_thickness: 0
-            padding: 5
-            background:
-              color: @ == $selected_item then $selected_bg_color else $item_bg_color
-            content: $item_template
-            on_click:
-              // invoke the item_selected event on the root widget
-              - @@ e => yui_invoke_event(e.source, item_selected, @)
-              // close the popup
-              - @@ e => e.source.closePopup()
+        padding: 1
+        content: $searchable then &dropdown_item_panel_searchable else &dropdown_item_panel
+
+  dropdown_item_panel_searchable:
+    type: panel
+    size: { max_h: $max_dropdown_height }
+    spacing: 0
+    elements:
+      - type: text_input
+        autofocus: true
+        border_thickness: 0
+        text: foo
+        size: { w: stretch }
+      - &dropdown_item_panel
+
+  dropdown_item_panel:
+    type: scrollbox
+    size: { max_h: $max_dropdown_height }
+    content: 
+      type: panel
+      spacing: 0
+      size: { w: stretch }
+      alignment: { h: stretch }
+      bind_slot_scope:
+        selected_item: $selected_item ?? $selection_scope.selected_item // little trick to simplify referring to the selected item
+      elements: $items
+      template:
+        type: button
+        border_thickness: 0
+        padding: 5
+        background:
+          color: @ == $selected_item then $selected_bg_color else $item_bg_color
+        content: $item_template
+        on_click:
+          // invoke the item_selected event on the root widget
+          - @@ e => yui_invoke_event(e.source, item_selected, @)
+          // close the popup
+          - @@ e => e.source.closePopup()
