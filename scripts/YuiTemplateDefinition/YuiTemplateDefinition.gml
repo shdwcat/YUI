@@ -1,5 +1,5 @@
 /// @description here
-function YuiTemplateDef(name, template_props, resources) constructor {
+function YuiTemplateDefinition(name, template_props, resources) constructor {
 	type = "template";
 	
 	self.name = name;
@@ -155,12 +155,12 @@ function yui_get_or_init_template_def(resources, template_type) {
 	// get or create the template definition
 	var template_instance_type = instanceof(template_definition);
 	if template_instance_type == "struct" {
-		template_definition = new YuiTemplateDef(template_type, template_definition, resources);
+		template_definition = new YuiTemplateDefinition(template_type, template_definition, resources);
 						
 		// update the resource entry so that we don't have to recreate it each time
 		resources[$ template_type] = template_definition;
 	}
-	else if template_instance_type != "YuiTemplateDef" {
+	else if template_instance_type != "YuiTemplateDefinition" {
 		throw yui_error("Unexpected template type:", template_type);
 	}
 			

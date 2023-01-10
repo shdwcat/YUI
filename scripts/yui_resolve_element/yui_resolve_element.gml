@@ -68,12 +68,12 @@ function yui_resolve_element(yui_data, resources, slot_values, parent_id = undef
 					// get or create the template definition
 					var template_type = instanceof(element_definition);
 					if template_type == "struct" {
-						element_definition = new YuiTemplateDef(yui_data.type, element_definition, resources);
+						element_definition = new YuiTemplateDefinition(yui_data.type, element_definition, resources);
 						
 						// update the resource entry so that we don't have to recreate it each time
 						resources[$yui_data.type] = element_definition;
 					}
-					else if template_type != "YuiTemplateDef" {
+					else if template_type != "YuiTemplateDefinition" {
 						throw yui_error("Unexpected template type:", template_type);
 					}
 					
