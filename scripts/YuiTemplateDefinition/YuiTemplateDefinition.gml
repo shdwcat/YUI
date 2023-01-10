@@ -39,9 +39,15 @@ function YuiTemplateDefinition(name, template_props, resources) constructor {
 		// set the type to the content type so that we don't recur back into this function
 		element_props.type = content.type;
 		
+		// merge the template content
+		// TODO: do this in construction?
+		var template_def = outer_template_content
+			? yui_apply_props(outer_template_content, content)
+			: content;
+		
 		// NOTE: this is needed to get template styles in yui_apply_element_props
 		element_props[$"template_type"] = name;
-		element_props[$"template_def"] = content;
+		element_props[$"template_def"] = template_def;
 		
 		// resolve template events
 		if events
@@ -91,25 +97,19 @@ function YuiTemplateDefinition(name, template_props, resources) constructor {
 		var i = 0; repeat array_length(slot_keys) {
 			var slot_key = slot_keys[i++];
 			
-			// only fill a slot if it isn't already filled
-			// NOTE: may need to reconsider this if I see weird shit somewhere!
-			if !slot_values.hasKey(slot_key) {
+			// the slot value is going to be either:
+			// * the value from the element props, bound
+			// * the value from the outer template content, bound
+			// * the value from the theme, deep-copied
+			// * the default value from our slot definitions, deep-copied
 			
-				// the slot value is going to be either:
-				// * the value from the element props, bound
-				// * the value from the outer template content, bound
-				// * the value from the theme, deep-copied
-				// * the default value from our slot definitions, deep-copied
-			
-				var slot_value =
-					((yui_bind(element_props[$ slot_key], resources, outer_slot_values, /*bind_arrays*/ true)
-					?? yui_bind(outer_template_content[$ slot_key], resources, outer_slot_values, /*bind_arrays*/ true))
-					?? yui_deep_copy(template_theme[$ slot_key]))
-					?? yui_deep_copy(slot_definitions.get(slot_key));
+			var slot_value =
+				((yui_bind(element_props[$ slot_key], resources, outer_slot_values, /*bind_arrays*/ true)
+				?? yui_bind(outer_template_content[$ slot_key], resources, outer_slot_values, /*bind_arrays*/ true))
+				?? yui_deep_copy(template_theme[$ slot_key]))
+				?? yui_deep_copy(slot_definitions.get(slot_key));
 				
-				slot_values.set(slot_key, slot_value);
-				
-			}
+			slot_values.set(slot_key, slot_value);
 		}
 	
 		return slot_values;
