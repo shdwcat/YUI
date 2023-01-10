@@ -27,6 +27,9 @@ resources:
       // the size applied to the content below the tab header
       content_size: null
 
+      // padding applied to the content below the tab header
+      content_padding: null
+
     events:
       tab_selected:
         // select the item
@@ -51,6 +54,7 @@ resources:
             on_click: @@ e => yui_invoke_event(e.source, 'tab_selected', @)
 
         - type: tab_panel_content
+          padding: $content_padding
           data_source: "$active_tab ?? $tab_items[$active_tab_index]"
           size: $content_size
           content: 
