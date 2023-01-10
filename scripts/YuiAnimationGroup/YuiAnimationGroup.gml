@@ -6,6 +6,7 @@ function YuiAnimationGroup(anim_group_props, resources, slot_values) constructor
 	
 	anim_properties = {};
 	
+	enabled = true;
 	duration = 0;
 	continuous = false;
 	

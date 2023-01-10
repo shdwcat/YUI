@@ -365,7 +365,8 @@ isPointVisible = function(x, y) {
 }
 
 beginAnimationGroup = function(animation_group) {
-	animation_group.start(animatable, self);
+	if animation_group.enabled
+		animation_group.start(animatable, self);
 }
 
 unload = function(unload_root = undefined) {
