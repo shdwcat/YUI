@@ -1,0 +1,36 @@
+id: widget_gallery
+file_type: screen
+
+import:
+  - ../Templates/screen_base.yui
+  
+  - /YUI/Animations/transitions.yui
+  - /YUI/Widgets/
+  - Animation Examples/
+
+root:
+  type: screen_base
+  content_layout: horizontal
+  
+  items:
+    - type: panel
+      spacing: 11
+      elements: 
+        - type: text
+          text_style: title
+          text: Animation Examples
+
+        - type: tab_panel
+          active_tab: @layouts.active_tab
+          on_tab_selected: @@ item => @layouts.active_tab = item
+          content_size: stretch
+          tab_content_binding: @content
+          tab_items:
+            - header: Basic Animations
+              content: &basic_examples
+            - header: Color Animations
+              content: &color_examples
+            - header: Text Animations
+              content: &text_examples
+            - header: Animation Sequences
+              content: &sequence_examples

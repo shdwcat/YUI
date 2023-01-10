@@ -1,0 +1,49 @@
+file_type: resources
+
+import:
+  - /YUI/Animations/transitions.yui
+
+resources:
+
+  border_panel:
+    type: fragment
+    content:
+      type: panel
+      padding: [10, 5]
+      border_color: $theme.resources.control_border
+      background: $theme.resources.panel_bg
+
+  basic_examples:
+    type: panel
+    padding: 5
+    elements:
+
+      - type: text
+        text: Opacity
+        text_style: subtitle
+
+      - type: border_panel
+        elements:
+          - type: text
+            text: Demo Panel
+          - type: button
+            content: A Button
+          - type: checkbox
+            content: A Checkbox
+
+        animate:
+          on_visible:
+            type: anim_sequence
+            enabled: false
+            repeat: true
+            animations:
+              - opacity:
+                  type: curve
+                  curve: curveSine
+                  duration: 1500
+                  to: 0
+              - opacity:
+                  type: curve
+                  curve: curveSine
+                  duration: 1500
+                  to: 1

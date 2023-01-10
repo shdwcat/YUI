@@ -583,6 +583,11 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"slider.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Widgets",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"welcome_screen.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"transitions.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Animations",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"animation_examples.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"basic.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens/Animation Examples",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"color.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens/Animation Examples",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"sequence.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens/Animation Examples",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"text.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens/Animation Examples",},
   ],
   "MetaData": {
     "IDEVersion": "2022.11.1.56",

@@ -1,0 +1,7 @@
+file_type: resources
+
+resources:
+  text_examples:
+    type: panel
+    elements:
+      - foo
