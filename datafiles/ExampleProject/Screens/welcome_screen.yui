@@ -99,6 +99,16 @@ root:
                   xoffset: &cascade_slide_out
 
             - type: button
+              content: Animation Examples
+              tooltip: View examples of the animation system in use
+              on_click: @@ e => yui_change_screen(animation_examples, e.source)
+              animate:
+                on_visible:
+                  xoffset: &cascade_slide_in
+                on_unloading:
+                  xoffset: &cascade_slide_out
+
+            - type: button
               content: TodoMVC Example
               tooltip: Working example of the TodoMVC app (a basic todo list tracker)
               on_click: @@ e => yui_change_screen(todo_mvc, e.source)
@@ -122,16 +132,6 @@ root:
               content: Layout Examples
               tooltip: View examples of the various panel layout options as including alignment behavior
               on_click: @@ e => yui_change_screen(layout_example, e.source)
-              animate:
-                on_visible:
-                  xoffset: &cascade_slide_in
-                on_unloading:
-                  xoffset: &cascade_slide_out
-
-            - type: button
-              content: Animation Examples
-              tooltip: View examples of the animation system in use
-              on_click: @@ e => yui_change_screen(animation_examples, e.source)
               animate:
                 on_visible:
                   xoffset: &cascade_slide_in

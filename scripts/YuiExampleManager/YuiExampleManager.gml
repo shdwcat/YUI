@@ -23,6 +23,8 @@ function YuiExampleManager() constructor {
 	
 	widget_data = new WidgetGalleryData();
 	
+	anim_data = new AnimationExampleData();
+	
 	// windows demo
 	windows = {
 		"default": new YuiWindowItem("buttons"),

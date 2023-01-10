@@ -8,6 +8,18 @@ import:
   - /YUI/Widgets/
   - Animation Examples/
 
+resources:
+  // hack to pass the anim data through the tab panel
+  // need to redo tabpanel content logic...
+  anim_tab_panel:
+    type: template
+    slots:
+      anim_data: undefined
+    content:
+      type: tab_panel
+      bind_slot_scope:
+        anim_data: $anim_data
+
 root:
   type: screen_base
   content_layout: horizontal
@@ -20,10 +32,12 @@ root:
           text_style: title
           text: Animation Examples
 
-        - type: tab_panel
+        - type: anim_tab_panel
+          anim_data: @anim_data
           active_tab: @layouts.active_tab
           on_tab_selected: @@ item => @layouts.active_tab = item
           content_size: stretch
+          content_padding: 0
           tab_content_binding: @content
           tab_items:
             - header: Basic Animations

@@ -2,6 +2,7 @@ file_type: resources
 
 import:
   - /YUI/Animations/transitions.yui
+  - /YUI/Widgets/
 
 resources:
 
@@ -13,37 +14,92 @@ resources:
       border_color: $theme.resources.control_border
       background: $theme.resources.panel_bg
 
+  // TODO: move to its own file
+  labeled_border:
+    type: template
+    slots:
+      label: null
+      content: null
+      layout: horizontal
+    content:
+      type: panel
+      layout: $layout
+      alignment:
+        v: @@ ($layout == horizontal) then center else null
+      elements:
+        - type: text
+          text: "$label + ':'"
+        - $content
+
   basic_examples:
     type: panel
-    padding: 5
+    data_source: $anim_data
+    padding: 0
+    layout: horizontal
     elements:
 
-      - type: text
-        text: Opacity
-        text_style: subtitle
-
-      - type: border_panel
+      - type: panel
+        flex: true
+        size: stretch
+        alignment: center
+        yoffset: -20
+        padding: 5
         elements:
-          - type: text
-            text: Demo Panel
-          - type: button
-            content: A Button
-          - type: checkbox
-            content: A Checkbox
 
-        animate:
-          on_visible:
-            type: anim_sequence
-            enabled: false
-            repeat: true
-            animations:
-              - opacity:
-                  type: curve
-                  curve: curveSine
-                  duration: 1500
-                  to: 0
-              - opacity:
-                  type: curve
-                  curve: curveSine
-                  duration: 1500
-                  to: 1
+          - type: border_panel
+            elements:
+              - type: text
+                text: Demo Panel
+              - type: button
+                content: A Button
+              - type: checkbox
+                label: A Checkbox
+
+            animate:
+              on_visible:
+                type: anim_sequence
+                enabled: false
+                repeat: true
+                animations:
+                  - opacity:
+                      type: curve
+                      curve: curveSine
+                      duration: 1500
+                      to: 0
+                  - opacity:
+                      type: curve
+                      curve: curveSine
+                      duration: 1500
+                      to: 1
+
+      // property panel
+      - type: panel
+        background: $theme.resources.control_border
+        size: { h: stretch }
+        padding: 1
+        elements:
+          - type: border
+            background: $theme.resources.panel_bg
+            padding: 5
+            content: 
+              type: text
+              padding: [5, 0]
+              text: Animation Properties
+              text_style: subtitle
+
+          - type: panel
+            padding: [10, 5]
+            alignment: { h: stretch }
+            elements:
+
+              - type: labeled_border
+                label: Curve
+                content:
+                  type: dropdown_menu
+                  can_clear_value: false
+                  items: @curve_list
+                  selected_item: @selected_curve
+                  on_item_selected: @@ item => @selected_curve = item
+                  item_template:
+                    type: text
+                    text: @name
