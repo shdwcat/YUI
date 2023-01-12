@@ -11,6 +11,13 @@ function AnimationExampleData() constructor {
 	
 	selected_curve = array_length(curve_list) > 0 ? curve_list[0] : undefined;
 	
-	foo = false;
+	from = 0;
+	to = 1;
+	duration = 1000;
+	delay = 0;
+	
+	repeats = false;
+	has_step = false;
+	step = undefined;
 
 }

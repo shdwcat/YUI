@@ -35,9 +35,9 @@ resources:
     template:
       type: panel
       layout: horizontal
-      spacing: 10
       elements:
         - type: border
+          visible: $label != undefined
           padding: 5
           content: $label
 
