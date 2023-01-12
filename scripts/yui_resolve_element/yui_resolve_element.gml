@@ -78,7 +78,7 @@ function yui_resolve_element(yui_data, resources, slot_values, parent_id = undef
 					}
 					
 					// create the element from the template_definition
-					element = element_definition.createElement(yui_data, resources, slot_values, /*parent*/ self);
+					element = element_definition.createElement(yui_data, slot_values, /*parent*/ self);
 				}
 				else if element_type == "fragment" {
 					element = yui_create_fragment_element(yui_data, element_definition, resources, slot_values);

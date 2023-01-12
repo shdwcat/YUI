@@ -23,12 +23,9 @@ function YuiTemplateDefinition(name, template_props, resources) constructor {
 
 	static createElement = function(
 		element_props,
-		outer_resources,
 		outer_slot_values,
 		parent_element,
 		outer_template_content = undefined) {
-		
-		// NOTE: we use the outer resources because the content_template constructor will need access to those
 		
 		// apply slot definitions from this template to the outer slot values
 		var slot_values = applySlotValues(element_props, outer_slot_values, outer_template_content);
@@ -51,7 +48,7 @@ function YuiTemplateDefinition(name, template_props, resources) constructor {
 		
 		// resolve template events
 		if events
-			resolveEvents(element_props, outer_resources, slot_values);
+			resolveEvents(element_props, resources, slot_values);
 			
 		// merge content events with events from element props and outer template content
 		var outer_events = outer_template_content ? outer_template_content[$"events"] : undefined;
@@ -61,14 +58,14 @@ function YuiTemplateDefinition(name, template_props, resources) constructor {
 		}
 		
 		if content_template {
-			var element = content_template.createElement(element_props, outer_resources, slot_values, parent_element, content);
+			var element = content_template.createElement(element_props, slot_values, parent_element, content);
 		}
 		else {
 			// NOTE: have to do this in the scope of the parent element because
 			// yui_resolve_element makes assumptions about what scope it's called in
 			var template_slot_values = slot_values;
 			with parent_element {
-				var element = yui_resolve_element(element_props, outer_resources, template_slot_values);
+				var element = yui_resolve_element(element_props, resources, template_slot_values);
 			}
 		}
 		
