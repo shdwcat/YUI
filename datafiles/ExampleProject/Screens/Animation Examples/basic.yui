@@ -45,6 +45,18 @@ resources:
         alignment: center
         yoffset: -20
         padding: 5
+        animate:
+          on_visible:
+            xoffset:
+              type: curve
+              trace: true
+              curve: $anim_data.selected_curve
+              from: $anim_data.from
+              to: $anim_data.to
+              duration: $anim_data.duration
+              delay: $anim_data.delay
+              repeat: $anim_data.repeats
+              step: $anim_data.time_step
         elements:
 
           - type: border_panel
@@ -56,22 +68,22 @@ resources:
               - type: checkbox
                 label: A Checkbox
 
-            animate:
-              on_visible:
-                type: anim_sequence
-                enabled: false
-                repeat: true
-                animations:
-                  - opacity:
-                      type: curve
-                      curve: curveSine
-                      duration: 1500
-                      to: 0
-                  - opacity:
-                      type: curve
-                      curve: curveSine
-                      duration: 1500
-                      to: 1
+            // animate:
+            //   on_visible:
+            //     type: anim_sequence
+            //     enabled: false
+            //     repeat: true
+            //     animations:
+            //       - opacity:
+            //           type: curve
+            //           curve: curveSine
+            //           duration: 1500
+            //           to: 0
+            //       - opacity:
+            //           type: curve
+            //           curve: curveSine
+            //           duration: 1500
+            //           to: 1
 
       // property panel
       - type: panel
@@ -115,6 +127,8 @@ resources:
                   type: text_input
                   size: { min_w: 100 }
                   text: @from
+                  events:
+                    on_text_changed: @@ text => @from = real(text)
 
               - type: labeled_border
                 label: To
@@ -122,6 +136,8 @@ resources:
                   type: text_input
                   size: { min_w: 100 }
                   text: @to
+                  events:
+                    on_text_changed: @@ text => @to = real(text)
 
               - type: labeled_border
                 label: Duration
@@ -129,6 +145,8 @@ resources:
                   type: text_input
                   size: { min_w: 100 }
                   text: @duration
+                  events:
+                    on_text_changed: @@ text => @duration = real(text)
 
               - type: labeled_border
                 label: Delay
@@ -136,6 +154,8 @@ resources:
                   type: text_input
                   size: { min_w: 100 }
                   text: @delay
+                  events:
+                    on_text_changed: @@ text => @delay = real(text)
 
               - type: slide_toggle
                 label: Repeat
@@ -149,35 +169,16 @@ resources:
                 is_checked: @has_step
                 on_checked_changed:
                   - @@ checked => @has_step = checked
-                  //- @@ checked => @step then false else (@step = 0)
+                  - @@ checked => checked then (@time_step = @step) else (@time_step = undefined)
 
               - type: labeled_border
                 label: Time Step
+                enabled: @has_step
                 content:
                   type: text_input
                   size: { min_w: 100 }
-                  enabled: @has_step
                   text: @step ?? (@has_step then 0 else '<none>')
                   events:
-                    on_text_changed: @@ text => @step = string_digits(text)
-
-              // - type: panel
-              //   layout: horizontal
-              //   spacing: 0
-              //   elements:
-              //     - type: checkbox
-              //       label: Step?
-              //       tooltip: How many milliseconds to wait between each animation update. No step value means the animation will update every frame.
-              //       is_checked: @has_step
-              //       on_checked_changed:
-              //         - @@ checked => @has_step = checked
-              //         - @@ checked => @step then false else (@step = 0)
-              //     - type: text_input
-              //       size: { min_w: 100 }
-              //       enabled: @has_step
-              //       text: @step ?? '<none>'
-
-              // - type: labeled_border
-              //   label: Effect
-              //   content:
-              //     foo
+                    on_text_changed:
+                      - @@ text => @step = real(text)
+                      - @@ text => @time_step = @step
