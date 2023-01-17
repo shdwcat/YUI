@@ -363,6 +363,7 @@
     {"id":{"name":"__yui_init_globals","path":"scripts/__yui_init_globals/__yui_init_globals.yy",},"order":19,},
     {"id":{"name":"yui_draw_alpha_surface_part","path":"scripts/yui_draw_alpha_surface_part/yui_draw_alpha_surface_part.yy",},"order":1,},
     {"id":{"name":"YuiHSVCurveAnimation","path":"scripts/YuiHSVCurveAnimation/YuiHSVCurveAnimation.yy",},"order":7,},
+    {"id":{"name":"yui_validate_number_input","path":"scripts/yui_validate_number_input/yui_validate_number_input.yy",},"order":18,},
     {"id":{"name":"YuiSetValue","path":"scripts/YuiSetValue/YuiSetValue.yy",},"order":3,},
     {"id":{"name":"scribble_font_set_style_family","path":"scripts/scribble_font_set_style_family/scribble_font_set_style_family.yy",},"order":12,},
     {"id":{"name":"scribble_anim_shake","path":"scripts/scribble_anim_shake/scribble_anim_shake.yy",},"order":6,},
