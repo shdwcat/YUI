@@ -98,7 +98,6 @@ function yui_resolve_element(yui_data, resources, slot_values, parent_id = undef
 		return element;
 	}
 	catch (error) {
-		var message = is_string(error) ? error : error.message;
-		return yui_make_error_element(message, resources, slot_values);
+		return yui_make_error_element(error, resources, slot_values);
 	}
 }
