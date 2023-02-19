@@ -232,28 +232,37 @@ arrange = function(available_size, viewport_size) {
 }
 
 process = function yui_base__process() {
+	
+	// calculate enabled state from parent and/or live value
+	
+	var is_parent_enabled = parent ? parent.enabled : true;
+	
+	if is_parent_enabled && enabled_value.is_live {
+		enabled_value.update(data_source);
+		enabled = enabled_value.value;
+	}
+	else {
+		enabled = is_parent_enabled;
+	}
+	
+	// update focusable state
+	
+	focusable = enabled ? yui_element.props.focusable : false;
+	if focused && !focusable {
+		YuiCursorManager.clearFocus();
+	}
+	
+	// update opacity
+	
 	if opacity_value.is_live opacity_value.update(data_source);
 		
 	var old_opacity = opacity;
 	
-	if enabled_value.is_live {
-		enabled_value.update(data_source);
-		enabled = enabled_value.value;
-	
-		focusable = enabled ? yui_element.props.focusable : false;
-		if focused && !focusable {
-			YuiCursorManager.clearFocus();
-		}
-	}
-	
-	// gotta update this every frame since it could be animated, including from the parent!
+	// update opacity every frame since it could be animated, including from the parent!
 	opacity = opacity_value.value * (parent ? parent.opacity : 1) * (1 - (!enabled * 0.5))
 	
 	// referenced by anything that needs to rebuild when opacity changes (e.g. text element)
 	opacity_changed = opacity != old_opacity;
-	
-	if opacity_changed
-		DEBUG_BREAK_YUI
 }
 
 move = function(xoffset, yoffset) {
