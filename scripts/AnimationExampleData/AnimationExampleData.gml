@@ -20,5 +20,7 @@ function AnimationExampleData() constructor {
 	has_step = false;
 	step = undefined;
 	time_step = undefined;
+	
+	from_error = undefined;
 
 }

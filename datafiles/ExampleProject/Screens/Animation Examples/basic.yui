@@ -125,10 +125,15 @@ resources:
                 label: From
                 content:
                   type: text_input
+                  background:
+                    color: @from_error != undefined then red else 0
                   size: { min_w: 100 }
                   text: @from
+                  tooltip: @from_error
                   events:
-                    on_text_changed: @@ text => @from = real(text)
+                    on_text_changed: 
+                      - @@ text => @from_error = yui_validate_number_input(text)
+                      - @@ text => @from_error == undefined then (@from = real(text)) else false
 
               - type: labeled_border
                 label: To
