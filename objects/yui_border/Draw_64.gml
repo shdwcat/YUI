@@ -12,6 +12,8 @@ else if is_bg_color_live {
 	bg_color_value.update(data_source);
 	if bg_color_value.value != undefined {
 		bg_color = bg_color_value.value;
+		if is_string(bg_color)
+			bg_color = yui_resolve_color(bg_color);
 		bg_alpha = ((bg_color & 0xFF000000) >> 24) / 255; // extract alpha
 	}
 }
