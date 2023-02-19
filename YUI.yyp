@@ -367,7 +367,7 @@
     {"id":{"name":"YuiSetValue","path":"scripts/YuiSetValue/YuiSetValue.yy",},"order":3,},
     {"id":{"name":"scribble_font_set_style_family","path":"scripts/scribble_font_set_style_family/scribble_font_set_style_family.yy",},"order":12,},
     {"id":{"name":"scribble_anim_shake","path":"scripts/scribble_anim_shake/scribble_anim_shake.yy",},"order":6,},
-    {"id":{"name":"YuiAnimationSequence","path":"scripts/YuiAnimationSequence/YuiAnimationSequence.yy",},"order":3,},
+    {"id":{"name":"YuiAnimationGroupSequence","path":"scripts/YuiAnimationGroupSequence/YuiAnimationGroupSequence.yy",},"order":3,},
     {"id":{"name":"GsplParserBase","path":"scripts/GsplParserBase/GsplParserBase.yy",},"order":3,},
     {"id":{"name":"__scribble_gen_10_set_padding_flags","path":"scripts/__scribble_gen_10_set_padding_flags/__scribble_gen_10_set_padding_flags.yy",},"order":1,},
     {"id":{"name":"closed_barbute","path":"sprites/closed_barbute/closed_barbute.yy",},"order":4,},

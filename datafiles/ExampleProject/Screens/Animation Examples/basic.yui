@@ -47,16 +47,19 @@ resources:
         padding: 5
         animate:
           on_visible:
-            xoffset:
-              type: curve
-              trace: true
-              curve: $anim_data.selected_curve
-              from: $anim_data.from
-              to: $anim_data.to
-              duration: $anim_data.duration
-              delay: $anim_data.delay
-              repeat: $anim_data.repeats
-              step: $anim_data.time_step
+            type: anim_sequence
+            repeat: true
+            animations:
+              - xoffset:
+                  type: curve
+                  trace: true
+                  curve: $anim_data.selected_curve
+                  from: $anim_data.from
+                  to: $anim_data.to
+                  duration: $anim_data.duration
+                  delay: $anim_data.delay
+                  repeat: $anim_data.repeats
+                  step: $anim_data.time_step
         elements:
 
           - type: border_panel

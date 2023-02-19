@@ -1,7 +1,7 @@
 /// @description here
 function yui_resolve_animation(anim_props, resources, slot_values) {
 	if is_array(anim_props) {
-		var sequence = new YuiAnimationSequence(anim_props);
+		var sequence = new YuiAnimationGroupSequence(anim_props);
 		return sequence;
 	}
 	else if is_struct(anim_props) {

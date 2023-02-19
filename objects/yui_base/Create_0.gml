@@ -399,7 +399,12 @@ unload = function(unload_root = undefined) {
 	unload_root_item ??= unload_root;
 	
 	// the unload time will be the max of our unload animation duration and any of our child items
-	var unload_time = on_unloading_anim ? on_unloading_anim.duration : 0;
+	var unload_time = 0;
+	if on_unloading_anim {
+		// need to call init in order to force bound duration to calc
+		on_unloading_anim.init(data_source);
+		unload_time = on_unloading_anim.duration;
+	}
 	if tooltip_item {
 		unload_time = max(unload_time, tooltip_item.unload(unload_root));
 	}

@@ -30,9 +30,9 @@ function YuiCurveAnimation(props, resources, slot_values)
 
 	channel_name_or_index = yui_bind_and_resolve(props[$"channel"], resources, slot_values) ?? 0;
 	value_channel = animcurve_get_channel(curve, channel_name_or_index) 
-		
-	from = yui_bind_and_resolve(props[$"from"], resources, slot_values);
-	to = yui_bind_and_resolve(props[$"to"], resources, slot_values) ?? 1;
+	
+	bindings.from = yui_bind(props[$"from"], resources, slot_values);
+	bindings.to = yui_bind(props[$"to"], resources, slot_values);
 	
 	var effect = props[$"effect"]
 	if effect != undefined {
@@ -40,7 +40,7 @@ function YuiCurveAnimation(props, resources, slot_values)
 		// can't use start_value because the target may not be a number
 		from ??= 0;
 		
-		self.effect = yui_bind(effect, resources, slot_values);
+		self.effect = yui_bind_and_resolve(effect, resources, slot_values);
 		
 		// fallback if it's not a lambda
 		if is_string(self.effect) {
@@ -55,6 +55,15 @@ function YuiCurveAnimation(props, resources, slot_values)
 		}
 		
 		self.compute = computeEffect;
+	}
+	
+	static base_init = init;
+	static init = function(data) {
+		base_init(data);
+		from = yui_resolve_binding(bindings.from, data) ?? 0;
+		to = yui_resolve_binding(bindings.to, data) ?? 1;
+		
+		// todo bind curve/channel
 	}
 
 	static compute = function(curve_pos, raw_value, start_value, start_time) {

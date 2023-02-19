@@ -1,5 +1,5 @@
 /// @description here
-function YuiAnimationSequence(props, resources, slot_values) constructor {
+function YuiAnimationGroupSequence(props, resources, slot_values) constructor {
 	static default_props = {
 		type: "anim_sequence",
 		enabled: true,
@@ -24,12 +24,11 @@ function YuiAnimationSequence(props, resources, slot_values) constructor {
 	var i = 0; repeat anim_count {
 		var anim_group_props = animations[i];
 		var anim_group = yui_resolve_animation_group(anim_group_props, resources, slot_values);
-		
-		// disallow nested continuous animations (because the sequence would never continue after one)
-		if anim_group.continuous
-			throw yui_error("Animations in a sequence cannot repeat. If you want the sequence to repeat, set 'repeat: true' on the sequence itself.");
-		
 		animations[i++] = anim_group;
+	}
+	
+	static init = function(data) {
+		// todo
 	}
 	
 	static start = function(animatable, owner) {
@@ -42,23 +41,24 @@ function YuiAnimationSequence(props, resources, slot_values) constructor {
 		// clean up previous time source (or framerate will suffer)
 		if previous_time_source
 			time_source_destroy(previous_time_source);
+			
+		// if the owner is gone, abort the sequence
+		if !weak_ref_alive(owner_ref) return;
 		
 		with sequence {
 			// start the current animation step
 			var anim_group = animations[index];
-			anim_group.start(animatable);
+
+			anim_group.start(animatable, owner_ref.ref);
 			
 			// check if we're out of further animations
 			var finished = ++index >= anim_count;
 			
-			// reset to start if the animation should repeat
+			// reset to start if the animation sequence should repeat
 			if finished && continuous {
 				finished = false;
 				index = 0;
 			}
-			
-			// ensure we're finished if the owner is no longer alive 
-			finished |= weak_ref_alive(owner_ref) == false;
 			
 			if !finished {
 				
