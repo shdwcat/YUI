@@ -51,10 +51,15 @@ left_click = function() {
 
 on_submit = function() {
 	var submit_text = input_string_get() + after_caret;
-	if events.on_text_changed != undefined {
-		yui_call_handler(events.on_text_changed, [submit_text], data_source);
+	
+	var text_changed = submit_text != original_text
+	if text_changed {	
+		if events.on_text_changed != undefined {
+			yui_call_handler(events.on_text_changed, [submit_text], data_source);
+		}
+		original_text = submit_text;
+		yui_log("submitted: " + submit_text);
 	}
-	yui_log("submitted: " + submit_text);
 }
 
 on_got_focus = function() {
