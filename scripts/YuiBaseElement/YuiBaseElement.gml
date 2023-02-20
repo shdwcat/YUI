@@ -161,6 +161,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 			var tooltip_props = {
 				type: "popup",
 				yui_type: "popup",
+				is_cursor_layer: false, // doesn't block cursor
 				content: props.tooltip,
 				placement: props.tooltip_placement,
 				padding: 5,

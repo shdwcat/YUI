@@ -7,6 +7,9 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		placement: YUI_PLACEMENT_MODE.BottomRight,
 		content: undefined,
 		
+		// popups default to being a cursor layer
+		is_cursor_layer: true,
+		
 		background: undefined,
 		border_color: undefined,
 		border_thickness: undefined,
