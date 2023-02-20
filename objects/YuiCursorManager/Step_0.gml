@@ -71,10 +71,17 @@ var i = 0; repeat ds_map_size(highlight_map) {
 	highlight_map[? keys[i++]] = false;
 }
 
+var print_debug = keyboard_check_pressed(vk_shift)
+
 // check hover now so that it's available to item build/arrange
 var i = hover_count - 1; repeat hover_count {
 	var next = hover_list[| i];
-	//yui_log("list instance", i, "is", next.id, "type", script_get_name(next.element_constructor));
+	
+	if print_debug {
+		yui_log("list instance", i, "is", next.id, "type", script_get_name(next.element_constructor), " and id ", next._id);
+		if next._id == "foopp"
+			DEBUG_BREAK_YUI
+	}
 	
 	// skip if cursor is not on a visible part of the element
 	if !isCursorOnVisiblePart(next) {
@@ -107,6 +114,10 @@ var i = hover_count - 1; repeat hover_count {
 	
 	i--;
 }
+
+
+if print_debug
+	DEBUG_BREAK_YUI
 
 // clear highlight from old items
 var keys = ds_map_keys_to_array(highlight_map);
