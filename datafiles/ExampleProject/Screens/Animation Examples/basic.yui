@@ -165,12 +165,12 @@ resources:
                   events:
                     on_text_changed: @@ text => @delay = real(text)
 
-              - type: slide_toggle
-                label: Repeat
-                on_label: Yes
-                off_label: No
-                is_checked: @repeats
-                on_checked_changed: @@ checked => @repeats = checked
+              // - type: slide_toggle
+              //   label: Repeat
+              //   on_label: Yes
+              //   off_label: No
+              //   is_checked: @repeats
+              //   on_checked_changed: @@ checked => @repeats = checked
 
               - type: checkbox
                 label: Enable Time Step
