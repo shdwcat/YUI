@@ -38,18 +38,19 @@ arrange = function(available_size, viewport_size) {
 	draw_rect = available_size;
 	self.viewport_size = viewport_size;
 	
-	if case_item {
-		case_item.arrange(available_size, viewport_size);
+	if !case_item 
+		return sizeToDefault(available_size);
+	
+	case_item.arrange(available_size, viewport_size);
 		
-		yui_resize_instance(case_item.draw_size.w, case_item.draw_size.h)
+	yui_resize_instance(case_item.draw_size.w, case_item.draw_size.h)
 		
-		if viewport_size {
-			updateViewport();
-		}
+	if viewport_size {
+		updateViewport();
+	}
 		
-		if case_item.is_size_changed {
-			is_size_changed = true;
-		}
+	if case_item.is_size_changed {
+		is_size_changed = true;
 	}
 	
 	return draw_size;
