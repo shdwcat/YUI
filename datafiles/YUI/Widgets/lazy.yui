@@ -1,0 +1,16 @@
+file_type: resources
+
+resources:
+
+  lazy:
+    type: template
+    slots:
+      content: null
+      content_visible: true
+    content:
+      type: switch
+      switch_on: $content_visible
+      cases:
+        true:
+          $content
+    

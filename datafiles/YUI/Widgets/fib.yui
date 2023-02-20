@@ -1,5 +1,8 @@
 file_type: resources
 
+import:
+  - lazy.yui
+
 resources:
   
   fib:
@@ -30,13 +33,14 @@ resources:
       elements:
         - type: text
           text: $first + $second | final
-        - type: switch
-          switch_on: $count <= $max
-          cases:
-            true:
-              type: fib-n
-              first: $second
-              second: $first + $second | final
-              count: $count + 1 | final
-              max: $max | final
+
+          // wrap the second element in a lazy evaluator, otherwise we'll recursively expand the view tree forever
+        - type: lazy
+          content_visible: $count <= $max
+          content:
+            type: fib-n
+            first: $second
+            second: $first + $second | final
+            count: $count + 1 | final
+            max: $max | final
 
