@@ -14,8 +14,14 @@ function YuiSwitchElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	
 	props.switch_on = yui_bind(props.switch_on, resources, slot_values);
 	
-	// init case elements
+	// init/bind case elements
 	case_elements = yui_deep_copy(props.cases);
+	var case_names = variable_struct_get_names(case_elements);
+	var i = 0; repeat array_length(case_names) {
+		var name = case_names[i++];
+		var case_item = case_elements[$name];
+		case_elements[$name] = yui_bind_and_resolve(case_item, resources, slot_values);
+	}
 	
 	if props.default_case != undefined {
 		default_element = yui_resolve_element(props.default_case, resources, slot_values);
