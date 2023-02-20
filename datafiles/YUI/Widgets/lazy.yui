@@ -5,12 +5,14 @@ resources:
   lazy:
     type: template
     slots:
-      content: null
+      // ideally this would just be 'content' but than can run into problems when using inside a widget like expander as the names collide. YUI needs to support lexical scoping for slots in order to fix this
+      lazy_content: null
+
       content_visible: true
     content:
       type: switch
       switch_on: $content_visible
       cases:
         true:
-          $content
+          $lazy_content
     

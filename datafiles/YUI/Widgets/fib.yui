@@ -37,7 +37,7 @@ resources:
           // wrap the second element in a lazy evaluator, otherwise we'll recursively expand the view tree forever
         - type: lazy
           content_visible: $count <= $max
-          content:
+          lazy_content:
             type: fib-n
             first: $second
             second: $first + $second | final
