@@ -1,0 +1,65 @@
+file_type: resources
+
+resources:
+
+  expander_icon_template:
+    type: image
+    sprite: yui_down_arrow_64
+    angle: $is_expanded then 0 else 90
+    size: 16
+
+  expander_header:
+    type: template
+    content:
+      type: button
+      //padding: 5
+      //background: #00000000
+      content:
+        type: panel
+        alignment: { v: center }
+        layout: horizontal
+        elements:
+          - $icon_template
+          - $header
+      on_click:
+        @@ e => $is_expanded_changed(not $is_expanded)
+
+  expander_content:
+    type: template
+    content:
+      type: border
+      padding: 5
+      content: $content
+
+  expander:
+    type: template
+
+    slots:
+      header: null
+      content: null
+
+      is_expanded: false
+      is_expanded_changed: null
+
+      header_template:
+        type: expander_header
+
+      content_template:
+        type: expander_content
+
+      icon_template: &expander_icon_template
+
+    content:
+      type: panel
+      layout: vertical
+      alignment: { w: stretch }
+      spacing: -1
+      elements:
+
+        - $header_template
+
+        - type: lazy
+          content_visible: $is_expanded
+          lazy_content:
+            $content_template
+    

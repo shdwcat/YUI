@@ -553,7 +553,6 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"layout_example.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"crash.txt","CopyToMask":-1,"filePath":"datafiles",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"switcher.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Widgets",},
-    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"fib.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Widgets",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"sandbox.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"equip_item.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Interactions",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"meter_bar.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Widgets",},
@@ -593,6 +592,8 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"sequence.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens/Animation Examples",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"text.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens/Animation Examples",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"widget_gallery.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"expander.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Widgets",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"fib.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Widgets",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"lazy.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Widgets",},
   ],
   "MetaData": {

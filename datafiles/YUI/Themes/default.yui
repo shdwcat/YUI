@@ -70,6 +70,14 @@ theme:
       selected_bg_color: &control_bg_light
       item_highlight_alpha: 0.4
 
+    expander_header:
+      background: &subpanel_bg
+      border_color: &control_border
+      
+    expander_content:
+      background: &control_border
+      border_color: &control_border
+
     listbox:
       background: &control_border
       border_color: &control_border
