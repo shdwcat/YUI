@@ -1,5 +1,5 @@
 /// @description here
-function YuiCanvasLayout(alignment, spacing) constructor {
+function YuiCanvasLayout(alignment, spacing) : YuiLayoutBase() constructor {
 	static is_live = false;
 	
 	self.alignment = alignment;

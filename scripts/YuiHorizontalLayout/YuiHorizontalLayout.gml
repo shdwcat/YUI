@@ -1,5 +1,5 @@
 /// @description here
-function YuiHorizontalLayout(alignment, spacing, panel_size) constructor {
+function YuiHorizontalLayout(alignment, spacing, panel_size) : YuiLayoutBase() constructor {
 	static is_live = false;
 	
 	self.alignment = alignment;

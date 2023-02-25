@@ -1,7 +1,7 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "YuiGridLayout",
+  "name": "YuiLayoutBase",
   "isDnD": false,
   "isCompatibility": false,
   "parent": {

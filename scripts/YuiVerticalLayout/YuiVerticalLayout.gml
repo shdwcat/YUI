@@ -1,11 +1,15 @@
 /// @description here
-function YuiVerticalLayout(alignment, spacing, panel_size) constructor {
+function YuiVerticalLayout(alignment, spacing, panel_size) : YuiLayoutBase() constructor {
 	static is_live = false;
 	
 	self.alignment = alignment;
-	self.spacing = spacing;
-	self.fill_w = panel_size.w != "auto";
+	self.spacing = spacing;	
 	self.min_w = panel_size.min_w;
+	
+	// whether stretch fills the full available width or just the max
+	self.fill_w = panel_size.w != "auto";
+	
+	self.fill_on_resize = panel_size.fill_w;
 	
 	static init = function(items, available_size, viewport_size, panel_props) {
 		self.items = items;
@@ -122,9 +126,9 @@ function YuiVerticalLayout(alignment, spacing, panel_size) constructor {
 			}
 		}
 		
-		//if trace {
-		//	DEBUG_BREAK_YUI;
-		//}
+		if trace {
+			DEBUG_BREAK_YUI;
+		}
 		
 		draw_size = {
 			x: available_size.x,
@@ -156,6 +160,19 @@ function YuiVerticalLayout(alignment, spacing, panel_size) constructor {
 		}
 		
 		return draw_size;
+	}
+	
+	static resize = function(width, height) {
+		if trace
+			DEBUG_BREAK_YUI;
+		
+		if fill_on_resize {
+			var count = array_length(items);
+			var i = 0; repeat count {
+				var item = items[i++];
+				item.resize(width, item.draw_size.h);
+			}
+		}
 	}
 	
 	static getAvailableSizeForItem = function(index, yoffset, allotted_h = undefined) {

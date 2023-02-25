@@ -166,6 +166,11 @@ move = function(xoffset, yoffset) {
 	}
 }
 
+resize = function(width, height) {
+	yui_resize_instance(width, height);
+	layout.resize(width - layout_props.padding.w, height - layout_props.padding.h);
+}
+
 unload = function(unload_root = undefined) {
 	// use base unload, not border's unload
 	var unload_time = base_unload(unload_root);
