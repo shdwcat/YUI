@@ -36,7 +36,6 @@ root:
           anim_data: @anim_data
           active_tab: @layouts.active_tab
           on_tab_selected: @@ item => @layouts.active_tab = item
-          content_size: stretch
           content_padding: 0
           tab_content_binding: @content
           tab_items:

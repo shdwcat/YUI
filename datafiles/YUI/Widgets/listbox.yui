@@ -39,9 +39,6 @@ resources:
         - @@ item => $on_item_selected(item)
 
     template:
-      // can't be scrollbox because there's a bug in yui_resolve_element when the root of 
-      // a template is another template. Ideal fix would be to do the DCS template definition
-      // system for YUI, but could be a lot of bugs!
 
       type: scrollbox
       content:

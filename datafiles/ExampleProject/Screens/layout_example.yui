@@ -23,7 +23,6 @@ root:
         - type: tab_panel
           active_tab: @layouts.active_tab
           on_tab_selected: @@ item => @layouts.active_tab = item
-          content_size: stretch
           tab_content_binding: @content
           tab_items:
             - header: Examples
