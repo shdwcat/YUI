@@ -6,10 +6,11 @@ function YuiVerticalLayout(alignment, spacing, panel_size) : YuiLayoutBase() con
 	self.spacing = spacing;	
 	self.min_w = panel_size.min_w;
 	
-	// whether stretch fills the full available width or just the max
-	self.fill_w = panel_size.w != "auto";
+	// whether to use the full available width or just the max item width
+	self.full_w = panel_size.w != "auto";
 	
-	self.fill_on_resize = panel_size.fill_w;
+	// whether to resize items when our panel resizes
+	self.fill = panel_size.fill;
 	
 	static init = function(items, available_size, viewport_size, panel_props) {
 		self.items = items;
@@ -133,7 +134,7 @@ function YuiVerticalLayout(alignment, spacing, panel_size) : YuiLayoutBase() con
 		draw_size = {
 			x: available_size.x,
 			y: available_size.y,
-			w: fill_w ? available_size.w : max(min_w ?? 0, max_w),
+			w: full_w ? available_size.w : max(min_w ?? 0, max_w),
 			h: is_flex_panel ? available_size.h : yoffset, // flex uses the full space,
 		};
 		
@@ -162,14 +163,13 @@ function YuiVerticalLayout(alignment, spacing, panel_size) : YuiLayoutBase() con
 		return draw_size;
 	}
 	
-	static resize = function(width, height) {
-		if trace
-			DEBUG_BREAK_YUI;
-		
-		if fill_on_resize {
+	static resize = function(width, height) {		
+		if fill {
 			var count = array_length(items);
 			var i = 0; repeat count {
 				var item = items[i++];
+				
+				// NOTE: panel has already accounted for padding
 				item.resize(width, item.draw_size.h);
 			}
 		}
