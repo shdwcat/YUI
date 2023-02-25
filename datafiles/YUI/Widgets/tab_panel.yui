@@ -54,7 +54,6 @@ resources:
             on_click: @@ e => yui_invoke_event(e.source, 'tab_selected', @)
 
         - type: tab_panel_content
-          padding: $content_padding
           data_source: "$active_tab ?? $tab_items[$active_tab_index]"
           size: $content_size
           content: 
@@ -79,6 +78,7 @@ resources:
     type: fragment
     content:
       type: border
+      padding: $content_padding
     
   // default template for displaying the item value
   tab_panel_header_template:

@@ -115,7 +115,6 @@ theme:
     tab_panel_content:
       background: &control_bg
       border_color: &control_border
-      padding: 5
       size: { min_w: 200, min_h: 100 }
 
     tab_header:
@@ -123,6 +122,9 @@ theme:
       selected_color: &control_bg_light
       border_color: &control_border
       padding: [10,5]
+
+    tab_panel:
+      content_padding: 5
 
     // === elements ===
 
