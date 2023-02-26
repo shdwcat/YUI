@@ -20,6 +20,11 @@ if hidden || parent && !parent.visible {
 
 if trace
 	DEBUG_BREAK_YUI;
+	
+// NOTE: if an item has no bindings to trigger rebuild, it will never do initial arrange
+// this can cause problems with panels that should be clipped out of a parent panel
+// as the children will never get arranged and sized to 0 for being clipped
+// need to figure out how to fix this...
 
 // NOTE: this will be false if no bindings are live
 if is_binding_active || !visible || rebuild {
