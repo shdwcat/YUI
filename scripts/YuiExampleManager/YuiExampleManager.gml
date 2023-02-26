@@ -23,7 +23,11 @@ function YuiExampleManager() constructor {
 	
 	widget_data = new WidgetGalleryData();
 	
-	anim_data = new AnimationExampleData();
+	anim_data = {
+		xoffset: new AnimationPropertyData(),
+		yoffset: new AnimationPropertyData(),
+		opacity: new AnimationPropertyData(1, 0),
+	};
 	
 	// windows demo
 	windows = {

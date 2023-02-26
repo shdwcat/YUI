@@ -55,13 +55,35 @@ resources:
                   type: curve
                   //enabled: false // HACK
                   trace: true
-                  curve: @selected_curve
-                  from: @from
-                  to: @to
-                  duration: @duration
-                  delay: @delay
-                  repeat: @repeats
-                  step: @time_step
+                  curve: @xoffset.selected_curve
+                  from: @xoffset.from
+                  to: @xoffset.to
+                  duration: @xoffset.duration
+                  delay: @xoffset.delay
+                  repeat: @xoffset.repeats
+                  step: @xoffset.time_step
+                yoffset:
+                  type: curve
+                  //enabled: false // HACK
+                  trace: true
+                  curve: @yoffset.selected_curve
+                  from: @yoffset.from
+                  to: @yoffset.to
+                  duration: @yoffset.duration
+                  delay: @yoffset.delay
+                  repeat: @yoffset.repeats
+                  step: @yoffset.time_step
+                opacity:
+                  type: curve
+                  //enabled: false // HACK
+                  trace: true
+                  curve: @opacity.selected_curve
+                  from: @opacity.from
+                  to: @opacity.to
+                  duration: @opacity.duration
+                  delay: @opacity.delay
+                  repeat: @opacity.repeats
+                  step: @opacity.time_step
         elements:
 
           - type: border_panel
@@ -70,8 +92,8 @@ resources:
                 text: Demo Panel
               - type: button
                 content: A Button
-              - type: checkbox
-                label: A Checkbox
+              // - type: checkbox
+              //   label: A Checkbox
 
       // property panel
       - type: panel
@@ -86,6 +108,8 @@ resources:
           - type: border
             background: $theme.resources.control_border
             padding: 5
+            // size:
+            //   h: 400
             content: 
               type: text
               padding: [5, 0]
@@ -93,94 +117,126 @@ resources:
               text_style: subtitle
 
           - type: expander
-            //trace: true
+            data_source: @xoffset
             header: xoffset
             size: fill
             padding: [-1, 0]
             is_expanded: @expanded
             is_expanded_changed: @@ expanded => @expanded = expanded
             content:
+              type: anim_property_panel
 
-              type: panel
-              padding: [10, 5]
-              alignment: { h: stretch }
-              elements:
+          - type: expander
+            data_source: @yoffset
+            header: yoffset
+            size: fill
+            padding: [-1, 0]
+            is_expanded: @expanded
+            is_expanded_changed: @@ expanded => @expanded = expanded
+            content:
+              type: anim_property_panel
 
-                - type: labeled_border
-                  label: Curve
-                  content:
-                    type: dropdown_menu
-                    can_clear_value: false
-                    items: @curve_list
-                    selected_item: @selected_curve
-                    on_item_selected: @@ item => @selected_curve = item
-                    item_template:
-                      type: text
-                      text: @name
+          - type: expander
+            data_source: @opacity
+            header: opacity
+            size: fill
+            padding: [-1, 0]
+            is_expanded: @expanded
+            is_expanded_changed: @@ expanded => @expanded = expanded
+            content_template:
+              type: expander_content
+              padding: 0
+            content:
+              type: anim_property_panel
+              // type: scrollbox
+              // size:
+              //   w: 270
+              // content:
+              //   type: anim_property_panel
 
-                - type: labeled_border
-                  label: From
-                  content:
-                    type: text_input
-                    background:
-                      color: @from_error != undefined then red else undefined
-                    size: { min_w: 100 }
-                    text: @from
-                    tooltip: @from_error
-                    events:
-                      on_text_changed: 
-                        - @@ text => @from_error = yui_validate_number_input(text)
-                        - @@ text => @from_error == undefined then (@from = real(text)) else false
+  anim_property_panel:
+    type: fragment
+    content:
+      type: panel
+      padding: [10, 5]
+      alignment: { h: stretch }
+      elements:
 
-                - type: labeled_border
-                  label: To
-                  content:
-                    type: text_input
-                    size: { min_w: 100 }
-                    text: @to
-                    events:
-                      on_text_changed: @@ text => @to = real(text)
+        - type: labeled_border
+          label: Curve
+          content:
+            type: dropdown_menu
+            can_clear_value: false
+            items: @curve_list
+            selected_item: @selected_curve
+            on_item_selected: @@ item => @selected_curve = item
+            item_template:
+              type: text
+              text: @name
 
-                - type: labeled_border
-                  label: Duration (ms)
-                  content:
-                    type: text_input
-                    size: { min_w: 100 }
-                    text: @duration
-                    events:
-                      on_text_changed: @@ text => @duration = real(text)
+        - type: labeled_border
+          label: From
+          content:
+            type: text_input
+            background:
+              color: @from_error != undefined then red else undefined
+            size: { min_w: 100 }
+            text: @from
+            tooltip: @from_error
+            events:
+              on_text_changed: 
+                - @@ text => @from_error = yui_validate_number_input(text)
+                - @@ text => @from_error == undefined then (@from = real(text)) else false
 
-                - type: labeled_border
-                  label: Delay
-                  content:
-                    type: text_input
-                    size: { min_w: 100 }
-                    text: @delay
-                    events:
-                      on_text_changed: @@ text => @delay = real(text)
+        - type: labeled_border
+          label: To
+          content:
+            type: text_input
+            size: { min_w: 100 }
+            text: @to
+            events:
+              on_text_changed: @@ text => @to = real(text)
 
-                // - type: slide_toggle
-                //   label: Repeat
-                //   on_label: Yes
-                //   off_label: No
-                //   is_checked: @repeats
-                //   on_checked_changed: @@ checked => @repeats = checked
+        - type: labeled_border
+          label: Duration (ms)
+          content:
+            type: text_input
+            size: { min_w: 100 }
+            text: @duration
+            events:
+              on_text_changed: @@ text => @duration = real(text)
 
-                - type: checkbox
-                  label: Enable Time Step
-                  is_checked: @has_step
-                  on_checked_changed:
-                    - @@ checked => @has_step = checked
-                    - @@ checked => checked then (@time_step = @step) else (@time_step = undefined)
+        - type: labeled_border
+          label: Delay
+          content:
+            type: text_input
+            size: { min_w: 100 }
+            text: @delay
+            events:
+              on_text_changed: @@ text => @delay = real(text)
 
-                - type: labeled_border
-                  label: Time Step
-                  enabled: @has_step
-                  content:
-                    type: text_input
-                    size: { min_w: 100 }
-                    text: @step ?? (@has_step then 0 else '<none>')
-                    events:
-                      on_text_changed:
-                        - @@ text => @step = real(text)
-                        - @@ text => @time_step = @step
+        // - type: slide_toggle
+        //   label: Repeat
+        //   on_label: Yes
+        //   off_label: No
+        //   is_checked: @repeats
+        //   on_checked_changed: @@ checked => @repeats = checked
+
+        - type: checkbox
+          label: Enable Time Step
+          is_checked: @has_step
+          on_checked_changed:
+            - @@ checked => @has_step = checked
+            - @@ checked => checked then (@time_step = @step) else (@time_step = undefined)
+
+        - type: labeled_border
+          label: Time Step
+          enabled: @has_step
+          content:
+            type: text_input
+            size: { min_w: 100 }
+            text: @step ?? (@has_step then 0 else '<none>')
+            events:
+              on_text_changed:
+                - @@ text => @step = real(text)
+                - @@ text => @time_step = @step
