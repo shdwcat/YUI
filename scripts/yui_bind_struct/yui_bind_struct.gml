@@ -3,6 +3,9 @@ function yui_bind_struct(struct, resources, slot_values, resolve = false, recurs
 		
 	if !is_struct(struct) return; // might be an array? is that useful?
 	
+	// return a new struct to avoid modifying source data
+	var bound_struct = {};
+	
 	// otherwise bind each key on the struct
 	var i = 0; var keys = variable_struct_get_names(struct); repeat array_length(keys) {
 		var key = keys[i++];
@@ -10,11 +13,11 @@ function yui_bind_struct(struct, resources, slot_values, resolve = false, recurs
 		
 		if recursive {
 			if is_struct(value) && !yui_is_binding(value) {
-				struct[$ key] = yui_bind_struct(value, resources, slot_values, resolve, true)
+				bound_struct[$ key] = yui_bind_struct(value, resources, slot_values, resolve, true)
 				continue;
 			}
 			if is_array(value) {
-				struct[$ key] = yui_bind_array(value, resources, slot_values, resolve, true)
+				bound_struct[$ key] = yui_bind_array(value, resources, slot_values, resolve, true)
 				continue;
 			}
 		}
@@ -23,8 +26,8 @@ function yui_bind_struct(struct, resources, slot_values, resolve = false, recurs
 		if resolve && yui_is_binding(result) && !result.is_lambda {
 			result = result.resolve();
 		}
-		struct[$ key] = result;
+		bound_struct[$ key] = result;
 	}
 	
-	return struct;
+	return bound_struct;
 }

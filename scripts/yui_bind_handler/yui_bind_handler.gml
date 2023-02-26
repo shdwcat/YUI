@@ -22,7 +22,12 @@ function yui_bind_handler(handler, resources, slot_values) {
 		
 		var interaction = handler[$ "interaction"];
 		if interaction != undefined && variable_struct_exists(handler, "parameters") {
-			yui_bind_struct(handler.parameters, resources, slot_values, , true);
+			
+			// return a new struct to avoid modifying source data
+			return {
+				interaction: interaction,
+				parameters: yui_bind_struct(handler.parameters, resources, slot_values, , true),
+			};
 		}
 		
 		return yui_bind(handler, resources, slot_values);

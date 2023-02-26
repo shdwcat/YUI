@@ -103,7 +103,7 @@ function YuiElementDrag(_props, _resources) constructor {
 			target.move(event.x_diff, event.y_diff);
 		}
 		
-		if props.trace {
+		if props.trace || parameters[$"trace"] {
 			yui_log(event);
 		}
 
