@@ -29,6 +29,7 @@ resources:
       // additional handler executed after item is selected
       on_item_selected: null
 
+      background: null
       foreground: null
 
     events:
@@ -41,6 +42,7 @@ resources:
     template:
 
       type: scrollbox
+      background: $background
       content:
 
         type: panel

@@ -109,7 +109,6 @@ theme:
       background: &control_border
 
     scrollbox:
-      background: &control_bg
       thumb_background: &focus_border // move to scrollbar style somewhere?
 
     tab_panel_content:
