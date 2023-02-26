@@ -43,7 +43,7 @@ root:
           max: @scroll_info.x_max ?? 1000
           on_value_changed: @@ value => @scroll_x = value >> floor()
           visible: @scroll_info.x_max > 0
-          size: { w: 200, h: 20 }
+          slider_size: { w: 200, h: 20 }
           thumb_size: { w: 30, h: 20 }
 
         - type: slider
@@ -52,7 +52,7 @@ root:
           max: @scroll_info.y_max ?? 1000
           on_value_changed: @@ value => @scroll_y = value >> floor()
           visible: @scroll_info.y_max > 0
-          size: { w: 200, h: 20 }
+          slider_size: { w: 200, h: 20 }
           thumb_size: { w: 30, h: 20 }
 
         - type: border
