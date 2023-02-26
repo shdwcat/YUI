@@ -1,6 +1,8 @@
 /// @description check cursor hover and run interaction
 
-// get mouse position once per frame
+var print_debug = keyboard_check_pressed(vk_shift)
+
+// get gui mouse position once per frame
 var mouse_gui_x = device_mouse_x_to_gui(device_index);
 var mouse_gui_y = device_mouse_y_to_gui(device_index);
 
@@ -42,15 +44,15 @@ if cursor_offset_x != 0 || cursor_offset_y != 0 {
 }
 else {
 	hover_count = instance_position_list(
-		mouse_x + cursor_offset_x,
-		mouse_y + cursor_offset_y,
+		mouse_x,
+		mouse_y,
 		yui_game_item,
 		hover_list,
 		false);
 	
 	hover_count += instance_position_list(
-		mouse_gui_x + cursor_offset_x,
-		mouse_gui_y + cursor_offset_y,
+		mouse_gui_x,
+		mouse_gui_y,
 		yui_base,
 		hover_list,
 		false);
@@ -70,8 +72,6 @@ var keys = ds_map_keys_to_array(highlight_map);
 var i = 0; repeat ds_map_size(highlight_map) {
 	highlight_map[? keys[i++]] = false;
 }
-
-var print_debug = keyboard_check_pressed(vk_shift)
 
 // check hover now so that it's available to item build/arrange
 var i = hover_count - 1; repeat hover_count {
