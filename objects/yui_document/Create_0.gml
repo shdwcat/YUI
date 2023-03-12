@@ -61,7 +61,9 @@ reload = function(destroy_now = false) {
 		throw "not implemented";
 	}
 	
-	var unload_time = root.unload();
+	var unload_time = instance_exists(root)
+		? root.unload()
+		: 0;
 	
 	yui_log("document unload time is", unload_time);
 	
