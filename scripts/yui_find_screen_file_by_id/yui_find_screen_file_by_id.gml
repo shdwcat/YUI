@@ -8,10 +8,8 @@ function yui_find_screen_file_by_id(screen_id) {
 		
 		if YUI_LIVE_RELOAD_ENABLED {
 			path = yui_string_after(path, YUI_LOCAL_PROJECT_DATA_FOLDER);
-			path = gspl_string_substring(path, 2)
 		}
 		
 		return path;
-		
 	}
 }

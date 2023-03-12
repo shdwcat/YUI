@@ -1,12 +1,11 @@
 {
+  "resourceType": "GMScript",
+  "resourceVersion": "1.0",
+  "name": "yui_find_screen_file_by_id",
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
     "name": "Handlers",
     "path": "folders/Packages - YUI/Event Handling/Handlers.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "yui_find_screen_file_by_id",
-  "tags": [],
-  "resourceType": "GMScript",
 }
