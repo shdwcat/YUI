@@ -102,7 +102,7 @@ resources:
         size: { h: stretch }
         alignment: { h: stretch }
         padding: 1
-        spacing: 0
+        spacing: -1
         elements:
         
           - type: border
@@ -116,43 +116,45 @@ resources:
               text: Animation Properties
               text_style: subtitle
 
-          - type: expander
-            data_source: @xoffset
-            header: xoffset
-            size: fill
-            padding: [-1, 0]
-            is_expanded: @expanded
-            is_expanded_changed: @@ expanded => @expanded = expanded
+          - type: scrollbox
+            size:
+              w: 270
+              max_w: 250
             content:
-              type: anim_property_panel
+              type: panel
+              spacing: -1
+              alignment: { h: stretch }
+              elements:
 
-          - type: expander
-            data_source: @yoffset
-            header: yoffset
-            size: fill
-            padding: [-1, 0]
-            is_expanded: @expanded
-            is_expanded_changed: @@ expanded => @expanded = expanded
-            content:
-              type: anim_property_panel
+                - type: expander
+                  data_source: @xoffset
+                  header: xoffset
+                  size: fill
+                  padding: [-1, 0]
+                  is_expanded: @expanded
+                  is_expanded_changed: @@ expanded => @expanded = expanded
+                  content:
+                    type: anim_property_panel
 
-          - type: expander
-            data_source: @opacity
-            header: opacity
-            size: fill
-            padding: [-1, 0]
-            is_expanded: @expanded
-            is_expanded_changed: @@ expanded => @expanded = expanded
-            content_template:
-              type: expander_content
-              padding: 0
-            content:
-              type: anim_property_panel
-              // type: scrollbox
-              // size:
-              //   w: 270
-              // content:
-              //   type: anim_property_panel
+                - type: expander
+                  data_source: @yoffset
+                  header: yoffset
+                  size: fill
+                  padding: [-1, 0]
+                  is_expanded: @expanded
+                  is_expanded_changed: @@ expanded => @expanded = expanded
+                  content:
+                    type: anim_property_panel
+
+                - type: expander
+                  data_source: @opacity
+                  header: opacity
+                  size: fill
+                  padding: [-1, 0]
+                  is_expanded: @expanded
+                  is_expanded_changed: @@ expanded => @expanded = expanded
+                  content:
+                    type: anim_property_panel
 
   anim_property_panel:
     type: fragment
