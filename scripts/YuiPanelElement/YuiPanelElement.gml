@@ -45,7 +45,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			var slot_name = bound_slot_names[i++];
 			var binding = yui_bind(props.bind_slot_scope[$ slot_name], resources, slot_values);
 			
-			if instanceof(binding) == "YuiScopeBinding" {
+			if is_instanceof(binding, YuiScopeBinding) {
 				throw yui_error("binding scope multiple times");
 			}
 			

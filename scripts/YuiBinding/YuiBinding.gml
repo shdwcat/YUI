@@ -29,7 +29,7 @@ function YuiBinding(path) : YuiExpr() constructor {
 				}
 			}
 		}
-		else if instanceof(self) == "YuiBinding" {
+		else if is_instanceof(self, YuiBinding) {
 			throw "YuiBinding initialized without a path!";
 		}
 		
