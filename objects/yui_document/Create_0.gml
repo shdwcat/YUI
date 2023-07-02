@@ -26,8 +26,8 @@ if is_full_screen {
 	draw_rect = {
 		x: 0,
 		y: 0,
-		w: camera_get_view_width(view_camera[view_current]),
-		h: camera_get_view_height(view_camera[view_current]),
+		w: display_get_gui_width(),
+		h: display_get_gui_height(),
 	};
 }
 else {
