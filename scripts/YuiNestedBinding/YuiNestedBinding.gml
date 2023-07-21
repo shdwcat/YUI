@@ -9,7 +9,7 @@ function YuiNestedBinding(inner_binding, path) : YuiBinding(undefined) construct
 	if path == "" {
 		resolver = resolveEmptyPath;
 	}
-	else if string_count(".", path) == 1 {
+	else if string_count(".", path) == 0 {
 		resolver = resolveToken;
 		token = path;
 	}
