@@ -30,8 +30,9 @@ function YuiSelectionScope(_id, _options = {}) constructor {
 	}
 }
 
-function YuiArraySelector(items, selected_item = undefined) constructor {
+function YuiArraySelector(items, selected_item = undefined, on_selected = undefined) constructor {
 	self.items = items;
+	self.on_selected = on_selected;
 		
 	select = function(item) {
 		if item != undefined {
@@ -47,6 +48,10 @@ function YuiArraySelector(items, selected_item = undefined) constructor {
 		else {
 			self.selected_index = -1;
 			self.selected_item = undefined;
+		}
+		
+		if (on_selected != undefined) {
+			on_selected(item);
 		}
 	}
 	
