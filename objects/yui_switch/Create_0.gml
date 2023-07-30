@@ -42,6 +42,8 @@ arrange = function(available_size, viewport_size) {
 		return sizeToDefault(available_size);
 	
 	case_item.arrange(available_size, viewport_size);
+	x = case_item.x;
+	y = case_item.y;
 		
 	yui_resize_instance(case_item.draw_size.w, case_item.draw_size.h)
 		
