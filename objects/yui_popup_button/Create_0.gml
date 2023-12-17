@@ -29,6 +29,8 @@ left_click = function() {
 	// TODO: fix popup stickiness due to unload logic
 	// (clicking too fast creates multiple popup items somehow)
 	
+	focus();
+	
 	is_popup_visible = !is_popup_visible;
 	if is_popup_visible {	
 		openPopup();

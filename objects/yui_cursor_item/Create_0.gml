@@ -60,7 +60,7 @@ setHighlight = function(highlight) {
 }
 
 focus = function() {
-	YuiCursorManager.setFocus(id);
+	if focusable YuiCursorManager.setFocus(id);
 }
 
 

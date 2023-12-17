@@ -20,6 +20,9 @@ left_pressed = function() {
 
 left_click = function() {
 	if !enabled return;
+	
+	focus();
+	
 	if yui_element.props.on_click != undefined {
 		var element = self;
 		var args = {

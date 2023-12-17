@@ -81,6 +81,9 @@ global_wheel_down = undefined
 
 setFocus = function(focus_item, new_scope = undefined) {
 	
+	// check if new focus is different from current
+	if focus_item == focused_item return;
+	
 	// trigger lost focus
 	if focused_item && instance_exists(focused_item) {
 		if focused_item.on_lost_focus focused_item.on_lost_focus();
