@@ -19,6 +19,7 @@ function YuiDynamicElement(_props, _resources, _slot_values) : YuiBaseElement(_p
 		return {};
 	}
 	
+	// feather ignore once GM2017
 	static getBoundValues = function YuiDynamicElement_getBoundValues(data, prev) {
 		var content = yui_resolve_binding(props.content, data);
 		

@@ -87,8 +87,8 @@ function yui_draw_rect_outline_clipped(x, y, w, h, cx1, cy1, cx2, cy2, t, color,
 /// @param vx2
 /// @param vy2
 /// @param h
-/// @param a
 /// @param vcol = c_white
+/// @param {real} a
 function yui_draw_rect_outline_alt(vx, vy, vx2, vy2, h, vcol = c_white, a = 1) {
 	
 	if abs(h)>1

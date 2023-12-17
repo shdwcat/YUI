@@ -26,7 +26,7 @@ build = function() {
 	}
 	
 	if trace {
-		DEBUG_BREAK_YUI;
+		DEBUG_BREAK_YUI
 	}
 }
 

@@ -33,6 +33,7 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	
 	props.padding = yui_resolve_padding(yui_bind(props.padding, resources, slot_values));
 	
+	// Feather disable once GM1041
 	content_element = yui_resolve_element(props.content, resources, slot_values);
 	
 	resolveBackgroundAndBorder()
@@ -44,6 +45,7 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	// set up popup mode
 	if props.popup {
 		props.popup.type = "popup";
+		// Feather disable once GM1041
 		popup_element = yui_resolve_element(props.popup, resources, slot_values);
 	}
 	
@@ -78,6 +80,7 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		};
 	}
 	
+	// feather ignore once GM2017
 	static getBoundValues = function YuiButtonElement_getBoundValues(data, prev) {
 		//if props.trace
 		//	DEBUG_BREAK_YUI

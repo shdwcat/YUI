@@ -1,7 +1,7 @@
 /// @description takes a string and a delimiter and splits the string into an array by the delimeter
-/// @param string the string to split
-/// @param delim the delimiter that separated tokens
-/// @param [count] max number of tokens to return
+/// @param {string} string the string to split
+/// @param {string} delim the delimiter that separated tokens
+/// @param {real} [count] max number of tokens to return
 function yui_string_split(str, delim, count = 0) {
 	
 	var pos = 1;

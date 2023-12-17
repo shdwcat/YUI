@@ -1,5 +1,5 @@
 /// @description convert any binding expressions on the array values variables to YuiBindings
-function yui_bind_array(array, resources, slot_values, resolve, recursive) {
+function yui_bind_array(array, resources, slot_values, resolve = false, recursive = false) {
 	
 	var bound_array = array_create(array_length(array));
 	

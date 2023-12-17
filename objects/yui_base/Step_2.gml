@@ -1,8 +1,11 @@
 /// @description bind / layout
 
 if layout_props == undefined {
+	// Feather disable once GM1021
 	yui_element ??= new element_constructor(default_props, {});
+	// feather disable GM2016
 	initLayout();
+	// feather restore GM2016
 }
 
 // ensure invsibile items destroy themselves since they won't run the Pre-Draw event

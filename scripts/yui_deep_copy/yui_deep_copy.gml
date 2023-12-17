@@ -7,7 +7,7 @@
 /// @param struct/array   The struct/array to be copied
 /// 
 /// @jujuadams 2021-02-14
-
+// feather ignore once GM1042
 function yui_deep_copy(_value)
 {
 	if yui_is_binding(_value)
@@ -16,6 +16,7 @@ function yui_deep_copy(_value)
     return (new __yui_deep_copy(_value)).copy;
 }
 
+// Feather ignore once GM2017
 function __yui_deep_copy(_value) constructor
 {
     source = _value;

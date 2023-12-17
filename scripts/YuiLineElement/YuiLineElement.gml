@@ -29,6 +29,7 @@ function YuiLineElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		};
 	}
 	
+	// feather ignore GM2017
 	static getBoundValues = function YuiLineElement_getBoundValues(data, prev) {
 		var line_end = yui_resolve_binding(props.line_end, data);
 		if !line_end return false;

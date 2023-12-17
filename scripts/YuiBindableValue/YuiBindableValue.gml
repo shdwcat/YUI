@@ -1,3 +1,5 @@
+// feather ignore GM2017
+
 /// @description wraps a YuiExpr to store the value and check for changes
 function YuiBindableValue(binding) constructor {
 	
@@ -62,7 +64,7 @@ function YuiBindableValue__updateBinding(data) {
 		return false;
 	}
 }
-	
+
 function YuiBindableValue__updateRawValue(data) {
 	
 	if animation && animation.enabled {

@@ -72,6 +72,7 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 		};
 	}
 	
+	// feather ignore once GM2017
 	static getBoundValues = function YuiViewportElement_getBoundValues(data, prev) {
 		var viewport_x = is_viewport_x_bound ? props.viewport_x.resolve(data) : props.viewport_x;
 		var viewport_y = is_viewport_y_bound ? props.viewport_y.resolve(data) : props.viewport_y;

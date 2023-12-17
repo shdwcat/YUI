@@ -54,6 +54,7 @@ setHighlight = function(highlight) {
 	self.highlight = highlight;
 	
 	if changed && on_hover_changed {
+		// Feather disable once GM1021
 		on_hover_changed();
 	}
 }

@@ -128,7 +128,7 @@ function YuiVerticalLayout(alignment, spacing, panel_size) : YuiLayoutBase() con
 		}
 		
 		if trace {
-			DEBUG_BREAK_YUI;
+			DEBUG_BREAK_YUI
 		}
 		
 		draw_size = {

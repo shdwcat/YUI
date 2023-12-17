@@ -51,6 +51,7 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		};
 	}
 	
+	// feather ignore once GM2017
 	static getBoundValues = function YuiPopupElement_getBoundValues(data, prev) {
 		var placement = yui_resolve_binding(props.placement, data);
 

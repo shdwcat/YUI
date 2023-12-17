@@ -21,7 +21,7 @@ function GsplPrattParser(tokens, eof_token) : GsplParserBase(tokens, eof_token) 
 		var token = advance();
 		var prefix = prefix_parselets[token._type];
 		
-		if prefix == undefined throw new yui_error("Could not parse token:", token._literal);
+		if prefix == undefined throw yui_error("Could not parse token:", token._literal);
 		
 		var left_expr = prefix.parse(self, token);
 		if left_expr[$ "optimize"] != undefined {

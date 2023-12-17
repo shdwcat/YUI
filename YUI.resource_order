@@ -237,6 +237,7 @@
     {"name":"scribble_font_add_from_sprite","order":2,"path":"scripts/scribble_font_add_from_sprite/scribble_font_add_from_sprite.yy",},
     {"name":"__shd_scribble_bake_outline_8dir","order":2,"path":"shaders/__shd_scribble_bake_outline_8dir/__shd_scribble_bake_outline_8dir.yy",},
     {"name":"YuiTestData","order":3,"path":"scripts/YuiTestData/YuiTestData.yy",},
+    {"name":"feather_control","order":1,"path":"scripts/feather_control/feather_control.yy",},
     {"name":"yui_white_pixel","order":9,"path":"sprites/yui_white_pixel/yui_white_pixel.yy",},
     {"name":"_yui_sprite_credits","order":1,"path":"notes/_yui_sprite_credits/_yui_sprite_credits.yy",},
     {"name":"GsplInfixCallParselet","order":7,"path":"scripts/GsplInfixCallParselet/GsplInfixCallParselet.yy",},

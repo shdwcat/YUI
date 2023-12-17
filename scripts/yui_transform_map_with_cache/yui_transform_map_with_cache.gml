@@ -10,7 +10,7 @@ function yui_transform_map_with_cache(data, transform_props) {
 	if is_undefined(cached_data) {
 		// cache the transformed data using the script
 		// TODO script params?
-		var func = asset_get_index(transform_props.cache_script);
+		var func = asset_get_index(transform_props.cache_script);		
 		cached_data = func(data);
 		transform_props.map[$ data] = cached_data;
 	}

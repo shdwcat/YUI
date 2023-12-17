@@ -87,7 +87,8 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			autotype: props.autotype,
 		};
 	}
-	
+
+	// feather ignore once GM2017
 	static getBoundValues = function YuiTextElement_getBoundValues(data, prev) {
 		var text = is_text_live && !is_array(props.text) ? props.text.resolve(data) : props.text;
 		if text == undefined {

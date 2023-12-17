@@ -39,6 +39,7 @@ var i = hover_count - 1; repeat hover_count {
 }
 
 if i < 0 && global_left_pressed {
+	// Feather disable once GM1021
 	global_left_pressed();
 }
 trackMouseDownItems(mb_left);

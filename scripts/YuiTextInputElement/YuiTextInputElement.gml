@@ -80,6 +80,7 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 		};
 	}
 	
+	// feather ignore once GM2017
 	static getBoundValues = function YuiTextElement_getBoundValues(data, prev) {
 
 		// diff

@@ -122,7 +122,7 @@ arrange = function(available_size, viewport_size) {
 
 onChildLayoutComplete = function(child) {
 	if !is_arranging {
-		arrange(draw_rect);
+		arrange(draw_rect, viewport_size);
 		if is_size_changed && parent {
 			parent.onChildLayoutComplete(self);
 		}

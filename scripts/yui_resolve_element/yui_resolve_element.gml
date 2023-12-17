@@ -1,3 +1,9 @@
+/// @desc resolves element props to a YUI Element
+/// @param {struct} yui_data Description
+/// @param {struct} resources Description
+/// @param {struct.yuichainedmap} slot_values Description
+/// @param {any} [parent_id] Description
+/// @returns {struct.YuiBaseElement,undefined}
 function yui_resolve_element(yui_data, resources, slot_values, parent_id = undefined) {
 	
 	static element_map = YuiGlobals.element_map;
@@ -42,11 +48,13 @@ function yui_resolve_element(yui_data, resources, slot_values, parent_id = undef
 		}
 	
 		if yui_data[$ "id"] == undefined {
+			// Feather disable once GM1041
 			if parent_id == undefined && variable_struct_exists(self, "props") {
 				parent_id = self.props.id;
 			}
 		
 			// if it doesn't have an explicit ID, set it to the render tree path via the parent
+			// feather ignore once GM1008
 			yui_data.id = (parent_id ?? "unknown parent") + "." + yui_data.type;
 		}
 	
@@ -84,7 +92,7 @@ function yui_resolve_element(yui_data, resources, slot_values, parent_id = undef
 					element = yui_create_fragment_element(yui_data, element_definition, resources, slot_values);
 				}
 				else {
-					throw new yui_error("Unknown element resource type: ", element_type);
+					throw yui_error("Unknown element resource type: ", element_type);
 				}
 			}
 			else {
@@ -95,6 +103,7 @@ function yui_resolve_element(yui_data, resources, slot_values, parent_id = undef
 			element = new element_constructor(yui_data, resources, slot_values);
 		}
 	
+		// feather ignore once GM1045
 		return element;
 	}
 	catch (error) {

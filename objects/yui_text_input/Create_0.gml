@@ -8,6 +8,7 @@ update = false;
 
 // track the current live text so we can determine when to update the inner yui_text element
 live_text = undefined;
+original_text = undefined;
 after_caret = "";
 caret_color = c_white;
 caret_x = 0;// undefined;

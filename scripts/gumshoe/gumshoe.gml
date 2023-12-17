@@ -31,9 +31,9 @@ On Microsoft platforms this flag does nothing as the file system is not case sen
 
 /// @param directory
 /// @param fileExtension
-/// @param returnStruct
-/// @param [forceLCNames] Force lowercase names on non-MSFT platforms, see comment(s) above for an explanation.
-/// @param [structValueGenerator] when returnStruct = true, function that generates the value for the file (params: directiory, file, extension, index)
+/// @param {bool} returnStruct
+/// @param {bool} [forceLCNames] Force lowercase names on non-MSFT platforms, see comment(s) above for an explanation.
+/// @param {function} [structValueGenerator] when returnStruct = true, function that generates the value for the file (params: directiory, file, extension, index)
 /// @param [forceForwardSlash] force all paths to use / as path separator regardless of platform
 function gumshoe(_directory, _extension, _return_struct = false, _force_lcnames = true, _generator = undefined, _force_forward_slash = undefined)
 {
@@ -153,7 +153,7 @@ function __gumshoe_array(_directory, _extension, _result, _match_all_mask, _path
 /// @param fileExtension
 /// @param matchAllMask
 /// @param pathSeparator
-/// @param structValueGenerator
+/// @param {function} structValueGenerator
 function __gumshoe_struct(_directory, _extension, _match_all_mask, _path_sep, _generator)
 {
     var _directories = [];

@@ -39,6 +39,7 @@ function YuiSwitchElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		};
 	}
 	
+	// feather ignore once GM2017
 	static getBoundValues = function YuiSwitchElement_getBoundValues(data, prev) {
 		var switch_value = yui_resolve_binding(props.switch_on, data);
 		
@@ -55,6 +56,7 @@ function YuiSwitchElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		}
 	}
 	
+	// feather ignore once GM2017
 	static getCaseElement = function YuiSwitchElement_getCaseElement(case_key) {
 		var element = case_elements[$ case_key];
 		

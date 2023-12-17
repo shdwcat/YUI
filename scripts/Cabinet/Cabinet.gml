@@ -1,6 +1,6 @@
 /// @description scans a folder on disk for files and tracks information about the files found
-/// @param folder_path
-/// @param extension
+/// @param {string} folder_path
+/// @param {string} extension
 /// @param options
 function Cabinet(folder_path, extension = ".*", options = undefined) constructor {
 
@@ -130,14 +130,14 @@ function CabinetFile(cabinet, data) constructor {
 			return tryLoad();
 			
 		if file_exists(fullpath)
-			return __readFile(fullpath);
+			return __readFile();
 	}
 	
 	// if the file exists on disk, will load the file from disk and cache it, then return it
 	static tryLoad = function() {
 		
 		// try to read the file
-		var file_result = file_exists(fullpath) ? __readFile(fullpath) : undefined;
+		var file_result = file_exists(fullpath) ? __readFile() : undefined;
 		
 		// if we read the file, cache it, track the time, and return it
 		if file_result != undefined {

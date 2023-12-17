@@ -50,6 +50,7 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		};
 	}
 	
+	// feather ignore once GM2017
 	static getBoundValues = function YuiImageElement_getBoundValues(data, prev) {
 		var sprite = is_sprite_live ? props.sprite.resolve(data) : self.sprite;
 		

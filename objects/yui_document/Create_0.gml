@@ -16,6 +16,9 @@ if yui_file == "" {
 // the document describing what to render
 document = undefined;
 
+// error encountered when attempting to load the document
+document_error = undefined;
+
 // the actual render instance root
 root = undefined;
 

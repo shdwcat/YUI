@@ -1,3 +1,4 @@
+// feather ignore GM2017
 /// @description calculates the viewport part when a rectangle does not fit within the viewport size
 function yui_trim_rect_to_viewport(x, y, w, h, viewport_size) {
 	var vR = viewport_size.x + viewport_size.w;

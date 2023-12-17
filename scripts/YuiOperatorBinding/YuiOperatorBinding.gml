@@ -191,7 +191,7 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 				return left.compile() + " or " + right.compile();
 				
 			case YS_TOKEN.PLUS:
-			
+			{
 				var left_str = left.compile();
 				var right_str = right.compile();
 				var is_left_str = left_type == "string";
@@ -207,6 +207,7 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 				else {
 					return left_str + " + " + right_str;
 				}
+			}
 				
 			case YS_TOKEN.MINUS:
 				return left.compile() + " - " + right.compile();
@@ -226,10 +227,11 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 			case YS_TOKEN.LESS:
 				return left.compile() + " < " + right.compile();
 				
-			case YS_TOKEN.LESS_EQUAL:;
+			case YS_TOKEN.LESS_EQUAL:
 				return left.compile() + " <= " + right.compile();
 				
 			case YS_TOKEN.STRING_PLUS:
+			{
 				var left_str = left.compile();
 				var right_str = right.compile();
 				
@@ -237,6 +239,7 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 				var right_comp = right_type == "string" ? right_str : "string(" + right_str + ")";
 				
 				return left_comp + " + " + right_comp;
+			}
 				
 			default:
 				throw gspl_log("Unknown operator: " + operator.getTokenName());
@@ -245,12 +248,12 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 } 
 
 /// @description
-function YuiPrefixOperatorBinding(operatorToken, right) : YuiExpr() constructor {
+function YuiPrefixOperatorBinding(operator_token, right) : YuiExpr() constructor {
 	static is_yui_binding = true;
 	static is_yui_live_binding = true;
 
-	self.token = operatorToken
-	self.operator = operatorToken._type;
+	self.token = operator_token
+	self.operator = operator_token._type;
 	self.right = right;
 	
 	static resolve = function(data)

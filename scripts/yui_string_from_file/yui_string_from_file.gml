@@ -2,8 +2,8 @@
 
 /// @return String that represents all the text inside the file
 ///
-/// @param filename     File to parse
-/// @param [removeBOM]  Whether to look for the UTF8 byte order mark and remove it. Defaults to <true>
+/// @param {string} filename     File to parse
+/// @param {bool} [removeBOM]  Whether to look for the UTF8 byte order mark and remove it. Defaults to <true>
 ///
 /// @jujuadams 2020-08-16
 

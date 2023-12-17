@@ -67,6 +67,10 @@ mouse_down_array[mb_side2] = [];
 
 left_pressed_consumed = false;
 left_click_consumed = false;
+right_pressed_consumed = false;
+right_click_consumed = false;
+wheel_down_consumed = false;
+wheel_up_consumed = false;
 
 // events to handle mouse interaction if YUI screen has not handled it
 // NOTE: only supports one subscriber!

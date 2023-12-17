@@ -44,6 +44,7 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		};
 	}
 	
+	// feather ignore once GM2017
 	static getBoundValues = function YuiBorderElement_getBoundValues(data, prev) {
 		if props.trace
 			DEBUG_BREAK_YUI

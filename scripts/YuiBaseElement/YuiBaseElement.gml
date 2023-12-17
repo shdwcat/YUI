@@ -80,6 +80,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	// get the theme props for our element type
 	element_theme = theme.elements[$ _props.type];
 	
+	// feather ignore once GM2017
 	static baseInit = function YuiBaseElement__baseInit(props, default_events = undefined) {
 	
 		props.events = yui_apply_props(props.events, default_events, base_events);

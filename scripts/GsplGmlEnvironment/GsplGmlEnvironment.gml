@@ -14,7 +14,7 @@ function GsplGmlEnvironment() : GsplEnvironment() constructor {
 		}
 		until function_name == "<unknown>";
 		
-		gspl_log("Registered", i, "runtime functions");
+		gspl_log($"Registered {i} runtime functions");
 		
 		return result;
 	}
@@ -30,8 +30,8 @@ function GsplGmlEnvironment() : GsplEnvironment() constructor {
 		throw "Not Supported: cannot assign values in GsplGmlEnvironment";
 	}
 	
-	static get = function(nameToken /* GsplToken */) {
-		var name = nameToken._lexeme;
+	static get = function(name_token /* GsplToken */) {
+		var name = name_token._lexeme;
 		var asset = asset_get_index(name);
 		if asset == -1 {
 			return variable_struct_get(runtime_functions, name); // until we support ?. operator!

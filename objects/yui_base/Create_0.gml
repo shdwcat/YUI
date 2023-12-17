@@ -174,7 +174,7 @@ hide_element = function() {
 bind_values = function yui_base__bind_values() {
 	var data_source_changed = false;
 	if has_data_source {
-		data_source_changed = data_source_value.update(data_context, current_time);
+		data_source_changed = data_source_value.update(data_context);
 		data_source = data_source_value.value;
 	}
 	else {

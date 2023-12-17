@@ -65,8 +65,8 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	props.count = yui_bind_and_resolve(props.count, resources, slot_values);
 	
-	var makeLayout = yui_resolve_layout(props.layout);
-	layout = new makeLayout(alignment, props.spacing, size);
+	var make_layout = yui_resolve_layout(props.layout);
+	layout = new make_layout(alignment, props.spacing, size);
 	layout.trace = props.trace;
 	
 	resolveBackgroundAndBorder()
@@ -136,6 +136,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		};
 	}
 	
+	// feather ignore once GM2017
 	static getBoundValues = function YuiPanelElement_getBoundValues(data, prev) {
 		// update scoped bindings if needed
 		if has_scoped_slots && (!prev || data != prev.data_source) {
@@ -166,7 +167,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			var data_items = data;
 		}
 		
-		var liveItemValues = layout.is_live
+		var live_item_values = layout.is_live
 			? layout.getLiveItemValues(data, prev)
 			: undefined;
 		
@@ -177,7 +178,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			&& (uses_template
 				? array_equals(data_items, prev.data_items)
 				: data_items == prev.data_items)
-			&& (!layout.is_live || liveItemValues == true)
+			&& (!layout.is_live || live_item_values == true)
 		{
 			return true;
 		}
@@ -189,7 +190,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			// panel
 			child_count: child_count,
 			data_items: data_items,
-			liveItemValues: liveItemValues,
+			liveItemValues: live_item_values,
 		};
 	}
 }
