@@ -53,9 +53,9 @@ function YuiExampleManager() constructor {
 	static checkLiveReload = function() {
 		// set live reload status
 		switch YUI_LIVE_RELOAD_STATE {
-			case YUI_LIVE_RELOAD_STATES.NOT_CONFIGURED:
-				live_reload_label = "Live Reload: NOT CONFIGURED";
-				live_reload_message = "Live Reload is not configured. See instructions in Configure Me! (YUI) folder in the Asset Browser";
+			case YUI_LIVE_RELOAD_STATES.RELEASE_MODE:
+				live_reload_label = "";
+				live_reload_message = "";
 				break;
 			case YUI_LIVE_RELOAD_STATES.SANDBOX_ENABLED:
 				live_reload_label = "Live Reload: DISABLED";
