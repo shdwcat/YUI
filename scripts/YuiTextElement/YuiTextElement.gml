@@ -84,29 +84,16 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			valign: valign,
 			highlight_color: highlight_color,
 			use_scribble: props.scribble,
+			autotype: props.autotype,
 		};
 	}
-	
+
+	// feather ignore once GM2017
 	static getBoundValues = function YuiTextElement_getBoundValues(data, prev) {
-		if data_source != undefined {
-			data = is_data_source_bound ? data_source.resolve(data) : data_source;
-		}
-		
-		var is_visible = is_visible_live ? props.visible.resolve(data) : props.visible;
-		if !is_visible return false;
-				
 		var text = is_text_live && !is_array(props.text) ? props.text.resolve(data) : props.text;
 		if text == undefined {
 			return false;
 		}
-		
-		var color = is_color_live
-			? yui_resolve_color(self.color.resolve(data))
-			: self.color;
-		
-		var opacity = is_opacity_live ? props.opacity.resolve(data) : props.opacity;
-		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
-		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
 		
 		// handle text array by joining the values		
 		if is_array(text) {
@@ -125,29 +112,24 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		
 		var typist = is_typist_live ? props.typist.resolve(data) : props.typist;
 		
+		if props.trace
+			DEBUG_BREAK_YUI
+		
 		// diff
 		if prev
 			&& text == prev.text
-			&& opacity == prev.opacity
-			&& xoffset == prev.xoffset
-			&& yoffset == prev.yoffset
-			&& color == prev.color
 			&& typist == prev.typist
 		{
 			return true;
 		}
 		
-		return {
+		var values = {
 			is_live: is_bound,
-			data_source: data,
-			text: text,
+			text: text,// ?? "",
 			font: font,
-			opacity: opacity,
-			xoffset: xoffset,
-			yoffset: yoffset,
-			color: color,
-			autotype: props.autotype,
 			typist: typist,
 		};
+		
+		return values
 	}
 }

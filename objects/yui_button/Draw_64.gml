@@ -1,23 +1,14 @@
 /// @description draw alpha + highlight
 
-if !bound_values.enabled {
-	var alpha = draw_get_alpha();
-	draw_set_alpha(0.5);
-}
-
 // Inherit the parent event
 event_inherited();
 
-if !bound_values.enabled {
-	draw_set_alpha(alpha);
-}
-
 var show_highlight = (highlight || YuiCursorManager.focused_item == id)
 	&& highlight_color != undefined
-	&& bound_values.enabled;
+	&& enabled;
 	
 if show_highlight {
-	var alpha = button_pressed ? pressed_alpha : highlight_alpha;
+	var alpha = (button_pressed ? pressed_alpha : highlight_alpha) * opacity;
 	if alpha > 0 {
 		if viewport_size {
 			if viewport_part.visible {
@@ -30,7 +21,7 @@ if show_highlight {
 				else {
 					draw_sprite_ext(
 						yui_white_pixel, 0,
-						draw_size.x, draw_size.y, draw_size.w, draw_size.h,
+						x, y, draw_size.w, draw_size.h,
 						0, highlight_color, alpha);
 				}
 			}
@@ -38,7 +29,7 @@ if show_highlight {
 		else {
 			draw_sprite_ext(
 				yui_white_pixel, 0,
-				draw_size.x, draw_size.y, draw_size.w, draw_size.h,
+				x, y, draw_size.w, draw_size.h,
 				0, highlight_color, alpha);
 		}
 	}

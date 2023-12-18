@@ -17,6 +17,7 @@ function YuiElementSize(size) constructor {
 	max_h = NaN;
 	default_w = 0;
 	default_h = 0;
+	fill = false;
 	
 	w_type = YUI_LENGTH_TYPE.Pixel;
 	h_type = YUI_LENGTH_TYPE.Pixel;
@@ -41,6 +42,11 @@ function YuiElementSize(size) constructor {
 		w = "stretch";
 		h = "stretch";
 	}
+	else if size == "fill" {
+		w = "auto";
+		h = "auto";
+		fill = true;
+	}
 	else if is_struct(size) {
 		if size[$ "w"] == undefined {
 			w = "auto";
@@ -57,9 +63,10 @@ function YuiElementSize(size) constructor {
 		}
 		
 		min_w = size[$ "min_w"];
-		max_w = size[$ "max_w"];
 		min_h = size[$ "min_h"];
+		max_w = size[$ "max_w"];
 		max_h = size[$ "max_h"];
+		fill = size[$ "fill"];
 		
 		is_exact_w = is_numeric(w);
 		is_exact_h = is_numeric(h);

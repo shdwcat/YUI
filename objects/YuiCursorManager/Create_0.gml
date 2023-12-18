@@ -1,5 +1,8 @@
 /// @description init
 
+// use single pixel + sizing with instance_place_list in step event
+sprite_index = yui_white_pixel
+
 // ===== interactions =====
 
 // hash of interaction.role strings to ids
@@ -18,8 +21,8 @@ cursor_offset_y = 0;
 finishInteraction = function() {
 	yui_log("interaction", active_interaction.props.type, "complete");
 	if visual_item {
-		yui_log("destroying interaction visual", visual_item);
-		instance_destroy(visual_item);
+		yui_log("unloading interaction visual", visual_item);
+		visual_item.unload();
 		cursor_offset_x = 0;
 		cursor_offset_y = 0;
 		visual_item = undefined;
@@ -64,6 +67,10 @@ mouse_down_array[mb_side2] = [];
 
 left_pressed_consumed = false;
 left_click_consumed = false;
+right_pressed_consumed = false;
+right_click_consumed = false;
+wheel_down_consumed = false;
+wheel_up_consumed = false;
 
 // events to handle mouse interaction if YUI screen has not handled it
 // NOTE: only supports one subscriber!
@@ -73,6 +80,9 @@ global_wheel_down = undefined
 // TODO: global versions of all events
 
 setFocus = function(focus_item, new_scope = undefined) {
+	
+	// check if new focus is different from current
+	if focus_item == focused_item return;
 	
 	// trigger lost focus
 	if focused_item && instance_exists(focused_item) {

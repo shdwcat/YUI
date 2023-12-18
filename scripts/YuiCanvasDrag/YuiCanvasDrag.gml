@@ -103,11 +103,11 @@ function YuiElementDrag(_props, _resources) constructor {
 			target.move(event.x_diff, event.y_diff);
 		}
 		
-		if props.trace {
+		if props.trace || parameters[$"trace"] {
 			yui_log(event);
 		}
 
-		yui_call_handler(on_position_changed, [event], target.bound_values.data_source);
+		yui_call_handler(on_position_changed, [event], target.data_source);
 		
 		if mouse_check_button_released(button) {
 			finish();

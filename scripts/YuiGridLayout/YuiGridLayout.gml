@@ -1,5 +1,5 @@
 /// @description
-function YuiGridLayout(alignment, spacing) constructor {
+function YuiGridLayout(alignment, spacing) : YuiLayoutBase() constructor {
 	static is_live = false;
 
 	self.alignment = alignment;

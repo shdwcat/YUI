@@ -24,7 +24,10 @@ function WidgetGalleryData() constructor {
 				// TODO?
 			}),
 			new YuiSubMenu("SubMenu Test", , [
-				new YuiMenuItem("Test", , function() {
+				new YuiMenuItem("Test 1", , function() {
+					// TODO?
+				}),
+				new YuiMenuItem("Test 2", , function() {
 					// TODO?
 				}),
 			]),

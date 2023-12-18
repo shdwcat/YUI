@@ -27,6 +27,9 @@ enum GSPL_FIBER_STATUS {
 // need to make GsplFiber not inherit KnitInterpreter
 
 /// @description a fiber can run a program (statements) and yield to other fibers during execution
+/// @param {array} gspl_program
+/// @param {struct} environment
+/// @param {struct.GsplFiber} calling_fiber
 function GsplFiber(gspl_program, environment, calling_fiber = undefined)
 	: KnitInterpreter(environment) constructor {
 		

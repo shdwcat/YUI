@@ -19,12 +19,13 @@ function YuiLambda(body, context) : YuiExpr() constructor {
 		// foo.resolve(data, environment)
 		// might need to be expr_context if we need more than the environment for some reason?
 		
-		// get the name of the first param
-		var param_name = context.arg_map[0];
-		
-		// set the first arg as the value of the first param
+		// set the context params from the args array
 		context.params = {};
-		context.params[$ param_name] = args[0];
+		var i = 0; repeat array_length(args) {
+			var param_name = context.arg_map[i];
+			context.params[$ param_name] = args[i];
+			i++;
+		}
 		
 		// call the function body
 		var result = body.resolve(data);

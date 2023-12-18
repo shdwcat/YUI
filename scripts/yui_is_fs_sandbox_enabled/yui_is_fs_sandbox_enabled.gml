@@ -1,5 +1,6 @@
 // courtesy of TabularElf!
 
+// Feather ignore once GM2017
 function __fileSystemGetSingleton() {
     static _instance = undefined;
     if (is_undefined(_instance)) {

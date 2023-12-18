@@ -1,8 +1,16 @@
 /// @description bind / layout
 
 if layout_props == undefined {
+	// Feather disable once GM1021
 	yui_element ??= new element_constructor(default_props, {});
+	// feather disable GM2016
 	initLayout();
+	// feather restore GM2016
+}
+
+// ensure invsibile items destroy themselves since they won't run the Pre-Draw event
+if !visible && unload_now {
+	instance_destroy(self);
 }
 
 // hide self if marked hidden, or parent is not visible
@@ -15,6 +23,11 @@ if hidden || parent && !parent.visible {
 
 if trace
 	DEBUG_BREAK_YUI;
+	
+// NOTE: if an item has no bindings to trigger rebuild, it will never do initial arrange
+// this can cause problems with panels that should be clipped out of a parent panel
+// as the children will never get arranged and sized to 0 for being clipped
+// need to figure out how to fix this...
 
 // NOTE: this will be false if no bindings are live
 if is_binding_active || !visible || rebuild {
@@ -33,6 +46,14 @@ if is_binding_active || !visible || rebuild {
 		if is_size_changed && parent {
 			parent.onChildLayoutComplete(self);
 		}
+		
+		if on_arrange_anim
+			beginAnimationGroup(on_arrange_anim);
 	}
 }
+	
+if visible {
+	process();
+}
+
 

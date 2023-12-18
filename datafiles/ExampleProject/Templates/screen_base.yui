@@ -1,9 +1,9 @@
 file_type: resources
 
 import:
-  // import all resources from main_panel.yui
   - "../Templates/back_button.yui"
   - "../Templates/main_panel.yui"
+  - /YUI/Animations/transitions.yui
 
 resources:
 
@@ -18,6 +18,11 @@ resources:
       type: panel
       padding: 30
       spacing: 20
+      animate:
+        on_visible:
+          opacity: &fade_in
+        on_unloading:
+          opacity: &fade_out
       elements:
 
         - type: back_button

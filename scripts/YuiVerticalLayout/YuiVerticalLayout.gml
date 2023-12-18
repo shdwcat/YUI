@@ -1,11 +1,16 @@
 /// @description here
-function YuiVerticalLayout(alignment, spacing, panel_size) constructor {
+function YuiVerticalLayout(alignment, spacing, panel_size) : YuiLayoutBase() constructor {
 	static is_live = false;
 	
 	self.alignment = alignment;
-	self.spacing = spacing;
-	self.fill_w = panel_size.w != "auto";
+	self.spacing = spacing;	
 	self.min_w = panel_size.min_w;
+	
+	// whether to use the full available width or just the max item width
+	self.full_w = panel_size.w != "auto";
+	
+	// whether to resize items when our panel resizes
+	self.fill = panel_size.fill;
 	
 	static init = function(items, available_size, viewport_size, panel_props) {
 		self.items = items;
@@ -122,14 +127,14 @@ function YuiVerticalLayout(alignment, spacing, panel_size) constructor {
 			}
 		}
 		
-		//if trace {
-		//	DEBUG_BREAK_YUI;
-		//}
+		if trace {
+			DEBUG_BREAK_YUI
+		}
 		
 		draw_size = {
 			x: available_size.x,
 			y: available_size.y,
-			w: fill_w ? available_size.w : max(min_w ?? 0, max_w),
+			w: full_w ? available_size.w : max(min_w ?? 0, max_w),
 			h: is_flex_panel ? available_size.h : yoffset, // flex uses the full space,
 		};
 		
@@ -156,6 +161,18 @@ function YuiVerticalLayout(alignment, spacing, panel_size) constructor {
 		}
 		
 		return draw_size;
+	}
+	
+	static resize = function(width, height) {		
+		if fill {
+			var count = array_length(items);
+			var i = 0; repeat count {
+				var item = items[i++];
+				
+				// NOTE: panel has already accounted for padding
+				item.resize(width, item.draw_size.h);
+			}
+		}
 	}
 	
 	static getAvailableSizeForItem = function(index, yoffset, allotted_h = undefined) {

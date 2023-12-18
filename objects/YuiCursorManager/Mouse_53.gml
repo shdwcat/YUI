@@ -21,7 +21,7 @@ var i = hover_count - 1; repeat hover_count {
 		}
 		
 		if next.left_pressed && isCursorOnVisiblePart(next) {
-			yui_log("pressed instance", i, "is", next.id, "type", object_get_name(next.object_index));
+			//yui_log("pressed instance", i, "is", next.id, "type", object_get_name(next.object_index));
 			left_pressed_consumed = next.left_pressed() != false;
 			if left_pressed_consumed {
 				break;
@@ -39,6 +39,7 @@ var i = hover_count - 1; repeat hover_count {
 }
 
 if i < 0 && global_left_pressed {
+	// Feather disable once GM1021
 	global_left_pressed();
 }
 trackMouseDownItems(mb_left);

@@ -1,6 +1,6 @@
 function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	static base_props = {
-		id: "", // unique ID for this element, required to enabled animations and other effects
+		id: "", // unique ID for this element
 		item_key: undefined, // identifies an element in an array (must bind to unique value on data!)
 		
 		theme: undefined,
@@ -12,6 +12,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		
 		data_source: undefined, // enables overriding the data context with something else
 		
+		enabled: true, // can be bound
 		visible: true,
 		opacity: 1, // 0-1, like alpha
 		size: "auto", // can also be { w: val, h: val } where val can be a number or "auto" | "content"
@@ -30,6 +31,9 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		
 		events: undefined,
 		
+		// placeholder for animation info
+		animate: undefined,
+		
 		// array of interaction.role participation
 		interactions: [], // these are defined in data!
 	};
@@ -41,6 +45,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		on_mouse_wheel_up: undefined,
 		on_mouse_wheel_down: undefined,
 		on_click: undefined,
+		on_right_click: undefined,
 		on_double_click: undefined,
 		on_arrange: undefined,
 		on_got_focus: undefined,
@@ -63,18 +68,20 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	if theme_override != undefined {
 		// grab new theme and override slot theme
 		theme = yui_resolve_theme(theme_override);
-		slot_values = yui_shallow_copy(slot_values);
-		slot_values.theme = theme;
+		slot_values = slot_values.extendWith({
+			theme: theme,
+		});
 	}
 	else {
 		// grab the theme from the slot values
-		theme = slot_values.theme;
+		theme = slot_values.get("theme");
 	}
 	
 	// get the theme props for our element type
 	element_theme = theme.elements[$ _props.type];
 	
-	static baseInit = function(props, default_events = undefined) {
+	// feather ignore once GM2017
+	static baseInit = function YuiBaseElement__baseInit(props, default_events = undefined) {
 	
 		props.events = yui_apply_props(props.events, default_events, base_events);
 		props.events.on_mouse_down = yui_bind_handler(props.events.on_mouse_down, resources, slot_values);
@@ -82,6 +89,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		props.events.on_mouse_wheel_up = yui_bind_handler(props.events.on_mouse_wheel_up, resources, slot_values);
 		props.events.on_mouse_wheel_down = yui_bind_handler(props.events.on_mouse_wheel_down, resources, slot_values);
 		props.events.on_click = yui_bind_handler(props.events.on_click, resources, slot_values);
+		props.events.on_right_click = yui_bind_handler(props.events.on_right_click, resources, slot_values);
 		props.events.on_double_click = yui_bind_handler(props.events.on_double_click, resources, slot_values);
 		props.events.on_arrange = yui_bind_handler(props.events.on_arrange, resources, slot_values);
 		props.events.on_got_focus = yui_bind_handler(props.events.on_got_focus, resources, slot_values);
@@ -93,13 +101,18 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		size = new YuiElementSize(yui_bind(props.size, resources, slot_values));
 		size.w = yui_bind(size.w, resources, slot_values);
 		size.h = yui_bind(size.h, resources, slot_values);
+		size.max_w = yui_bind_and_resolve(size.max_w, resources, slot_values);
+		size.max_h = yui_bind_and_resolve(size.max_h, resources, slot_values);
 	
 		canvas = new YuiCanvasPosition(props.canvas, resources, slot_values, props.id);
 		flex = new YuiFlexValue(props.flex);
 	
 		// TODO: move this to YuiPanelElement?
 		alignment = new YuiElementAlignment(yui_bind(props.alignment, resources, slot_values));
+		alignment.v = yui_bind_and_resolve(alignment.v, resources, slot_values);
+		alignment.h = yui_bind_and_resolve(alignment.h, resources, slot_values);
 		
+		props.enabled = yui_bind(props.enabled, resources, slot_values);
 		props.visible = yui_bind(props.visible, resources, slot_values);
 		props.opacity = yui_bind(props.opacity, resources, slot_values);
 		props.item_key = yui_bind(props.item_key, resources, slot_values);
@@ -110,22 +123,36 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	
 		data_source = yui_bind(props.data_source, resources, slot_values);
 	
-		is_data_source_bound = yui_is_live_binding(data_source);
+		is_data_source_live = yui_is_live_binding(data_source);
 		is_visible_live = yui_is_live_binding(props.visible);
-		is_opacity_live = yui_is_live_binding(props.opacity);
 		is_tooltip_live = yui_is_live_binding(props.tooltip);
-		is_xoffset_live = yui_is_live_binding(props.xoffset);
-		is_yoffset_live = yui_is_live_binding(props.yoffset);
-	
-		base_is_bound = yui_is_live_binding(data_source)
+		
+		on_visible_anim = undefined;
+		on_arrange_anim = undefined;
+		on_unloading_anim = undefined;
+		
+		if props.animate != undefined {
+			var on_visible_animation = props.animate[$"on_visible"];
+			if on_visible_animation != undefined {
+				on_visible_anim = yui_resolve_animation_group(on_visible_animation, resources, slot_values);
+			}
+			var on_arrange_animation = props.animate[$"on_arrange"];
+			if on_arrange_animation != undefined {
+				on_arrange_anim = yui_resolve_animation_group(on_arrange_animation, resources, slot_values);
+			}
+			var on_unloading_animation = props.animate[$"on_unloading"];
+			if on_unloading_animation != undefined {
+				on_unloading_anim = yui_resolve_animation_group(on_unloading_animation, resources, slot_values);
+			}
+		}
+			
+		base_is_bound =
+			is_data_source_live
 			|| is_visible_live
-			|| is_opacity_live
 			|| is_tooltip_live
 			|| yui_is_live_binding(props.size)
 			|| yui_is_live_binding(size.w)
 			|| yui_is_live_binding(size.h)
-			|| is_xoffset_live
-			|| is_yoffset_live;
 	
 		tooltip_element = undefined;
 	}
@@ -135,6 +162,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 			var tooltip_props = {
 				type: "popup",
 				yui_type: "popup",
+				is_cursor_layer: false, // doesn't block cursor
 				content: props.tooltip,
 				placement: props.tooltip_placement,
 				padding: 5,
@@ -167,9 +195,11 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 				// a struct is used when we want to bind the background dynamically,
 				// in order to differentiate between sprite indexes (which are numbers)
 				// and color values (which are also numbers :()
+				
 				bg_sprite_binding = yui_bind(background_expr[$"sprite"], resources, slot_values);
 				is_bg_sprite_live = bg_sprite_binding != undefined;
 				bg_sprite = undefined;
+				
 				bg_color_binding = yui_bind(background_expr[$"color"], resources, slot_values);
 				is_bg_color_live = bg_color_binding != undefined;
 				bg_color = undefined;

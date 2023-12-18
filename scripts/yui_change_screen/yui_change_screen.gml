@@ -1,10 +1,12 @@
 /// @description changes the screen file for the current document and reloads it
 function yui_change_screen(screen_id, view_item) {
 	
-	var root_document = view_item.parent;
-	while root_document.parent != undefined {
-		root_document = root_document.parent;
+	var root = view_item.parent;
+	while root.parent != undefined {
+		root = root.parent;
 	}
+	
+	root_document = root.document;
 	
 	var screen_file = yui_find_screen_file_by_id(screen_id);
 	

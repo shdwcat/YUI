@@ -3,7 +3,7 @@ function yui_create_fragment_element(fragment_element_props, fragment_definition
 	
 	// deep copy the fragment content so that we don't share
 	// the content struct with other instances of the same fragment
-	var content = snap_deep_copy(fragment_definition.content);
+	var content = yui_deep_copy(fragment_definition.content);
 	
 	// store the original .yui type name for reflection purposes
 	fragment_element_props.yui_type = fragment_element_props.type;

@@ -1,5 +1,8 @@
 // credit for these goes to the incomparable Juju Adams
 
+// Feather ignore GM2017
+// Feather ignore GM1042
+
 /// @param colour
 function yui_color_get_luma(_colour)
 {
@@ -7,6 +10,7 @@ function yui_color_get_luma(_colour)
          + (0.7152/255)*colour_get_green(_colour)
          + (0.0722/255)*colour_get_blue(_colour);
 }
+
 
 /// @param colour
 /// @param luma

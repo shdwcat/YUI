@@ -9,7 +9,7 @@ var i = hover_count - 1; repeat hover_count {
 			&& isCursorOnVisiblePart(next)
 			&& yui_array_contains(mouse_down_array[mb_right], next) {
 				
-			yui_log("clicked instance", i, "is", next.id, "type", object_get_name(next.object_index));
+			//yui_log("clicked instance", i, "is", next.id, "type", object_get_name(next.object_index));
 			var handled = next.right_click();
 			if handled != false {
 				break;

@@ -1,6 +1,6 @@
 /// @description scans a folder on disk for files and tracks information about the files found
-/// @param folder_path
-/// @param extension
+/// @param {string} folder_path
+/// @param {string} extension
 /// @param options
 function Cabinet(folder_path, extension = ".*", options = undefined) constructor {
 
@@ -19,8 +19,14 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 		// flat view of the folder tree (indexed by full filepath)
 		flat_map = {};
 		
-		file_list = gumshoe(folder_path, extension);
-		tree = gumshoe(folder_path, extension, true, true, __generateCabinetItem);
+		file_list = gumshoe(folder_path, extension, , , , /* forceForwardSlash */ true);
+		tree = gumshoe(
+			folder_path,
+			extension,
+			/* returnStruct */ true,
+			/* forceLCNames */ true,
+			__generateCabinetItem,
+			/* forceForwardSlash */ true);
 	}
 	
 	// clears the cached values for this Cabinet (and all associated CabinetFiles)
@@ -29,11 +35,8 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 	}
 	
 	// gets the CabinetFile corresponding to the provided 'path' if it exists
-	static file = function(path) {
-		// TODO: use platform safe logic here (from nik's gumshoe fixes)
-		path = string_replace_all(path, "/", "\\");
-		path = __fixPath(path);
-		return flat_map[$ path];
+	static file = function(path, is_included_file = true) {
+		return flat_map[$ __fixPath(path, is_included_file)];
 	}
 	
 	// gets the content from the CabinetFile for the provided 'path' (possibly cached)
@@ -45,15 +48,21 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 	}
 	
 	// fixes the provided path by resolving '..' segments to the appropriate final directory
-	static __fixPath = function(path) {
-		var fixed_path = path;
+	static __fixPath = function(path, is_included_file) {
+		var fixed_path = string_replace_all(path, "\\", "/");
 		
-		var pos = string_pos("..\\", fixed_path);
+		// resolve relative file paths
+		var pos = string_pos("../", fixed_path);
 		while pos != 0 {
-			var previous_directory_pos = string_last_pos_ext("\\", fixed_path, pos - 2);
+			var previous_directory_pos = string_last_pos_ext("/", fixed_path, pos - 2);
 			fixed_path = string_delete(fixed_path, previous_directory_pos, pos - previous_directory_pos + 2);
 			
-			pos = string_pos("..\\", fixed_path);
+			pos = string_pos("../", fixed_path);
+		}
+		
+		// for included files on non-microsoft platforms, lowercase the file path to match the filenames that GM exports
+		if !_is_microsoft && is_included_file {
+			fixed_path = string_lower(fixed_path)
 		}
 		
 		return fixed_path;
@@ -80,6 +89,14 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 		
 		return result;
 	}
+	
+	static _is_microsoft =
+		os_type == os_windows
+		|| os_type == os_uwp
+		|| os_type == os_xboxone
+		|| os_type == os_xboxseriesxs
+		|| os_type == os_win8native
+		|| os_type == os_winphone;
 }
 
 /// @description Tracks a data file found on disk by the associated Cabinet
@@ -113,14 +130,14 @@ function CabinetFile(cabinet, data) constructor {
 			return tryLoad();
 			
 		if file_exists(fullpath)
-			return __readFile(fullpath);
+			return __readFile();
 	}
 	
 	// if the file exists on disk, will load the file from disk and cache it, then return it
 	static tryLoad = function() {
 		
 		// try to read the file
-		var file_result = file_exists(fullpath) ? __readFile(fullpath) : undefined;
+		var file_result = file_exists(fullpath) ? __readFile() : undefined;
 		
 		// if we read the file, cache it, track the time, and return it
 		if file_result != undefined {

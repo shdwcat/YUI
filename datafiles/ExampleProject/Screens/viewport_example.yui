@@ -6,6 +6,7 @@ import:
   - ../Templates/back_button.yui
   - /YUI/Widgets/slider.yui
   - /YUI/Widgets/slide_toggle.yui
+  - /YUI/Animations/transitions.yui
 
   resources:
     textt:
@@ -18,6 +19,11 @@ root:
   type: panel
   padding: 30
   spacing: 10
+  animate:
+    on_visible:
+      opacity: &fade_in
+    on_unloading:
+      opacity: &fade_out
   
   elements:
     - type: back_button
@@ -37,7 +43,7 @@ root:
           max: @scroll_info.x_max ?? 1000
           on_value_changed: @@ value => @scroll_x = value >> floor()
           visible: @scroll_info.x_max > 0
-          size: { w: 200, h: 20 }
+          slider_size: { w: 200, h: 20 }
           thumb_size: { w: 30, h: 20 }
 
         - type: slider
@@ -46,7 +52,7 @@ root:
           max: @scroll_info.y_max ?? 1000
           on_value_changed: @@ value => @scroll_y = value >> floor()
           visible: @scroll_info.y_max > 0
-          size: { w: 200, h: 20 }
+          slider_size: { w: 200, h: 20 }
           thumb_size: { w: 30, h: 20 }
 
         - type: border

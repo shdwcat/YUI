@@ -14,8 +14,14 @@ function YuiSwitchElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	
 	props.switch_on = yui_bind(props.switch_on, resources, slot_values);
 	
-	// init case elements
-	case_elements = snap_deep_copy(props.cases);
+	// init/bind case elements
+	case_elements = yui_deep_copy(props.cases);
+	var case_names = variable_struct_get_names(case_elements);
+	var i = 0; repeat array_length(case_names) {
+		var name = case_names[i++];
+		var case_item = case_elements[$name];
+		case_elements[$name] = yui_bind_and_resolve(case_item, resources, slot_values);
+	}
 	
 	if props.default_case != undefined {
 		default_element = yui_resolve_element(props.default_case, resources, slot_values);
@@ -33,10 +39,8 @@ function YuiSwitchElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		};
 	}
 	
-	static getBoundValues = function YuiSwitchElement_getBoundValues(data, prev) {		
-		var is_visible = yui_resolve_binding(props.visible, data);
-		if !is_visible return false;		
-		
+	// feather ignore once GM2017
+	static getBoundValues = function YuiSwitchElement_getBoundValues(data, prev) {
 		var switch_value = yui_resolve_binding(props.switch_on, data);
 		
 		// diff
@@ -52,6 +56,7 @@ function YuiSwitchElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		}
 	}
 	
+	// feather ignore once GM2017
 	static getCaseElement = function YuiSwitchElement_getCaseElement(case_key) {
 		var element = case_elements[$ case_key];
 		

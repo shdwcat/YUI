@@ -29,7 +29,7 @@ function YuiBinding(path) : YuiExpr() constructor {
 				}
 			}
 		}
-		else if instanceof(self) == "YuiBinding" {
+		else if is_instanceof(self, YuiBinding) {
 			throw "YuiBinding initialized without a path!";
 		}
 		
@@ -43,6 +43,7 @@ function YuiBinding(path) : YuiExpr() constructor {
 		//}
 	}
 	
+	// feather ignore once GM2017
 	static resolve = function YuiBinding_resolve(data_context, view_context) {
 		//if view_resolver {
 		//	// replace the data_context with the data_context from the resolved view item
@@ -54,10 +55,12 @@ function YuiBinding(path) : YuiExpr() constructor {
 		return data;
 	}
 	
+	// feather ignore once GM2017
 	static resolveEmptyPath = function YuiBinding_resolveEmptyPath(data) {
 		return data;
 	}
 	
+	// feather ignore once GM2017
 	static resolveToken = function YuiBinding_resolveToken(data) {
 		if is_undefined(data) || is_string(data) {
 			return undefined; // expecting struct but got undefined or string
@@ -65,6 +68,7 @@ function YuiBinding(path) : YuiExpr() constructor {
 		return data[$ token];
 	}
 	
+	// feather ignore once GM2017
 	static resolveTokenArray = function YuiBinding_resolveTokenArray(data) {
 		
 		if data == undefined {

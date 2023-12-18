@@ -1,0 +1,7 @@
+file_type: resources
+
+resources:
+  color_examples:
+    type: panel
+    elements:
+      - foo

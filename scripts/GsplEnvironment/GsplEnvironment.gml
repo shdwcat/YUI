@@ -1,8 +1,8 @@
 /// @description execution environment
 /// @param {struct.GsplEnvironment} enclosingEnv
-function GsplEnvironment(enclosingEnv = undefined) constructor {
+function GsplEnvironment(enclosing_env = undefined) constructor {
 	self.values = {};
-	self.enclosing = enclosingEnv;
+	self.enclosing = enclosing_env;
 	
 	static define = function(name /* string */, value) {
 		variable_struct_set(values, name, value);

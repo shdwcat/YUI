@@ -2,7 +2,7 @@
 function KnitScanner(source, token_definition) 
 	: GsplScanner(source, token_definition) constructor {
 	
-	scanToken = function() {
+	static scanToken = function() {
 	    var c = advance();
 		
 	    switch (c) {

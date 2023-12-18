@@ -12,7 +12,7 @@ build = function() {
 	
 	// make/update the child item
 	if template_item {
-		instance_destroy(template_item);
+		template_item.unload();
 		template_item = undefined;
 	}
 	if bound_values.resource_key != undefined {
@@ -60,4 +60,15 @@ onChildLayoutComplete = function(child) {
 	if parent {
 		parent.onChildLayoutComplete(self);
 	}
+}
+
+base_unload = unload;
+unload = function(unload_root = undefined) {
+	var unload_time = base_unload(unload_root);
+	
+	if template_item {
+		unload_time = max(unload_time, template_item.unload(unload_root_item));
+	}
+
+	return unload_time;
 }

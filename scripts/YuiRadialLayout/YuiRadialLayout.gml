@@ -1,5 +1,5 @@
 /// @description Arranges item in a radial layout
-function YuiRadialLayout(alignment, spacing) constructor {
+function YuiRadialLayout(alignment, spacing) : YuiLayoutBase() constructor {
 	static is_live = false;
 
 	// NOTE: not relevant to this layout

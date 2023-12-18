@@ -38,10 +38,20 @@ function yui_error() {
 	
 		i++;
 	}
+	
+	var stack = string_join_ext("\n", debug_get_callstack(12));
+	
+	log_message = message + "\n" + stack;
 
 	// TODO: log to errors.txt
 	show_debug_message(message);
-	return message;
+	return {
+		message: message,
+		stacktrace: stack,
+		toString: function() {
+			return string("{0}\nSTACK:\n{1}", message, stacktrace);
+		}
+	};
 }
 
 

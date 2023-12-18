@@ -1,11 +1,16 @@
 /// @description here
-function YuiHorizontalLayout(alignment, spacing, panel_size) constructor {
+function YuiHorizontalLayout(alignment, spacing, panel_size) : YuiLayoutBase() constructor {
 	static is_live = false;
 	
 	self.alignment = alignment;
 	self.spacing = spacing;
-	self.fill_h = panel_size.h != "auto";
 	self.min_h = panel_size.min_h;
+	
+	// whether to use the full available height or just the max item height
+	self.full_h = panel_size.h != "auto";
+	
+	// whether to resize items when our panel resizes
+	self.fill = panel_size.fill;
 	
 	static init = function(items, available_size, viewport_size, panel_props) {
 		self.items = items;
@@ -130,7 +135,7 @@ function YuiHorizontalLayout(alignment, spacing, panel_size) constructor {
 			x: available_size.x,
 			y: available_size.y,
 			w: is_flex_panel ? available_size.w : xoffset, // flex uses the full space
-			h: fill_h ? available_size.h : max(min_h ?? 0, max_h),
+			h: full_h ? available_size.h : max(min_h ?? 0, max_h),
 		};
 
 		if !is_flex_panel && alignment.h == "center" {
@@ -155,6 +160,18 @@ function YuiHorizontalLayout(alignment, spacing, panel_size) constructor {
 		}
 		
 		return draw_size;
+	}
+	
+	static resize = function(width, height) {		
+		if fill {
+			var count = array_length(items);
+			var i = 0; repeat count {
+				var item = items[i++];
+				
+				// NOTE: panel has already accounted for padding
+				item.resize(item.draw_size.w, height);
+			}
+		}
 	}
 	
 	static getAvailableSizeForItem = function(index, xoffset, allotted_w = undefined) {

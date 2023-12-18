@@ -19,8 +19,6 @@ border_build = build;
 build = function yui_panel__build() {
 	border_build();
 	
-	trace = yui_element.props.trace; // hack
-	
 	// resync our internal children to the bound children
 	
 	var child_count = bound_values.child_count;
@@ -87,7 +85,7 @@ build = function yui_panel__build() {
 		repeat excess_count {
 			var excess_child = internal_children[i++];
 			//tracelog("destroying excess child at", i, excess_child.data_context.id, "id: ", excess_child.id);
-			instance_destroy(excess_child);
+			excess_child.unload();
 		}
 		
 		// resize the array to the new count
@@ -126,10 +124,6 @@ arrange = function yui_panel__arrange(available_size, viewport_size) {
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
 	
-	if bound_values && (bound_values.xoffset != 0 || bound_values.yoffset != 0) {
-		move(bound_values.xoffset, bound_values.yoffset);
-	}
-	
 	if viewport_size {
 		updateViewport();
 	}
@@ -143,8 +137,7 @@ arrange = function yui_panel__arrange(available_size, viewport_size) {
 	};
 	
 	if events.on_arrange != undefined {
-		var data = bound_values ? bound_values.data_source : undefined;
-		yui_call_handler(events.on_arrange, [used_size], data);
+		yui_call_handler(events.on_arrange, [used_size], data_source);
 	}
 	
 	return used_size;
@@ -153,7 +146,7 @@ arrange = function yui_panel__arrange(available_size, viewport_size) {
 onChildLayoutComplete = function(child) {
 	if !is_arranging {
 		arrange(draw_rect);
-		if parent {
+		if is_size_changed && parent {
 			parent.onChildLayoutComplete(self);
 		}
 	}
@@ -171,4 +164,26 @@ move = function(xoffset, yoffset) {
 		used_layout_size.x += xoffset;
 		used_layout_size.y += yoffset;
 	}
+}
+
+resize = function(width, height) {
+	yui_resize_instance(width, height);
+	layout.resize(width - layout_props.padding.w, height - layout_props.padding.h);
+}
+
+unload = function(unload_root = undefined) {
+	// use base unload, not border's unload
+	var unload_time = base_unload(unload_root);
+	
+	var i = 0; repeat array_length(internal_children) {
+		var child_item = internal_children[i];
+		//yui_log("unloading panel child (index ", i, ") visual", instance.id);
+		
+		var child_unload_time = child_item.unload(unload_root_item);
+		
+		unload_time = max(unload_time, child_unload_time);
+		i++;
+	}
+
+	return unload_time;
 }

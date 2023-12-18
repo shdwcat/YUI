@@ -1,4 +1,5 @@
 // NOTE: This file is adapted from the original snap_from_yaml by @shdwcat
+// Feather ignore GM1042
 
 enum __SNAP_YUI
 {
@@ -24,8 +25,8 @@ enum __SNAP_YUI
 ///      3. Anchors, documents, directives, nodes... all the weird extra stuff
 /// 
 /// @param string              The YUI string to be decoded
-/// @param [replaceKeywords]   Whether to replace keywords (true, false, null) with boolean/undefined equivalents. Default to <true>
-/// @param [trackFieldOrder]   Whether to track the order of struct fields as they appear in the YUI string (stored in __snap_field_order field on each GML struct). Default to <false>
+/// @param {bool} [replaceKeywords]   Whether to replace keywords (true, false, null) with boolean/undefined equivalents. Default to <true>
+/// @param {bool} [trackFieldOrder]   Whether to track the order of struct fields as they appear in the YUI string (stored in __snap_field_order field on each GML struct). Default to <false>
 /// 
 /// @jujuadams 2020-09-20
 function snap_from_yui(_string, _replace_keywords = true, _track_field_order = false)
@@ -44,6 +45,7 @@ function snap_from_yui(_string, _replace_keywords = true, _track_field_order = f
 #macro snap_from_yui_get_token_type tokens_array[token_index][0]
 #macro snap_from_yui_get_token_value tokens_array[token_index][1]
 
+// Feather ignore once GM2017
 function __snap_from_yui_tokenizer(_buffer) constructor
 {
     buffer = _buffer;
@@ -287,6 +289,7 @@ function __snap_from_yui_tokenizer(_buffer) constructor
     }
 }
 
+// Feather ignore once GM2017
 function __snap_from_yui_builder(_tokens_array, _replace_keywords, _track_field_order, source) constructor
 {
     tokens_array = _tokens_array;

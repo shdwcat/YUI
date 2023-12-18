@@ -9,13 +9,13 @@ default_props = {
 	content: "This is a test! Big Test! This is a test! Big Test!This is a test! Big Test!This is a test! Big Test!",
 }
 
+is_arranging = false;
 has_content_item = true; // yui_panel sets this to false
 content_item = undefined;
 
 draw_border = false;
 
 onLayoutInit = function() {	
-	trace = yui_element.props.trace; // hack
 		
 	if layout_props.bg_color != undefined {
 		bg_color = layout_props.bg_color;
@@ -32,6 +32,14 @@ onLayoutInit = function() {
 		bg_alpha = 1;
 	}
 	
+	is_bg_sprite_live = yui_element.is_bg_sprite_live;
+	if is_bg_sprite_live
+		bg_sprite_value = new YuiBindableValue(yui_element.bg_sprite_binding);
+		
+	is_bg_color_live = yui_element.is_bg_color_live;
+	if is_bg_color_live
+		bg_color_value = new YuiBindableValue(yui_element.bg_color_binding);
+	
 	border_focus_color = layout_props.border_focus_color ?? border_color;
 	
 	if border_color != undefined {
@@ -45,38 +53,22 @@ onLayoutInit = function() {
 
 build = function() {
 	
-	opacity = bound_values.opacity * parent.opacity * 1 - (!enabled * 0.5);
-	
-	if layout_props.is_bg_live {
-		if bound_values.bg_sprite != undefined {
-			bg_sprite = bound_values.bg_sprite;
-			bg_alpha = 1;
-		}
-		else if bound_values.bg_color != undefined {
-			bg_color = bound_values.bg_color;
-			bg_alpha = ((bg_color & 0xFF000000) >> 24) / 255; // extract alpha
-		}
-	}
-	
 	// create the content item instance if there should be one
-	// NOTE: have to do this after opacity is updated
 	var make_content_item = 
 		has_content_item
 		&& content_item == undefined
 		&& layout_props.content_element != undefined
 
 	if make_content_item {
-		if trace
-			DEBUG_BREAK_YUI
-		content_item = yui_make_render_instance(layout_props.content_element, bound_values.data_source);
+		content_item = yui_make_render_instance(layout_props.content_element, data_source);
 	}
 	
 	if content_item {
 		// check if we need to rebuild
-		content_item.rebuild = content_item.data_context != bound_values.data_source;
+		content_item.rebuild = content_item.data_context != data_source;
 		if content_item.rebuild {
 			// update child data context
-			content_item.data_context = bound_values.data_source;
+			content_item.data_context = data_source;
 			// will trigger build() as child runs after this
 		}
 	}
@@ -102,7 +94,9 @@ arrange = function(available_size, viewport_size) {
 	
 	var content_size = undefined;
 	if content_item {
+		is_arranging = true;
 		content_size = content_item.arrange(padded_rect, viewport_size);
+		is_arranging = false;
 	}
 	else {
 		content_size = { x: padded_rect.x, y: padded_rect.y, w: 0, h: 0 };
@@ -115,26 +109,23 @@ arrange = function(available_size, viewport_size) {
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
 	
-	if bound_values && (bound_values.xoffset != 0 || bound_values.yoffset != 0) {
-		move(bound_values.xoffset, bound_values.yoffset);
-	}
-	
 	if viewport_size {
 		updateViewport();
 	}
 	
-	if bound_values && events.on_arrange != undefined {
-		var data = bound_values ? bound_values.data_source : undefined;
-		yui_call_handler(events.on_arrange, [draw_size], data);
+	if events.on_arrange != undefined {
+		yui_call_handler(events.on_arrange, [draw_size], data_source);
 	}
 	
 	return draw_size;
 }
 
 onChildLayoutComplete = function(child) {
-	arrange(draw_rect);
-	if parent {
-		parent.onChildLayoutComplete(self);
+	if !is_arranging {
+		arrange(draw_rect, viewport_size);
+		if is_size_changed && parent {
+			parent.onChildLayoutComplete(self);
+		}
 	}
 }
 
@@ -146,4 +137,14 @@ move = function(xoffset, yoffset) {
 		content_item.move(xoffset, yoffset);
 	}
 }
+
+base_unload = unload;
+unload = function(unload_root = undefined) {
+	var unload_time = base_unload(unload_root);
 	
+	if content_item {
+		unload_time = max(unload_time, content_item.unload(unload_root_item));
+	}
+
+	return unload_time;
+}

@@ -58,7 +58,7 @@ root:
             events:
               on_text_changed:
                 - @@ text => @new_task.label = text
-                - @@ text => array_push(@tasks, snap_deep_copy(@new_task))
+                - @@ text => array_push(@tasks, yui_deep_copy(@new_task))
                 - @@ text => @new_task.label = ''
                 - @@ text => input_string_set('')
 

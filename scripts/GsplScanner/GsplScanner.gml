@@ -1,4 +1,6 @@
 /// @description GsplScanner base
+/// @param {string} source
+/// @param {struct.GsplTokenDefinition} token_definition
 function GsplScanner(source, token_definition) constructor {
 
 	_source = source; // string - TODO buffer?
@@ -196,6 +198,6 @@ function GsplScanner(source, token_definition) constructor {
 	
 	static _error = function(line, msg, value = undefined) {
 		value ??= ""
-		gspl_log("[", line, "]", msg, value);
+		gspl_log($"[{line}] {msg} {value}");
 	}
 }

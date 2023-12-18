@@ -1,12 +1,11 @@
 {
-  "isDnD": false,
+  "resourceType": "GMScript",
+  "resourceVersion": "1.0",
+  "name": "YsParser",
   "isCompatibility": false,
+  "isDnD": false,
   "parent": {
     "name": "Ys",
     "path": "folders/Packages - YUI/Parser/Ys.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "YsParser",
-  "tags": [],
-  "resourceType": "GMScript",
 }

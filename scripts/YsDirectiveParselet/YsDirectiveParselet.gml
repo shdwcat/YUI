@@ -35,7 +35,7 @@ function YsDirectiveParselet() constructor {
 			
 			// if the expr is a binding expression literal, parse it
 			case "resolve":
-				if instanceof(expr) == "YuiValueWrapper" {
+				if is_instanceof(expr, YuiValueWrapper) {
 					var expr_value = expr.resolve();
 					if yui_is_binding_expr(expr_value) {
 						var inner_expr = yui_parse_binding_expr(expr_value, parser.resources, parser.slot_values);

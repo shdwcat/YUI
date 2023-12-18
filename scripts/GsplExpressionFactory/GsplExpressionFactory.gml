@@ -10,13 +10,13 @@ function GsplExpressionFactory(parse_tree_definition) constructor {
 		var key = names[i++];
 		var expression_definition = parse_tree_definition[$key]; 
 		
-		var instanceFactory = new GsplExpressionInstanceFactory(key, expression_definition);
+		var instance_factory = new GsplExpressionInstanceFactory(key, expression_definition);
 		
 		// need to store the factory so it doesn't get GC'd
 		//self[$key + "Factory"] = instanceFactory;
 		
 		// store the factory under the expression name
-		self[$key] = instanceFactory.make;
+		self[$key] = instance_factory.make;
 	}
 
 }
@@ -34,13 +34,13 @@ function GsplExpressionInstanceFactory(type, expression_definition) constructor 
 		
 		// visitor pattern, e.g. if type is Binary, we want to call visitor.visitBinary(expression)
 		var accept = function(visitor) {
-			var visitorFunction = visitor[$"visit" + type];
-			if (visitorFunction == undefined) {
+			var visitor_function = visitor[$"visit" + type];
+			if (visitor_function == undefined) {
 				throw "unable to find visitor function: visit" + type;
 			}
 			
 			// need to jump some hoops to call the method with the right scope
-			var apply = method(visitor, visitorFunction);
+			var apply = method(visitor, visitor_function);
 			return apply(self);
 		};
 		

@@ -24,7 +24,7 @@ function YuiDocument(_yui_file, cabinet) constructor {
 			: yui_file;
 		
 		if !file_exists(yui_filepath) {
-			load_error = yui_string_concat("Could not find yui document file at", yui_filepath);
+			load_error = $"Could not find yui document file at {yui_filepath}";
 			yui_error(load_error);
 			return;
 		}

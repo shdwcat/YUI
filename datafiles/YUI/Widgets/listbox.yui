@@ -29,6 +29,7 @@ resources:
       // additional handler executed after item is selected
       on_item_selected: null
 
+      background: null
       foreground: null
 
     events:
@@ -39,19 +40,15 @@ resources:
         - @@ item => $on_item_selected(item)
 
     template:
-      // can't be scrollbox because there's a bug in yui_resolve_element when the root of 
-      // a template is another template. Ideal fix would be to do the DCS template definition
-      // system for YUI, but could be a lot of bugs!
 
-      // type: border
-      // content:
-
-        // trying to nest scrollbox inside here just causes another bug where the 
-        // scrollbox size becomes infinite or something and eventually crashes GM
+      type: scrollbox
+      background: $background
+      content:
 
         type: panel
         padding: 1
         spacing: 1
+        size: { w: stretch }
         alignment: { h: stretch }
         elements: $items
 

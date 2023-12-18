@@ -1,0 +1,49 @@
+id: widget_gallery
+file_type: screen
+
+import:
+  - ../Templates/screen_base.yui
+  
+  - /YUI/Animations/transitions.yui
+  - /YUI/Widgets/
+  - Animation Examples/
+
+resources:
+  // hack to pass the anim data through the tab panel
+  // need to redo tabpanel content logic...
+  anim_tab_panel:
+    type: template
+    slots:
+      anim_data: undefined
+    content:
+      type: tab_panel
+      bind_slot_scope:
+        anim_data: $anim_data
+
+root:
+  type: screen_base
+  content_layout: horizontal
+  
+  items:
+    - type: panel
+      spacing: 11
+      elements: 
+        - type: text
+          text_style: title
+          text: Animation Examples
+
+        - type: anim_tab_panel
+          anim_data: @anim_data
+          active_tab: @layouts.active_tab
+          on_tab_selected: @@ item => @layouts.active_tab = item
+          content_padding: 0
+          tab_content_binding: @content
+          tab_items:
+            - header: Demo
+              content: &animation_builder
+            // - header: Color Animations
+            //   content: &color_examples
+            // - header: Text Animations
+            //   content: &text_examples
+            // - header: Animation Sequences
+            //   content: &sequence_examples

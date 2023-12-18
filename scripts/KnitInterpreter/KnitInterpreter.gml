@@ -89,16 +89,16 @@ function KnitInterpreter(environment) constructor {
 	}
 	
 	static visitForStatement = function(statement) {
-		var loopEnv = new GsplEnvironment(environment);
+		var loop_env = new GsplEnvironment(environment);
 		
 		// swap in the loop environment when evaluating the producer (for the for-each case)
 		// todo: try/catch?
-		environment = loopEnv;		
+		environment = loop_env;		
 		var producer = evaluate(statement.producer);
-		environment = loopEnv.enclosing;
+		environment = loop_env.enclosing;
 							
 		// create the loop fiber and start it
-		var fiber = new GsplLoopFiber(producer, statement.statement, loopEnv, self);
+		var fiber = new GsplLoopFiber(producer, statement.statement, loop_env, self);
 		var result = fiber.start();
 		return result;
 	}
@@ -154,8 +154,8 @@ function KnitInterpreter(environment) constructor {
 	
 	static visitEachExpr = function(expr) {
 		var producer = evaluate(expr.producer);
-		var eachIterator = new GsplEachIterator(expr.itemName, producer, environment);
-		return eachIterator;
+		var each_iterator = new GsplEachIterator(expr.itemName, producer, environment);
+		return each_iterator;
 	}
 	
 	static visitTimespan = function(expr) {
@@ -348,21 +348,29 @@ function KnitInterpreter(environment) constructor {
 				break;
 				
 			case KNIT_TOKEN.GREATER:
-				var earlyResult = checkComparisonOperands(expression.operator, left, right);
-				if earlyResult != undefined return earlyResult;
+			{
+				var early_result = checkComparisonOperands(expression.operator, left, right);
+				if early_result != undefined return early_result;
 				return real(left) > real(right);
+			}
 			case KNIT_TOKEN.GREATER_EQUAL:
-				var earlyResult = checkComparisonOperands(expression.operator, left, right);
-				if earlyResult != undefined return earlyResult;
+			{
+				var early_result = checkComparisonOperands(expression.operator, left, right);
+				if early_result != undefined return early_result;
 				return real(left) >= real(right);
+			}
 			case KNIT_TOKEN.LESS:
-				var earlyResult = checkComparisonOperands(expression.operator, left, right);
-				if earlyResult != undefined return earlyResult;
+			{
+				var early_result = checkComparisonOperands(expression.operator, left, right);
+				if early_result != undefined return early_result;
 				return real(left) < real(right);
+			}
 			case KNIT_TOKEN.LESS_EQUAL:
-				var earlyResult = checkComparisonOperands(expression.operator, left, right);
-				if earlyResult != undefined return earlyResult;
+			{
+				var early_result = checkComparisonOperands(expression.operator, left, right);
+				if early_result != undefined return early_result;
 				return real(left) <= real(right);
+			}
 				
 			case KNIT_TOKEN.BANG_EQUAL:
 				return !isEqual(left, right);
@@ -467,20 +475,20 @@ function KnitInterpreter(environment) constructor {
 	static checkComparisonOperands = function(operator, left, right) {
 		
 		// check for undefined and null
-		var isLeftUndefinedOrNull = left == undefined || left == gspl_null;
-		var isRightUndefinedOrNull = right == undefined || right == gspl_null;
+		var is_left_undefined_or_null = left == undefined || left == gspl_null;
+		var is_right_undefined_or_null = right == undefined || right == gspl_null;
 		
 		// if both are undefined or null, result is false
-		if isLeftUndefinedOrNull && isRightUndefinedOrNull return false;
+		if is_left_undefined_or_null && is_right_undefined_or_null return false;
 		
-		var leftIsNumber = typeof(left) == "number";
-		var rightIsNumber = typeof(right) == "number";
+		var left_is_number = typeof(left) == "number";
+		var right_is_number = typeof(right) == "number";
 		
 		// if we're comparing a number and an undefined/null, result is false
-		if (isLeftUndefinedOrNull && rightIsNumber)	|| (leftIsNumber && isRightUndefinedOrNull)
+		if (is_left_undefined_or_null && right_is_number)	|| (left_is_number && is_right_undefined_or_null)
 			return false;
 		
-		if leftIsNumber && rightIsNumber
+		if left_is_number && right_is_number
 			return; // valid number comparison
 		else
 			throw new GsplRuntimeError(operator, "Operands must be numbers: " + string(left) + ", " + string(right));

@@ -1,5 +1,9 @@
 /// @description A fiber that repeats the same statement until the iterator completes
-function GsplLoopFiber(iterator, statement, environment, calling_fiber)
+/// @param {struct} iterator
+/// @param {struct} statement
+/// @param {struct} environment
+/// @param {struct.GsplFiber} calling_fiber
+function GsplLoopFiber(iterator, statement, environment, calling_fiber = undefined)
 	: GsplFiber(undefined, environment, calling_fiber) constructor {
 		
 	self.iterator = iterator;

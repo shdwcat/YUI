@@ -1,5 +1,5 @@
-/// @description dispose
+/// @description unload interaction item
 
 if interaction_item {
-	instance_destroy(interaction_item);
+	interaction_item.unload();
 }

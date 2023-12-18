@@ -22,9 +22,10 @@ function YuiDataTemplateElement(_props, _resources, _slot_values) : YuiBaseEleme
 	// ===== functions =====
 	
 	static getLayoutProps = function() {
-		return;
+		return {};
 	}
 	
+	// feather ignore once GM2017
 	static getBoundValues = function YuiDataTemplateElement_getBoundValues(data, prev) {
 		var resource_key = yui_resolve_binding(props.resource_key, data);
 		

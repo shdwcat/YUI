@@ -11,7 +11,7 @@ function YuiCallFunction(func_name, args) : YuiExpr() constructor {
 	self.arg_count = array_length(args);
 	self.resolved_args = array_create(arg_count);	
 		
-	if instanceof(func_name) == "YuiIdentifier" {
+	if is_instanceof(func_name, YuiIdentifier) {
 		func_name = func_name.resolve();
 		var script_index = asset_get_index(func_name);
 		if script_index != -1 {
@@ -32,7 +32,7 @@ function YuiCallFunction(func_name, args) : YuiExpr() constructor {
 			resolve = resolveRuntimeFunction;
 		}
 	}
-	else if instanceof(func_name) == "YuiLambda" {
+	else if is_instanceof(func_name, YuiLambda) {
 		resolve = resolveLambda;
 	}
 	else {
@@ -103,7 +103,7 @@ function YuiCallFunction(func_name, args) : YuiExpr() constructor {
 			return yui_call_handler(func_ref, resolved_args, data);
 		}
 		
-		if instanceof(func_ref) == "YuiLambda" {
+		if is_instanceof(func_ref, YuiLambda) {
 			return func_ref.call(data, resolved_args);
 		}
 
@@ -130,11 +130,11 @@ function YuiCallFunction(func_name, args) : YuiExpr() constructor {
 		if is_string(func_name) {
 			var call = func_name;
 		}
-		else if instanceof(func_name) == "YuiIdentifier" {
+		else if is_instanceof(func_name, YuiIdentifier) {
 			// needs special handling until I can fix how function names work...
 			var call = func_name.identifier;
 		}
-		else if instanceof(func_name) == "YuiLambda" {
+		else if is_instanceof(func_name, YuiLambda) {
 			// needs special handling until I can fix how function names work...
 			var call = func_name.compiled_script_name;
 		}
@@ -144,7 +144,7 @@ function YuiCallFunction(func_name, args) : YuiExpr() constructor {
 		
 		call += "(";
 		
-		if instanceof(func_name) == "YuiLambda" {
+		if is_instanceof(func_name, YuiLambda) {
 			call += "data, ";
 		}
 		

@@ -24,8 +24,12 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		elements: undefined,
 		
 		// option B: bind the element list to data, and use a template to render each element
-		path: undefined, // defines the source path for the element list
 		template: undefined, // the template to use when rendering elements from the path
+		
+		// child elements (and sub-children will be indexed by their positiin in this panel
+		// NOTE: setting 'indexed: true' on a sub-panel will replace this index
+		// NOTE: does not work for template mode
+		indexed: false,
 		
 		// allows binding slots at panel scope instead of item scope
 		bind_slot_scope: undefined,
@@ -35,18 +39,18 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	has_scoped_slots = props.bind_slot_scope != undefined;
 	if has_scoped_slots {
-		slot_values = yui_shallow_copy(slot_values);
+		slot_values = slot_values.extendWith();
 		var bound_slot_names = variable_struct_get_names(props.bind_slot_scope);
 		var i = 0; repeat array_length(bound_slot_names) {
 			var slot_name = bound_slot_names[i++];
 			var binding = yui_bind(props.bind_slot_scope[$ slot_name], resources, slot_values);
 			
-			if instanceof(binding) == "YuiScopeBinding" {
+			if is_instanceof(binding, YuiScopeBinding) {
 				throw yui_error("binding scope multiple times");
 			}
 			
 			var scoped_binding = new YuiScopeBinding(binding);
-			slot_values[$ slot_name] = scoped_binding;
+			slot_values.set(slot_name, scoped_binding);
 		}
 	}
 	
@@ -61,8 +65,8 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	props.count = yui_bind_and_resolve(props.count, resources, slot_values);
 	
-	var makeLayout = yui_resolve_layout(props.layout);
-	layout = new makeLayout(alignment, props.spacing, size);
+	var make_layout = yui_resolve_layout(props.layout);
+	layout = new make_layout(alignment, props.spacing, size);
 	layout.trace = props.trace;
 	
 	resolveBackgroundAndBorder()
@@ -77,10 +81,25 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	else {
 		// generate item_elements if we have explicit elements
 		item_elements = [];
-		var i = 0; repeat array_length(props.elements) {
+		var i = 0; var panel_count = array_length(props.elements); repeat panel_count {
 			var element = props.elements[i];
 			var panel_item_id = props.id + "[" + string(i) + "]";
-			item_elements[i] = yui_resolve_element(element, resources, slot_values, panel_item_id);
+			var item_slot_values = slot_values;
+			
+			// when indexing is enabled, set the $panel_index and $panel_count slots
+			if props.indexed {
+				item_slot_values = slot_values.extendWith({
+					panel_index: i,
+					panel_count: panel_count,
+				});
+			}
+			
+			item_elements[i] = yui_resolve_element(
+				element,
+				resources,
+				item_slot_values,
+				panel_item_id);
+				
 			i++;
 		}
 		element_count = i;
@@ -117,30 +136,17 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		};
 	}
 	
+	// feather ignore once GM2017
 	static getBoundValues = function YuiPanelElement_getBoundValues(data, prev) {
-		if data_source != undefined {
-			data = is_data_source_bound ? data_source.resolve(data) : data_source;
-		}
-		
 		// update scoped bindings if needed
 		if has_scoped_slots && (!prev || data != prev.data_source) {
 			var bound_slot_names = variable_struct_get_names(props.bind_slot_scope);
 			var i = 0; repeat array_length(bound_slot_names) {
 				var slot_name = bound_slot_names[i++];
-				var binding = slot_values[$ slot_name];
+				var binding = slot_values.get(slot_name);
 				binding.updateScope(data);
 			}
 		}
-		
-		var is_visible = is_visible_live ? props.visible.resolve(data) : props.visible;
-		if !is_visible return false;
-		
-		var opacity = is_opacity_live ? props.opacity.resolve(data) : props.opacity;
-		var xoffset = is_xoffset_live ? props.xoffset.resolve(data) : props.xoffset;
-		var yoffset = is_yoffset_live ? props.yoffset.resolve(data) : props.yoffset;
-		
-		var bg_sprite = is_bg_sprite_live ? yui_resolve_sprite_by_name(bg_sprite_binding.resolve(data)) : undefined;
-		var bg_color = is_bg_color_live ? yui_resolve_color(bg_color_binding.resolve(data)) : undefined;
 		
 		if uses_template {
 			// single template element for bound data_items
@@ -161,23 +167,18 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			var data_items = data;
 		}
 		
-		var liveItemValues = layout.is_live
+		var live_item_values = layout.is_live
 			? layout.getLiveItemValues(data, prev)
 			: undefined;
 		
 		// diff
 		if prev
 			&& data == prev.data_source
-			&& opacity == prev.opacity
-			&& xoffset == prev.xoffset
-			&& yoffset == prev.yoffset
-			&& bg_sprite == prev.bg_sprite
-			&& bg_color == prev.bg_color
 			&& child_count == prev.child_count
 			&& (uses_template
 				? array_equals(data_items, prev.data_items)
 				: data_items == prev.data_items)
-			&& (!layout.is_live || liveItemValues == true)
+			&& (!layout.is_live || live_item_values == true)
 		{
 			return true;
 		}
@@ -186,16 +187,10 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			is_live: is_bound || layout.is_live,
 			// border
 			data_source: data,
-			opacity: opacity,
-			xoffset: xoffset,
-			yoffset: yoffset,
-			// live versions
-			bg_sprite: bg_sprite,
-			bg_color: bg_color,
 			// panel
 			child_count: child_count,
 			data_items: data_items,
-			liveItemValues: liveItemValues,
+			liveItemValues: live_item_values,
 		};
 	}
 }

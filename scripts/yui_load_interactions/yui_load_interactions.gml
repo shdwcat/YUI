@@ -7,7 +7,7 @@
 //	var map = {};
 //	var i = 0; repeat array_length(files) {
 //		var filename = files[i++];
-//		var filetext = string_from_file(filename);
+//		var filetext = yui_string_from_file(filename);
 //		var snap = snap_from_yui(filetext, undefined, true);
 		
 //		// hack

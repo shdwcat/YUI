@@ -89,13 +89,13 @@ function KnitParser(tokens, eof_token, parse_tree_definition) constructor {
 		var condition = logicalOr(); // this way doesn't allow assignment as a condition
 		//consume(KNIT_TOKEN.RIGHT_PAREN. "Expect ')' after if condition.");		
 		
-		var thenBranch = statement();
-		var elseBranch = undefined;
+		var then_branch = statement();
+		var else_branch = undefined;
 		if match(KNIT_TOKEN.ELSE) {
-			elseBranch = statement();
+			else_branch = statement();
 		}
 		
-		return Expr.IfStatement({ condition: condition, thenBranch: thenBranch, elseBranch: elseBranch });
+		return Expr.IfStatement({ condition: condition, thenBranch: then_branch, elseBranch: else_branch });
 	}
 	
 	static forStatement = function() {
@@ -129,7 +129,7 @@ function KnitParser(tokens, eof_token, parse_tree_definition) constructor {
 	}
 	
 	static eachExpression = function() {
-		var itemName = consume(KNIT_TOKEN.IDENTIFIER, "Expect identifier after 'each'.");
+		var item_mame = consume(KNIT_TOKEN.IDENTIFIER, "Expect identifier after 'each'.");
 		
 		consume(KNIT_TOKEN.IN, "Expect 'in' after 'for each' identifier.");
 		
@@ -137,7 +137,7 @@ function KnitParser(tokens, eof_token, parse_tree_definition) constructor {
 		var source = expression();
 		var producer = Expr.Iterator({ source: source });
 		
-		return Expr.EachExpr({ itemName: itemName, producer: producer });
+		return Expr.EachExpr({ item_mame: item_mame, producer: producer });
 	}
 	
 	self.in_animate_block = false;
@@ -147,16 +147,16 @@ function KnitParser(tokens, eof_token, parse_tree_definition) constructor {
 		// desugar into a for statement with a `frame` after the normal statement;
 		
 		self.in_animate_block = true;
-		var forStmt = forStatement();
+		var for_stmt = forStatement();
 		self.in_animate_block = false;
 		
-		forStmt.statement = Expr.BlockStatement({
+		for_stmt.statement = Expr.BlockStatement({
 			statements: [
-				forStmt.statement,
+				for_stmt.statement,
 				Expr.FrameStatement({}),
 			]
 		});
-		return forStmt;
+		return for_stmt;
 	}
 	
 	self.in_event_block = false;
@@ -255,25 +255,25 @@ function KnitParser(tokens, eof_token, parse_tree_definition) constructor {
 	static assignment = function() {
 		var expr = logicalOr();
 		
-		var assignOperator = undefined;
+		var assign_operator = undefined;
 		// TODO: switch statement? hook the 'inner' operator to the token when we scan it?
 		if match(KNIT_TOKEN.PLUS_EQUAL) {
-			assignOperator = previous();
-			assignOperator._type = KNIT_TOKEN.PLUS;
+			assign_operator = previous();
+			assign_operator._type = KNIT_TOKEN.PLUS;
 		}
 		if match(KNIT_TOKEN.MINUS_EQUAL) {
-			assignOperator = previous();
-			assignOperator._type = KNIT_TOKEN.MINUS;
+			assign_operator = previous();
+			assign_operator._type = KNIT_TOKEN.MINUS;
 		}
 				
-		if assignOperator != undefined || match(KNIT_TOKEN.EQUAL) {
+		if assign_operator != undefined || match(KNIT_TOKEN.EQUAL) {
 			var equals = previous();
 			var value = assignment();
 			
 			// desugar 'x += 1' into 'x = x + 1'
-			if assignOperator != undefined {
-				var binaryOp = Expr.Binary({ left: expr, operator: assignOperator, right: value });
-				value = binaryOp;
+			if assign_operator != undefined {
+				var binary_op = Expr.Binary({ left: expr, operator: assign_operator, right: value });
+				value = binary_op;
 			}
 			
 			if expr.type == "Variable" {
@@ -449,7 +449,7 @@ function KnitParser(tokens, eof_token, parse_tree_definition) constructor {
 		}
 		
 		if match(KNIT_TOKEN.LEFT_PAREN) {
-			var expr = expression();
+			expr = expression();
 			consume(KNIT_TOKEN.RIGHT_PAREN, "Expect  ')' after expression.");
 			return Expr.Grouping({ expression: expr });
 		}

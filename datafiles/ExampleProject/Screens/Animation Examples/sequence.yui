@@ -1,0 +1,7 @@
+file_type: resources
+
+resources:
+  sequence_examples:
+    type: panel
+    elements:
+      - foo

@@ -10,6 +10,7 @@ function YsParser(tokens, eof_token)
 
 	// === expression types ===
 	
+	// feather disable GM2017
 	self.Literal = YuiValueWrapper;
 	self.Identifier = undefined; // unused?
 	self.PrefixOperator = YuiPrefixOperatorBinding;
@@ -19,6 +20,7 @@ function YsParser(tokens, eof_token)
 	self.Call = YuiCallFunction;
 	self.Indexer = YuiIndexBinding;
 	self.Subscript = YuiSubscript;
+	// feather restore GM2017
 	
 	// === operators ===
 
@@ -113,7 +115,7 @@ function YsParser(tokens, eof_token)
 		expr.source = source;
 		
 		if expr[$ "trace"] == true {
-			DEBUG_BREAK_YUI;
+			DEBUG_BREAK_YUI
 		}
 		
 		if !expr.is_yui_live_binding {

@@ -8,7 +8,7 @@ case_item = undefined;
 build = function() {
 	// clear out the old item;
 	if case_item {
-		instance_destroy(case_item);
+		case_item.unload();
 		case_item = undefined;
 	}
 	
@@ -38,18 +38,21 @@ arrange = function(available_size, viewport_size) {
 	draw_rect = available_size;
 	self.viewport_size = viewport_size;
 	
-	if case_item {
-		case_item.arrange(available_size, viewport_size);
+	if !case_item 
+		return sizeToDefault(available_size);
+	
+	case_item.arrange(available_size, viewport_size);
+	x = case_item.x;
+	y = case_item.y;
 		
-		yui_resize_instance(case_item.draw_size.w, case_item.draw_size.h)
+	yui_resize_instance(case_item.draw_size.w, case_item.draw_size.h)
 		
-		if viewport_size {
-			updateViewport();
-		}
+	if viewport_size {
+		updateViewport();
+	}
 		
-		if case_item.is_size_changed {
-			is_size_changed = true;
-		}
+	if case_item.is_size_changed {
+		is_size_changed = true;
 	}
 	
 	return draw_size;
@@ -73,4 +76,15 @@ onChildLayoutComplete = function(child) {
 	if parent {
 		parent.onChildLayoutComplete(self);
 	}
+}
+
+base_unload = unload;
+unload = function(unload_root = undefined) {
+	var unload_time = base_unload(unload_root);
+	
+	if case_item {
+		unload_time = max(unload_time, case_item.unload(unload_root_item));
+	}
+
+	return unload_time;
 }

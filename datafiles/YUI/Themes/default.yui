@@ -66,9 +66,17 @@ theme:
       border_color: &accent_color
 
     dropdown_menu:
-      item_bg_color: &control_border
+      item_bg_color: &control_bg
       selected_bg_color: &control_bg_light
       item_highlight_alpha: 0.4
+
+    expander_header:
+      background: &subpanel_bg
+      border_color: &control_border
+      
+    expander_content:
+      background: &control_border
+      border_color: &control_border
 
     listbox:
       background: &control_border
@@ -101,13 +109,11 @@ theme:
       background: &control_border
 
     scrollbox:
-      background: &control_bg
       thumb_background: &focus_border // move to scrollbar style somewhere?
 
     tab_panel_content:
       background: &control_bg
       border_color: &control_border
-      padding: 5
       size: { min_w: 200, min_h: 100 }
 
     tab_header:
@@ -115,6 +121,9 @@ theme:
       selected_color: &control_bg_light
       border_color: &control_border
       padding: [10,5]
+
+    tab_panel:
+      content_padding: 5
 
     // === elements ===
 
@@ -138,6 +147,15 @@ theme:
       padding: [10, 5]
     
     popup:
+      animate:
+        on_visible:
+          opacity: curveExpoInv
+        // on_unloading:
+        //   opacity:
+        //     type: curve
+        //     curve: curveLinear
+        //     duration: 200
+        //     end: 0
       background: &control_border
       border_color: &focus_border
       border_thickness: 1
