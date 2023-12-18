@@ -19,7 +19,11 @@
 #macro __SCRIBBLE_VBUFF_WRITE_GLYPH  if (_glyph_texture != _last_glyph_texture)\
                                      {\
                                          _last_glyph_texture = _glyph_texture;\
-                                         _vbuff = _page_data.__get_vertex_buffer(_glyph_texture, _glyph_grid[# _i, __SCRIBBLE_GEN_GLYPH.__MSDF_PXRANGE], _glyph_grid[# _i, __SCRIBBLE_GEN_GLYPH.__BILINEAR], self);\
+                                         _vbuff = _page_data.__get_vertex_buffer(_glyph_texture,\
+                                                                                 _glyph_grid[# _i, __SCRIBBLE_GEN_GLYPH.__MSDF_PXRANGE],\
+                                                                                 _glyph_grid[# _i, __SCRIBBLE_GEN_GLYPH.__MSDF_THICKNESS_OFFSET],\
+                                                                                 _glyph_grid[# _i, __SCRIBBLE_GEN_GLYPH.__BILINEAR],\
+                                                                                 self);\
                                      }\
                                      if (_bezier_do)\
                                      {\
@@ -65,17 +69,18 @@
 
 function __scribble_gen_9_write_vbuffs()
 {
-    if (SCRIBBLE_ALLOW_TEXT_GETTER)
+    static _string_buffer   = __scribble_get_buffer_a();
+    static _effects_map     = __scribble_get_effects_map();
+    static _generator_state = __scribble_get_generator_state();
+    
+    with(_generator_state)
     {
-        var _string_buffer = global.__scribble_buffer;
+        var _glyph_grid     = __glyph_grid;
+        var _control_grid   = __control_grid;
+        var _vbuff_pos_grid = __vbuff_pos_grid;
+        var _element        = __element;
+        var _glyph_count    = __glyph_count;
     }
-    
-    var _glyph_grid     = global.__scribble_glyph_grid;
-    var _control_grid   = global.__scribble_control_grid;
-    var _vbuff_pos_grid = global.__scribble_vbuff_pos_grid;
-    
-    var _element     = global.__scribble_generator_state.__element;
-    var _glyph_count = global.__scribble_generator_state.__glyph_count;
     
     
     
@@ -90,11 +95,11 @@ function __scribble_gen_9_write_vbuffs()
     
     
     
-    if (is_array(global.__scribble_generator_state.__bezier_lengths_array))
+    if (is_array(_generator_state.__bezier_lengths_array))
     {
         //Prep for Bezier curve shenanigans if necessary
         var _bezier_do              = true;
-        var _bezier_lengths         = global.__scribble_generator_state.__bezier_lengths_array;
+        var _bezier_lengths         = _generator_state.__bezier_lengths_array;
         var _bezier_search_index    = 0;
         var _bezier_search_d0       = 0;
         var _bezier_search_d1       = _bezier_lengths[1];
@@ -105,8 +110,6 @@ function __scribble_gen_9_write_vbuffs()
     {
         _bezier_do = false;
     }
-    
-    var _vbuff_pos_grid = global.__scribble_vbuff_pos_grid;
     
     var _glyph_scale        = 1.0;
     var _glyph_colour       = 0xFFFFFFFF;
@@ -124,10 +127,12 @@ function __scribble_gen_9_write_vbuffs()
     var _p = 0;
     repeat(__pages)
     {
-        var _page_data          = __pages_array[_p];
-        var _page_events_dict   = _page_data.__events;
-        var _vbuff              = undefined;
-        var _last_glyph_texture = undefined;
+        var _page_data             = __pages_array[_p];
+        var _page_char_events_dict = _page_data.__char_events;
+        var _page_line_events_dict = _page_data.__line_events;
+        var _vbuff                 = undefined;
+        var _last_glyph_texture    = undefined;
+        var _packed_indexes        = 0;
         
         if (SCRIBBLE_ALLOW_TEXT_GETTER)
         {
@@ -179,17 +184,35 @@ function __scribble_gen_9_write_vbuffs()
                     break;
                     
                     case __SCRIBBLE_GEN_CONTROL_TYPE.__EVENT:
-                        var _animation_index = _packed_indexes div __SCRIBBLE_MAX_LINES;
-                        var _event_array = _page_events_dict[$ _animation_index]; //Find the correct event array in the dictionary, creating a new one if needed
+                        var _character_index =  _packed_indexes div __SCRIBBLE_MAX_LINES;
+                        var _line_index      = (_packed_indexes mod __SCRIBBLE_MAX_LINES) + ((_character_index > 0)? 1 : 0);
+                        
+                        var _event = _control_grid[# _control_index, __SCRIBBLE_GEN_CONTROL.__DATA];
+                        _event.position        = _character_index; //Legacy
+                        _event.character_index = _character_index;
+                        _event.line_index      = _line_index;
+                        
+                        
+                        
+                        var _event_array = _page_char_events_dict[$ _character_index]; //Find the correct event array in the dictionary, creating a new one if needed
                         
                         if (!is_array(_event_array))
                         {
                             var _event_array = [];
-                            _page_events_dict[$ _animation_index] = _event_array;
+                            _page_char_events_dict[$ _character_index] = _event_array;
                         }
                         
-                        var _event = _control_grid[# _control_index, __SCRIBBLE_GEN_CONTROL.__DATA];
-                        _event.position = _animation_index; //Update the glyph index to the *local* glyph index for the page
+                        array_push(_event_array, _event);
+                        
+                        
+                        
+                        var _event_array = _page_line_events_dict[$ _line_index]; //Find the correct event array in the dictionary, creating a new one if needed
+                        if (!is_array(_event_array))
+                        {
+                            var _event_array = [];
+                            _page_line_events_dict[$ _line_index] = _event_array;
+                        }
+                        
                         array_push(_event_array, _event);
                     break;
                     
@@ -266,8 +289,8 @@ function __scribble_gen_9_write_vbuffs()
                     _write_colour = _glyph_colour | 0xFFFFFF; //Make sure we use the general glyph alpha
                     
                     _glyph_effect_flags = ~_glyph_effect_flags;
-                    _glyph_effect_flags |= (1 << global.__scribble_effects[? "rainbow"]);
-                    _glyph_effect_flags |= (1 << global.__scribble_effects[? "cycle"  ]);
+                    _glyph_effect_flags |= (1 << _effects_map[? "rainbow"]);
+                    _glyph_effect_flags |= (1 << _effects_map[? "cycle"  ]);
                     _glyph_effect_flags = ~_glyph_effect_flags;
                 }
                 
@@ -322,13 +345,15 @@ function __scribble_gen_9_write_vbuffs()
                     else
                     {
                         //FIXME - sprite_get_uvs() occasionally gives us nonsense for the 7-index result in runtime 2022.3.0.497
-                        var _crop_height = global.__scribble_html5_sprite_height_workaround[$ string(_sprite_index) + ":" + string(_j)];
+                        static _html5_sprite_height_workaround_dict = {};
+                        
+                        var _crop_height = _html5_sprite_height_workaround_dict[$ string(_sprite_index) + ":" + string(_j)];
                         if (_crop_height == undefined)
                         {
                             var _sprite_data = sprite_get_info(_sprite_index);
                             _crop_height = _sprite_data.frames[_j].crop_height;
                             
-                            global.__scribble_html5_sprite_height_workaround[$ string(_sprite_index) + ":" + string(_j)] = _crop_height;
+                            _html5_sprite_height_workaround_dict[$ string(_sprite_index) + ":" + string(_j)] = _crop_height;
                         }
                         
                         var _quad_b = _quad_t + _crop_height/_glyph_yscale;
@@ -366,8 +391,8 @@ function __scribble_gen_9_write_vbuffs()
                     _write_colour = _write_colour | 0xFFFFFF;
                     
                     _glyph_effect_flags = ~_glyph_effect_flags;
-                    _glyph_effect_flags |= (1 << global.__scribble_effects[? "rainbow"]);
-                    _glyph_effect_flags |= (1 << global.__scribble_effects[? "cycle"  ]);
+                    _glyph_effect_flags |= (1 << _effects_map[? "rainbow"]);
+                    _glyph_effect_flags |= (1 << _effects_map[? "cycle"  ]);
                     _glyph_effect_flags = ~_glyph_effect_flags;
                 }
                 
@@ -462,17 +487,36 @@ function __scribble_gen_9_write_vbuffs()
     {
         if (_control_grid[# _control_index, __SCRIBBLE_GEN_CONTROL.__TYPE] == __SCRIBBLE_GEN_CONTROL_TYPE.__EVENT)
         {
-            var _animation_index = _i; //TODO
-            var _event_array = _page_events_dict[$ _animation_index]; //Find the correct event array in the diciontary, creating a new one if needed
+            var _character_index =  _packed_indexes div __SCRIBBLE_MAX_LINES;
+            var _line_index      = (_packed_indexes mod __SCRIBBLE_MAX_LINES) + ((_character_index > 0)? 1 : 0);
+            
+            var _event = _control_grid[# _control_index, __SCRIBBLE_GEN_CONTROL.__DATA];
+            _event.position        = _character_index; //Legacy
+            _event.character_index = _character_index;
+            _event.line_index      = _line_index;
+            
+            
+            
+            var _event_array = _page_char_events_dict[$ _character_index]; //Find the correct event array in the diciontary, creating a new one if needed
             
             if (!is_array(_event_array))
             {
                 var _event_array = [];
-                _page_events_dict[$ _animation_index] = _event_array;
+                _page_char_events_dict[$ _character_index] = _event_array;
             }
             
-            var _event = _control_grid[# _control_index, __SCRIBBLE_GEN_CONTROL.__DATA];
-            _event.position = _animation_index; //Update the glyph index to the *local* glyph index for the page
+            array_push(_event_array, _event);
+            
+            
+            
+            var _event_array = _page_line_events_dict[$ _line_index]; //Find the correct event array in the diciontary, creating a new one if needed
+            
+            if (!is_array(_event_array))
+            {
+                var _event_array = [];
+                _page_line_events_dict[$ _line_index] = _event_array;
+            }
+            
             array_push(_event_array, _event);
         }
                 

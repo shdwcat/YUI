@@ -5,7 +5,7 @@
 
 function scribble_typists_add_event(_name, _function)
 {
-    if (!variable_global_exists("__scribble_typewriter_events")) global.__scribble_typewriter_events = ds_map_create();
+    __scribble_initialize();
     
     if (!is_string(_name))
     {
@@ -30,19 +30,26 @@ function scribble_typists_add_event(_name, _function)
         }
     }
     
-    if (ds_map_exists(global.__scribble_colours, _name))
+    if (ds_map_exists(__scribble_config_colours(), _name))
     {
         __scribble_trace("Warning! Event name \"" + _name + "\" has already been defined as a colour");
         exit;
     }
     
-    if (ds_map_exists(global.__scribble_effects, _name))
+    if (ds_map_exists(__scribble_get_effects_map(), _name))
     {
         __scribble_trace("Warning! Event name \"" + _name + "\" has already been defined as an effect");
         exit;
     }
     
-    var _old_function = global.__scribble_typewriter_events[? _name];
+    if (ds_map_exists(__scribble_get_macros_map(), _name))
+    {
+        __scribble_trace("Warning! Macro name \"" + _name + "\" has already been defined as a macro");
+        exit;
+    }
+    
+    var _typewriter_events_map = __scribble_get_typewriter_events_map();
+    var _old_function = _typewriter_events_map[? _name];
     if (!is_undefined(_old_function))
     {
         if (is_numeric(_old_function) and (_old_function < 0))
@@ -55,6 +62,6 @@ function scribble_typists_add_event(_name, _function)
         }
     }
     
-    global.__scribble_typewriter_events[? _name] = _function;
+    _typewriter_events_map[? _name] = _function;
     if (SCRIBBLE_VERBOSE) __scribble_trace("Tying event [" + _name + "] to \"" + (is_method(_function)? string(_function) : script_get_name(_function)) + "\"");
 }

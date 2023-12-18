@@ -3,6 +3,10 @@
 
 function __scribble_class_model(_element, _model_cache_name) constructor
 {
+    static __scribble_state    = __scribble_get_state();
+    static __mcache_dict       = __scribble_get_cache_state().__mcache_dict;
+    static __mcache_name_array = __scribble_get_cache_state().__mcache_name_array;
+    
     //Record the start time so we can get a duration later
     if (SCRIBBLE_VERBOSE) var _timer_total = get_timer();
     
@@ -13,7 +17,7 @@ function __scribble_class_model(_element, _model_cache_name) constructor
     if (__SCRIBBLE_DEBUG) __scribble_trace("Caching model \"", __cache_name, "\"");
     
     //Defensive programming to prevent memory leaks when accidentally rebuilding a model for a given cache name
-    var _weak = global.__scribble_mcache_dict[$ __cache_name];
+    var _weak = __mcache_dict[$ __cache_name];
     if ((_weak != undefined) && weak_ref_alive(_weak) && !_weak.ref.__flushed)
     {
         __scribble_trace("Warning! Rebuilding model \"", __cache_name, "\"");
@@ -21,10 +25,10 @@ function __scribble_class_model(_element, _model_cache_name) constructor
     }
     
     //Add this model to the global cache
-    global.__scribble_mcache_dict[$ __cache_name] = weak_ref_create(self);
-    array_push(global.__scribble_mcache_name_array, __cache_name);
+    __mcache_dict[$ __cache_name] = weak_ref_create(self);
+    array_push(__mcache_name_array, __cache_name);
     
-    __last_drawn = current_time;
+    __last_drawn = __scribble_state.__frames;
     __frozen     = undefined;
     __flushed    = false;
     
@@ -62,7 +66,7 @@ function __scribble_class_model(_element, _model_cache_name) constructor
     {
         if (__flushed) return undefined;
         
-        __last_drawn = current_time;
+        __last_drawn = __scribble_state.__frames;
         
         __pages_array[_page].__submit(_msdf_feather_thickness, (__has_arabic || __has_thai || SCRIBBLE_ALWAYS_DOUBLE_DRAW) && _double_draw);
     }
@@ -90,7 +94,7 @@ function __scribble_class_model(_element, _model_cache_name) constructor
         __reset();
         
         //Remove reference from cache
-        variable_struct_remove(global.__scribble_mcache_dict, __cache_name);
+        variable_struct_remove(__mcache_dict, __cache_name);
         
         //Set as __flushed
         __flushed = true;
@@ -220,26 +224,26 @@ function __scribble_class_model(_element, _model_cache_name) constructor
     {
         return __pages;
     }
-	
-	/// @param page
-	static __get_text = function(_page)
-	{
+    
+    /// @param page
+    static __get_text = function(_page)
+    {
         if (_page < 0) __scribble_error("Page index ", _page, " doesn't exist. Minimum page index is 0");
         if (_page >= __pages) __scribble_error("Page index ", _page, " doesn't exist. Maximum page index is ", __pages-1);
-		
+        
         if (!SCRIBBLE_ALLOW_TEXT_GETTER) __scribble_error("Cannot get text, SCRIBBLE_ALLOW_TEXT_GETTER = <false>\nPlease set SCRIBBLE_ALLOW_TEXT_GETTER to <true> to get text");
         
-		return __pages_array[_page].__text;
-	}
-	
-	/// @param page
-	static __get_glyph_data = function(_index, _page)
-	{
+        return __pages_array[_page].__text;
+    }
+    
+    /// @param page
+    static __get_glyph_data = function(_index, _page)
+    {
         if (_page < 0) __scribble_error("Page index ", _page, " doesn't exist. Minimum page index is 0");
         if (_page >= __pages) __scribble_error("Page index ", _page, " doesn't exist. Maximum page index is ", __pages-1);
-		
-		return __pages_array[_page].__get_glyph_data(_index);
-	}
+        
+        return __pages_array[_page].__get_glyph_data(_index);
+    }
     
     static __get_wrapped = function()
     {
@@ -294,26 +298,13 @@ function __scribble_class_model(_element, _model_cache_name) constructor
         }
     }
     
-    
-    
-    with(global.__scribble_generator_state)
+    static _generator_state = __scribble_get_generator_state();
+    with(_generator_state)
     {
-        __element          = _element;
-        __glyph_count      = 0;
-        __control_count    = 0;
-        __word_count       = 0;
-        __line_count       = 0;
-        __line_height_min  = 0;
-        __line_height_max  = 0;
-        __model_max_width  = 0;
-        __model_max_height = 0;
-        __overall_bidi     = _element.__bidi_hint;
+        __Reset();
         
-        __uses_halign_left   = false;
-        __uses_halign_center = false;
-        __uses_halign_right  = false;
-        
-        __bezier_lengths_array = undefined;
+        __element      = _element;
+        __overall_bidi = _element.__bidi_hint;
     };
     
     __scribble_gen_1_model_limits_and_bezier_curves();

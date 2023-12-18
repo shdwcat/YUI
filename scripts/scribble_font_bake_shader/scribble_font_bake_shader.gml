@@ -32,7 +32,8 @@ function scribble_font_bake_shader(_source_font_name, _new_font_name, _shader, _
         return undefined;
     }
 
-    var _src_font_data = global.__scribble_font_data[? _source_font_name];
+    static _font_data_map = __scribble_get_font_data_map();
+    var _src_font_data = _font_data_map[? _source_font_name];
     if (!is_struct(_src_font_data))
     {
         __scribble_error("Source font \"", _source_font_name, "\" not found\n\"", _new_font_name, "\" will not be available");
@@ -41,8 +42,8 @@ function scribble_font_bake_shader(_source_font_name, _new_font_name, _shader, _
     
     if (_src_font_data.__msdf)
     {
-    	__scribble_error("Source font cannot be an MSDF font");
-    	return undefined;
+        __scribble_error("Source font cannot be an MSDF font");
+        return undefined;
     }
     
     var _src_glyph_grid = _src_font_data.__glyph_data_grid;
@@ -50,6 +51,7 @@ function scribble_font_bake_shader(_source_font_name, _new_font_name, _shader, _
     
     //Create a new font
     var _new_font_data = new __scribble_class_font(_new_font_name, _glyph_count, false);
+    _new_font_data.__runtime = true;
     var _new_glyphs_grid = _new_font_data.__glyph_data_grid;
     
     //Copy the raw data over from the source font (this include the glyph map, glyph grid, and other assorted properties)
@@ -57,9 +59,8 @@ function scribble_font_bake_shader(_source_font_name, _new_font_name, _shader, _
     
     
     
-    //Build a vertex buffer for all the glyphs
-    var _vbuff = vertex_create_buffer();
-    vertex_begin(_vbuff, global.__scribble_passthrough_vertex_format);
+    //We spin up vertex buffers on demand based on what textures are being used
+    var _vbuff_data_map = ds_map_create();
     
     var _line_x      = 0;
     var _line_y      = 0;
@@ -68,16 +69,26 @@ function scribble_font_bake_shader(_source_font_name, _new_font_name, _shader, _
     var _i = 0;
     repeat(_glyph_count)
     {
-        var _width  = _src_glyph_grid[# _i, SCRIBBLE_GLYPH.WIDTH ];
-        var _height = _src_glyph_grid[# _i, SCRIBBLE_GLYPH.HEIGHT];
-        var _u0     = _src_glyph_grid[# _i, SCRIBBLE_GLYPH.U0    ];
-        var _v0     = _src_glyph_grid[# _i, SCRIBBLE_GLYPH.V0    ];
-        var _u1     = _src_glyph_grid[# _i, SCRIBBLE_GLYPH.U1    ];
-        var _v1     = _src_glyph_grid[# _i, SCRIBBLE_GLYPH.V1    ];
+        var _texture = _src_glyph_grid[# _i, SCRIBBLE_GLYPH.TEXTURE];
+        var _width   = _src_glyph_grid[# _i, SCRIBBLE_GLYPH.WIDTH  ];
+        var _height  = _src_glyph_grid[# _i, SCRIBBLE_GLYPH.HEIGHT ];
+        var _u0      = _src_glyph_grid[# _i, SCRIBBLE_GLYPH.U0     ];
+        var _v0      = _src_glyph_grid[# _i, SCRIBBLE_GLYPH.V0     ];
+        var _u1      = _src_glyph_grid[# _i, SCRIBBLE_GLYPH.U1     ];
+        var _v1      = _src_glyph_grid[# _i, SCRIBBLE_GLYPH.V1     ];
+        
+        //Ignore any glyphs with invalid textures
+        //Due to HTML5 being dogshit, we can't use is_ptr()
+        if (is_numeric(_texture) || is_undefined(_texture))
+        {
+            ++_i;
+            continue;
+        }
         
         var _width_ext  = _width  + _border + _l_pad + _r_pad;
         var _height_ext = _height + _border + _t_pad + _b_pad;
         
+        //Check to see if we have space on this texture page
         if (_line_y + _height_ext >= _texture_size)
         {
             __scribble_error("No space left on ", _texture_size, "x", _texture_size, " texture page\nPlease increase the size of the texture page");
@@ -86,11 +97,40 @@ function scribble_font_bake_shader(_source_font_name, _new_font_name, _shader, _
             return;
         }
         
+        //Line wrap glyphs
         if (_line_x + _width_ext >= _texture_size)
         {
             _line_x       = 0;
             _line_y      += _line_height;
             _line_height  = 0;
+        }
+        
+        //Find a vertex buffer for this particular glyph's texture
+        var _vbuff_data = _vbuff_data_map[? string(_texture)];
+        if (_vbuff_data == undefined)
+        {
+            static _vertex_format = undefined;
+            if (_vertex_format == undefined)
+            {
+                vertex_format_begin();
+                vertex_format_add_position(); //12 bytes
+                vertex_format_add_color();    // 4 bytes
+                vertex_format_add_texcoord(); // 8 bytes
+                _vertex_format = vertex_format_end();
+            }
+            
+            //If we don't have a vertex buffer for this texture, create a new one and store a reference to it
+            var _vbuff = vertex_create_buffer();
+            vertex_begin(_vbuff, _vertex_format);
+            
+            _vbuff_data_map[? string(_texture)] = {
+                __vertex_buffer: _vbuff,
+                __texture: _texture,
+            };
+        }
+        else
+        {
+            var _vbuff = _vbuff_data.__vertex_buffer;
         }
         
         var _l = _l_pad + _line_x;
@@ -117,28 +157,32 @@ function scribble_font_bake_shader(_source_font_name, _new_font_name, _shader, _
         ++_i;
     }
     
-    vertex_end(_vbuff);
-    
-    
-    //Search through our glyphs until we find a valid texture pointer
-    //Due to HTML5 being dogshit, we can't use is_ptr()
-    var _texture = -1;
-    var _i = 0;
-    while(is_numeric(_texture))
-    {
-        _texture = _src_glyph_grid[# _i, SCRIBBLE_GLYPH.TEXTURE]; //FIXME - Don't assume every glyph is on the same texture page
-        ++_i;
-    }
-    
-    //Draw the vertex buffer to a surface, then bake that surface into a sprite
+    //Draw the vertex buffers to a surface, then bake that surface into a sprite
     var _surface_0 = surface_create(_texture_size, _texture_size);
-    var _surface_1 = surface_create(_texture_size, _texture_size);
     
     //Draw the source glyphs to a surface
     surface_set_target(_surface_0);
     draw_clear_alpha(c_white, 0.0);
     gpu_set_blendenable(false);
-    vertex_submit(_vbuff, pr_trianglelist, _texture);
+    
+    //Iterate over all vertex buffers we created and draw those vertex buffers to the first surface
+    var _vbuff_data_array = ds_map_values_to_array(_vbuff_data_map);
+    var _i = 0;
+    repeat(array_length(_vbuff_data_array))
+    {
+        var _vbuff_data = _vbuff_data_array[_i];
+        var _vbuff = _vbuff_data.__vertex_buffer;
+        
+        vertex_end(_vbuff);
+        vertex_submit(_vbuff, pr_trianglelist, _vbuff_data.__texture);
+        vertex_delete_buffer(_vbuff);
+        
+        ++_i;
+    }
+    
+    ds_map_destroy(_vbuff_data_map);
+    var _surface_1 = surface_create(_texture_size, _texture_size);
+    
     gpu_set_blendenable(true);
     surface_reset_target();
     
@@ -162,10 +206,10 @@ function scribble_font_bake_shader(_source_font_name, _new_font_name, _shader, _
     surface_reset_target();
     
     surface_free(_surface_0);
-    vertex_delete_buffer(_vbuff);
     
     //Make a sprite from the effect surface to make the texture stick
     var _sprite = sprite_create_from_surface(_surface_1, 0, 0, _texture_size, _texture_size, false, false, 0, 0);
+    _new_font_data.__source_sprite = _sprite;
     surface_free(_surface_1);
     
     

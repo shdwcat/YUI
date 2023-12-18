@@ -3,15 +3,21 @@
 
 function scribble_anim_rainbow(_weight, _speed)
 {
-    if ((_weight != global.__scribble_anim_properties[__SCRIBBLE_ANIM.__RAINBOW_WEIGHT])
-    ||  (_speed  != global.__scribble_anim_properties[__SCRIBBLE_ANIM.__RAINBOW_SPEED ]))
+    static _array = __scribble_get_anim_properties();
+    
+    if ((_weight != _array[__SCRIBBLE_ANIM.__RAINBOW_WEIGHT])
+    ||  (_speed  != _array[__SCRIBBLE_ANIM.__RAINBOW_SPEED ]))
     {
-        global.__scribble_anim_properties[@ __SCRIBBLE_ANIM.__RAINBOW_WEIGHT] = _weight;
-        global.__scribble_anim_properties[@ __SCRIBBLE_ANIM.__RAINBOW_SPEED ] = _speed;
+        _array[@ __SCRIBBLE_ANIM.__RAINBOW_WEIGHT] = _weight;
+        _array[@ __SCRIBBLE_ANIM.__RAINBOW_SPEED ] = _speed;
         
-        global.__scribble_anim_shader_desync                 = true;
-        global.__scribble_anim_shader_desync_to_default      = false;
-        global.__scribble_anim_shader_msdf_desync            = true;
-        global.__scribble_anim_shader_msdf_desync_to_default = false;
+        static _scribble_state = __scribble_get_state();
+        with(_scribble_state)
+        {
+            __standard_anim_desync            = true;
+            __standard_anim_desync_to_default = false;
+            __msdf_anim_desync                = true;
+            __msdf_anim_desync_to_default     = false;
+        }
     }
 }

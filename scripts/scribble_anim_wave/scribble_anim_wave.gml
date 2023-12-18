@@ -4,17 +4,23 @@
 
 function scribble_anim_wave(_size, _frequency, _speed)
 {
-    if ((_size      != global.__scribble_anim_properties[__SCRIBBLE_ANIM.__WAVE_SIZE ])
-    ||  (_frequency != global.__scribble_anim_properties[__SCRIBBLE_ANIM.__WAVE_FREQ ])
-    ||  (_speed     != global.__scribble_anim_properties[__SCRIBBLE_ANIM.__WAVE_SPEED]))
+    static _array = __scribble_get_anim_properties();
+    
+    if ((_size      != _array[__SCRIBBLE_ANIM.__WAVE_SIZE ])
+    ||  (_frequency != _array[__SCRIBBLE_ANIM.__WAVE_FREQ ])
+    ||  (_speed     != _array[__SCRIBBLE_ANIM.__WAVE_SPEED]))
     {
-        global.__scribble_anim_properties[@ __SCRIBBLE_ANIM.__WAVE_SIZE ] = _size;
-        global.__scribble_anim_properties[@ __SCRIBBLE_ANIM.__WAVE_FREQ ] = _frequency;
-        global.__scribble_anim_properties[@ __SCRIBBLE_ANIM.__WAVE_SPEED] = _speed;
+        _array[@ __SCRIBBLE_ANIM.__WAVE_SIZE ] = _size;
+        _array[@ __SCRIBBLE_ANIM.__WAVE_FREQ ] = _frequency;
+        _array[@ __SCRIBBLE_ANIM.__WAVE_SPEED] = _speed;
         
-        global.__scribble_anim_shader_desync                 = true;
-        global.__scribble_anim_shader_desync_to_default      = false;
-        global.__scribble_anim_shader_msdf_desync            = true;
-        global.__scribble_anim_shader_msdf_desync_to_default = false;
+        static _scribble_state = __scribble_get_state();
+        with(_scribble_state)
+        {
+            __standard_anim_desync            = true;
+            __standard_anim_desync_to_default = false;
+            __msdf_anim_desync                = true;
+            __msdf_anim_desync_to_default     = false;
+        }
     }
 }
