@@ -31,7 +31,7 @@ function __yui_init_live_reload() {
 	else {
 		// get the datafiles folder path from the project file path
 		var project_folder = string_trim_end(GM_project_filename, [game_project_name + ".yyp"]);
-		var data_folder = project_folder + "/datafiles/";	
+		var data_folder = string_replace_all(project_folder, "\\", "/") + "/datafiles/";	
 		YUI_LOCAL_PROJECT_DATA_FOLDER = data_folder;
 		
 		global.__yui_is_sandboxed = yui_is_fs_sandbox_enabled();
