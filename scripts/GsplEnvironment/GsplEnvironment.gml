@@ -1,5 +1,5 @@
 /// @description execution environment
-/// @param {struct.GsplEnvironment} enclosingEnv
+/// @param {struct.GsplEnvironment} enclosing_env
 function GsplEnvironment(enclosing_env = undefined) constructor {
 	self.values = {};
 	self.enclosing = enclosing_env;

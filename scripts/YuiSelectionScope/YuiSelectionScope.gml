@@ -21,7 +21,7 @@ function YuiSelectionScope(_id, _options = {}) constructor {
 	
 	selected_item = options.default_selected_item;
 		
-	select = function(selection) {
+	function select(selection) {
 		switch selection_behavior {
 			case SELECTION_BEHAVIOR.Single:
 				selected_item = selection;
@@ -72,7 +72,7 @@ function YuiArraySelector(items, selected_item = undefined, on_selected = undefi
 	self.selected_item = selected_item
 		?? (array_length(items) > 0 ? items[0] : undefined);
 	
-	selectPreviousIndex = function() {
+	function selectPreviousIndex() {
 		if selected_index <= 0 {
 			throw yui_error("Cannot select index below 0");
 		}
@@ -82,11 +82,11 @@ function YuiArraySelector(items, selected_item = undefined, on_selected = undefi
 		}
 	}
 	
-	canSelectNextIndex = function() {
+	function canSelectNextIndex() {
 		return selected_index + 1 < array_length(items);
 	}
 	
-	selectNextIndex = function() {
+	function selectNextIndex() {
 		if !canSelectNextIndex() {
 			throw yui_error("Cannot select index above item count");
 		}
