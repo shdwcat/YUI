@@ -15,7 +15,7 @@ var i = hover_count - 1; repeat hover_count {
 
 			// do double click if this is the second click
 			if click_count > 0 {
-				yui_log("calling double click - elapsed was", click_elapsed);
+				yui_log($"calling double click - elapsed was {click_elapsed}");
 				var handled = next.left_double_click();
 				if handled != false {
 					click_count = 0;
@@ -33,7 +33,7 @@ var i = hover_count - 1; repeat hover_count {
 			// note: not currently able to bubble this event if the handler returns false
 			var click_delay = double_click_interval_ms - click_elapsed;
 			if next.left_click && click_delay > 0 {
-				yui_log("queued click in", click_delay, "ms");
+				yui_log($"queued click in {click_delay} ms");
 				queueEvent("click", next, next.left_click, click_delay);
 				break;
 			}

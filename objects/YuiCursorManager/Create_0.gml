@@ -19,9 +19,9 @@ cursor_offset_x = 0;
 cursor_offset_y = 0;
 
 finishInteraction = function() {
-	yui_log("interaction", active_interaction.props.type, "complete");
+	yui_log($"interaction {active_interaction.props.type} complete");
 	if visual_item {
-		yui_log("unloading interaction visual", visual_item);
+		yui_log($"unloading interaction visual {visual_item}");
 		visual_item.unload();
 		cursor_offset_x = 0;
 		cursor_offset_y = 0;
@@ -165,7 +165,7 @@ queueEvent = function(name, target, method, delay_ms) {
 	// convert milliseconds to game steps
 	// room_speed = steps per second
 	var steps = ceil(room_speed * (delay_ms / 1000));
-	yui_log("queueing event", name, "with delay ms", delay_ms);
+	yui_log($"queueing event {name} with delay ms {delay_ms}");
 	alarm_set(0, steps);
 }
 

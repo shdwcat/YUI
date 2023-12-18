@@ -25,7 +25,7 @@ function yui_try_start_interaction(interaction_name, source_data, event) {
 	var can_start = interaction.canStart(source_data);
 	if !can_start return false;
 	
-	yui_log("starting", interaction.props.type, "interaction");
+	yui_log($"starting {interaction.props.type} interaction");
 	
 	var element = interaction.start(source_data, event, id);
 	if element {

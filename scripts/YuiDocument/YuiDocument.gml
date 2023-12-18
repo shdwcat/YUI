@@ -32,7 +32,7 @@ function YuiDocument(_yui_file, cabinet) constructor {
 		var cabinet_file = cabinet.file(yui_filepath);
 		
 		// load the file data (possibly cached)
-		yui_log("loading yui_file:", yui_filepath);
+		yui_log($"loading yui_file {yui_filepath}");
 		var file_data = cabinet_file.tryRead();
 		
 		// apply default props
