@@ -84,7 +84,7 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"crash.txt","CopyToMask":-1,"filePath":"datafiles",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"inventory.yaml","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Data",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"equip_item.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Interactions",},
-    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"basic.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens/Animation Examples",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"animation_builder.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens/Animation Examples",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"color.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens/Animation Examples",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"sequence.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens/Animation Examples",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"text.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Screens/Animation Examples",},
