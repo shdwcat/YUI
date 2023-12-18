@@ -172,6 +172,7 @@ resources:
             items: @curve_list
             selected_item: @selected_curve
             on_item_selected: @@ item => @selected_curve = item
+            scrollable: true
             item_template:
               type: text
               text: @name

@@ -33,6 +33,9 @@ resources:
       // whether to show a search field above the items
       searchable: false
 
+      // whether to show the items inside a scrollbox
+      scrollable: false
+
       // template to use when rendering items in dropdown
       item_template: &dropdown_item_template
 
@@ -91,8 +94,9 @@ resources:
       popup:
         placement: $dropdown_placement
         padding: 1
-        content: $searchable then &dropdown_item_panel_searchable else &dropdown_item_panel
+        content: $scrollable then &dropdown_item_panel_scrollable else &dropdown_item_panel_normal
 
+  // currently unused
   dropdown_item_panel_searchable:
     type: panel
     size: { max_h: $max_dropdown_height }
@@ -105,13 +109,22 @@ resources:
         size: { w: stretch }
       - &dropdown_item_panel
 
-  dropdown_item_panel:
+  dropdown_item_panel_scrollable:
     type: scrollbox
     size: { max_h: $max_dropdown_height }
     content: 
+      type: dropdown_item_panel
+      size: { w: stretch }
+
+  dropdown_item_panel_normal:
+    type: dropdown_item_panel
+
+  dropdown_item_panel:
+    type: fragment
+    content:
       type: panel
       spacing: 0
-      size: { w: stretch }
+      //size: { w: stretch }
       alignment: { h: stretch }
       bind_slot_scope:
         selected_item: $selected_item ?? $selection_scope.selected_item // little trick to simplify referring to the selected item
