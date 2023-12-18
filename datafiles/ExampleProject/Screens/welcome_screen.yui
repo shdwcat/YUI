@@ -31,6 +31,7 @@ root:
     // helper message about live reload state
     - type: text
       text: @live_reload_label + ' - ' + @live_reload_message | final
+      visible: @live_reload_label != ''
       canvas:
         left: 5
         bottom: 5
@@ -178,12 +179,12 @@ root:
                 on_unloading:
                   xoffset: &cascade_slide_out
 
-    - type: button
-      content: Toggle Opacity
-      canvas:
-        top: 10
-        right: 300
-      on_click: @toggleOpacity()
+    // - type: button
+    //   content: Toggle Opacity
+    //   canvas:
+    //     top: 10
+    //     right: 300
+    //   on_click: @toggleOpacity()
 
     - type: button
       content: Toggle Theme
