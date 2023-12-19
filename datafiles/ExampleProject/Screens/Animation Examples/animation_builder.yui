@@ -118,8 +118,7 @@ resources:
 
           - type: scrollbox
             size:
-              w: 270
-              max_w: 250
+              w: 335
             content:
               type: panel
               spacing: -1
@@ -168,6 +167,7 @@ resources:
           label: Curve
           content:
             type: dropdown_menu
+            size: { w: 170 }
             can_clear_value: false
             items: @curve_list
             selected_item: @selected_curve
@@ -233,7 +233,7 @@ resources:
             - @@ checked => checked then (@time_step = @step) else (@time_step = undefined)
 
         - type: labeled_border
-          label: Time Step
+          label: "   Time Step"
           enabled: @has_step
           content:
             type: text_input
