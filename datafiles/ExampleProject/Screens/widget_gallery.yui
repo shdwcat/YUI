@@ -49,6 +49,7 @@ root:
 
             - type: dropdown_menu
               items: @switcher_items
+              size: { w: 175 }
               selection_scope: @switcher_selector
 
             - type: text
