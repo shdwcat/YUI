@@ -36,7 +36,7 @@ arrange = function(available_size, viewport_size) {
 	self.viewport_size = viewport_size;
 	
 	if !visible {
-		return sizeToDefault(available_size);
+		return sizeToDefault();
 	}
 	
 	var padding = layout_props.padding;	
@@ -44,7 +44,7 @@ arrange = function(available_size, viewport_size) {
 	
 	// don't bother drawing if there isn't enough room
 	if padded_rect.w <= 0 || padded_rect.h <= 0 {
-		return sizeToDefault(available_size);
+		return sizeToDefault();
 	}
 	
 	

@@ -101,7 +101,7 @@ arrange = function yui_panel__arrange(available_size, viewport_size) {
 	self.viewport_size = viewport_size;
 	
 	if !visible {
-		return sizeToDefault(available_size);
+		return sizeToDefault();
 	}
 	
 	//if trace {

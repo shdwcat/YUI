@@ -224,11 +224,11 @@ bind_values = function yui_base__bind_values() {
 }
 
 build = function() {
-	throw "build not implemented on this type";
+	throw "build() not implemented on this type!";
 }
 
 arrange = function(available_size, viewport_size) {
-	throw "arrange not implemented on this type";
+	throw "arrange() not implemented on this type!";
 }
 
 process = function yui_base__process() {
@@ -304,9 +304,9 @@ updateViewport = function() {
 
 resize = yui_resize_instance;
 
-sizeToDefault = function(available_size) {
-	var w = min(default_w, available_size.w);
-	var h = min(default_h, available_size.h);
+sizeToDefault = function() {
+	var w = min(default_w, draw_rect.w);
+	var h = min(default_h, draw_rect.h);
 	yui_resize_instance(w, h);
 	return draw_size;
 }

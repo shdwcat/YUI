@@ -39,7 +39,7 @@ arrange = function(available_size, viewport_size) {
 	self.viewport_size = viewport_size;
 	
 	if !case_item 
-		return sizeToDefault(available_size);
+		return sizeToDefault();
 	
 	case_item.arrange(available_size, viewport_size);
 	x = case_item.x;

@@ -50,7 +50,7 @@ arrange = function(available_size, viewport_size) {
 	self.viewport_size = viewport_size;
 	
 	if !visible {
-		return sizeToDefault(available_size);
+		return sizeToDefault();
 	}
 	
 	var actual_viewport_size = yui_apply_element_size(layout_props.size, available_size, {
