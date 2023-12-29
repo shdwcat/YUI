@@ -46,10 +46,11 @@ arrange = function(available_size, viewport_size) {
 	y = case_item.y;
 		
 	yui_resize_instance(case_item.draw_size.w, case_item.draw_size.h)
-		
-	if viewport_size {
-		updateViewport();
-	}
+	
+	// probably unnecessary but keeping for reference
+	//if viewport_size {
+	//	updateViewport();
+	//}
 		
 	if case_item.is_size_changed {
 		is_size_changed = true;

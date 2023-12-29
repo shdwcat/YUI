@@ -29,12 +29,15 @@ build = function() {
 arrange = function(available_size, viewport_size) {
 	draw_rect = available_size
 	if template_item {
+		
 		template_item.arrange(available_size, viewport_size);
+		
 		yui_resize_instance(template_item.draw_size.w, template_item.draw_size.h)
 		
-		if viewport_size {
-			updateViewport();
-		}
+		// probably unnecessary but keeping for reference
+		//if viewport_size {
+		//	updateViewport();
+		//}
 		
 		if template_item.is_size_changed {
 			is_size_changed = true;

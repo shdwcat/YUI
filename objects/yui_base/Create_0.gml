@@ -97,8 +97,7 @@ initLayout = function() {
 	_id = yui_element.props.id;
 	trace = yui_element.props.trace;
 	
-	default_w = yui_element.size.default_w;
-	default_h = yui_element.size.default_h;
+	element_size = yui_element.size;
 	canvas = yui_element.canvas;
 	flex = yui_element.flex;
 	has_tooltip = yui_element.props.tooltip != undefined;
@@ -305,8 +304,8 @@ updateViewport = function() {
 resize = yui_resize_instance;
 
 sizeToDefault = function() {
-	var w = min(default_w, draw_rect.w);
-	var h = min(default_h, draw_rect.h);
+	var w = min(element_size.default_w, draw_rect.w);
+	var h = min(element_size.default_h, draw_rect.h);
 	yui_resize_instance(w, h);
 	return draw_size;
 }

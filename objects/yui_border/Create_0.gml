@@ -102,16 +102,17 @@ arrange = function(available_size, viewport_size) {
 		content_size = { x: padded_rect.x, y: padded_rect.y, w: 0, h: 0 };
 	}
 
-	var drawn_size = yui_apply_element_size(layout_props.size, available_size, {
+	var drawn_size = element_size.constrainDrawSize(available_size, {
 		w: content_size ? content_size.w + padding.w : 0,
 		h: content_size ? content_size.h + padding.h : 0,
 	});
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
 	
-	if viewport_size {
-		updateViewport();
-	}
+	// probably unnecessary but keeping for reference
+	//if viewport_size {
+	//	updateViewport();
+	//}
 	
 	if events.on_arrange != undefined {
 		yui_call_handler(events.on_arrange, [draw_size], data_source);

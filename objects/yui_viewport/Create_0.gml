@@ -53,7 +53,7 @@ arrange = function(available_size, viewport_size) {
 		return sizeToDefault();
 	}
 	
-	var actual_viewport_size = yui_apply_element_size(layout_props.size, available_size, {
+	var actual_viewport_size = element_size.constrainDrawSize(available_size, {
 		x: x,
 		y: y,
 		w: 0,
@@ -77,7 +77,7 @@ arrange = function(available_size, viewport_size) {
 		content_size = { x: x, y: y, w: 0, h: 0 };
 	}
 	
-	var drawn_size = yui_apply_element_size(layout_props.size, available_size, {
+	var drawn_size = element_size.constrainDrawSize(available_size, {
 		w: content_size.w,
 		h: content_size.h,
 	});

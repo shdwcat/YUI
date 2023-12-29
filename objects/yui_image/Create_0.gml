@@ -106,7 +106,7 @@ arrange = function(available_size, viewport_size) {
 	}
 	
 	// might need to use bbox size to accomodate rotated sprites?
-	var drawn_size = yui_apply_element_size(layout_props.size, available_size, {
+	var drawn_size = element_size.constrainDrawSize(available_size, {
 		w: draw_size.w,
 		h: draw_size.h,
 	});
@@ -116,10 +116,11 @@ arrange = function(available_size, viewport_size) {
 	// position at the padded rect corner so we can just draw at x/y
 	x = padded_rect.x;
 	y = padded_rect.y;
-	
-	if viewport_size {
-		updateViewport();
-	}
+
+	// probably unnecessary but keeping for reference
+	//if viewport_size {
+	//	updateViewport();
+	//}
 			
 	return draw_size;
 }

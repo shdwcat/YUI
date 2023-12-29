@@ -32,9 +32,10 @@ arrange = function(available_size, viewport_size) {
 		content_item.arrange(available_size, viewport_size);
 		yui_resize_instance(content_item.draw_size.w, content_item.draw_size.h)
 		
-		if viewport_size {
-			updateViewport();
-		}
+		// probably unnecessary but keeping for reference
+		//if viewport_size {
+		//	updateViewport();
+		//}
 		
 		if content_item.is_size_changed {
 			is_size_changed = true;

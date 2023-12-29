@@ -117,21 +117,22 @@ arrange = function yui_panel__arrange(available_size, viewport_size) {
 	is_arranging = false;
 	
 	// update our draw size to encompass the layout's draw size with our padding
-	var drawn_size = yui_apply_element_size(layout_props.size, available_size, {
+	var drawn_size = element_size.constrainDrawSize(available_size, {
 		w: layout.draw_size.w + padding.w,
 		h: layout.draw_size.h + padding.h,
 	});
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
 	
-	if viewport_size {
-		updateViewport();
-	}
+	// probably unnecessary but keeping for reference
+	//if viewport_size {
+	//	updateViewport();
+	//}
 	
 	// our used size is the layout used size with our padding
 	var used_size = {
-		x: available_size.x,
-		y: available_size.y,
+		x: x,
+		y: y,
 		w: max(drawn_size.w, used_layout_size.w + padding.w),
 		h: max(drawn_size.h, used_layout_size.h + padding.h),
 	};

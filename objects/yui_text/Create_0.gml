@@ -136,7 +136,7 @@ arrange = function(available_size, viewport_size) {
 	}
 	
 	// update draw size
-	var drawn_size = yui_apply_element_size(layout_props.size, available_size, {
+	var drawn_size = element_size.constrainDrawSize(available_size, {
 		w: draw_width + padding.w,
 		h: draw_height + padding.h,
 	});
