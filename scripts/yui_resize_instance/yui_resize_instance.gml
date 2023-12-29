@@ -1,4 +1,6 @@
-/// @description resizes an instance to the specified width and height
+/// @desc  resizes an instance to the specified width and height
+/// @param {real} width
+/// @param {real} height
 function yui_resize_instance(width, height) {
 	
 	is_size_changed =

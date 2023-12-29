@@ -1,4 +1,5 @@
 /// @description here
+/// @param {real,array} padding
 function yui_resolve_padding(padding = 0) {
 		
 	var result = {};

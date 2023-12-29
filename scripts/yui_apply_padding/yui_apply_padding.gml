@@ -1,5 +1,8 @@
-/// @description returns a new rect with the padding applied to the draw rect
-/// and the size of the effective padding that was applied
+/// @desc  returns a new rect with the padding applied to the draw rect and the size of the effective padding that was applied
+/// @param {struct} draw_rect the available size
+/// @param {struct} padding
+/// @param {struct.YuiElementSize} size element size props
+/// @param {struct} [bound_values]
 function yui_apply_padding(draw_rect, padding, size, bound_values = undefined) {
 	
 	var max_w = draw_rect.w;
