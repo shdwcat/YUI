@@ -35,35 +35,37 @@ onLayoutInit = function() {
 build = function() {
 	
 	var text = override_text ?? bound_values.text;
-		
-	scribble_element = scribble(text, string(id))
-		.starting_format(bound_values.font)
-		.align(layout_props.halign, layout_props.valign);
 	
-	if bound_values.typist {
-		typist = bound_values.typist;
-		typist.__associate(scribble_element);
+	if use_scribble {
+		scribble_element = scribble(text, string(id))
+			.starting_format(bound_values.font)
+			.align(layout_props.halign, layout_props.valign);
+		
+		if bound_values.typist {
+			typist = bound_values.typist;
+			typist.__associate(scribble_element);
+		}
+		else if layout_props.autotype != undefined {
+			typist = scribble_typist();
+			var autotype = layout_props.autotype;
+			if autotype == true {
+				typist.in(0.15, 0);
+			}
+			else if is_struct(autotype) {
+				typist.in(autotype.speed, autotype.smoothness);
+			}
+			else {
+				// TODO validate this in YuiTextElement
+				throw yui_error("invalid autotype value");
+			}
+		}	
 	}
-	else if layout_props.autotype != undefined {
-		typist = scribble_typist();
-		var autotype = layout_props.autotype;
-		if autotype == true {
-			typist.in(0.15, 0);
-		}
-		else if is_struct(autotype) {
-			typist.in(autotype.speed, autotype.smoothness);
-		}
-		else {
-			// TODO validate this in YuiTextElement
-			throw yui_error("invalid autotype value");
-		}
-	}	
 	
 	font = asset_get_index(bound_values.font);
 }
 
 arrange = function(available_size, viewport_size) {
-	if !scribble_element 
+	if use_scribble && !scribble_element 
 		return sizeToDefault(available_size);
 	
 	x = available_size.x;
@@ -85,39 +87,65 @@ arrange = function(available_size, viewport_size) {
 	
 	element_xoffset = padding.left;
 	element_yoffset = padding.top;
+		
+	if use_scribble {
 	
-	//if trace {
-	//	DEBUG_BREAK_YUI;
-	//}
-	
-	scribble_element.wrap(padded_rect.w, padded_rect.h);
+		scribble_element.wrap(padded_rect.w, padded_rect.h);
+		var is_wrapped = scribble_element.get_wrapped();
+		var new_bbox = scribble_element.get_bbox(x, y, padding.left, padding.top, padding.right, padding.bottom);
 
-	var new_bbox = scribble_element.get_bbox(x, y, padding.left, padding.top, padding.right, padding.bottom);
+		var draw_width = layout_props.halign or is_wrapped ? available_size.w : new_bbox.width;
+		var draw_height = layout_props.valign ? available_size.h : new_bbox.height;
+	}
+	else {
 	
-	var old_font = draw_get_font();
-	draw_set_font(font);
+		//scribble_element.wrap(padded_rect.w, padded_rect.h);
+		//var new_bbox = scribble_element.get_bbox(x, y, padding.left, padding.top, padding.right, padding.bottom);
 	
-	var render_width = new_bbox.width;
-	var render_height = max(new_bbox.height, string_height("bq"));
+		var old_font = draw_get_font();
+		draw_set_font(font);
 	
-	draw_set_font(old_font);
+		// calc size
+		var text = bound_values.text
+		var native_width = string_width_ext(text, -1, padded_rect.w);
+		var native_height = string_height_ext(text, -1, padded_rect.w);
+		
+		// check wrapped
+		var native_width_nowrap = string_width(text);
+		var is_wrapped = native_width_nowrap > padded_rect.w;
+		
+		//var render_width = new_bbox.width;
+		//var render_height = max(new_bbox.height, string_height("bq"));
+		
+		//if native_width != 0 and abs(native_width - render_width) > 1
+		//	DEBUG_BREAK_YUI
+			
+		//if abs(native_height - render_height) > 1
+		//	DEBUG_BREAK_YUI
 	
-	text_surface_w = render_width + padding.w;
+		draw_set_font(old_font);
 	
-	// can't use string_height_ext because it doesn't account for letters like pqyg
-	text_surface_h = new_bbox.height + padding.h;
+		text_surface_w = native_width + padding.w;
+	
+		// can't use string_height_ext because it doesn't account for letters like pqyg
+		text_surface_h = native_height + padding.h;
+	
+		// update draw size
+		var draw_width = layout_props.halign or is_wrapped ? available_size.w : native_width;
+		var draw_height = layout_props.valign ? available_size.h : native_height;
+	}
 	
 	// update draw size
-	var draw_width = layout_props.halign
-		|| scribble_element.get_wrapped() ? available_size.w : render_width;
-	var draw_height = layout_props.valign ? available_size.h : render_height;
-	
 	var drawn_size = yui_apply_element_size(layout_props.size, available_size, {
 		w: draw_width + padding.w,
 		h: draw_height + padding.h,
 	});
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
+	
+	if trace {
+		DEBUG_BREAK_YUI
+	}
 	
 	use_text_surface = font >= 0 && !use_scribble;
 	if use_text_surface {
@@ -154,6 +182,10 @@ buildTextSurface = function yui_text__buildTextSurface(text = undefined) {
 	if (text_surface_w > 0 && text_surface_h > 0) {
 
 		text ??= override_text ?? bound_values.text;
+				
+		if trace {
+			DEBUG_BREAK_YUI
+		}
 	
 		text_surface = yui_draw_text_to_surface(
 			element_xoffset, element_yoffset,
