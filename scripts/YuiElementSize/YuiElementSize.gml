@@ -100,22 +100,15 @@ function YuiElementSize(size) constructor {
 	
 	/**
 	 * Constrains the provided draw_size according to the element size config and available space
-	 * @param {struct.YuiArrangeSize} arrange_size
+	 * @param {struct} available_size
 	 * @param {struct} draw_size
 	 */
-	static constrainDrawSize = function(arrange_size, draw_size) {
+	static constrainDrawSize = function(available_size, draw_size) {
 		
 		// NOTE: the draw_size parameter is modified and returned below
-		
-		var is_arrange_size = instanceof(arrange_size) == YuiArrangeSize;
-		
-		var available_max_w = is_arrange_size
-			? arrange_size.max_w
-			: arrange_size.w;
-		
-		var available_max_h = is_arrange_size
-			? arrange_size.max_h
-			: arrange_size.h;
+				
+		var available_max_w = available_size.w;		
+		var available_max_h = available_size.h;
 		
 		var element_w = is_w_bound ? w.resolve() : w;
 		var element_h = is_h_bound ? h.resolve() : h;
