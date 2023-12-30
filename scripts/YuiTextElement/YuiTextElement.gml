@@ -26,10 +26,14 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	
 	baseInit(props);
 	
-	if !scribble_enabled && (props.scribble || props.typist || props.autotype)
-	{
+	if !scribble_enabled && (props.scribble || props.typist || props.autotype) {
 		throw yui_error($"Add Scribble to your project in order to use scribble features (in {props.id})");
 	}
+	
+	if props.text_format != undefined {
+		yui_warning($"text.text_format is deprecated and will be removed in the future (in {props.id})");
+	}
+		
 	
 	props.text = yui_bind(props.text, resources, slot_values);
 	props.typist = yui_bind(props.typist, resources, slot_values);
