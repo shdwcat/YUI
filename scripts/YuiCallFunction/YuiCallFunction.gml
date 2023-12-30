@@ -32,7 +32,7 @@ function YuiCallFunction(func_name, args) : YuiExpr() constructor {
 			resolve = resolveRuntimeFunction;
 		}
 	}
-	else if is_instanceof(func_name, YuiLambda) {
+	else if yui_is_lambda(func_name) {
 		resolve = resolveLambda;
 	}
 	else {

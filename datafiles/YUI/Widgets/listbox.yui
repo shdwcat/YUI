@@ -32,6 +32,7 @@ resources:
       background: null
       foreground: null
 
+    // TODO convert to match dropdown_list
     events:
       item_selected:
         // select the item

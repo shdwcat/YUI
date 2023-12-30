@@ -28,5 +28,6 @@ function yui_invoke_event(view_item, event_name, event_args) {
 	
 	// NOTE: invokes the event against the item and datacontext the event was found on
 	// NOTE: ignores 'data_source' prop of that item!
+	yui_log($"invoking event '{event_name}'");
 	yui_call_handler(matched_event, [event_args], item.data_context);
 }

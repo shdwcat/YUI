@@ -55,13 +55,6 @@ resources:
 
       indicator_template: &dropdown_indicator_template
 
-    events:
-      item_selected:
-        // select the item
-        - @@ item => $selection_scope then $selection_scope.select(item) else false
-        // invoke the user handler
-        - @@ item => $on_item_selected(item)
-
     template:
       type: button
       id: dropdown_button
@@ -128,6 +121,8 @@ resources:
       //size: { w: stretch }
       alignment: { h: stretch }
       bind_slot_scope:
+        on_item_selected: $on_item_selected
+        selection_scope: $selection_scope
         selected_item: $selected_item ?? $selection_scope.selected_item // little trick to simplify referring to the selected item
       elements: $items
       template:
@@ -138,7 +133,9 @@ resources:
           color: @ == $selected_item then $selected_bg_color else $item_bg_color
         content: $item_template
         on_click:
-          // invoke the item_selected event on the root widget
-          - @@ e => yui_invoke_event(e.source, item_selected, @)
+          // update selection scope if it exists
+          - @@ $selection_scope then $selection_scope.select(@) else false
+          // invoke the user handler
+          - @@ $on_item_selected(@)
           // close the popup
           - @@ e => e.source.closePopup()
