@@ -64,7 +64,9 @@ build = function() {
 	font = asset_get_index(bound_values.font);
 }
 
-arrange = function(available_size, viewport_size) {
+/// @param {struct} available_size
+/// @param {struct} viewport_size
+arrange = function yui_text__arrange(available_size, viewport_size) {
 	if use_scribble && !scribble_element 
 		return sizeToDefault();
 	

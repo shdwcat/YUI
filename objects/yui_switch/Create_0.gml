@@ -34,6 +34,8 @@ build = function() {
 
 // forward the rest to the child item or vice versa
 
+/// @param {struct} available_size
+/// @param {struct} viewport_size
 arrange = function(available_size, viewport_size) {
 	draw_rect = available_size;
 	self.viewport_size = viewport_size;

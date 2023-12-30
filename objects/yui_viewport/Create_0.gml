@@ -42,6 +42,8 @@ build = function() {
 	viewport_y = bound_values.viewport_y;
 }
 
+/// @param {struct} available_size
+/// @param {struct} viewport_size
 arrange = function(available_size, viewport_size) {
 	
 	x = available_size.x;

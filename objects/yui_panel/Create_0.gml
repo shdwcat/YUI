@@ -93,6 +93,8 @@ build = function yui_panel__build() {
 	}
 }
 
+/// @param {struct} available_size
+/// @param {struct} viewport_size
 arrange = function yui_panel__arrange(available_size, viewport_size) {
 		
 	x = available_size.x;

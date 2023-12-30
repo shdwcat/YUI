@@ -226,6 +226,8 @@ build = function() {
 	throw "build() not implemented on this type!";
 }
 
+/// @param {struct} available_size
+/// @param {struct} viewport_size
 arrange = function(available_size, viewport_size) {
 	throw "arrange() not implemented on this type!";
 }
