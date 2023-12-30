@@ -25,7 +25,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	
 	props.text = yui_bind(props.text, resources, slot_values);
 	props.typist = yui_bind(props.typist, resources, slot_values);
-	props.padding = yui_resolve_padding(yui_bind(props.padding, resources, slot_values));
+	props.padding = new YuiPadding(yui_bind(props.padding, resources, slot_values));
 	
 	// look up the text style by name from the theme
 	text_style = theme.text_styles[$ props.text_style];

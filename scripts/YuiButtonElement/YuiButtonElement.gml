@@ -31,7 +31,7 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	
 	baseInit(props);
 	
-	props.padding = yui_resolve_padding(yui_bind(props.padding, resources, slot_values));
+	props.padding = new YuiPadding(yui_bind(props.padding, resources, slot_values));
 	
 	// Feather disable once GM1041
 	content_element = yui_resolve_element(props.content, resources, slot_values);

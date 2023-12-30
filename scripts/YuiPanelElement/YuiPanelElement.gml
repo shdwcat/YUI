@@ -56,7 +56,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	baseInit(props);
 	
-	props.padding = yui_resolve_padding(yui_bind(props.padding, resources, slot_values));
+	props.padding = new YuiPadding(yui_bind(props.padding, resources, slot_values));
 	
 	props.elements = yui_bind(props.elements, resources, slot_values);
 	

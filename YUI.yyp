@@ -487,6 +487,7 @@
     {"id":{"name":"input_string_async","path":"scripts/input_string_async/input_string_async.yy",},},
     {"id":{"name":"yui_viewport","path":"objects/yui_viewport/yui_viewport.yy",},},
     {"id":{"name":"yui_create_fragment_element","path":"scripts/yui_create_fragment_element/yui_create_fragment_element.yy",},},
+    {"id":{"name":"YuiPadding","path":"scripts/YuiPadding/YuiPadding.yy",},},
     {"id":{"name":"yui_apply_props","path":"scripts/yui_apply_props/yui_apply_props.yy",},},
     {"id":{"name":"YuiCallFunction","path":"scripts/YuiCallFunction/YuiCallFunction.yy",},},
     {"id":{"name":"YuiVerticalLayout","path":"scripts/YuiVerticalLayout/YuiVerticalLayout.yy",},},
