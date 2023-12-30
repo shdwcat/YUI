@@ -81,6 +81,7 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Sprites","folderPath":"folders/YUI Example/Sprites.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"UI Sprites","folderPath":"folders/YUI Example/UI Sprites.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"YUI Tests","folderPath":"folders/YUI Tests.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Deprecated","folderPath":"folders/Packages - YUI/Deprecated.yy",},
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":".gitattributes","CopyToMask":-1,"filePath":"datafiles",},
