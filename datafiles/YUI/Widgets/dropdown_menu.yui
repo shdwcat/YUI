@@ -76,7 +76,7 @@ resources:
           - type: border
             padding: [5, 0, 5, 0]
             data_source: $selected_item ?? $selection_scope.selected_item
-            flex: true
+            //flex: true
             content: $item_template
 
           - type: button

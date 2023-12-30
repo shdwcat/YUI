@@ -159,15 +159,17 @@ resources:
     type: fragment
     content:
       type: panel
+      trace: true
       padding: [10, 5]
       alignment: { h: stretch }
       elements:
 
         - type: labeled_border
+          size: { w: 300 }
           label: Curve
           content:
             type: dropdown_menu
-            size: { w: 170 }
+            //size: { w: 170 }
             can_clear_value: false
             items: @curve_list
             selected_item: @selected_curve
