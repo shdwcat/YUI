@@ -140,7 +140,7 @@
     {"name":"__scribble_tick","order":11,"path":"scripts/__scribble_tick/__scribble_tick.yy",},
     {"name":"scribble_font_bake_outline_8dir_2px","order":2,"path":"scripts/scribble_font_bake_outline_8dir_2px/scribble_font_bake_outline_8dir_2px.yy",},
     {"name":"yui_draw_trace_rect","order":6,"path":"scripts/yui_draw_trace_rect/yui_draw_trace_rect.yy",},
-    {"name":"yui_apply_padding","order":19,"path":"scripts/yui_apply_padding/yui_apply_padding.yy",},
+    {"name":"yui_apply_padding","order":10,"path":"scripts/yui_apply_padding/yui_apply_padding.yy",},
     {"name":"scribble_typist","order":11,"path":"scripts/scribble_typist/scribble_typist.yy",},
     {"name":"yui_icon_open_folder","order":11,"path":"sprites/yui_icon_open_folder/yui_icon_open_folder.yy",},
     {"name":"YuiLambda","order":7,"path":"scripts/YuiLambda/YuiLambda.yy",},
