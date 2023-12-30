@@ -79,6 +79,7 @@
     {"name":"scribble_kerning_pair_get","order":18,"path":"scripts/scribble_kerning_pair_get/scribble_kerning_pair_get.yy",},
     {"name":"curveSineInv","order":30,"path":"animcurves/curveSineInv/curveSineInv.yy",},
     {"name":"DEBUG_BREAK_YUI","order":12,"path":"scripts/DEBUG_BREAK_YUI/DEBUG_BREAK_YUI.yy",},
+    {"name":"yui_check_scribble","order":19,"path":"scripts/yui_check_scribble/yui_check_scribble.yy",},
     {"name":"YuiThenElseBinding","order":12,"path":"scripts/YuiThenElseBinding/YuiThenElseBinding.yy",},
     {"name":"__scribble_gen_9_write_vbuffs","order":9,"path":"scripts/__scribble_gen_9_write_vbuffs/__scribble_gen_9_write_vbuffs.yy",},
     {"name":"yui_rgb_to_yuv","order":4,"path":"scripts/yui_rgb_to_yuv/yui_rgb_to_yuv.yy",},

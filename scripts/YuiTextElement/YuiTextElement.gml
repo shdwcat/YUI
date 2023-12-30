@@ -1,5 +1,8 @@
 /// @description renders YUI text
 function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_props, _resources, _slot_values) constructor {
+	
+	static scribble_enabled = yui_check_scribble();
+	
 	static default_props = {
 		type: "text",
 		padding: 0,
@@ -22,6 +25,11 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	props = yui_apply_element_props(_props);
 	
 	baseInit(props);
+	
+	if !scribble_enabled && (props.scribble || props.typist || props.autotype)
+	{
+		throw yui_error($"Add Scribble to your project in order to use scribble features (in {props.id})");
+	}
 	
 	props.text = yui_bind(props.text, resources, slot_values);
 	props.typist = yui_bind(props.typist, resources, slot_values);

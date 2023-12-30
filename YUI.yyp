@@ -177,6 +177,7 @@
     {"id":{"name":"scribble_kerning_pair_get","path":"scripts/scribble_kerning_pair_get/scribble_kerning_pair_get.yy",},},
     {"id":{"name":"curveSineInv","path":"animcurves/curveSineInv/curveSineInv.yy",},},
     {"id":{"name":"DEBUG_BREAK_YUI","path":"scripts/DEBUG_BREAK_YUI/DEBUG_BREAK_YUI.yy",},},
+    {"id":{"name":"yui_check_scribble","path":"scripts/yui_check_scribble/yui_check_scribble.yy",},},
     {"id":{"name":"YuiThenElseBinding","path":"scripts/YuiThenElseBinding/YuiThenElseBinding.yy",},},
     {"id":{"name":"__scribble_config_behaviours","path":"scripts/__scribble_config_behaviours/__scribble_config_behaviours.yy",},},
     {"id":{"name":"yui_change_screen","path":"scripts/yui_change_screen/yui_change_screen.yy",},},
