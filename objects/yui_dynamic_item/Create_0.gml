@@ -27,7 +27,9 @@ build = function() {
 // forward the rest to the child item or vice versa
 
 arrange = function(available_size, viewport_size) {
-	draw_rect = available_size
+	draw_rect = available_size;
+	self.viewport_size = viewport_size;
+	
 	if content_item {
 		content_item.arrange(available_size, viewport_size);
 		yui_resize_instance(content_item.draw_size.w, content_item.draw_size.h)

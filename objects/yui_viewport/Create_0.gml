@@ -77,10 +77,12 @@ arrange = function(available_size, viewport_size) {
 		content_size = { x: x, y: y, w: 0, h: 0 };
 	}
 	
-	var drawn_size = element_size.constrainDrawSize(available_size, {
+	var desired_size = {
 		w: content_size.w,
 		h: content_size.h,
-	});
+	};
+	
+	var drawn_size = element_size.constrainDrawSize(available_size, desired_size);
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
 	

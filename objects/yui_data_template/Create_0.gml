@@ -27,7 +27,9 @@ build = function() {
 // forward the rest to the child item or vice versa
 
 arrange = function(available_size, viewport_size) {
-	draw_rect = available_size
+	draw_rect = available_size;
+	self.viewport_size = viewport_size;
+	
 	if template_item {
 		
 		template_item.arrange(available_size, viewport_size);

@@ -92,20 +92,21 @@ arrange = function(available_size, viewport_size) {
 		return sizeToDefault();
 	}
 	
-	var content_size = undefined;
+	var desired_size = {
+		w: 0,
+		h: 0,
+	}
+	
 	if content_item {
 		is_arranging = true;
-		content_size = content_item.arrange(padded_rect, viewport_size);
+		var content_size = content_item.arrange(padded_rect, viewport_size);
 		is_arranging = false;
-	}
-	else {
-		content_size = { x: padded_rect.x, y: padded_rect.y, w: 0, h: 0 };
+		
+		desired_size.w += content_size.w + padding.w;
+		desired_size.h += content_size.h + padding.h;
 	}
 
-	var drawn_size = element_size.constrainDrawSize(available_size, {
-		w: content_size ? content_size.w + padding.w : 0,
-		h: content_size ? content_size.h + padding.h : 0,
-	});
+	var drawn_size = element_size.constrainDrawSize(available_size, desired_size);
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
 	

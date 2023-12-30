@@ -87,6 +87,8 @@ arrange = function(available_size, viewport_size) {
 	
 	element_xoffset = padding.left;
 	element_yoffset = padding.top;
+	
+	var desired_size = {};
 		
 	if use_scribble {
 	
@@ -94,8 +96,12 @@ arrange = function(available_size, viewport_size) {
 		var is_wrapped = scribble_element.get_wrapped();
 		var new_bbox = scribble_element.get_bbox(x, y, padding.left, padding.top, padding.right, padding.bottom);
 
-		var draw_width = layout_props.halign or is_wrapped ? available_size.w : new_bbox.width;
-		var draw_height = layout_props.valign ? available_size.h : new_bbox.height;
+		desired_size.w = layout_props.halign or is_wrapped
+			? available_size.w
+			: new_bbox.width;
+		desired_size.h = layout_props.valign
+			? available_size.h
+			: new_bbox.height;
 	}
 	else {
 	
@@ -131,15 +137,20 @@ arrange = function(available_size, viewport_size) {
 		text_surface_h = native_height + padding.h;
 	
 		// update draw size
-		var draw_width = layout_props.halign or is_wrapped ? available_size.w : native_width;
-		var draw_height = layout_props.valign ? available_size.h : native_height;
+		desired_size.w = layout_props.halign or is_wrapped
+			? available_size.w
+			: native_width;
+		desired_size.h = layout_props.valign
+			? available_size.h
+			: native_height;
 	}
 	
+	// account for padding
+	desired_size.w += padding.w;
+	desired_size.h += padding.h;
+	
 	// update draw size
-	var drawn_size = element_size.constrainDrawSize(available_size, {
-		w: draw_width + padding.w,
-		h: draw_height + padding.h,
-	});
+	var drawn_size = element_size.constrainDrawSize(available_size, desired_size);
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
 	

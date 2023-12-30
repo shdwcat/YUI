@@ -116,11 +116,13 @@ arrange = function yui_panel__arrange(available_size, viewport_size) {
 	used_layout_size = layout.arrange(bound_values);
 	is_arranging = false;
 	
-	// update our draw size to encompass the layout's draw size with our padding
-	var drawn_size = element_size.constrainDrawSize(available_size, {
+	// our desired size is the layout's draw size with our padding
+	var desired_size = {
 		w: layout.draw_size.w + padding.w,
 		h: layout.draw_size.h + padding.h,
-	});
+	}
+	
+	var drawn_size = element_size.constrainDrawSize(available_size, desired_size);
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
 	
@@ -146,7 +148,7 @@ arrange = function yui_panel__arrange(available_size, viewport_size) {
 
 onChildLayoutComplete = function(child) {
 	if !is_arranging {
-		arrange(draw_rect);
+		arrange(draw_rect, viewport_size);
 		if is_size_changed && parent {
 			parent.onChildLayoutComplete(self);
 		}
