@@ -147,7 +147,6 @@ resources:
             - type: layout_example_item
               content:
                 type: text
-                scribble: true
                 text: One item\non two lines
 
             - type: layout_example_item
@@ -172,7 +171,6 @@ resources:
             - type: layout_example_item
               content:
                 type: text
-                scribble: true
                 text: One item\non two lines
 
             - type: layout_example_item

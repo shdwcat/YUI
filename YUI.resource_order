@@ -9,6 +9,7 @@
     {"name":"Compiler","order":2,"path":"folders/Packages - YUI/Compiler.yy",},
     {"name":"Cursor","order":3,"path":"folders/Packages - YUI/Cursor.yy",},
     {"name":"Data","order":4,"path":"folders/Packages - YUI/Data.yy",},
+    {"name":"Deprecated","order":18,"path":"folders/Packages - YUI/Deprecated.yy",},
     {"name":"Elements","order":5,"path":"folders/Packages - YUI/Elements.yy",},
     {"name":"Event Handling","order":6,"path":"folders/Packages - YUI/Event Handling.yy",},
     {"name":"Fonts","order":7,"path":"folders/Packages - YUI/Fonts.yy",},
@@ -39,7 +40,6 @@
     {"name":"Superfonts","order":9,"path":"folders/Scribble/Superfonts.yy",},
     {"name":"YUI Compiled Functions","order":8,"path":"folders/YUI Compiled Functions.yy",},
     {"name":"YUI Tests","order":1,"path":"folders/YUI Tests.yy",},
-    {"name":"Deprecated","order":18,"path":"folders/Packages - YUI/Deprecated.yy",},
   ],
   "ResourceOrderSettings": [
     {"name":"yui_get_item_parent_map","order":20,"path":"scripts/yui_get_item_parent_map/yui_get_item_parent_map.yy",},

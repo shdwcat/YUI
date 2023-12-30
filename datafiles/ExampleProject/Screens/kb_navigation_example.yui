@@ -8,9 +8,7 @@ import:
 root:
   type: screen_base
   items:
-    - type: text
-      scribble: true
-      text: This example demonstrates how keyboard/gamepad navigation works.\nCheck kb_navigation_example.yui to see how submenus etc are configured
+    - This example demonstrates how keyboard/gamepad navigation works.\nCheck kb_navigation_example.yui to see how submenus etc are configured.
 
     - type: panel
       layout: horizontal

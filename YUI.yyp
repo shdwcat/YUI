@@ -35,6 +35,7 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Compiler","folderPath":"folders/Packages - YUI/Compiler.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Cursor","folderPath":"folders/Packages - YUI/Cursor.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Data","folderPath":"folders/Packages - YUI/Data.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Deprecated","folderPath":"folders/Packages - YUI/Deprecated.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Elements","folderPath":"folders/Packages - YUI/Elements.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Event Handling","folderPath":"folders/Packages - YUI/Event Handling.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Handlers","folderPath":"folders/Packages - YUI/Event Handling/Handlers.yy",},
@@ -81,7 +82,6 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Sprites","folderPath":"folders/YUI Example/Sprites.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"UI Sprites","folderPath":"folders/YUI Example/UI Sprites.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"YUI Tests","folderPath":"folders/YUI Tests.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Deprecated","folderPath":"folders/Packages - YUI/Deprecated.yy",},
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":".gitattributes","CopyToMask":-1,"filePath":"datafiles",},

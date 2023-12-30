@@ -34,7 +34,6 @@ resources:
               content:
                 type: text
                 text: Flex = 1
-                scribble: true
 
             - type: panel
               layout: vertical
@@ -45,7 +44,6 @@ resources:
               elements:
                 - type: text
                   layout: vertical
-                  scribble: true
                   text: A nested\nvertical panel
                   //flex: true
 
@@ -84,7 +82,6 @@ resources:
               content:
                 type: text
                 text: Flex = 1
-                scribble: true
 
             - type: panel
               layout: vertical
@@ -95,7 +92,6 @@ resources:
               elements:
                 - type: text
                   layout: vertical
-                  scribble: true
                   text: A nested\nvertical panel
                   //flex: true
 
@@ -134,7 +130,6 @@ resources:
               content:
                 type: text
                 text: Flex = 1
-                scribble: true
 
             - type: panel
               layout: vertical
@@ -145,9 +140,8 @@ resources:
               elements:
                 - type: text
                   layout: vertical
-                  scribble: true
                   text: A nested\nvertical panel
-                  //flex: true
+                  flex: true
 
                 - type: button
                   border_color: $theme.resources.control_bg_light
