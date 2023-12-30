@@ -33,10 +33,9 @@ onLayoutInit = function() {
 }
 
 build = function() {
-	
-	var text = override_text ?? bound_values.text;
-	
+		
 	if use_scribble {
+		formatted_text = override_text ?? bound_values.text
 		scribble_element = scribble(text, string(id))
 			.starting_format(bound_values.font)
 			.align(layout_props.halign, layout_props.valign);
@@ -59,6 +58,10 @@ build = function() {
 				throw yui_error("invalid autotype value");
 			}
 		}	
+	}
+	else {		
+		// handle newlines
+		formatted_text = override_text ?? string_replace(bound_values.text, "\\n", "\n");
 	}
 	
 	font = asset_get_index(bound_values.font);
@@ -114,9 +117,8 @@ arrange = function yui_text__arrange(available_size, viewport_size) {
 		draw_set_font(font);
 	
 		// calc size
-		var text = bound_values.text
-		var native_width = string_width_ext(text, -1, padded_rect.w);
-		var native_height = string_height_ext(text, -1, padded_rect.w);
+		var native_width = string_width_ext(formatted_text, -1, padded_rect.w);
+		var native_height = string_height_ext(formatted_text, -1, padded_rect.w);
 		
 		// check wrapped
 		var native_width_nowrap = string_width(text);
@@ -194,7 +196,7 @@ buildTextSurface = function yui_text__buildTextSurface(text = undefined) {
 	
 	if (text_surface_w > 0 && text_surface_h > 0) {
 
-		text ??= override_text ?? bound_values.text;
+		text ??= formatted_text;
 				
 		if trace {
 			DEBUG_BREAK_YUI
