@@ -109,7 +109,7 @@ arrange = function yui_panel__arrange(available_size, viewport_size) {
 	//}
 	
 	var padding = layout_props.padding;
-	padded_rect = yui_apply_padding(available_size, padding, layout_props.size);
+	padded_rect = padding.apply(available_size, layout_props.size);
 	layout.init(internal_children, padded_rect, viewport_size, yui_element.props);
 
 	is_arranging = true;

@@ -85,7 +85,7 @@ arrange = function(available_size, viewport_size) {
 	}
 	
 	var padding = layout_props.padding;
-	padded_rect = yui_apply_padding(available_size, padding, layout_props.size);
+	padded_rect = padding.apply(available_size, layout_props.size);
 	
 	// don't bother drawing if there isn't enough room
 	if padded_rect.w < 0 || padded_rect.h < 0 {

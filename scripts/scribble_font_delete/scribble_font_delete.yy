@@ -1,11 +1,11 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "yui_apply_padding",
+  "name": "scribble_font_delete",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Deprecated",
-    "path": "folders/Packages - YUI/Deprecated.yy",
+    "name": "Fonts",
+    "path": "folders/Scribble/Fonts.yy",
   },
 }
