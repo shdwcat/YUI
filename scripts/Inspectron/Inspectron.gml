@@ -30,57 +30,58 @@ function InspectronRenderer(target, extends) constructor {
 	
 	self.fields = [];
 	
+	/// @param {struct.InspectronField} field
+	static __addField = function(field) {
+		field.owner = self;
+		array_push(fields, field);
+		return self;
+	}
+	
 	// TODO: support custom label on everything
 	
 	static Header = function(header) {
-		array_push(fields, new InspectronLabel($"[ {header} ]"));
-		return self;
+		return __addField(new InspectronLabel($"[ {header} ]"));
 	}
 	
 	static Label = function(label) {
-		array_push(fields, new InspectronLabel(label));
-		return self;
+		return __addField(new InspectronLabel(label));
 	}
 	
 	static Watch = function(field_name) {
-		array_push(fields, new InspectronWatch(field_name));
-		return self;
+		return __addField(new InspectronWatch(field_name));
 	}
 	
 	static TextInput = function(field_name, label = undefined) {
-		array_push(fields, new InspectronTextInput(field_name, label));
-		return self;
+		return __addField(new InspectronTextInput(field_name, label));
 	}
 	
 	static Bool = function(field_name) {
-		array_push(fields, new InspectronBool(field_name));
-		return self;
+		return __addField(new InspectronBool(field_name));
 	}
 	
 	static Checkbox = function(field_name) {
-		array_push(fields, new InspectronCheckbox(field_name));
-		return self;
+		return __addField(new InspectronCheckbox(field_name));
 	}
 	
 	static Color = function(field_name) {
-		array_push(fields, new InspectronColor(field_name));
-		return self;
+		return __addField(new InspectronColor(field_name));
 	}
 	
 	static Sprite = function(field_name) {
-		array_push(fields, new InspectronSprite(field_name));
-		return self;
+		return __addField(new InspectronSprite(field_name));
 	}
 	
 	static Rect = function(field_name) {
-		array_push(fields, new InspectronRect(field_name));
-		return self;
+		return __addField(new InspectronRect(field_name));
 	}
 	
 	static FieldsSuffix = function(field_filter, type, scope_name = undefined) {
 		var test = function(name, filter) { return string_ends_with(name, filter) };
-		array_push(fields, new InspectronFieldPicker(field_filter, test, type, scope_name));
-		return self;
+		return __addField(new InspectronFieldPicker(field_filter, test, type, scope_name));
+	}
+		
+	static FontPicker = function(field_name, label = undefined) {
+		return __addField(new InspectronAssetPicker(field_name, label, asset_font));
 	}
 	
 	/// @desc renders the inspectron to the current debug window
@@ -98,6 +99,7 @@ function InspectronRenderer(target, extends) constructor {
 
 /// @desc base class for inspectron field items
 function InspectronField() constructor {
+	owner = undefined;
 
 	/// @desc renders the inspectron field to the current debug window
 	function render(scope, scope_name = undefined) {
@@ -227,6 +229,29 @@ function InspectronFieldPicker(filter, test, type, scope_override) constructor {
 				field.render(target, scope_override);
 			}
 		}
+	}
+}
+
+/// @param {string} field_name
+/// @param {string} custom_label
+/// @param {Constant.AssetType} asset_type
+function InspectronAssetPicker(field_name, custom_label, asset_type) : InspectronField() constructor {
+	self.field_name = field_name;
+	self.custom_label = custom_label;
+	self.asset_type = asset_type;
+	
+	function render(scope, scope_name) {
+		var label = __inspectronLabel(scope_name, custom_label ?? field_name);
+		
+		var assets = asset_get_ids(asset_type);
+		var pairs = array_map(assets, function(asset) {
+			var name = font_get_name(asset);
+			var index = real(asset);
+			return $"{name}:{index}";
+		});
+		var specifier = string_join_ext(",", pairs);
+		
+		dbg_drop_down(ref_create(scope, field_name), specifier, label);
 	}
 }
 
