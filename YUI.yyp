@@ -336,6 +336,7 @@
     {"id":{"name":"yui_button_bg","path":"sprites/yui_button_bg/yui_button_bg.yy",},},
     {"id":{"name":"yui_icon_hamburger_menu","path":"sprites/yui_icon_hamburger_menu/yui_icon_hamburger_menu.yy",},},
     {"id":{"name":"yui_init_theme","path":"scripts/yui_init_theme/yui_init_theme.yy",},},
+    {"id":{"name":"Inspectron","path":"scripts/Inspectron/Inspectron.yy",},},
     {"id":{"name":"yui_panel_bg","path":"sprites/yui_panel_bg/yui_panel_bg.yy",},},
     {"id":{"name":"curveSine","path":"animcurves/curveSine/curveSine.yy",},},
     {"id":{"name":"yui_string_split","path":"scripts/yui_string_split/yui_string_split.yy",},},
