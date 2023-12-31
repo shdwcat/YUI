@@ -30,6 +30,8 @@ function InspectronRenderer(target, extends) constructor {
 	
 	self.fields = [];
 	
+	// TODO: support custom label on everything
+	
 	static Header = function(header) {
 		array_push(fields, new InspectronLabel($"[ {header} ]"));
 		return self;
@@ -42,6 +44,11 @@ function InspectronRenderer(target, extends) constructor {
 	
 	static Watch = function(field_name) {
 		array_push(fields, new InspectronWatch(field_name));
+		return self;
+	}
+	
+	static TextInput = function(field_name, label = undefined) {
+		array_push(fields, new InspectronTextInput(field_name, label));
 		return self;
 	}
 	
@@ -112,6 +119,16 @@ function InspectronWatch(field_name) : InspectronField() constructor {
 	function render(scope, scope_name) {
 		var label = __inspectronLabel(scope_name, field_name);
 		dbg_watch(ref_create(scope, field_name), label);
+	}
+}
+
+function InspectronTextInput(field_name, custom_label) : InspectronField() constructor {
+	self.field_name = field_name;
+	self.custom_label = custom_label;
+	
+	function render(scope, scope_name) {
+		var label = __inspectronLabel(scope_name, custom_label ?? field_name);
+		dbg_text_input(ref_create(scope, field_name), label);
 	}
 }
 
