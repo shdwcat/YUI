@@ -183,6 +183,7 @@
     {"name":"__scribble_class_page","order":5,"path":"scripts/__scribble_class_page/__scribble_class_page.yy",},
     {"name":"GsplInfixParselet","order":8,"path":"scripts/GsplInfixParselet/GsplInfixParselet.yy",},
     {"name":"scribble_anim_rainbow","order":4,"path":"scripts/scribble_anim_rainbow/scribble_anim_rainbow.yy",},
+    {"name":"YuiInspector","order":22,"path":"scripts/YuiInspector/YuiInspector.yy",},
     {"name":"YuiExampleManager","order":6,"path":"scripts/YuiExampleManager/YuiExampleManager.yy",},
     {"name":"yui_error_icon","order":7,"path":"sprites/yui_error_icon/yui_error_icon.yy",},
     {"name":"GsplGmlEnvironment","order":1,"path":"scripts/GsplGmlEnvironment/GsplGmlEnvironment.yy",},

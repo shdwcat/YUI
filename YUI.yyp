@@ -298,6 +298,7 @@
     {"id":{"name":"__scribble_class_page","path":"scripts/__scribble_class_page/__scribble_class_page.yy",},},
     {"id":{"name":"GsplInfixParselet","path":"scripts/GsplInfixParselet/GsplInfixParselet.yy",},},
     {"id":{"name":"scribble_anim_rainbow","path":"scripts/scribble_anim_rainbow/scribble_anim_rainbow.yy",},},
+    {"id":{"name":"YuiInspector","path":"scripts/YuiInspector/YuiInspector.yy",},},
     {"id":{"name":"YuiExampleManager","path":"scripts/YuiExampleManager/YuiExampleManager.yy",},},
     {"id":{"name":"yui_error_icon","path":"sprites/yui_error_icon/yui_error_icon.yy",},},
     {"id":{"name":"GsplArrayIterator","path":"scripts/GsplArrayIterator/GsplArrayIterator.yy",},},

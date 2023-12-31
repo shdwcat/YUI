@@ -1,5 +1,7 @@
 /// @description init
 
+inspector = new YuiInspector();
+
 // use single pixel + sizing with instance_place_list in step event
 sprite_index = yui_white_pixel
 
