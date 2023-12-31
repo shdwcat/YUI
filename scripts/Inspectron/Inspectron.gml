@@ -1,6 +1,8 @@
 // INSPECTRON - A Fluent API for easily creating GM debug overlays
 // copyright @shdwcat 2023 
 
+// (these are restored at end of file)
+// feather disable GM1056
 
 /// @description Fluent API for easily creating GM debug overlays
 /// @param {struct,id.instance} target
@@ -37,8 +39,6 @@ function InspectronRenderer(target, extends) constructor {
 		return self;
 	}
 	
-	// TODO: support custom label on everything
-	
 	static Header = function(header) {
 		return __addField(new InspectronLabel($"[ {header} ]"));
 	}
@@ -47,32 +47,32 @@ function InspectronRenderer(target, extends) constructor {
 		return __addField(new InspectronLabel(label));
 	}
 	
-	static Watch = function(field_name) {
-		return __addField(new InspectronWatch(field_name));
+	static Watch = function(field_name, label = undefined) {
+		return __addField(new InspectronWatch(field_name, label));
 	}
 	
 	static TextInput = function(field_name, label = undefined) {
 		return __addField(new InspectronTextInput(field_name, label));
 	}
 	
-	static Bool = function(field_name) {
-		return __addField(new InspectronBool(field_name));
+	static Bool = function(field_name, label = undefined) {
+		return __addField(new InspectronBool(field_name, label));
 	}
 	
-	static Checkbox = function(field_name) {
-		return __addField(new InspectronCheckbox(field_name));
+	static Checkbox = function(field_name, label = undefined) {
+		return __addField(new InspectronCheckbox(field_name, label));
 	}
 	
-	static Color = function(field_name) {
-		return __addField(new InspectronColor(field_name));
+	static Color = function(field_name, label = undefined) {
+		return __addField(new InspectronColor(field_name, label));
 	}
 	
-	static Sprite = function(field_name) {
-		return __addField(new InspectronSprite(field_name));
+	static Sprite = function(field_name, label = undefined) {
+		return __addField(new InspectronSprite(field_name, label));
 	}
 	
-	static Rect = function(field_name) {
-		return __addField(new InspectronRect(field_name));
+	static Rect = function(field_name, label = undefined) {
+		return __addField(new InspectronRect(field_name, label));
 	}
 	
 	static FieldsSuffix = function(field_filter, type, scope_name = undefined) {
@@ -98,8 +98,16 @@ function InspectronRenderer(target, extends) constructor {
 }
 
 /// @desc base class for inspectron field items
-function InspectronField() constructor {
-	owner = undefined;
+function InspectronField(custom_label = undefined) constructor {
+	self.custom_label = custom_label;
+	
+	self.owner = undefined;
+	
+	function __label(scope_name) {
+		return scope_name != undefined
+			? $"    {custom_label ?? field_name}"
+			: (custom_label ?? field_name)
+	}
 
 	/// @desc renders the inspectron field to the current debug window
 	function render(scope, scope_name = undefined) {
@@ -115,48 +123,47 @@ function InspectronLabel(label) : InspectronField() constructor {
 	}
 }
 
-function InspectronWatch(field_name) : InspectronField() constructor {
+function InspectronWatch(field_name, custom_label) : InspectronField(custom_label) constructor {
 	self.field_name = field_name;
 	
 	function render(scope, scope_name) {
-		var label = __inspectronLabel(scope_name, field_name);
+		var label = __label(scope_name);
 		dbg_watch(ref_create(scope, field_name), label);
 	}
 }
 
-function InspectronTextInput(field_name, custom_label) : InspectronField() constructor {
+function InspectronTextInput(field_name, custom_label) : InspectronField(custom_label) constructor {
 	self.field_name = field_name;
-	self.custom_label = custom_label;
 	
 	function render(scope, scope_name) {
-		var label = __inspectronLabel(scope_name, custom_label ?? field_name);
+		var label = __label(scope_name);
 		dbg_text_input(ref_create(scope, field_name), label);
 	}
 }
 
-function InspectronBool(field_name) : InspectronField() constructor {
+function InspectronBool(field_name, custom_label) : InspectronField(custom_label) constructor {
 	self.field_name = field_name;
 	
 	function render(scope, scope_name) {
-		var label = __inspectronLabel(scope_name, field_name) + "?";
+		var label = __label(scope_name) + "?";
 		dbg_watch(ref_create(scope, field_name), label);
 	}
 }
 
-function InspectronCheckbox(field_name) : InspectronField() constructor {
+function InspectronCheckbox(field_name, custom_label) : InspectronField(custom_label) constructor {
 	self.field_name = field_name;
 	
 	function render(scope, scope_name) {
-		var label = __inspectronLabel(scope_name, field_name) + "?";
+		var label = __label(scope_name) + "?";
 		dbg_checkbox(ref_create(scope, field_name), label);
 	}
 }
 
-function InspectronColor(field_name) : InspectronField() constructor {
+function InspectronColor(field_name, custom_label) : InspectronField(custom_label) constructor {
 	self.field_name = field_name;
 	
 	function render(scope, scope_name) {
-		var label = __inspectronLabel(scope_name, field_name);
+		var label = __label(scope_name);
 		var color = scope[$ field_name];
 		
 		// dbg_color will crash if color value is undefined
@@ -169,12 +176,12 @@ function InspectronColor(field_name) : InspectronField() constructor {
 	}
 }
 
-function InspectronSprite(field_name, index = 0) : InspectronField() constructor {
+function InspectronSprite(field_name, custom_label, index = 0) : InspectronField(custom_label) constructor {
 	self.field_name = field_name;
 	self.index = index;
 	
 	function render(scope, scope_name) {
-		var label = __inspectronLabel(scope_name, field_name);
+		var label = __label(scope_name);
 		var sprite = scope[$ field_name];
 		
 		// dbg_sprite will crash if sprite value is undefined
@@ -187,16 +194,16 @@ function InspectronSprite(field_name, index = 0) : InspectronField() constructor
 	}
 }
 
-function InspectronRect(field_name) : InspectronField() constructor {
+function InspectronRect(field_name, custom_label) : InspectronField(custom_label) constructor {
 	self.field_name = field_name;
 	
 	function render(scope, scope_name) {
-		var label = __inspectronLabel(scope_name, field_name);
+		var label = __label(scope_name);
 		dbg_watch(ref_create(scope, field_name), label);
 	}
 }
 
-function InspectronFieldPicker(filter, test, type, scope_override) constructor {
+function InspectronFieldPicker(filter, test, type, scope_override) : InspectronField() constructor {
 	self.filter = filter;
 	self.test = test;
 	self.type = type;
@@ -235,13 +242,12 @@ function InspectronFieldPicker(filter, test, type, scope_override) constructor {
 /// @param {string} field_name
 /// @param {string} custom_label
 /// @param {Constant.AssetType} asset_type
-function InspectronAssetPicker(field_name, custom_label, asset_type) : InspectronField() constructor {
+function InspectronAssetPicker(field_name, custom_label, asset_type) : InspectronField(custom_label) constructor {
 	self.field_name = field_name;
-	self.custom_label = custom_label;
 	self.asset_type = asset_type;
 	
 	function render(scope, scope_name) {
-		var label = __inspectronLabel(scope_name, custom_label ?? field_name);
+		var label = __label(scope_name);
 		
 		var assets = asset_get_ids(asset_type);
 		var pairs = array_map(assets, function(asset) {
@@ -255,11 +261,4 @@ function InspectronAssetPicker(field_name, custom_label, asset_type) : Inspectro
 	}
 }
 
-// internal util
-
-// feather disable once GM2017
-function __inspectronLabel(scope_name, field_name) {
-	return scope_name != undefined
-		? $"    {field_name}"
-		: field_name
-}
+// feather restore GM1056
