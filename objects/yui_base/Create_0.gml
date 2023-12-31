@@ -433,3 +433,20 @@ unload = function(unload_root = undefined) {
 	
 	return unload_time;
 }
+
+Inspectron()
+	.Header("yui_base")
+	.Checkbox(nameof(trace))
+	.Checkbox(nameof(is_cursor_layer))
+	.Watch(nameof(enabled))
+	.Watch(nameof(focusable))
+	.Watch(nameof(opacity))
+	.Watch(nameof(xoffset))
+	.Watch(nameof(yoffset))
+	.Rect(nameof(draw_size))
+	.Rect(nameof(draw_rect))
+	.Rect(nameof(viewport_size))
+	.Rect(nameof(viewport_part))
+	.FieldsSuffix("color", InspectronColor, nameof(layout_props))
+	.FieldsSuffix("sprite", InspectronSprite, nameof(layout_props))
+	

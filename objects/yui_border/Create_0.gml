@@ -152,3 +152,7 @@ unload = function(unload_root = undefined) {
 
 	return unload_time;
 }
+
+Inspectron()
+	.Header("yui_border")
+	.FieldsSuffix("color", InspectronColor)

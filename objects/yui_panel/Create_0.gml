@@ -192,3 +192,7 @@ unload = function(unload_root = undefined) {
 
 	return unload_time;
 }
+
+Inspectron()
+	.Header("yui_panel")
+	.Rect(nameof(used_layout_size))

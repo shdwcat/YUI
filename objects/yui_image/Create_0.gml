@@ -128,3 +128,7 @@ arrange = function(available_size, viewport_size) {
 			
 	return draw_size;
 }
+
+Inspectron()
+	.Header("yui_image")
+	.Sprite(nameof(sprite_index))

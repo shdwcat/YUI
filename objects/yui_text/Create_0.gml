@@ -214,3 +214,9 @@ buildTextSurface = function yui_text__buildTextSurface(text = undefined) {
 			text_surface);
 	}
 }
+
+
+Inspectron()
+	.Header("yui_text")
+	.Watch(nameof(formatted_text))
+	.Watch(nameof(font))
