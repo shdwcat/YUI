@@ -88,15 +88,20 @@ function InspectronRenderer(target, extends) constructor {
 		return __addField(new InspectronAssetPicker(field_name, label, asset_font));
 	}
 	
+	static Include = function(field_name, label = undefined) {
+		return __addField(new InspectronTargetReference(field_name, label));
+	}
+	
 	/// @desc renders the inspectron to the current debug window
-	static render = function() {
+	/// @param {string} scope_name
+	static render = function(scope_name = undefined) {
 		var i = 0; repeat array_length(fields) {
 			var field = fields[i++];
-			field.render(target);
+			field.render(target, scope_name);
 		}
 		
 		if extends {
-			extends.render();
+			extends.render(scope_name);
 		}
 	}
 }
@@ -231,7 +236,7 @@ function InspectronFieldPicker(filter, test, type, scope_override) : InspectronF
 		var names = struct_get_names(target);
 		var i = 0; repeat array_length(names) {
 			var name = names[i++];
-			if test(name, filter) {
+			if name != "inspectron" and test(name, filter) {
 				
 				if !matched {
 					matched = true;
@@ -250,6 +255,28 @@ function InspectronFieldPicker(filter, test, type, scope_override) : InspectronF
 				var field = new type(name);
 				field.render(target, scope_override);
 			}
+		}
+	}
+}
+
+/// @param {string} field_name
+/// @param {string} custom_label
+/// @param {Constant.AssetType} asset_type
+function InspectronTargetReference(field_name, custom_label) : InspectronField(custom_label) constructor {
+	self.field_name = field_name;
+	
+	function render(scope, scope_name) {
+		var label = __label(scope_name);
+		var target = scope[$ field_name];
+		if target == undefined {
+			dbg_watch(ref_create(scope, field_name), label);
+		}
+		else {
+			var inspectron = target[$ "inspectron"];
+			if inspectron == undefined throw "When using .Include(target), the target must have an inspectron defined!";
+			
+			dbg_text($" {label}:");
+			inspectron.render(label);
 		}
 	}
 }
