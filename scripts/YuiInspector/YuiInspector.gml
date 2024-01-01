@@ -5,6 +5,8 @@ function YuiInspector() constructor {
 	target_list = undefined;
 	debug_pointer = undefined;
 	
+	min_w = 500;
+	min_h = 300;
 	w = 700;
 	h = 550;
 	
@@ -37,16 +39,97 @@ function YuiInspector() constructor {
 				dbg_view_delete(debug_pointer);
 			}
 			
-			var max_x = display_get_width() - w;
-			var max_y = display_get_height() - h;
+			var window_w = window_get_width();
+			var window_h = window_get_height();
+			var max_x = window_w - w;
+			var max_y = window_h - h;
+			
+			var target_left = target.x;			
+			var target_top = target.y;
+			var target_w = target.draw_size.w;
+			var target_h = target.draw_size.h;
+			
+			var target_right = target_left + target_w;
+			var target_bottom = target_top + target_h;
+			
+			var position = "right";
+			var desired_x = target_right + 5;
+			var desired_y = target_top;
+			var desired_w = w;
+			var desired_h = h;
+			
+			var free_w = window_w - desired_x;
+			
+			if free_w < desired_w {
+				if free_w > min_w {
+					desired_w = free_w;
+				}
+				else if target_left + min_w < window_w {
+					// resposition down
+					yui_log("repositioning down (from width)");
+					position = "down";
+					desired_x = target_left;
+					desired_y = target_bottom + 5;
+				}
+				else {
+					// resposition left
+					yui_log("repositioning left (from width)");
+					position = "left";
+					desired_x = target_left - w;
+					desired_y = target_top;
+				}
+			}
+			
+			var free_h = window_h - desired_y;
+			if free_h < h {
+				if free_h > min_h {
+					desired_h = free_h;
+				}
+				else if position == "right" {
+					// if we had room to the right, just move the view up on screen
+					desired_y = window_h - min_h;
+					desired_h = min_h;
+				}
+				else {
+					// resposition left
+					yui_log("repositioning left (from height)");
+					position = "left";
+					desired_x = target_left - w;
+					desired_y = target_top;
+					
+					// check height again
+					free_h = window_h - desired_y;
+					if free_h < h {
+						if free_h > min_h {
+							desired_h = free_h;
+						}
+						else {
+							// just move the view up on screen
+							desired_y = window_h - min_h;
+							desired_h = min_h;
+						}
+					}
+				}
+			}
+			
+			// if off screen left or above, reposition bottom right
+			if desired_x < 0 || desired_y < 0 {
+				yui_log("positioning bottom right as last resort");
+				position = "bottom_right";
+				desired_x = max_x;
+				desired_y = max_y;
+				desired_w = w;
+				desired_h = h;
+			}
 		
 			debug_pointer = dbg_view(
-				"YUI - " + target._id, true,
-				min(max_x, target.x + target.draw_size.w + 5),
-				min(max_y, target.y),
-				w, h);
+				$"YUI - {target._id}", true,
+				desired_x, desired_y, desired_w, desired_h);
 			
 			dbg_section("General");
+			dbg_text($"Target: x: {target.x}, y: {target.y}");
+			dbg_text($"Window: w: {window_w}, h: {window_h}");
+			dbg_text($"Debug View: x: {desired_x}, y: {desired_y}, w: {desired_w}, h: {desired_h}");
 						
 			InspectronArrayDropDown(ref_create(self, "pick_index"), "Elements (click to select target)", target_list, function (item) {
 				return item._id;
