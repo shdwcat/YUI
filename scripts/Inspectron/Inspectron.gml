@@ -85,9 +85,30 @@ function InspectronRenderer(target, extends) constructor {
 		var test = function(name, filter) { return string_ends_with(name, filter) };
 		return __addField(new InspectronFieldPicker(field_filter, test, type, scope_name));
 	}
+	
+	static Picker = function(field_name, choices, label = undefined) {
+		return __addField(new InspectronPicker(field_name, label, choices));
+	}
+	
+	static LabeledPicker = function(field_name, choices, labels, label = undefined) {
+		return __addField(new InspectronPicker(field_name, label, choices, labels));
+	}
+	
+	static AssetPicker = function(field_name, asset_type, name_func, label = undefined) {
+		return __addField(new InspectronAssetPicker(field_name, label, asset_type, name_func));
+	}
 		
 	static FontPicker = function(field_name, label = undefined) {
-		return __addField(new InspectronAssetPicker(field_name, label, asset_font));
+		return __addField(new InspectronAssetPicker(field_name, label, asset_font, font_get_name));
+	}
+		
+	static SpritePicker = function(field_name, label = undefined) {
+		return __addField(new InspectronAssetPicker(field_name, label, asset_sprite, sprite_get_name));
+	}
+	
+	// TODO convert to .FilterBy()
+	static FilteredSpritePicker = function(field_name, filter_func, label = undefined) {
+		return __addField(new InspectronAssetPicker(field_name, label, asset_sprite, sprite_get_name, filter_func));
 	}
 	
 	static Include = function(field_name, label = undefined) {
@@ -285,23 +306,67 @@ function InspectronTargetReference(field_name, custom_label) : InspectronField(c
 
 /// @param {string} field_name
 /// @param {string} custom_label
-/// @param {Constant.AssetType} asset_type
-function InspectronAssetPicker(field_name, custom_label, asset_type) : InspectronField(custom_label) constructor {
+/// @param {array} choices
+/// @param {array<string>} labels
+function InspectronPicker(field_name, custom_label, choices, labels = undefined) : InspectronField(custom_label) constructor {
+	self.field_name = field_name;
+	self.choices = choices;
+	self.choice_labels = labels ?? choices;
+	
+	function render(scope, scope_name, level) {
+		var label = __label(level);
+		
+		// feather disable once GM1041
+		dbg_drop_down(ref_create(scope, field_name), choices, choice_labels, label);
+	}
+}
+
+/// @param {string} field_name
+/// @param {string} custom_label
+/// @param {Constant.AssetType} asset_type the asset type to choose
+/// @param {Function} name_func function to get the name of the asset
+/// @param {Function} filter_func asset => bool - function to filter the listed assets
+function InspectronAssetPicker(field_name, custom_label, asset_type, name_func, filter_func) : InspectronField(custom_label) constructor {
 	self.field_name = field_name;
 	self.asset_type = asset_type;
+	self.name_func = name_func;
+	self.filter_func = filter_func;
 	
 	function render(scope, scope_name, level) {
 		var label = __label(level);
 		
 		var assets = asset_get_ids(asset_type);
-		var pairs = array_map(assets, function(asset) {
-			var name = font_get_name(asset);
-			var index = real(asset);
-			return $"{name}:{index}";
-		});
-		var specifier = string_join_ext(",", pairs);
 		
-		dbg_drop_down(ref_create(scope, field_name), specifier, label);
+		// sort by name
+		array_sort(assets, function(left, right) {
+			var left_name = name_func(left);
+			var right_name = name_func(right);
+		    if left_name < right_name
+		        return -1;
+		    else if left_name > right_name
+		        return 1;
+		    else
+		        return 0;
+		});
+		
+		// now get the names as an array
+		var names = array_map(assets, name_func);
+		
+		if filter_func != undefined {
+			var i = 0; repeat array_length(assets) {
+				var passed = filter_func(assets[i], names[i]);
+				if !passed {
+					array_delete(assets, i, 1);
+					array_delete(names, i, 1);
+				}
+				else {
+					i++;
+				}
+			}
+		}
+		
+		// feather disable once GM1041
+		dbg_drop_down(ref_create(scope, field_name), assets, names, label);
 	}
 }
 
