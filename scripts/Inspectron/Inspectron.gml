@@ -39,6 +39,10 @@ function InspectronRenderer(target, extends) constructor {
 		return self;
 	}
 	
+	static Section = function(label) {
+		return __addField(new InspectronSection(label));
+	}
+	
 	static Header = function(header) {
 		return __addField(new InspectronLabel($"[ {header} ]"));
 	}
@@ -112,6 +116,14 @@ function InspectronField(custom_label = undefined) constructor {
 	/// @desc renders the inspectron field to the current debug window
 	function render(scope, scope_name = undefined) {
 		dbg_text(label);
+	}
+}
+
+function InspectronSection(label) : InspectronField() constructor {
+	self.label = label;
+	
+	function render(scope, scope_name) {
+		dbg_section(label);
 	}
 }
 
@@ -224,7 +236,10 @@ function InspectronFieldPicker(filter, test, type, scope_override) : InspectronF
 				if !matched {
 					matched = true;
 					if scope_override != undefined {
-						dbg_text($" {scope_override}/{filter}s:");
+						var category = filter != ""
+							? $"/{filter}s"
+							: ""; 
+						dbg_text($" {scope_override}{category}:");
 					}
 					else {
 						dbg_text($" {filter}s:");
@@ -259,6 +274,22 @@ function InspectronAssetPicker(field_name, custom_label, asset_type) : Inspectro
 		
 		dbg_drop_down(ref_create(scope, field_name), specifier, label);
 	}
+}
+
+/// @desc better dbg_drop_down()
+/// @param {id.DbgRef} ref
+/// @param {string} label
+/// @param {Array<Any>} items
+/// @param {Function} label_func
+// feather ignore once GM2017
+function InspectronArrayDropDown(ref, label, items, label_func) {
+	
+	var pairs = array_map(items, method({ label_func }, function(item, index) {
+		return $"{label_func(item)}:{index}";
+	}));
+	var specifier = string_join_ext(",", pairs);
+		
+	dbg_drop_down(ref, specifier, label);
 }
 
 // feather restore GM1056
