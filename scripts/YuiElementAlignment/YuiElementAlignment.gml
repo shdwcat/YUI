@@ -24,6 +24,6 @@ function YuiElementAlignment(alignment, h_default = "left", v_default = "top") c
 	}
 	
 	static inspectron = Inspectron()
-		.Watch(nameof(h), "h(orizontal)")
-		.Watch(nameof(v), "v(ertical)")
+		.Picker(nameof(h), ["left", "center", "stretch"], "h(orizontal)")
+		.Picker(nameof(v), ["top", "center", "stretch"], "v(ertical)")
 }

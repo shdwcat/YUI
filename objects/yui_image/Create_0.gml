@@ -131,4 +131,5 @@ arrange = function(available_size, viewport_size) {
 
 Inspectron()
 	.Section("yui_image")
-	.Sprite(nameof(sprite_index))
+	//.Sprite(nameof(sprite_index))
+	.SpritePicker(nameof(sprite_index));
