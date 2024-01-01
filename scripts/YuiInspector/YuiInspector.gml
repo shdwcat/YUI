@@ -32,7 +32,7 @@ function YuiInspector() constructor {
 			target_list = render_items;
 			
 			current = {
-				pick_index: pick_index,
+				pick_index,
 			};
 		
 			if debug_pointer {
@@ -46,8 +46,16 @@ function YuiInspector() constructor {
 			
 			var target_left = target.x;			
 			var target_top = target.y;
-			var target_w = target.draw_size.w;
-			var target_h = target.draw_size.h;
+			
+			var target_w = 0;
+			var target_h = 0;
+			if target.sprite_index >= 0 {
+				target_w = sprite_get_width(target.sprite_index) * target.image_xscale;
+				target_h = sprite_get_height(target.sprite_index) * target.image_yscale;
+			}
+			else {
+				show_debug_message("Warning: Inspectron was unable to determine the target's size because it has no sprite");
+			}
 			
 			var target_right = target_left + target_w;
 			var target_bottom = target_top + target_h;
@@ -126,14 +134,16 @@ function YuiInspector() constructor {
 				$"YUI - {target._id}", true,
 				desired_x, desired_y, desired_w, desired_h);
 			
-			dbg_section("General");
-			dbg_text($"Target: x: {target.x}, y: {target.y}");
-			dbg_text($"Window: w: {window_w}, h: {window_h}");
-			dbg_text($"Debug View: x: {desired_x}, y: {desired_y}, w: {desired_w}, h: {desired_h}");
+			dbg_section($"General");
+			//dbg_text($"Target: x: {target.x}, y: {target.y}");
+			//dbg_text($"Window: w: {window_w}, h: {window_h}");
+			//dbg_text($"Debug View: x: {desired_x}, y: {desired_y}, w: {desired_w}, h: {desired_h}");
 						
-			InspectronArrayDropDown(ref_create(self, "pick_index"), "Elements (click to select target)", target_list, function (item) {
-				return item._id;
-			});	
+			InspectronArrayDropDown(
+				ref_create(self, "pick_index"),
+				$"Instances at {mouse_x}, {mouse_y}",
+				target_list,
+				function (item) { return item._id; });	
 			
 			var f = function() {
 				yui_log("clicked");
