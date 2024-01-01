@@ -154,5 +154,5 @@ unload = function(unload_root = undefined) {
 }
 
 Inspectron()
-	.Header("yui_border")
+	.Section("yui_border")
 	.FieldsSuffix("color", InspectronColor)

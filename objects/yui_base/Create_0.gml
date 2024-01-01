@@ -435,7 +435,7 @@ unload = function(unload_root = undefined) {
 }
 
 Inspectron()
-	.Header("yui_base")
+	.Section("yui_base")
 	.Checkbox(nameof(trace))
 	.Checkbox(nameof(is_cursor_layer))
 	.Watch(nameof(enabled))
@@ -447,6 +447,4 @@ Inspectron()
 	.Rect(nameof(draw_rect))
 	.Rect(nameof(viewport_size))
 	.Rect(nameof(viewport_part))
-	.FieldsSuffix("color", InspectronColor, nameof(layout_props))
-	.FieldsSuffix("sprite", InspectronSprite, nameof(layout_props))
 	

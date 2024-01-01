@@ -217,6 +217,6 @@ buildTextSurface = function yui_text__buildTextSurface(text = undefined) {
 
 
 Inspectron()
-	.Header("yui_text")
+	.Section("yui_text")
 	.Watch(nameof(formatted_text), "text")
 	.FontPicker(nameof(font))

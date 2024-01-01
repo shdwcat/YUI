@@ -8,14 +8,16 @@ function YuiInspector() constructor {
 	w = 700;
 	h = 550;
 	
-	show_parents = false;
+	pick_index = 0;
+	search = "";
 	
 	current = {
-		show_parents: false,
+		pick_index: 0,
 	}
 	
 	static refresh = function() {
-		var needs_refresh = show_parents != current.show_parents;
+		var needs_refresh =
+			pick_index != current.pick_index;
 		
 		if needs_refresh show(target_list, true);
 	}
@@ -28,7 +30,7 @@ function YuiInspector() constructor {
 			target_list = render_items;
 			
 			current = {
-				show_parents: show_parents,
+				pick_index: pick_index,
 			};
 		
 			if debug_pointer {
@@ -44,22 +46,20 @@ function YuiInspector() constructor {
 				min(max_y, target.y),
 				w, h);
 			
-			dbg_section("Options");
-			dbg_checkbox(ref_create(self, "show_parents"), "Show Parents?");
-			dbg_checkbox(ref_create(self, "show_bindings"), "show_bindings?");
-					
-			var count = array_length(render_items);
-			var i = 0; repeat count {
-				var item = render_items[i++];
-				
-				if i == 2 && show_parents
-					dbg_text("=== Parents ===");
-				
-				dbg_section(item._id);
-				item.inspectron.render();
-				
-				if (!show_parents) break;
-			}		
+			dbg_section("General");
+						
+			InspectronArrayDropDown(ref_create(self, "pick_index"), "Elements (click to select target)", target_list, function (item) {
+				return item._id;
+			});	
+			
+			var f = function() {
+				yui_log("clicked");
+			}
+			dbg_button("Generate Layout Log", f);
+			
+			// render whichever item was picked
+			var pick = target_list[pick_index];
+			pick.inspectron.render();
 		}
 	}
 }

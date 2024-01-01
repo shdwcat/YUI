@@ -194,5 +194,6 @@ unload = function(unload_root = undefined) {
 }
 
 Inspectron()
-	.Header("yui_panel")
+	.Section("yui_panel")
 	.Rect(nameof(used_layout_size))
+	.FieldsSuffix("", InspectronWatch, nameof(layout))
