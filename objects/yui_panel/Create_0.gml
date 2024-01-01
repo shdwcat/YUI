@@ -5,6 +5,7 @@ event_inherited();
 
 has_content_item = false;
 
+layout = undefined;
 internal_children = [];
 is_arranging = false;
 used_layout_size = undefined;
@@ -195,5 +196,4 @@ unload = function(unload_root = undefined) {
 
 Inspectron()
 	.Section("yui_panel")
-	.Rect(nameof(used_layout_size))
-	.FieldsSuffix("", InspectronWatch, nameof(layout))
+	.Include(nameof(layout))

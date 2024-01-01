@@ -137,6 +137,14 @@ function YuiElementSize(size) constructor {
 	
 		return draw_size;
 	}
+	
+	static inspectron = Inspectron()
+		.Watch(nameof(w))
+		.Watch(nameof(h))
+		.Watch(nameof(min_w))
+		.Watch(nameof(min_h))
+		.Watch(nameof(max_w))
+		.Watch(nameof(max_h))
 }
 
 function YuiFlexValue(value) constructor {

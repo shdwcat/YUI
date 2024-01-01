@@ -77,4 +77,10 @@ function YuiPadding(padding) constructor {
 	
 		return padded_rect;
 	}
+	
+	static inspectron = Inspectron()
+		.Watch(nameof(left))
+		.Watch(nameof(top))
+		.Watch(nameof(right))
+		.Watch(nameof(bottom))
 }
