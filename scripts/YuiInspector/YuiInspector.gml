@@ -52,11 +52,6 @@ function YuiInspector() constructor {
 				target_list,
 				function (item) { return item._id; });	
 			
-			var f = function() {
-				yui_log("clicked");
-			}
-			dbg_button("Generate Layout Log", f);
-			
 			// render whichever item was picked
 			var pick = target_list[pick_index];
 			pick.inspectron.render();

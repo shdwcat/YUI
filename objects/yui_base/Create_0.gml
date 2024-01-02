@@ -434,7 +434,12 @@ unload = function(unload_root = undefined) {
 	return unload_time;
 }
 
+generateLayoutLog = function() {
+	yui_log("TODO: generate layout log");
+}
+
 Inspectron()
+	.Button("Generate Layout Log", generateLayoutLog).AtTop()
 	.Section("yui_base")
 	.Checkbox(nameof(trace))
 	.Checkbox(nameof(is_cursor_layer))
