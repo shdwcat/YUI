@@ -1,7 +1,24 @@
 // INSPECTRON - A Fluent API for easily creating GM debug overlays
 // copyright @shdwcat 2023 
 
+// === Configuration - edit these if you want! ===
+
+// default size of the debug overlay
+#macro INSPECTRON_WIDTH 700
+#macro INSPECTRON_HEIGHT 550
+
+// minimum size of the overlay if space is restricted
+#macro INSPECTRON_MIN_WIDTH 500
+#macro INSPECTRON_MIN_HEIGHT 300
+
+// how much to indent nested values (e.g. structs or linked instances)
 #macro INSPECTRON_INDENT "    "
+
+
+
+
+
+// === Inspectron code below! ===
 
 // (these are restored at end of file)
 // feather disable GM1056
@@ -384,6 +401,115 @@ function InspectronArrayDropDown(ref, label, items, label_func) {
 	var specifier = string_join_ext(",", pairs);
 		
 	dbg_drop_down(ref, specifier, label);
+}
+
+/// @desc calculates where to positon the Inspectron debug overlay
+/// @param {id.Instance} target the instance to position the overlay next to
+// feather ignore once GM2017
+function InspectronCalcOverlayRect(target) {
+		
+	var window_w = window_get_width();
+	var window_h = window_get_height();
+	var max_x = window_w - INSPECTRON_WIDTH;
+	var max_y = window_h - INSPECTRON_HEIGHT;
+			
+	var target_left = target.x;			
+	var target_top = target.y;
+			
+	var target_w = 0;
+	var target_h = 0;
+	if target.sprite_index >= 0 {
+		target_w = sprite_get_width(target.sprite_index) * target.image_xscale;
+		target_h = sprite_get_height(target.sprite_index) * target.image_yscale;
+	}
+	else {
+		show_debug_message("Warning: Inspectron was unable to determine the target's size because it has no sprite");
+	}
+			
+	var target_right = target_left + target_w;
+	var target_bottom = target_top + target_h;
+			
+	var position = "right";
+	var desired_x = target_right + 5;
+	var desired_y = target_top;
+	var desired_w = INSPECTRON_WIDTH;
+	var desired_h = INSPECTRON_HEIGHT;
+			
+	var free_w = window_w - desired_x;
+			
+	if free_w < desired_w {
+		if free_w > INSPECTRON_MIN_WIDTH {
+			desired_w = free_w;
+		}
+		else if target_left + INSPECTRON_MIN_HEIGHT < window_w {
+			// reposition down
+			//show_debug_message("repositioning down (from width)");
+			position = "down";
+			desired_x = target_left;
+			desired_y = target_bottom + 5;
+		}
+		else {
+			// reposition left
+			//show_debug_message("repositioning left (from width)");
+			position = "left";
+			desired_x = target_left - INSPECTRON_WIDTH;
+			desired_y = target_top;
+		}
+	}
+			
+	var free_h = window_h - desired_y;
+	if free_h < INSPECTRON_HEIGHT {
+		if free_h > INSPECTRON_MIN_HEIGHT {
+			// squeeze if we can
+			desired_h = free_h;
+		}
+		else if position == "right" {
+			// if we had room to the right, just move the view up on screen
+			desired_h = INSPECTRON_MIN_HEIGHT;
+			desired_y = window_h - desired_h;
+		}
+		else {
+			// reposition left
+			//show_debug_message("repositioning left (from height)");
+			position = "left";
+			desired_x = target_left - INSPECTRON_WIDTH;
+			desired_y = target_top;
+					
+			// check height again
+			free_h = window_h - desired_y;
+			if free_h < INSPECTRON_HEIGHT {
+				if free_h > INSPECTRON_MIN_HEIGHT {
+					desired_h = free_h;
+				}
+				else {
+					// just move the view up on screen
+					desired_h = INSPECTRON_MIN_HEIGHT;
+					desired_y = window_h - desired_h;
+				}
+			}
+		}
+	}
+			
+	// if off screen left or above, reposition bottom right
+	if desired_x < 0 || desired_y < 0 {
+		//show_debug_message("positioning bottom right as last resort");
+		position = "bottom_right";
+		desired_x = max_x;
+		desired_y = max_y;
+		desired_w = INSPECTRON_WIDTH;
+		desired_h = INSPECTRON_HEIGHT;
+	}
+	
+	//show_debug_message($"Target: x: {target.x}, y: {target.y}");
+	//show_debug_message($"Window: w: {window_w}, h: {window_h}");
+	//show_debug_message($"Debug View: x: {desired_x}, y: {desired_y}, w: {desired_w}, h: {desired_h}");
+	
+	return {
+		x: desired_x,
+		y: desired_y,
+		w: desired_w,
+		h: desired_h,
+	};
 }
 
 // feather restore GM1056
