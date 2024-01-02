@@ -49,6 +49,15 @@ function InspectronRenderer(target, extends) constructor {
 	self.target = target;
 	self.extends = extends;
 	
+	if extends {
+		// init top fields from our base so that they actually go to the top
+		self.top_fields = extends.top_fields;
+		extends.top_fields = [];
+	}
+	else {
+		self.top_fields = [];
+	}
+	
 	self.fields = [];
 	
 	/// @param {struct.InspectronField} field
@@ -64,6 +73,10 @@ function InspectronRenderer(target, extends) constructor {
 	
 	static Header = function(header) {
 		return __addField(new InspectronLabel($"[ {header} ]"));
+	}
+	
+	static Button = function(label, on_click) {
+		return __addField(new InspectronButton(label, on_click));
 	}
 	
 	static Label = function(label) {
@@ -132,11 +145,27 @@ function InspectronRenderer(target, extends) constructor {
 		return __addField(new InspectronTargetReference(field_name, label));
 	}
 	
+	/// @desc Ensures that the previous field will be rendered at the top of the inspector,
+	///		even if the inspectron is inherited by a child object or derived constructor.
+	///		(Useful for adding buttons/etc related to the base object/constructor.)
+	static AtTop = function() {
+		
+		var last = array_pop(fields);
+		if last == undefined throw "Cannot call .AtTop() before defining a field!";
+		
+		array_push(top_fields, last);
+		
+		return self;
+	}
+	
 	/// @desc renders the inspectron to the current debug window
 	/// @param {string} scope_name
 	static render = function(scope_name = undefined, level = 0) {
-		var i = 0; repeat array_length(fields) {
-			var field = fields[i++];
+		
+		var all_fields = array_concat(top_fields, fields);
+		
+		var i = 0; repeat array_length(all_fields) {
+			var field = all_fields[i++];
 			field.render(target, scope_name, level);
 		}
 		
@@ -168,6 +197,16 @@ function InspectronSection(name) : InspectronField() constructor {
 	
 	function render(scope, scope_name, level) {
 		dbg_section(name);
+	}
+}
+
+function InspectronButton(custom_label, on_click) : InspectronField() constructor {
+	self.custom_label = custom_label;
+	self.on_click = on_click;
+	
+	function render(scope, scope_name, level) {
+		var label = __label(level);
+		dbg_button(label, on_click);
 	}
 }
 
