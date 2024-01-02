@@ -4,7 +4,7 @@
 // === Configuration - edit these if you want! ===
 
 // whether to automatically call InspectronSetGesture with the gesture settings below
-#macro INSPECTRON_GESTURE_ENABLED true
+#macro INSPECTRON_GESTURE_ENABLED false
 
 // mouse button and optional modifier key to trigger Inspectron if enabled above
 #macro INSPECTRON_GESTURE_MOUSE_BUTTON mb_middle
