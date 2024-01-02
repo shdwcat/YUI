@@ -118,7 +118,6 @@ resources:
     content:
       type: panel
       spacing: 0
-      //size: { w: stretch }
       alignment: { h: stretch }
       bind_slot_scope:
         on_item_selected: $on_item_selected

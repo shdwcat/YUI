@@ -1,7 +1,5 @@
 /// @description check cursor hover and run interaction
 
-inspector.refresh();
-
 var print_debug = keyboard_check_pressed(vk_shift)
 
 // get gui mouse position once per frame

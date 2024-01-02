@@ -1,9 +1,7 @@
 /// @description init
 
-inspector = new YuiInspector();
-
 // use single pixel + sizing with instance_place_list in step event
-sprite_index = yui_white_pixel
+sprite_index = yui_white_pixel;
 
 // ===== interactions =====
 
@@ -179,4 +177,3 @@ clearQueuedEvent = function() {
 	queued_method = undefined;
 	alarm_set(0, -1)
 }
-
