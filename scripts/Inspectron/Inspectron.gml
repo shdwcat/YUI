@@ -18,14 +18,45 @@
 
 
 
-// === Inspectron code below! ===
+// === Inspectron code is below! ===
+
 
 // (these are restored at end of file)
 // feather disable GM1056
+// feather disable GM2017
+// feather disable GM2043
+
+/// @desc creates a debug overlay for any matching inspectable items found at the mouse coordinates
+/// @param {Asset.GMObject,Id.Instance,Id.TileMapElement,Constant.All,Constant.Other,Array} game_kind
+///		the GAME object or type of object to get at the mouse coordinates
+///		(object index, instance, tile map element, all/other keyword, or an array of these values)
+/// @param {Asset.GMObject,Id.Instance,Id.TileMapElement,Constant.All,Constant.Other,Array} gui_kind
+///		the GUI object or type of object to get at the mouse's GUI coordinates
+///		(object index, instance, tile map element, all/other keyword, or an array of these values)
+/// @param {string} name the name for the debug view
+/// @param {function} item_name_func function to customize how an instance is named in the debug view
+function InspectronGo(game_kind = all, gui_kind = undefined, name = "Inspectron", item_name_func = undefined) {
+	static overlay = new InspectronOverlay(name, item_name_func);	
+	
+	overlay.Reset()
+		.Pick(mouse_x, mouse_y, game_kind);
+		
+	if gui_kind != undefined
+		overlay.Pick(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), gui_kind);
+		
+	overlay.Show();
+}
+
+/// @desc stops and hides the Inspectron overlay created by InspectronGo
+///		(you probably don't ever need to call this)
+function InspectronStop() {
+	if InspectronGo.overlay != undefined {
+		InspectronGo.overlay.Hide();
+	}
+}
 
 /// @description Fluent API for easily creating GM debug overlays
 /// @param {struct,id.instance} target
-// feather disable once GM2017
 function Inspectron(target = undefined) {
 	var had_target = target != undefined;
 	
@@ -144,6 +175,21 @@ function InspectronRenderer(target, extends) constructor {
 	static Include = function(field_name, label = undefined) {
 		return __addField(new InspectronTargetReference(field_name, label));
 	}
+	
+	//static OpenStruct = function(target) {
+	//	if target == undefined throw "Can't .OpenStruct(target) if target is undefined!";
+		
+	//	var inner = Inspectron(target);
+	//	inner.owner = self;
+	//	__addField(inner);
+	//	return inner;
+	//}
+	
+	//static Close = function() {
+	//	if owner == undefined throw "Can't call .Close() on a top level Inspectron!";
+		
+	//	return owner;
+	//}
 	
 	/// @desc Ensures that the previous field will be rendered at the top of the inspector,
 	///		even if the inspectron is inherited by a child object or derived constructor.
@@ -431,7 +477,6 @@ function InspectronAssetPicker(field_name, custom_label, asset_type, name_func, 
 /// @param {string} label
 /// @param {Array<Any>} items
 /// @param {Function} label_func
-// feather ignore once GM2017
 function InspectronArrayDropDown(ref, label, items, label_func) {
 	
 	var pairs = array_map(items, method({ label_func }, function(item, index) {
@@ -442,11 +487,31 @@ function InspectronArrayDropDown(ref, label, items, label_func) {
 	dbg_drop_down(ref, specifier, label);
 }
 
-
+/// @param {string} name the name for the debug view
+/// @param {function} item_name_func function that returns the display name for an inspectable item
 // feather ignore GM1045
-function InspectronOverlay() constructor {
+function InspectronOverlay(name = "Inspectron", item_name_func = undefined) constructor {
+	self.name = name;
+	self.item_name_func = item_name_func ?? function (instance) {
+		return $"ID {real(instance.id)} - {object_get_name(instance.object_index)}";
+	};
 	
-	self.targets = [];
+	self.debug_pointer = undefined;
+	self.time_source = undefined;
+	
+	Reset();
+	
+	static Reset = function() {
+		target = undefined;
+		targets = [];
+		pick_index = 0;
+		
+		self.current = {
+			pick_index,
+		}
+		
+		return self;
+	}
 
 	/// @param {real} x the x position to check (in world coordinates, not GUI)
 	/// @param {real} y the y position to check (in world coordinates, not GUI)
@@ -477,11 +542,93 @@ function InspectronOverlay() constructor {
 
 		return self;
 	}
+	
+	static Show = function () {
+		
+		target = array_length(targets) > pick_index
+			? targets[pick_index]
+			: undefined;
+			
+		if target == undefined || !instance_exists(target) {
+			Hide();
+			return;
+		}
+		
+		// track current state for comparison in .Update()
+		current = {
+			pick_index,
+		};
+		
+		// delete the old view
+		if debug_pointer != undefined
+			dbg_view_delete(debug_pointer);
+		
+		if time_source == undefined
+			StartUpdateLoop();
+		
+		// position and show the debug view
+		
+		var window_rect = InspectronCalcOverlayRect(target);
+
+		debug_pointer = dbg_view(
+			$"{name} - {item_name_func(array_first(targets))}", true,
+			window_rect.x, window_rect.y, window_rect.w, window_rect.h);
+			
+		dbg_section($"General");
+						
+		InspectronArrayDropDown(
+			ref_create(self, "pick_index"),
+			$"Instances at {mouse_x}, {mouse_y} (in depth order):",
+			targets,
+			item_name_func);
+			
+		// render whichever item was picked
+		target.inspectron.render();
+	}
+	
+	static Hide = function() {
+		Reset();
+		
+		if time_source != undefined {
+			time_source_destroy(time_source);
+			time_source = undefined
+		}
+		
+		if debug_pointer != undefined
+			dbg_view_delete(debug_pointer);
+	}
+	
+	static StartUpdateLoop = function() {
+		
+		// start a time source to call .Update() each frame
+		time_source ??= time_source_create(
+			time_source_global, 1, time_source_units_frames,
+			function (overlay) {
+				overlay.Update();
+			},
+			[ self ],
+			-1);
+			
+		time_source_start(time_source);
+	}
+	
+	/// @desc checks if any inspectron option values have changed so that the view can be updated
+	static Update = function() {
+		if target == undefined || !instance_exists(target) {
+			Hide();
+			return;
+		}
+				
+		var needs_refresh =
+			pick_index != current.pick_index;
+			
+		if needs_refresh Show();
+	}
+}
 // feather restore GM1045
 
 /// @desc calculates where to positon the Inspectron debug overlay
 /// @param {id.Instance} target the instance to position the overlay next to
-// feather ignore once GM2017
 function InspectronCalcOverlayRect(target) {
 		
 	var window_w = window_get_width();
@@ -589,3 +736,5 @@ function InspectronCalcOverlayRect(target) {
 }
 
 // feather restore GM1056
+// feather restore GM2017
+// feather restore GM2043
