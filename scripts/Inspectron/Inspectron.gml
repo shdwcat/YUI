@@ -442,6 +442,43 @@ function InspectronArrayDropDown(ref, label, items, label_func) {
 	dbg_drop_down(ref, specifier, label);
 }
 
+
+// feather ignore GM1045
+function InspectronOverlay() constructor {
+	
+	self.targets = [];
+
+	/// @param {real} x the x position to check (in world coordinates, not GUI)
+	/// @param {real} y the y position to check (in world coordinates, not GUI)
+	/// @param {Asset.GMObject,Id.Instance,Id.TileMapElement,Constant.All,Constant.Other,Array} kind
+	///		the object or type of object to get
+	///		(object index, instance, tile map element, all/other keyword, or an array of these values)
+	/// @returns {Array<Id.Instance>}
+	static Pick = function(x, y, kind) {
+	
+		var list = ds_list_create();
+		var count = instance_position_list(x, y, kind, list, false);
+		
+		var existing_count = array_length(targets);
+		
+		// push existing items to the end
+		if existing_count > 0 {
+			array_resize(targets, existing_count + count);
+			array_copy(targets, count, targets, 0, existing_count);
+		}
+
+		// copy the list into the array in reverse order
+		var i = 0; repeat count {
+			targets[i] = list[| count - i - 1];
+			i++;
+		}
+	
+		ds_list_destroy(list);	
+
+		return self;
+	}
+// feather restore GM1045
+
 /// @desc calculates where to positon the Inspectron debug overlay
 /// @param {id.Instance} target the instance to position the overlay next to
 // feather ignore once GM2017
