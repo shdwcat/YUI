@@ -588,6 +588,7 @@
     {"id":{"name":"yui_align_item","path":"scripts/yui_align_item/yui_align_item.yy",},},
     {"id":{"name":"yui_draw_text_to_surface","path":"scripts/yui_draw_text_to_surface/yui_draw_text_to_surface.yy",},},
     {"id":{"name":"YuiPopupElement","path":"scripts/YuiPopupElement/YuiPopupElement.yy",},},
+    {"id":{"name":"InspectronConfig","path":"scripts/InspectronConfig/InspectronConfig.yy",},},
     {"id":{"name":"yui_color_from_hex_string","path":"scripts/yui_color_from_hex_string/yui_color_from_hex_string.yy",},},
     {"id":{"name":"KnitParser","path":"scripts/KnitParser/KnitParser.yy",},},
     {"id":{"name":"YuiAnimationGroup","path":"scripts/YuiAnimationGroup/YuiAnimationGroup.yy",},},

@@ -1,30 +1,13 @@
 // INSPECTRON - A Fluent API for easily creating GM debug overlays
 // copyright @shdwcat 2023 
 
-// === Configuration - edit these if you want! ===
-
-// default size of the debug overlay
-#macro INSPECTRON_WIDTH 700
-#macro INSPECTRON_HEIGHT 550
-
-// minimum size of the overlay if space is restricted
-#macro INSPECTRON_MIN_WIDTH 500
-#macro INSPECTRON_MIN_HEIGHT 300
-
-// how much to indent nested values (e.g. structs or linked instances)
-#macro INSPECTRON_INDENT "    "
-
-
-
-
-
-// === Inspectron code is below! ===
-
-
 // (these are restored at end of file)
 // feather disable GM1056
 // feather disable GM2017
 // feather disable GM2043
+
+if INSPECTRON_GESTURE_ENABLED
+	InspectronSetGesture(INSPECTRON_GESTURE_MOUSE_BUTTON, INSPECTRON_GESTURE_MODIFIER);
 
 /// @desc creates a debug overlay for any matching inspectable items found at the mouse coordinates
 /// @param {Asset.GMObject,Id.Instance,Id.TileMapElement,Constant.All,Constant.Other,Array} game_kind
@@ -54,6 +37,34 @@ function InspectronStop() {
 		InspectronGo.overlay.Hide();
 	}
 }
+
+function InspectronSetGesture(button, modifier = undefined) {
+	static time_source = undefined;
+	
+	self.button = button;
+	self.modifier = modifier;
+	
+	if time_source == undefined {
+		time_source = time_source_create(
+			time_source_global, 1, time_source_units_frames,
+			function () {
+				if mouse_check_button_released(button) and (modifier == undefined or keyboard_check(modifier)) {
+						InspectronGo();
+				}					
+			},
+			[],
+			-1);
+			
+		time_source_start(time_source);
+	}
+}
+
+// feather ignore GM1044
+function InspectronClearGesture() {
+	time_source_destroy(InspectronSetGesture.time_source);
+	InspectronSetGesture.time_source = undefined;
+}
+// feather restore GM1044
 
 /// @description Fluent API for easily creating GM debug overlays
 /// @param {struct,id.instance} target
@@ -513,6 +524,8 @@ function InspectronOverlay(name = "Inspectron", item_name_func = undefined) cons
 		return self;
 	}
 
+	/// @desc finds instances of the provided 'kind' at the given coordinates 
+	///		and adds them to the targets list for this InspectronOverlay
 	/// @param {real} x the x position to check (in world coordinates, not GUI)
 	/// @param {real} y the y position to check (in world coordinates, not GUI)
 	/// @param {Asset.GMObject,Id.Instance,Id.TileMapElement,Constant.All,Constant.Other,Array} kind
