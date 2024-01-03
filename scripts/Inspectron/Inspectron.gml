@@ -219,6 +219,26 @@ function InspectronRenderer(target, extends) constructor {
 		return self;
 	}
 	
+	/// @desc adds fields for many built-in instance variables
+	static BuiltIn = function() {
+		Section("Built-In");
+		Watch(nameof(x));
+		Watch(nameof(y));
+		Watch(nameof(depth));
+		Watch(nameof(vspeed));
+		Watch(nameof(hspeed));
+		Checkbox(nameof(visible));
+		Checkbox(nameof(persistent));
+		SpritePicker(nameof(sprite_index));
+		Watch(nameof(sprite_xoffset));
+		Watch(nameof(sprite_yoffset));
+		Watch(nameof(sprite_width));
+		Watch(nameof(sprite_height));
+		Slider(nameof(image_alpha), 0, 1);
+		Slider(nameof(image_index), 0, target.image_number);
+		Color(nameof(image_blend));
+	}
+	
 	/// @desc renders the inspectron to the current debug window
 	/// @param {string} scope_name
 	static render = function(scope_name = undefined, level = 0) {
@@ -582,6 +602,18 @@ function InspectronOverlay(name = "Inspectron", item_name_func = undefined) cons
 			return;
 		}
 		
+		var inspectron = target[$ "inspectron"];
+		if inspectron == undefined {
+			if INSPECTRON_AUTO_INSPECT_ENABLED {
+				with target {
+					Inspectron().BuiltIn();
+				}
+			}
+			else {
+				return;
+			}
+		}
+		
 		// track current state for comparison in .Update()
 		current = {
 			pick_index,
@@ -603,13 +635,15 @@ function InspectronOverlay(name = "Inspectron", item_name_func = undefined) cons
 			window_rect.x, window_rect.y, window_rect.w, window_rect.h);
 			
 		dbg_section($"General");
+					
+		//dbg_text("debug window rect: " + window_rect.toString())
 						
 		InspectronArrayDropDown(
 			ref_create(self, "pick_index"),
 			$"Instances at {mouse_x}, {mouse_y} (in depth order):",
 			targets,
 			item_name_func);
-			
+
 		// render whichever item was picked
 		target.inspectron.render();
 	}
@@ -656,16 +690,49 @@ function InspectronOverlay(name = "Inspectron", item_name_func = undefined) cons
 // feather restore GM1045
 
 /// @desc calculates where to positon the Inspectron debug overlay
-/// @param {id.Instance} target the instance to position the overlay next to
-function InspectronCalcOverlayRect(target) {
+/// @param {Id.Instance} target the instance to position the overlay next to
+/// @param {Id.Camera} camera the camera to use when determining GUI position
+function InspectronCalcOverlayRect(target, camera = undefined) {
+	
+	/// @param {Real} x
+	/// @param {Id.Camera,Real} camera
+	static __worldToWindowX = function(x, camera = 0) {
+		var camera_x = camera_get_view_x(view_camera[camera]);
+		var camera_w = camera_get_view_width(view_camera[camera]);
+
+		var xoffset = x - camera_x;
+
+		// convert to window coords
+		var xoffset_percent = xoffset / camera_w;
+
+		var gui_x = xoffset_percent * window_get_width();
+	
+		return floor(gui_x);
+	}
+	
+	/// @param {Real} x
+	/// @param {Id.Camera,Real} camera
+	static __worldToWindowY = function(y, camera = 0) {
+		var camera_y = camera_get_view_y(view_camera[camera]);
+		var camera_h = camera_get_view_height(view_camera[camera]);
+	
+		var yoffset = y - camera_y;
+
+		// convert to window coords
+		var yoffset_percent = yoffset / camera_h;
+
+		var gui_y = yoffset_percent * window_get_height();
+
+		return floor(gui_y);
+	}
 		
 	var window_w = window_get_width();
 	var window_h = window_get_height();
 	var max_x = window_w - INSPECTRON_WIDTH;
 	var max_y = window_h - INSPECTRON_HEIGHT;
 			
-	var target_left = target.x;			
-	var target_top = target.y;
+	var target_left = __worldToWindowX(target.x - target.sprite_xoffset, camera);
+	var target_top = __worldToWindowY(target.y - target.sprite_yoffset, camera);
 			
 	var target_w = 0;
 	var target_h = 0;

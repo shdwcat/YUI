@@ -3,6 +3,9 @@
 
 // === Configuration - edit these if you want! ===
 
+// whether to automatically create a basic inspectron for instances that don't define one
+#macro INSPECTRON_AUTO_INSPECT_ENABLED true
+
 // whether to automatically call InspectronSetGesture with the gesture settings below
 #macro INSPECTRON_GESTURE_ENABLED false
 
