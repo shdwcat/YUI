@@ -133,6 +133,10 @@ function InspectronRenderer(target, extends) constructor {
 		return __addField(new InspectronTextInput(field_name, label));
 	}
 	
+	static Slider = function(field_name, minimum, maximum, label = undefined) {
+		return __addField(new InspectronSlider(field_name, label, minimum, maximum));
+	}
+	
 	static Bool = function(field_name, label = undefined) {
 		return __addField(new InspectronBool(field_name, label));
 	}
@@ -291,6 +295,17 @@ function InspectronTextInput(field_name, custom_label) : InspectronField(custom_
 	function render(scope, scope_name, level) {
 		var label = __label(level);
 		dbg_text_input(ref_create(scope, field_name), label);
+	}
+}
+
+function InspectronSlider(field_name, custom_label, minimum, maximum) : InspectronField(custom_label) constructor {
+	self.field_name = field_name;
+	self.minimum = minimum;
+	self.maximum = maximum;
+	
+	function render(scope, scope_name, level) {
+		var label = __label(level);
+		dbg_slider(ref_create(scope, field_name), minimum, maximum, label);
 	}
 }
 
