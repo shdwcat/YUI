@@ -545,6 +545,8 @@ function InspectronOverlay(name = "Inspectron", item_name_func = undefined) cons
 	self.debug_pointer = undefined;
 	self.time_source = undefined;
 	
+	//self.frame = undefined;
+	
 	Reset();
 	
 	static Reset = function() {
@@ -625,6 +627,25 @@ function InspectronOverlay(name = "Inspectron", item_name_func = undefined) cons
 		
 		if time_source == undefined
 			StartUpdateLoop();
+		
+		//if frame != undefined
+		//	instance_destroy(frame);
+			
+		//var frame_x = target.x - target.sprite_xoffset;
+		//var frame_y = target.y - target.sprite_yoffset;
+		
+		//var xscale = target.image_xscale;
+		//var yscale = target.image_yscale;
+		
+		//frame = instance_create_depth(
+		//	frame_x,
+		//	frame_y,
+		//	target.depth,
+		//	InspectronDebugFrame,
+		//	{
+		//		w: target.sprite_width,
+		//		h: target.sprite_height,
+		//	});
 		
 		// position and show the debug view
 		
