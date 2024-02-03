@@ -1,5 +1,5 @@
-// INSPECTRON - A Fluent API for easily creating GM debug overlays
-// copyright @shdwcat 2023 
+// INSPECTRON - A fluent API for easily creating GameMaker debug views
+// copyright @shdwcat 2024
 
 // (these are restored at end of file)
 // feather disable GM1056
@@ -464,7 +464,7 @@ function InspectronPicker(field_name, custom_label, choices, labels = undefined)
 	function render(scope, scope_name, level) {
 		var label = __label(level);
 		
-		// feather disable once GM1041
+		// feather disable GM1041
 		dbg_drop_down(ref_create(scope, field_name), choices, choice_labels, label);
 	}
 }
@@ -718,69 +718,128 @@ function InspectronCalcOverlayRect(target, camera = undefined) {
 	/// @param {Real} x
 	/// @param {Id.Camera,Real} camera
 	static __worldToWindowX = function(x, camera = 0) {
-		var camera_x = camera_get_view_x(view_camera[camera]);
-		var camera_w = camera_get_view_width(view_camera[camera]);
+		
+		if view_enabled {
+			var camera_x = camera_get_view_x(view_camera[camera]);
+			var camera_w = camera_get_view_width(view_camera[camera]);
+			var viewport_w = view_wport[camera];
+			var window_w = window_get_width();
 
-		var xoffset = x - camera_x;
+			// position relative to camera
+			var xoffset = x - camera_x;
 
-		// convert to window coords
-		var xoffset_percent = xoffset / camera_w;
+			// find the relation of the camera x to the camera size
+			var camera_ratio_x = xoffset / camera_w;
+			
+			// multiply by the viewport size to get the x position in the view
+			var x_in_viewport = camera_ratio_x * viewport_w;
+		
+			var view_scale_w = viewport_w / window_w;
+			var x_in_window = x_in_viewport / view_scale_w;
+		
+			// account for the viewport's x
+			x_in_window += view_get_xport(camera);
 
-		var gui_x = xoffset_percent * window_get_width();
-	
-		return floor(gui_x);
+			return floor(x_in_window);
+		}
+		else {
+			// when views are not enabled, the full room is drawn scaled to the window size
+			var window_w = window_get_width();
+
+			// find the relation of the room x to the room width
+			var room_ratio_x = x / room_width;
+			var x_in_window = room_ratio_x * window_w;
+
+			return floor(x_in_window);
+		}
 	}
 	
-	/// @param {Real} x
+	/// @param {Real} y
 	/// @param {Id.Camera,Real} camera
 	static __worldToWindowY = function(y, camera = 0) {
-		var camera_y = camera_get_view_y(view_camera[camera]);
-		var camera_h = camera_get_view_height(view_camera[camera]);
-	
-		var yoffset = y - camera_y;
+		if view_enabled {
+			var camera_y = camera_get_view_y(view_camera[camera]);
+			var camera_h = camera_get_view_height(view_camera[camera]);
+			var viewport_h = view_hport[camera];
+			var window_h = window_get_height();
 
-		// convert to window coords
-		var yoffset_percent = yoffset / camera_h;
+			// position relative to camera
+			var yoffset = y - camera_y;
 
-		var gui_y = yoffset_percent * window_get_height();
+			// find the relation of the camera y to the camera size
+			var camera_ratio_y = yoffset / camera_h;
 
-		return floor(gui_y);
+			// multiple by the viewport size to get the x position in the view
+			var y_in_viewport = camera_ratio_y * viewport_h;
+		
+			var view_scale_h = viewport_h / window_h;
+			var y_in_window = y_in_viewport / view_scale_h;
+		
+			// account for the viewport's y
+			y_in_window += view_get_yport(camera);
+			
+			return floor(y_in_window);
+		}
+		else {
+			// when views are not enabled, the full room is drawn scaled to the window size
+			var window_h = window_get_height();
+
+			// find the relation of the room y to the room height
+			var room_ratio_y = y / room_height;
+			var y_in_window = room_ratio_y * window_h;
+
+			return floor(y_in_window);
+		}
 	}
 		
 	var window_w = window_get_width();
 	var window_h = window_get_height();
-	var max_x = window_w - INSPECTRON_WIDTH;
-	var max_y = window_h - INSPECTRON_HEIGHT;
-			
-	var target_left = __worldToWindowX(target.x - target.sprite_xoffset, camera);
-	var target_top = __worldToWindowY(target.y - target.sprite_yoffset, camera);
+	
+	// the default width and height may be too large for small
+	// resolutions so constrain it to a reasonable size
+	var max_w = min(INSPECTRON_WIDTH, window_w * .66);
+	var max_h = min(INSPECTRON_HEIGHT, window_h * .66);
+	var min_w = min(INSPECTRON_MIN_WIDTH, max_w * .75);
+	var min_h = min(INSPECTRON_MIN_HEIGHT, max_h * .75);
+	
+	var max_x = window_w - max_w;
+	var max_y = window_h - max_h;
+	
+	var target_x = target.x - target.sprite_xoffset;
+	var target_y = target.y - target.sprite_yoffset;
+	var target_left = __worldToWindowX(target_x, camera);
+	var target_top = __worldToWindowY(target_y, camera);
 			
 	var target_w = 0;
 	var target_h = 0;
 	if target.sprite_index >= 0 {
-		target_w = sprite_get_width(target.sprite_index) * target.image_xscale;
-		target_h = sprite_get_height(target.sprite_index) * target.image_yscale;
+		target_w = target.sprite_width;
+		target_h = target.sprite_height;
 	}
 	else {
 		show_debug_message("Warning: Inspectron was unable to determine the target's size because it has no sprite");
 	}
 			
-	var target_right = target_left + target_w;
-	var target_bottom = target_top + target_h;
+	var target_right = __worldToWindowX(target_x + target_w, camera);
+	var target_bottom = __worldToWindowY(target_y + target_h, camera);
+	
+	// remember our original desired size in case we need to reset after repositioning
+	var original_desired_w = min(INSPECTRON_WIDTH, max_w);
+	var original_desired_h = min(INSPECTRON_HEIGHT, max_h);
 			
 	var position = "right";
 	var desired_x = target_right + 5;
 	var desired_y = target_top;
-	var desired_w = INSPECTRON_WIDTH;
-	var desired_h = INSPECTRON_HEIGHT;
+	var desired_w = min(original_desired_w, max_w);
+	var desired_h = min(original_desired_h, max_h);
 			
 	var free_w = window_w - desired_x;
-			
+
 	if free_w < desired_w {
-		if free_w > INSPECTRON_MIN_WIDTH {
+		if free_w > min_w {
 			desired_w = free_w;
 		}
-		else if target_left + INSPECTRON_MIN_HEIGHT < window_w {
+		else if target_left + min_h < window_w {
 			// reposition down
 			//show_debug_message("repositioning down (from width)");
 			position = "down";
@@ -791,38 +850,38 @@ function InspectronCalcOverlayRect(target, camera = undefined) {
 			// reposition left
 			//show_debug_message("repositioning left (from width)");
 			position = "left";
-			desired_x = target_left - INSPECTRON_WIDTH;
+			desired_x = target_left - desired_w;
 			desired_y = target_top;
 		}
 	}
 			
 	var free_h = window_h - desired_y;
-	if free_h < INSPECTRON_HEIGHT {
-		if free_h > INSPECTRON_MIN_HEIGHT {
+	if free_h < desired_h {
+		if free_h > min_h {
 			// squeeze if we can
 			desired_h = free_h;
 		}
 		else if position == "right" {
 			// if we had room to the right, just move the view up on screen
-			desired_h = INSPECTRON_MIN_HEIGHT;
+			desired_h = min_h;
 			desired_y = window_h - desired_h;
 		}
 		else {
 			// reposition left
 			//show_debug_message("repositioning left (from height)");
 			position = "left";
-			desired_x = target_left - INSPECTRON_WIDTH;
+			desired_x = target_left - original_desired_w;
 			desired_y = target_top;
 					
 			// check height again
 			free_h = window_h - desired_y;
-			if free_h < INSPECTRON_HEIGHT {
-				if free_h > INSPECTRON_MIN_HEIGHT {
+			if free_h < original_desired_h {
+				if free_h > min_h {
 					desired_h = free_h;
 				}
 				else {
 					// just move the view up on screen
-					desired_h = INSPECTRON_MIN_HEIGHT;
+					desired_h = min_h;
 					desired_y = window_h - desired_h;
 				}
 			}
@@ -835,8 +894,8 @@ function InspectronCalcOverlayRect(target, camera = undefined) {
 		position = "bottom_right";
 		desired_x = max_x;
 		desired_y = max_y;
-		desired_w = INSPECTRON_WIDTH;
-		desired_h = INSPECTRON_HEIGHT;
+		desired_w = max_w;
+		desired_h = max_h;
 	}
 	
 	//show_debug_message($"Target: x: {target.x}, y: {target.y}");
