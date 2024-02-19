@@ -18,6 +18,9 @@ visual_item = undefined;
 cursor_offset_x = 0;
 cursor_offset_y = 0;
 
+// variables for Input 6 library support
+is_navigation_active = false; // whether YUI should check for inputs and update focus
+
 finishInteraction = function() {
 	yui_log($"interaction {active_interaction.props.type} complete");
 	if visual_item {
@@ -110,6 +113,10 @@ setFocus = function(focus_item, new_scope = undefined) {
 }
 
 moveFocus = function(direction = YUI_FOCUS_DIRECTION.DOWN) {
+	if !focused_item {
+		return;
+	}
+
 	var next_item = yui_find_focus_item(
 		focused_item,
 		focus_list,
@@ -119,18 +126,25 @@ moveFocus = function(direction = YUI_FOCUS_DIRECTION.DOWN) {
 	if next_item {
 		setFocus(next_item);
 	}
-	else if direction != YUI_FOCUS_DIRECTION.UP {
-		moveFocus(YUI_FOCUS_DIRECTION.UP);
-	}
-	else {
-		clearFocus();
-	}
+	// NOTE: what was this stuff supposed to do?
+	//else if direction != YUI_FOCUS_DIRECTION.UP {
+	//	moveFocus(YUI_FOCUS_DIRECTION.UP);
+	//}
+	//else {
+	//	clearFocus();
+	//}
 }
 
 clearFocus = function() {
 	// TODO: this should try to find the previous focus item in scope,
 	// or kick up the focus stack
 	setFocus(undefined);
+}
+
+activateFocused = function() {
+	if focused_item && instance_exists(focused_item) && focused_item.left_click != undefined {
+		focused_item.left_click();
+	}
 }
 
 trackMouseDownItems = function(button) {
@@ -164,7 +178,7 @@ queueEvent = function(name, target, method, delay_ms) {
 	
 	// convert milliseconds to game steps
 	// room_speed = steps per second
-	var steps = ceil(room_speed * (delay_ms / 1000));
+	var steps = ceil(game_get_speed(gamespeed_fps) * (delay_ms / 1000));
 	yui_log($"queueing event {name} with delay ms {delay_ms}");
 	alarm_set(0, steps);
 }
