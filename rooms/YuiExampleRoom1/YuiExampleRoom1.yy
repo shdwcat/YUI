@@ -2,7 +2,7 @@
   "resourceType": "GMRoom",
   "resourceVersion": "1.0",
   "name": "YuiExampleRoom1",
-  "creationCodeFile": "",
+  "creationCodeFile": "rooms/YuiExampleRoom1/RoomCreationCode.gml",
   "inheritCode": false,
   "inheritCreationOrder": false,
   "inheritLayers": false,
