@@ -1,5 +1,8 @@
 /// @description init
 
+// input lib setup
+if YUI_INPUT_LIB_ENABLED __yui_init_input_lib();
+
 // use single pixel + sizing with instance_place_list in step event
 sprite_index = yui_white_pixel;
 
@@ -160,6 +163,68 @@ trackMouseDownItems = function(button) {
 
 isCursorOnVisiblePart = function(item) {
 	return item.isPointVisible(mouse_x + cursor_offset_x, mouse_y + cursor_offset_y);
+}
+
+onCursorWheelUp = function() {
+	var wheel_up_consumed = false;
+	var i = hover_count - 1; repeat hover_count {
+		var next = hover_list[| i];
+		//yui_log("pressed instance", i, "is", next.id, "type", object_get_name(next.object_index));
+	
+		if instance_exists(next) && isCursorOnVisiblePart(next) {
+			if next.on_mouse_wheel_up {
+				//yui_log("pressed instance", i, "is", next.id, "type", object_get_name(next.object_index));
+				wheel_up_consumed = next.on_mouse_wheel_up() != false;
+				if wheel_up_consumed {
+					break;
+				}
+			}
+	
+			// a cursor layer blocks all events from propagating below it
+			// e.g. popups and windows
+			if next.is_cursor_layer {
+				break;
+			}
+		}
+	
+		i--;
+	}
+
+	if i < 0 && global_wheel_up {
+		// Feather disable once GM1021
+		global_wheel_up();
+	}
+}
+
+onCursorWheelDown = function() {
+	var wheel_down_consumed = false;
+	var i = hover_count - 1; repeat hover_count {
+		var next = hover_list[| i];
+		//yui_log("pressed instance", i, "is", next.id, "type", object_get_name(next.object_index));
+	
+		if instance_exists(next) && isCursorOnVisiblePart(next) {
+			if next.on_mouse_wheel_down {
+				//yui_log("pressed instance", i, "is", next.id, "type", object_get_name(next.object_index));
+				wheel_down_consumed = next.on_mouse_wheel_down() != false;
+				if wheel_down_consumed {
+					break;
+				}
+			}
+	
+			// a cursor layer blocks all events from propagating below it
+			// e.g. popdowns and windows
+			if next.is_cursor_layer {
+				break;
+			}
+		}
+	
+		i--;
+	}
+
+	if i < 0 && global_wheel_down {
+		// Feather disable once GM1021
+		global_wheel_down();
+	}
 }
 
 // track delayed events like double click

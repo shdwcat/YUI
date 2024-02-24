@@ -898,6 +898,7 @@
     {"id":{"name":"input_mouse_capture_get","path":"scripts/input_mouse_capture_get/input_mouse_capture_get.yy",},},
     {"id":{"name":"input_cursor_dx","path":"scripts/input_cursor_dx/input_cursor_dx.yy",},},
     {"id":{"name":"yui_resolve_resource_category_map","path":"scripts/yui_resolve_resource_category_map/yui_resolve_resource_category_map.yy",},},
+    {"id":{"name":"__yui_init_input_lib","path":"scripts/__yui_init_input_lib/__yui_init_input_lib.yy",},},
     {"id":{"name":"string_width_scribble","path":"scripts/string_width_scribble/string_width_scribble.yy",},},
     {"id":{"name":"input_cursor_limit_get","path":"scripts/input_cursor_limit_get/input_cursor_limit_get.yy",},},
     {"id":{"name":"GsplScanner","path":"scripts/GsplScanner/GsplScanner.yy",},},

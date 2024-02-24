@@ -716,6 +716,7 @@
     {"name":"__yui_init_crash_handler","order":21,"path":"scripts/__yui_init_crash_handler/__yui_init_crash_handler.yy",},
     {"name":"input_cursor_dx","order":2,"path":"scripts/input_cursor_dx/input_cursor_dx.yy",},
     {"name":"yui_resolve_resource_category_map","order":3,"path":"scripts/yui_resolve_resource_category_map/yui_resolve_resource_category_map.yy",},
+    {"name":"__yui_init_input_lib","order":3,"path":"scripts/__yui_init_input_lib/__yui_init_input_lib.yy",},
     {"name":"string_width_scribble","order":5,"path":"scripts/string_width_scribble/string_width_scribble.yy",},
     {"name":"input_cursor_limit_get","order":6,"path":"scripts/input_cursor_limit_get/input_cursor_limit_get.yy",},
     {"name":"input_mouse_wheel_up","order":10,"path":"scripts/input_mouse_wheel_up/input_mouse_wheel_up.yy",},
