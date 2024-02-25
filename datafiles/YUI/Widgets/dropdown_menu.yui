@@ -27,8 +27,9 @@ resources:
       // array of items to select from
       items: []
 
+      // currently broken
       // whether the value can be cleared
-      can_clear_value: true
+      //can_clear_value: true
 
       // whether to show a search field above the items
       searchable: false
@@ -72,16 +73,18 @@ resources:
             //flex: true
             content: $item_template
 
-          - type: button
-            content:
-              type: text // TODO X sprite
-              color: $theme.resources.negative_color
-              text: X
-            padding: [5, 0]
-            background: #00000000
-            border_thickness: 0
-            visible: $can_clear_value and ($selected_item != undefined or $selection_scope.selected_index >= 0)
-            on_click: @@ e => yui_invoke_event(e.source, item_selected, undefined)
+            // this is broken because events turned out not to work
+
+          // - type: button
+          //   content:
+          //     type: text // TODO X sprite
+          //     color: $theme.resources.negative_color
+          //     text: X
+          //   padding: [5, 0]
+          //   background: #00000000
+          //   border_thickness: 0
+          //   visible: $can_clear_value and ($selected_item != undefined or $selection_scope.selected_index >= 0)
+          //   on_click: @@ e => yui_invoke_event(e.source, item_selected, undefined)
 
           - $indicator_template
 
