@@ -20,18 +20,22 @@ function yui_find_focus_item(current_item, list, direction, precise = false) {
 		case YUI_FOCUS_DIRECTION.UP:
 			var edge_x = item_center_x;
 			var edge_y = 0;
+			item_center_y = current_item.bbox_top;
 			break;
 		case YUI_FOCUS_DIRECTION.DOWN:
 			var edge_x = item_center_x;
 			var edge_y = window_get_height();
+			item_center_y = current_item.bbox_bottom;
 			break;
 		case YUI_FOCUS_DIRECTION.LEFT:
 			var edge_x = 0;
 			var edge_y = item_center_y;
+			item_center_x = current_item.bbox_left;
 			break;
 		case YUI_FOCUS_DIRECTION.RIGHT:
 			var edge_x = window_get_width();
 			var edge_y = item_center_y;
+			item_center_x = current_item.bbox_right;
 			break;
 	}
 	
@@ -86,7 +90,6 @@ function yui_find_focus_item(current_item, list, direction, precise = false) {
 			break;
 	}
 	
-	
 	ds_list_clear(list);
 	count = collision_rectangle_list(
 		rect_x1,
@@ -99,9 +102,9 @@ function yui_find_focus_item(current_item, list, direction, precise = false) {
 		list,
 		false); // ordered
 	
+	// find the closest item from those in the rectangle	
 	var closest_item = undefined;
 	var shortest_distance = infinity;
-	
 	var i = 0; repeat count {
 		var target = list[| i++];
 		
