@@ -56,25 +56,39 @@ if bg_alpha > 0 {
 
 // draw border
 if draw_border {
-	var color = focused ? border_focus_color : border_color;
-	if viewport_size {
-		if viewport_part.visible {
-			if viewport_part.clipped {
-				yui_draw_rect_outline_clipped(
-					x, y, draw_size.w, draw_size.h,
-					viewport_part.x, viewport_part.y, viewport_part.x2, viewport_part.y2,
-					border_thickness, color, border_alpha * opacity);
-			}
-			else {
-				yui_draw_rect_outline(
-					x, y, draw_size.w, draw_size.h,
-					border_thickness, color, border_alpha * opacity);
+	var do_draw = false;
+	
+	if focused && has_focus_color {
+		var do_draw = true;
+		var color = border_focus_color;
+		var alpha = 1;
+	}
+	else if !focused && has_border_color {
+		var do_draw = true;
+		var color = border_color;
+		var alpha = border_alpha;
+	}
+	
+	if do_draw {
+		if viewport_size {
+			if viewport_part.visible {
+				if viewport_part.clipped {
+					yui_draw_rect_outline_clipped(
+						x, y, draw_size.w, draw_size.h,
+						viewport_part.x, viewport_part.y, viewport_part.x2, viewport_part.y2,
+						border_thickness, color, alpha * opacity);
+				}
+				else {
+					yui_draw_rect_outline(
+						x, y, draw_size.w, draw_size.h,
+						border_thickness, color, alpha * opacity);
+				}
 			}
 		}
-	}
-	else {
-		yui_draw_rect_outline(
-			x, y, draw_size.w, draw_size.h,
-			border_thickness, color, border_alpha * opacity);
+		else {
+			yui_draw_rect_outline(
+				x, y, draw_size.w, draw_size.h,
+				border_thickness, color, alpha * opacity);
+		}
 	}
 }

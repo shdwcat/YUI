@@ -13,6 +13,8 @@ is_arranging = false;
 has_content_item = true; // yui_panel sets this to false
 content_item = undefined;
 
+has_border_color = false;
+has_focus_color = false;
 draw_border = false;
 
 onLayoutInit = function() {	
@@ -21,12 +23,17 @@ onLayoutInit = function() {
 		bg_color = layout_props.bg_color;
 		bg_alpha = ((bg_color & 0xFF000000) >> 24) / 255;
 	}
+	
 	if layout_props.border_color != undefined {
+		has_border_color = true;
 		border_color = layout_props.border_color;
+		border_alpha = ((border_color & 0xFF000000) >> 24) / 255;
 	}
+	
 	if layout_props.border_thickness != undefined {
 		border_thickness = layout_props.border_thickness;
 	}
+	
 	if layout_props.bg_sprite != undefined {
 		bg_sprite = layout_props.bg_sprite;
 		bg_alpha = 1;
@@ -39,16 +46,19 @@ onLayoutInit = function() {
 	is_bg_color_live = yui_element.is_bg_color_live;
 	if is_bg_color_live
 		bg_color_value = new YuiBindableValue(yui_element.bg_color_binding);
+
 	
-	border_focus_color = layout_props.border_focus_color ?? border_color;
-	
-	if border_color != undefined {
-		border_alpha = ((border_color & 0xFF000000) >> 24) / 255;
+	if layout_props.border_focus_color != undefined {
+		has_focus_color = true;
+		border_focus_color = layout_props.border_focus_color;
+	}
+	else {
+		border_focus_color = border_color;
 	}
 	
 	draw_border =
-		border_thickness > 0 && border_alpha > 0
-		&& (border_color > 0 || border_focus_color > 0);
+		border_thickness > 0 
+		&& (has_border_color || has_focus_color);
 }
 
 build = function() {

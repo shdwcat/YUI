@@ -40,7 +40,7 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 	
 	props.padding = new YuiPadding(yui_bind(props.padding, resources, slot_values));
 	
-	resolveBackgroundAndBorder()
+	resolveBackgroundAndBorder();
 	
 	content_element = yui_resolve_element({
 		type: "text",
