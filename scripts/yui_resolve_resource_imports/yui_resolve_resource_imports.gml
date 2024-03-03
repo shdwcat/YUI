@@ -4,7 +4,7 @@ function yui_resolve_resource_imports(resources, imports, base_folder, cabinet) 
 	// load and merge imports
 	var merged_resources = yui_load_and_merge_resource_files(imports, cabinet, base_folder)
 	
-	{
+	if resources {
 		// merge the document resources over the imported resources
 		var document_resource_names = variable_struct_get_names(resources);
 		var name_count = array_length(document_resource_names)
