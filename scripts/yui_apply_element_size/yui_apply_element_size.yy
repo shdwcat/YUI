@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Layout",
-    "path": "folders/Packages - YUI/Layout.yy",
+    "name": "Deprecated",
+    "path": "folders/Packages - YUI/Deprecated.yy",
   },
 }

@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Handlers",
-    "path": "folders/Packages - YUI/Event Handling/Handlers.yy",
+    "name": "Deprecated",
+    "path": "folders/Packages - YUI/Deprecated.yy",
   },
 }

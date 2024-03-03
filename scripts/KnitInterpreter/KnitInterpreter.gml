@@ -173,7 +173,7 @@ function KnitInterpreter(environment) constructor {
 					"Undefined variable '" + get_expression.name._lexeme + "' on '" + get_expression.object.name._lexeme + "'.");
 				return value;		
 			}
-			else if ds_exists(object, ds_map_add) {
+			else if ds_exists(object, ds_type_map) {
 				var value = object[? get_expression.name._lexeme];
 				if value == undefined throw new GsplRuntimeError(get_expression.name,
 					"Undefined variable '" + get_expression.name._lexeme + "' on '" + get_expression.object.name._lexeme + "'.");
@@ -195,7 +195,7 @@ function KnitInterpreter(environment) constructor {
 		if is_struct(object) || instance_exists(object) {
 			return object[$ get_expression.name._lexeme];
 		}
-		else if ds_exists(object, ds_map_add) {
+		else if ds_exists(object, ds_type_map) {
 			return object[? get_expression.name._lexeme];
 		}
 		 // todo custom object types? get/call on literals?
@@ -306,7 +306,7 @@ function KnitInterpreter(environment) constructor {
 			object[$ set_expression.name._lexeme] = value;
 			return value;
 		}
-		else if ds_exists(object, ds_map_add) {
+		else if ds_exists(object, ds_type_map) {
 			var value = evaluate(set_expression.value);
 			object[? set_expression.name._lexeme] = value;
 			return value;

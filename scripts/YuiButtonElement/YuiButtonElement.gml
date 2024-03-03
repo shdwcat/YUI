@@ -31,12 +31,12 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	
 	baseInit(props);
 	
-	props.padding = yui_resolve_padding(yui_bind(props.padding, resources, slot_values));
+	props.padding = new YuiPadding(yui_bind(props.padding, resources, slot_values));
 	
 	// Feather disable once GM1041
 	content_element = yui_resolve_element(props.content, resources, slot_values);
 	
-	resolveBackgroundAndBorder()
+	resolveBackgroundAndBorder();
 	
 	props.highlight_color = yui_bind_and_resolve(props.highlight_color, resources, slot_values);
 	props.highlight_alpha = yui_bind(props.highlight_alpha, resources, slot_values);

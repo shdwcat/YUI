@@ -4,6 +4,8 @@
 event_inherited();
 
 border_arrange = arrange;
+/// @param {struct} available_size
+/// @param {struct} viewport_size
 arrange = function(available_size, viewport_size) {
 	border_arrange(available_size, viewport_size);
 	

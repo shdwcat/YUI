@@ -4,25 +4,26 @@ file_type: screen
 import:
   // import all resources from main_panel.yui
   - ../Templates/main_panel.yui
-  
+
   // import all resources from transitions.yui to use in animations
   - /YUI/Animations/transitions.yui
+  - /YUI/Widgets/
 
 root:
   type: panel // panel is used to layout and arrange child elements
   layout: canvas // canvas can be used to position elements arbitrarily within the panel, or along the edges
   //theme: pink!
-  
-  animate:
-    on_visible:
-      //opacity: &fade_in
-      xoffset:
-        type: curve
-        enabled: false
-        curve: curveExpoInv
-        duration: 2000
-        start: 300
-        end: 0
+
+  // animate:
+  //   on_visible:
+  //     //opacity: &fade_in
+  //     xoffset:
+  //       type: curve
+  //       enabled: false
+  //       curve: curveExpoInv
+  //       duration: 2000
+  //       start: 300
+  //       end: 0
     // on_unloading:
     //   opacity: &fade_out
 
@@ -31,6 +32,7 @@ root:
     // helper message about live reload state
     - type: text
       text: @live_reload_label + ' - ' + @live_reload_message | final
+      visible: @live_reload_label != ''
       canvas:
         left: 5
         bottom: 5
@@ -48,7 +50,7 @@ root:
       elements:
         - type: panel
           spacing: 5
-          elements: 
+          elements:
             - type: text // 'type: text' is how we draw text! simple
               text_style: title // this applies one of the text styles defined in the active theme
               //opacity: @test_opacity
@@ -68,7 +70,6 @@ root:
                   //     xoffset: &slide_right
                   //   - color: &fade_to_green
                   //     xoffset: &slide_left
-              //scribble: true
               text: "Welcome to the YUI Example Project!" // and here we set the text itself
 
               // You can also just put a string as a child and it will automatically be converted to a 'text' element. Easy!
@@ -87,7 +88,7 @@ root:
               content: Widget Gallery // the 'content' for a button can be a simple string like this, or a child element, which could be a panel containing more elements!
 
               // on_click is how we tell the button what to do
-              // here we call the 'yui_change_screen' function and pass it 
+              // here we call the 'yui_change_screen' function and pass it
               // the name of the screen, and a reference to the visual element
               // so that the function can determine which screen to change
               tooltip: View examples of the widgets included with YUI
@@ -109,17 +110,7 @@ root:
                   xoffset: &cascade_slide_out
 
             - type: button
-              content: TodoMVC Example
-              tooltip: Working example of the TodoMVC app (a basic todo list tracker)
-              on_click: @@ e => yui_change_screen(todo_mvc, e.source)
-              animate:
-                on_visible:
-                  xoffset: &cascade_slide_in
-                on_unloading:
-                  xoffset: &cascade_slide_out
-
-            - type: button
-              content: "Drag and Drop: Inventory Screen"
+              content: "Drag and Drop Example: Inventory Screen"
               tooltip: Demonstrates an inventory screen where you can drag and drop items onto equipment slots for a character
               on_click: @@ e => yui_change_screen(inventory_screen, e.source)
               animate:
@@ -149,8 +140,8 @@ root:
                   xoffset: &cascade_slide_out
 
             - type: button
-              content: Keyboard Navigation
-              tooltip: Basic demo for how automatic keyboard navigation works
+              content: Keyboard/Gamepad Navigation
+              tooltip: Basic demo for how automatic keyboard/gamepad navigation works
               on_click: @@ e => yui_change_screen(kb_navigation_example, e.source)
               animate:
                 on_visible:
@@ -169,7 +160,17 @@ root:
                   xoffset: &cascade_slide_out
 
             - type: button
-              content: Dev Sandbox
+              content: TodoMVC Example
+              tooltip: Working example of the TodoMVC app (a basic todo list tracker)
+              on_click: @@ e => yui_change_screen(todo_mvc, e.source)
+              animate:
+                on_visible:
+                  xoffset: &cascade_slide_in
+                on_unloading:
+                  xoffset: &cascade_slide_out
+
+            - type: button
+              content: Dev Sandbox (Experimental)
               tooltip: In development work (may crash!)
               on_click: @@ e => yui_change_screen(sandbox, e.source)
               animate:
@@ -178,12 +179,12 @@ root:
                 on_unloading:
                   xoffset: &cascade_slide_out
 
-    - type: button
-      content: Toggle Opacity
-      canvas:
-        top: 10
-        right: 300
-      on_click: @toggleOpacity()
+    // - type: button
+    //   content: Toggle Opacity
+    //   canvas:
+    //     top: 10
+    //     right: 300
+    //   on_click: @toggleOpacity()
 
     - type: button
       content: Toggle Theme

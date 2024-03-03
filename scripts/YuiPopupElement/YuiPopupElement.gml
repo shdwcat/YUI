@@ -23,7 +23,7 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	resolveBackgroundAndBorder()
 	
-	props.padding = yui_resolve_padding(yui_bind(props.padding, resources, slot_values));
+	props.padding = new YuiPadding(yui_bind(props.padding, resources, slot_values));
 	
 	content_element = yui_resolve_element(props.content, resources, slot_values);
 

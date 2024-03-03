@@ -7,8 +7,8 @@ function YuiThenElseBinding(left, then_expr, else_expr) : YuiExpr() constructor 
 	self.then_expr = then_expr;
 	self.else_expr = else_expr;
 	
-	// we're callable if both then and else are callable
-	self.is_call = then_expr.is_call && else_expr.is_call
+	// we're callable if either then and else are callable
+	self.is_call = then_expr.is_call || else_expr.is_call
 	
 	if (!left.is_yui_live_binding
 		&& !then_expr.is_yui_live_binding

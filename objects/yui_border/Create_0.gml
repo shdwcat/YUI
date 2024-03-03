@@ -13,6 +13,8 @@ is_arranging = false;
 has_content_item = true; // yui_panel sets this to false
 content_item = undefined;
 
+has_border_color = false;
+has_focus_color = false;
 draw_border = false;
 
 onLayoutInit = function() {	
@@ -21,12 +23,17 @@ onLayoutInit = function() {
 		bg_color = layout_props.bg_color;
 		bg_alpha = ((bg_color & 0xFF000000) >> 24) / 255;
 	}
+	
 	if layout_props.border_color != undefined {
+		has_border_color = true;
 		border_color = layout_props.border_color;
+		border_alpha = ((border_color & 0xFF000000) >> 24) / 255;
 	}
+	
 	if layout_props.border_thickness != undefined {
 		border_thickness = layout_props.border_thickness;
 	}
+	
 	if layout_props.bg_sprite != undefined {
 		bg_sprite = layout_props.bg_sprite;
 		bg_alpha = 1;
@@ -39,16 +46,19 @@ onLayoutInit = function() {
 	is_bg_color_live = yui_element.is_bg_color_live;
 	if is_bg_color_live
 		bg_color_value = new YuiBindableValue(yui_element.bg_color_binding);
+
 	
-	border_focus_color = layout_props.border_focus_color ?? border_color;
-	
-	if border_color != undefined {
-		border_alpha = ((border_color & 0xFF000000) >> 24) / 255;
+	if layout_props.border_focus_color != undefined {
+		has_focus_color = true;
+		border_focus_color = layout_props.border_focus_color;
+	}
+	else {
+		border_focus_color = border_color;
 	}
 	
 	draw_border =
-		border_thickness > 0 && border_alpha > 0
-		&& (border_color > 0 || border_focus_color > 0);
+		border_thickness > 0 
+		&& (has_border_color || has_focus_color);
 }
 
 build = function() {
@@ -74,6 +84,8 @@ build = function() {
 	}
 }
 
+/// @param {struct} available_size
+/// @param {struct} viewport_size
 arrange = function(available_size, viewport_size) {
 	x = available_size.x;
 	y = available_size.y;
@@ -81,37 +93,39 @@ arrange = function(available_size, viewport_size) {
 	self.viewport_size = viewport_size;
 	
 	if !visible {
-		return sizeToDefault(available_size);
+		return sizeToDefault();
 	}
 	
 	var padding = layout_props.padding;
-	padded_rect = yui_apply_padding(available_size, padding, layout_props.size);
+	padded_rect = padding.apply(available_size, layout_props.size);
 	
 	// don't bother drawing if there isn't enough room
 	if padded_rect.w < 0 || padded_rect.h < 0 {
-		return sizeToDefault(available_size);
+		return sizeToDefault();
 	}
 	
-	var content_size = undefined;
+	var desired_size = {
+		w: 0,
+		h: 0,
+	}
+	
 	if content_item {
 		is_arranging = true;
-		content_size = content_item.arrange(padded_rect, viewport_size);
+		var content_size = content_item.arrange(padded_rect, viewport_size);
 		is_arranging = false;
-	}
-	else {
-		content_size = { x: padded_rect.x, y: padded_rect.y, w: 0, h: 0 };
+		
+		desired_size.w += content_size.w + padding.w;
+		desired_size.h += content_size.h + padding.h;
 	}
 
-	var drawn_size = yui_apply_element_size(layout_props.size, available_size, {
-		w: content_size ? content_size.w + padding.w : 0,
-		h: content_size ? content_size.h + padding.h : 0,
-	});
+	var drawn_size = element_size.constrainDrawSize(available_size, desired_size);
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
 	
-	if viewport_size {
-		updateViewport();
-	}
+	// probably unnecessary but keeping for reference
+	//if viewport_size {
+	//	updateViewport();
+	//}
 	
 	if events.on_arrange != undefined {
 		yui_call_handler(events.on_arrange, [draw_size], data_source);
@@ -148,3 +162,7 @@ unload = function(unload_root = undefined) {
 
 	return unload_time;
 }
+
+Inspectron()
+	.Section("yui_border")
+	.FieldsSuffix("color", InspectronColor)

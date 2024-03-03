@@ -70,7 +70,7 @@ reload = function(destroy_now = false) {
 		? root.unload()
 		: 0;
 	
-	yui_log("document unload time is", unload_time);
+	yui_log($"document unload time is {unload_time}");
 	
 	if unload_time > 0 {
 		call_later(unload_time / 1000, time_source_units_seconds, load);

@@ -1,10 +1,7 @@
 /// @description
-function YuiGridLayout(alignment, spacing) : YuiLayoutBase() constructor {
+function YuiGridLayout(alignment, spacing) : YuiLayoutBase(alignment, spacing) constructor {
 	static is_live = false;
 
-	self.alignment = alignment;
-	self.spacing = spacing;
-	
 	// elements may use this to calculate their own draw size
 	self.draw_size = undefined;
 	
@@ -77,6 +74,10 @@ function YuiGridLayout(alignment, spacing) : YuiLayoutBase() constructor {
 				throw yui_error("only left_to_right grid is currently supported");
 		}
 	}
+	
+	static inspectron = Inspectron()
+		.Label(" type: grid")
+		.Include(nameof(settings))
 }
 
 function YuiGridSettings(grid_settings = {}) constructor {
@@ -97,4 +98,8 @@ function YuiGridSettings(grid_settings = {}) constructor {
 	// the total h/w used by spacing
 	spacing_height = (props.rows - 1) * props.row_spacing;
 	spacing_width = (props.columns - 1) * props.column_spacing;
+	
+	static inspectron = Inspectron()
+		.Watch(nameof(spacing_width))
+		.Watch(nameof(spacing_height))
 }

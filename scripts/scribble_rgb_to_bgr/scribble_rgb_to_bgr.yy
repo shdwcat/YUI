@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Miscellaneous",
-    "path": "folders/Scribble/Miscellaneous.yy",
+    "name": "Colours",
+    "path": "folders/Scribble/Colours.yy",
   },
 }

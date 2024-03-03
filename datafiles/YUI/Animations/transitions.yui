@@ -37,7 +37,7 @@ resources:
     curve: curveExpoInv
     duration: 600
     delay: @@ ($panel_index ?? 0) * 100
-    from: -300
+    from: -400
     to: 0
 
   cascade_slide_out:

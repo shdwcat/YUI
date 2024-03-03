@@ -2,15 +2,13 @@ id: kb_navigation_example
 file_type: screen
 
 import:
-  - ../Templates/main_panel.yui
-  - ../Templates/screen_base.yui
+  - ../Templates/
 
 root:
   type: screen_base
+  title: Keyboard/Gamepad Navigation
   items:
-    - type: text
-      scribble: true
-      text: This example demonstrates how keyboard/gamepad navigation works.\nCheck kb_navigation_example.yui to see how submenus etc are configured
+    - This example demonstrates how keyboard/gamepad navigation works.\nCheck kb_navigation_example.yui to see how submenus etc are configured.
 
     - type: panel
       layout: horizontal
@@ -26,7 +24,7 @@ root:
               autofocus: true
               content: Start New Game
               //on_click: @@ start_new_game()
-            
+
             - type: button
               content: Continue Game
               //on_click: @@ continue_game()
@@ -36,23 +34,22 @@ root:
 
             - type: button
               content: Options
-            
+
             - type: button
               content: Credits
 
         - type: panel
           alignment: { h: stretch }
           elements:
-            
+
             - type: button
               content: Column 2 item 1
-            
+
             - type: button
               content: Column 2 item 2
-            
+
             - type: button
               content: Column 2 item 3
-            
+
             - type: button
               content: Column 2 item 4
-          

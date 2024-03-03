@@ -2,10 +2,6 @@
 
 function scribble_msdf_thickness_offset(_offset)
 {
-    global.__scribble_msdf_thickness_offset = _offset;
-    
-    //TODO - Optimise
-    shader_set(__shd_scribble_msdf);
-    shader_set_uniform_f(global.__scribble_msdf_u_fMSDFThicknessOffset, _offset);
-    shader_reset();
+    static _scribble_state = __scribble_get_state();
+    _scribble_state.__msdf_thickness_offset = _offset;
 }

@@ -2,43 +2,23 @@ id: widget_gallery
 file_type: screen
 
 import:
-  - ../Templates/main_panel.yui
-  - ../Templates/back_button.yui
-  
+  - ../Templates/
+
   - /YUI/Animations/transitions.yui
   - /YUI/Widgets/
 
 root:
 
-  type: panel
-  padding: 30
-  spacing: 20
-  animate:
-    on_visible:
-      opacity: &fade_in
-    on_unloading:
-      opacity: &fade_out
-  //theme: pink!
-  
-  elements:
-    - type: back_button
-
-    // - type: scrollbox
-    //   // trace: true
-    //   content_w: fit
-    //   background: $theme.resources.panel_bg
-    //   padding: 0
-    //   content:
-
+  type: screen_base
+  title: Widget Gallery
+  items:
     - type: panel
       layout: horizontal
-      background: $theme.resources.panel_bg
       size: stretch
       data_source: @widget_data
       elements:
 
         - type: panel
-          padding: 15
           spacing: 10
 
           elements:
@@ -63,8 +43,7 @@ root:
                 on_text_changed: @@ text => @editable_text = text
 
             - type: text
-              text: @editable_text
-              text_format: "Committed Text: {0}"
+              text: @@ 'Committed Text - ' + @editable_text
 
             - type: text
               text: Menu
@@ -121,7 +100,6 @@ root:
               meter_blend_color: blue
 
         - type: panel
-          padding: 15
           spacing: 10
 
           elements:
@@ -132,7 +110,7 @@ root:
 
             - type: scrollbox
               size: { w: 300, h: 100 }
-              content: 
+              content:
                 type: text
                 padding: 5
                 text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum dui orci, in venenatis ipsum elementum vitae. Integer sagittis neque in nibh mollis venenatis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed commodo ultricies dolor eget maximus. Duis non gravida nulla, vel tincidunt lectus. Vestibulum dapibus sapien a augue ultrices porttitor. Fusce ultrices lacus nisl. Vestibulum nisi velit, placerat sed lacus vel, tincidunt ultricies metus. Maecenas porta, justo in imperdiet iaculis, urna ipsum varius urna, porta bibendum enim lorem sit amet enim. Nullam mattis tincidunt augue, vitae ultrices magna faucibus vel. Nunc lorem nunc, commodo ut tincidunt id, sagittis sed ipsum. Interdum et malesuada fames ac ante ipsum primis in faucibus.

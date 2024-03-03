@@ -1,129 +1,11 @@
-#region Build find-replace lookup table
-
-//TODO - Precalculate the lookup table
-//TODO - Move this to __scribble_system_glyph_data()
-var _unicode_source_array = [
-    "‘",   "’",   "“",   "”",   "(",    ")",   "{",    "}",   "=", "।",  "?",  "-",  "µ", "॰", ",", ".",
-	"०",  "१",  "२",  "३",     "४",   "५",  "६",   "७",   "८",   "९", "x", 
-
-	"फ़्",  "क़",  "ख़",  "ग़", "ज़्", "ज़",  "ड़",  "ढ़",   "फ़",  "य़",  "ऱ",  "ऩ",  
-	"त्त्",   "त्त",     "क्त",  "दृ",  "कृ",
-
-	"ह्न",  "ह्य",  "हृ",  "ह्म",  "ह्र",  "ह्",   "द्द",  "क्ष्", "क्ष", "त्र्", "त्र","ज्ञ",
-	"छ्य",  "ट्य",  "ठ्य",  "ड्य",  "ढ्य", "द्य","द्व",
-	"श्र",  "ट्र",    "ड्र",    "ढ्र",    "छ्र",   "क्र",  "फ्र",  "द्र",   "प्र",   "ग्र", "रु",  "रू",
-	"्र",
-
-	"ओ",  "औ",  "आ",   "अ",   "ई",   "इ",  "उ",   "ऊ",  "ऐ",  "ए", "ऋ",
-
-	"क्",  "क",  "क्क",  "ख्",   "ख",    "ग्",   "ग",  "घ्",  "घ",    "ङ",
-	"चै",   "च्",   "च",   "छ",  "ज्", "ज",   "झ्",  "झ",   "ञ",
-
-	"ट्ट",   "ट्ठ",   "ट",   "ठ",   "ड्ड",   "ड्ढ",  "ड",   "ढ",  "ण्", "ण",  
-	"त्",  "त",  "थ्", "थ",  "द्ध",  "द", "ध्", "ध",  "न्",  "न",  
-
-	"प्",  "प",  "फ्", "फ",  "ब्",  "ब", "भ्",  "भ",  "म्",  "म",
-	"य्",  "य",  "र",  "ल्", "ल",  "ळ",  "व्",  "व", 
-	"श्", "श",  "ष्", "ष",  "स्",   "स",   "ह",     
-
-	"ऑ",   "ॉ",  "ो",   "ौ",   "ा",   "ी",   "ु",   "ू",   "ृ",   "े",   "ै",
-	"ं",   "ँ",   "ः",   "ॅ",    "ऽ", chr(0x94D), //virama
-];
-    
-var _krutidev_source_array = [
-    "^", "*",  "Þ", "ß", "¼", "½", "¿", "À", "¾", "A", "\\", "&", "&", "Œ", "]","-", 
-	"å",  "ƒ",  "„",   "…",   "†",   "‡",   "ˆ",   "‰",   "Š",   "‹","Û",
-
-	"¶",   "d",    "[k",  "x",  "T",  "t",   "M+", "<+", "Q",  ";",    "j",   "u",
-	"Ù",   "Ùk",   "Dr",    "–",   "—",       
-
-	"à",   "á",    "â",   "ã",   "ºz",  "º",   "í", "{", "{k",  "«", "=","K", 
-	"Nî",   "Vî",    "Bî",   "Mî",   "<î", "|","}",
-	"J",   "Vª",   "Mª",  "<ªª",  "Nª",   "Ø",  "Ý",   "æ", "ç", "xz", "#", ":",
-	"z",
-
-	"vks",  "vkS",  "vk",    "v",   "bZ",  "b",  "m",  "Å",  ",s",  ",",   "_",
-
-	"D",  "d",    "ô",     "[",     "[k",    "X",   "x",  "?",    "?k",   "³", 
-	"pkS",  "P",    "p",  "N",   "T",    "t",   "÷",  ">",   "¥",
-
-	"ê",      "ë",      "V",  "B",   "ì",       "ï",     "M",  "<",  ".", ".k",   
-	"R",  "r",   "F", "Fk",  ")",    "n", "/",  "/k",  "U", "u",   
-
-	"I",  "i",   "¶", "Q",   "C",  "c",  "H",  "Hk", "E",   "e",
-	"¸",   ";",    "j",  "Y",   "y",  "G",  "O",  "o",
-	"'", "'k",  "\"", "\"k", "L",   "l",   "g",      
-
-	"v‚",    "‚",    "ks",   "kS",   "k",     "h",    "q",   "w",   "`",    "s",    "S",
-	"a",    "¡",    "%",     "W",   "·", "~",
-];
-
-//Use a ds_map rather than a struct since our keys will be integers
-global.__scribble_krutidev_lookup_map = ds_map_create();
-    
-var _i = 0;
-repeat(array_length(_unicode_source_array))
-{
-    var _string = _unicode_source_array[_i];
-        
-    var _searchInteger = 0;
-    var _j = string_length(_string);
-    repeat(_j)
-    {
-        _searchInteger = (_searchInteger << 16) | ord(string_char_at(_string, _j));
-        --_j;
-    }
-        
-    var _string = _krutidev_source_array[_i];
-    var _writeArray = [];
-    var _j = 1;
-    repeat(string_length(_string))
-    {
-        array_push(_writeArray, ord(string_char_at(_string, _j)));
-        ++_j;
-    }
-        
-    global.__scribble_krutidev_lookup_map[? _searchInteger] = _writeArray;
-        
-    ++_i;
-}
-    
-#endregion
-
-
-
-#region Build matra lookup table
-
-//Use a ds_map rather than a struct since our keys are integers
-//TODO - Convert these to hex and add comments
-global.__scribble_krutidev_matra_lookup_map = ds_map_create();
-global.__scribble_krutidev_matra_lookup_map[?   58] = true;
-global.__scribble_krutidev_matra_lookup_map[? 2305] = true;
-global.__scribble_krutidev_matra_lookup_map[? 2306] = true;
-global.__scribble_krutidev_matra_lookup_map[? 2366] = true;
-global.__scribble_krutidev_matra_lookup_map[? 2367] = true;
-global.__scribble_krutidev_matra_lookup_map[? 2368] = true;
-global.__scribble_krutidev_matra_lookup_map[? 2369] = true;
-global.__scribble_krutidev_matra_lookup_map[? 2370] = true;
-global.__scribble_krutidev_matra_lookup_map[? 2371] = true;
-global.__scribble_krutidev_matra_lookup_map[? 2373] = true;
-global.__scribble_krutidev_matra_lookup_map[? 2375] = true;
-global.__scribble_krutidev_matra_lookup_map[? 2376] = true;
-global.__scribble_krutidev_matra_lookup_map[? 2379] = true;
-global.__scribble_krutidev_matra_lookup_map[? 2380] = true;
-    
-#endregion
-
-
-
 #macro __SCRIBBLE_PARSER_INSERT_NUKTA  ds_grid_set_grid_region(_temp_grid, _glyph_grid, _i+1, 0, _glyph_count+3, __SCRIBBLE_GEN_GLYPH.__SIZE, 0, 0);\
                                        ds_grid_set_grid_region(_glyph_grid, _temp_grid, 0, 0, _glyph_count+3 - _i, __SCRIBBLE_GEN_GLYPH.__SIZE, _i+2, 0);\
                                        ;\
                                        ++_i;\
                                        ++_glyph_count;\
                                        ;\
-                                       _glyph_grid[# _i+1, __SCRIBBLE_GEN_GLYPH.__UNICODE      ] = 0x093C;\ //Nukta
-                                       _glyph_grid[# _i+1, __SCRIBBLE_GEN_GLYPH.__CONTROL_COUNT] = _glyph_grid[# _i, __SCRIBBLE_GEN_GLYPH.__CONTROL_COUNT];
+                                       _glyph_grid[# _i, __SCRIBBLE_GEN_GLYPH.__UNICODE      ] = 0x093C;\ //Nukta
+                                       _glyph_grid[# _i, __SCRIBBLE_GEN_GLYPH.__CONTROL_COUNT] = _glyph_grid[# _i, __SCRIBBLE_GEN_GLYPH.__CONTROL_COUNT];
 
 
 function __scribble_gen_3_devanagari()
@@ -131,10 +13,17 @@ function __scribble_gen_3_devanagari()
     //Avoid this mess if we can
     if (!__has_devanagari) exit;
     
-    var _glyph_grid   = global.__scribble_glyph_grid;
-    var _control_grid = global.__scribble_control_grid;
-    var _temp_grid    = global.__scribble_temp2_grid;
-    var _glyph_count  = global.__scribble_generator_state.__glyph_count;
+    static _krutidev_lookup_map       = __scribble_get_krutidev_lookup_map();
+    static _krutidev_matra_lookup_map = __scribble_get_krutidev_matra_lookup_map();
+    
+    static _generator_state = __scribble_get_generator_state();
+    with(_generator_state)
+    {
+        var _glyph_grid   = __glyph_grid;
+        var _control_grid = __control_grid;
+        var _temp_grid    = __temp2_grid;
+        var _glyph_count = _generator_state.__glyph_count;
+    }
     
     //Glyph count includes the terminating null. We don't need that for Krutidev conversion
     --_glyph_count;
@@ -160,13 +49,13 @@ function __scribble_gen_3_devanagari()
             //Set up alternating single quote marks
             case ord("'"):
                 _in_single_quote = !_in_single_quote;
-                _glyph_grid[# _i, __SCRIBBLE_GEN_GLYPH.__UNICODE] = _in_single_quote? ord("^") : ord("*");
+                _glyph_grid[# _i, __SCRIBBLE_GEN_GLYPH.__UNICODE] = __SCRIBBLE_DEVANAGARI_OFFSET + (_in_single_quote? ord("^") : ord("*"));
             break;
             
             //Set up alternating double quote marks
             case ord("\""):
                 _in_double_quote = !_in_double_quote;
-                _glyph_grid[# _i, __SCRIBBLE_GEN_GLYPH.__UNICODE] = _in_double_quote? ord("ß") : ord("Þ");
+                _glyph_grid[# _i, __SCRIBBLE_GEN_GLYPH.__UNICODE] = __SCRIBBLE_DEVANAGARI_OFFSET + (_in_double_quote? ord("ß") : ord("Þ"));
             break;
             
             //Split up nukta ligatures into their componant parts
@@ -238,10 +127,26 @@ function __scribble_gen_3_devanagari()
         var _char = _glyph_grid[# _i, __SCRIBBLE_GEN_GLYPH.__UNICODE];
         if (_char == ord("ि"))
         {
-            //If we find a virama behind us keep tracking backwards
-            //We go two indexes backwards because virama (should) always follows another character
             var _j = _i - 1;
-            while((_j >= 0) && (_glyph_grid[# _j, __SCRIBBLE_GEN_GLYPH.__UNICODE] == 0x094D)) _j -= 2;
+            while(_j >= 0)
+            {
+                var _prev_char = _glyph_grid[# _j, __SCRIBBLE_GEN_GLYPH.__UNICODE];
+                if (_prev_char == 0x094D)
+                {
+                    //If we find a virama behind us keep tracking backwards
+                    //We go two indexes backwards because virama (should) always follows another character
+                    _j -= 2;
+                }
+                else if (_prev_char == 0x093C) 
+                {
+                    //Move behind a nukta too
+                    _j -= 1;
+                }
+                else
+                {
+                    break;
+                }
+            }
             
             //Copy everything from the start of the subtring (where ि  will go) to the end (which is where ि  currently is)
             ds_grid_set_grid_region(_temp_grid, _glyph_grid, _j, 0, _i-1, __SCRIBBLE_GEN_GLYPH.__SIZE, 0, 0);
@@ -250,7 +155,7 @@ function __scribble_gen_3_devanagari()
             ds_grid_set_grid_region(_glyph_grid, _temp_grid, 0, 0, _i-1 - _j, __SCRIBBLE_GEN_GLYPH.__SIZE, _j+1, 0);
             
             //Insert ि  (encoded in Krutidev as f) into its new position
-            _glyph_grid[# _j, __SCRIBBLE_GEN_GLYPH.__UNICODE      ] = ord("f");
+            _glyph_grid[# _j, __SCRIBBLE_GEN_GLYPH.__UNICODE      ] = __SCRIBBLE_DEVANAGARI_OFFSET + ord("f");
             _glyph_grid[# _j, __SCRIBBLE_GEN_GLYPH.__CONTROL_COUNT] = _glyph_grid[# _j+1, __SCRIBBLE_GEN_GLYPH.__CONTROL_COUNT];
         }
         
@@ -263,8 +168,6 @@ function __scribble_gen_3_devanagari()
     
     #region Move र् (ra + virama) after matras
     
-    var _matraLookupMap = global.__scribble_krutidev_matra_lookup_map;
-    
     //Using a for-loop here as _glyph_count may change
     for(var _i = 0; _i < _glyph_count; ++_i)
     {
@@ -275,7 +178,7 @@ function __scribble_gen_3_devanagari()
             
             //If the character after the probable position for ra+virama is a matra, keep searching right
             var _charRight = _glyph_grid[# _newPosition+1, __SCRIBBLE_GEN_GLYPH.__UNICODE];
-            while(ds_map_exists(_matraLookupMap, _charRight))
+            while(ds_map_exists(_krutidev_matra_lookup_map, _charRight))
             {
                 _newPosition++;
                 _charRight = _glyph_grid[# _newPosition+1, __SCRIBBLE_GEN_GLYPH.__UNICODE];
@@ -292,7 +195,7 @@ function __scribble_gen_3_devanagari()
             ds_grid_set_grid_region(_glyph_grid, _temp_grid, _i+2, 0, _newPosition, __SCRIBBLE_GEN_GLYPH.__SIZE, _i, 0);
             
             //Insert the new ra+virama combined character. Krutidev handles this as a single glyph (encoded as Z)
-            _glyph_grid[# _i + _copyCount, __SCRIBBLE_GEN_GLYPH.__UNICODE      ] = ord("Z");
+            _glyph_grid[# _i + _copyCount, __SCRIBBLE_GEN_GLYPH.__UNICODE      ] = __SCRIBBLE_DEVANAGARI_OFFSET + ord("Z");
             _glyph_grid[# _i + _copyCount, __SCRIBBLE_GEN_GLYPH.__CONTROL_COUNT] = _glyph_grid[# _copyCount-1, __SCRIBBLE_GEN_GLYPH.__CONTROL_COUNT];
             
             //Second copy: Place the remainder of the glyphs after ra+virama
@@ -309,8 +212,6 @@ function __scribble_gen_3_devanagari()
     
     #region Perform bulk find-replace
     
-    var _lookupMap = global.__scribble_krutidev_lookup_map;
-    
     //Create a 64-bit minibuffer
     //Fortunately all the characters we're looking for fit into 16 bits and we only need to look for 4 at a time
     var _oneChar   = 0x0000;
@@ -323,27 +224,27 @@ function __scribble_gen_3_devanagari()
     {
         _oneChar   = _twoChar   >> 16;
         _twoChar   = _threeChar >> 16;
-        _threeChar = _fourChar  >> 16;
+        _threeChar = (_fourChar & 0x7FFFFFFFFFFFFFFF) >> 16; //Ensure the top bit is 0 so we get zeroes across the LHS
         _fourChar  = _threeChar | ((_glyph_grid[# _i+3, __SCRIBBLE_GEN_GLYPH.__UNICODE] & 0xFFFF) << 48);
         
         //Try to find a matching substring
         var _foundLength = 4;
-        var _replacementArray = _lookupMap[? _fourChar];
+        var _replacementArray = _krutidev_lookup_map[? _fourChar];
         
         if (_replacementArray == undefined)
         {
             _foundLength = 3;
-            _replacementArray = _lookupMap[? _threeChar];
+            _replacementArray = _krutidev_lookup_map[? _threeChar];
             
             if (_replacementArray == undefined)
             {
                 _foundLength = 2;
-                _replacementArray = _lookupMap[? _twoChar];
+                _replacementArray = _krutidev_lookup_map[? _twoChar];
                 
                 if (_replacementArray == undefined)
                 {
                     _foundLength = 1;
-                    _replacementArray = _lookupMap[? _oneChar];
+                    _replacementArray = _krutidev_lookup_map[? _oneChar];
                 }
             }
         }
@@ -356,19 +257,18 @@ function __scribble_gen_3_devanagari()
             if ((_foundLength == 1) && (_replacementLength == 1))
             {
                 //Shortcut for the most common replacement operation
-                _glyph_grid[# _i, __SCRIBBLE_GEN_GLYPH.__UNICODE] = _replacementArray[0];
+                _glyph_grid[# _i, __SCRIBBLE_GEN_GLYPH.__UNICODE] = __SCRIBBLE_DEVANAGARI_OFFSET + _replacementArray[0];
             }
             else
             {
                 //Heavyweight general replacement code... we want to avoid as many delete/insert commands as possible
                 
-                //Copy over as much data as possible from one array
+                //Overwrite as much data as possible. This reduces ds_grid_set_grid_region() calls
                 var _copyCount = min(_foundLength, _replacementLength);
-                
                 var _j = 0;
                 repeat(_copyCount)
                 {
-                    _glyph_grid[# _i + _j, __SCRIBBLE_GEN_GLYPH.__UNICODE] = _replacementArray[_j];
+                    _glyph_grid[# _i + _j, __SCRIBBLE_GEN_GLYPH.__UNICODE] = __SCRIBBLE_DEVANAGARI_OFFSET + _replacementArray[_j];
                     ++_j;
                 }
                 
@@ -383,21 +283,31 @@ function __scribble_gen_3_devanagari()
                 }
                 else if (_foundLength < _replacementLength)
                 {
-                    //Throw an error if we're trying to add more than one character
-                    //I don't think this ever comes up but it might in the future
-                    if (_replacementLength - _foundLength > 1)
-                    {
-                        __scribble_error("Devanagari substring insertion length > 1. Please report this error");
-                    }
+                    //Otherwise, we're adding characters to the array so we have to insert some characters into the output grid
                     
-                    //Otherwise, we're adding characters to the array so we have to insert some characters
-                    //This code presumes we're only adding 1 character
                     var _insertPos = _i + _copyCount;
                     ds_grid_set_grid_region(_temp_grid, _glyph_grid, _insertPos, 0, _glyph_count, __SCRIBBLE_GEN_GLYPH.__SIZE, 0, 0);
-                    ds_grid_set_grid_region(_glyph_grid, _temp_grid, 0, 0, _glyph_count - _insertPos, __SCRIBBLE_GEN_GLYPH.__SIZE, _insertPos+1, 0);
+                    ds_grid_set_grid_region(_glyph_grid, _temp_grid, 0, 0, _glyph_count - _insertPos, __SCRIBBLE_GEN_GLYPH.__SIZE, _insertPos + (_replacementLength - _foundLength), 0);
                     
-                    _glyph_grid[# _insertPos, __SCRIBBLE_GEN_GLYPH.__UNICODE      ] = _replacementArray[_replacementLength-1];
-                    _glyph_grid[# _insertPos, __SCRIBBLE_GEN_GLYPH.__CONTROL_COUNT] = _glyph_grid[# _insertPos-1, __SCRIBBLE_GEN_GLYPH.__CONTROL_COUNT];
+                    if (_replacementLength - _foundLength == 1)
+                    {
+                        //Adding one character
+                        _glyph_grid[# _insertPos, __SCRIBBLE_GEN_GLYPH.__UNICODE      ] = __SCRIBBLE_DEVANAGARI_OFFSET + _replacementArray[_replacementLength-1];
+                        _glyph_grid[# _insertPos, __SCRIBBLE_GEN_GLYPH.__CONTROL_COUNT] = _glyph_grid[# _insertPos-1, __SCRIBBLE_GEN_GLYPH.__CONTROL_COUNT];
+                    }
+                    else if (_replacementLength - _foundLength == 2)
+                    {
+                        //Adding two characters
+                        _glyph_grid[# _insertPos, __SCRIBBLE_GEN_GLYPH.__UNICODE      ] = __SCRIBBLE_DEVANAGARI_OFFSET + _replacementArray[_replacementLength-2];
+                        _glyph_grid[# _insertPos, __SCRIBBLE_GEN_GLYPH.__CONTROL_COUNT] = _glyph_grid[# _insertPos-1, __SCRIBBLE_GEN_GLYPH.__CONTROL_COUNT];
+                        
+                        _glyph_grid[# _insertPos+1, __SCRIBBLE_GEN_GLYPH.__UNICODE      ] = __SCRIBBLE_DEVANAGARI_OFFSET + _replacementArray[_replacementLength-1];
+                        _glyph_grid[# _insertPos+1, __SCRIBBLE_GEN_GLYPH.__CONTROL_COUNT] = _glyph_grid[# _insertPos-1, __SCRIBBLE_GEN_GLYPH.__CONTROL_COUNT];
+                    }
+                    else
+                    {
+                        __scribble_error("Devanagari substring insertion length > 2. Please report this error");
+                    }
                 }
                 
                 _i           += _replacementLength - 1; //Off-by-one to account for ++_i in the for-loop
@@ -441,30 +351,34 @@ function __scribble_gen_3_devanagari()
         }
         
         var _found_glyph = _glyph_grid[# _i, __SCRIBBLE_GEN_GLYPH.__UNICODE];
-        
-        var _glyph_write = _found_glyph;
-        if (_glyph_write != 32) _glyph_write += __SCRIBBLE_DEVANAGARI_OFFSET;
-        
-        //Pull info out of the font's data structures
-        var _data_index = _font_glyphs_map[? _glyph_write];
-        
-        //If our glyph is missing, choose the missing character glyph instead!
-        if (_data_index == undefined)
+        if (_found_glyph == 0xFFFF)
         {
-            __scribble_trace("Couldn't find glyph data for character code " + string(_found_glyph) + " (" + chr(_found_glyph) + ") in font \"" + string(_font_name) + "\"");
-            _glyph_write = ord(SCRIBBLE_MISSING_CHARACTER);
-            _data_index = _font_glyphs_map[? _glyph_write];
+            __scribble_trace("Warning! Devanagari parser extended beyond the end of the available characters");
         }
-        
-        if (_data_index == undefined)
+        else if (_found_glyph >= 32) //Don't transform sprite, surfaces, or stuff that's non-printable
         {
-            //This should only happen if SCRIBBLE_MISSING_CHARACTER is missing for a font
-            __scribble_trace("Couldn't find glyph data for character code " + string(_glyph_write) + " (" + chr(_glyph_write) + ") in font \"" + string(_font_name) + "\"");
-        }
-        else
-        {
-            //Add this glyph to our grid by copying from the font's own glyph data grid
-            ds_grid_set_grid_region(_glyph_grid, _font_glyph_data_grid, _data_index, SCRIBBLE_GLYPH.UNICODE, _data_index, SCRIBBLE_GLYPH.BILINEAR, _i, __SCRIBBLE_GEN_GLYPH.__UNICODE);
+            //Pull info out of the font's data structures
+            var _glyph_write = _found_glyph;
+            var _data_index = _font_glyphs_map[? _glyph_write];
+            
+            //If our glyph is missing, choose the missing character glyph instead!
+            if (_data_index == undefined)
+            {
+                __scribble_trace("Couldn't find glyph data for character code " + string(_found_glyph) + " (" + chr(_found_glyph) + ") in font \"" + string(_font_name) + "\"");
+                _glyph_write = ord(SCRIBBLE_MISSING_CHARACTER);
+                _data_index = _font_glyphs_map[? _glyph_write];
+            }
+            
+            if (_data_index == undefined)
+            {
+                //This should only happen if SCRIBBLE_MISSING_CHARACTER is missing for a font
+                __scribble_trace("Couldn't find glyph data for character code " + string(_glyph_write) + " (" + chr(_glyph_write) + ") in font \"" + string(_font_name) + "\"");
+            }
+            else if (_font_glyph_data_grid[# _data_index, SCRIBBLE_GLYPH.BIDI] != __SCRIBBLE_BIDI.WHITESPACE) //Don't transform whitespace
+            {
+                //Add this glyph to our grid by copying from the font's own glyph data grid
+                ds_grid_set_grid_region(_glyph_grid, _font_glyph_data_grid, _data_index, SCRIBBLE_GLYPH.UNICODE, _data_index, SCRIBBLE_GLYPH.BILINEAR, _i, __SCRIBBLE_GEN_GLYPH.__UNICODE);
+            }
         }
         
         ++_i;
@@ -479,9 +393,29 @@ function __scribble_gen_3_devanagari()
     _glyph_grid[# _glyph_count, __SCRIBBLE_GEN_GLYPH.__HEIGHT       ] = 0;
     _glyph_grid[# _glyph_count, __SCRIBBLE_GEN_GLYPH.__FONT_HEIGHT  ] = 0;
     _glyph_grid[# _glyph_count, __SCRIBBLE_GEN_GLYPH.__SEPARATION   ] = 0;
-    _glyph_grid[# _glyph_count, __SCRIBBLE_GEN_GLYPH.__CONTROL_COUNT] = _glyph_grid[# _glyph_count-1, __SCRIBBLE_GEN_GLYPH.__CONTROL_COUNT]; //Make sure we collect controls at the end of a string
+    _glyph_grid[# _glyph_count, __SCRIBBLE_GEN_GLYPH.__CONTROL_COUNT] = (_glyph_count > 0)? _glyph_grid[# _glyph_count-1, __SCRIBBLE_GEN_GLYPH.__CONTROL_COUNT] : 0; //Make sure we collect controls at the end of a string
     
-    global.__scribble_generator_state.__glyph_count = _glyph_count+1;
+    _generator_state.__glyph_count = _glyph_count+1;
     
     #endregion
+}
+
+function __scribble_debug_krutidev(_glyph_grid)
+{
+    var _string = "";
+    
+    var _i = 0;
+    while(true)
+    {
+        var _unicode = _glyph_grid[# _i, __SCRIBBLE_GEN_GLYPH.__UNICODE];
+        if (_unicode >= __SCRIBBLE_DEVANAGARI_OFFSET) _unicode -= __SCRIBBLE_DEVANAGARI_OFFSET;
+        
+        if (_unicode <= 0) break;
+        
+        _string += chr(_unicode);
+        
+        ++_i;
+    }
+    
+    return _string;
 }

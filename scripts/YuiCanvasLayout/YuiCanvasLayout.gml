@@ -1,9 +1,7 @@
 /// @description here
-function YuiCanvasLayout(alignment, spacing) : YuiLayoutBase() constructor {
+function YuiCanvasLayout(alignment, spacing) : YuiLayoutBase(alignment, spacing) constructor {
 	static is_live = false;
 	
-	self.alignment = alignment;
-	self.spacing = spacing;
 	self.live_items = undefined;
 	
 	// elements may use this to calculate their own draw size

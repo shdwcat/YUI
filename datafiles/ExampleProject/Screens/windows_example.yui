@@ -2,13 +2,13 @@ id: windows_example
 file_type: screen
 
 import:
-  - ../Templates/main_panel.yui
-  - ../Templates/screen_base.yui
+  - ../Templates/
   - /YUI/Widgets/child_window.yui
   - /YUI/Widgets/checkbox.yui
 
 root:
   type: screen_base
+  title: Windows Example
   items:
     - This example demonstrates the child_window widget
 
@@ -58,7 +58,7 @@ root:
               - type: button
                 autofocus: true
                 content: Start New Game
-              
+
               - type: button
                 content: Continue Game
 
@@ -67,7 +67,7 @@ root:
 
               - type: button
                 content: Options
-              
+
               - type: button
                 content: Credits
 
@@ -91,16 +91,16 @@ root:
             size: { w: stretch }
             alignment: { h: stretch }
             elements:
-              
+
               - type: button
                 content: Column 2 item 1
-              
+
               - type: button
                 content: Column 2 item 2
-              
+
               - type: button
                 content: Column 2 item 3
-              
+
               - type: button
                 content: Column 2 item 4
 
@@ -124,16 +124,15 @@ root:
             size: { w: stretch }
             alignment: { h: stretch }
             elements:
-              
+
               - type: button
                 content: Column 2 item 1
-              
+
               - type: button
                 content: Column 2 item 2
-              
+
               - type: button
                 content: Column 2 item 3
-              
+
               - type: button
                 content: Column 2 item 4
-      

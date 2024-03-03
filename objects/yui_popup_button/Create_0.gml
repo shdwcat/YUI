@@ -9,6 +9,8 @@ popup_item = undefined;
 // do we need to override build?
 
 button_arrange = arrange;
+/// @param {struct} available_size
+/// @param {struct} viewport_size
 arrange = function(available_size, viewport_size) {
 	var size = button_arrange(available_size, viewport_size);
 	return size;

@@ -2,8 +2,7 @@ id: widget_gallery
 file_type: screen
 
 import:
-  - ../Templates/screen_base.yui
-  
+  - ../Templates/
   - /YUI/Animations/transitions.yui
   - /YUI/Widgets/
   - Animation Examples/
@@ -22,15 +21,13 @@ resources:
 
 root:
   type: screen_base
+  title: Animation Examples
   content_layout: horizontal
-  
+
   items:
     - type: panel
       spacing: 11
-      elements: 
-        - type: text
-          text_style: title
-          text: Animation Examples
+      elements:
 
         - type: anim_tab_panel
           anim_data: @anim_data

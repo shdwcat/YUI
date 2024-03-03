@@ -81,6 +81,7 @@ varying float v_fTextScale;
 
 uniform vec4  u_vColourBlend;                           //4
 uniform vec4  u_vGradient;                              //4
+uniform vec2  u_vSkew;                                  //2
 uniform vec2  u_vRegionActive;                          //2
 uniform vec4  u_vRegionColour;                          //4
 uniform float u_fTime;                                  //1
@@ -88,6 +89,7 @@ uniform float u_aDataFields[MAX_ANIM_FIELDS];           //21
 uniform vec2  u_aBezier[3];                             //6
 uniform float u_fBlinkState;                            //1
 
+uniform int   u_iTypewriterUseLines;                    //1
 uniform int   u_iTypewriterMethod;                      //1
 uniform int   u_iTypewriterCharMax;                     //1
 uniform float u_fTypewriterWindowArray[2*WINDOW_COUNT]; //6
@@ -306,22 +308,22 @@ vec2 bezierDerivative(float t, vec2 p1, vec2 p2, vec2 p3)
 
 float easeQuad(float time)
 {
-	return time*time;
+    return time*time;
 }
 
 float easeCubic(float time)
 {
-	return time*time*time;
+    return time*time*time;
 }
 
 float easeQuart(float time)
 {
-	return time*time*time*time;
+    return time*time*time*time;
 }
 
 float easeQuint(float time)
 {
-	return time*time*time*time*time;
+    return time*time*time*time*time;
 }
 
 float easeSine(float time)
@@ -343,7 +345,7 @@ float easeCirc(float time)
 float easeBack(float time)
 {
     float param = 1.70158;
-	return time*time*((param + 1.0)*time - param);
+    return time*time*((param + 1.0)*time - param);
 }
 
 float easeElastic(float time)
@@ -355,30 +357,30 @@ float easeElastic(float time)
 
 float easeBounce(float time)
 {
-	float n1 = 7.5625;
-	float d1 = 2.75;
+    float n1 = 7.5625;
+    float d1 = 2.75;
     
     time = 1.0 - time;
     
-	if (time < 1.0 / d1)
+    if (time < 1.0 / d1)
     {
-		return 1.0 - n1*time*time;
-	}
+        return 1.0 - n1*time*time;
+    }
     else if (time < 2.0 / d1)
     {
         time -= 1.5/d1;
-		return 1.0 - (n1*time*time + 0.75);
-	}
+        return 1.0 - (n1*time*time + 0.75);
+    }
     else if (time < 2.5 / d1)
     {
         time -= 2.25/d1;
-		return 1.0 - (n1*time*time + 0.9375);
-	}
+        return 1.0 - (n1*time*time + 0.9375);
+    }
     else
     {
         time -= 2.625/d1;
-		return 1.0 - (n1*time*time + 0.984375);
-	}
+        return 1.0 - (n1*time*time + 0.984375);
+    }
 }
 
 
@@ -448,6 +450,7 @@ void main()
         centre = pos + centreDelta;
     }
     
+    pos += u_vSkew*centre.yx;
     if (SLANT_FLAG > 0.5) pos.x += centreDelta.y*SLANT_GRADIENT;
     
     
@@ -494,7 +497,7 @@ void main()
     
     if (easeMethod > EASE_NONE)
     {
-        float fadeIndex = characterIndex + 1.0;
+        float fadeIndex = ((u_iTypewriterUseLines > 0)? lineIndex : characterIndex) + 1.0;
         if (u_iTypewriterCharMax > 0) fadeIndex = float(u_iTypewriterCharMax) - fadeIndex;
         
         float time = fade(u_fTypewriterWindowArray, u_fTypewriterSmoothness, fadeIndex, fadeOut);

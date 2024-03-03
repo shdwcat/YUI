@@ -100,8 +100,8 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 }
 
 /// @description Tracks a data file found on disk by the associated Cabinet
-/// @param the Cabinet associated with this CabinetFile
-/// @param the data for the file (directory, filename, etc)
+/// @param {struct.Cabinet} cabinet the Cabinet associated with this CabinetFile
+/// @param {struct} data the data for the file (directory, filename, etc)
 function CabinetFile(cabinet, data) constructor {
 	self.cabinet = cabinet;
 	

@@ -17,7 +17,7 @@ resources:
 
   dropdown_menu:
     type: template
-    
+
     slots:
       // the selection scope that manages selection state
       selection_scope: null // type: YuiSelectionScope
@@ -43,7 +43,7 @@ resources:
       selected_bg_color: null
 
       // additional handler executed after item is selected
-      on_item_selected: null 
+      on_item_selected: null
 
       // where to place the dropdown
       dropdown_placement: bottom_left
@@ -54,13 +54,6 @@ resources:
       foreground: null
 
       indicator_template: &dropdown_indicator_template
-
-    events:
-      item_selected:
-        // select the item
-        - @@ item => $selection_scope then $selection_scope.select(item) else false
-        // invoke the user handler
-        - @@ item => $on_item_selected(item)
 
     template:
       type: button
@@ -76,6 +69,7 @@ resources:
           - type: border
             padding: [5, 0, 5, 0]
             data_source: $selected_item ?? $selection_scope.selected_item
+            //flex: true
             content: $item_template
 
           - type: button
@@ -87,7 +81,11 @@ resources:
             background: #00000000
             border_thickness: 0
             visible: $can_clear_value and ($selected_item != undefined or $selection_scope.selected_index >= 0)
-            on_click: @@ e => yui_invoke_event(e.source, item_selected, undefined)
+            on_click:
+              // update selection scope if it exists
+              - @@ $selection_scope then $selection_scope.select(undefined) else false
+              // invoke the user handler
+              - @@ $on_item_selected(undefined)
 
           - $indicator_template
 
@@ -112,7 +110,7 @@ resources:
   dropdown_item_panel_scrollable:
     type: scrollbox
     size: { max_h: $max_dropdown_height }
-    content: 
+    content:
       type: dropdown_item_panel
       size: { w: stretch }
 
@@ -124,9 +122,10 @@ resources:
     content:
       type: panel
       spacing: 0
-      //size: { w: stretch }
       alignment: { h: stretch }
       bind_slot_scope:
+        on_item_selected: $on_item_selected
+        selection_scope: $selection_scope
         selected_item: $selected_item ?? $selection_scope.selected_item // little trick to simplify referring to the selected item
       elements: $items
       template:
@@ -137,7 +136,9 @@ resources:
           color: @ == $selected_item then $selected_bg_color else $item_bg_color
         content: $item_template
         on_click:
-          // invoke the item_selected event on the root widget
-          - @@ e => yui_invoke_event(e.source, item_selected, @)
+          // update selection scope if it exists
+          - @@ $selection_scope then $selection_scope.select(@) else false
+          // invoke the user handler
+          - @@ $on_item_selected(@)
           // close the popup
           - @@ e => e.source.closePopup()

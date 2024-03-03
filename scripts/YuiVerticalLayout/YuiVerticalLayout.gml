@@ -1,9 +1,7 @@
 /// @description here
-function YuiVerticalLayout(alignment, spacing, panel_size) : YuiLayoutBase() constructor {
+function YuiVerticalLayout(alignment, spacing, panel_size) : YuiLayoutBase(alignment, spacing) constructor {
 	static is_live = false;
 	
-	self.alignment = alignment;
-	self.spacing = spacing;	
 	self.min_w = panel_size.min_w;
 	
 	// whether to use the full available width or just the max item width

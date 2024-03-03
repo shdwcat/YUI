@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Elements",
-    "path": "folders/Packages - YUI/Elements.yy",
+    "name": "Deprecated",
+    "path": "folders/Packages - YUI/Deprecated.yy",
   },
 }

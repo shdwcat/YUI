@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "scripts",
-    "path": "folders/Packages - YUI/scripts.yy",
+    "name": "Deprecated",
+    "path": "folders/Packages - YUI/Deprecated.yy",
   },
 }

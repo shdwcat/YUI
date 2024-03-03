@@ -30,6 +30,7 @@ resources:
       // padding applied to the content below the tab header
       content_padding: null
 
+    // TODO convert to match dropdown_list
     events:
       tab_selected:
         // select the item

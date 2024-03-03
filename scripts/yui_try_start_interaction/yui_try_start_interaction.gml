@@ -25,18 +25,20 @@ function yui_try_start_interaction(interaction_name, source_data, event) {
 	var can_start = interaction.canStart(source_data);
 	if !can_start return false;
 	
-	yui_log("starting", interaction.props.type, "interaction");
+	yui_log($"starting {interaction.props.type} interaction");
 	
 	var element = interaction.start(source_data, event, id);
 	if element {
 		YuiCursorManager.visual_item = yui_make_render_instance(element, interaction, , 100);
 		YuiCursorManager.visual_item.parent = undefined;
-		YuiCursorManager.visual_item.arrange({
+		
+		var draw_rect = {
 			x: device_mouse_x_to_gui(0),
 			y: device_mouse_y_to_gui(0),
 			w: window_get_width(),
 			h: window_get_height(),
-		})
+		};
+		YuiCursorManager.visual_item.arrange(draw_rect)
 	}
 	
 	YuiCursorManager.active_interaction = interaction;

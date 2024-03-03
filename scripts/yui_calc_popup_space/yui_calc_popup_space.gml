@@ -1,4 +1,8 @@
 // calculates the space on screen where a popup could draw
+/// @desc Function Description
+/// @param {enum.YUI_PLACEMENT_MODE} placement which direction to place the popup
+/// @param {struct} parent_size the size of the item the popup is relative to
+/// @returns {struct} the available size for the popup
 function yui_calc_popup_space(placement, parent_size) {
 	
 	// TODO: any way to account for views?

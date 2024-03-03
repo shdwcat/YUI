@@ -1,4 +1,5 @@
-/// @description get the layout constructor for the provided layout type
+/// @desc  get the layout constructor for the provided layout type
+/// @param {string} layout_type
 function yui_resolve_layout(layout_type) {
 	
 	switch layout_type {

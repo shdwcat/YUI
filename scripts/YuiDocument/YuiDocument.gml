@@ -32,8 +32,11 @@ function YuiDocument(_yui_file, cabinet) constructor {
 		var cabinet_file = cabinet.file(yui_filepath);
 		
 		// load the file data (possibly cached)
-		yui_log("loading yui_file:", yui_filepath);
-		var file_data = cabinet_file.tryRead();
+		yui_log($"loading yui_file {yui_filepath}");
+		var file_data = cabinet_file.tryRead();		
+		
+		if file_data[$ "trace"]
+			DEBUG_BREAK_YUI
 		
 		// apply default props
 		var document_data = yui_apply_props(file_data);

@@ -1,5 +1,8 @@
 /// @description renders YUI text
 function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_props, _resources, _slot_values) constructor {
+	
+	static scribble_enabled = yui_check_scribble();
+	
 	static default_props = {
 		type: "text",
 		padding: 0,
@@ -13,7 +16,8 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		font: undefined, // overrides text_style.font
 		color: undefined, // overrides text_style.color
 		highlight_color: undefined,
-				
+		
+		// these require scribble: true
 		autotype: undefined, // simple option to enable typist.in()
 		typist: undefined, // controls typewriter behavior
 	};
@@ -22,9 +26,18 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	
 	baseInit(props);
 	
+	if !scribble_enabled && (props.scribble || props.typist || props.autotype) {
+		throw yui_error($"Add Scribble to your project in order to use scribble features (in {props.id})");
+	}
+	
+	if props.text_format != undefined {
+		yui_warning($"text.text_format is deprecated and will be removed in the future (in {props.id})");
+	}
+		
+	
 	props.text = yui_bind(props.text, resources, slot_values);
 	props.typist = yui_bind(props.typist, resources, slot_values);
-	props.padding = yui_resolve_padding(yui_bind(props.padding, resources, slot_values));
+	props.padding = new YuiPadding(yui_bind(props.padding, resources, slot_values));
 	
 	// look up the text style by name from the theme
 	text_style = theme.text_styles[$ props.text_style];

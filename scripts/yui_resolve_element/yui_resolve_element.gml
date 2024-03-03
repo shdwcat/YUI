@@ -1,7 +1,7 @@
 /// @desc resolves element props to a YUI Element
 /// @param {struct} yui_data Description
 /// @param {struct} resources Description
-/// @param {struct.yuichainedmap} slot_values Description
+/// @param {struct.yuichainedmap,undefined} slot_values Description
 /// @param {any} [parent_id] Description
 /// @returns {struct.YuiBaseElement,undefined}
 function yui_resolve_element(yui_data, resources, slot_values, parent_id = undefined) {

@@ -42,6 +42,8 @@ build = function() {
 	viewport_y = bound_values.viewport_y;
 }
 
+/// @param {struct} available_size
+/// @param {struct} viewport_size
 arrange = function(available_size, viewport_size) {
 	
 	x = available_size.x;
@@ -50,10 +52,10 @@ arrange = function(available_size, viewport_size) {
 	self.viewport_size = viewport_size;
 	
 	if !visible {
-		return sizeToDefault(available_size);
+		return sizeToDefault();
 	}
 	
-	var actual_viewport_size = yui_apply_element_size(layout_props.size, available_size, {
+	var actual_viewport_size = element_size.constrainDrawSize(available_size, {
 		x: x,
 		y: y,
 		w: 0,
@@ -77,10 +79,12 @@ arrange = function(available_size, viewport_size) {
 		content_size = { x: x, y: y, w: 0, h: 0 };
 	}
 	
-	var drawn_size = yui_apply_element_size(layout_props.size, available_size, {
+	var desired_size = {
 		w: content_size.w,
 		h: content_size.h,
-	});
+	};
+	
+	var drawn_size = element_size.constrainDrawSize(available_size, desired_size);
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
 	

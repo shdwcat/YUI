@@ -5,6 +5,7 @@ event_inherited();
 
 has_content_item = false;
 
+layout = undefined;
 internal_children = [];
 is_arranging = false;
 used_layout_size = undefined;
@@ -93,6 +94,8 @@ build = function yui_panel__build() {
 	}
 }
 
+/// @param {struct} available_size
+/// @param {struct} viewport_size
 arrange = function yui_panel__arrange(available_size, viewport_size) {
 		
 	x = available_size.x;
@@ -101,7 +104,7 @@ arrange = function yui_panel__arrange(available_size, viewport_size) {
 	self.viewport_size = viewport_size;
 	
 	if !visible {
-		return sizeToDefault(available_size);
+		return sizeToDefault();
 	}
 	
 	//if trace {
@@ -109,29 +112,32 @@ arrange = function yui_panel__arrange(available_size, viewport_size) {
 	//}
 	
 	var padding = layout_props.padding;
-	padded_rect = yui_apply_padding(available_size, padding, layout_props.size);
+	padded_rect = padding.apply(available_size, layout_props.size);
 	layout.init(internal_children, padded_rect, viewport_size, yui_element.props);
 
 	is_arranging = true;
 	used_layout_size = layout.arrange(bound_values);
 	is_arranging = false;
 	
-	// update our draw size to encompass the layout's draw size with our padding
-	var drawn_size = yui_apply_element_size(layout_props.size, available_size, {
+	// our desired size is the layout's draw size with our padding
+	var desired_size = {
 		w: layout.draw_size.w + padding.w,
 		h: layout.draw_size.h + padding.h,
-	});
+	}
+	
+	var drawn_size = element_size.constrainDrawSize(available_size, desired_size);
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
 	
-	if viewport_size {
-		updateViewport();
-	}
+	// probably unnecessary but keeping for reference
+	//if viewport_size {
+	//	updateViewport();
+	//}
 	
 	// our used size is the layout used size with our padding
 	var used_size = {
-		x: available_size.x,
-		y: available_size.y,
+		x: x,
+		y: y,
 		w: max(drawn_size.w, used_layout_size.w + padding.w),
 		h: max(drawn_size.h, used_layout_size.h + padding.h),
 	};
@@ -145,7 +151,7 @@ arrange = function yui_panel__arrange(available_size, viewport_size) {
 
 onChildLayoutComplete = function(child) {
 	if !is_arranging {
-		arrange(draw_rect);
+		arrange(draw_rect, viewport_size);
 		if is_size_changed && parent {
 			parent.onChildLayoutComplete(self);
 		}
@@ -187,3 +193,7 @@ unload = function(unload_root = undefined) {
 
 	return unload_time;
 }
+
+Inspectron()
+	.Section("yui_panel")
+	.Include(nameof(layout))

@@ -97,8 +97,7 @@ initLayout = function() {
 	_id = yui_element.props.id;
 	trace = yui_element.props.trace;
 	
-	default_w = yui_element.size.default_w;
-	default_h = yui_element.size.default_h;
+	element_size = yui_element.size;
 	canvas = yui_element.canvas;
 	flex = yui_element.flex;
 	has_tooltip = yui_element.props.tooltip != undefined;
@@ -224,11 +223,13 @@ bind_values = function yui_base__bind_values() {
 }
 
 build = function() {
-	throw "build not implemented on this type";
+	throw "build() not implemented on this type!";
 }
 
+/// @param {struct} available_size
+/// @param {struct} viewport_size
 arrange = function(available_size, viewport_size) {
-	throw "arrange not implemented on this type";
+	throw "arrange() not implemented on this type!";
 }
 
 process = function yui_base__process() {
@@ -304,9 +305,9 @@ updateViewport = function() {
 
 resize = yui_resize_instance;
 
-sizeToDefault = function(available_size) {
-	var w = min(default_w, available_size.w);
-	var h = min(default_h, available_size.h);
+sizeToDefault = function() {
+	var w = min(element_size.default_w, draw_rect.w);
+	var h = min(element_size.default_h, draw_rect.h);
 	yui_resize_instance(w, h);
 	return draw_size;
 }
@@ -432,3 +433,23 @@ unload = function(unload_root = undefined) {
 	
 	return unload_time;
 }
+
+generateLayoutLog = function() {
+	yui_log("TODO: generate layout log");
+}
+
+Inspectron()
+	.Button("Generate Layout Log", generateLayoutLog).AtTop()
+	.Section("yui_base")
+	.Checkbox(nameof(trace))
+	.Checkbox(nameof(is_cursor_layer))
+	.Watch(nameof(enabled))
+	.Watch(nameof(focusable))
+	.Watch(nameof(opacity))
+	.Watch(nameof(xoffset))
+	.Watch(nameof(yoffset))
+	.Rect(nameof(draw_size))
+	.Rect(nameof(draw_rect))
+	.Rect(nameof(viewport_size))
+	.Rect(nameof(viewport_part))
+	

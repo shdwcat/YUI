@@ -34,22 +34,25 @@ build = function() {
 
 // forward the rest to the child item or vice versa
 
+/// @param {struct} available_size
+/// @param {struct} viewport_size
 arrange = function(available_size, viewport_size) {
 	draw_rect = available_size;
 	self.viewport_size = viewport_size;
 	
 	if !case_item 
-		return sizeToDefault(available_size);
+		return sizeToDefault();
 	
 	case_item.arrange(available_size, viewport_size);
 	x = case_item.x;
 	y = case_item.y;
 		
 	yui_resize_instance(case_item.draw_size.w, case_item.draw_size.h)
-		
-	if viewport_size {
-		updateViewport();
-	}
+	
+	// probably unnecessary but keeping for reference
+	//if viewport_size {
+	//	updateViewport();
+	//}
 		
 	if case_item.is_size_changed {
 		is_size_changed = true;

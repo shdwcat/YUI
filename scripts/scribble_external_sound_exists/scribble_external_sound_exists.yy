@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Miscellaneous",
-    "path": "folders/Scribble/Miscellaneous.yy",
+    "name": "External Assets",
+    "path": "folders/Scribble/External Assets.yy",
   },
 }

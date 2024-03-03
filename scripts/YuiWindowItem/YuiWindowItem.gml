@@ -5,7 +5,7 @@ function YuiWindowItem(unique_id = undefined, top = 0, left = 0) constructor {
 	self.left = left;
 	self.visible = true;
 	
-	self.onClosed = function(e) {
-		yui_log("onClosed not set on window:", unique_id);
+	function onClosed(e) {
+		yui_log($"onClosed not defined on window: {unique_id}");
 	}
 }

@@ -3,14 +3,19 @@
 
 function __scribble_class_element(_string, _unique_id) constructor
 {
+    static __scribble_state    = __scribble_get_state();
+    static __ecache_array      = __scribble_get_cache_state().__ecache_array;
+    static __ecache_dict       = __scribble_get_cache_state().__ecache_dict;
+    static __ecache_name_array = __scribble_get_cache_state().__ecache_name_array;
+    
     __text       = _string;
     __unique_id  = _unique_id;
-    __cache_name = _string + ":" + _unique_id;
+    __cache_name = _string + ((_unique_id == undefined)? SCRIBBLE_DEFAULT_UNIQUE_ID : (":" + string(_unique_id)));
     
     if (__SCRIBBLE_DEBUG) __scribble_trace("Caching element \"" + __cache_name + "\"");
     
     //Defensive programming to prevent memory leaks when accidentally rebuilding a model for a given cache name
-    var _weak = global.__scribble_ecache_dict[$ __cache_name];
+    var _weak = __ecache_dict[$ __cache_name];
     if ((_weak != undefined) && weak_ref_alive(_weak) && !_weak.ref.__flushed)
     {
         __scribble_trace("Warning! Flushing element \"", __cache_name, "\" due to cache name collision");
@@ -18,9 +23,9 @@ function __scribble_class_element(_string, _unique_id) constructor
     }
     
     //Add this text element to the global cache
-    global.__scribble_ecache_dict[$ __cache_name] = weak_ref_create(self);
-    array_push(global.__scribble_ecache_array, self);
-    array_push(global.__scribble_ecache_name_array, __cache_name);
+    __ecache_dict[$ __cache_name] = weak_ref_create(self);
+    array_push(__ecache_array, self);
+    array_push(__ecache_name_array, __cache_name);
     
     __flushed = false;
     
@@ -28,42 +33,53 @@ function __scribble_class_element(_string, _unique_id) constructor
     __model_cache_name = undefined;
     __model = undefined;
     
-    __last_drawn = current_time;
+    __last_drawn = __scribble_state.__frames;
     __freeze = false;
     
     
     
-    __starting_font   = global.__scribble_default_font;
+    __starting_font   = __scribble_state.__default_font;
     __starting_colour = __scribble_process_colour(SCRIBBLE_DEFAULT_COLOR);
     __starting_halign = SCRIBBLE_DEFAULT_HALIGN;
     __starting_valign = SCRIBBLE_DEFAULT_VALIGN;
     __blend_colour    = c_white;
     __blend_alpha     = 1.0;
+    __skew_x          = 0;
+    __skew_y          = 0;
     __gradient_colour = c_black;
     __gradient_alpha  = 0.0;
     __flash_colour    = c_white;
     __flash_alpha     = 0.0;
     
+    __randomize_animation = false;
+    
     __origin_x       = 0.0;
     __origin_y       = 0.0;
-    __xscale         = 1.0;
-    __yscale         = 1.0;
-    __angle          = 0.0;
+    
+    __pre_scale      = 1.0;
+    
+    __post_xscale    = 1.0;
+    __post_yscale    = 1.0;
+    __post_angle     = 0.0;
+    
     __matrix_dirty   = true;
     __matrix         = undefined;
     __matrix_inverse = undefined;
     __matrix_x       = undefined;
     __matrix_y       = undefined;
     
+    __wrap_apply      = false;
     __wrap_max_width  = -1;
     __wrap_max_height = -1;
     __wrap_per_char   = false;
     __wrap_no_pages   = false;
     __wrap_max_scale  = 1;
     
-    __scale_to_box_max_width  = 0;
-    __scale_to_box_max_height = 0;
-    __scale_to_box_scale      = undefined;
+    __scale_to_box_dirty    = true;
+    __scale_to_box_width    = 0;
+    __scale_to_box_height   = 0;
+    __scale_to_box_maximise = false;
+    __scale_to_box_scale    = undefined;
     
     __line_height_min = -1;
     __line_height_max = -1;
@@ -150,6 +166,8 @@ function __scribble_class_element(_string, _unique_id) constructor
     /// @param [typist]
     static draw = function(_x, _y, _typist = undefined)
     {
+        static _scribble_state = __scribble_get_state();
+        
         var _function_scope = other;
         
         if (!SCRIBBLE_WARNING_LEGACY_TYPEWRITER)
@@ -162,18 +180,18 @@ function __scribble_class_element(_string, _unique_id) constructor
         if (!is_struct(_model)) return undefined;
         
         //If enough time has elapsed since we drew this element then update our animation time
-        if (current_time - __last_drawn > __SCRIBBLE_EXPECTED_FRAME_TIME)
+        if (__last_drawn < __scribble_state.__frames)
         {
             __animation_time += __animation_speed*SCRIBBLE_TICK_SIZE;
             if (SCRIBBLE_SAFELY_WRAP_TIME) __animation_time = __animation_time mod 16383; //Cheeky wrapping to prevent GPUs with low accuracy flipping out
         }
         
-        __last_drawn = current_time;
+        __last_drawn = __scribble_state.__frames;
         
         //Update the blink state
-        if (global.__scribble_anim_blink_on_duration + global.__scribble_anim_blink_off_duration > 0)
+        if (_scribble_state.__blink_on_duration + _scribble_state.__blink_off_duration > 0)
         {
-            __animation_blink_state = (((__animation_time + global.__scribble_anim_blink_time_offset) mod (global.__scribble_anim_blink_on_duration + global.__scribble_anim_blink_off_duration)) < global.__scribble_anim_blink_on_duration);
+            __animation_blink_state = (((__animation_time + _scribble_state.__blink_time_offset) mod (_scribble_state.__blink_on_duration + _scribble_state.__blink_off_duration)) < _scribble_state.__blink_on_duration);
         }
         else
         {
@@ -185,7 +203,7 @@ function __scribble_class_element(_string, _unique_id) constructor
         
         //...aaaand set the matrix
         var _old_matrix = matrix_get(matrix_world);
-        var _matrix = matrix_multiply(__update_matrix(_x, _y), _old_matrix);
+        var _matrix = matrix_multiply(__update_matrix(_model, _x, _y), _old_matrix);
         matrix_set(matrix_world, _matrix);
         
         //Submit the model
@@ -194,12 +212,17 @@ function __scribble_class_element(_string, _unique_id) constructor
         //Make sure we reset the world matrix
         matrix_set(matrix_world, _old_matrix);
         
-        //Run the garbage collecter
-        __scribble_gc_collect();
-        
         if (SCRIBBLE_SHOW_WRAP_BOUNDARY) debug_draw_bbox(_x, _y);
         
-        return SCRIBBLE_DRAW_RETURNS_SELF? self : undefined;
+        if (SCRIBBLE_DRAW_RETURNS_SELF)
+        {
+            return self;
+        }
+        else
+        {
+            static _null = new __scribble_class_null_element();
+            return _null;
+        }
     }
     
     /// @param fontName
@@ -261,9 +284,11 @@ function __scribble_class_element(_string, _unique_id) constructor
     /// @param alpha
     static blend = function(_colour, _alpha)
     {
+        static _colors_struct = __scribble_config_colours();
+        
         if (is_string(_colour))
         {
-            _colour = global.__scribble_colours[$ _colour];
+            _colour = _colors_struct[$ _colour];
             if (_colour == undefined)
             {
                 __scribble_error("Colour name \"", _colour, "\" not recognised");
@@ -281,9 +306,11 @@ function __scribble_class_element(_string, _unique_id) constructor
     /// @param alpha
     static gradient = function(_colour, _alpha)
     {
+        static _colors_struct = __scribble_config_colours();
+        
         if (is_string(_colour))
         {
-            _colour = global.__scribble_colours[$ _colour];
+            _colour = _colors_struct[$ _colour];
             if (_colour == undefined)
             {
                 __scribble_error("Colour name \"", _colour, "\" not recognised");
@@ -305,9 +332,11 @@ function __scribble_class_element(_string, _unique_id) constructor
     /// @param alpha
     static flash = function(_colour, _alpha)
     {
+        static _colors_struct = __scribble_config_colours();
+        
         if (is_string(_colour))
         {
-            _colour = global.__scribble_colours[$ _colour];
+            _colour = _colors_struct[$ _colour];
             if (_colour == undefined)
             {
                 __scribble_error("Colour name \"", _colour, "\" not recognised");
@@ -333,7 +362,7 @@ function __scribble_class_element(_string, _unique_id) constructor
         if ((__origin_x != _x) || (__origin_y != _y))
         {
             __matrix_dirty = true;
-            __bbox_dirty = true;
+            __bbox_dirty   = true;
             
             __origin_x = _x;
             __origin_y = _y;
@@ -347,25 +376,55 @@ function __scribble_class_element(_string, _unique_id) constructor
     /// @param [angle=0]
     static transform = function(_xscale, _yscale = _xscale, _angle = 0)
     {
-        if ((__xscale != _xscale) || (__yscale != _yscale) || (__angle != _angle))
+        if ((__post_xscale != _xscale) || (__post_yscale != _yscale) || (__post_angle != _angle))
         {
             __matrix_dirty = true;
-            __bbox_dirty = true;
+            __bbox_dirty   = true;
             
-            __xscale = _xscale;
-            __yscale = _yscale;
-            __angle  = _angle;
+            __post_xscale = _xscale;
+            __post_yscale = _yscale;
+            __post_angle  = _angle;
         }
+        
+        return self;
+    }
+    
+    /// @param scale
+    static scale = function(_scale)
+    {
+        if (__pre_scale != _scale)
+        {
+            __model_cache_name_dirty = true;
+            
+            __pre_scale = _scale;
+        }
+        
+        return self;
+    }
+    
+    static skew = function(_skew_x, _skew_y)
+    {
+        __skew_x = _skew_x;
+        __skew_y = _skew_y;
         
         return self;
     }
     
     /// @param maxWidth
     /// @param maxHeight
-    static scale_to_box = function(_max_width, _max_height)
+    /// @param [maximise=false]
+    static scale_to_box = function(_max_width, _max_height, _maximise = false)
     {
-        __scale_to_box_max_width  = ((_max_width  == undefined) || (_max_width  < 0))? 0 : _max_width;
-        __scale_to_box_max_height = ((_max_height == undefined) || (_max_height < 0))? 0 : _max_height;
+        _max_width  = ((_max_width  == undefined) || (_max_width  < 0))? 0 : _max_width;
+        _max_height = ((_max_height == undefined) || (_max_height < 0))? 0 : _max_height;
+        
+        if ((_max_width != __scale_to_box_width) || (_max_height != __scale_to_box_height) || (_maximise != __scale_to_box_maximise))
+        {
+            __scale_to_box_width    = _max_width;
+            __scale_to_box_height   = _max_height;
+            __scale_to_box_maximise = _maximise;
+            __scale_to_box_dirty    = true;
+        }
         
         return self;
     }
@@ -375,15 +434,18 @@ function __scribble_class_element(_string, _unique_id) constructor
     /// @param [characterWrap=false]
     static wrap = function(_wrap_max_width, _wrap_max_height = -1, _wrap_per_char = false)
     {
-        if ((_wrap_max_width  != __wrap_max_width)
+        if (!__wrap_apply
+        ||  (_wrap_max_width  != __wrap_max_width)
         ||  (_wrap_max_height != __wrap_max_height)
         ||  (_wrap_per_char   != __wrap_per_char)
         ||  __wrap_no_pages
         ||  (__wrap_max_scale != 1))
         {
             __model_cache_name_dirty = true;
-            __bbox_dirty = true;
+            __bbox_dirty             = true;
+            __scale_to_box_dirty     = true;
             
+            __wrap_apply      = ((_wrap_max_width >= 0) && !is_infinity(_wrap_max_width)); //Turn off wrapping logic if we have an invalid width
             __wrap_max_width  = _wrap_max_width;
             __wrap_max_height = _wrap_max_height;
             __wrap_per_char   = _wrap_per_char;
@@ -400,21 +462,48 @@ function __scribble_class_element(_string, _unique_id) constructor
     /// @param [maxScale=1]
     static fit_to_box = function(_wrap_max_width, _wrap_max_height, _wrap_per_char = false, _wrap_max_scale = 1)
     {
-        if ((_wrap_max_width  != __wrap_max_width)
+        if (!__wrap_apply
+        ||  (_wrap_max_width  != __wrap_max_width)
         ||  (_wrap_max_height != __wrap_max_height)
         ||  (_wrap_per_char   != __wrap_per_char)
         ||  !__wrap_no_pages
         ||  (_wrap_max_scale  != __wrap_max_scale))
         {
             __model_cache_name_dirty = true;
-            __matrix_dirty = true;
-            __bbox_dirty = true;
+            __matrix_dirty           = true; //By changing the .fit_to_box() properties we'll very likely change the __fit_scale variable used to shape text in the world matrix
+            __bbox_dirty             = true;
+            __scale_to_box_dirty     = true;
             
+            __wrap_apply      = ((_wrap_max_width >= 0) && !is_infinity(_wrap_max_width)); //Turn off wrapping logic if we have an invalid width
             __wrap_max_width  = _wrap_max_width;
             __wrap_max_height = _wrap_max_height;
             __wrap_per_char   = _wrap_per_char;
             __wrap_no_pages   = true;
             __wrap_max_scale  = _wrap_max_scale;
+        }
+        
+        return self;
+    }
+    
+    static pin_guide_width = function(_width)
+    {
+        if (__wrap_apply
+        ||  (__wrap_max_width != _width)
+        ||  (__wrap_max_height != -1)
+        ||  __wrap_per_char
+        ||  __wrap_no_pages
+        ||  (__wrap_max_scale != 1))
+        {
+            __model_cache_name_dirty = true;
+            __bbox_dirty             = true;
+            __scale_to_box_dirty     = true;
+            
+            __wrap_apply      = false; //Turn off wrapping entirely
+            __wrap_max_width  = _width;
+            __wrap_max_height = -1;
+            __wrap_per_char   = false;
+            __wrap_no_pages   = false;
+            __wrap_max_scale  = 1;
         }
         
         return self;
@@ -456,8 +545,9 @@ function __scribble_class_element(_string, _unique_id) constructor
         if ((_l != __padding_l) || (_t != __padding_t) || (_r != __padding_r) || (_b != __padding_b))
         {
             __model_cache_name_dirty = true;
-            __matrix_dirty = true;
-            __bbox_dirty = true;
+            __matrix_dirty           = true;
+            __bbox_dirty             = true;
+            __scale_to_box_dirty     = true;
             
             __padding_l = _l;
             __padding_t = _t;
@@ -552,15 +642,15 @@ function __scribble_class_element(_string, _unique_id) constructor
         var _page         = _model.__pages_array[__page];
         var _region_array = _page.__region_array;
         
-        var _matrix = __update_matrix(_element_x, _element_y);
+        var _matrix = __update_matrix(_model, _element_x, _element_y);
         if (__matrix_inverse == undefined) __matrix_inverse = __scribble_matrix_inverse(matrix_multiply(_matrix, matrix_get(matrix_world)));
         var _vector = matrix_transform_vertex(__matrix_inverse, _pointer_x, _pointer_y, 0);
         var _x = _vector[0];
         var _y = _vector[1];
         
         var _found = undefined;
-        var _i = 0;
-        repeat(array_length(_region_array))
+        var _i = array_length(_region_array)-1;
+        repeat(_i+1)
         {
             var _region = _region_array[_i];
             var _bbox_array = _region.__bbox_array;
@@ -579,7 +669,7 @@ function __scribble_class_element(_string, _unique_id) constructor
             }
             
             if (_found != undefined) break;
-            ++_i;
+            --_i;
         }
         
         return _found;
@@ -659,8 +749,8 @@ function __scribble_class_element(_string, _unique_id) constructor
                 return;
             }
             
-            var _xscale = __scale_to_box_scale*_model.__fit_scale*__xscale;
-            var _yscale = __scale_to_box_scale*_model.__fit_scale*__yscale;
+            var _xscale = __scale_to_box_scale*_model.__fit_scale*__post_xscale;
+            var _yscale = __scale_to_box_scale*_model.__fit_scale*__post_yscale;
             
             //Left/top padding is baked into the model
             var _bbox = _model.__get_bbox(SCRIBBLE_BOUNDING_BOX_USES_PAGE? __page : undefined, __padding_l, __padding_t, __padding_r, __padding_b);
@@ -668,7 +758,7 @@ function __scribble_class_element(_string, _unique_id) constructor
             __bbox_raw_width  = 1 + _bbox.right - _bbox.left;
             __bbox_raw_height = 1 + _bbox.bottom - _bbox.top;
             
-            if ((_xscale == 1) && (_yscale == 1) && (__angle == 0))
+            if ((_xscale == 1) && (_yscale == 1) && (__post_angle == 0))
             {
                 __bbox_matrix = matrix_build(-__origin_x, -__origin_y, 0,    0,0,0,    1,1,1);
                 
@@ -688,7 +778,7 @@ function __scribble_class_element(_string, _unique_id) constructor
                 //TODO - Optimize this
                 __bbox_matrix = matrix_multiply(matrix_build(-__origin_x, -__origin_y, 0,    0, 0,       0,          1,       1, 1),
                                 matrix_multiply(matrix_build(          0,           0, 0,    0, 0,       0,    _xscale, _yscale, 1),
-                                                matrix_build(          0,           0, 0,    0, 0, __angle,          1,       1, 1)));
+                                                matrix_build(          0,           0, 0,    0, 0, __post_angle,          1,       1, 1)));
                 
                 var _l = _bbox.left;
                 var _t = _bbox.top;
@@ -754,6 +844,9 @@ function __scribble_class_element(_string, _unique_id) constructor
         __update_bbox_matrix();
         
         return {
+            x: _x,
+            y: _y,
+            
             left:   _x + __bbox_aabb_left,
             top:    _y + __bbox_aabb_top,
             right:  _x + __bbox_aabb_right,
@@ -810,10 +903,10 @@ function __scribble_class_element(_string, _unique_id) constructor
         }
         
         __update_bbox_matrix();
-        var _xscale = __scale_to_box_scale*_model.__fit_scale*__xscale;
-        var _yscale = __scale_to_box_scale*_model.__fit_scale*__yscale;
+        var _xscale = __scale_to_box_scale*_model.__fit_scale*__post_xscale;
+        var _yscale = __scale_to_box_scale*_model.__fit_scale*__post_yscale;
         
-        if ((_xscale == 1) && (_yscale == 1) && (__angle == 0))
+        if ((_xscale == 1) && (_yscale == 1) && (__post_angle == 0))
         {
             //Avoid using matrices if we can
             var _l = _x - __origin_x + _bbox.left;
@@ -934,14 +1027,14 @@ function __scribble_class_element(_string, _unique_id) constructor
         return _model.__get_wrapped();
     }
     
-	/// @param [page]
+    /// @param [page]
     static get_text = function()
     {
-		var _page = ((argument_count > 0) && (argument[0] != undefined))? argument[0] : __page;
-		
+        var _page = ((argument_count > 0) && (argument[0] != undefined))? argument[0] : __page;
+        
         var _model = __get_model(true);
         if (!is_struct(_model)) return 0;
-		return _model.__get_text(_page);
+        return _model.__get_text(_page);
     }
     
     /// @param [page]
@@ -980,6 +1073,22 @@ function __scribble_class_element(_string, _unique_id) constructor
     
     
     #region Typewriter
+    
+    static pre_update_typist = function(_typist)
+    {
+        var _function_scope = other;
+        
+        if (is_struct(_typist))
+        {
+            with(_typist)
+            {
+                //Tick over the typist
+                __tick(other, _function_scope);
+            }
+        }
+        
+        return self;
+    }
     
     static reveal = function(_character)
     {
@@ -1123,7 +1232,27 @@ function __scribble_class_element(_string, _unique_id) constructor
         
         __get_model(true);
         
-        return SCRIBBLE_BUILD_RETURNS_SELF? self : undefined;
+        if (SCRIBBLE_BUILD_RETURNS_SELF)
+        {
+            return self;
+        }
+        else
+        {
+            static _null = new __scribble_class_null_element();
+            return _null;
+        }
+    }
+    
+    static refresh = function()
+    {
+        var _model = __get_model(false);
+        if (_model != undefined)
+        {
+            _model.__flush();
+            __get_model(true);
+        }
+        
+        return self;
     }
     
     static flush = function()
@@ -1132,9 +1261,9 @@ function __scribble_class_element(_string, _unique_id) constructor
         if (__SCRIBBLE_DEBUG) __scribble_trace("Flushing element \"" + string(__cache_name) + "\"");
         
         //Remove reference from cache
-        variable_struct_remove(global.__scribble_ecache_dict, __cache_name);
+        variable_struct_remove(__ecache_dict, __cache_name);
         
-        var _array = global.__scribble_ecache_array;
+        var _array = __ecache_array;
         var _i = 0;
         repeat(array_length(_array))
         {
@@ -1151,7 +1280,15 @@ function __scribble_class_element(_string, _unique_id) constructor
         //Set as __flushed
         __flushed = true;
         
-        return undefined;
+        if (SCRIBBLE_FLUSH_RETURNS_SELF)
+        {
+            return self;
+        }
+        else
+        {
+            static _null = new __scribble_class_null_element();
+            return _null;
+        }
     }
     
     #endregion
@@ -1160,18 +1297,18 @@ function __scribble_class_element(_string, _unique_id) constructor
     
     #region Miscellaneous
     
-    static get_events = function()
+    static get_events = function(_position, _page_index = __page, _use_lines = false)
     {
-        var _position = argument[0];
-        var _page     = ((argument_count > 1) && (argument[1] != undefined))? argument[1] : __page;
+        static _empty_array = [];
         
         var _model = __get_model(true);
-        if (!is_struct(_model)) return [];
+        if (!is_struct(_model)) return _empty_array;
         
-        var _page = _model.__pages_array[_page];
+        var _page = _model.__pages_array[_page_index];
+        var _event_struct = _use_lines? _page.__line_events : _page.__char_events;
         
-        var _events = _page.__events[$ _position];
-        if (!is_array(_events)) return [];
+        var _events = _event_struct[$ _position];
+        if (!is_array(_events)) return _empty_array;
         
         return _events;
     }
@@ -1227,6 +1364,17 @@ function __scribble_class_element(_string, _unique_id) constructor
         return self;
     }
     
+    static randomize_animation = function(_state)
+    {
+        if (__randomize_animation != _state)
+        {
+            __model_cache_name_dirty = true;
+            __randomize_animation = _state;
+        }
+        
+        return self;
+    }
+    
     static z = function(_z)
     {
         __z = _z;
@@ -1246,7 +1394,7 @@ function __scribble_class_element(_string, _unique_id) constructor
         __text      = _text;
         __unique_id = _unique_id;
         
-        var _new_cache_name = __text + ":" + __unique_id;
+        var _new_cache_name = __text + ((_unique_id == undefined)? SCRIBBLE_DEFAULT_UNIQUE_ID : (":" + string(_unique_id)));
         if (__cache_name != _new_cache_name)
         {
             flush();
@@ -1255,7 +1403,7 @@ function __scribble_class_element(_string, _unique_id) constructor
             __model_cache_name_dirty = true;
             __cache_name = _new_cache_name;
             
-            var _weak = global.__scribble_ecache_dict[$ __cache_name];
+            var _weak = __ecache_dict[$ __cache_name];
             if ((_weak != undefined) && weak_ref_alive(_weak) && !_weak.ref.__flushed)
             {
                 __scribble_trace("Warning! Flushing element \"", __cache_name, "\" due to cache name collision (try choosing a different unique ID)");
@@ -1263,9 +1411,9 @@ function __scribble_class_element(_string, _unique_id) constructor
             }
             
             //Add this text element to the global cache
-            global.__scribble_ecache_dict[$ __cache_name] = weak_ref_create(self);
-            array_push(global.__scribble_ecache_array, self);
-            array_push(global.__scribble_ecache_name_array, __cache_name);
+            __ecache_dict[$ __cache_name] = weak_ref_create(self);
+            array_push(__ecache_array, self);
+            array_push(__ecache_name_array, __cache_name);
         }
         
         return self;
@@ -1273,7 +1421,30 @@ function __scribble_class_element(_string, _unique_id) constructor
     
     static debug_draw_bbox = function(_x, _y)
     {
-        //FIXME - Reimplement
+        //FIXME - Reimplement properly
+        
+        var _oldColour = draw_get_colour();
+        draw_set_colour(c_red);
+        
+        switch(__starting_halign)
+        {
+            case fa_left:                             break;
+            case fa_center: _x -= __wrap_max_width/2; break;
+            case fa_right:  _x -= __wrap_max_width;   break;
+        }
+        
+        switch(__starting_valign)
+        {
+            case fa_top:                               break;
+            case fa_middle: _y -= __wrap_max_height/2; break;
+            case fa_bottom: _y -= __wrap_max_height;   break;
+        }
+        
+        draw_rectangle(_x, _y, _x + __wrap_max_width, _y + __wrap_max_height, true);
+        draw_rectangle(_x+1, _y+1, _x-1 + __wrap_max_width, _y-1 + __wrap_max_height, true);
+        
+        draw_set_colour(_oldColour);
+        
         return self;
     }
     
@@ -1285,6 +1456,8 @@ function __scribble_class_element(_string, _unique_id) constructor
     
     static __get_model = function(_allow_create)
     {
+        static _mcache_dict = __scribble_get_cache_state().__mcache_dict;
+        
         if (__flushed || (__text == ""))
         {
             __model = undefined;
@@ -1294,35 +1467,42 @@ function __scribble_class_element(_string, _unique_id) constructor
             if (__model_cache_name_dirty)
             {
                 __model_cache_name_dirty = false;
+                __bbox_dirty             = true;
+                __scale_to_box_dirty     = true; //The dimensions of the text element might change as a result of a model change
                 
-                buffer_seek(global.__scribble_buffer, buffer_seek_start, 0);
-                buffer_write(global.__scribble_buffer, buffer_text, string(__text           ));     buffer_write(global.__scribble_buffer, buffer_u8,  0x3A); //colon
-                buffer_write(global.__scribble_buffer, buffer_text, string(__starting_font  ));     buffer_write(global.__scribble_buffer, buffer_u8,  0x3A); //colon
-                buffer_write(global.__scribble_buffer, buffer_text, string(__starting_colour));     buffer_write(global.__scribble_buffer, buffer_u8,  0x3A);
-                buffer_write(global.__scribble_buffer, buffer_text, string(__starting_halign));     buffer_write(global.__scribble_buffer, buffer_u8,  0x3A);
-                buffer_write(global.__scribble_buffer, buffer_text, string(__starting_valign));     buffer_write(global.__scribble_buffer, buffer_u8,  0x3A);
-                buffer_write(global.__scribble_buffer, buffer_text, string(__line_height_min));     buffer_write(global.__scribble_buffer, buffer_u8,  0x3A);
-                buffer_write(global.__scribble_buffer, buffer_text, string(__line_height_max));     buffer_write(global.__scribble_buffer, buffer_u8,  0x3A);
-                buffer_write(global.__scribble_buffer, buffer_text, string(__line_spacing   ));     buffer_write(global.__scribble_buffer, buffer_u8,  0x3A);
-                buffer_write(global.__scribble_buffer, buffer_text, string(__wrap_max_width  - (__padding_l + __padding_r))); buffer_write(global.__scribble_buffer, buffer_u8,  0x3A);
-                buffer_write(global.__scribble_buffer, buffer_text, string(__wrap_max_height - (__padding_t + __padding_b))); buffer_write(global.__scribble_buffer, buffer_u8,  0x3A);
-                buffer_write(global.__scribble_buffer, buffer_text, string(__wrap_per_char  ));     buffer_write(global.__scribble_buffer, buffer_u8,  0x3A);
-                buffer_write(global.__scribble_buffer, buffer_text, string(__wrap_no_pages  ));     buffer_write(global.__scribble_buffer, buffer_u8,  0x3A);
-                buffer_write(global.__scribble_buffer, buffer_text, string(__wrap_max_scale ));     buffer_write(global.__scribble_buffer, buffer_u8,  0x3A);
-                buffer_write(global.__scribble_buffer, buffer_text, string(__bezier_array[0]));     buffer_write(global.__scribble_buffer, buffer_u8,  0x2C); //comma
-                buffer_write(global.__scribble_buffer, buffer_text, string(__bezier_array[1]));     buffer_write(global.__scribble_buffer, buffer_u8,  0x2C);
-                buffer_write(global.__scribble_buffer, buffer_text, string(__bezier_array[2]));     buffer_write(global.__scribble_buffer, buffer_u8,  0x2C);
-                buffer_write(global.__scribble_buffer, buffer_text, string(__bezier_array[3]));     buffer_write(global.__scribble_buffer, buffer_u8,  0x2C);
-                buffer_write(global.__scribble_buffer, buffer_text, string(__bezier_array[4]));     buffer_write(global.__scribble_buffer, buffer_u8,  0x2C);
-                buffer_write(global.__scribble_buffer, buffer_text, string(__bezier_array[5]));     buffer_write(global.__scribble_buffer, buffer_u8,  0x3A);
-                buffer_write(global.__scribble_buffer, buffer_text, string(__bidi_hint));           buffer_write(global.__scribble_buffer, buffer_u8,  0x3A);
-                buffer_write(global.__scribble_buffer, buffer_text, string(__ignore_command_tags)); buffer_write(global.__scribble_buffer, buffer_u8,  0x3A);
-                buffer_write(global.__scribble_buffer, buffer_u8, 0x00);
-                buffer_seek(global.__scribble_buffer, buffer_seek_start, 0);
-                __model_cache_name = buffer_read(global.__scribble_buffer, buffer_string);
+                static _buffer = __scribble_get_buffer_a();
+                buffer_seek(_buffer, buffer_seek_start, 0);
+                buffer_write(_buffer, buffer_text, string(__text           ));     buffer_write(_buffer, buffer_u8,  0x3A); //colon
+                buffer_write(_buffer, buffer_text, string(__starting_font  ));     buffer_write(_buffer, buffer_u8,  0x3A);
+                buffer_write(_buffer, buffer_text, string(__starting_colour));     buffer_write(_buffer, buffer_u8,  0x3A);
+                buffer_write(_buffer, buffer_text, string(__starting_halign));     buffer_write(_buffer, buffer_u8,  0x3A);
+                buffer_write(_buffer, buffer_text, string(__starting_valign));     buffer_write(_buffer, buffer_u8,  0x3A);
+                buffer_write(_buffer, buffer_text, string(__pre_scale      ));     buffer_write(_buffer, buffer_u8,  0x3A);
+                buffer_write(_buffer, buffer_text, string(__line_height_min));     buffer_write(_buffer, buffer_u8,  0x3A);
+                buffer_write(_buffer, buffer_text, string(__line_height_max));     buffer_write(_buffer, buffer_u8,  0x3A);
+                buffer_write(_buffer, buffer_text, string(__line_spacing   ));     buffer_write(_buffer, buffer_u8,  0x3A);
+                buffer_write(_buffer, buffer_text, string(__wrap_apply     ));     buffer_write(_buffer, buffer_u8,  0x3A);
+                buffer_write(_buffer, buffer_text, string(__wrap_max_width  - (__padding_l + __padding_r))); buffer_write(_buffer, buffer_u8,  0x3A);
+                buffer_write(_buffer, buffer_text, string(__wrap_max_height - (__padding_t + __padding_b))); buffer_write(_buffer, buffer_u8,  0x3A);
+                buffer_write(_buffer, buffer_text, string(__wrap_per_char  ));     buffer_write(_buffer, buffer_u8,  0x3A);
+                buffer_write(_buffer, buffer_text, string(__wrap_no_pages  ));     buffer_write(_buffer, buffer_u8,  0x3A);
+                buffer_write(_buffer, buffer_text, string(__wrap_max_scale ));     buffer_write(_buffer, buffer_u8,  0x3A);
+                buffer_write(_buffer, buffer_text, string(__bezier_array[0]));     buffer_write(_buffer, buffer_u8,  0x2C); //comma
+                buffer_write(_buffer, buffer_text, string(__bezier_array[1]));     buffer_write(_buffer, buffer_u8,  0x2C);
+                buffer_write(_buffer, buffer_text, string(__bezier_array[2]));     buffer_write(_buffer, buffer_u8,  0x2C);
+                buffer_write(_buffer, buffer_text, string(__bezier_array[3]));     buffer_write(_buffer, buffer_u8,  0x2C);
+                buffer_write(_buffer, buffer_text, string(__bezier_array[4]));     buffer_write(_buffer, buffer_u8,  0x2C);
+                buffer_write(_buffer, buffer_text, string(__bezier_array[5]));     buffer_write(_buffer, buffer_u8,  0x3A);
+                buffer_write(_buffer, buffer_text, string(__bidi_hint));           buffer_write(_buffer, buffer_u8,  0x3A);
+                buffer_write(_buffer, buffer_text, string(__ignore_command_tags)); buffer_write(_buffer, buffer_u8,  0x3A);
+                buffer_write(_buffer, buffer_text, string(__randomize_animation)); buffer_write(_buffer, buffer_u8,  0x3A);
+                buffer_write(_buffer, buffer_u8, 0x00);
+                buffer_seek(_buffer, buffer_seek_start, 0);
+                
+                __model_cache_name = buffer_read(_buffer, buffer_string);
             }
             
-            var _weak = global.__scribble_mcache_dict[$ __model_cache_name];
+            var _weak = _mcache_dict[$ __model_cache_name];
             if ((_weak != undefined) && weak_ref_alive(_weak) && !_weak.ref.__flushed)
             {
                 __model = _weak.ref;
@@ -1343,53 +1523,105 @@ function __scribble_class_element(_string, _unique_id) constructor
     
     static __set_standard_uniforms = function(_typist, _function_scope)
     {
+        static _u_fTime         = shader_get_uniform(__shd_scribble, "u_fTime"                   );
+        static _u_vColourBlend  = shader_get_uniform(__shd_scribble, "u_vColourBlend"            );
+        static _u_fBlinkState   = shader_get_uniform(__shd_scribble, "u_fBlinkState"             );
+        static _u_vGradient     = shader_get_uniform(__shd_scribble, "u_vGradient"               );
+        static _u_vSkew         = shader_get_uniform(__shd_scribble, "u_vSkew"                   );
+        static _u_vFlash        = shader_get_uniform(__shd_scribble, "u_vFlash"                  );
+        static _u_vRegionActive = shader_get_uniform(__shd_scribble, "u_vRegionActive"           );
+        static _u_vRegionColour = shader_get_uniform(__shd_scribble, "u_vRegionColour"           );
+        static _u_aDataFields   = shader_get_uniform(__shd_scribble, "u_aDataFields"             );
+        static _u_aBezier       = shader_get_uniform(__shd_scribble, "u_aBezier"                 );
+        
+        static _u_iTypewriterUseLines      = shader_get_uniform(__shd_scribble, "u_iTypewriterUseLines"     );
+        static _u_iTypewriterMethod        = shader_get_uniform(__shd_scribble, "u_iTypewriterMethod"       );
+        static _u_iTypewriterCharMax       = shader_get_uniform(__shd_scribble, "u_iTypewriterCharMax"      );
+        static _u_fTypewriterWindowArray   = shader_get_uniform(__shd_scribble, "u_fTypewriterWindowArray"  );
+        static _u_fTypewriterSmoothness    = shader_get_uniform(__shd_scribble, "u_fTypewriterSmoothness"   );
+        static _u_vTypewriterStartPos      = shader_get_uniform(__shd_scribble, "u_vTypewriterStartPos"     );
+        static _u_vTypewriterStartScale    = shader_get_uniform(__shd_scribble, "u_vTypewriterStartScale"   );
+        static _u_fTypewriterStartRotation = shader_get_uniform(__shd_scribble, "u_fTypewriterStartRotation");
+        static _u_fTypewriterAlphaDuration = shader_get_uniform(__shd_scribble, "u_fTypewriterAlphaDuration");
+        
+        static _scribble_state        = __scribble_get_state();
+        static _anim_properties_array = __scribble_get_anim_properties();
+        
+        static _shader_uniforms_dirty    = true;
+        static _shader_set_to_use_bezier = false;
+        
         shader_set(__shd_scribble);
-        shader_set_uniform_f(global.__scribble_u_fTime, __animation_time);
+        shader_set_uniform_f(_u_fTime, __animation_time);
         
         //TODO - Optimise
-        shader_set_uniform_f(global.__scribble_u_vColourBlend, colour_get_red(  __blend_colour)/255,
-                                                               colour_get_green(__blend_colour)/255,
-                                                               colour_get_blue( __blend_colour)/255,
-                                                               __blend_alpha);
+        var _blend_colour = __blend_colour;
+        shader_set_uniform_f(_u_vColourBlend, colour_get_red(  _blend_colour)/255,
+                                              colour_get_green(_blend_colour)/255,
+                                              colour_get_blue( _blend_colour)/255,
+                                              __blend_alpha);
         
-        shader_set_uniform_f(global.__scribble_u_vGradient, colour_get_red(  __gradient_colour)/255,
-                                                            colour_get_green(__gradient_colour)/255,
-                                                            colour_get_blue( __gradient_colour)/255,
-                                                            __gradient_alpha);
+        shader_set_uniform_f(_u_fBlinkState, __animation_blink_state);
         
-        shader_set_uniform_f(global.__scribble_u_vFlash, colour_get_red(  __flash_colour)/255,
-                                                         colour_get_green(__flash_colour)/255,
-                                                         colour_get_blue( __flash_colour)/255,
-                                                         __flash_alpha);
-        
-        shader_set_uniform_f(global.__scribble_u_vRegionActive, __region_glyph_start, __region_glyph_end);
-        
-        shader_set_uniform_f(global.__scribble_u_vRegionColour, colour_get_red(  __region_colour)/255,
-                                                                colour_get_green(__region_colour)/255,
-                                                                colour_get_blue( __region_colour)/255,
-                                                                __region_blend);
-        
-        shader_set_uniform_f(global.__scribble_u_fBlinkState, __animation_blink_state);
+        if ((__gradient_alpha != 0) || (__skew_x != 0) || (__skew_y != 0) || (__flash_alpha != 0) || (__region_blend != 0))
+        {
+            _shader_uniforms_dirty = true;
+            
+            shader_set_uniform_f(_u_vGradient, colour_get_red(  __gradient_colour)/255,
+                                               colour_get_green(__gradient_colour)/255,
+                                               colour_get_blue( __gradient_colour)/255,
+                                               __gradient_alpha);
+            
+            shader_set_uniform_f(_u_vSkew, __skew_x, __skew_y);
+            
+            shader_set_uniform_f(_u_vFlash, colour_get_red(  __flash_colour)/255,
+                                            colour_get_green(__flash_colour)/255,
+                                            colour_get_blue( __flash_colour)/255,
+                                            __flash_alpha);
+            
+            shader_set_uniform_f(_u_vRegionActive, __region_glyph_start, __region_glyph_end);
+            
+            shader_set_uniform_f(_u_vRegionColour, colour_get_red(  __region_colour)/255,
+                                                   colour_get_green(__region_colour)/255,
+                                                   colour_get_blue( __region_colour)/255,
+                                                   __region_blend);
+            
+        }
+        else if (_shader_uniforms_dirty)
+        {
+            _shader_uniforms_dirty = false;
+            
+            shader_set_uniform_f(_u_vGradient, 0, 0, 0, 0);
+            shader_set_uniform_f(_u_vSkew, 0, 0);
+            shader_set_uniform_f(_u_vFlash, 0, 0, 0, 0);
+            shader_set_uniform_f(_u_vRegionActive, 0, 0);
+            shader_set_uniform_f(_u_vRegionColour, 0, 0, 0, 0);
+        }
         
         //Update the animation properties for this shader if they've changed since the last time we drew an element
-        if (global.__scribble_anim_shader_desync)
+        if (_scribble_state.__standard_anim_desync)
         {
-            global.__scribble_anim_shader_desync = false;
-            global.__scribble_anim_shader_default = global.__scribble_anim_shader_desync_to_default;
-            shader_set_uniform_f_array(global.__scribble_u_aDataFields, global.__scribble_anim_properties);
+            with(_scribble_state)
+            {
+                __standard_anim_desync  = false;
+                __standard_anim_default = __standard_anim_desync_to_default;
+            }
+            
+            shader_set_uniform_f_array(_u_aDataFields, _anim_properties_array);
         }
         
         if (__bezier_using)
         {
             //If we're using a Bezier curve for this element, push that value into the shader
-            global.__scribble_bezier_using = true;
-            shader_set_uniform_f_array(global.__scribble_u_aBezier, __bezier_array);
+            _shader_set_to_use_bezier = true;
+            shader_set_uniform_f_array(_u_aBezier, __bezier_array);
         }
-        else if (global.__scribble_bezier_using)
+        else if (_shader_set_to_use_bezier)
         {
             //If we're *not* using a Bezier curve but we have a previous Bezier curve cached, reset the curve in the shader
-            global.__scribble_bezier_using = false;
-            shader_set_uniform_f_array(global.__scribble_u_aBezier, global.__scribble_bezier_null_array);
+            _shader_set_to_use_bezier = false;
+            
+            static _null_array = array_create(6, 0);
+            shader_set_uniform_f_array(_u_aBezier, _null_array);
         }
         
         if (_typist != undefined)
@@ -1405,18 +1637,19 @@ function __scribble_class_element(_string, _unique_id) constructor
         }
         else if (__tw_reveal != undefined)
         {
-            shader_set_uniform_i(global.__scribble_u_iTypewriterMethod,            SCRIBBLE_EASE.LINEAR);
-            shader_set_uniform_i(global.__scribble_u_iTypewriterCharMax,           0);
-            shader_set_uniform_f(global.__scribble_u_fTypewriterSmoothness,        0);
-            shader_set_uniform_f(global.__scribble_u_vTypewriterStartPos,          0, 0);
-            shader_set_uniform_f(global.__scribble_u_vTypewriterStartScale,        1, 1);
-            shader_set_uniform_f(global.__scribble_u_fTypewriterStartRotation,     0);
-            shader_set_uniform_f(global.__scribble_u_fTypewriterAlphaDuration,     1.0);
-            shader_set_uniform_f_array(global.__scribble_u_fTypewriterWindowArray, __tw_reveal_window_array);
+            shader_set_uniform_i(_u_iTypewriterUseLines,          0);
+            shader_set_uniform_i(_u_iTypewriterMethod,            SCRIBBLE_EASE.LINEAR);
+            shader_set_uniform_i(_u_iTypewriterCharMax,           0);
+            shader_set_uniform_f(_u_fTypewriterSmoothness,        0);
+            shader_set_uniform_f(_u_vTypewriterStartPos,          0, 0);
+            shader_set_uniform_f(_u_vTypewriterStartScale,        1, 1);
+            shader_set_uniform_f(_u_fTypewriterStartRotation,     0);
+            shader_set_uniform_f(_u_fTypewriterAlphaDuration,     1.0);
+            shader_set_uniform_f_array(_u_fTypewriterWindowArray, __tw_reveal_window_array);
         }
         else
         {
-            shader_set_uniform_i(global.__scribble_u_iTypewriterMethod, SCRIBBLE_EASE.NONE);
+            shader_set_uniform_i(_u_iTypewriterMethod, SCRIBBLE_EASE.NONE);
         }
         
         shader_reset();
@@ -1424,53 +1657,109 @@ function __scribble_class_element(_string, _unique_id) constructor
    
     static __set_msdf_uniforms = function(_typist, _function_scope)
     {
+        static _msdf_u_fTime         = shader_get_uniform(__shd_scribble_msdf, "u_fTime"        );
+        static _msdf_u_vColourBlend  = shader_get_uniform(__shd_scribble_msdf, "u_vColourBlend" );
+        static _msdf_u_fBlinkState   = shader_get_uniform(__shd_scribble_msdf, "u_fBlinkState"  );
+        static _msdf_u_vGradient     = shader_get_uniform(__shd_scribble_msdf, "u_vGradient"    );
+        static _msdf_u_vSkew         = shader_get_uniform(__shd_scribble_msdf, "u_vSkew"        );
+        static _msdf_u_vFlash        = shader_get_uniform(__shd_scribble_msdf, "u_vFlash"       );
+        static _msdf_u_vRegionActive = shader_get_uniform(__shd_scribble_msdf, "u_vRegionActive");
+        static _msdf_u_vRegionColour = shader_get_uniform(__shd_scribble_msdf, "u_vRegionColour");
+        static _msdf_u_aDataFields   = shader_get_uniform(__shd_scribble_msdf, "u_aDataFields"  );
+        static _msdf_u_aBezier       = shader_get_uniform(__shd_scribble_msdf, "u_aBezier"      );
+        
+        static _msdf_u_iTypewriterUseLines      = shader_get_uniform(__shd_scribble_msdf, "u_iTypewriterUseLines"     );
+        static _msdf_u_iTypewriterMethod        = shader_get_uniform(__shd_scribble_msdf, "u_iTypewriterMethod"       );
+        static _msdf_u_iTypewriterCharMax       = shader_get_uniform(__shd_scribble_msdf, "u_iTypewriterCharMax"      );
+        static _msdf_u_fTypewriterWindowArray   = shader_get_uniform(__shd_scribble_msdf, "u_fTypewriterWindowArray"  );
+        static _msdf_u_fTypewriterSmoothness    = shader_get_uniform(__shd_scribble_msdf, "u_fTypewriterSmoothness"   );
+        static _msdf_u_vTypewriterStartPos      = shader_get_uniform(__shd_scribble_msdf, "u_vTypewriterStartPos"     );
+        static _msdf_u_vTypewriterStartScale    = shader_get_uniform(__shd_scribble_msdf, "u_vTypewriterStartScale"   );
+        static _msdf_u_fTypewriterStartRotation = shader_get_uniform(__shd_scribble_msdf, "u_fTypewriterStartRotation");
+        static _msdf_u_fTypewriterAlphaDuration = shader_get_uniform(__shd_scribble_msdf, "u_fTypewriterAlphaDuration");
+    
+        static _msdf_u_vShadowOffsetAndSoftness = shader_get_uniform(__shd_scribble_msdf, "u_vShadowOffsetAndSoftness");
+        static _msdf_u_vShadowColour            = shader_get_uniform(__shd_scribble_msdf, "u_vShadowColour"           );
+        static _msdf_u_vBorderColour            = shader_get_uniform(__shd_scribble_msdf, "u_vBorderColour"           );
+        static _msdf_u_fBorderThickness         = shader_get_uniform(__shd_scribble_msdf, "u_fBorderThickness"        );
+        static _msdf_u_vOutputSize              = shader_get_uniform(__shd_scribble_msdf, "u_vOutputSize"             );
+        
+        static _scribble_state        = __scribble_get_state();
+        static _anim_properties_array = __scribble_get_anim_properties();
+        
+        static _shader_uniforms_dirty    = true;
+        static _shader_set_to_use_bezier = false;
+        
         shader_set(__shd_scribble_msdf);
-        shader_set_uniform_f(global.__scribble_msdf_u_fTime, __animation_time);
+        shader_set_uniform_f(_msdf_u_fTime, __animation_time);
         
         //TODO - Optimise
-        shader_set_uniform_f(global.__scribble_msdf_u_vColourBlend, colour_get_red(  __blend_colour)/255,
-                                                                    colour_get_green(__blend_colour)/255,
-                                                                    colour_get_blue( __blend_colour)/255,
-                                                                    __blend_alpha);
+        shader_set_uniform_f(_msdf_u_vColourBlend, colour_get_red(  __blend_colour)/255,
+                                                   colour_get_green(__blend_colour)/255,
+                                                   colour_get_blue( __blend_colour)/255,
+                                                   __blend_alpha);
         
-        shader_set_uniform_f(global.__scribble_msdf_u_vGradient, colour_get_red(  __gradient_colour)/255,
-                                                                 colour_get_green(__gradient_colour)/255,
-                                                                 colour_get_blue( __gradient_colour)/255,
-                                                                 __gradient_alpha);
+        shader_set_uniform_f(_msdf_u_fBlinkState, __animation_blink_state);
         
-        shader_set_uniform_f(global.__scribble_msdf_u_vFlash, colour_get_red(  __flash_colour)/255,
-                                                              colour_get_green(__flash_colour)/255,
-                                                              colour_get_blue( __flash_colour)/255,
-                                                              __flash_alpha);
-        
-        shader_set_uniform_f(global.__scribble_msdf_u_vRegionActive, __region_glyph_start, __region_glyph_end);
-        
-        shader_set_uniform_f(global.__scribble_msdf_u_vRegionColour, colour_get_red(  __region_colour)/255,
-                                                                     colour_get_green(__region_colour)/255,
-                                                                     colour_get_blue( __region_colour)/255,
-                                                                     __region_blend);
-        
-        shader_set_uniform_f(global.__scribble_msdf_u_fBlinkState, __animation_blink_state);
+        if ((__gradient_alpha != 0) || (__skew_x != 0) || (__skew_y != 0) || (__flash_alpha != 0) || (__region_blend != 0))
+        {
+            _shader_uniforms_dirty = true;
+            
+            shader_set_uniform_f(_msdf_u_vGradient, colour_get_red(  __gradient_colour)/255,
+                                                    colour_get_green(__gradient_colour)/255,
+                                                    colour_get_blue( __gradient_colour)/255,
+                                                    __gradient_alpha);
+            
+            shader_set_uniform_f(_msdf_u_vSkew, __skew_x, __skew_y);
+            
+            shader_set_uniform_f(_msdf_u_vFlash, colour_get_red(  __flash_colour)/255,
+                                                 colour_get_green(__flash_colour)/255,
+                                                 colour_get_blue( __flash_colour)/255,
+                                                 __flash_alpha);
+            
+            shader_set_uniform_f(_msdf_u_vRegionActive, __region_glyph_start, __region_glyph_end);
+            
+            shader_set_uniform_f(_msdf_u_vRegionColour, colour_get_red(  __region_colour)/255,
+                                                        colour_get_green(__region_colour)/255,
+                                                        colour_get_blue( __region_colour)/255,
+                                                        __region_blend);
+        }
+        else if (_shader_uniforms_dirty)
+        {
+            _shader_uniforms_dirty = false;
+            
+            shader_set_uniform_f(_msdf_u_vGradient, 0, 0, 0, 0);
+            shader_set_uniform_f(_msdf_u_vSkew, 0, 0);
+            shader_set_uniform_f(_msdf_u_vFlash, 0, 0, 0, 0);
+            shader_set_uniform_f(_msdf_u_vRegionActive, 0, 0);
+            shader_set_uniform_f(_msdf_u_vRegionColour, 0, 0, 0, 0);
+        }
         
         //Update the animation properties for this shader if they've changed since the last time we drew an element
-        if (global.__scribble_anim_shader_msdf_desync)
+        if (_scribble_state.__msdf_anim_desync)
         {
-            global.__scribble_anim_shader_msdf_desync = false;
-            global.__scribble_anim_shader_msdf_default = global.__scribble_anim_shader_msdf_desync_to_default;
-            shader_set_uniform_f_array(global.__scribble_msdf_u_aDataFields, global.__scribble_anim_properties);
+            with(_scribble_state)
+            {
+                __msdf_anim_desync  = false;
+                __msdf_anim_default = __msdf_anim_desync_to_default;
+            }
+            
+            shader_set_uniform_f_array(_msdf_u_aDataFields, _anim_properties_array);
         }
         
         if (__bezier_using)
         {
             //If we're using a Bezier curve for this element, push that value into the shader
-            global.__scribble_bezier_msdf_using = true;
-            shader_set_uniform_f_array(global.__scribble_msdf_u_aBezier, __bezier_array);
+            _shader_set_to_use_bezier = true;
+            shader_set_uniform_f_array(_msdf_u_aBezier, __bezier_array);
         }
-        else if (global.__scribble_bezier_msdf_using)
+        else if (_shader_set_to_use_bezier)
         {
             //If we're *not* using a Bezier curve but we have a previous Bezier curve cached, reset the curve in the shader
-            global.__scribble_bezier_msdf_using = false;
-            shader_set_uniform_f_array(global.__scribble_msdf_u_aBezier, global.__scribble_bezier_null_array);
+            _shader_set_to_use_bezier = false;
+            
+            static _null_array = array_create(6, 0);
+            shader_set_uniform_f_array(_msdf_u_aBezier, _null_array);
         }
         
         if (_typist != undefined)
@@ -1486,32 +1775,33 @@ function __scribble_class_element(_string, _unique_id) constructor
         }
         else if (__tw_reveal != undefined)
         {
-            shader_set_uniform_i(global.__scribble_msdf_u_iTypewriterMethod,            SCRIBBLE_EASE.LINEAR);
-            shader_set_uniform_i(global.__scribble_msdf_u_iTypewriterCharMax,           0);
-            shader_set_uniform_f(global.__scribble_msdf_u_fTypewriterSmoothness,        0);
-            shader_set_uniform_f(global.__scribble_msdf_u_vTypewriterStartPos,          0, 0);
-            shader_set_uniform_f(global.__scribble_msdf_u_vTypewriterStartScale,        1, 1);
-            shader_set_uniform_f(global.__scribble_msdf_u_fTypewriterStartRotation,     0);
-            shader_set_uniform_f(global.__scribble_msdf_u_fTypewriterAlphaDuration,     1.0);
-            shader_set_uniform_f_array(global.__scribble_msdf_u_fTypewriterWindowArray, __tw_reveal_window_array);
+            shader_set_uniform_i(_msdf_u_iTypewriterUseLines,          0);
+            shader_set_uniform_i(_msdf_u_iTypewriterMethod,            SCRIBBLE_EASE.LINEAR);
+            shader_set_uniform_i(_msdf_u_iTypewriterCharMax,           0);
+            shader_set_uniform_f(_msdf_u_fTypewriterSmoothness,        0);
+            shader_set_uniform_f(_msdf_u_vTypewriterStartPos,          0, 0);
+            shader_set_uniform_f(_msdf_u_vTypewriterStartScale,        1, 1);
+            shader_set_uniform_f(_msdf_u_fTypewriterStartRotation,     0);
+            shader_set_uniform_f(_msdf_u_fTypewriterAlphaDuration,     1.0);
+            shader_set_uniform_f_array(_msdf_u_fTypewriterWindowArray, __tw_reveal_window_array);
         }
         else
         {
-            shader_set_uniform_i(global.__scribble_msdf_u_iTypewriterMethod, SCRIBBLE_EASE.NONE);
+            shader_set_uniform_i(_msdf_u_iTypewriterMethod, SCRIBBLE_EASE.NONE);
         }
         
-        shader_set_uniform_f(global.__scribble_msdf_u_vShadowOffsetAndSoftness, __msdf_shadow_xoffset, __msdf_shadow_yoffset, __msdf_shadow_softness);
+        shader_set_uniform_f(_msdf_u_vShadowOffsetAndSoftness, __msdf_shadow_xoffset, __msdf_shadow_yoffset, __msdf_shadow_softness);
         
-        shader_set_uniform_f(global.__scribble_msdf_u_vShadowColour, colour_get_red(  __msdf_shadow_colour)/255,
-                                                                     colour_get_green(__msdf_shadow_colour)/255,
-                                                                     colour_get_blue( __msdf_shadow_colour)/255,
-                                                                     __msdf_shadow_alpha);
+        shader_set_uniform_f(_msdf_u_vShadowColour, colour_get_red(  __msdf_shadow_colour)/255,
+                                                    colour_get_green(__msdf_shadow_colour)/255,
+                                                    colour_get_blue( __msdf_shadow_colour)/255,
+                                                    __msdf_shadow_alpha);
         
-        shader_set_uniform_f(global.__scribble_msdf_u_vBorderColour, colour_get_red(  __msdf_border_colour)/255,
-                                                                     colour_get_green(__msdf_border_colour)/255,
-                                                                     colour_get_blue( __msdf_border_colour)/255);
+        shader_set_uniform_f(_msdf_u_vBorderColour, colour_get_red(  __msdf_border_colour)/255,
+                                                    colour_get_green(__msdf_border_colour)/255,
+                                                    colour_get_blue( __msdf_border_colour)/255);
         
-        shader_set_uniform_f(global.__scribble_msdf_u_fBorderThickness, __msdf_border_thickness);
+        shader_set_uniform_f(_msdf_u_fBorderThickness, __msdf_border_thickness);
         
         var _surface = surface_get_target();
         if (_surface >= 0)
@@ -1525,36 +1815,36 @@ function __scribble_class_element(_string, _unique_id) constructor
             var _surface_height = window_get_height();
         }
         
-        shader_set_uniform_f(global.__scribble_msdf_u_vOutputSize, _surface_width, _surface_height);
+        shader_set_uniform_f(_msdf_u_vOutputSize, _surface_width, _surface_height);
         
         shader_reset();
     }
     
     static __update_scale_to_box_scale = function()
     {
-        //FIXME - Only update scales and such if and when the scaling dimensions change
+        if (!__scale_to_box_dirty) return;
+        __scale_to_box_dirty = false;
+        
         var _model = __get_model(true);
         
         var _xscale = 1.0;
         var _yscale = 1.0;
-        
-        if (__scale_to_box_max_width  > 0) _xscale = __scale_to_box_max_width  / (_model.__get_width()  + __padding_l + __padding_r);
-        if (__scale_to_box_max_height > 0) _yscale = __scale_to_box_max_height / (_model.__get_height() + __padding_t + __padding_b);
+        if (__scale_to_box_width  > 0) _xscale = __scale_to_box_width  / (_model.__get_width()  + __padding_l + __padding_r);
+        if (__scale_to_box_height > 0) _yscale = __scale_to_box_height / (_model.__get_height() + __padding_t + __padding_b);
         
         var _previous_scale_to_box_scale = __scale_to_box_scale;
-        __scale_to_box_scale = min(1.0, _xscale, _yscale);
+        __scale_to_box_scale = min(_xscale, _yscale);
+        if (!__scale_to_box_maximise) __scale_to_box_scale = min(1, __scale_to_box_scale);
+        
         if (__scale_to_box_scale != _previous_scale_to_box_scale)
         {
             __matrix_dirty = true;
-            __bbox_dirty = true;
+            __bbox_dirty   = true;
         }
     }
     
-    static __update_matrix = function(_x, _y)
+    static __update_matrix = function(_model, _x, _y)
     {
-        var _model = __get_model(true);
-        if (!is_struct(_model)) return;
-        
         __update_scale_to_box_scale();
         
         if (__matrix_dirty || (__matrix_x != _x) || (__matrix_y != _y))
@@ -1566,9 +1856,9 @@ function __scribble_class_element(_string, _unique_id) constructor
             
             var _x_offset = -__origin_x;
             var _y_offset = -__origin_y;
-            var _xscale   = __scale_to_box_scale*_model.__fit_scale*__xscale;
-            var _yscale   = __scale_to_box_scale*_model.__fit_scale*__yscale;
-            var _angle    = __angle;
+            var _xscale   = __scale_to_box_scale*_model.__fit_scale*__post_xscale;
+            var _yscale   = __scale_to_box_scale*_model.__fit_scale*__post_yscale;
+            var _angle    = __post_angle;
             
             if (!_model.__pad_bbox_l) _x_offset += __padding_l;
             if (!_model.__pad_bbox_t) _y_offset += __padding_t;
@@ -1586,7 +1876,7 @@ function __scribble_class_element(_string, _unique_id) constructor
                 //FIXME - Re-optimise
                 __matrix = matrix_multiply(matrix_build(_x_offset, _y_offset, 0,    0,0,0,          1,1,1),
                            matrix_multiply(matrix_build(0,0,0,                      0,0,0,          _xscale, _yscale, 1),
-                           matrix_multiply(matrix_build(0,0,0,                      0,0,__angle,    1,1,1),
+                           matrix_multiply(matrix_build(0,0,0,                      0,0,__post_angle,    1,1,1),
                                            matrix_build(_x, _y, __z,                0,0,0,          1,1,1))));
                 
                 //var _sin = dsin(_angle);

@@ -1,9 +1,7 @@
 /// @description here
-function YuiHorizontalLayout(alignment, spacing, panel_size) : YuiLayoutBase() constructor {
+function YuiHorizontalLayout(alignment, spacing, panel_size) : YuiLayoutBase(alignment, spacing) constructor {
 	static is_live = false;
 	
-	self.alignment = alignment;
-	self.spacing = spacing;
 	self.min_h = panel_size.min_h;
 	
 	// whether to use the full available height or just the max item height

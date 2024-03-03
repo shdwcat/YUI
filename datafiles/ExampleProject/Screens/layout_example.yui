@@ -2,23 +2,19 @@ id: layout_example
 file_type: screen
 
 import:
-  - ../Templates/screen_base.yui
+  - ../Templates/
   - /YUI/Widgets/tab_panel.yui
-  - Layouts/examples.yui
-  - Layouts/vertical.yui
-  - Layouts/horizontal.yui
+  - Layouts/
 
 root:
   type: screen_base
+  title: Layout Examples
   content_layout: horizontal
-  
+
   items:
     - type: panel
       spacing: 11
-      elements: 
-        - type: text
-          text_style: title
-          text: Layout Examples
+      elements:
 
         - type: tab_panel
           active_tab: @layouts.active_tab

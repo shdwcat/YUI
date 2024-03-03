@@ -16,6 +16,8 @@ build = function() {
 	y2 = bound_values.y2;
 }
 
+/// @param {struct} available_size
+/// @param {struct} viewport_size
 arrange = function(available_size, viewport_size) {
 	draw_rect = available_size;
 	self.viewport_size = viewport_size;

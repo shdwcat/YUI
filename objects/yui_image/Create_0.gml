@@ -30,62 +30,69 @@ build = function() {
 	}
 }
 
+/// @param {struct.YuiArrangeSize} arrange_size
+/// @param {struct} viewport_size
 arrange = function(available_size, viewport_size) {
 
 	draw_rect = available_size;
 	self.viewport_size = viewport_size;
 	
 	if !visible {
-		return sizeToDefault(available_size);
+		return sizeToDefault();
 	}
 	
 	var padding = layout_props.padding;	
-	padded_rect = yui_apply_padding(available_size, padding, layout_props.size, bound_values);
+	padded_rect = padding.apply(available_size, layout_props.size, bound_values);
 	
 	// don't bother drawing if there isn't enough room
 	if padded_rect.w <= 0 || padded_rect.h <= 0 {
-		return sizeToDefault(available_size);
+		return sizeToDefault();
 	}
 	
+	var desired_size = {};
+	
+	// width
 	
 	if layout_props.size.w_type == YUI_LENGTH_TYPE.Proportional {
 		// assume we want to stretch the sprite to fit the proportional space
 		image_xscale = padded_rect.w / sprite_get_width(sprite_index);
 		// only use the proportion
-		draw_size.w = padded_rect.w + padding.w;
+		desired_size.w = padded_rect.w + padding.w;
 	}
 	else if layout_props.size.w == "stretch" {
 		image_xscale = padded_rect.w / sprite_get_width(sprite_index);
-		draw_size.w = available_size.w;
+		desired_size.w = available_size.w;
 	}
 	else if layout_props.size.w == "center" {
 		x += padded_rect.w / 2;
 		image_xscale = 1;
-		draw_size.w = available_size.w;
+		desired_size.w = available_size.w;
 	}
 	else {
 		image_xscale = 1;
-		draw_size.w = sprite_width + padding.w;
+		desired_size.w = sprite_width + padding.w;
 	}
+	
+	// height
 	
 	if layout_props.size.h_type == YUI_LENGTH_TYPE.Proportional {
 		// assume we want to stretch the sprite to fit the proportional space
 		image_yscale = padded_rect.h / sprite_get_height(sprite_index);
 		// only use the proportion
-		draw_size.h = padded_rect.h + padding.h;
+		desired_size.h = padded_rect.h + padding.h;
 	}
 	else if layout_props.size.h == "stretch" {
 		image_yscale = padded_rect.h / sprite_get_height(sprite_index);
-		draw_size.h = available_size.h;
+		desired_size.h = available_size.h;
 	}
 	else if layout_props.size.w == "center" {
 		y += padded_rect.h / 2;
 		image_yscale = 1;
-		draw_size.h = available_size.h;
+		desired_size.h = available_size.h;
 	}
 	else {
 		image_yscale = 1;
-		draw_size.h = sprite_height + padding.h;
+		desired_size.h = sprite_height + padding.h;
 	}
 	
 	// check if the sprite is bigger than the space
@@ -93,12 +100,12 @@ arrange = function(available_size, viewport_size) {
 		if is_numeric(layout_props.size.w) {
 			// scale down
 			image_xscale = padded_rect.w / sprite_get_width(sprite_index);
-			draw_size.w = padded_rect.w + padding.w;
+			desired_size.w = padded_rect.w + padding.w;
 		}
 		if is_numeric(layout_props.size.h) {
 			// scale down
 			image_yscale = padded_rect.h / sprite_get_height(sprite_index);
-			draw_size.h = padded_rect.h + padding.h;
+			desired_size.h = padded_rect.h + padding.h;
 		}
 		
 		// stretch - scale to the size
@@ -106,20 +113,23 @@ arrange = function(available_size, viewport_size) {
 	}
 	
 	// might need to use bbox size to accomodate rotated sprites?
-	var drawn_size = yui_apply_element_size(layout_props.size, available_size, {
-		w: draw_size.w,
-		h: draw_size.h,
-	});
+	var drawn_size = element_size.constrainDrawSize(available_size, desired_size);
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
 	
 	// position at the padded rect corner so we can just draw at x/y
 	x = padded_rect.x;
 	y = padded_rect.y;
-	
-	if viewport_size {
-		updateViewport();
-	}
+
+	// probably unnecessary but keeping for reference
+	//if viewport_size {
+	//	updateViewport();
+	//}
 			
 	return draw_size;
 }
+
+Inspectron()
+	.Section("yui_image")
+	//.Sprite(nameof(sprite_index))
+	.SpritePicker(nameof(sprite_index));

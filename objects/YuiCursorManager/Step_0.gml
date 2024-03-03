@@ -78,7 +78,7 @@ var i = hover_count - 1; repeat hover_count {
 	var next = hover_list[| i];
 	
 	if print_debug {
-		yui_log("list instance", i, "is", next.id, "type", script_get_name(next.element_constructor), " and id ", next._id);
+		yui_log($"list instance {i} is {next.id} type {script_get_name(next.element_constructor)} and id {next._id}");
 		if next._id == "foopp"
 			DEBUG_BREAK_YUI
 	}

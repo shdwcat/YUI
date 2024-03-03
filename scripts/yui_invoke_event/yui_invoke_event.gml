@@ -1,6 +1,11 @@
 /// @description invokes an event on a view item
 function yui_invoke_event(view_item, event_name, event_args) {
 	
+	if view_item == undefined
+		throw yui_error("attempted to invoke event on undefined view_item");
+	if event_name == undefined
+		throw yui_error("attempted to invoke event without a name");
+	
 	var matched_event = undefined;
 	var item = view_item;
 		
@@ -28,5 +33,6 @@ function yui_invoke_event(view_item, event_name, event_args) {
 	
 	// NOTE: invokes the event against the item and datacontext the event was found on
 	// NOTE: ignores 'data_source' prop of that item!
+	yui_log($"invoking event '{event_name}'");
 	yui_call_handler(matched_event, [event_args], item.data_context);
 }

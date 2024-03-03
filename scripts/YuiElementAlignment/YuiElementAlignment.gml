@@ -21,5 +21,9 @@ function YuiElementAlignment(alignment, h_default = "left", v_default = "top") c
 	}
 	else {
 		throw "unsupported alignment value";
-	}	
+	}
+	
+	static inspectron = Inspectron()
+		.Picker(nameof(h), ["left", "center", "stretch"], "h(orizontal)")
+		.Picker(nameof(v), ["top", "center", "stretch"], "v(ertical)")
 }

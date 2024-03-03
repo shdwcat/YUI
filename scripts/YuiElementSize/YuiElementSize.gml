@@ -97,6 +97,54 @@ function YuiElementSize(size) constructor {
 	
 	is_w_bound = yui_is_binding(w);
 	is_h_bound = yui_is_binding(h);
+	
+	/**
+	 * Constrains the provided draw_size according to the element size config and available space
+	 * @param {struct} available_size
+	 * @param {struct} draw_size
+	 */
+	static constrainDrawSize = function(available_size, draw_size) {
+		
+		// NOTE: the draw_size parameter is modified and returned below
+				
+		var available_max_w = available_size.w;		
+		var available_max_h = available_size.h;
+		
+		var element_w = is_w_bound ? w.resolve() : w;
+		var element_h = is_h_bound ? h.resolve() : h;
+	
+		// width
+		if element_w == "stretch" {
+			draw_size.w = max(available_max_w, min_w ?? 0);
+		}
+		else if is_numeric(min_w) {
+			draw_size.w = clamp(draw_size.w, min_w, max(available_max_w, min_w));
+		}
+		else if is_numeric(element_w) {
+			draw_size.w = min(element_w, available_max_w);
+		}
+	
+		// height
+		if element_h == "stretch" {
+			draw_size.h = max(available_max_h, min_h ?? 0);
+		}	
+		else if is_numeric(min_h) {
+			draw_size.h = clamp(draw_size.h, min_h, max(available_max_h, min_h));
+		}
+		else if is_numeric(element_h) {
+			draw_size.h = min(element_h, available_max_h);
+		}
+	
+		return draw_size;
+	}
+	
+	static inspectron = Inspectron()
+		.Watch(nameof(w))
+		.Watch(nameof(h))
+		.Watch(nameof(min_w))
+		.Watch(nameof(min_h))
+		.Watch(nameof(max_w))
+		.Watch(nameof(max_h))
 }
 
 function YuiFlexValue(value) constructor {

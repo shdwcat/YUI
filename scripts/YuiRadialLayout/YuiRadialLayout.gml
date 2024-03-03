@@ -1,10 +1,6 @@
 /// @description Arranges item in a radial layout
-function YuiRadialLayout(alignment, spacing) : YuiLayoutBase() constructor {
+function YuiRadialLayout(alignment, spacing) : YuiLayoutBase(alignment, spacing) constructor {
 	static is_live = false;
-
-	// NOTE: not relevant to this layout
-	//self.alignment = alignment;
-	//self.spacing = spacing;
 	
 	// elements may use this to calculate their own draw size
 	self.draw_size = undefined;
