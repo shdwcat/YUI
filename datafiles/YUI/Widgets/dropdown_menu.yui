@@ -17,7 +17,7 @@ resources:
 
   dropdown_menu:
     type: template
-    
+
     slots:
       // the selection scope that manages selection state
       selection_scope: null // type: YuiSelectionScope
@@ -27,9 +27,8 @@ resources:
       // array of items to select from
       items: []
 
-      // currently broken
       // whether the value can be cleared
-      //can_clear_value: true
+      can_clear_value: true
 
       // whether to show a search field above the items
       searchable: false
@@ -44,7 +43,7 @@ resources:
       selected_bg_color: null
 
       // additional handler executed after item is selected
-      on_item_selected: null 
+      on_item_selected: null
 
       // where to place the dropdown
       dropdown_placement: bottom_left
@@ -73,18 +72,20 @@ resources:
             //flex: true
             content: $item_template
 
-            // this is broken because events turned out not to work
-
-          // - type: button
-          //   content:
-          //     type: text // TODO X sprite
-          //     color: $theme.resources.negative_color
-          //     text: X
-          //   padding: [5, 0]
-          //   background: #00000000
-          //   border_thickness: 0
-          //   visible: $can_clear_value and ($selected_item != undefined or $selection_scope.selected_index >= 0)
-          //   on_click: @@ e => yui_invoke_event(e.source, item_selected, undefined)
+          - type: button
+            content:
+              type: text // TODO X sprite
+              color: $theme.resources.negative_color
+              text: X
+            padding: [5, 0]
+            background: #00000000
+            border_thickness: 0
+            visible: $can_clear_value and ($selected_item != undefined or $selection_scope.selected_index >= 0)
+            on_click:
+              // update selection scope if it exists
+              - @@ $selection_scope then $selection_scope.select(undefined) else false
+              // invoke the user handler
+              - @@ $on_item_selected(undefined)
 
           - $indicator_template
 
@@ -109,7 +110,7 @@ resources:
   dropdown_item_panel_scrollable:
     type: scrollbox
     size: { max_h: $max_dropdown_height }
-    content: 
+    content:
       type: dropdown_item_panel
       size: { w: stretch }
 
