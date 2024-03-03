@@ -26,7 +26,7 @@ YUI has built-in optional support for the popular Scribble and Input libraries. 
 
   See the Scribble documentation for how to set up Scribble and what formatting features are available
   
-* **[Inpu 6.1.5](https://github.com/offalynne/input)** - Mouse/Keyboard/Gamepad/Touch Support
+* **[Input 6.1.5](https://github.com/offalynne/input)** - Mouse/Keyboard/Gamepad/Touch Support
   
   YUI is designed to be compatible with Input 6.1.5 and future 6.x.x versions, and may be compatible with previous 8.x.x versions.
 
