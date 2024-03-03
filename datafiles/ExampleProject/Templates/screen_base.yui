@@ -11,6 +11,7 @@ resources:
     type: template
 
     slots:
+      title: null
       items: []
       content_layout: null
 
@@ -25,7 +26,16 @@ resources:
           opacity: &fade_out
       elements:
 
-        - type: back_button
+        - type: panel
+          layout: horizontal
+          spacing: 10
+          elements:
+            - type: back_button
+
+            - type: text
+              padding: 3
+              text: $title
+              text_style: subtitle
 
         - type: main_panel
           layout: $content_layout ?? 'vertical'

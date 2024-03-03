@@ -2,8 +2,7 @@ id: sandbox
 file_type: screen
 
 import:
-  - ../Templates/main_panel.yui
-  - ../Templates/back_button.yui
+  - ../Templates/
 
   - /YUI/Widgets/fib.yui
 
@@ -11,19 +10,11 @@ resources:
 
 root:
 
-  type: panel
-  padding: 30
-  spacing: 10
+  type: screen_base
+  title: Dev Sandbox
+  items:
+    - type: text
+      text: Fibonacci test
+      text_style: subtitle
 
-  elements:
-    - type: back_button
-
-    - type: panel
-
-      elements:
-
-        - type: text
-          text: Fibonacci test
-          text_style: subtitle
-
-        - type: fib
+    - type: fib

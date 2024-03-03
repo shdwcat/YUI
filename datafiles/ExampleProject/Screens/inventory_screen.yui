@@ -3,12 +3,11 @@ file_type: screen
 
 import:
   - /YUI/Animations/transitions.yui
-  
-  - "../Templates/main_panel.yui"
-  - "../Templates/back_button.yui"
+
+  - ../Templates/
 
   // importing interactions here enables live reload for them
-  - "../Interactions/equip_item.yui"
+  - ../Interactions/equip_item.yui
 
 // resources can also be defined within a .yui file, without needing to be imported
 resources:
@@ -17,7 +16,7 @@ resources:
   // e.g. head/boots/etc (these are defined in inventory.yaml in the Example Data folder)
   equipped_item_slot:
     type: fragment
-    content: 
+    content:
       type: panel
       layout: horizontal
       spacing: 15
@@ -36,7 +35,7 @@ resources:
 
           // This section indicates that this panel participates in the 'equip_item' interaction in
           // the 'drop' role. Elements can participate in multiple interactions in different roles.
-          interactions: 
+          interactions:
             - equip_item.drop
 
           content:
@@ -50,7 +49,7 @@ resources:
   // (the items are defined in inventory.yaml in the Example Data folder)
   inventory_item_slot:
     type: fragment
-    content: 
+    content:
       type: border
       padding: 2
       border_color: $theme.resources.control_border
@@ -60,7 +59,7 @@ resources:
         sprite: @sprite
         size: stretch
 
-      // this section specifies that the 'equip_item' interaction should start when the mouse button 
+      // this section specifies that the 'equip_item' interaction should start when the mouse button
       // is pressed on this panel. 'interaction' is an alternative to calling a function directly
       events:
         on_mouse_down:
@@ -82,18 +81,11 @@ resources:
               - @slot
 
 root:
-  type: panel
-  padding: 30
-  layout: canvas 
-  animate:
-    on_visible:
-      opacity: &fade_in
-    on_unloading:
-      opacity: &fade_out
-  elements:
-    - type: back_button
+  type: screen_base
+  title: "Drag and Drop Example: Inventory Screen"
+  items:
 
-    - type: main_panel
+    - type: panel
       canvas:
         top: 50
         left: 191
@@ -103,15 +95,10 @@ root:
       spacing: 20
       padding: 30
       elements:
-        - type: text
-          text_style: title
-          text: Inventory Screen
 
         - type: main_panel
           background: $theme.resources.subpanel_bg
-          canvas:
-            top: 50
-          spacing: 10
+          spacing: 22s
           padding: 20
           elements:
             - type: text
@@ -132,7 +119,6 @@ root:
         - type: main_panel
           background: $theme.resources.subpanel_bg
           canvas:
-            top: 210
             left: 220
           padding: 20
           spacing: 10

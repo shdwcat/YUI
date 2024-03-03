@@ -2,7 +2,7 @@ id: todo_mvc
 file_type: screen
 
 import:
-  - ../Templates/screen_base.yui
+  - ../Templates/
   - /YUI/Widgets/checkbox.yui
 
 resources:
@@ -33,6 +33,7 @@ resources:
 
 root:
   type: screen_base
+  title: TodoMVC Example
   items:
     - This example implements the famous TodoMVC app
 
@@ -84,14 +85,14 @@ root:
                   size: { w: 370 }
                   label: @label
                   is_checked: @checked
-                  on_checked_changed: 
+                  on_checked_changed:
                     - @@ checked => @checked = checked
                     - @@ checked => &state.done_count = &state.done_count + (checked then 1 else -1)
 
                   // use a switch to display the plain text by default, and text_input when editable
                   content_template:
                     type: switch
-                    trace: true
+                    //trace: true
                     switch_on: @editable
                     cases:
                       false:
