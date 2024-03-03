@@ -4,7 +4,7 @@ file_type: screen
 import:
   // import all resources from main_panel.yui
   - ../Templates/main_panel.yui
-  
+
   // import all resources from transitions.yui to use in animations
   - /YUI/Animations/transitions.yui
   - /YUI/Widgets/
@@ -13,7 +13,7 @@ root:
   type: panel // panel is used to layout and arrange child elements
   layout: canvas // canvas can be used to position elements arbitrarily within the panel, or along the edges
   //theme: pink!
-  
+
   // animate:
   //   on_visible:
   //     //opacity: &fade_in
@@ -50,7 +50,7 @@ root:
       elements:
         - type: panel
           spacing: 5
-          elements: 
+          elements:
             - type: text // 'type: text' is how we draw text! simple
               text_style: title // this applies one of the text styles defined in the active theme
               //opacity: @test_opacity
@@ -88,7 +88,7 @@ root:
               content: Widget Gallery // the 'content' for a button can be a simple string like this, or a child element, which could be a panel containing more elements!
 
               // on_click is how we tell the button what to do
-              // here we call the 'yui_change_screen' function and pass it 
+              // here we call the 'yui_change_screen' function and pass it
               // the name of the screen, and a reference to the visual element
               // so that the function can determine which screen to change
               tooltip: View examples of the widgets included with YUI

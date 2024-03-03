@@ -4,20 +4,17 @@ file_type: screen
 import:
   - ../Templates/main_panel.yui
   - ../Templates/back_button.yui
-  
+
   - /YUI/Widgets/fib.yui
 
 resources:
-  widget_wrapper:
-    type: template
-
 
 root:
 
   type: panel
   padding: 30
   spacing: 10
-  
+
   elements:
     - type: back_button
 
