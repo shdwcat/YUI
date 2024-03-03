@@ -7,7 +7,7 @@
 #macro DEFAULT_THEME_NAME "default"
 
 // macro to control whether YUI should attempt to use Input 6 library for navigation and interaction
-#macro YUI_INPUT_LIB_ENABLED true
+#macro YUI_INPUT_LIB_ENABLED false
 
 // whether to use Quick Setup mode
 // Automatically configures some verbs to work properly with the default profiles in __input_config_verbs
