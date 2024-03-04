@@ -1,3 +1,5 @@
+#macro CABINET_VERBOSE_LOGGING true
+ 
 /// @description scans a folder on disk for files and tracks information about the files found
 /// @param {string} folder_path
 /// @param {string} extension
@@ -123,14 +125,24 @@ function CabinetFile(cabinet, data) constructor {
 	// will be applied to the raw file content before returning (or caching) the value.
 	static tryRead = function() {
 		var cached_file = cabinet.cache[$ fullpath];
-		if cached_file != undefined
+		if cached_file != undefined {
+			if CABINET_VERBOSE_LOGGING show_debug_message($"Found file in cache: {fullpath}")
 			return cached_file;
+		}
 
-		if cabinet.options.cache_reads
-			return tryLoad();
+		if cabinet.options.cache_reads {
+			if CABINET_VERBOSE_LOGGING show_debug_message($"Loading file from disk (for cache): {fullpath}")
+			var result = tryLoad();
+			if CABINET_VERBOSE_LOGGING show_debug_message($"Found file on disk (for cache): {fullpath}")
+			return result;
+		}
 			
-		if file_exists(fullpath)
+		if CABINET_VERBOSE_LOGGING show_debug_message($"Loading file from disk (no caching): {fullpath}")
+		if file_exists(fullpath) {
+			if CABINET_VERBOSE_LOGGING show_debug_message($"Found file on disk: {fullpath}")
 			return __readFile();
+		}
+		else if CABINET_VERBOSE_LOGGING show_debug_message($"File not found on disk: {fullpath}")
 	}
 	
 	// if the file exists on disk, will load the file from disk and cache it, then return it
@@ -229,4 +241,3 @@ function CabinetOptions(options = {}) constructor {
 	// function to modify the CabinetFile with additional data
 	cabinet_file_customizer = options[$ "cabinet_file_customizer"];
 }
-
