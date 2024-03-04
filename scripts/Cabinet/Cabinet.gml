@@ -1,5 +1,7 @@
 #macro CABINET_VERBOSE_LOGGING true
  
+#macro CABINET_MAC_CASE_HACK true
+
 /// @description scans a folder on disk for files and tracks information about the files found
 /// @param {string} folder_path
 /// @param {string} extension
@@ -62,9 +64,14 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 			pos = string_pos("../", fixed_path);
 		}
 		
+		// maybe max doesn't use lower case?
+		if !CABINET_MAC_CASE_HACK {
+		
 		// for included files on non-microsoft platforms, lowercase the file path to match the filenames that GM exports
 		if !_is_microsoft && is_included_file {
 			fixed_path = string_lower(fixed_path)
+		}
+		
 		}
 		
 		return fixed_path;
