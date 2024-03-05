@@ -31,6 +31,10 @@ function YuiDocument(_yui_file, cabinet) constructor {
 		
 		var cabinet_file = cabinet.file(yui_filepath);
 		
+		if cabinet_file == undefined {
+			throw yui_error($"YuiDocument: Unable to find file at {yui_filepath}. Please turn on CABINET_VERBOSE_LOGGING to see verbose logs.");
+		}
+		
 		// load the file data (possibly cached)
 		yui_log($"loading yui_file {yui_filepath}");
 		var file_data = cabinet_file.tryRead();		
