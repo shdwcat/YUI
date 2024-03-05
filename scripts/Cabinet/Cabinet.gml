@@ -40,7 +40,18 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 	
 	// gets the CabinetFile corresponding to the provided 'path' if it exists
 	static file = function(path, is_included_file = true) {
-		return flat_map[$ __fixPath(path, is_included_file)];
+		var file = flat_map[$ __fixPath(path, is_included_file)];
+		if file == undefined && CABINET_VERBOSE_LOGGING {
+			show_debug_message("Unable to find file:");
+			show_debug_message($"Original path: {path}");
+			show_debug_message($"Fixed path: {__fixPath(path, is_included_file)}");
+			show_debug_message($"Known File List:");
+			var paths = struct_get_names(flat_map);
+			var i = 0; repeat array_length(paths) {
+				show_debug_message($"  {paths[i++]}");
+			}
+		}
+		return file;
 	}
 	
 	// gets the content from the CabinetFile for the provided 'path' (possibly cached)
