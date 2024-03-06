@@ -1,6 +1,4 @@
 #macro CABINET_VERBOSE_LOGGING true
- 
-#macro CABINET_MAC_CASE_HACK true
 
 /// @description scans a folder on disk for files and tracks information about the files found
 /// @param {string} folder_path
@@ -22,13 +20,20 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 	static rescan = function() {
 		// flat view of the folder tree (indexed by full filepath)
 		flat_map = {};
-		
-		file_list = gumshoe(folder_path, extension, , , , /* forceForwardSlash */ true);
+				
+		file_list = gumshoe(
+			folder_path,
+			extension,
+			/* returnStruct */ false,
+			_force_lowercase,
+			/* structValueGenerator */ undefined,
+			/* forceForwardSlash */ true);
+			
 		tree = gumshoe(
 			folder_path,
 			extension,
 			/* returnStruct */ true,
-			/* forceLCNames */ true,
+			_force_lowercase,
 			__generateCabinetItem,
 			/* forceForwardSlash */ true);
 	}
@@ -73,16 +78,12 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 			fixed_path = string_delete(fixed_path, previous_directory_pos, pos - previous_directory_pos + 2);
 			
 			pos = string_pos("../", fixed_path);
-		}
+		}	
 		
-		// maybe max doesn't use lower case?
-		if !CABINET_MAC_CASE_HACK {
-		
-		// for included files on non-microsoft platforms, lowercase the file path to match the filenames that GM exports
-		if !_is_microsoft && is_included_file {
+		// for included files on non-microsoft/non-mac platforms,
+		// lowercase the file path to match the filenames that GM exports
+		if _force_lowercase && is_included_file {
 			fixed_path = string_lower(fixed_path)
-		}
-		
 		}
 		
 		return fixed_path;
@@ -92,8 +93,10 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 	// and applies customization logic from cabinet options if present
 	static __generateCabinetItem = function(directory, file, extension, index) {
 		
+		var fullpath = directory + file;
+		
 		var result = new CabinetFile(self, {
-			fullpath: directory + file,
+			fullpath: fullpath,
 			directory: directory,
 			file: file,
 			extension: extension,
@@ -105,7 +108,7 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 		}
 		
 		// point the flat_map entry at the cabinet file
-		flat_map[$ result.fullpath] = result;
+		flat_map[$ fullpath] = result;
 		
 		return result;
 	}
@@ -117,6 +120,9 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 		|| os_type == os_xboxseriesxs
 		|| os_type == os_win8native
 		|| os_type == os_winphone;
+	
+	static _force_lowercase = !_is_microsoft && os_type != os_macosx;
+		
 }
 
 /// @description Tracks a data file found on disk by the associated Cabinet
