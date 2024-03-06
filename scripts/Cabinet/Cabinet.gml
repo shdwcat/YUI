@@ -1,4 +1,6 @@
-#macro CABINET_VERBOSE_LOGGING true
+// Set this to true to enable verbose logging which will
+// dump a lot of info in the log to help with debugging
+#macro CABINET_VERBOSE_LOGGING false
 
 /// @description scans a folder on disk for files and tracks information about the files found
 /// @param {string} folder_path
