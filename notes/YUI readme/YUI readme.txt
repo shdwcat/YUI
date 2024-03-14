@@ -1,4 +1,4 @@
-# YUI version 0.5.1 - by @shdwcat
+# YUI version 0.6.0 - by @shdwcat
 
 YUI is a GMS library for creating user interfaces, anywhere from simple to complex.
 

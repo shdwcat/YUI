@@ -1,4 +1,4 @@
-#macro YUI_VERSION "0.5.1" // also listed in YUI readme file!
+#macro YUI_VERSION "0.6.0" // also listed in YUI readme file!
 
 yui_log("Welcome to YUI by @shdwcat - version " + YUI_VERSION);
 
