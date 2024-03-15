@@ -22,7 +22,7 @@ function InspectronGo(game_kind = all, gui_kind = undefined, name = "Inspectron"
 	static overlay = new InspectronOverlay(name, item_name_func);	
 	
 	overlay.Reset()
-		.Pick(mouse_x, mouse_y, game_kind);
+		.Pick(INSPECTRON_MOUSE_X, INSPECTRON_MOUSE_Y, game_kind);
 		
 	if gui_kind != undefined
 		overlay.Pick(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), gui_kind);
@@ -661,7 +661,7 @@ function InspectronOverlay(name = "Inspectron", item_name_func = undefined) cons
 						
 		InspectronArrayDropDown(
 			ref_create(self, "pick_index"),
-			$"Instances at {mouse_x}, {mouse_y} (in depth order):",
+			$"Instances at {INSPECTRON_MOUSE_X}, {INSPECTRON_MOUSE_Y} (in depth order):",
 			targets,
 			item_name_func);
 

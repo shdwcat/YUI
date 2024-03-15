@@ -23,3 +23,8 @@
 
 // how much to indent nested values (e.g. structs or linked instances)
 #macro INSPECTRON_INDENT "    "
+
+// defines how the mouse x,y coordinates are obtained
+// (you most likely don't need to change this unless you are doing very advanced things with cameras)
+#macro INSPECTRON_MOUSE_X mouse_x
+#macro INSPECTRON_MOUSE_Y mouse_y
