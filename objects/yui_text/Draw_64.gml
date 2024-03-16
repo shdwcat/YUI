@@ -51,10 +51,10 @@ else {
 		}
 		else {
 			// remake the surface if it doesn't exist
-			if !text_surface || !surface_exists(text_surface) {
+			if text_surface == undefined || !surface_exists(text_surface) {
 				buildTextSurface();
 			}
-			if text_surface {
+			if text_surface != undefined {
 				yui_draw_alpha_surface(text_surface, x, y, opacity, color);
 			}
 		}
