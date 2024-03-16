@@ -17,7 +17,7 @@ constants:
   accent_color: #e3008c
   lum_factor: 1
   accent_lum: -0.5
-  
+
   // tint_color: #33FF33
   // accent_color: #00ff00
 
@@ -26,7 +26,7 @@ constants:
   // accent_color: #05dae8
   // lum_factor: .8
   // accent_lum: .5
-  
+
   // tint_color: #00bbbb
   // accent_color: #ffbb00
   // accent_lum: 1
@@ -48,7 +48,7 @@ resources:
   focus_border: &accent_color
 
 theme:
-  
+
   // overrides default values for the specified element
   elements:
 
@@ -73,7 +73,7 @@ theme:
     expander_header:
       background: &subpanel_bg
       border_color: &control_border
-      
+
     expander_content:
       background: &control_border
       border_color: &control_border
@@ -134,10 +134,10 @@ theme:
       border_focus_color: &focus_border
       border_thickness: 1
       padding: 7
-    
+
     panel:
       spacing: 5
-    
+
     button:
       background: &control_bg
       border_color: &control_border
@@ -146,11 +146,11 @@ theme:
       highlight_color: &accent_color //>> yui_color_shift_hue(&accent_color, 1.5)
       highlight_alpha: .5
       padding: [10, 5]
-    
+
     popup:
-      animate:
-        on_visible:
-          opacity: curveExpoInv
+      // animate:
+      //   on_visible:
+      //     opacity: curveExpoInv
         // on_unloading:
         //   opacity:
         //     type: curve
