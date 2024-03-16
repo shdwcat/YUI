@@ -36,7 +36,7 @@ build = function() {
 		
 	if use_scribble {
 		formatted_text = override_text ?? bound_values.text
-		scribble_element = scribble(text, string(id))
+		scribble_element = scribble(formatted_text, string(id))
 			.starting_format(bound_values.font)
 			.align(layout_props.halign, layout_props.valign);
 		
