@@ -15,6 +15,7 @@ function YuiElementDrag(_props, _resources) constructor {
 		
 		condition: undefined,
 		on_position_changed: undefined,
+		on_drag_end: undefined,
 
 		trace: false,
 	};
@@ -35,6 +36,7 @@ function YuiElementDrag(_props, _resources) constructor {
 		parameters = variable_struct_get(interaction, "parameters") ?? {};
 		
 		on_position_changed = parameters[$ "on_position_changed"] ?? props.on_position_changed;
+		on_drag_end = parameters[$ "on_drag_end"] ?? props.on_drag_end;
 		
 		// target might be an ancestor of the source, e.g. the window containing the title bar drag button
 		var source_type = parameters[$"source_type"];
@@ -110,6 +112,9 @@ function YuiElementDrag(_props, _resources) constructor {
 		yui_call_handler(on_position_changed, [event], target.data_source);
 		
 		if mouse_check_button_released(button) {
+			if on_drag_end != undefined {
+				yui_call_handler(on_drag_end, [event], target.data_source);
+			}
 			finish();
 		}
 	}
@@ -129,5 +134,6 @@ function YuiElementDrag(_props, _resources) constructor {
 		relative_x = undefined;
 		relative_y = undefined;
 		on_position_changed = undefined;
+		on_drag_end = undefined;
 	}
 }
