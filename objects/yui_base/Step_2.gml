@@ -8,7 +8,7 @@ if layout_props == undefined {
 	// feather restore GM2016
 }
 
-// ensure invsibile items destroy themselves since they won't run the Pre-Draw event
+// ensure invisible items destroy themselves since they won't run the Pre-Draw event
 if !visible && unload_now {
 	instance_destroy(self);
 }
