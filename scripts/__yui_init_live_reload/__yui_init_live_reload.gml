@@ -34,18 +34,20 @@ function __yui_init_live_reload() {
 		// get the datafiles folder path from the project file path
 		var project_folder = string_trim_end(GM_project_filename, [game_project_name + ".yyp"]);
 		var data_folder = string_replace_all(project_folder, "\\", "/") + "/datafiles/";	
-		YUI_LOCAL_PROJECT_DATA_FOLDER = data_folder;
 		
 		var is_sandboxed = yui_is_fs_sandbox_enabled();
 		if is_sandboxed {
 			YUI_LIVE_RELOAD_STATE = YUI_LIVE_RELOAD_STATES.SANDBOX_ENABLED;
+			data_folder = "";
 		}
-		else if !directory_exists(YUI_LOCAL_PROJECT_DATA_FOLDER) {
+		else if !directory_exists(data_folder) {
 			YUI_LIVE_RELOAD_STATE = YUI_LIVE_RELOAD_STATES.FOLDER_INCORRECT;
 		}
 		else {
 			YUI_LIVE_RELOAD_STATE = YUI_LIVE_RELOAD_STATES.ENABLED;
 		}
+		
+		YUI_LOCAL_PROJECT_DATA_FOLDER = data_folder;
 	}
 
 	YUI_LIVE_RELOAD_ENABLED = YUI_LIVE_RELOAD_STATE == YUI_LIVE_RELOAD_STATES.ENABLED;

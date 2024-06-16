@@ -19,7 +19,7 @@ function YuiDocument(_yui_file, cabinet) constructor {
 	
 	static loadDocument = function() {
 		
-		var yui_filepath = global.__yui_live_reload_enabled
+		var yui_filepath = YUI_LIVE_RELOAD_ENABLED
 			? YUI_LOCAL_PROJECT_DATA_FOLDER + yui_file
 			: yui_file;
 		
