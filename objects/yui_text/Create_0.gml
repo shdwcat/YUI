@@ -194,7 +194,8 @@ buildTextSurface = function yui_text__buildTextSurface(text = undefined) {
 	
 	if !bound_values return;
 	
-	if (text_surface_w > 0 && text_surface_h > 0) {
+	// only build the surface if it would have any pixels
+	if text_surface_w > 0 && text_surface_h > 0 {
 
 		text ??= formatted_text;
 				
@@ -212,6 +213,11 @@ buildTextSurface = function yui_text__buildTextSurface(text = undefined) {
 			layout_props.halign, layout_props.valign,
 			font,
 			text_surface);
+	}
+	// otherwise remove the existing surface if it exists
+	else if text_surface >= 0 && surface_exists(text_surface) {
+		surface_free(text_surface);
+		text_surface = undefined;
 	}
 }
 
