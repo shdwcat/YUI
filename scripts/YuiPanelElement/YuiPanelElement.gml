@@ -153,7 +153,10 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			var source_items = is_elements_bound ? props.elements.resolve(data) : props.elements;
 			
 			if !is_array(source_items) {
-				throw yui_error("source_items must resolve to an array");
+				if data == undefined
+					throw yui_error("unable to resolve 'elements' to an array - data_context was undefined, check that your data_context has been created before the yui_document that references it");
+				else
+					throw yui_error("'elements' must resolve to an array");
 			}
 			
 			// we need to copy the array for diff detection to work
