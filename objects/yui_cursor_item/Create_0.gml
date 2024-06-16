@@ -63,4 +63,5 @@ focus = function() {
 	if focusable YuiCursorManager.setFocus(id);
 }
 
-
+// override to handle keyboard input (currently limited support)
+onKeyPressed = undefined

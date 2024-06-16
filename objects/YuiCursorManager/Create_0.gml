@@ -165,15 +165,33 @@ isCursorOnVisiblePart = function(item) {
 	return item.isPointVisible(mouse_x + cursor_offset_x, mouse_y + cursor_offset_y);
 }
 
+onKeyLeft = function() {
+	if focused_item && focused_item.onKeyPressed && focused_item.onKeyPressed(vk_left) return;
+	moveFocus(YUI_FOCUS_DIRECTION.LEFT);
+}
+
+onKeyRight = function() {
+	if focused_item && focused_item.onKeyPressed && focused_item.onKeyPressed(vk_right) return;
+	moveFocus(YUI_FOCUS_DIRECTION.RIGHT);
+}
+
+onKeyUp = function() {
+	if focused_item && focused_item.onKeyPressed && focused_item.onKeyPressed(vk_up) return;
+	moveFocus(YUI_FOCUS_DIRECTION.UP);
+}
+
+onKeyDown = function() {
+	if focused_item && focused_item.onKeyPressed && focused_item.onKeyPressed(vk_down) return;
+	moveFocus(YUI_FOCUS_DIRECTION.DOWN);
+}
+
 onCursorWheelUp = function() {
 	var wheel_up_consumed = false;
 	var i = hover_count - 1; repeat hover_count {
 		var next = hover_list[| i];
-		//yui_log("pressed instance", i, "is", next.id, "type", object_get_name(next.object_index));
 	
 		if instance_exists(next) && isCursorOnVisiblePart(next) {
 			if next.on_mouse_wheel_up {
-				//yui_log("pressed instance", i, "is", next.id, "type", object_get_name(next.object_index));
 				wheel_up_consumed = next.on_mouse_wheel_up() != false;
 				if wheel_up_consumed {
 					break;
@@ -200,11 +218,9 @@ onCursorWheelDown = function() {
 	var wheel_down_consumed = false;
 	var i = hover_count - 1; repeat hover_count {
 		var next = hover_list[| i];
-		//yui_log("pressed instance", i, "is", next.id, "type", object_get_name(next.object_index));
 	
 		if instance_exists(next) && isCursorOnVisiblePart(next) {
 			if next.on_mouse_wheel_down {
-				//yui_log("pressed instance", i, "is", next.id, "type", object_get_name(next.object_index));
 				wheel_down_consumed = next.on_mouse_wheel_down() != false;
 				if wheel_down_consumed {
 					break;

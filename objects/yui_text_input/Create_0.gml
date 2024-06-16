@@ -83,3 +83,8 @@ on_lost_focus = function() {
 	original_text = undefined;
 	update = false;
 }
+
+onKeyPressed = function(key) {
+	// TODO handle input here instead of key events
+	return focused && (key == vk_left || key == vk_right)
+}

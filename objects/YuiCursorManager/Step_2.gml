@@ -45,12 +45,12 @@ if YUI_INPUT_LIB_ENABLED && is_navigation_active {
 				+ input_check_opposing_repeat(YUI_INPUT_VERB_UP, YUI_INPUT_VERB_DOWN);
 	
 			if up_down != 0 {
-				if up_down < 0 moveFocus(YUI_FOCUS_DIRECTION.UP)
-				else moveFocus(YUI_FOCUS_DIRECTION.DOWN)
+				if up_down < 0 onKeyUp();
+				else onKeyDown();
 			}
 			else if left_right != 0 {
-				if left_right < 0 moveFocus(YUI_FOCUS_DIRECTION.LEFT)
-				else moveFocus(YUI_FOCUS_DIRECTION.RIGHT)
+				if left_right < 0 onKeyLeft();
+				else onKeyRight();
 			}
 		}
 	}
