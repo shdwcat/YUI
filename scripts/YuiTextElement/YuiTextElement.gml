@@ -51,6 +51,9 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	highlight_color = yui_resolve_color(yui_bind(props.highlight_color, resources, slot_values));
 	
 	font = props.font ?? text_style.font;
+	if yui_is_binding(font) {
+		font = font.resolve();
+	}
 	if !is_string(font) {
 		throw yui_error("Expecting font name");
 	}
