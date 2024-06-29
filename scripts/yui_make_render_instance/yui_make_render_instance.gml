@@ -8,12 +8,20 @@ function yui_make_render_instance(yui_element, data, index = 0, depth_offset = 0
 	
 	depth_offset += yui_element.props.layer;
 	
-	// NOTE: expects to be called from a yui_base-derived object
+	// NOTE: expects to be called from a yui_base-derived object or yui_document
 	var parent = self;
+	
+	if instanceof(parent) == "instance" && object_index == yui_document {
+		var document = parent;
+	}
+	else {
+		var document = parent.document;
+	}	
 	
 	var child = instance_create_depth(x, y, depth - (1 + depth_offset), render_object, {
 		data_context: data,
 		parent: parent,
+		document: document,
 		item_index: index,
 		yui_element: yui_element,
 		persistent: persistent,

@@ -55,7 +55,6 @@ load = function() {
 
 	root = yui_make_render_instance(element, data_context);
 	root.parent = undefined;
-	root.document = self;
 	root.arrange(draw_rect);
 }
 
