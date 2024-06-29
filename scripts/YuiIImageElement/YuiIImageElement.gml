@@ -7,7 +7,7 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		
 		sprite: undefined,
 		ignore_sprite_origin: true, // default to draw as if origin is 0,0
-		frame: 0,		
+		frame: undefined,
 		angle: 0,
 		blend_color: c_white,
 	};
