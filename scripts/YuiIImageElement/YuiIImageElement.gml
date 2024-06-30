@@ -3,12 +3,11 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	static default_props = {
 		type: "image",
 		padding: 0,
-		center: false,
 		
 		sprite: undefined,
-		ignore_sprite_origin: true, // default to draw as if origin is 0,0
 		frame: undefined,
 		angle: 0,
+		mirror: undefined,
 		blend_color: c_white,
 	};
 	
@@ -29,6 +28,7 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	props.frame = yui_bind(props.frame, resources, slot_values);
 	props.angle = yui_bind(props.angle, resources, slot_values);
+	props.mirror = yui_bind(props.mirror, resources, slot_values);
 	
 	props.blend_color = yui_bind(props.blend_color, resources, slot_values);
 	is_blend_color_live = yui_is_live_binding(props.blend_color);	
@@ -45,8 +45,8 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	static getLayoutProps = function() {
 		return {
 			padding: props.padding,
-			size: size,
-			alignment: alignment,
+			size,
+			alignment,
 		};
 	}
 	
@@ -67,12 +67,17 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			
 		var w = yui_resolve_binding(size.w, data);
 		var h = yui_resolve_binding(size.h, data);
+		var mirror = yui_resolve_binding(props.mirror, data);
+		var mirror_x = mirror == true || mirror == "x";
+		var mirror_y = mirror == true || mirror == "y";
 		
 		// diff
 		if prev
 			&& sprite == prev.sprite
 			&& w == prev.w
 			&& h == prev.h
+			&& mirror_x == prev.mirror_x
+			&& mirror_y == prev.mirror_y
 		{
 			return true;
 		}
@@ -80,9 +85,11 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		return {
 			is_live: is_bound,
 			data_source: data,
-			sprite: sprite,
-			w: w,
-			h: h,
+			sprite,
+			w,
+			h,
+			mirror_x,
+			mirror_y,
 		};
 	}
 }
