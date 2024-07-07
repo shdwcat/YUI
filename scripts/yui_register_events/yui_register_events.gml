@@ -7,7 +7,7 @@ function yui_register_events(events) {
 				source: source,
 				button: "left",
 			};
-			yui_call_handler(events.on_mouse_down, [args], data_context);
+			yui_call_handler(events.on_mouse_down, [args], data_source);
 		}
 	}
 	
@@ -18,7 +18,7 @@ function yui_register_events(events) {
 				source: source,
 				button: "left",
 			};
-			yui_call_handler(events.on_mouse_up, [args], data_context);
+			yui_call_handler(events.on_mouse_up, [args], data_source);
 		}
 	}
 	
@@ -29,7 +29,7 @@ function yui_register_events(events) {
 				source: source,
 				button: "left",
 			};
-			yui_call_handler(events.on_click, [args], data_context);
+			yui_call_handler(events.on_click, [args], data_source);
 		}
 	}
 	
@@ -40,7 +40,7 @@ function yui_register_events(events) {
 				source: source,
 				button: "right",
 			};
-			yui_call_handler(events.on_right_click, [args], data_context);
+			yui_call_handler(events.on_right_click, [args], data_source);
 		}
 	}
 	
@@ -52,7 +52,7 @@ function yui_register_events(events) {
 				button: "left",
 				clicks: 2,
 			};
-			yui_call_handler(events.on_double_click, [args], data_context);
+			yui_call_handler(events.on_double_click, [args], data_source);
 		}
 	}
 	
@@ -64,7 +64,7 @@ function yui_register_events(events) {
 			var args = {
 				source: source,
 			};
-			yui_call_handler(events.on_mouse_wheel_up, [args], data_context);
+			yui_call_handler(events.on_mouse_wheel_up, [args], data_source);
 		}
 	}
 	
@@ -74,7 +74,7 @@ function yui_register_events(events) {
 			var args = {
 				source: source,
 			};
-			yui_call_handler(events.on_mouse_wheel_down, [args], data_context);
+			yui_call_handler(events.on_mouse_wheel_down, [args], data_source);
 		}
 	}
 	
@@ -85,7 +85,7 @@ function yui_register_events(events) {
 				source: source,
 				hover: source.highlight,
 			};
-			yui_call_handler(events.on_hover_changed, [args], data_context);
+			yui_call_handler(events.on_hover_changed, [args], data_source);
 		}
 	}
 	
@@ -96,7 +96,7 @@ function yui_register_events(events) {
 			var args = {
 				source: source,
 			};
-			yui_call_handler(events.on_got_focus, [args], data_context);
+			yui_call_handler(events.on_got_focus, [args], data_source);
 			
 			// call base handler
 			if base_on_got_focus base_on_got_focus();
@@ -110,7 +110,7 @@ function yui_register_events(events) {
 			var args = {
 				source: source,
 			};
-			yui_call_handler(events.on_lost_focus, [args], data_context);
+			yui_call_handler(events.on_lost_focus, [args], data_source);
 			
 			// call base handler
 			if base_on_lost_focus base_on_lost_focus();
