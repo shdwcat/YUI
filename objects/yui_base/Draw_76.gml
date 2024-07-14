@@ -13,7 +13,8 @@ if unloading {
 
 // destroy once we're done unloading
 if unload_now {
-	instance_destroy(self);
+	instance_destroy();
+	return;
 }
 
 // applying this in pre-draw assures that all arrange() calls as
