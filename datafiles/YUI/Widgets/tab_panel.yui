@@ -4,7 +4,7 @@ resources:
 
   tab_panel:
     type: template
-    
+
     slots:
       // array of items to display tabs for
       tab_items: []
@@ -47,17 +47,17 @@ resources:
           spacing: 0
           elements: $tab_items
           bind_slot_scope:
-            active_tab: "$active_tab ?? $tab_items[$active_tab_index]" // little trick to simplify referring to the active tab in the header template
+            active_tab: $active_tab ?? $tab_items[$active_tab_index] // little trick to simplify referring to the active tab in the header template
             active_tab_index: $active_tab_index
-          template: 
+          template:
             type: tab_header
             content: $tab_header_template
             on_click: @@ e => yui_invoke_event(e.source, 'tab_selected', @)
 
         - type: tab_panel_content
-          data_source: "$active_tab ?? $tab_items[$active_tab_index]"
+          data_source: $active_tab ?? $tab_items[$active_tab_index]
           size: $content_size
-          content: 
+          content:
             // because the tab content is coming from a binding, we need to use dynamic
             // in order to render an actual template instead of the content as a string
             type: dynamic
@@ -80,7 +80,7 @@ resources:
     content:
       type: border
       padding: $content_padding
-    
+
   // default template for displaying the item value
   tab_panel_header_template:
     type: text
