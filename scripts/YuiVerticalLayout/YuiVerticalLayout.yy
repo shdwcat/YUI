@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "YuiVerticalLayout",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Layout",
-    "path": "folders/Packages - YUI/Layout.yy",
+  "$GMScript":"v1",
+  "%Name":"YuiVerticalLayout",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"YuiVerticalLayout",
+  "parent":{
+    "name":"Layout",
+    "path":"folders/Packages - YUI/Layout.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

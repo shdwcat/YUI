@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "GsplParserError",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Parser",
-    "path": "folders/Packages - gspl/Parser.yy",
+  "$GMScript":"v1",
+  "%Name":"GsplParserError",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"GsplParserError",
+  "parent":{
+    "name":"Parser",
+    "path":"folders/Packages - gspl/Parser.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

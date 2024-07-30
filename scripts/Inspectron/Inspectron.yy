@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "Inspectron",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "YUI",
-    "path": "YUI.yyp",
+  "$GMScript":"v1",
+  "%Name":"Inspectron",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Inspectron",
+  "parent":{
+    "name":"YUI",
+    "path":"YUI.yyp",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

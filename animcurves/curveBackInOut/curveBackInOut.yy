@@ -1,9 +1,8 @@
 {
-  "resourceType": "GMAnimCurve",
-  "resourceVersion": "1.2",
-  "name": "curveBackInOut",
-  "channels": [
-    {"resourceType":"GMAnimCurveChannel","resourceVersion":"1.0","name":"curve1","colour":4290799884,"points":[
+  "$GMAnimCurve":"",
+  "%Name":"curveBackInOut",
+  "channels":[
+    {"$GMAnimCurveChannel":"","%Name":"curve1","colour":4290799884,"name":"curve1","points":[
         {"th0":0.0,"th1":0.0,"tv0":0.0,"tv1":0.0,"x":0.0,"y":0.0,},
         {"th0":0.0,"th1":0.0,"tv0":0.0,"tv1":0.0,"x":0.00990099,"y":0.045305386,},
         {"th0":0.0,"th1":0.0,"tv0":0.0,"tv1":0.0,"x":0.01980198,"y":0.08816291,},
@@ -106,11 +105,14 @@
         {"th0":0.0,"th1":0.0,"tv0":0.0,"tv1":0.0,"x":0.980198,"y":0.9118371,},
         {"th0":0.0,"th1":0.0,"tv0":0.0,"tv1":0.0,"x":0.990099,"y":0.9546946,},
         {"th0":0.0,"th1":0.0,"tv0":0.0,"tv1":0.0,"x":1.0,"y":1.0,},
-      ],"visible":true,},
+      ],"resourceType":"GMAnimCurveChannel","resourceVersion":"2.0","visible":true,},
   ],
-  "function": 0,
-  "parent": {
-    "name": "Easing Curves",
-    "path": "folders/Easing Curves.yy",
+  "function":0,
+  "name":"curveBackInOut",
+  "parent":{
+    "name":"Easing Curves",
+    "path":"folders/Easing Curves.yy",
   },
+  "resourceType":"GMAnimCurve",
+  "resourceVersion":"2.0",
 }

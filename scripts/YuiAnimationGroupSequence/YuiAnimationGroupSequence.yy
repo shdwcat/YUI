@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "YuiAnimationGroupSequence",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Animation",
-    "path": "folders/Packages - YUI/Animation.yy",
+  "$GMScript":"v1",
+  "%Name":"YuiAnimationGroupSequence",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"YuiAnimationGroupSequence",
+  "parent":{
+    "name":"Animation",
+    "path":"folders/Packages - YUI/Animation.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

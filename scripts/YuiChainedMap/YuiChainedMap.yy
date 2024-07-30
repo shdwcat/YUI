@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "YuiChainedMap",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Binding",
-    "path": "folders/Packages - YUI/Binding.yy",
+  "$GMScript":"v1",
+  "%Name":"YuiChainedMap",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"YuiChainedMap",
+  "parent":{
+    "name":"Binding",
+    "path":"folders/Packages - YUI/Binding.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

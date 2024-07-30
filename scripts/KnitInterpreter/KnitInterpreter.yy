@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "KnitInterpreter",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Knit",
-    "path": "folders/Packages - gspl/Languages/Knit.yy",
+  "$GMScript":"v1",
+  "%Name":"KnitInterpreter",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"KnitInterpreter",
+  "parent":{
+    "name":"Knit",
+    "path":"folders/Packages - gspl/Languages/Knit.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

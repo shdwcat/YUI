@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "GsplLoopFiber",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Execute",
-    "path": "folders/Packages - gspl/Execute.yy",
+  "$GMScript":"v1",
+  "%Name":"GsplLoopFiber",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"GsplLoopFiber",
+  "parent":{
+    "name":"Execute",
+    "path":"folders/Packages - gspl/Execute.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }
