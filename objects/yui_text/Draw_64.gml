@@ -55,7 +55,7 @@ else {
 				buildTextSurface();
 			}
 			if text_surface != undefined {
-				yui_draw_alpha_surface(text_surface, x, y, opacity, color);
+				yui_draw_alpha_surface(text_surface, x + element_xoffset, y + element_yoffset, opacity, color);
 			}
 		}
 	}

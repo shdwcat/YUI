@@ -135,10 +135,10 @@ arrange = function yui_text__arrange(available_size, viewport_size) {
 	
 		draw_set_font(old_font);
 	
-		text_surface_w = native_width + padding.w;
+		text_surface_w = native_width;
 	
 		// can't use string_height_ext because it doesn't account for letters like pqyg
-		text_surface_h = native_height + padding.h;
+		text_surface_h = native_height;
 	
 		// update draw size
 		desired_size.w = layout_props.halign or is_wrapped
@@ -181,10 +181,10 @@ arrange = function yui_text__arrange(available_size, viewport_size) {
 	
 	// when centering, center on the center of the padded rect
 	if layout_props.halign == fa_center {
-		element_xoffset += padded_rect.w / 2;
+		element_xoffset += (padded_rect.w / 2) - (text_surface_w / 2);
 	}
 	if layout_props.valign == fa_middle {
-		element_yoffset += padded_rect.h / 2;
+		element_yoffset += (padded_rect.h / 2) - (text_surface_h / 2);
 	}
 	
 	return draw_size;
@@ -204,13 +204,11 @@ buildTextSurface = function yui_text__buildTextSurface(text = undefined) {
 		}
 	
 		text_surface = yui_draw_text_to_surface(
-			element_xoffset, element_yoffset,
 			text_surface_w, text_surface_h,
 			text,
-			text_surface_w - layout_props.padding.w,
+			text_surface_w,
 			c_white, // color blending happens on surface draw
 			opacity,
-			layout_props.halign, layout_props.valign,
 			font,
 			text_surface);
 	}
