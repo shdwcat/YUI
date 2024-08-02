@@ -474,7 +474,7 @@ function InspectronPicker(field_name, custom_label, choices, labels = undefined)
 /// @param {Constant.AssetType} asset_type the asset type to choose
 /// @param {Function} name_func function to get the name of the asset
 /// @param {Function} filter_func asset => bool - function to filter the listed assets
-function InspectronAssetPicker(field_name, custom_label, asset_type, name_func, filter_func) : InspectronField(custom_label) constructor {
+function InspectronAssetPicker(field_name, custom_label, asset_type, name_func, filter_func = undefined) : InspectronField(custom_label) constructor {
 	self.field_name = field_name;
 	self.asset_type = asset_type;
 	self.name_func = name_func;
