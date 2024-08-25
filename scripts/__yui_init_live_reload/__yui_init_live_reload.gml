@@ -39,7 +39,7 @@ function __yui_init_live_reload() {
 		if is_sandboxed {
 			YUI_LIVE_RELOAD_STATE = YUI_LIVE_RELOAD_STATES.SANDBOX_ENABLED;
 			
-			// if we're sandboxed, use the normal included /datafiles folder instead
+			yui_log("Application is sandboxed, using included /datafiles instead of project folder");
 			data_folder = "";
 		}
 		else if !directory_exists(data_folder) {
