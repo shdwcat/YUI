@@ -20,11 +20,20 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		// these require scribble: true
 		autotype: undefined, // simple option to enable typist.in()
 		typist: undefined, // controls typewriter behavior
+		regions: false, // whether region features are enabled at all
+		region_color: undefined, // highlight color when a region is active
+		region_blend: 1, // blend amount for highlighted region
 	};
+	
+	static default_events = {
+		on_region_hover_changed: undefined, // event for when a region is hovered (or no longer hovered)
+	}
 	
 	props = yui_apply_element_props(_props);
 	
-	baseInit(props);
+	baseInit(props, default_events);
+	
+	props.events.on_region_hover_changed = yui_bind_handler(props.events.on_region_hover_changed, resources, slot_values);
 	
 	if !scribble_enabled && (props.scribble || props.typist || props.autotype) {
 		throw yui_error($"Add Scribble to your project in order to use scribble features (in {props.id})");
@@ -57,6 +66,10 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	if !is_string(font) {
 		throw yui_error("Expecting font name");
 	}
+	
+	// assume regions are enabled when region color is set
+	if props.region_color != undefined props.regions = true
+	props.region_color = yui_resolve_color(props.region_color);
 	
 	is_text_live = yui_is_live_binding(props.text);
 	
@@ -101,6 +114,12 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			highlight_color: highlight_color,
 			use_scribble: props.scribble,
 			autotype: props.autotype,
+			regions: {
+				enabled: props.regions,
+				highlight: props.region_color != undefined,
+				color: props.region_color,
+				blend: props.region_blend,
+			},
 		};
 	}
 

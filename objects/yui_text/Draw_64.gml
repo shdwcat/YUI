@@ -21,6 +21,43 @@ if highlight && highlight_color != undefined {
 if is_string(color) color = yui_resolve_color(color);
 
 if use_scribble {
+	if trace {
+		DEBUG_BREAK_YUI;
+	}
+	
+	if regions.enabled {
+		var hover_region = scribble_element.region_detect(
+			x + element_xoffset,
+			y + element_yoffset,
+			device_mouse_x_to_gui(0),
+			device_mouse_y_to_gui(0));
+			
+		var region_changed = hover_region != active_region;
+		if region_changed {
+			active_region = hover_region;
+			
+			if regions.highlight {
+				if active_region == undefined {
+					scribble_element.region_set_active(undefined);
+				}
+				else {
+					scribble_element.region_set_active(active_region, regions.color, regions.blend);
+				}
+			}
+			
+			if events.on_region_hover_changed != undefined {
+				var element = self;
+				var args = {
+					source: element,
+					scribble_element: scribble_element,
+					region: active_region,
+				};
+		
+				yui_call_handler(events.on_region_hover_changed, [args], data_source);
+			}
+		}
+	}
+	
 	scribble_element.blend(color, opacity);
 
 	// draw the scribble element

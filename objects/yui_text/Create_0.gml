@@ -18,6 +18,12 @@ text_surface = undefined;
 text_surface_w = 0;
 text_surface_h = 0;
 
+// the region settings (enabled/highlight/color/blend)
+regions = undefined;
+
+// the active region, if scribble regions are enabled and a region is hovered over
+active_region = undefined;
+
 // used by yui_text_input
 override_text = undefined;
 
@@ -30,6 +36,8 @@ onLayoutInit = function() {
 	
 	highlight_color = layout_props.highlight_color;
 	use_scribble = layout_props.use_scribble;
+	
+	regions = layout_props.regions;
 }
 
 build = function() {
