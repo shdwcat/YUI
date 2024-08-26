@@ -1,4 +1,4 @@
-#macro YUI_VERSION "0.6.2"
+#macro YUI_VERSION "0.6.3"
 
 yui_log("Welcome to YUI by @shdwcat - version " + YUI_VERSION);
 
@@ -26,16 +26,16 @@ global.__yui_globals.placement_map = {
 global.__yui_globals.color_table = {
 	white: c_white,
 	black: c_black,
-	
+
 	red: c_red,
 	green: c_green,
 	blue: c_blue,
 	yellow: c_yellow,
-	
+
 	aqua: c_aqua,
 	cyan: c_aqua,
 	maroon: c_maroon,
-	
+
 	gray: c_gray,
 	lightgray: 0xD3D3D3,
 	darkgray: 0xA9A9A9,
