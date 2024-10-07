@@ -69,7 +69,12 @@ function YsParser(tokens, eof_token)
 	infix(YS_TOKEN.LEFT_BRACKET,
 		new GsplIndexerParselet(YS_PRECEDENCE.CALL, YS_TOKEN.RIGHT_BRACKET));
 			
+	// infix call e.g. @foo |> bar()
+	infix(YS_TOKEN.PIPE_GREATER,
+		new GsplInfixCallParselet(YS_PRECEDENCE.CALL));
+		
 	// infix call e.g. @foo >> bar()
+	// DEPRECATED
 	infix(YS_TOKEN.GREATER_GREATER,
 		new GsplInfixCallParselet(YS_PRECEDENCE.CALL));
 	

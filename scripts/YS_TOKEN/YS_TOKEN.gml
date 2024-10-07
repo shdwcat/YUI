@@ -4,6 +4,7 @@ enum YS_TOKEN {
 	LEFT_BRACKET, RIGHT_BRACKET,
 	DOT, // member access
 	COMMA, // function args
+	PIPE_GREATER, // |> infix function call
 	GREATER_GREATER, // >> infix function call
 	ARROW, // => lambda definition
 	QUESTION, COLON, // ? : ternary

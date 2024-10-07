@@ -19,7 +19,10 @@ function YsScanner(source, token_definition) : GsplScanner(source, token_definit
 				if match("?") addToken(YS_TOKEN.QUESTION_QUESTION)
 				else addToken(YS_TOKEN.QUESTION);
 				break;
-			case "|": addToken(YS_TOKEN.PIPE); break;
+			case "|":
+				if match(">") addToken(YS_TOKEN.PIPE_GREATER)
+				else addToken(YS_TOKEN.PIPE);
+				break;
 		    case "-": addToken(YS_TOKEN.MINUS); break;
 		    case "+": addToken(YS_TOKEN.PLUS); break;
 		    case "*": addToken(YS_TOKEN.STAR); break;
