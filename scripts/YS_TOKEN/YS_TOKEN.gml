@@ -40,6 +40,7 @@ enum YS_TOKEN {
 	BINDING_IDENTIFIER, // @bind
 	SLOT_IDENTIFIER, // $slot
 	RESOURCE_IDENTIFIER, // &resource
+	HOST_IDENTIFIER, // ~host
 	
 	// values
 	STRING,

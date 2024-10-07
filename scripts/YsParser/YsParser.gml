@@ -35,6 +35,7 @@ function YsParser(tokens, eof_token)
 	prefix(YS_TOKEN.BINDING_IDENTIFIER, new YsBindingParselet());
 	prefix(YS_TOKEN.SLOT_IDENTIFIER, new YsSlotParselet());
 	prefix(YS_TOKEN.RESOURCE_IDENTIFIER, new YsResourceParselet());
+	prefix(YS_TOKEN.HOST_IDENTIFIER, new MxHostParselet());
 	prefix(YS_TOKEN.IDENTIFIER, new YsFunctionParselet());
 			
 	prefix(YS_TOKEN.LEFT_PAREN, new GsplGroupParselet(YS_TOKEN.RIGHT_PAREN));

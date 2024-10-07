@@ -2,17 +2,8 @@
 function yui_bind(value, resources, slot_values, bind_arrays = false) {
 	// NOTE: 'value' is the binding_expr
 	
-	if is_string(value) {
-		switch string_char_at(value, 1) {
-			case "@":
-			case "$":
-			case "&":
-				return yui_parse_binding_expr(value, resources, slot_values);
-			case ">":
-				if string_char_at(value, 2) == ">" {
-					return yui_parse_binding_expr(value, resources, slot_values);
-				}
-		}
+	if yui_is_binding_expr(value) {
+		return yui_parse_binding_expr(value, resources, slot_values);
 	}
 	
 	if bind_arrays {

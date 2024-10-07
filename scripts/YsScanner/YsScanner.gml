@@ -115,6 +115,10 @@ function YsScanner(source, token_definition) : GsplScanner(source, token_definit
 				skip(1);
 				scanVariablePath(YS_TOKEN.RESOURCE_IDENTIFIER);
 				break;
+			case "~":
+				skip(1);
+				scanVariablePath(YS_TOKEN.HOST_IDENTIFIER);
+				break;
 			
 			case "#":
 				scanColor(YS_TOKEN.COLOR); 

@@ -6,6 +6,7 @@ function yui_is_binding_expr(binding) {
 			case "@":
 			case "$":
 			case "&":
+			case "~":
 				return true;
 		}
 	}

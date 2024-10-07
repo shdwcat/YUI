@@ -904,6 +904,7 @@
     {"id":{"name":"GsplScanner","path":"scripts/GsplScanner/GsplScanner.yy",},},
     {"id":{"name":"input_mouse_wheel_up","path":"scripts/input_mouse_wheel_up/input_mouse_wheel_up.yy",},},
     {"id":{"name":"YsTokenDefinition","path":"scripts/YsTokenDefinition/YsTokenDefinition.yy",},},
+    {"id":{"name":"MxHostParselet","path":"scripts/MxHostParselet/MxHostParselet.yy",},},
     {"id":{"name":"input_cursor_y","path":"scripts/input_cursor_y/input_cursor_y.yy",},},
     {"id":{"name":"input_binding_swap","path":"scripts/input_binding_swap/input_binding_swap.yy",},},
     {"id":{"name":"YuiGridLayout","path":"scripts/YuiGridLayout/YuiGridLayout.yy",},},

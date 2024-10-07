@@ -721,6 +721,7 @@
     {"name":"input_cursor_limit_get","order":6,"path":"scripts/input_cursor_limit_get/input_cursor_limit_get.yy",},
     {"name":"input_mouse_wheel_up","order":10,"path":"scripts/input_mouse_wheel_up/input_mouse_wheel_up.yy",},
     {"name":"YsTokenDefinition","order":3,"path":"scripts/YsTokenDefinition/YsTokenDefinition.yy",},
+    {"name":"MxHostParselet","order":8,"path":"scripts/MxHostParselet/MxHostParselet.yy",},
     {"name":"input_cursor_y","order":11,"path":"scripts/input_cursor_y/input_cursor_y.yy",},
     {"name":"input_binding_swap","order":10,"path":"scripts/input_binding_swap/input_binding_swap.yy",},
     {"name":"YuiGridLayout","order":10,"path":"scripts/YuiGridLayout/YuiGridLayout.yy",},
