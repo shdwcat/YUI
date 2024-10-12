@@ -1,43 +1,59 @@
 /// @description Calls a function with bindable arguments
-function YuiCallFunction(func_name, args) : YuiExpr() constructor {
+function YuiCallFunction(target_expr, args) : YuiExpr() constructor {
 	static is_yui_live_binding = true;
 	static is_call = true;
 	
 	static runtime_functions = gspl_get_runtime_function_map();
 	
-	self.func_name = func_name;
+	self.target_expr = target_expr;
 	self.args = args;
 	self.arg_count = array_length(args);
 	self.resolved_args = array_create(arg_count);
+
+	if is_instanceof(target_expr, YuiAssetReference) {
+		var target = target_expr.resolve();
+		if !is_callable(target) {
+			throw yui_error($"YuiCallFunction: Target is not callable");
+		}
 		
-	if is_instanceof(func_name, YuiIdentifier) {
-		func_name = func_name.resolve();
-		var script_index = asset_get_index(func_name);
+		if target_expr.is_runtime_function {
+			function_index = target;
+			resolve = resolveRuntimeFunction;
+		}
+		else {
+			// script
+			self.script_index = target;
+			resolve = resolveScript;
+		}
+	}
+	else if is_instanceof(target_expr, YuiIdentifier) {
+		var target_name = target_expr.resolve();
+		var script_index = asset_get_index(target_name);
 		if script_index != -1 {
 			// call script
 			self.script_index = script_index;
 			resolve = resolveScript;
-			yui_log_asset_use(func_name, asset_script, "From YuiCallFunction");
+			yui_log_asset_use(target_name, "script", target_expr.source);
 		}
 		else {
 			// call runtime function
-			function_index = runtime_functions[$ func_name];
+			function_index = runtime_functions[$ target_name];
 					
 			if function_index == undefined {
-				yui_warning("could not find script or built-in function with name: " + func_name);
+				yui_warning("could not find script or built-in function with name: " + target_name);
 				resolve = function() { return undefined };
 				return;
 			}
 		
 			resolve = resolveRuntimeFunction;
-			yui_log_asset_use(func_name, "runtime_function", "From YuiCallFunction");
+			yui_log_asset_use(target_name, "GML Runtime Function", target_expr.source);
 		}
 	}
-	else if yui_is_lambda(func_name) {
+	else if yui_is_lambda(target_expr) {
 		resolve = resolveLambda;
 	}
 	else {
-		// treat func_name as a binding (may be slot etc also) and resolve it
+		// treat target_expr as a binding (may be slot etc also) and resolve it
 		resolve = resolveBoundFunction;
 	}
 	
@@ -82,13 +98,13 @@ function YuiCallFunction(func_name, args) : YuiExpr() constructor {
 			i++;
 		}
 		
-		return func_name.call(data, resolved_args);
+		return target_expr.call(data, resolved_args);
 	}
 	
 	static resolveBoundFunction = function(data) {
 		
 		// resolve the function reference and arguments
-		var func_ref = func_name.resolve(data);
+		var func_ref = target_expr.resolve(data);
 		var i = 0; repeat arg_count {
 			resolved_args[i] = args[i].resolve(data);
 			i++;
@@ -128,24 +144,24 @@ function YuiCallFunction(func_name, args) : YuiExpr() constructor {
 	
 	static compile = function() {
 		
-		if is_string(func_name) {
-			var call = func_name;
+		if is_string(target_expr) {
+			var call = target_expr;
 		}
-		else if is_instanceof(func_name, YuiIdentifier) {
+		else if is_instanceof(target_expr, YuiIdentifier) {
 			// needs special handling until I can fix how function names work...
-			var call = func_name.identifier;
+			var call = target_expr.identifier;
 		}
-		else if is_instanceof(func_name, YuiLambda) {
+		else if is_instanceof(target_expr, YuiLambda) {
 			// needs special handling until I can fix how function names work...
-			var call = func_name.compiled_script_name;
+			var call = target_expr.compiled_script_name;
 		}
 		else {
-			var call = func_name.compile();
+			var call = target_expr.compile();
 		}
 		
 		call += "(";
 		
-		if is_instanceof(func_name, YuiLambda) {
+		if is_instanceof(target_expr, YuiLambda) {
 			call += "data, ";
 		}
 		

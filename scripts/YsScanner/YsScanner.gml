@@ -120,7 +120,7 @@ function YsScanner(source, token_definition) : GsplScanner(source, token_definit
 				break;
 			case "~":
 				skip(1);
-				scanVariablePath(YS_TOKEN.HOST_IDENTIFIER);
+				scanIdentifier(YS_TOKEN.HOST_IDENTIFIER);
 				break;
 			
 			case "#":

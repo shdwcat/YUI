@@ -1,11 +1,11 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "YsFunctionParselet",
+  "name": "YuiAssetReference",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Deprecated",
-    "path": "folders/Packages - YUI/Deprecated.yy",
+    "name": "Structures",
+    "path": "folders/Packages - YUI/Binding/Structures.yy",
   },
 }
