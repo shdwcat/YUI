@@ -1,0 +1,7 @@
+yui_resolve_color, 6, "From YuiCallFunction"
+yui_color_shift_hue, 6, "From YuiCallFunction"
+YuiCursorManager, object, "@@ ~YuiCursorManager"
+yui_log, script, "@@ e => ~yui_log('region is ' + e.region)"
+yui_change_screen, script, "@@ e => ~yui_change_screen(widget_gallery, e.source)"
+yui_example_exit_game, script, "@@ e => ~yui_example_exit_game()"
+yui_error_icon, sprite, "@@ ~yui_error_icon"

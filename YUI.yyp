@@ -152,6 +152,7 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"screen_base.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Templates",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"input_license.txt","CopyToMask":-1,"filePath":"datafiles",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"sdl2.txt","CopyToMask":-1,"filePath":"datafiles",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"yui_asset_use_log.csv","CopyToMask":-1,"filePath":"datafiles",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"transitions.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Animations",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"scrollbar_drag.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Interactions",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"slider_drag.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Interactions",},

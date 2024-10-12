@@ -25,27 +25,34 @@ function MxHostParselet() : GsplPrefixParselet() constructor {
 				throw yui_error($"Cannot use subpath expression with runtime functions ({path})");
 			}
 			
+			yui_log_asset_use(name, "GML runtime function", parser.source);
+			
 			// YuiCallFunction is very hacky and expects just the name of the runtime function
 			// not the function index itself
 			return new YuiIdentifier(name);
 		}
 		
-		var asset = asset_get_index(name);
+		var asset = asset_get_index(name);		
 		if asset == -1 {
 			// TODO: only throw in debug mode (?)
 			throw yui_warning($"Could not find GM host asset with name: {path_parts[0]}");
 		}
 		
 		var asset_type = asset_get_type(name);
+		var asset_type_name = string_split(string(asset), " ", 3)[1];
 		
 		// objects are the only asset where we can apply subpathing
 		// TODO could it work for e.g. sequences?
 		if asset_type == asset_object {
+			yui_log_asset_use(name, asset_type_name, parser.source);
 			return new YuiValueBinding(asset, sub_path);
 		}
 		else if sub_path != "" {
 			throw yui_error($"Cannot use subpath expression with asset type {asset_type}");
 		}
+		
+		// log anything else
+		yui_log_asset_use(name, asset_type_name, parser.source);
 		
 		if asset_type == asset_script {
 			// YuiCallFunction is very hacky and expects just the name of the script
