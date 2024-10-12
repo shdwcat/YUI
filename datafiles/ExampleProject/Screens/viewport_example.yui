@@ -22,7 +22,7 @@ root:
       value: @scroll_x
       min: 0
       max: @scroll_info.x_max ?? 1000
-      on_value_changed: @@ value => @scroll_x = value >> floor()
+      on_value_changed: @@ value => @scroll_x = value |> floor()
       visible: @scroll_info.x_max > 0
       slider_size: { w: 200, h: 20 }
       thumb_size: { w: 30, h: 20 }
@@ -31,7 +31,7 @@ root:
       value: @scroll_y
       min: 0
       max: @scroll_info.y_max ?? 1000
-      on_value_changed: @@ value => @scroll_y = value >> floor()
+      on_value_changed: @@ value => @scroll_y = value |> floor()
       visible: @scroll_info.y_max > 0
       slider_size: { w: 200, h: 20 }
       thumb_size: { w: 30, h: 20 }
@@ -50,8 +50,8 @@ root:
         viewport_y: @scroll_y
         on_viewport_info: @@ value => @scroll_info = value
         events:
-          on_mouse_wheel_up: @scroll_y = max(@scroll_y - @scroll_info.y_max * 0.05, 0) >> floor()
-          on_mouse_wheel_down: @scroll_y = min(@scroll_y + @scroll_info.y_max * 0.05, @scroll_info.y_max) >> floor()
+          on_mouse_wheel_up: @scroll_y = max(@scroll_y - @scroll_info.y_max * 0.05, 0) |> floor()
+          on_mouse_wheel_down: @scroll_y = min(@scroll_y + @scroll_info.y_max * 0.05, @scroll_info.y_max) |> floor()
         content:
 
           type: panel

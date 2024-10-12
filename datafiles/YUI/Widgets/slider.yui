@@ -71,5 +71,5 @@ resources:
           visible: $show_value
 
         - type: text
-          text: $value >> string_format(0, 0) // format as a whole number with no decimals
+          text: $value |> string_format(0, 0) // format as a whole number with no decimals
           visible: $show_value
