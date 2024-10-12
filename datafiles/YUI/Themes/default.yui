@@ -33,17 +33,17 @@ constants:
 
 functions:
 
-  do_shift: @@ color => color >> yui_color_shift_hue(yui_resolve_color(&tint_color), &lum_factor)
-  do_accent_shift: @@ color => color >> yui_color_shift_hue(yui_resolve_color(&accent_color), &lum_factor + &accent_lum)
+  do_shift: @@ color => color |> yui_color_shift_hue(yui_resolve_color(&tint_color), &lum_factor)
+  do_accent_shift: @@ color => color |> yui_color_shift_hue(yui_resolve_color(&accent_color), &lum_factor + &accent_lum)
 
 resources:
 
-  panel_bg: @@ #2f2f2f >> &do_shift()
-  subpanel_bg: @@ #3c3c3c >> &do_shift()
+  panel_bg: @@ #2f2f2f |> &do_shift()
+  subpanel_bg: @@ #3c3c3c |> &do_shift()
 
-  control_bg: @@ #252525 >> &do_shift()
-  control_border: @@ #1b1b1b >> &do_shift()
-  control_bg_light: @@ #5b5b5b >> &do_accent_shift()
+  control_bg: @@ #252525 |> &do_shift()
+  control_border: @@ #1b1b1b |> &do_shift()
+  control_bg_light: @@ #5b5b5b |> &do_accent_shift()
 
   focus_border: &accent_color
 
@@ -143,7 +143,7 @@ theme:
       border_color: &control_border
       border_focus_color: &focus_border
       border_thickness: 1
-      highlight_color: &accent_color //>> yui_color_shift_hue(&accent_color, 1.5)
+      highlight_color: &accent_color //|> yui_color_shift_hue(&accent_color, 1.5)
       highlight_alpha: .5
       padding: [10, 5]
 
