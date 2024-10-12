@@ -461,6 +461,7 @@
     {"id":{"name":"skull_signet","path":"sprites/skull_signet/skull_signet.yy",},},
     {"id":{"name":"scribble_glyph_get","path":"scripts/scribble_glyph_get/scribble_glyph_get.yy",},},
     {"id":{"name":"__scribble_font_add_from_project","path":"scripts/__scribble_font_add_from_project/__scribble_font_add_from_project.yy",},},
+    {"id":{"name":"yui_delete_file","path":"scripts/yui_delete_file/yui_delete_file.yy",},},
     {"id":{"name":"__input_load_sdl2_from_file","path":"scripts/__input_load_sdl2_from_file/__input_load_sdl2_from_file.yy",},},
     {"id":{"name":"yui_transform_map_with_cache","path":"scripts/yui_transform_map_with_cache/yui_transform_map_with_cache.yy",},},
     {"id":{"name":"scribble_font_exists","path":"scripts/scribble_font_exists/scribble_font_exists.yy",},},

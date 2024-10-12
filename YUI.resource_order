@@ -331,6 +331,7 @@
     {"name":"skull_signet","order":12,"path":"sprites/skull_signet/skull_signet.yy",},
     {"name":"scribble_glyph_get","order":16,"path":"scripts/scribble_glyph_get/scribble_glyph_get.yy",},
     {"name":"__scribble_font_add_from_project","order":7,"path":"scripts/__scribble_font_add_from_project/__scribble_font_add_from_project.yy",},
+    {"name":"yui_delete_file","order":20,"path":"scripts/yui_delete_file/yui_delete_file.yy",},
     {"name":"__input_load_sdl2_from_file","order":7,"path":"scripts/__input_load_sdl2_from_file/__input_load_sdl2_from_file.yy",},
     {"name":"yui_transform_map_with_cache","order":1,"path":"scripts/yui_transform_map_with_cache/yui_transform_map_with_cache.yy",},
     {"name":"scribble_font_exists","order":7,"path":"scripts/scribble_font_exists/scribble_font_exists.yy",},
