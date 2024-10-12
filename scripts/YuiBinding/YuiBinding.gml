@@ -1,6 +1,5 @@
 /// @description struct that can dynamically resolve a value from a single data path at runtime
 function YuiBinding(path) : YuiExpr() constructor {
-	static is_yui_binding = true;
 	static is_yui_live_binding = true;
 	
 	self.path = path;

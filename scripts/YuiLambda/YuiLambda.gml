@@ -1,8 +1,6 @@
 /// @description
 function YuiLambda(body, context) : YuiExpr() constructor {
-	static is_yui_binding = true;
 	static is_yui_live_binding = true;
-	static is_yui_call = true;
 	static is_lambda = true;
 
 	self.body = body;

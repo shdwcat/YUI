@@ -1,6 +1,5 @@
 /// @description Calls a function with bindable arguments
 function YuiCallFunction(func_name, args) : YuiExpr() constructor {
-	static is_yui_binding = true;
 	static is_yui_live_binding = true;
 	static is_call = true;
 	

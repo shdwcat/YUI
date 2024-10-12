@@ -1,6 +1,5 @@
 /// @description
 function YuiValueWrapper(value, type = undefined) : YuiExpr() constructor {
-	static is_yui_binding = true;
 	static is_yui_live_binding = false;
 	
 	// TODO: move this to .getLiteral() on the token class

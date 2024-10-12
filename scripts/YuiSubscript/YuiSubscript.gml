@@ -1,6 +1,5 @@
 /// @description access a single variable from a source, e.g. foo.bar
 function YuiSubscript(expr, variable_name) : YuiExpr() constructor {
-	static is_yui_binding = true;
 	static is_yui_live_binding = true;
 	
 	self.expr = expr;

@@ -1,6 +1,5 @@
 /// @description
 function YuiValueBinding(value, path) : YuiBinding(undefined) constructor {
-	static is_yui_binding = true;
 	static is_yui_live_binding = true; // value is static but the value from the path might change
 	
 	self.value = value;

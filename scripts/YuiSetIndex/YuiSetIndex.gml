@@ -1,6 +1,5 @@
 /// @description
 function YuiSetIndex(left, index, right) : YuiExpr() constructor {
-	static is_yui_binding = true;
 	static is_yui_live_binding = true;
 	static is_call = true;
 	static is_assign = true;

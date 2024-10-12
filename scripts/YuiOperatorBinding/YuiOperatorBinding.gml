@@ -1,6 +1,5 @@
 /// @description
 function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
-	static is_yui_binding = true;
 	static is_yui_live_binding = true;
 	
 	self.left = left;

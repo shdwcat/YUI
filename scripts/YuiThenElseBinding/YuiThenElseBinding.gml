@@ -1,6 +1,5 @@
 /// @description
 function YuiThenElseBinding(left, then_expr, else_expr) : YuiExpr() constructor {
-	static is_yui_binding = true;
 	static is_yui_live_binding = true; // check inner bindings?
 	
 	self.left = left;
