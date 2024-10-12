@@ -185,9 +185,11 @@ unload = function(unload_root = undefined) {
 		var child_item = internal_children[i];
 		//yui_log("unloading panel child (index ", i, ") visual", instance.id);
 		
-		var child_unload_time = child_item.unload(unload_root_item);
+		if instance_exists(child_item) {
+			var child_unload_time = child_item.unload(unload_root_item);
+			unload_time = max(unload_time, child_unload_time);
+		}
 		
-		unload_time = max(unload_time, child_unload_time);
 		i++;
 	}
 
