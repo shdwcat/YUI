@@ -659,6 +659,7 @@
     {"id":{"name":"scribble_super_glyph_copy","path":"scripts/scribble_super_glyph_copy/scribble_super_glyph_copy.yy",},},
     {"id":{"name":"YuiSelectionScope","path":"scripts/YuiSelectionScope/YuiSelectionScope.yy",},},
     {"id":{"name":"emerald_necklace","path":"sprites/emerald_necklace/emerald_necklace.yy",},},
+    {"id":{"name":"__yui_init","path":"scripts/__yui_init/__yui_init.yy",},},
     {"id":{"name":"yui_array_find_index","path":"scripts/yui_array_find_index/yui_array_find_index.yy",},},
     {"id":{"name":"input_virtual_debug_draw","path":"scripts/input_virtual_debug_draw/input_virtual_debug_draw.yy",},},
     {"id":{"name":"input_binding_gamepad_get","path":"scripts/input_binding_gamepad_get/input_binding_gamepad_get.yy",},},

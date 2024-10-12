@@ -21,8 +21,6 @@ enum YUI_LIVE_RELOAD_STATES {
 	ENABLED,
 }
 
-__yui_init_live_reload();
-
 function __yui_init_live_reload() {
 	
 	if (GM_build_type == "exe") {

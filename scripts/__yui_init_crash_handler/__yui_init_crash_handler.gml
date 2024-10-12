@@ -2,8 +2,7 @@
 // (otherwise this will prevent us from breaking in the debugger at the error site)
 if !debug_mode {
 	exception_unhandled_handler(function(ex) {
-	
-	
+		
 		// Print some messages to the output log
 	    show_debug_message( "--------------------------------------------------------------");
 	    show_debug_message( "Unhandled exception " + string(ex) );

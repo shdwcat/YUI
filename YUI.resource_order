@@ -507,6 +507,7 @@
     {"name":"scribble_super_glyph_copy","order":2,"path":"scripts/scribble_super_glyph_copy/scribble_super_glyph_copy.yy",},
     {"name":"YuiSelectionScope","order":3,"path":"scripts/YuiSelectionScope/YuiSelectionScope.yy",},
     {"name":"emerald_necklace","order":6,"path":"sprites/emerald_necklace/emerald_necklace.yy",},
+    {"name":"__yui_init","order":28,"path":"scripts/__yui_init/__yui_init.yy",},
     {"name":"yui_array_find_index","order":1,"path":"scripts/yui_array_find_index/yui_array_find_index.yy",},
     {"name":"input_virtual_debug_draw","order":2,"path":"scripts/input_virtual_debug_draw/input_virtual_debug_draw.yy",},
     {"name":"__scribble_gen_6_build_lines","order":6,"path":"scripts/__scribble_gen_6_build_lines/__scribble_gen_6_build_lines.yy",},
