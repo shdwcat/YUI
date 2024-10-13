@@ -33,8 +33,8 @@ constants:
 
 functions:
 
-  do_shift: @@ color => color |> yui_color_shift_hue(yui_resolve_color(&tint_color), &lum_factor)
-  do_accent_shift: @@ color => color |> yui_color_shift_hue(yui_resolve_color(&accent_color), &lum_factor + &accent_lum)
+  do_shift: @@ color => color |> ~yui_color_shift_hue(~yui_resolve_color(&tint_color), &lum_factor)
+  do_accent_shift: @@ color => color |> ~yui_color_shift_hue(~yui_resolve_color(&accent_color), &lum_factor + &accent_lum)
 
 resources:
 
