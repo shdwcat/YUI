@@ -6,6 +6,8 @@ function YuiLambdaVariable(param_name, context) : YuiExpr() constructor {
 	self.context = context;
 	
 	static resolve = function(data) {
+		// gets the defined parameter from the 'context params' which in this case
+		// is set up in YuiLambda/YuiLambdaParselet
 		// note: this is some bootleg shit
 		return context.params[$ param_name];
 	}
