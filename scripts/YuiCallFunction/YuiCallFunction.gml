@@ -1,3 +1,6 @@
+// NOTE: unsafe function calls will not be supported in the future
+#macro YUI_ALLOW_UNSAFE_FUNCTION_CALLS false
+
 /// @description Calls a function with bindable arguments
 function YuiCallFunction(target_expr, args) : YuiExpr() constructor {
 	static is_yui_live_binding = true;
@@ -28,6 +31,13 @@ function YuiCallFunction(target_expr, args) : YuiExpr() constructor {
 	}
 	else if is_instanceof(target_expr, YuiIdentifier) {
 		var target_name = target_expr.resolve();
+		
+		var error = yui_error($"Use ~{target_name} to refer to GML functions or scripts, or set YUI_ALLOW_UNSAFE_FUNCTION_CALLS macro to true (in expression '{target_expr.source}')");
+		if !YUI_ALLOW_UNSAFE_FUNCTION_CALLS {
+			throw error;
+		}
+		
+		
 		var script_index = asset_get_index(target_name);
 		if script_index != -1 {
 			// call script
