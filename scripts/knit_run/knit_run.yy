@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Knit",
-    "path": "folders/Packages - gspl/Languages/Knit.yy",
+    "path": "folders/Packages - experimental/Knit.yy",
   },
 }

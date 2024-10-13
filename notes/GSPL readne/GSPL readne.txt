@@ -1,16 +1,16 @@
-# GSPL Version 0.1.0 - by @shdwcat
+# GSPL Version 0.1.1 - by @shdwcat
 
 # GSPL - Generic Scanner Parser Logic
 
 This package contains many helpful scripts for implementing custom data formats or even
-scripting languages inside GMS.
+scripting languages inside GameMaker.
 
 NOTE: There is no documentation for any of this yet, as I have been developing it primarily
 	  for my own uses. If you find it useful, let me know and I can try to help ;)
 
 Folders:
 
-	Objects - gms game objects used by other parts of the system
+	Objects - GM game objects used by other parts of the system
 
 	Scanner - Scripts to convert a string to a sequence of tokens to be parsed
 
@@ -19,9 +19,5 @@ Folders:
 		For a scripting language, this could be the expression tree representing the logic to be executed
 	
 	Execute - Scripts for executing an expression tree
-
-	Languages - Example implementations of the above.
-		Currently this is only 'Knit' which is a scripting language I've been toying around with.
-		Sorry no documentation for it yet :P
 	
 	test - Stuff to help for testing during development

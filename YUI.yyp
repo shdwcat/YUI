@@ -59,8 +59,7 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Environment","folderPath":"folders/Packages - gspl/Execute/Environment.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Iterators","folderPath":"folders/Packages - gspl/Execute/Iterators.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"ValueTypes","folderPath":"folders/Packages - gspl/Execute/ValueTypes.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Languages","folderPath":"folders/Packages - gspl/Languages.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Knit","folderPath":"folders/Packages - gspl/Languages/Knit.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Knit","folderPath":"folders/Packages - experimental/Knit.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Objects","folderPath":"folders/Packages - gspl/Objects.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Parser","folderPath":"folders/Packages - gspl/Parser.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Pratt","folderPath":"folders/Packages - gspl/Parser/Pratt.yy",},
@@ -121,6 +120,7 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Sprites","folderPath":"folders/YUI Example/Sprites.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"UI Sprites","folderPath":"folders/YUI Example/UI Sprites.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"YUI Tests","folderPath":"folders/YUI Tests.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Packages - experimental","folderPath":"folders/Packages - experimental.yy",},
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":".gitattributes","CopyToMask":-1,"filePath":"datafiles",},
