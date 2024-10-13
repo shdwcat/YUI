@@ -42,6 +42,7 @@
     {"name":"25  Gamepads (Direct)","order":27,"path":"folders/Input/25  Gamepads (Direct).yy",},
     {"name":"26  Keyboard (Direct)","order":28,"path":"folders/Input/26  Keyboard (Direct).yy",},
     {"name":"27  Combos","order":29,"path":"folders/Input/27  Combos.yy",},
+    {"name":"Packages - experimental","order":15,"path":"folders/Packages - experimental.yy",},
     {"name":"Packages - gspl","order":3,"path":"folders/Packages - gspl.yy",},
     {"name":"Packages - YUI","order":4,"path":"folders/Packages - YUI.yy",},
     {"name":"Binding","order":1,"path":"folders/Packages - YUI/Binding.yy",},
@@ -79,7 +80,6 @@
     {"name":"Superfonts","order":9,"path":"folders/Scribble/Superfonts.yy",},
     {"name":"YUI Compiled Functions","order":5,"path":"folders/YUI Compiled Functions.yy",},
     {"name":"YUI Tests","order":1,"path":"folders/YUI Tests.yy",},
-    {"name":"Packages - experimental","order":15,"path":"folders/Packages - experimental.yy",},
   ],
   "ResourceOrderSettings": [
     {"name":"__input_load_sdl2_from_string","order":8,"path":"scripts/__input_load_sdl2_from_string/__input_load_sdl2_from_string.yy",},
