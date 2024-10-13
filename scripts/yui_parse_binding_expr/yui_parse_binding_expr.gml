@@ -31,8 +31,8 @@ function yui_parse_binding_expr(expr_source, resources, slot_values) {
 	
 	var tokens = scanner.scanTokens();
 	
-	var parser = new YsParser(tokens, expr_source);
-	var binding = parser.parse(resources, slot_values);
+	var parser = new YsParser(tokens, expr_source, resources, slot_values);
+	var binding = parser.parse();
 	
 	// compile the binding for future speed up
 	if YUI_COMPILER_ENABLED && yui_is_binding(binding) {
