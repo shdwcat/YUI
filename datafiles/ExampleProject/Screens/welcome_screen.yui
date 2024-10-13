@@ -78,7 +78,7 @@ root:
               region_color: #2277ff
               text: This screen is defined in [region,file]datafiles/ExampleProject/Screens/welcome_screen.yui[/region]
               events:
-                on_region_hover_changed: @@ e => yui_log('region is ' + e.region)
+                on_region_hover_changed: @@ e => ~yui_log('region is ' + e.region)
 
             - You can edit this file while the game is running! Press F5 to reload after making changes
             //- @app_name
@@ -98,7 +98,7 @@ root:
               // the name of the screen, and a reference to the visual element
               // so that the function can determine which screen to change
               tooltip: View examples of the widgets included with YUI
-              on_click: @@ e => yui_change_screen(widget_gallery, e.source)
+              on_click: @@ e => ~yui_change_screen(widget_gallery, e.source)
               animate:
                 on_visible:
                   xoffset: &cascade_slide_in
@@ -108,7 +108,7 @@ root:
             - type: button
               content: Animation Examples
               tooltip: View examples of the animation system in use
-              on_click: @@ e => yui_change_screen(animation_examples, e.source)
+              on_click: @@ e => ~yui_change_screen(animation_examples, e.source)
               animate:
                 on_visible:
                   xoffset: &cascade_slide_in
@@ -118,7 +118,7 @@ root:
             - type: button
               content: "Drag and Drop Example: Inventory Screen"
               tooltip: Demonstrates an inventory screen where you can drag and drop items onto equipment slots for a character
-              on_click: @@ e => yui_change_screen(inventory_screen, e.source)
+              on_click: @@ e => ~yui_change_screen(inventory_screen, e.source)
               animate:
                 on_visible:
                   xoffset: &cascade_slide_in
@@ -128,7 +128,7 @@ root:
             - type: button
               content: Layout Examples
               tooltip: View examples of the various panel layout options as including alignment behavior
-              on_click: @@ e => yui_change_screen(layout_example, e.source)
+              on_click: @@ e => ~yui_change_screen(layout_example, e.source)
               animate:
                 on_visible:
                   xoffset: &cascade_slide_in
@@ -138,7 +138,7 @@ root:
             - type: button
               content: Windows Example
               tooltip: View an example of the child_window widget, which creates a draggable window on screen
-              on_click: @@ e => yui_change_screen(windows_example, e.source)
+              on_click: @@ e => ~yui_change_screen(windows_example, e.source)
               animate:
                 on_visible:
                   xoffset: &cascade_slide_in
@@ -148,7 +148,7 @@ root:
             - type: button
               content: Keyboard/Gamepad Navigation
               tooltip: Basic demo for how automatic keyboard/gamepad navigation works
-              on_click: @@ e => yui_change_screen(kb_navigation_example, e.source)
+              on_click: @@ e => ~yui_change_screen(kb_navigation_example, e.source)
               animate:
                 on_visible:
                   xoffset: &cascade_slide_in
@@ -158,7 +158,7 @@ root:
             - type: button
               content: Viewport example
               tooltip: Demo of the viewport element showcasing complex inner context
-              on_click: @@ e => yui_change_screen(viewport_example, e.source)
+              on_click: @@ e => ~yui_change_screen(viewport_example, e.source)
               animate:
                 on_visible:
                   xoffset: &cascade_slide_in
@@ -168,7 +168,7 @@ root:
             - type: button
               content: TodoMVC Example
               tooltip: Working example of the TodoMVC app (a basic todo list tracker)
-              on_click: @@ e => yui_change_screen(todo_mvc, e.source)
+              on_click: @@ e => ~yui_change_screen(todo_mvc, e.source)
               animate:
                 on_visible:
                   xoffset: &cascade_slide_in
@@ -178,7 +178,7 @@ root:
             - type: button
               content: Dev Sandbox (Experimental)
               tooltip: In development work (may crash!)
-              on_click: @@ e => yui_change_screen(sandbox, e.source)
+              on_click: @@ e => ~yui_change_screen(sandbox, e.source)
               animate:
                 on_visible:
                   xoffset: &cascade_slide_in
@@ -218,4 +218,4 @@ root:
               tooltip: Click to exit the YUI Example Project // most elements let you define a tooltip that will be shown on hover!
               tooltip_placement: left_top // as with the popup itself, controls where the tooltip is placed
               padding: 10
-              on_click: @@ e => yui_example_exit_game()
+              on_click: @@ e => ~yui_example_exit_game()
