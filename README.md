@@ -31,7 +31,7 @@ YUI has built-in optional support for the popular Scribble and Input libraries. 
 
 * **[Input 6.1.5](https://github.com/offalynne/input)** - Mouse/Keyboard/Gamepad/Touch Support
 
-  YUI is designed to be compatible with Input 6.1.5 and future 6.x.x versions, and may be compatible with previous 8.x.x versions.
+  YUI is designed to be compatible with Input 6.1.5 and future 6.x.x versions, and may be compatible with previous 6.x.x versions.
 
   When Input is included in your project and YUI is configured to use it for navigation, the gamepad will be able to navigate the UI similar to the standard keyboard navigation support. (Touchpad support is untested currently!)
 
