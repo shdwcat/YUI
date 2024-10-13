@@ -59,9 +59,9 @@ root:
             events:
               on_text_changed:
                 - @@ text => @new_task.label = text
-                - @@ text => array_push(@tasks, yui_deep_copy(@new_task))
+                - @@ text => ~array_push(@tasks, ~yui_deep_copy(@new_task))
                 - @@ text => @new_task.label = ''
-                - @@ text => input_string_set('')
+                - @@ text => ~input_string_set('')
 
           // panel to display the tasks
           - type: panel
@@ -121,7 +121,7 @@ root:
                   visible: @hover
                   on_click:
                     - @@ e => &state.done_count = &state.done_count - @checked
-                    - @@ e => array_delete(&state.tasks, yui_array_find_index(&state.tasks, @), 1)
+                    - @@ e => ~array_delete(&state.tasks, ~yui_array_find_index(&state.tasks, @), 1)
                   content:
                     type: text // TODO X sprite
                     padding: [5, 2, 5, 0]
@@ -136,7 +136,7 @@ root:
             background: $theme.resources.panel_bg
             elements:
               - type: text
-                text: @@ (array_length(@tasks) - @done_count) + ' items left'
+                text: @@ (~array_length(@tasks) - @done_count) + ' items left'
                 padding: 5
 
               - type: checkbox

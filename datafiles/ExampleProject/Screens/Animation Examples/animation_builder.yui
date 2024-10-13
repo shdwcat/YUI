@@ -104,13 +104,13 @@ resources:
         padding: 1
         spacing: -1
         elements:
-        
+
           - type: border
             background: $theme.resources.control_border
             padding: 5
             // size:
             //   h: 400
-            content: 
+            content:
               type: text
               padding: [5, 0]
               text: Animation Properties
@@ -187,9 +187,9 @@ resources:
             text: @from
             tooltip: @from_error
             events:
-              on_text_changed: 
-                - @@ text => @from_error = yui_validate_number_input(text)
-                - @@ text => @from_error == undefined then (@from = real(text)) else false
+              on_text_changed:
+                - @@ text => @from_error = ~yui_validate_number_input(text)
+                - @@ text => @from_error == undefined then (@from = ~real(text)) else false
 
         - type: labeled_border
           label: To
@@ -198,7 +198,7 @@ resources:
             size: { min_w: 100 }
             text: @to
             events:
-              on_text_changed: @@ text => @to = real(text)
+              on_text_changed: @@ text => @to = ~real(text)
 
         - type: labeled_border
           label: Duration (ms)
@@ -207,7 +207,7 @@ resources:
             size: { min_w: 100 }
             text: @duration
             events:
-              on_text_changed: @@ text => @duration = real(text)
+              on_text_changed: @@ text => @duration = ~real(text)
 
         - type: labeled_border
           label: Delay
@@ -216,7 +216,7 @@ resources:
             size: { min_w: 100 }
             text: @delay
             events:
-              on_text_changed: @@ text => @delay = real(text)
+              on_text_changed: @@ text => @delay = ~real(text)
 
         // - type: slide_toggle
         //   label: Repeat
@@ -241,5 +241,5 @@ resources:
             text: @step ?? (@has_step then 0 else '<none>')
             events:
               on_text_changed:
-                - @@ text => @step = real(text)
+                - @@ text => @step = ~real(text)
                 - @@ text => @time_step = @step

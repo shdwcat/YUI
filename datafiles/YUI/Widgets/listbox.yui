@@ -10,7 +10,7 @@ resources:
 
   listbox:
     type: template
-    
+
     slots:
       // the selection scope that manages selection state
       selection_scope: null // type: YuiSelectionScope
@@ -58,7 +58,7 @@ resources:
           selected_item: $selected_item ?? $selection_scope.selected_item // little trick to simplify referring to the selected item
 
         template:
-        
+
           type: button
           border_thickness: 0
           padding: [6, 5]
@@ -67,4 +67,4 @@ resources:
           content: $item_template
 
           // invoke the item_selected event on the root widget
-          on_click: @@ e => yui_invoke_event(e.source, item_selected, @)
+          on_click: @@ e => ~yui_invoke_event(e.source, item_selected, @)

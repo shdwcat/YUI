@@ -28,8 +28,8 @@ resources:
       type: panel
       layout: $orientation
       events:
-        on_mouse_wheel_down: $on_value_changed(max($value - $wheel_increment, $min))
-        on_mouse_wheel_up: $on_value_changed(min($value + $wheel_increment, $max))
+        on_mouse_wheel_down: $on_value_changed(~max($value - $wheel_increment, $min))
+        on_mouse_wheel_up: $on_value_changed(~min($value + $wheel_increment, $max))
       elements:
 
         - type: text
@@ -71,5 +71,5 @@ resources:
           visible: $show_value
 
         - type: text
-          text: $value |> string_format(0, 0) // format as a whole number with no decimals
+          text: $value |> ~string_format(0, 0) // format as a whole number with no decimals
           visible: $show_value

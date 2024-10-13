@@ -22,7 +22,7 @@ root:
       value: @scroll_x
       min: 0
       max: @scroll_info.x_max ?? 1000
-      on_value_changed: @@ value => @scroll_x = value |> floor()
+      on_value_changed: @@ value => @scroll_x = value |> ~floor()
       visible: @scroll_info.x_max > 0
       slider_size: { w: 200, h: 20 }
       thumb_size: { w: 30, h: 20 }
@@ -31,7 +31,7 @@ root:
       value: @scroll_y
       min: 0
       max: @scroll_info.y_max ?? 1000
-      on_value_changed: @@ value => @scroll_y = value |> floor()
+      on_value_changed: @@ value => @scroll_y = value |> ~floor()
       visible: @scroll_info.y_max > 0
       slider_size: { w: 200, h: 20 }
       thumb_size: { w: 30, h: 20 }
@@ -50,8 +50,8 @@ root:
         viewport_y: @scroll_y
         on_viewport_info: @@ value => @scroll_info = value
         events:
-          on_mouse_wheel_up: @scroll_y = max(@scroll_y - @scroll_info.y_max * 0.05, 0) |> floor()
-          on_mouse_wheel_down: @scroll_y = min(@scroll_y + @scroll_info.y_max * 0.05, @scroll_info.y_max) |> floor()
+          on_mouse_wheel_up: @scroll_y = ~max(@scroll_y - @scroll_info.y_max * 0.05, 0) |> ~floor()
+          on_mouse_wheel_down: @scroll_y = ~min(@scroll_y + @scroll_info.y_max * 0.05, @scroll_info.y_max) |> ~floor()
         content:
 
           type: panel
@@ -79,7 +79,7 @@ root:
 
             - type: text
               events:
-                on_mouse_down: @@ yui_log('click')
+                on_mouse_down: @@ ~yui_log('click')
               text: Mauris eleifend fringilla fringilla. Aliquam ut mi tincidunt, aliquam magna tincidunt, gravida turpis. Nullam eleifend ante sed pharetra commodo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nullam tempus bibendum elit ac tempor. Nullam ut euismod dui, nec pretium nulla. Curabitur vehicula quis purus vel molestie. Nam pharetra quis turpis sit amet malesuada. Cras vitae felis nec augue vestibulum condimentum eu id nisl. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam ut ligula vel mi ullamcorper vestibulum nec sit amet libero. Sed eros diam, pellentesque nec porta molestie, aliquet at sapien. In vulputate quam quis neque venenatis, vitae cursus quam ullamcorper. Donec quis accumsan augue, non luctus lectus. Aenean ultrices a ligula quis eleifend.
 
             - type: slide_toggle
@@ -90,7 +90,7 @@ root:
 
             - type: text
               events:
-                on_mouse_down: @@ e => yui_log('visible ' + e.source.visible)
+                on_mouse_down: @@ e => ~yui_log('visible ' + e.source.visible)
               text: Curabitur porta massa purus, at porta velit commodo vel. Sed consequat justo quam, nec tristique risus consequat et. Pellentesque vel tempus ligula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce erat lectus, commodo eu metus nec, dapibus tempor odio. Nullam quis lorem id massa lacinia placerat in ut risus. Cras placerat libero non suscipit varius. Sed iaculis erat ac ornare commodo. Duis aliquet erat eget cursus mattis. Praesent auctor sapien maximus lorem lacinia, vitae porttitor nisl auctor. Morbi ligula purus, dapibus vitae lobortis ac, aliquet ac mi. Mauris mollis nec tortor et vulputate. Fusce ac sollicitudin justo, in rhoncus lorem. Fusce eget eros molestie enim condimentum eleifend.
 
             - type: text

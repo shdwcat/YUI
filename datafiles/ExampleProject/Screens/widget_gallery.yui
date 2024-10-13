@@ -79,7 +79,7 @@ root:
               items: @switcher_items
               selection_scope: @switcher_selector
               selected_index: 1
-              on_item_selected: @@ value => show_debug_message('selected ' + value)
+              on_item_selected: @@ value => ~show_debug_message('selected ' + value)
 
             - type: text
               text: Slider
@@ -116,8 +116,8 @@ root:
                 text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum dui orci, in venenatis ipsum elementum vitae. Integer sagittis neque in nibh mollis venenatis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed commodo ultricies dolor eget maximus. Duis non gravida nulla, vel tincidunt lectus. Vestibulum dapibus sapien a augue ultrices porttitor. Fusce ultrices lacus nisl. Vestibulum nisi velit, placerat sed lacus vel, tincidunt ultricies metus. Maecenas porta, justo in imperdiet iaculis, urna ipsum varius urna, porta bibendum enim lorem sit amet enim. Nullam mattis tincidunt augue, vitae ultrices magna faucibus vel. Nunc lorem nunc, commodo ut tincidunt id, sagittis sed ipsum. Interdum et malesuada fames ac ante ipsum primis in faucibus.
                 events:
                   on_right_click:
-                    - @@ clipboard_set_text(e.source.text_value.value)
-                    - @@ yui_log('copied text to clipboard')
+                    - @@ ~clipboard_set_text(e.source.text_value.value)
+                    - @@ ~yui_log('copied text to clipboard')
 
             - type: text
               text: Listbox
