@@ -1,4 +1,4 @@
-#macro YUI_VERSION "0.6.3"
+#macro YUI_VERSION "0.6.4"
 
 yui_log("Welcome to YUI by @shdwcat - version " + YUI_VERSION);
 
