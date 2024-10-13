@@ -33,7 +33,7 @@ function YuiCallFunction(target_expr, args) : YuiExpr() constructor {
 			// call script
 			self.script_index = script_index;
 			resolve = resolveScript;
-			yui_log_asset_use(target_name, "script", target_expr.source);
+			yui_log_asset_use(target_name, "!! script", target_expr.source);
 		}
 		else {
 			// call runtime function
@@ -46,7 +46,7 @@ function YuiCallFunction(target_expr, args) : YuiExpr() constructor {
 			}
 		
 			resolve = resolveRuntimeFunction;
-			yui_log_asset_use(target_name, "GML Runtime Function", target_expr.source);
+			yui_log_asset_use(target_name, "!! GML Runtime Function", target_expr.source);
 		}
 	}
 	else if yui_is_lambda(target_expr) {
