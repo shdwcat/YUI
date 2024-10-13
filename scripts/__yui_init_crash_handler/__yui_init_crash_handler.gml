@@ -9,8 +9,8 @@ if !debug_mode {
 	    show_debug_message( "--------------------------------------------------------------");
 
 	    // Write the exception struct to a file
-		var crash_file = YUI_LOCAL_PROJECT_DATA_FOLDER + "crash.txt";
-	    if file_exists(crash_file) file_delete(crash_file);
+		var crash_file = YUI_LOCAL_PROJECT_DATA_FOLDER + "logs/crash.txt";
+		if file_exists(crash_file) file_delete(crash_file);
 	    var _f = file_text_open_write(crash_file);
 	    file_text_write_string(_f, string(ex));
 	    file_text_close(_f);
