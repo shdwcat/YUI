@@ -21,7 +21,7 @@ function ys_test(test_file, log_tokens = true) {
 		}
 	}
 	
-	var parser = new YsParser(tokens, YS_TOKEN.EOF);
+	var parser = new YsParser(tokens, source);
 	
 	var binding = parser.parseExpression();
 	

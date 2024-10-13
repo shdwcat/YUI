@@ -1,5 +1,5 @@
 /// @description YuiScript scanner
-function YsScanner(source, token_definition) : GsplScanner(source, token_definition) constructor {
+function YsScanner(source) : GsplScanner(source, ys_token_definition()) constructor {
 	
 	// implements scanning logic
 	static scanToken = function() {
