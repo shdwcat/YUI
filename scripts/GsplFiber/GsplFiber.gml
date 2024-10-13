@@ -31,7 +31,8 @@ enum GSPL_FIBER_STATUS {
 /// @param {struct} environment
 /// @param {struct.GsplFiber} calling_fiber
 function GsplFiber(gspl_program, environment, calling_fiber = undefined)
-	: KnitInterpreter(environment) constructor {
+	//: KnitInterpreter(environment)
+	constructor {
 		
 	static pauseFiber = new GsplFiberInstruction(GSPL_FIBER_INSTRUCTION.PAUSE, undefined);
 		
