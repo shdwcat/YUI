@@ -9,7 +9,7 @@ resources:
       min: 0
       max: 100
       value: 0
-      meter_sprite: yui_white_pixel // default to a white pixel
+      meter_sprite: ~yui_white_pixel // default to a white pixel
       meter_blend_color: null
 
     template:

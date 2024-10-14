@@ -91,7 +91,7 @@ resources:
               elements:
                 - type: image
                   visible: @is_checked
-                  sprite: yui_icon_checkmark
+                  sprite: ~yui_icon_checkmark
                   padding: 1
                   size: 20
                 - $item_template

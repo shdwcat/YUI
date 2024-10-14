@@ -143,7 +143,7 @@ theme:
       border_color: &control_border
       border_focus_color: &focus_border
       border_thickness: 1
-      highlight_color: &accent_color //|> yui_color_shift_hue(&accent_color, 1.5)
+      highlight_color: &accent_color //|> ~yui_color_shift_hue(&accent_color, 1.5)
       highlight_alpha: .5
       padding: [10, 5]
 

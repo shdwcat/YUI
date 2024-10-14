@@ -30,7 +30,7 @@ drag:
         padding: 10
         text_style: subtitle
         text: @source.data.name
-  
+
   // by default, the visual for the item being dragged is drawn centered on the cursor
   // but we can disable that here, so that it's position with the cursor at the top left
   center_visual: false
@@ -51,7 +51,7 @@ drop:
   // draw helpful indicators to guide users to valid drop targets, or indicate what action
   // will happen when the item is dropped!
   visual:
-  
+
     // The switch element is useful when we want to render a different element depending on
     // some value of the data. In this case, we only want to draw the 'invalid' indicator when
     // the slots don't match. This could also be done using a binding on 'visible', but this
@@ -61,7 +61,7 @@ drop:
     cases:
       false:
         type: image
-        sprite: yui_panel_bg
+        sprite: ~yui_panel_bg
         size: stretch
         blend_color: maroon
         opacity: 0.7
@@ -69,9 +69,9 @@ drop:
   // here we define the 'action' which is the script to execute when a valid drop occurs
   // and the parameters to pass to it
   // TODO: use assignment once implemented
-  action: @@ yui_example_equip_item(@source.data /* the item */, @target.data /* the slot */)
+  action: @@ ~yui_example_equip_item(@source.data /* the item */, @target.data /* the slot */)
 
 // lastly, you can also define an action to take if the drop is cancelled
 // (aka the dragged item is released over something which is not a drop target
 // or is not a *valid* drop target)
-on_cancel: @@ yui_log(`interaction 'equip_item' was cancelled`)
+on_cancel: @@ ~yui_log(`interaction 'equip_item' was cancelled`)

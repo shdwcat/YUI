@@ -62,7 +62,7 @@ root:
               //     text:
               //       type: curve
               //       curve: curveLinear
-              //       effect: @@ yui_reveal_string
+              //       effect: @@ ~yui_reveal_string
                   // type: anim_sequence
                   // repeat: true
                   // animations:

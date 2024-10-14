@@ -26,7 +26,7 @@ root:
 
       // sets the background to use the included 'yui_panel_bg' sprite (9-sliced)
       // can also be set to a color value using web format e.g. #3f3f3f
-      background: yui_panel_bg
+      background: ~yui_panel_bg
 
       // padding is the number space to leave between the border and the content
       padding: 10

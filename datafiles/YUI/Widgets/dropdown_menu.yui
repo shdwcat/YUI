@@ -13,7 +13,7 @@ resources:
     type: image
     blend_color: $theme.resources.accent_color
     size: 20
-    sprite: yui_down_arrow_64
+    sprite: ~yui_down_arrow_64
 
   dropdown_menu:
     type: template

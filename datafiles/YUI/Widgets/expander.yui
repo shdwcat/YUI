@@ -4,7 +4,7 @@ resources:
 
   expander_icon_template:
     type: image
-    sprite: yui_down_arrow_64
+    sprite: ~yui_down_arrow_64
     angle: $is_expanded then 0 else 90
     size: 16
 
@@ -62,4 +62,4 @@ resources:
           content_visible: $is_expanded
           lazy_content:
             $content_template
-    
+
