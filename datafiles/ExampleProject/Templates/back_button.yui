@@ -7,4 +7,4 @@ resources:
     content:
       type: button
       content: Back
-      on_click: @@ e => yui_change_screen(welcome_screen, e.source)
+      on_click: @@ e => ~yui_change_screen(welcome_screen, e.source)
