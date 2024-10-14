@@ -20,10 +20,8 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	props.sprite = yui_bind(props.sprite, resources, slot_values);
 	is_sprite_live = yui_is_live_binding(props.sprite);
 	if !is_sprite_live {
-		sprite = yui_resolve_sprite_by_name(props.sprite);
-		if sprite == -1 {
-			sprite = undefined; // TODO pink placeholder warning sprite?
-		}
+		validateSprite(props.sprite);
+		sprite = props.sprite;
 	}
 	
 	props.frame = yui_bind(props.frame, resources, slot_values);
@@ -50,16 +48,21 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		};
 	}
 	
+	static validateSprite = function(sprite) {
+		var is_valid_sprite = sprite == undefined
+			|| is_handle(sprite) && sprite_exists(sprite);
+		if !is_valid_sprite {
+			throw yui_error($"image.sprite must be a sprite asset (got: ({typeof(sprite)}) {sprite})");
+		}
+		
+		return sprite;
+	}
+	
 	// feather ignore once GM2017
 	static getBoundValues = function YuiImageElement_getBoundValues(data, prev) {
 		var sprite = is_sprite_live ? props.sprite.resolve(data) : self.sprite;
-		
 		if is_sprite_live {
-			// get the sprite asset from the name
-			sprite = yui_resolve_sprite_by_name(sprite);
-			if sprite == -1 {
-				sprite = undefined; // TODO pink placeholder warning sprite?
-			}
+			validateSprite(sprite);
 		}
 
 		if props.trace
