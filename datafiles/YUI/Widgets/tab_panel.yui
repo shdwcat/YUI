@@ -72,8 +72,7 @@ resources:
       selected_color: $theme.resources.control_bg_light
     template:
       type: button
-      background:
-        color: @header == $active_tab.header then $selected_color else $bg_color
+      background: @header == $active_tab.header then $selected_color else $bg_color
 
   tab_panel_content:
     type: fragment

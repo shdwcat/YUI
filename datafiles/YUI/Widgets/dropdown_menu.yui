@@ -132,8 +132,7 @@ resources:
         type: button
         border_thickness: 0
         padding: 5
-        background:
-          color: @ == $selected_item then $selected_bg_color else $item_bg_color
+        background: @ == $selected_item then $selected_bg_color else $item_bg_color
         content: $item_template
         on_click:
           // update selection scope if it exists
