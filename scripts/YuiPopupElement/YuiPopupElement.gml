@@ -21,15 +21,13 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	props.placement = yui_read_placement_mode(yui_bind(props.placement, resources, slot_values));
 	
-	resolveBackgroundAndBorder()
+	resolveBackgroundAndBorder();
 	
 	props.padding = new YuiPadding(yui_bind(props.padding, resources, slot_values));
 	
 	content_element = yui_resolve_element(props.content, resources, slot_values);
 
 	is_bound = base_is_bound
-		|| is_bg_sprite_live
-		|| is_bg_color_live
 		|| yui_is_live_binding(props.placement);
 	
 	// ===== functions =====
@@ -41,9 +39,6 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			size: size,
 			content_element: content_element,
 			// border
-			is_bg_live: is_bg_sprite_live || is_bg_color_live,
-			bg_sprite: bg_sprite,
-			bg_color: bg_color,
 			border_color: border_color,
 			border_thickness: props.border_thickness,
 			// not supported

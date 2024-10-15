@@ -21,9 +21,9 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	props.padding = new YuiPadding(yui_bind(props.padding, resources, slot_values));
 	content_element = yui_resolve_element(props.content, resources, slot_values);
 	
-	resolveBackgroundAndBorder()
+	resolveBackgroundAndBorder();
 	
-	is_bound = base_is_bound
+	is_bound = base_is_bound;
 		
 	// ===== functions =====
 		
@@ -33,11 +33,6 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 			padding: props.padding,
 			size: size,
 			content_element: content_element,
-			is_bg_live: is_bg_sprite_live || is_bg_color_live,
-			is_bg_sprite_live: is_bg_sprite_live,
-			is_bg_color_live: is_bg_color_live,
-			bg_sprite: bg_sprite,
-			bg_color: bg_color,
 			border_color: border_color,
 			border_thickness: props.border_thickness,
 			border_focus_color: border_focus_color,

@@ -30,7 +30,7 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 	
 	content_element = yui_resolve_element(props.content, resources, slot_values);
 	
-	resolveBackgroundAndBorder()
+	resolveBackgroundAndBorder();
 	
 	props.on_viewport_info = yui_bind_handler(props.on_viewport_info, resources, slot_values);
 	
@@ -45,8 +45,6 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 	is_viewport_y_bound = yui_is_live_binding(props.viewport_y);
 	
 	is_bound = base_is_bound
-		|| is_bg_sprite_live
-		|| is_bg_color_live
 		|| is_viewport_x_bound
 		|| is_viewport_y_bound;
 		
@@ -59,9 +57,6 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 			size: size,
 			// border
 			content_element: content_element,
-			is_bg_live: is_bg_sprite_live || is_bg_color_live,
-			bg_sprite: bg_sprite,
-			bg_color: bg_color,
 			border_color: border_color,
 			border_thickness: props.border_thickness,
 			border_focus_color: border_focus_color,

@@ -54,8 +54,6 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 	is_enabled_live = yui_is_live_binding(props.enabled);
 	
 	is_bound = base_is_bound
-		|| is_bg_sprite_live
-		|| is_bg_color_live
 		|| is_enabled_live;
 	
 	// ===== functions =====
@@ -68,9 +66,6 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 			size: size,
 			// border
 			content_element: content_element,
-			is_bg_live: is_bg_sprite_live || is_bg_color_live,
-			bg_sprite: bg_sprite,
-			bg_color: bg_color,
 			border_color: border_color,
 			border_thickness: props.border_thickness,
 			border_focus_color: border_focus_color,

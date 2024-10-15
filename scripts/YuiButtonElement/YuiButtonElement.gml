@@ -51,9 +51,7 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	
 	props.on_click = yui_bind_handler(props.on_click, resources, slot_values);
 	
-	is_bound = base_is_bound
-		|| is_bg_sprite_live
-		|| is_bg_color_live;
+	is_bound = base_is_bound;
 		
 	// ===== functions =====
 	
@@ -71,9 +69,6 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 			pressed_alpha: props.pressed_alpha,
 			// border
 			content_element: content,
-			is_bg_live: is_bg_sprite_live || is_bg_color_live,
-			bg_sprite: bg_sprite,
-			bg_color: bg_color,
 			border_color: border_color,
 			border_thickness: props.border_thickness,
 			border_focus_color: border_focus_color,
