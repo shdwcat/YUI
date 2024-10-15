@@ -23,6 +23,9 @@ function YsSlotParselet() : GsplPrefixParselet() constructor {
 				return new YuiNestedBinding(slot_value, sub_path);
 			}
 		}
+		else if yui_is_binding_expr(slot_value) {
+			return yui_parse_binding_expr(slot_value, parser.resources, parser.slot_values)
+		}
 		else if sub_path == "" {
 			// if there is no sub path, return the value (wrapped)
 			return new YuiValueWrapper(slot_value);

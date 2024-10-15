@@ -14,16 +14,18 @@ function YsParser(tokens, source, resources, slot_values) : GsplPrattParser(toke
 		
 		var expr = parseExpression();
 		
-		// store the source for debugging
-		expr.source = source;
+		if yui_is_binding(expr) {
+			
+			// store the source for debugging
+			expr.source = source;
+			if expr[$ "trace"] == true {
+				DEBUG_BREAK_YUI
+			}
 		
-		if expr[$ "trace"] == true {
-			DEBUG_BREAK_YUI
-		}
-		
-		if !expr.is_yui_live_binding {
-			// unwrap top level wrappers
-			expr = expr.resolve();
+			if !yui_is_live_binding(expr) {
+				// unwrap top level wrappers
+				expr = expr.resolve();
+			}
 		}
 		
 		return expr;
