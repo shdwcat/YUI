@@ -11,9 +11,9 @@ event_inherited();
 
 onLayoutInit = function() {
 	
-	frame_value = new YuiBindableValue(yui_element.props.frame);
-	angle_value = new YuiBindableValue(yui_element.props.angle);
-	blend_color_value = new YuiBindableValue(yui_element.props.blend_color);
+	frame_value = new YuiBindableValue(yui_element.frame);
+	angle_value = new YuiBindableValue(yui_element.angle);
+	blend_color_value = new YuiBindableValue(yui_element.blend_color);
 	
 	animatable.frame = frame_value;
 	animatable.angle = angle_value;
