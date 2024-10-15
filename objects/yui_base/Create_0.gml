@@ -100,9 +100,9 @@ initLayout = function() {
 	element_size = yui_element.size;
 	canvas = yui_element.canvas;
 	flex = yui_element.flex;
-	has_tooltip = yui_element.props.tooltip != undefined;
+	has_tooltip = yui_element.tooltip != undefined;
 	
-	events = yui_element.props.events;
+	events = yui_element.events;
 	yui_register_events(events);
 	
 	interactions = yui_element.props.interactions;
@@ -123,11 +123,11 @@ initLayout = function() {
 	has_data_source = yui_element.data_source != undefined;
 	
 	data_source_value = new YuiBindableValue(yui_element.data_source);
-	enabled_value = new YuiBindableValue(yui_element.props.enabled);
-	visible_value = new YuiBindableValue(yui_element.props.visible);
-	opacity_value = new YuiBindableValue(yui_element.props.opacity);
-	xoffset_value = new YuiBindableValue(yui_element.props.xoffset);
-	yoffset_value = new YuiBindableValue(yui_element.props.yoffset);
+	enabled_value = new YuiBindableValue(yui_element.enabled);
+	visible_value = new YuiBindableValue(yui_element.visible);
+	opacity_value = new YuiBindableValue(yui_element.opacity);
+	xoffset_value = new YuiBindableValue(yui_element.xoffset);
+	yoffset_value = new YuiBindableValue(yui_element.yoffset);
 	
 	// map of animatable properties to the YuiBindableValues
 	animatable = {
@@ -137,7 +137,7 @@ initLayout = function() {
 		yoffset: yoffset_value,
 	};
 	
-	if !enabled_value.is_live enabled = yui_element.props.enabled;
+	if !enabled_value.is_live enabled = yui_element.enabled;
 	
 	on_visible_anim = yui_element.on_visible_anim;
 	on_arrange_anim = yui_element.on_arrange_anim;

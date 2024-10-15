@@ -34,7 +34,7 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 	
 	baseInit(props, default_events);
 	
-	props.events.on_text_changed = yui_bind_handler(props.events.on_text_changed, resources, slot_values);
+	events.on_text_changed = yui_bind_handler(events.on_text_changed, resources, slot_values);
 	
 	props.max_chars = min(props.max_chars, YUI_MAX_INPUT_CHARS);
 	

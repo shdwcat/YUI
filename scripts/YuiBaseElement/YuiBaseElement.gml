@@ -83,18 +83,18 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	// feather ignore once GM2017
 	static baseInit = function YuiBaseElement__baseInit(props, default_events = undefined) {
 	
-		props.events = yui_apply_props(props.events, default_events, base_events);
-		props.events.on_mouse_down = yui_bind_handler(props.events.on_mouse_down, resources, slot_values);
-		props.events.on_mouse_up = yui_bind_handler(props.events.on_mouse_up, resources, slot_values);
-		props.events.on_mouse_wheel_up = yui_bind_handler(props.events.on_mouse_wheel_up, resources, slot_values);
-		props.events.on_mouse_wheel_down = yui_bind_handler(props.events.on_mouse_wheel_down, resources, slot_values);
-		props.events.on_click = yui_bind_handler(props.events.on_click, resources, slot_values);
-		props.events.on_right_click = yui_bind_handler(props.events.on_right_click, resources, slot_values);
-		props.events.on_double_click = yui_bind_handler(props.events.on_double_click, resources, slot_values);
-		props.events.on_arrange = yui_bind_handler(props.events.on_arrange, resources, slot_values);
-		props.events.on_got_focus = yui_bind_handler(props.events.on_got_focus, resources, slot_values);
-		props.events.on_lost_focus = yui_bind_handler(props.events.on_lost_focus, resources, slot_values);
-		props.events.on_hover_changed = yui_bind_handler(props.events.on_hover_changed, resources, slot_values);
+		events = yui_apply_props(props.events, default_events, base_events);
+		events.on_mouse_down = yui_bind_handler(events.on_mouse_down, resources, slot_values);
+		events.on_mouse_up = yui_bind_handler(events.on_mouse_up, resources, slot_values);
+		events.on_mouse_wheel_up = yui_bind_handler(events.on_mouse_wheel_up, resources, slot_values);
+		events.on_mouse_wheel_down = yui_bind_handler(events.on_mouse_wheel_down, resources, slot_values);
+		events.on_click = yui_bind_handler(events.on_click, resources, slot_values);
+		events.on_right_click = yui_bind_handler(events.on_right_click, resources, slot_values);
+		events.on_double_click = yui_bind_handler(events.on_double_click, resources, slot_values);
+		events.on_arrange = yui_bind_handler(events.on_arrange, resources, slot_values);
+		events.on_got_focus = yui_bind_handler(events.on_got_focus, resources, slot_values);
+		events.on_lost_focus = yui_bind_handler(events.on_lost_focus, resources, slot_values);
+		events.on_hover_changed = yui_bind_handler(events.on_hover_changed, resources, slot_values);
 	
 		YuiCursorManager.participation_hash.hashArray(props.interactions);
 	
@@ -112,20 +112,21 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		alignment.v = yui_bind_and_resolve(alignment.v, resources, slot_values);
 		alignment.h = yui_bind_and_resolve(alignment.h, resources, slot_values);
 		
-		props.enabled = yui_bind(props.enabled, resources, slot_values);
-		props.visible = yui_bind(props.visible, resources, slot_values);
-		props.opacity = yui_bind(props.opacity, resources, slot_values);
-		props.item_key = yui_bind(props.item_key, resources, slot_values);
-		props.tooltip = yui_bind(props.tooltip, resources, slot_values);
+		enabled = yui_bind(props.enabled, resources, slot_values);
+		visible = yui_bind(props.visible, resources, slot_values);
+		opacity = yui_bind(props.opacity, resources, slot_values);
+		
+		item_key = yui_bind(props.item_key, resources, slot_values);
+		tooltip = yui_bind(props.tooltip, resources, slot_values);
 	
-		props.xoffset = yui_bind(props.xoffset, resources, slot_values);
-		props.yoffset = yui_bind(props.yoffset, resources, slot_values);
+		xoffset = yui_bind(props.xoffset, resources, slot_values);
+		yoffset = yui_bind(props.yoffset, resources, slot_values);
 	
 		data_source = yui_bind(props.data_source, resources, slot_values);
 	
 		is_data_source_live = yui_is_live_binding(data_source);
-		is_visible_live = yui_is_live_binding(props.visible);
-		is_tooltip_live = yui_is_live_binding(props.tooltip);
+		is_visible_live = yui_is_live_binding(visible);
+		is_tooltip_live = yui_is_live_binding(tooltip);
 		
 		on_visible_anim = undefined;
 		on_arrange_anim = undefined;
@@ -150,7 +151,6 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 			is_data_source_live
 			|| is_visible_live
 			|| is_tooltip_live
-			|| yui_is_live_binding(props.size)
 			|| yui_is_live_binding(size.w)
 			|| yui_is_live_binding(size.h)
 	
@@ -158,12 +158,12 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	}
 	
 	static createTooltip = function() {
-		if tooltip_element == undefined && props.tooltip != undefined {
+		if tooltip_element == undefined && tooltip != undefined {
 			var tooltip_props = {
 				type: "popup",
 				yui_type: "popup",
 				is_cursor_layer: false, // doesn't block cursor
-				content: props.tooltip,
+				content: tooltip,
 				placement: props.tooltip_placement,
 				padding: 5,
 				size: { max_w: props.tooltip_width },

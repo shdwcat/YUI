@@ -33,7 +33,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	
 	baseInit(props, default_events);
 	
-	props.events.on_region_hover_changed = yui_bind_handler(props.events.on_region_hover_changed, resources, slot_values);
+	events.on_region_hover_changed = yui_bind_handler(events.on_region_hover_changed, resources, slot_values);
 	
 	if !scribble_enabled && (props.scribble || props.typist || props.autotype) {
 		throw yui_error($"Add Scribble to your project in order to use scribble features (in {props.id})");
