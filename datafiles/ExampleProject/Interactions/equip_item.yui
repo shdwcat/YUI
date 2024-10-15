@@ -24,7 +24,7 @@ drag:
     padding: 1
     elements:
       - type: image
-        sprite: @source.data.sprite
+        sprite: @source.data.sprite |> ~asset_get_index()
         size: 64
       - type: text
         padding: 10

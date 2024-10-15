@@ -17,6 +17,7 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	props.padding = new YuiPadding(yui_bind(props.padding, resources, slot_values));
 	
+	var o_sprite = props.sprite;
 	props.sprite = yui_bind(props.sprite, resources, slot_values);
 	is_sprite_live = yui_is_live_binding(props.sprite);
 	if !is_sprite_live {
@@ -50,12 +51,11 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	static validateSprite = function(sprite) {
 		var is_valid_sprite = sprite == undefined
+			|| sprite == -1
 			|| is_handle(sprite) && sprite_exists(sprite);
 		if !is_valid_sprite {
 			throw yui_error($"image.sprite must be a sprite asset (got: ({typeof(sprite)}) {sprite})");
 		}
-		
-		return sprite;
 	}
 	
 	// feather ignore once GM2017

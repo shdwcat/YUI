@@ -40,7 +40,7 @@ resources:
 
           content:
             type: image
-            sprite: @equipped_item.sprite
+            sprite: @equipped_item.sprite |> ~asset_get_index()
             size: stretch
         - type: text
           text: @name
@@ -56,7 +56,7 @@ resources:
       background: $theme.resources.control_bg
       content:
         type: image
-        sprite: @sprite
+        sprite: @sprite |> ~asset_get_index()
         size: stretch
 
       // this section specifies that the 'equip_item' interaction should start when the mouse button
