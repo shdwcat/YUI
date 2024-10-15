@@ -150,6 +150,7 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"main_panel.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Templates",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"screen_base.yui","CopyToMask":-1,"filePath":"datafiles/ExampleProject/Templates",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"input_license.txt","CopyToMask":-1,"filePath":"datafiles",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"crash.txt","CopyToMask":-1,"filePath":"datafiles/logs",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"example_project_asset_use.csv","CopyToMask":-1,"filePath":"datafiles/logs",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"yui_asset_use_log.csv","CopyToMask":-1,"filePath":"datafiles/logs",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"sdl2.txt","CopyToMask":-1,"filePath":"datafiles",},

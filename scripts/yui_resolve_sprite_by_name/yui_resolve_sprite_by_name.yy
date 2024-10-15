@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "resolve",
-    "path": "folders/Packages - YUI/scripts/resolve.yy",
+    "name": "Deprecated",
+    "path": "folders/Packages - YUI/Deprecated.yy",
   },
 }

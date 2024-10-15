@@ -587,7 +587,7 @@
     {"name":"YuiElementSize","order":6,"path":"scripts/YuiElementSize/YuiElementSize.yy",},
     {"name":"input_window_has_focus","order":9,"path":"scripts/input_window_has_focus/input_window_has_focus.yy",},
     {"name":"yui_create_dynamic_sprite","order":10,"path":"scripts/yui_create_dynamic_sprite/yui_create_dynamic_sprite.yy",},
-    {"name":"yui_resolve_sprite_by_name","order":5,"path":"scripts/yui_resolve_sprite_by_name/yui_resolve_sprite_by_name.yy",},
+    {"name":"yui_resolve_sprite_by_name","order":12,"path":"scripts/yui_resolve_sprite_by_name/yui_resolve_sprite_by_name.yy",},
     {"name":"input_value_is_binding","order":8,"path":"scripts/input_value_is_binding/input_value_is_binding.yy",},
     {"name":"input_gamepad_value","order":12,"path":"scripts/input_gamepad_value/input_gamepad_value.yy",},
     {"name":"yui_resolve_nested_binding","order":11,"path":"scripts/yui_resolve_nested_binding/yui_resolve_nested_binding.yy",},
