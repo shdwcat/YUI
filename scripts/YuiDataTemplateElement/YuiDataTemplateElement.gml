@@ -14,9 +14,9 @@ function YuiDataTemplateElement(_props, _resources, _slot_values) : YuiBaseEleme
 	
 	baseInit(props);
 	
-	props.resource_key = yui_bind(props.resource_key, resources, slot_values);
+	resource_key = yui_bind(props.resource_key, resources, slot_values);
 	
-	// this is unique pet data_template element!
+	// this is unique per data_template element!
 	category_map = yui_resolve_resource_category_map(props.resource_group, _resources)
 	
 	// ===== functions =====
@@ -27,7 +27,7 @@ function YuiDataTemplateElement(_props, _resources, _slot_values) : YuiBaseEleme
 	
 	// feather ignore once GM2017
 	static getBoundValues = function YuiDataTemplateElement_getBoundValues(data, prev) {
-		var resource_key = yui_resolve_binding(props.resource_key, data);
+		var resource_key = yui_resolve_binding(self.resource_key, data);
 		
 		// diff
 		if prev

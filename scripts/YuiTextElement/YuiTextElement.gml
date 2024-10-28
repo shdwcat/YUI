@@ -44,9 +44,8 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	}
 		
 	
-	props.text = yui_bind(props.text, resources, slot_values);
-	props.typist = yui_bind(props.typist, resources, slot_values);
-	props.padding = new YuiPadding(yui_bind(props.padding, resources, slot_values));
+	text = yui_bind(props.text, resources, slot_values);
+	typist = yui_bind(props.typist, resources, slot_values);
 	
 	// look up the text style by name from the theme
 	text_style = theme.text_styles[$ props.text_style];
@@ -69,26 +68,26 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	
 	// assume regions are enabled when region color is set
 	if props.region_color != undefined props.regions = true
-	props.region_color = yui_resolve_color(props.region_color);
+	region_color = yui_resolve_color(props.region_color);
 	
-	is_text_live = yui_is_live_binding(props.text);
+	is_text_live = yui_is_live_binding(text);
 	
 	// check if text is an array with bindings
-	if is_array(props.text) {
-		var i = 0; repeat array_length(props.text) {
-			var text_item = props.text[i];
+	if is_array(text) {
+		var i = 0; repeat array_length(text) {
+			var text_item = text[i];
 				
 			// update binding expression to YuiBinding in place
 			if yui_is_binding_expr(text_item) {
 				is_text_live = true;
 				var binding = yui_bind(text_item, resources, slot_values)
-				props.text[i] = binding;
+				text[i] = binding;
 			}	
 			i++;
 		}
 	}
 	
-	is_typist_live = yui_is_live_binding(props.typist);
+	is_typist_live = yui_is_live_binding(typist);
 	
 	is_bound = base_is_bound
 		|| is_text_live
@@ -107,7 +106,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			: fa_top
 		
 		return {
-			padding: props.padding,
+			padding,
 			size: size,
 			halign: halign,
 			valign: valign,
@@ -116,8 +115,8 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			autotype: props.autotype,
 			regions: {
 				enabled: props.regions,
-				highlight: props.region_color != undefined,
-				color: props.region_color,
+				highlight: region_color != undefined,
+				color: region_color,
 				blend: props.region_blend,
 			},
 		};
@@ -125,7 +124,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 
 	// feather ignore once GM2017
 	static getBoundValues = function YuiTextElement_getBoundValues(data, prev) {
-		var text = is_text_live && !is_array(props.text) ? props.text.resolve(data) : props.text;
+		var text = is_text_live && !is_array(self.text) ? self.text.resolve(data) : self.text;
 		if text == undefined {
 			return false;
 		}
@@ -145,7 +144,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			text = string_replace(props.text_format, "{0}", text);
 		}
 		
-		var typist = is_typist_live ? props.typist.resolve(data) : props.typist;
+		var typist = is_typist_live ? self.typist.resolve(data) : self.typist;
 		
 		if props.trace
 			DEBUG_BREAK_YUI

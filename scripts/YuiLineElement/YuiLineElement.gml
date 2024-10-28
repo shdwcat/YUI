@@ -15,11 +15,11 @@ function YuiLineElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	
 	baseInit(props);
 	
-	props.line_start = yui_bind_struct(props.line_start, resources, slot_values);
-	props.line_end = yui_bind_struct(props.line_end, resources, slot_values);
+	line_start = yui_bind_struct(props.line_start, resources, slot_values);
+	line_end = yui_bind_struct(props.line_end, resources, slot_values);
 	
-	props.width = yui_bind(props.width, resources, slot_values);
-	props.color = yui_bind(props.color, resources, slot_values);
+	width = yui_bind(props.width, resources, slot_values);
+	color = yui_bind(props.color, resources, slot_values);
 	
 	// ===== functions =====
 	
@@ -31,13 +31,13 @@ function YuiLineElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	
 	// feather ignore GM2017
 	static getBoundValues = function YuiLineElement_getBoundValues(data, prev) {
-		var line_end = yui_resolve_binding(props.line_end, data);
+		var line_end = yui_resolve_binding(self.line_end, data);
 		if !line_end return false;
 		
-		var line_start = yui_resolve_binding(props.line_start, data);
+		var line_start = yui_resolve_binding(self.line_start, data);
 		
-		var width = yui_resolve_binding(props.width, data);
-		var color = yui_resolve_color(yui_resolve_binding(props.color, data));
+		var width = yui_resolve_binding(self.width, data);
+		var color = yui_resolve_color(yui_resolve_binding(self.color, data));
 		
 		var x1 = yui_resolve_binding(line_start.x, data);
 		var y1 = yui_resolve_binding(line_start.y, data);

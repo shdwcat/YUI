@@ -106,6 +106,8 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	
 		canvas = new YuiCanvasPosition(props.canvas, resources, slot_values, props.id);
 		flex = new YuiFlexValue(props.flex);
+		
+		padding = new YuiPadding(yui_bind(props[$"padding"] ?? 0, resources, slot_values));
 	
 		// TODO: move this to YuiPanelElement?
 		alignment = new YuiElementAlignment(yui_bind(props.alignment, resources, slot_values));

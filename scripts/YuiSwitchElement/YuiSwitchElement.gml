@@ -12,7 +12,7 @@ function YuiSwitchElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	
 	baseInit(props);
 	
-	props.switch_on = yui_bind(props.switch_on, resources, slot_values);
+	switch_on = yui_bind(props.switch_on, resources, slot_values);
 	
 	// init/bind case elements
 	case_elements = yui_deep_copy(props.cases);
@@ -41,7 +41,7 @@ function YuiSwitchElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	
 	// feather ignore once GM2017
 	static getBoundValues = function YuiSwitchElement_getBoundValues(data, prev) {
-		var switch_value = yui_resolve_binding(props.switch_on, data);
+		var switch_value = yui_resolve_binding(switch_on, data);
 		
 		// diff
 		if prev

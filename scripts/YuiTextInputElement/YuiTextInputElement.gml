@@ -36,9 +36,7 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 	
 	events.on_text_changed = yui_bind_handler(events.on_text_changed, resources, slot_values);
 	
-	props.max_chars = min(props.max_chars, YUI_MAX_INPUT_CHARS);
-	
-	props.padding = new YuiPadding(yui_bind(props.padding, resources, slot_values));
+	max_chars = min(props.max_chars, YUI_MAX_INPUT_CHARS);
 	
 	resolveBackgroundAndBorder();
 	
@@ -51,7 +49,7 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 		color: props.color,
 	}, resources, slot_values);
 	
-	is_enabled_live = yui_is_live_binding(props.enabled);
+	is_enabled_live = yui_is_live_binding(enabled);
 	
 	is_bound = base_is_bound
 		|| is_enabled_live;
@@ -62,7 +60,7 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 		
 		return {
 			alignment: alignment,
-			padding: props.padding,
+			padding,
 			size: size,
 			// border
 			content_element: content_element,
@@ -70,7 +68,7 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 			border_thickness: props.border_thickness,
 			border_focus_color: border_focus_color,
 			// text_input
-			max_chars: props.max_chars,
+			max_chars,
 			highlight_color: yui_resolve_color(props.highlight_color),
 		};
 	}

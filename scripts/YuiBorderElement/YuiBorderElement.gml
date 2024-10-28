@@ -17,8 +17,6 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	props = yui_apply_element_props(_props);
 	
 	baseInit(props);
-	
-	props.padding = new YuiPadding(yui_bind(props.padding, resources, slot_values));
 	content_element = yui_resolve_element(props.content, resources, slot_values);
 	
 	resolveBackgroundAndBorder();
@@ -30,12 +28,12 @@ function YuiBorderElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	static getLayoutProps = function() {
 		return {
 			alignment: alignment,
-			padding: props.padding,
+			padding,
 			size: size,
-			content_element: content_element,
-			border_color: border_color,
+			content_element,
+			border_color,
 			border_thickness: props.border_thickness,
-			border_focus_color: border_focus_color,
+			border_focus_color,
 		};
 	}
 	

@@ -15,8 +15,6 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	baseInit(props);
 	
-	props.padding = new YuiPadding(yui_bind(props.padding, resources, slot_values));
-	
 	sprite = yui_bind(props.sprite, resources, slot_values);
 	is_sprite_live = yui_is_live_binding(sprite);
 	if !is_sprite_live {
@@ -41,7 +39,7 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	static getLayoutProps = function() {
 		return {
-			padding: props.padding,
+			padding,
 			size,
 			alignment,
 		};
@@ -58,7 +56,7 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	// feather ignore once GM2017
 	static getBoundValues = function YuiImageElement_getBoundValues(data, prev) {
-		var sprite = is_sprite_live ? sprite.resolve(data) : self.sprite;
+		var sprite = is_sprite_live ? self.sprite.resolve(data) : self.sprite;
 		if is_sprite_live {
 			validateSprite(sprite);
 		}
@@ -68,7 +66,7 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			
 		var w = yui_resolve_binding(size.w, data);
 		var h = yui_resolve_binding(size.h, data);
-		var mirror = yui_resolve_binding(mirror, data);
+		var mirror = yui_resolve_binding(self.mirror, data);
 		var mirror_x = mirror == true || mirror == "x";
 		var mirror_y = mirror == true || mirror == "y";
 		

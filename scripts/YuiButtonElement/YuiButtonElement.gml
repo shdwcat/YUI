@@ -31,16 +31,14 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	
 	baseInit(props);
 	
-	props.padding = new YuiPadding(yui_bind(props.padding, resources, slot_values));
-	
 	// Feather disable once GM1041
 	content_element = yui_resolve_element(props.content, resources, slot_values);
 	
 	resolveBackgroundAndBorder();
 	
-	props.highlight_color = yui_bind_and_resolve(props.highlight_color, resources, slot_values);
-	props.highlight_alpha = yui_bind(props.highlight_alpha, resources, slot_values);
-	props.pressed_alpha = yui_bind(props.pressed_alpha, resources, slot_values);
+	highlight_color = yui_bind_and_resolve(props.highlight_color, resources, slot_values);
+	highlight_alpha = yui_bind(props.highlight_alpha, resources, slot_values);
+	pressed_alpha = yui_bind(props.pressed_alpha, resources, slot_values);
 	
 	// set up popup mode
 	if props.popup {
@@ -49,7 +47,7 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		popup_element = yui_resolve_element(props.popup, resources, slot_values);
 	}
 	
-	props.on_click = yui_bind_handler(props.on_click, resources, slot_values);
+	on_click = yui_bind_handler(props.on_click, resources, slot_values);
 	
 	is_bound = base_is_bound;
 		
@@ -62,11 +60,11 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		
 		return {
 			alignment: alignment,
-			padding: props.padding,
+			padding,
 			size: size,
-			highlight_color: yui_resolve_color(props.highlight_color),
-			highlight_alpha: props.highlight_alpha,
-			pressed_alpha: props.pressed_alpha,
+			highlight_color: yui_resolve_color(highlight_color),
+			highlight_alpha,
+			pressed_alpha,
 			// border
 			content_element: content,
 			border_color: border_color,

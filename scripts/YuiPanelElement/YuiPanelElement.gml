@@ -56,16 +56,15 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	baseInit(props);
 	
-	props.padding = new YuiPadding(yui_bind(props.padding, resources, slot_values));
-	
-	props.elements = yui_bind(props.elements, resources, slot_values);
+	elements = yui_bind(props.elements, resources, slot_values);
 	
 	// live binding this is not (yet?) supported, but this enables $slot support
-	props.layout = yui_bind(props.layout, resources, slot_values);
+	layout_type = yui_bind(props.layout, resources, slot_values);
 	
-	props.count = yui_bind_and_resolve(props.count, resources, slot_values);
+	count = yui_bind_and_resolve(props.count, resources, slot_values);
+	reverse = yui_bind_and_resolve(props.reverse, resources, slot_values);
 	
-	var make_layout = yui_resolve_layout(props.layout);
+	var make_layout = yui_resolve_layout(layout_type);
 	layout = new make_layout(alignment, props.spacing, size);
 	layout.trace = props.trace;
 	
@@ -81,8 +80,8 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	else {
 		// generate item_elements if we have explicit elements
 		item_elements = [];
-		var i = 0; var panel_count = array_length(props.elements); repeat panel_count {
-			var element = props.elements[i];
+		var i = 0; var panel_count = array_length(elements); repeat panel_count {
+			var element = elements[i];
 			var panel_item_id = props.id + "[" + string(i) + "]";
 			var item_slot_values = slot_values;
 			
@@ -108,7 +107,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		layout.init(item_elements, undefined, undefined, props);
 	}
 	
-	is_elements_bound = yui_is_live_binding(props.elements);
+	is_elements_bound = yui_is_live_binding(elements);
 	
 	is_bound = base_is_bound
 		|| is_elements_bound;
@@ -118,16 +117,16 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	static getLayoutProps = function() {
 		
 		return {
-			alignment: alignment,
-			padding: props.padding,
-			size: size,
-			layout: layout,
-			reverse: props.reverse,
-			count: props.count,
+			alignment,
+			padding,
+			size,
+			layout,
+			reverse,
+			count,
 			// border
-			border_color: border_color,
+			border_color,
 			border_thickness: props.border_thickness,
-			border_focus_color: border_focus_color,
+			border_focus_color,
 		};
 	}
 	
@@ -145,7 +144,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		
 		if uses_template {
 			// single template element for bound data_items
-			var source_items = is_elements_bound ? props.elements.resolve(data) : props.elements;
+			var source_items = is_elements_bound ? self.elements.resolve(data) : self.elements;
 			
 			if !is_array(source_items) {
 				if data == undefined

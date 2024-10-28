@@ -11,7 +11,7 @@ function YuiDynamicElement(_props, _resources, _slot_values) : YuiBaseElement(_p
 	
 	baseInit(props);
 	
-	props.content = yui_bind(props.content, resources, slot_values);
+	content = yui_bind(props.content, resources, slot_values);
 	
 	// ===== functions =====
 	
@@ -21,7 +21,7 @@ function YuiDynamicElement(_props, _resources, _slot_values) : YuiBaseElement(_p
 	
 	// feather ignore once GM2017
 	static getBoundValues = function YuiDynamicElement_getBoundValues(data, prev) {
-		var content = yui_resolve_binding(props.content, data);
+		var content = yui_resolve_binding(self.content, data);
 		
 		// diff
 		if prev

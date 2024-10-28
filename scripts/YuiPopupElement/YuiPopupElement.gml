@@ -19,27 +19,25 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	baseInit(props);
 	
-	props.placement = yui_read_placement_mode(yui_bind(props.placement, resources, slot_values));
+	placement = yui_read_placement_mode(yui_bind(props.placement, resources, slot_values));
 	
 	resolveBackgroundAndBorder();
-	
-	props.padding = new YuiPadding(yui_bind(props.padding, resources, slot_values));
 	
 	content_element = yui_resolve_element(props.content, resources, slot_values);
 
 	is_bound = base_is_bound
-		|| yui_is_live_binding(props.placement);
+		|| yui_is_live_binding(placement);
 	
 	// ===== functions =====
 	
 	static getLayoutProps = function() {
 		return {
-			alignment: alignment,
-			padding: props.padding,
+			alignment,
+			padding,
 			size: size,
-			content_element: content_element,
+			content_element,
 			// border
-			border_color: border_color,
+			border_color,
 			border_thickness: props.border_thickness,
 			// not supported
 			border_focus_color: undefined,
@@ -48,7 +46,7 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	// feather ignore once GM2017
 	static getBoundValues = function YuiPopupElement_getBoundValues(data, prev) {
-		var placement = yui_resolve_binding(props.placement, data);
+		var placement = yui_resolve_binding(self.placement, data);
 
 		// diff
 		if prev

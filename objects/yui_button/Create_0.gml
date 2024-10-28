@@ -23,14 +23,14 @@ left_click = function() {
 	
 	focus();
 	
-	if yui_element.props.on_click != undefined {
+	if yui_element.on_click != undefined {
 		var element = self;
 		var args = {
 			source: element,
 			button: "left",
 		};
 		
-		yui_call_handler(yui_element.props.on_click, [args], data_source);
+		yui_call_handler(yui_element.on_click, [args], data_source);
 	}
 }
 

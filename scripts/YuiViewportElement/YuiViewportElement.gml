@@ -32,17 +32,17 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 	
 	resolveBackgroundAndBorder();
 	
-	props.on_viewport_info = yui_bind_handler(props.on_viewport_info, resources, slot_values);
+	on_viewport_info = yui_bind_handler(props.on_viewport_info, resources, slot_values);
 	
-	props.viewport_x = yui_bind(props.viewport_x, resources, slot_values);
-	props.viewport_y = yui_bind(props.viewport_y, resources, slot_values);
+	viewport_x = yui_bind(props.viewport_x, resources, slot_values);
+	viewport_y = yui_bind(props.viewport_y, resources, slot_values);
 	
 	// supports slots etc but not live binding
-	props.content_w = yui_bind(props.content_w, resources, slot_values);
-	props.content_h = yui_bind(props.content_h, resources, slot_values);
+	content_w = yui_bind(props.content_w, resources, slot_values);
+	content_h = yui_bind(props.content_h, resources, slot_values);
 	
-	is_viewport_x_bound = yui_is_live_binding(props.viewport_x);
-	is_viewport_y_bound = yui_is_live_binding(props.viewport_y);
+	is_viewport_x_bound = yui_is_live_binding(viewport_x);
+	is_viewport_y_bound = yui_is_live_binding(viewport_y);
 	
 	is_bound = base_is_bound
 		|| is_viewport_x_bound
@@ -56,21 +56,21 @@ function YuiViewportElement(_props, _resources, _slot_values) : YuiBaseElement(_
 			alignment: alignment,
 			size: size,
 			// border
-			content_element: content_element,
-			border_color: border_color,
+			content_element,
+			border_color,
 			border_thickness: props.border_thickness,
-			border_focus_color: border_focus_color,
+			border_focus_color,
 			// viewport
-			content_w: props.content_w,
-			content_h: props.content_h,
-			on_viewport_info: props.on_viewport_info,
+			content_w,
+			content_h,
+			on_viewport_info,
 		};
 	}
 	
 	// feather ignore once GM2017
 	static getBoundValues = function YuiViewportElement_getBoundValues(data, prev) {
-		var viewport_x = is_viewport_x_bound ? props.viewport_x.resolve(data) : props.viewport_x;
-		var viewport_y = is_viewport_y_bound ? props.viewport_y.resolve(data) : props.viewport_y;
+		var viewport_x = is_viewport_x_bound ? self.viewport_x.resolve(data) : self.viewport_x;
+		var viewport_y = is_viewport_y_bound ? self.viewport_y.resolve(data) : self.viewport_y;
 		
 		// diff
 		if prev
