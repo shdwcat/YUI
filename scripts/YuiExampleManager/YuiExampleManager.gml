@@ -11,6 +11,10 @@ function YuiExampleManager() constructor {
 		active_tab_index: 0
 	};
 	
+	anim_examples = {
+		active_tab_index: 0
+	}
+	
 	var items_file = yui_string_from_file("ExampleProject/Data/inventory.yaml")
 	var inventory = snap_from_yui(items_file);
 	

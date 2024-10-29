@@ -31,10 +31,10 @@ root:
 
         - type: anim_tab_panel
           anim_data: @anim_data
-          active_tab: @layouts.active_tab
-          on_tab_selected: @@ item => @layouts.active_tab = item
+          active_tab: @anim_examples.active_tab
+          on_tab_selected: @@ item => @anim_examples.active_tab = item
           content_padding: 0
-          tab_content_binding: @content
+          tab_content_binding: @header
           tab_items:
             - header: Demo
               content: &animation_builder
