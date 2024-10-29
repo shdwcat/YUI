@@ -28,7 +28,7 @@ active_region = undefined;
 override_text = undefined;
 
 onLayoutInit = function() {
-	text_value = new YuiBindableValue(yui_element.props.text);
+	text_value = new YuiBindableValue(yui_element.text);
 	animatable.text = text_value;
 	
 	color_value = new YuiBindableValue(yui_element.color);
