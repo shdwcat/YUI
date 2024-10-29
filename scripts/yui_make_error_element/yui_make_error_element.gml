@@ -29,7 +29,7 @@ function yui_make_error_element(error, resources, slot_values) {
 		size: { max_w: 210 },
 		content: message,
 		data_source: error,
-		on_click: "e => clipboard_set_text(@)",
+		on_click: "e => ~clipboard_set_text(@)",
 	};
 	
 	var element = new YuiButtonElement(props, resources, slot_values);
