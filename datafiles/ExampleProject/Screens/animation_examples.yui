@@ -34,7 +34,7 @@ root:
           active_tab: @anim_examples.active_tab
           on_tab_selected: @@ item => @anim_examples.active_tab = item
           content_padding: 0
-          tab_content_binding: @header
+          tab_content_binding: @content
           tab_items:
             - header: Demo
               content: &animation_builder
