@@ -10,6 +10,17 @@ internal_children = [];
 is_arranging = false;
 used_layout_size = undefined;
 
+destroy = function() {
+	var i = 0; repeat array_length(internal_children) {
+		var child = internal_children[i++];
+		if instance_exists(child)
+			child.destroy();
+	}
+		
+	// use base_destroy not border_destroy		
+	base_destroy();
+}
+
 border_onLayoutInit = onLayoutInit;
 onLayoutInit = function() {
 	border_onLayoutInit();

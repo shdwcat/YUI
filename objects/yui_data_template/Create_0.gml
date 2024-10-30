@@ -6,6 +6,13 @@ event_inherited();
 // the render instance for the resolved template element
 template_item = undefined;
 
+base_destroy = destroy;
+destroy = function() {
+	if template_item && instance_exists(template_item)
+		template_item.destroy();
+	base_destroy();
+}
+
 build = function() {
 	
 	opacity = parent.opacity

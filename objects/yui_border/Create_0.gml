@@ -19,6 +19,13 @@ has_border_color = false;
 has_focus_color = false;
 draw_border = false;
 
+base_destroy = destroy;
+destroy = function() {
+	if content_item && instance_exists(content_item)
+		content_item.destroy();
+	base_destroy();
+}
+
 onLayoutInit = function() {	
 		
 	if layout_props.border_color != undefined {

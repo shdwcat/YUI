@@ -6,6 +6,13 @@ event_inherited();
 is_popup_visible = false;
 popup_item = undefined;
 
+border_destroy = destroy;
+destroy = function() {
+	if popup_item && instance_exists(popup_item)
+		popup_item.destroy();
+	border_destroy();
+}
+
 // do we need to override build?
 
 button_arrange = arrange;

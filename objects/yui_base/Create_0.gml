@@ -93,6 +93,13 @@ viewport_part = undefined;
 // hack so that text element knows to rebuild
 opacity_changed = false;
 
+destroy = function() {
+	if tooltip_item && instance_exists(tooltip_item)
+		tooltip_item.destroy();
+	instance_destroy();
+	//yui_log($"destroyed instance {id} ({object_get_name(object_index)})");
+}
+
 initLayout = function() {
 	_id = yui_element.props.id;
 	trace = yui_element.props.trace;

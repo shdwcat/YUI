@@ -5,6 +5,13 @@ event_inherited();
 
 case_item = undefined;
 
+base_destroy = destroy;
+destroy = function() {
+	if case_item && instance_exists(case_item)
+		case_item.destroy();
+	base_destroy();
+}
+
 build = function() {
 	// clear out the old item;
 	if case_item {

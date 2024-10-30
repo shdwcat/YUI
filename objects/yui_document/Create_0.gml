@@ -22,6 +22,9 @@ document_error = undefined;
 // the actual render instance root
 root = undefined;
 
+// whether the document is being unloaded
+is_unloading = false;
+
 // calculate the space we were given to draw in
 calcSize = function() {
 	if is_full_screen {
@@ -45,6 +48,7 @@ calcSize = function() {
 }
 
 load = function() {
+	is_unloading = false;
 	document = new YuiDocument(yui_file, YuiGlobals.yui_cabinet);
 	document_error = document.load_error
 	if document_error != undefined {
@@ -59,19 +63,24 @@ load = function() {
 }
 
 reload = function(destroy_now = false) {
+	if is_unloading return;
+	
+	var is_reload = instance_exists(root);
+	
 	if destroy_now {
-		// TODO force destroy with no animations
-		
-		throw "not implemented";
+		if instance_exists(root)
+			root.destroy();
 	}
 	
 	var unload_time = instance_exists(root)
 		? root.unload()
 		: 0;
 	
-	yui_log($"document unload time is {unload_time}");
+	yui_log($"document unload time is {unload_time} - {yui_file}");
+	yui_log($"is reload: {is_reload}");
 	
 	if unload_time > 0 {
+		is_unloading = true;
 		call_later(unload_time / 1000, time_source_units_seconds, load);
 	}
 	else {
