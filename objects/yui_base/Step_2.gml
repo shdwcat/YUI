@@ -17,8 +17,7 @@ if !visible && unload_now {
 // hide self if marked hidden, or parent is not visible
 // (depth order ensures further children will get hidden in the same frame)
 if hidden || parent && !parent.visible {
-	visible = false;
-	rebuild = false;
+	hideElement();
 	exit;
 }
 

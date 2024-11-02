@@ -115,16 +115,9 @@ initLayout = function() {
 	interactions = yui_element.props.interactions;
 	yui_register_interactions(interactions);
 	
-	focusable = yui_element.props.focusable;
+	is_element_focusable = yui_element.props.focusable;
+	autofocus = yui_element.props.autofocus;
 	is_cursor_layer = yui_element.props.is_cursor_layer;
-	
-	// TODO: this bypasses enabled, should probably move to first build
-	// set initial focus if needed
-	if focusable 
-		&& ((YuiCursorManager.focused_item == undefined || !instance_exists(YuiCursorManager.focused_item))
-			|| yui_element.props.autofocus) {
-		YuiCursorManager.setFocus(id);
-	}
 	
 	// any data_source value means we have to evaluate it 
 	has_data_source = yui_element.data_source != undefined;
@@ -139,7 +132,6 @@ initLayout = function() {
 	// map of animatable properties to the YuiBindableValues
 	animatable = {
 		opacity: opacity_value,
-		visible: visible_value,
 		xoffset: xoffset_value,
 		yoffset: yoffset_value,
 	};
@@ -158,22 +150,23 @@ onLayoutInit = function() {
 	// virtual
 }
 
-hide_element = function() {
+hideElement = function() {
 	if visible {
 		visible = false;
-			
+		
 		if focused {
-			YuiCursorManager.clearFocus();
+			YuiCursorManager.unfocus();
 		}
 			
 		// trigger parent re-layout since we might have been taking up space
-		if parent and bound_values {
+		if parent && bound_values {
 			parent.onChildLayoutComplete(self);
 		}
 		
 		// need to reset these, as values may change while the element
 		// is not visible, which means the diffing will be out of date
 		bound_values = undefined;
+		rebuild = false;
 	}
 }
 
@@ -189,7 +182,7 @@ bind_values = function yui_base__bind_values() {
 	
 	if visible_value.is_live visible_value.update(data_source);
 	if visible_value.value == false {
-		hide_element();
+		hideElement();
 		exit;
 	}
 	
@@ -199,15 +192,36 @@ bind_values = function yui_base__bind_values() {
 	// handle custom cases where we might want to not be visible 
 	// e.g. text element text is undefined
 	if new_values == false {
-		hide_element();
+		hideElement();
 		exit;
 	}
-	
+		
 	// ensure that we're now visible
 	var was_visible = visible;
 	visible = true;
 	
+	// calculate enabled state from parent and/or live value
+	var is_parent_enabled = parent ? parent.enabled : true;
+	if is_parent_enabled && enabled_value.is_live {
+		enabled_value.update(data_source);
+		enabled = enabled_value.value;
+	}
+	else {
+		enabled = is_parent_enabled;
+	}	
+	
+	// update focus state
+	focusable = enabled ? is_element_focusable : false;
 	if !was_visible {
+		// only autofocus if we just became visible
+		YuiCursorManager.tryAutofocus(id);
+	}
+	else if focused && !focusable {
+		YuiCursorManager.unfocus();
+	}
+	
+	if !was_visible {
+	
 		if on_visible_anim
 			beginAnimationGroup(on_visible_anim);
 	}
@@ -223,7 +237,7 @@ bind_values = function yui_base__bind_values() {
 		bound_values = new_values;
 	}
 	
-	// maybe move this to element.is_live()?
+	// maybe move this to element.isLive()?
 	is_binding_active = bound_values.is_live;
 
 	return true;
@@ -240,25 +254,6 @@ arrange = function(available_size, viewport_size) {
 }
 
 process = function yui_base__process() {
-	
-	// calculate enabled state from parent and/or live value
-	
-	var is_parent_enabled = parent ? parent.enabled : true;
-	
-	if is_parent_enabled && enabled_value.is_live {
-		enabled_value.update(data_source);
-		enabled = enabled_value.value;
-	}
-	else {
-		enabled = is_parent_enabled;
-	}
-	
-	// update focusable state
-	
-	focusable = enabled ? yui_element.props.focusable : false;
-	if focused && !focusable {
-		YuiCursorManager.clearFocus();
-	}
 	
 	// update opacity
 	
@@ -389,6 +384,8 @@ beginAnimationGroup = function(animation_group) {
 unload = function(unload_root = undefined) {
 	
 	unloading = true;
+	
+	if focused YuiCursorManager.unfocus();
 	
 	// TODO: call on_unloading element event
 	

@@ -25,7 +25,8 @@ build = function() {
 		sprite_index = bound_values.sprite;
 	}
 	else {
-		visible = false;
+		hideElement();
+		exit;
 	}
 	
 	mirror_x = bound_values.mirror_x;

@@ -25,6 +25,9 @@ root = undefined;
 // whether the document is being unloaded
 is_unloading = false;
 
+// simplifies logic in render items
+enabled = true
+
 // calculate the space we were given to draw in
 calcSize = function() {
 	if is_full_screen {
@@ -76,8 +79,8 @@ reload = function(destroy_now = false) {
 		? root.unload()
 		: 0;
 	
-	yui_log($"document unload time is {unload_time} - {yui_file}");
-	yui_log($"is reload: {is_reload}");
+	//yui_log($"document unload time is {unload_time} - {yui_file}");
+	//yui_log($"is reload: {is_reload}");
 	
 	if unload_time > 0 {
 		is_unloading = true;

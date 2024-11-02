@@ -90,6 +90,9 @@ setFocus = function(focus_item, new_scope = undefined) {
 	// check if new focus is different from current
 	if focus_item == focused_item return;
 	
+	// skip if item is not focusable
+	if focus_item && !focus_item.focusable return;
+	
 	// trigger lost focus
 	if focused_item && instance_exists(focused_item) {
 		if focused_item.on_lost_focus focused_item.on_lost_focus();
@@ -139,9 +142,13 @@ moveFocus = function(direction = YUI_FOCUS_DIRECTION.DOWN) {
 }
 
 clearFocus = function() {
+	setFocus(undefined);
+}
+
+unfocus = function() {
 	// TODO: this should try to find the previous focus item in scope,
 	// or kick up the focus stack
-	setFocus(undefined);
+	clearFocus();
 }
 
 activateFocused = function() {
@@ -154,7 +161,7 @@ trackMouseDownItems = function(button) {
 	array_resize(mouse_down_array[button], hover_count);
 	var i = hover_count - 1; repeat hover_count {
 		var item = hover_list[|i];
-		var type = object_get_name(item.object_index);
+		//var type = object_get_name(item.object_index);
 		//yui_log("mouse down on:", item, " - ", type, " - ", item[$" _id"]);
 		mouse_down_array[button][i] = item;
 		i--;
@@ -166,22 +173,26 @@ isCursorOnVisiblePart = function(item) {
 }
 
 onKeyLeft = function() {
-	if focused_item && focused_item.onKeyPressed && focused_item.onKeyPressed(vk_left) return;
+	if focused_item && instance_exists(focused_item)
+		&& focused_item.onKeyPressed && focused_item.onKeyPressed(vk_left) return;
 	moveFocus(YUI_FOCUS_DIRECTION.LEFT);
 }
 
 onKeyRight = function() {
-	if focused_item && focused_item.onKeyPressed && focused_item.onKeyPressed(vk_right) return;
+	if focused_item && instance_exists(focused_item)
+		&& focused_item.onKeyPressed && focused_item.onKeyPressed(vk_right) return;
 	moveFocus(YUI_FOCUS_DIRECTION.RIGHT);
 }
 
 onKeyUp = function() {
-	if focused_item && focused_item.onKeyPressed && focused_item.onKeyPressed(vk_up) return;
+	if focused_item && instance_exists(focused_item)
+		&& focused_item.onKeyPressed && focused_item.onKeyPressed(vk_up) return;
 	moveFocus(YUI_FOCUS_DIRECTION.UP);
 }
 
 onKeyDown = function() {
-	if focused_item && focused_item.onKeyPressed && focused_item.onKeyPressed(vk_down) return;
+	if focused_item && instance_exists(focused_item)
+		&& focused_item.onKeyPressed && focused_item.onKeyPressed(vk_down) return;
 	moveFocus(YUI_FOCUS_DIRECTION.DOWN);
 }
 
@@ -240,6 +251,12 @@ onCursorWheelDown = function() {
 	if i < 0 && global_wheel_down {
 		// Feather disable once GM1021
 		global_wheel_down();
+	}
+}
+
+function tryAutofocus(item) {
+	if item.autofocus || focused_item == undefined || !instance_exists(focused_item) {
+		setFocus(item);
 	}
 }
 

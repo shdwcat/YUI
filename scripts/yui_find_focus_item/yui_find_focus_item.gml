@@ -53,7 +53,7 @@ function yui_find_focus_item(current_item, list, direction, precise = false) {
 		list,
 		true); // ordered
 	
-	// find the first fosusable item int the list (and return it if found)
+	// find the first focusable item in the list (and return it if found)
 	var i = 0; repeat count {
 		var target = list[| i++];
 		

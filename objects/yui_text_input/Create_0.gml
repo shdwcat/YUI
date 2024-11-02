@@ -47,9 +47,7 @@ move = function(xoffset, yoffset) {
 }
 
 left_click = function() {
-	if enabled && focusable && !focused {
-		YuiCursorManager.setFocus(id);
-	}
+	YuiCursorManager.setFocus(id);
 }
 
 on_submit = function() {
