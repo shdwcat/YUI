@@ -25,7 +25,8 @@ build = function() {
 		sprite_index = bound_values.sprite;
 	}
 	else {
-		hideElement();
+		// NOTE: not using hideElement() because this is just to not draw anything when there is now sprite
+		visible = false;
 		exit;
 	}
 	
