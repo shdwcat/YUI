@@ -117,7 +117,13 @@ initLayout = function() {
 	
 	is_element_focusable = yui_element.props.focusable;
 	autofocus = yui_element.props.autofocus;
+	is_focus_scope = yui_element.props.is_focus_scope;
 	is_cursor_layer = yui_element.props.is_cursor_layer;
+	
+	if focus_scope == undefined || is_cursor_layer || is_focus_scope {
+		is_focus_root = true;
+		focus_scope = new YuiFocusScope(id, focus_scope);
+	}
 	
 	// any data_source value means we have to evaluate it 
 	has_data_source = yui_element.data_source != undefined;
@@ -154,6 +160,7 @@ hideElement = function() {
 	if visible {
 		visible = false;
 		
+		focusable = false;
 		if focused {
 			YuiCursorManager.unfocus();
 		}

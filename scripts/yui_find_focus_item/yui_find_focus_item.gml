@@ -13,8 +13,15 @@ enum YUI_FOCUS_DIRECTION {
 function yui_find_focus_item(current_item, list, direction, precise = false) {
 	
 	if !instance_exists(current_item) return undefined;
-	var item_center_x = current_item.x + (current_item.bbox_right - current_item.bbox_left)/2;
-	var item_center_y = current_item.y + (current_item.bbox_bottom - current_item.bbox_top)/2;
+	
+	// the scope to check will be the scope of the current item, unless that
+	// item is the root of its scope, in which case check the parent scope
+	var scope = current_item.is_focus_root && current_item.focus_scope.parent
+		? current_item.focus_scope.parent
+		: current_item.focus_scope;
+	
+	var item_center_x = mean(current_item.bbox_left, current_item.bbox_right);
+	var item_center_y = mean(current_item.bbox_top, current_item.bbox_bottom);
 	
 	switch direction {
 		case YUI_FOCUS_DIRECTION.UP:
@@ -51,15 +58,43 @@ function yui_find_focus_item(current_item, list, direction, precise = false) {
 		precise,
 		true, // notme (this is vaguely irrelevent, 'me' is YuiCursorManager)
 		list,
-		true); // ordered
-	
-	// find the first focusable item in the list (and return it if found)
+		false); // order only works for target X/Y but we need bbox center
+
+	// find the closest focusable item in the list (by bbox center)
+	var closest_item = undefined;
+	var shortest_distance = infinity;
 	var i = 0; repeat count {
 		var target = list[| i++];
 		
-		if target.id != current_item.id && target.focusable {
-			return target;
+		// the target must be focusable or a focus scope root
+		var is_valid = target.id != current_item.id && scope.matches(target)
+			&& (target.focusable || target.is_focus_root);
+		if !is_valid {
+			continue;
 		}
+		
+		var bbox_center_x = mean(target.bbox_left, target.bbox_right);
+		var bbox_center_y = mean(target.bbox_top, target.bbox_bottom);
+		var distance = point_distance(
+			item_center_x, item_center_y,
+			bbox_center_x, bbox_center_y);
+		
+		if current_item.trace
+			yui_log($"distance is {distance} to {target._id} for scope {scope.id}");
+			
+		if distance < shortest_distance {
+			shortest_distance = distance;
+			
+			// if the target isn't focusable then get the scope's focus
+			closest_item = target.focusable
+				? target
+				: (target.focus_scope.focused_item ?? target.focus_scope.autofocus_target);
+		}
+	}
+	
+	// return the closest item if we found it
+	if closest_item != undefined {
+		return closest_item;
 	}
 	
 	// fallback when nothing is directly in that direction: check the entire portion of the screen
@@ -102,15 +137,18 @@ function yui_find_focus_item(current_item, list, direction, precise = false) {
 		list,
 		false); // ordered
 	
-	// find the closest item from those in the rectangle	
-	var closest_item = undefined;
-	var shortest_distance = infinity;
+	// find the closest item from those in the rectangle
+	closest_item = undefined;
+	shortest_distance = infinity;
 	var i = 0; repeat count {
 		var target = list[| i++];
 		
+		if current_item.trace yui_log($"checking wide {target._id} for scope {scope.id}");
 		
-		if target.id == current_item.id 
-		|| target.focusable == false {
+		// the target must be focusable or a focus scope root
+		var is_valid = target.id != current_item.id && scope.matches(target)
+			&& (target.focusable || target.is_focus_root);
+		if !is_valid {
 			continue;
 		}
 		
@@ -133,11 +171,38 @@ function yui_find_focus_item(current_item, list, direction, precise = false) {
 		
 		var distance = point_distance(
 			item_center_x, item_center_y,
-			target.x, target.y) // NOTE: not using target center, may cause problems!
+			mean(target.bbox_left, target.bbox_right),
+			mean(target.bbox_top, target.bbox_bottom));
 			
 		if distance < shortest_distance {
 			shortest_distance = distance;
-			closest_item = target;
+			
+			// if the target isn't focusable then get the scope's focus
+			closest_item = target.focusable
+				? target
+				: (target.focus_scope.focused_item ?? target.focus_scope.autofocus_target);
+		}
+	}
+	
+	if closest_item == undefined {
+		
+		// try navigating from the scope root
+		if current_item != scope.root_item {
+			// if the scope's root is focusable then focus that
+			// otherwise, try navigating from the root itself 
+			if scope.root_item.focusable
+				return scope.root_item;
+			else {
+				yui_log($"target not found, attempting to navigate from scope root: {scope.root_item._id}");
+				return yui_find_focus_item(scope.root_item, list, direction, precise);
+			}
+		}
+		// otherwise, try navigating from the parent scope
+		else if scope.parent {
+			if scope.parent.focused_item {
+				yui_log($"target not found, returning focused item from parent scope {scope.parent.id}");
+				return scope.parent.focused_item;
+			}
 		}
 	}
 	

@@ -10,21 +10,31 @@ function yui_make_render_instance(yui_element, data, index = 0, depth_offset = 0
 	
 	// NOTE: expects to be called from a yui_base-derived object or yui_document
 	var parent = self;
+	var focus_scope = undefined;
 	
-	if instanceof(parent) == "instance" && object_index == yui_document {
-		var document = parent;
+	if instanceof(parent) == "instance"{
+		if object_index == yui_document {
+			var document = parent;
+		}
+		else {
+			var document = parent.document;
+			focus_scope = parent.focus_scope;
+		}
 	}
 	else {
+		// TODO: validate whether we ever hit this (maybe in game items? need tests for that)
 		var document = parent.document;
-	}	
-	
+		//throw yui_error("unexpected parent type");
+	}
+		
 	var child = instance_create_depth(x, y, depth - (1 + depth_offset), render_object, {
 		data_context: data,
-		parent: parent,
-		document: document,
+		yui_element,
+		persistent,
+		parent,
+		document,
+		focus_scope,
 		item_index: index,
-		yui_element: yui_element,
-		persistent: persistent,
 	});
 	
 	with child {

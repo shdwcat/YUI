@@ -14,6 +14,7 @@ resources:
       checked: false
       hover: false
       editable: false
+      delete_focused: false
       label: "test"
     filter_mode: all // all | active | completed
     done_count: 0
@@ -21,14 +22,17 @@ resources:
       - checked: false
         hover: false
         editable: false
+        delete_focused: false
         label: YUI is cool
       - checked: false
         hover: false
         editable: false
+        delete_focused: false
         label: you should use it
       - checked: false
         hover: false
         editable: false
+        delete_focused: false
         label: thanks @shdwcat
 
 root:
@@ -63,8 +67,13 @@ root:
                 - @@ text => @new_task.label = ''
                 - @@ text => ~input_string_set('')
 
+          - type: text
+            text: buffer
+
           // panel to display the tasks
           - type: panel
+            id: task_list
+            is_focus_scope: true
             size: { w: 400 }
             spacing: 1
             elements: @tasks
@@ -118,14 +127,17 @@ root:
                   size: 33
                   background: #00000000
                   border_thickness: 0
-                  visible: @hover
+                  tooltip: Click to delete this item
                   on_click:
                     - @@ e => &state.done_count = &state.done_count - @checked
                     - @@ e => ~array_delete(&state.tasks, ~yui_array_find_index(&state.tasks, @), 1)
+                  events:
+                    on_got_focus: @delete_focused = true
+                    on_lost_focus: @delete_focused = false
                   content:
                     type: text // TODO X sprite
                     padding: [5, 2, 5, 0]
-                    color: $theme.resources.negative_color
+                    color: @@ (@hover or @delete_focused) then $theme.resources.negative_color else $theme.resources.hint_text
                     text: X
 
           // bottom panel with done count and filter buttons

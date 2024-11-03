@@ -425,6 +425,7 @@
     {"id":{"name":"yui_icon_trash","path":"sprites/yui_icon_trash/yui_icon_trash.yy",},},
     {"id":{"name":"KnitInterpreter","path":"scripts/KnitInterpreter/KnitInterpreter.yy",},},
     {"id":{"name":"YS_TOKEN","path":"scripts/YS_TOKEN/YS_TOKEN.yy",},},
+    {"id":{"name":"YuiFocusScope","path":"scripts/YuiFocusScope/YuiFocusScope.yy",},},
     {"id":{"name":"input_gamepad_check","path":"scripts/input_gamepad_check/input_gamepad_check.yy",},},
     {"id":{"name":"YuiRadialLayout","path":"scripts/YuiRadialLayout/YuiRadialLayout.yy",},},
     {"id":{"name":"__input_class_icon_category","path":"scripts/__input_class_icon_category/__input_class_icon_category.yy",},},

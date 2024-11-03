@@ -48,6 +48,7 @@ resources:
       type: panel
       layout: horizontal
       spacing: 3
+      is_focus_scope: true
       elements: $menu_items
       template:
 

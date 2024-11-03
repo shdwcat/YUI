@@ -19,6 +19,8 @@ root:
       elements:
 
         - type: panel
+          id: col1
+          is_focus_scope: true
           spacing: 10
 
           elements:
@@ -100,6 +102,8 @@ root:
               meter_blend_color: blue
 
         - type: panel
+          id: col2
+          is_focus_scope: true
           spacing: 10
 
           elements:

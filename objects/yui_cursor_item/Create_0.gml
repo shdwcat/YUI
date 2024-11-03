@@ -10,15 +10,21 @@ focusable = false;
 // whether this item is currently focused (managed by YuiCursorManager)
 focused = false;
 
+// the YuiFocusScope for this item
+focus_scope ??= undefined;
+
+// whether this is the root of its associated focus scope
+is_focus_root = false;
+
+// whether this object acts as a cursor layer, which prevents mouse events
+// from propagating to instances below it
+is_cursor_layer = false;
+
 // whether the cursor is over this item
 highlight = false;
 
 // render item for any interactions this participates in
 interaction_item = undefined;
-
-// whether this object acts as a cursor layer, which prevents mouse events
-// from propagating to instances below it
-is_cursor_layer = false;
 
 // TODO: convert to cursor_click?
 left_pressed = undefined;
@@ -45,6 +51,7 @@ opacity = 1;
 onChildLayoutComplete = function(child) {
 	// this is just here to make the recursive call simpler in yui_elements
 }
+
 isPointVisible = function(x, y) {
 	return true;
 }
