@@ -91,6 +91,7 @@ resources:
               - type: text
                 text: Demo Panel
               - type: button
+                focusable: false
                 content: A Button
               // - type: checkbox
               //   label: A Checkbox

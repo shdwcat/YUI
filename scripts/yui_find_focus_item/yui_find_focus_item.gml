@@ -81,14 +81,52 @@ function yui_find_focus_item(current_item, list, direction, precise = false) {
 		
 		if current_item.trace
 			yui_log($"distance is {distance} to {target._id} for scope {scope.id}");
+
+		// sometimes the inner item will be closer by distance, but we want to match the outer item
+		// 1) if we have a closest item and found a new closest item, ignore it if it's inside
+		//    the current item's bounding box
+		// 2) if we have a closest item, but the new item fully encloses that item
+		//    then we should return the new item
 			
 		if distance < shortest_distance {
+			
+			if closest_item {
+				var is_inside_closest_item = rectangle_in_rectangle(
+					target.bbox_left,
+					target.bbox_top,
+					target.bbox_right,
+					target.bbox_bottom,
+					closest_item.bbox_left,
+					closest_item.bbox_top,
+					closest_item.bbox_right,
+					closest_item.bbox_bottom);
+					
+				if is_inside_closest_item == 1 {
+					// entirely inside the closest item
+					continue;
+				}
+			}
+			
 			shortest_distance = distance;
 			
 			// if the target isn't focusable then get the scope's focus
 			closest_item = target.focusable
 				? target
 				: (target.focus_scope.focused_item ?? target.focus_scope.autofocus_target);
+		}
+		else if closest_item {
+			var encompasses_closest_item = rectangle_in_rectangle(
+				closest_item.bbox_left,
+				closest_item.bbox_top,
+				closest_item.bbox_right,
+				closest_item.bbox_bottom,
+				target.bbox_left,
+				target.bbox_top,
+				target.bbox_right,
+				target.bbox_bottom);
+			if encompasses_closest_item == 1 {
+				closest_item = target;
+			}
 		}
 	}
 	
@@ -175,12 +213,44 @@ function yui_find_focus_item(current_item, list, direction, precise = false) {
 			mean(target.bbox_top, target.bbox_bottom));
 			
 		if distance < shortest_distance {
+			
+			if closest_item {
+				var is_inside_closest_item = rectangle_in_rectangle(
+					target.bbox_left,
+					target.bbox_top,
+					target.bbox_right,
+					target.bbox_bottom,
+					closest_item.bbox_left,
+					closest_item.bbox_top,
+					closest_item.bbox_right,
+					closest_item.bbox_bottom);
+					
+				if is_inside_closest_item == 1 {
+					// entirely inside the closest item
+					continue;
+				}
+			}
+			
 			shortest_distance = distance;
 			
 			// if the target isn't focusable then get the scope's focus
 			closest_item = target.focusable
 				? target
 				: (target.focus_scope.focused_item ?? target.focus_scope.autofocus_target);
+		}
+		else if closest_item {
+			var encompasses_closest_item = rectangle_in_rectangle(
+				closest_item.bbox_left,
+				closest_item.bbox_top,
+				closest_item.bbox_right,
+				closest_item.bbox_bottom,
+				target.bbox_left,
+				target.bbox_top,
+				target.bbox_right,
+				target.bbox_bottom);
+			if encompasses_closest_item == 1 {
+				closest_item = target;
+			}
 		}
 	}
 	

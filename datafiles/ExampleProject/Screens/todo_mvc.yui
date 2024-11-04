@@ -67,9 +67,6 @@ root:
                 - @@ text => @new_task.label = ''
                 - @@ text => ~input_string_set('')
 
-          - type: text
-            text: buffer
-
           // panel to display the tasks
           - type: panel
             id: task_list
