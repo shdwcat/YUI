@@ -1,4 +1,4 @@
-# YUI 0.6.4
+# YUI 0.6.5
 ## A UI system for GameMaker by [@shdwcat](https://github.com/shdwcat)
 
 ### Why YUI?
