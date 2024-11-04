@@ -78,4 +78,6 @@ function yui_error() {
 	};
 }
 
-
+function yui_break(message) {
+	yui_log(message);
+}

@@ -73,6 +73,7 @@ openPopup = function() {
 	// open the popup
 	
 	popup_item = yui_make_render_instance(bound_values.popup_element, data_source, , 100);
+	popup_item.focus_scope.doAutofocus();
 	
 	positionPopup(draw_size);
 }

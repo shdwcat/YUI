@@ -3,7 +3,7 @@
 // Inherit the parent event
 event_inherited();
 
-var show_highlight = (highlight || YuiCursorManager.focused_item == id)
+var show_highlight = (highlight || focused)
 	&& highlight_color != undefined
 	&& enabled;
 	

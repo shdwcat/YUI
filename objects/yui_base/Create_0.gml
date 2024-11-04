@@ -162,7 +162,7 @@ hideElement = function() {
 		
 		focusable = false;
 		if focused {
-			YuiCursorManager.unfocus();
+			focus_scope.unfocus(id);
 		}
 			
 		// trigger parent re-layout since we might have been taking up space
@@ -219,12 +219,12 @@ bind_values = function yui_base__bind_values() {
 	
 	// update focus state
 	focusable = enabled ? is_element_focusable : false;
-	if !was_visible {
+	if focusable && !was_visible {
 		// only autofocus if we just became visible
 		YuiCursorManager.tryAutofocus(id);
 	}
 	else if focused && !focusable {
-		YuiCursorManager.unfocus();
+		focus_scope.unfocus(id);
 	}
 	
 	if !was_visible {
@@ -391,8 +391,9 @@ beginAnimationGroup = function(animation_group) {
 unload = function(unload_root = undefined) {
 	
 	unloading = true;
+	focusable = false;
 	
-	if focused YuiCursorManager.unfocus();
+	if focused focus_scope.unfocus(id);
 	
 	// TODO: call on_unloading element event
 	

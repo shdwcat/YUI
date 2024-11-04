@@ -24,8 +24,38 @@ function YuiFocusScope(root_item, parent) constructor {
 			|| other_item.is_focus_root && other_item.focus_scope.parent == self;
 	}
 	
-	function focus(item) {
+	focus = function(item) {
 		focused_item = item;
+		focused_item.focused = true;
+		
+		if focused_item.on_got_focus focused_item.on_got_focus();
+		
 		yui_log($"set focus for scope {id} to {item ? item._id : "undefined"}");
+	}
+	
+	// attempt to focus our current autofocus target
+	doAutofocus = function() {
+		if autofocus_target && instance_exists(autofocus_target) {
+			autofocus_target.focus();
+			return autofocus_target.focused;
+		}
+		else {
+			yui_warning($"failed to autofocus in scope {id}");
+		}
+	}
+	
+	unfocus = function(item) {
+		
+		if item != autofocus_target && doAutofocus() {
+			yui_log($"reset focus to autofocus target in scope {id}: {autofocus_target._id}");
+		}
+		else if parent {
+			yui_log($"looking for focus in parent scope {parent.id}");
+			parent.unfocus(item);
+		}
+		else {
+			yui_log($"clearing focus due to no parent scope for {id}")
+			YuiCursorManager.clearFocus();
+		}
 	}
 }

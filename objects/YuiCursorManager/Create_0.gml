@@ -41,6 +41,9 @@ finishInteraction = function() {
 // which item has keyboard/gamepad focus
 focused_item = undefined;
 
+// which YuiFocusScope the focused_item is in
+active_focus_scope = undefined;
+
 // for use with finding next focus item
 focus_list = ds_list_create();
 
@@ -90,24 +93,31 @@ setFocus = function(focus_item) {
 	
 	focused_item = focus_item;
 	
-	// trigger got focus
 	if focused_item && instance_exists(focused_item) {
-		focused_item.focused = true;
-		focused_item.focus_scope.focus(focused_item);
-		if focused_item.on_got_focus focused_item.on_got_focus();
+		// track the new focus scope and focus the item within it
+		active_focus_scope = focused_item.focus_scope;
+		active_focus_scope.focus(focused_item);
+	}
+	else {
+		active_focus_scope = undefined;
 	}
 }
 
 moveFocus = function(direction = YUI_FOCUS_DIRECTION.DOWN) {
-	if !focused_item {
-		return;
+	var current_item = focused_item;
+
+	// if the current item is not valid, autofocus the active scope
+	var is_current_item_valid = current_item && instance_exists(current_item);
+	if !is_current_item_valid && active_focus_scope {
+		active_focus_scope.doAutofocus();
+		exit;
 	}
 
 	var next_item = yui_find_focus_item(
-		focused_item,
+		current_item,
 		focus_list,
 		direction,
-		is_focus_precise); // TODO move to macro
+		is_focus_precise); // TODO move to macro?
 
 	if next_item {
 		setFocus(next_item);
@@ -118,10 +128,21 @@ clearFocus = function() {
 	setFocus(undefined);
 }
 
-unfocus = function() {
-	// TODO: this should try to find the previous focus item in scope,
-	// or kick up the focus stack
-	clearFocus();
+tryAutofocus = function(item) {
+	// NOTE: assumes item is focusable (checked at single callsite to this function)
+		
+	if item.autofocus || focused_item == undefined || !instance_exists(focused_item) {
+		if is_navigation_active {
+			setFocus(item);
+		}
+	}
+	
+	// TODO: should also support focus scope roots
+	if item.focus_scope.autofocus_target == undefined {
+		item.focus_scope.autofocus_target = item;
+		
+		active_focus_scope ??= item.focus_scope;
+	}
 }
 
 activateFocused = function() {
@@ -146,26 +167,34 @@ isCursorOnVisiblePart = function(item) {
 }
 
 onKeyLeft = function() {
+	// trigger normal keypress handling first
 	if focused_item && instance_exists(focused_item)
 		&& focused_item.onKeyPressed && focused_item.onKeyPressed(vk_left) return;
+
 	moveFocus(YUI_FOCUS_DIRECTION.LEFT);
 }
 
 onKeyRight = function() {
+	// trigger normal keypress handling first
 	if focused_item && instance_exists(focused_item)
 		&& focused_item.onKeyPressed && focused_item.onKeyPressed(vk_right) return;
+
 	moveFocus(YUI_FOCUS_DIRECTION.RIGHT);
 }
 
 onKeyUp = function() {
+	// trigger normal keypress handling first
 	if focused_item && instance_exists(focused_item)
 		&& focused_item.onKeyPressed && focused_item.onKeyPressed(vk_up) return;
+
 	moveFocus(YUI_FOCUS_DIRECTION.UP);
 }
 
 onKeyDown = function() {
+	// trigger normal keypress handling first
 	if focused_item && instance_exists(focused_item)
 		&& focused_item.onKeyPressed && focused_item.onKeyPressed(vk_down) return;
+
 	moveFocus(YUI_FOCUS_DIRECTION.DOWN);
 }
 
@@ -224,18 +253,6 @@ onCursorWheelDown = function() {
 	if i < 0 && global_wheel_down {
 		// Feather disable once GM1021
 		global_wheel_down();
-	}
-}
-
-function tryAutofocus(item) {
-		
-	if item.autofocus || focused_item == undefined || !instance_exists(focused_item) {
-		setFocus(item);
-	}
-	
-	// TODO: should also support focus scope roots
-	if item.focusable && item.focus_scope.autofocus_target == undefined {
-		item.focus_scope.autofocus_target = item;
 	}
 }
 
