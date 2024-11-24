@@ -78,6 +78,6 @@ function yui_error() {
 	};
 }
 
-function yui_break(message) {
+function yui_break(message = undefined) {
 	yui_log(message);
 }

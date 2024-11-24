@@ -47,8 +47,28 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	text = yui_bind(props.text, resources, slot_values);
 	typist = yui_bind(props.typist, resources, slot_values);
 	
+	autotype = props.autotype;
+	if autotype == true {
+		autotype = { speed: 0.15, smoothness: 0 };
+	}
+	else if is_struct(autotype) {
+		if !struct_exists(autotype, "speed") {
+			autotype.speed = 0;
+		}
+		if !struct_exists(autotype, "smoothness") {
+			autotype.smoothness = 0;
+		}
+	}
+	else if autotype != undefined {
+		throw yui_error("text.autotype must be 'true' or a struct with 'speed' and/or 'smoothness'");
+	}
+	
 	// look up the text style by name from the theme
 	text_style = theme.text_styles[$ props.text_style];
+	
+	font = props.font
+		? yui_bind(props.font, resources, slot_values)
+		: text_style.font;
 		
 	color = yui_bind(props.color ?? text_style.color, resources, slot_values);
 	is_color_live = yui_is_live_binding(color);
@@ -58,19 +78,12 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	
 	highlight_color = yui_resolve_color(yui_bind(props.highlight_color, resources, slot_values));
 	
-	font = props.font ?? text_style.font;
-	if yui_is_binding(font) {
-		font = font.resolve();
-	}
-	if !is_string(font) {
-		throw yui_error("Expecting font name");
-	}
-	
 	// assume regions are enabled when region color is set
 	if props.region_color != undefined props.regions = true
 	region_color = yui_resolve_color(props.region_color);
 	
 	is_text_live = yui_is_live_binding(text);
+	is_font_live = yui_is_live_binding(font);
 	
 	// check if text is an array with bindings
 	if is_array(text) {
@@ -91,6 +104,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	
 	is_bound = base_is_bound
 		|| is_text_live
+		|| is_font_live
 		|| is_color_live
 		|| is_typist_live;
 		
@@ -107,12 +121,12 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		
 		return {
 			padding,
-			size: size,
-			halign: halign,
-			valign: valign,
-			highlight_color: highlight_color,
+			size,
+			halign,
+			valign,
+			highlight_color,
 			use_scribble: props.scribble,
-			autotype: props.autotype,
+			autotype,
 			regions: {
 				enabled: props.regions,
 				highlight: region_color != undefined,
@@ -146,12 +160,15 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		
 		var typist = is_typist_live ? self.typist.resolve(data) : self.typist;
 		
+		var font = is_font_live ? self.font.resolve(data) : self.font;
+		
 		if props.trace
 			DEBUG_BREAK_YUI
 		
 		// diff
 		if prev
 			&& text == prev.text
+			&& font == prev.font
 			&& typist == prev.typist
 		{
 			return true;
@@ -159,7 +176,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		
 		var values = {
 			is_live: is_bound,
-			text: text,// ?? "",
+			text: text,
 			font: font,
 			typist: typist,
 		};

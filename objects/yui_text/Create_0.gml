@@ -41,11 +41,13 @@ onLayoutInit = function() {
 }
 
 build = function() {
+	
+	font = bound_values.font;
 		
 	if use_scribble {
 		formatted_text = override_text ?? bound_values.text
 		scribble_element = scribble(formatted_text, string(id))
-			.starting_format(bound_values.font)
+			.starting_format(font_get_name(font))
 			.align(layout_props.halign, layout_props.valign);
 		
 		if bound_values.typist {
@@ -55,24 +57,13 @@ build = function() {
 		else if layout_props.autotype != undefined {
 			typist = scribble_typist();
 			var autotype = layout_props.autotype;
-			if autotype == true {
-				typist.in(0.15, 0);
-			}
-			else if is_struct(autotype) {
-				typist.in(autotype.speed, autotype.smoothness);
-			}
-			else {
-				// TODO validate this in YuiTextElement
-				throw yui_error("invalid autotype value");
-			}
+			typist.in(autotype.speed, autotype.smoothness);
 		}	
 	}
 	else {		
 		// handle newlines
 		formatted_text = override_text ?? string_replace(bound_values.text, "\\n", "\n");
 	}
-	
-	font = asset_get_index(bound_values.font);
 }
 
 /// @param {struct} available_size
@@ -167,7 +158,7 @@ arrange = function yui_text__arrange(available_size, viewport_size) {
 	yui_resize_instance(drawn_size.w, drawn_size.h);
 	
 	if trace {
-		DEBUG_BREAK_YUI
+		yui_break()
 	}
 	
 	use_text_surface = font >= 0 && !use_scribble;

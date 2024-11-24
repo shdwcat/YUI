@@ -75,6 +75,7 @@ root:
               // You can also just put a string as a child and it will automatically be converted to a 'text' element. Easy!
             - type: text
               scribble: true
+              autotype: true
               region_color: #2277ff
               text: This screen is defined in [region,file]datafiles/ExampleProject/Screens/welcome_screen.yui[/region]
               events:

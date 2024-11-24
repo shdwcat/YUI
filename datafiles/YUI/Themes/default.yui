@@ -167,13 +167,13 @@ theme:
   text_styles:
 
     title:
-      font: fnt_yui_title
+      font: ~fnt_yui_title
       color: &text_color
 
     subtitle:
-      font: fnt_yui_subtitle
+      font: ~fnt_yui_subtitle
       color: &text_color
 
     body:
-      font: fnt_yui_body
+      font: ~fnt_yui_body
       color: &text_color
