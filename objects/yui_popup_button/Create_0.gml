@@ -23,6 +23,18 @@ arrange = function(available_size, viewport_size) {
 	return size;
 }
 
+traverse = function(func, acc = undefined) {
+	
+	with self {
+		// allow the traverse function to change the acc itself
+		acc = func(acc) ?? acc;
+	}
+	
+	if popup_item && instance_exists(popup_item) {
+		popup_item.traverse(func, acc);
+	}
+}
+
 border_move = move;
 move = function(xoffset, yoffset) {
 	border_move(xoffset, yoffset);
@@ -90,6 +102,11 @@ closePopup = function(close_parent = false) {
 	is_popup_visible = false;
 	
 	if popup_item {
+		// if focus is within our popup, focus ourselves
+		var focus_target = popup_item.focus_scope.findFocusTarget();
+		if focus_target.focused
+			focus();
+		
 		popup_item.unload();
 		popup_item = undefined;
 	}
