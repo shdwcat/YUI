@@ -29,23 +29,23 @@ function YuiDragAndDrop(_props, _resources) constructor {
 	props = yui_apply_props(_props);
 	resources = _resources;
 	
-	props.drag.condition = yui_bind(props.drag.condition, resources, undefined);
+	drag_condition = yui_bind(props.drag.condition, resources, undefined);
 	drag_element = yui_resolve_element(props.drag.visual, resources, undefined);
-	props.drag.start = yui_bind_handler(props.drag[$ "start"], resources, undefined);
-	props.drag.action = yui_bind_handler(props.drag.action, resources, undefined);
+	drag_start = yui_bind_handler(props.drag[$ "start"], resources, undefined);
+	drag_action = yui_bind_handler(props.drag.action, resources, undefined);
 	
 	drop_hash_id = YuiCursorManager.participation_hash.getStringId(props.id + ".drop");
-	props.drop.condition = yui_bind(props.drop.condition, resources, undefined);
+	drop_condition = yui_bind(props.drop.condition, resources, undefined);
 	drop_element = yui_resolve_element(props.drop.visual, resources, undefined);
-	props.drop.action = yui_bind_handler(props.drop.action, resources, undefined);
+	drop_action = yui_bind_handler(props.drop.action, resources, undefined);
 	
-	props.on_cancel = yui_bind_handler(props.on_cancel, resources, undefined);
+	on_cancel = yui_bind_handler(props.on_cancel, resources, undefined);
 	
 	
 	static canStart = function(source_data) {
-		if props.drag.condition != undefined {
+		if drag_condition != undefined {
 			// TODO condition array?
-			return yui_resolve_binding(props.drag.condition, source_data);
+			return yui_resolve_binding(drag_condition, source_data);
 		}
 		else {
 			return true;
@@ -118,13 +118,13 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		}
 		
 		// call start handler if defined
-		if props.drag.start != undefined {
+		if drag_start != undefined {
 			var interaction_data = {
 				source: source,
 				target: target,
 				cursor: cursor,
 			};
-			yui_call_handler(props.drag.start, , interaction_data);
+			yui_call_handler(drag_start, , interaction_data);
 		}
 		
 		return drag_element;
@@ -176,19 +176,19 @@ function YuiDragAndDrop(_props, _resources) constructor {
 		// end drag on mouse up
 		var button_down = mouse_check_button(source.event.button); // TODO button
 		if !button_down {
-			if target.can_drop || props.drop.condition == true {
-				yui_call_handler(props.drop.action, , interaction_data);
+			if target.can_drop || drop_condition == true {
+				yui_call_handler(drop_action, , interaction_data);
 			}
 			else {
-				yui_call_handler(props.on_cancel, , interaction_data);
+				yui_call_handler(on_cancel, , interaction_data);
 			}
 			finish();
 			return false;
 		}
 		
 		// optionally run an action every frame
-		if props.drag.action != undefined {
-			yui_call_handler(props.drag.action, , interaction_data);
+		if drag_action != undefined {
+			yui_call_handler(drag_action, , interaction_data);
 		}
 	}
 	
@@ -258,10 +258,10 @@ function YuiDragAndDrop(_props, _resources) constructor {
 	}
 	
 	static canDrop = function(data) {
-		if props.drop.condition == undefined return true;
+		if drop_condition == undefined return true;
 		// TODO condition array?
 		
-		var can_drop = yui_resolve_binding(props.drop.condition, data);
+		var can_drop = yui_resolve_binding(drop_condition, data);
 		return can_drop;
 	}
 	
