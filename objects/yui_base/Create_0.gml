@@ -458,11 +458,49 @@ doTraverse = function(func, acc = undefined) {
 	traverse(f, acc);
 }
 
+generateFocusDebug = function() {
+	yui_log("TODO: generate focus debug");
+	
+	var info = {
+		_id,
+		scope_id: focus_scope.id,
+		scope_info: focus_scope.getInfo(),
+		children: {}
+	};
+	
+	doTraverse(focusDebug, info);
+	
+	yui_log("debug output:");
+	
+	var json = json_stringify(info, true);
+	clipboard_set_text(json);
+	yui_log(json);
+}
+
+focusDebug = function(info) {
+	//yui_log($"focus debug on {_id}");
+	
+	if focus_scope.id != info.scope_id {
+		// track the new focus scope as a child
+		var new_info = {
+			_id,
+			scope_id: focus_scope.id,
+			scope_info: focus_scope.getInfo(),
+			children: {}
+		};
+		info.children[$_id] = new_info;
+		
+		// further traversal will add to the child scope info
+		return new_info;
+	}
+}
+
 generateLayoutLog = function() {
 	yui_log("TODO: generate layout log");
 }
 
 Inspectron()
+	.Button("Generate Focus Debug", generateFocusDebug).AtTop()
 	.Button("Generate Layout Log", generateLayoutLog).AtTop()
 	.Section("yui_base")
 	.Checkbox(nameof(trace))
