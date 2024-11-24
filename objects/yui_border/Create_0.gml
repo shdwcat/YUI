@@ -135,6 +135,19 @@ onChildLayoutComplete = function(child) {
 	}
 }
 
+base_traverse = traverse;
+traverse = function(func, acc = undefined) {
+	
+	with self {
+		// allow the traverse function to change the acc itself
+		acc = func(acc) ?? acc;
+	}
+	
+	if content_item && instance_exists(content_item) {
+		content_item.traverse(func, acc);
+	}
+}
+
 // override move
 base_move = move;
 move = function(xoffset, yoffset) {

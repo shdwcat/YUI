@@ -57,6 +57,18 @@ arrange = function(available_size, viewport_size) {
 	return draw_size;
 }
 
+traverse = function(func, acc = undefined) {
+	
+	with self {
+		// allow the traverse function to change the acc itself
+		acc = func(acc) ?? acc;
+	}
+	
+	if template_item {
+		template_item.traverse(func, acc);
+	}
+}
+
 move = function(xoffset, yoffset) {
 	if template_item {
 		template_item.move(xoffset, yoffset);

@@ -169,6 +169,22 @@ onChildLayoutComplete = function(child) {
 	}
 }
 
+base_traverse = traverse;
+traverse = function(func, acc = undefined) {
+	
+	with self {
+		// allow the traverse function to change the acc itself
+		acc = func(acc) ?? acc;
+	}
+	
+	var i = 0; repeat array_length(internal_children) {
+		var child = internal_children[i++];
+		if instance_exists(child) {
+			child.traverse(func, acc);
+		}
+	}
+}
+
 move = function(xoffset, yoffset) {
 	// use base move, not border's move
 	base_move(xoffset, yoffset);

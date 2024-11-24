@@ -446,6 +446,18 @@ unload = function(unload_root = undefined) {
 	return unload_time;
 }
 
+traverse = function(func, acc = undefined) {
+	with self {
+		func(acc);
+	}
+}
+
+doTraverse = function(func, acc = undefined) {
+	// need to unbind the function from its scope
+	var f = method(undefined, func);
+	traverse(f, acc);
+}
+
 generateLayoutLog = function() {
 	yui_log("TODO: generate layout log");
 }
