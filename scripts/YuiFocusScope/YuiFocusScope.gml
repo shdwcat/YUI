@@ -87,7 +87,7 @@ function YuiFocusScope(root_item, parent) constructor {
 		var target = findFocusTarget();
 		if target {
 			target.focus();
-			return autofocus_target.focused;
+			return target.focused;
 		}
 		else {
 			yui_warning($"failed to autofocus in scope {id}");
@@ -98,7 +98,7 @@ function YuiFocusScope(root_item, parent) constructor {
 	unfocus = function(item) {
 		
 		if item != autofocus_target && doAutofocus() {
-			yui_log($"reset focus to autofocus target in scope {id}: {autofocus_target._id}");
+			yui_log($"reset focus to autofocus target in scope {id}");
 		}
 		else if parent {
 			yui_log($"looking for focus in parent scope {parent.id}");
