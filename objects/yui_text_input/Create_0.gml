@@ -47,8 +47,9 @@ move = function(xoffset, yoffset) {
 }
 
 left_click = function() {
-	if !enabled return
-	focus();
+	if enabled {
+		focus();
+	}
 }
 
 on_submit = function() {
