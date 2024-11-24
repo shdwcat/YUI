@@ -504,7 +504,7 @@ generateLayoutLog = function() {
 
 Inspectron()
 	.Button("Generate Focus Debug", generateFocusDebug).AtTop()
-	.Button("Generate Layout Log", generateLayoutLog).AtTop()
+	//.Button("Generate Layout Log", generateLayoutLog).AtTop()
 	.Section("yui_base")
 	.Checkbox(nameof(trace))
 	.Checkbox(nameof(is_cursor_layer))
