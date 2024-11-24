@@ -13,7 +13,29 @@ function YuiFocusScope(root_item, parent) constructor {
 	autofocus_target = undefined;
 	
 	// track this for easier debugging
-	id = root_item._id;
+	id = $"scope: {root_item._id}";
+	
+	function getInfo() {
+		is_focused = undefined;
+		if focused_item {
+			is_focused = is_instanceof(focused_item, YuiFocusScope)
+				? "is focus scope"
+				: focused_item.focused;
+		}
+		return {
+			is_focused,
+			focused_item: getFocusId(focused_item),
+			autofocus_target: getFocusId(autofocus_target),
+		}
+	}
+	
+	function getFocusId(item) {
+		if item {
+			return is_instanceof(item, YuiFocusScope)
+					? item.id
+					: item._id
+		}
+	}
 	
 	// used in yui_find_focus_item to check if the item is a valid match for this scope
 	function matches(other_item) {
@@ -28,19 +50,48 @@ function YuiFocusScope(root_item, parent) constructor {
 		focused_item = item;
 		focused_item.focused = true;
 		
+		if parent {
+			parent.focused_item = self;
+		}
+		
 		if focused_item.on_got_focus focused_item.on_got_focus();
 		
 		yui_log($"set focus for scope {id} to {item ? item._id : "undefined"}");
 	}
 	
+	findFocusTarget = function() {
+		// if something is actually focused, get that, otherwise fallback to the autofocus target
+		if focused_item {
+			if is_instanceof(focused_item, YuiFocusScope) {
+				return focused_item.findFocusTarget();
+			}
+			else if instance_exists(focused_item) {
+				return focused_item;
+			}
+		}
+		else if autofocus_target {
+			if is_instanceof(autofocus_target, YuiFocusScope) {
+				return autofocus_target.findFocusTarget();
+			}
+			else if instance_exists(autofocus_target) {
+				return autofocus_target;
+			}
+		}
+		else {
+			return undefined;
+		}
+	}
+	
 	// attempt to focus our current autofocus target
 	doAutofocus = function() {
-		if autofocus_target && instance_exists(autofocus_target) {
-			autofocus_target.focus();
+		var target = findFocusTarget();
+		if target {
+			target.focus();
 			return autofocus_target.focused;
 		}
 		else {
 			yui_warning($"failed to autofocus in scope {id}");
+			return false;
 		}
 	}
 	

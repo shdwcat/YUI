@@ -219,9 +219,12 @@ bind_values = function yui_base__bind_values() {
 	
 	// update focus state
 	focusable = enabled ? is_element_focusable : false;
-	if focusable && !was_visible {
-		// only autofocus if we just became visible
-		YuiCursorManager.tryAutofocus(id);
+	
+	// only autofocus if we just became visible
+	if !was_visible {
+		if focusable || is_focus_root {
+			YuiCursorManager.tryAutofocus(id, is_focus_root);
+		}
 	}
 	else if focused && !focusable {
 		focus_scope.unfocus(id);

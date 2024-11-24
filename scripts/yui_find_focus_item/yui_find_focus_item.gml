@@ -1,3 +1,5 @@
+#macro YUI_TRACE_FIND_FOCUS true
+
 enum YUI_FOCUS_DIRECTION {
 	UP = 1,
 	DOWN = 2,
@@ -112,7 +114,7 @@ function yui_find_focus_item(current_item, list, direction, precise = false) {
 			// if the target isn't focusable then get the scope's focus
 			closest_item = target.focusable
 				? target
-				: (target.focus_scope.focused_item ?? target.focus_scope.autofocus_target);
+				: target.focus_scope.findFocusTarget();
 		}
 		else if closest_item {
 			var encompasses_closest_item = rectangle_in_rectangle(
@@ -181,7 +183,8 @@ function yui_find_focus_item(current_item, list, direction, precise = false) {
 	var i = 0; repeat count {
 		var target = list[| i++];
 		
-		if current_item.trace yui_log($"checking wide {target._id} for scope {scope.id}");
+		if current_item.trace
+			yui_log($"checking wide {target._id} for scope {scope.id}");
 		
 		// the target must be focusable or a focus scope root
 		var is_valid = target.id != current_item.id && scope.matches(target)
@@ -236,7 +239,7 @@ function yui_find_focus_item(current_item, list, direction, precise = false) {
 			// if the target isn't focusable then get the scope's focus
 			closest_item = target.focusable
 				? target
-				: (target.focus_scope.focused_item ?? target.focus_scope.autofocus_target);
+				: target.focus_scope.findFocusTarget();
 		}
 		else if closest_item {
 			var encompasses_closest_item = rectangle_in_rectangle(
@@ -263,14 +266,18 @@ function yui_find_focus_item(current_item, list, direction, precise = false) {
 			if scope.root_item.focusable
 				return scope.root_item;
 			else {
-				yui_log($"target not found, attempting to navigate from scope root: {scope.root_item._id}");
+				if current_item.trace
+					yui_log($"target not found, attempting to navigate from scope root: {scope.root_item._id}");
+					
 				return yui_find_focus_item(scope.root_item, list, direction, precise);
 			}
 		}
 		// otherwise, try navigating from the parent scope
 		else if scope.parent {
 			if scope.parent.focused_item {
-				yui_log($"target not found, returning focused item from parent scope {scope.parent.id}");
+				if current_item.trace
+					yui_log($"target not found, returning focused item from parent scope {scope.parent.id}");
+					
 				return scope.parent.focused_item;
 			}
 		}

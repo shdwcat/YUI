@@ -91,6 +91,8 @@ setFocus = function(focus_item) {
 		focused_item.focused = false;
 	}
 	
+	// TODO: is this where focus scopes get checked before focusing or is that in yui_find_focus_item?
+	
 	focused_item = focus_item;
 	
 	if focused_item && instance_exists(focused_item) {
@@ -128,20 +130,29 @@ clearFocus = function() {
 	setFocus(undefined);
 }
 
-tryAutofocus = function(item) {
+tryAutofocus = function(target, is_focus_root) {
 	// NOTE: assumes item is focusable (checked at single callsite to this function)
 		
-	if item.autofocus || focused_item == undefined || !instance_exists(focused_item) {
-		if is_navigation_active {
-			setFocus(item);
+	if !is_focus_root {
+		// we will focus this item if it has autofocus: true OR there is no focused item at all
+		if target.autofocus || focused_item == undefined || !instance_exists(focused_item) {
+			if is_navigation_active {
+				setFocus(target);
+			}
 		}
 	}
 	
-	// TODO: should also support focus scope roots
-	if item.focus_scope.autofocus_target == undefined {
-		item.focus_scope.autofocus_target = item;
+	if is_focus_root {
+		var parent_scope = target.focus_scope.parent;
+		if parent_scope
+			parent_scope.autofocus_target ??= target.focus_scope;
+	}
+	else {
+		if target.focus_scope.autofocus_target == undefined {
+			target.focus_scope.autofocus_target = target;
 		
-		active_focus_scope ??= item.focus_scope;
+			active_focus_scope ??= target.focus_scope;
+		}
 	}
 }
 
