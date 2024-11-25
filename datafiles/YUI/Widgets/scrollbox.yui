@@ -121,7 +121,6 @@ resources:
       on_mouse_down:
         interaction: scrollbar_drag
         parameters:
-          trace: true
           on_position_changed: @@ e => $scroll_state.y = e.top * $scroll_state.info.y_max
 
   h_scroll_button:
@@ -133,5 +132,4 @@ resources:
       on_mouse_down:
         interaction: scrollbar_drag
         parameters:
-          trace: true
           on_position_changed: @@ e => $scroll_state.x = e.left * $scroll_state.info.x_max
