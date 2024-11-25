@@ -79,5 +79,6 @@ function yui_error() {
 }
 
 function yui_break(message = undefined) {
-	yui_log(message);
+	if message
+		yui_log(message);
 }
