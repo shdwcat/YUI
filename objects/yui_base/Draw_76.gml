@@ -23,8 +23,14 @@ if unload_now {
 var xxv = xoffset_value;
 var yxv = yoffset_value
 
-if xxv.is_live xxv.update(data_source);
-if yxv.is_live yxv.update(data_source);
+var update_x = false;
+var update_y = false;
+
+if xxv.is_live
+	update_x = xxv.update(data_source);
+
+if yxv.is_live
+	update_y = yxv.update(data_source);
 
 if parent {
 	xoffset = xxv.value + parent.xoffset;
@@ -35,8 +41,8 @@ else {
 	yoffset = yxv.value;
 }
 
-if xoffset != 0
+if xoffset != 0 || update_x
 	x = draw_size.x + xoffset;
 	
-if yoffset != 0
+if yoffset != 0 || update_y
 	y = draw_size.y + yoffset;
