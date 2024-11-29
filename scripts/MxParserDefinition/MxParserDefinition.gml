@@ -13,6 +13,7 @@ function MxParserDefinition() : GsplPrattParserDefinition(YS_TOKEN.EOF) construc
 	self.Set = YuiSetValue;
 	self.Conditional = YuiThenElseBinding;
 	self.Call = YuiCallFunction;
+	self.List = MxListExpression;
 	self.Indexer = YuiIndexBinding;
 	self.Subscript = YuiSubscript;
 	// feather restore GM2017
@@ -34,6 +35,9 @@ function MxParserDefinition() : GsplPrattParserDefinition(YS_TOKEN.EOF) construc
 	prefix(YS_TOKEN.IDENTIFIER, new MxIdentifierParselet());
 			
 	prefix(YS_TOKEN.LEFT_PAREN, new GsplGroupParselet(YS_TOKEN.RIGHT_PAREN));
+	
+	// list expressions
+	prefix(YS_TOKEN.LEFT_BRACKET, new GsplListParselet(YS_TOKEN.COMMA, YS_TOKEN.RIGHT_BRACKET));
 	
 	// prefix operators
 	prefixOperator(YS_TOKEN.MINUS, YS_PRECEDENCE.PREFIX);

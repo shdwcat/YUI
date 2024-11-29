@@ -12,6 +12,7 @@ function GsplPrattParser(tokens, definition) : GsplParserBase(tokens, gspl_wrap(
 	self.Set = definition.Set;
 	self.Conditional = definition.Conditional;
 	self.Call = definition.Call;
+	self.List = definition.List;
 	self.Subscript = definition.Subscript;
 	self.Indexer = definition.Indexer;
 

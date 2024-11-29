@@ -13,6 +13,7 @@ function GsplPrattParserDefinition(eof_token) constructor {
 	self.Set = undefined;
 	self.Conditional = undefined;
 	self.Call = undefined;
+	self.List = undefined;
 	self.Subscript = undefined;
 	self.Indexer = undefined;
 	
