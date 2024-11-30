@@ -42,6 +42,8 @@ build = function() {
 /// @param {struct} viewport_size
 arrange = function(available_size, viewport_size) {
 
+	x = available_size.x;
+	y = available_size.y;
 	draw_rect = available_size;
 	self.viewport_size = viewport_size;
 	
@@ -129,10 +131,12 @@ arrange = function(available_size, viewport_size) {
 	if mirror_x {
 		image_xscale = -image_xscale;
 		padded_rect.x += abs(sprite_width);
+		draw_size.x += abs(sprite_width);
 	}
 	if mirror_y {
 		image_yscale = -image_yscale;
 		padded_rect.y += abs(sprite_height);
+		draw_size.y += abs(sprite_height);
 	}
 	
 	// position at the padded rect corner so we can just draw at x/y
@@ -149,5 +153,6 @@ arrange = function(available_size, viewport_size) {
 
 Inspectron()
 	.Section("yui_image")
-	//.Sprite(nameof(sprite_index))
-	.SpritePicker(nameof(sprite_index));
+	.SpritePicker(nameof(sprite_index))
+	.Watch(nameof(sprite_width))
+	.Watch(nameof(sprite_height));

@@ -21,7 +21,7 @@ if unload_now {
 // a result of step logic will have been completed at this point
 
 var xxv = xoffset_value;
-var yxv = yoffset_value
+var yxv = yoffset_value;
 
 var update_x = false;
 var update_y = false;
@@ -41,8 +41,5 @@ else {
 	yoffset = yxv.value;
 }
 
-if xoffset != 0 || update_x
-	x = draw_size.x + xoffset;
-	
-if yoffset != 0 || update_y
-	y = draw_size.y + yoffset;
+x = draw_size.x + xoffset;
+y = draw_size.y + yoffset;
