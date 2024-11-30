@@ -23,7 +23,7 @@ function GsplPrattParser(tokens, definition) : GsplParserBase(tokens, gspl_wrap(
 		if prefix == undefined throw yui_error("Could not parse token:", token._literal);
 		
 		var left_expr = prefix.parse(self, token);
-		if left_expr[$ "optimize"] != undefined {
+		if is_struct(left_expr) && left_expr[$ "optimize"] != undefined {
 			left_expr = left_expr.optimize();
 		}
 		
@@ -33,7 +33,7 @@ function GsplPrattParser(tokens, definition) : GsplParserBase(tokens, gspl_wrap(
 			
 			var infix = definition.infix_parselets[token._type];
 			left_expr = infix.parse(self, left_expr, token);
-			if left_expr[$ "optimize"] != undefined {
+			if is_struct(left_expr) && left_expr[$ "optimize"] != undefined {
 				left_expr = left_expr.optimize();
 			}
 		}
