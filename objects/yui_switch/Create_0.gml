@@ -59,6 +59,10 @@ arrange = function(available_size, viewport_size) {
 	
 	if !case_item 
 		return sizeToDefault();
+	
+	// we need to constrain the draw size by our element size
+	// (border etc get this from padding logic)
+	var available_rect = element_size.constrainDrawSize(available_size, available_size);
 		
 	var desired_size = {
 		w: 0,
@@ -67,7 +71,7 @@ arrange = function(available_size, viewport_size) {
 	
 	if case_item {
 		is_arranging = true;
-		var content_size = case_item.arrange(available_size, viewport_size);
+		var content_size = case_item.arrange(available_rect, viewport_size);
 		is_arranging = false;
 		
 		desired_size.w += content_size.w;
@@ -107,6 +111,7 @@ traverse = function(func, acc = undefined) {
 
 base_move = move;
 move = function(xoffset, yoffset) {
+	base_move(xoffset, yoffset);
 	if case_item {
 		case_item.move(xoffset, yoffset);
 	}
