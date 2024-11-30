@@ -51,7 +51,7 @@ function YuiGridLayout(alignment, spacing) : YuiLayoutBase(alignment, spacing) c
 			// arrange it within the size
 			var item_size = item.arrange(possible_size, viewport_size);
 			
-			yui_log($"item_size for {i} was {item_size}");
+			//yui_log($"item_size for {i} was {item_size}");
 			
 			var item_bottom = item_size.y + item_size.h + row_spacing;
 			grid_bottom = max(grid_bottom, item_bottom);
