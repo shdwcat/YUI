@@ -66,7 +66,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	// look up the text style by name from the theme
 	text_style = theme.text_styles[$ props.text_style];
 	
-	font = props.font
+	font = props.font != undefined
 		? yui_bind(props.font, resources, slot_values)
 		: text_style.font;
 		

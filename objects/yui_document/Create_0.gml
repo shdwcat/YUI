@@ -25,9 +25,6 @@ root = undefined;
 // whether the document is being unloaded
 is_unloading = false;
 
-// simplifies logic in render items
-enabled = true
-
 // calculate the space we were given to draw in
 calcSize = function() {
 	if is_full_screen {
@@ -61,7 +58,6 @@ load = function() {
 	var element = document.root_element;
 
 	root = yui_make_render_instance(element, data_context);
-	root.parent = undefined;
 	root.arrange(draw_rect);
 }
 

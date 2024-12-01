@@ -209,31 +209,7 @@ bind_values = function yui_base__bind_values() {
 	var was_visible = visible;
 	visible = true;
 	
-	// calculate enabled state from parent and/or live value
-	var is_parent_enabled = parent ? parent.enabled : true;
-	if is_parent_enabled && enabled_value.is_live {
-		enabled_value.update(data_source);
-		enabled = enabled_value.value;
-	}
-	else {
-		enabled = is_parent_enabled;
-	}	
-	
-	// update focus state
-	focusable = enabled ? is_element_focusable : false;
-	
-	// only autofocus if we just became visible
 	if !was_visible {
-		if focusable || is_focus_root {
-			YuiCursorManager.tryAutofocus(id, is_focus_root);
-		}
-	}
-	else if focused && !focusable {
-		focus_scope.unfocus(id);
-	}
-	
-	if !was_visible {
-	
 		if on_visible_anim
 			beginAnimationGroup(on_visible_anim);
 	}
@@ -265,19 +241,53 @@ arrange = function(available_size, viewport_size) {
 	throw "arrange() not implemented on this type!";
 }
 
-process = function yui_base__process() {
+// bindable values/behavior that also depends on parent state go here
+// e.g. opacity of an element also depends on the opacity of the parent
+// NOTE: only executes if the element is visible
+process = function yui_base__process(became_visible) {
+	
+	
+	// calculate enabled state from parent and/or live value
+	var is_parent_enabled = parent ? parent.enabled : true;
+	if is_parent_enabled && enabled_value.is_live {
+		var enc = enabled_value.update(data_source);
+		if enc && trace
+			yui_break();
+		enabled = enabled_value.value;
+	}
+	else {
+		enabled = is_parent_enabled;
+	}	
+	
+	// update focus state
+	focusable = enabled ? is_element_focusable : false;
+	
+	// only autofocus if we just became visible (otherwise ensure we're unfocused)
+	if became_visible {
+		if focusable || is_focus_root {
+			YuiCursorManager.tryAutofocus(id, is_focus_root);
+		}
+	}
+	else if focused && !focusable {
+		focus_scope.unfocus(id);
+	}
 	
 	// update opacity
 	
 	if opacity_value.is_live opacity_value.update(data_source);
 		
 	var old_opacity = opacity;
-	
-	// update opacity every frame since it could be animated, including from the parent!
 	opacity = opacity_value.value * (parent ? parent.opacity : 1) * (1 - (!enabled * 0.5))
 	
 	// referenced by anything that needs to rebuild when opacity changes (e.g. text element)
 	opacity_changed = opacity != old_opacity;
+	
+	// trigger animations
+	
+	if became_visible {
+		if on_visible_anim
+			beginAnimationGroup(on_visible_anim);
+	}
 }
 
 move = function(xoffset, yoffset) {
@@ -514,7 +524,9 @@ Inspectron()
 	.Watch(nameof(depth))
 	.Watch(nameof(enabled))
 	.Watch(nameof(focusable))
+	.Watch(nameof(focused))
 	.Watch(nameof(opacity))
+	.Watch(nameof(highlight))
 	.Watch(nameof(xoffset))
 	.Watch(nameof(yoffset))
 	.Rect(nameof(x))

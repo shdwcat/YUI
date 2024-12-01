@@ -15,6 +15,9 @@ function yui_make_render_instance(yui_element, data, index = 0, depth_offset = 0
 	if instanceof(parent) == "instance"{
 		if object_index == yui_document {
 			var document = parent;
+			
+			// document doesn't have all the expected parent properties
+			parent = undefined;
 		}
 		else {
 			var document = parent.document;
@@ -42,6 +45,7 @@ function yui_make_render_instance(yui_element, data, index = 0, depth_offset = 0
 		bind_values();
 		if visible {
 			build();
+			process(/* became_visible */ true);
 			
 			// NOTE: is this supposed to arrange? arrange will happen later...
 			if on_arrange_anim
