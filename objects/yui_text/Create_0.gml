@@ -28,10 +28,10 @@ active_region = undefined;
 override_text = undefined;
 
 onLayoutInit = function() {
-	text_value = new YuiBindableValue(yui_element.text);
+	text_value = new YuiBindableValue(yui_element.text, yui_element.getDefaultAnim("text"));
 	animatable.text = text_value;
 	
-	color_value = new YuiBindableValue(yui_element.color);
+	color_value = new YuiBindableValue(yui_element.color, yui_element.getDefaultAnim("color"));
 	animatable.color = color_value;
 	
 	highlight_color = layout_props.highlight_color;

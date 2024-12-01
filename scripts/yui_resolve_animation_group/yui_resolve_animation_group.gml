@@ -1,6 +1,6 @@
 function yui_resolve_animation_group(anim_group_props, resources, slot_values) {
 	
-	// automatically turn an array of animation groups into an AnimationSequence
+	// automatically turn an array of animation groups into an AnimationGroupSequence
 	if is_array(anim_group_props) {
 		var sequence_props = { animations: anim_group_props };
 		return new YuiAnimationGroupSequence(sequence_props, resources, slot_values);

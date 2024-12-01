@@ -11,9 +11,9 @@ event_inherited();
 
 onLayoutInit = function() {
 	
-	frame_value = new YuiBindableValue(yui_element.frame);
-	angle_value = new YuiBindableValue(yui_element.angle);
-	blend_color_value = new YuiBindableValue(yui_element.blend_color);
+	frame_value = new YuiBindableValue(yui_element.frame, yui_element.getDefaultAnim("frame"));
+	angle_value = new YuiBindableValue(yui_element.angle, yui_element.getDefaultAnim("angle"));
+	blend_color_value = new YuiBindableValue(yui_element.blend_color, yui_element.getDefaultAnim("blend_color"));
 	
 	animatable.frame = frame_value;
 	animatable.angle = angle_value;
@@ -25,7 +25,7 @@ build = function() {
 		sprite_index = bound_values.sprite;
 	}
 	else {
-		// NOTE: not using hideElement() because this is just to not draw anything when there is now sprite
+		// NOTE: not using hideElement() because this is just to not draw anything when there is no sprite
 		visible = false;
 		exit;
 	}

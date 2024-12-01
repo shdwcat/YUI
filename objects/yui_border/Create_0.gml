@@ -38,7 +38,8 @@ onLayoutInit = function() {
 		border_thickness = layout_props.border_thickness;
 	}
 	
-	background_value = new YuiBindableValue(yui_element.background);
+	background_value = new YuiBindableValue(yui_element.background, yui_element.getDefaultAnim("background"));
+	animatable.background = background_value
 	
 	if layout_props.border_focus_color != undefined {
 		has_focus_color = true;

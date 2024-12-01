@@ -131,9 +131,11 @@ initLayout = function() {
 	data_source_value = new YuiBindableValue(yui_element.data_source);
 	enabled_value = new YuiBindableValue(yui_element.enabled);
 	visible_value = new YuiBindableValue(yui_element.visible);
-	opacity_value = new YuiBindableValue(yui_element.opacity);
-	xoffset_value = new YuiBindableValue(yui_element.xoffset);
-	yoffset_value = new YuiBindableValue(yui_element.yoffset);
+	
+	// animatable values
+	opacity_value = new YuiBindableValue(yui_element.opacity, yui_element.getDefaultAnim("opacity"));
+	xoffset_value = new YuiBindableValue(yui_element.xoffset, yui_element.getDefaultAnim("xoffset"));
+	yoffset_value = new YuiBindableValue(yui_element.yoffset, yui_element.getDefaultAnim("yoffset"));
 	
 	// map of animatable properties to the YuiBindableValues
 	animatable = {

@@ -1,7 +1,7 @@
 /// @description here
 function yui_resolve_animation(anim_props, resources, slot_values) {
 	if is_array(anim_props) {
-		var sequence = new YuiAnimationGroupSequence({ animations: anim_props}, resources, slot_values);
+		var sequence = new YuiAnimationGroupSequence({ animations: anim_props }, resources, slot_values);
 		return sequence;
 	}
 	else if is_struct(anim_props) {
@@ -9,8 +9,8 @@ function yui_resolve_animation(anim_props, resources, slot_values) {
 			var anim = new YuiCurveAnimation(anim_props, resources, slot_values);
 			return anim;
 		}
-		else if anim_props.type == "color_curve" {
-			var anim = new YuiColorCurveAnimation(anim_props, resources, slot_values);
+		else if anim_props.type == "rgb_curve" {
+			var anim = new YuiRGBCurveAnimation(anim_props, resources, slot_values);
 			return anim;
 		}
 		else if anim_props.type == "hsv_curve" {

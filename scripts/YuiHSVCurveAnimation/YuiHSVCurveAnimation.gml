@@ -54,7 +54,7 @@ function YuiHSVCurveAnimation(props, resources, slot_values)
 		v_stop = undefined;
 	}
 
-	static compute = function(curve_pos, raw_color, start_value, start_time) {
+	static compute = function(curve_pos, base_color, start_value, start_time) {
 		
 		var curve_value = animcurve_channel_evaluate(value_channel, curve_pos);
 		
@@ -63,9 +63,9 @@ function YuiHSVCurveAnimation(props, resources, slot_values)
 		var s1 = s_start ?? color_get_saturation(start_value);
 		var v1 = v_start ?? color_get_value(start_value);
 		
-		var h2 = h_stop ?? color_get_hue(raw_color);
-		var s2 = s_stop ?? color_get_saturation(raw_color);
-		var v2 = v_stop ?? color_get_value(raw_color)
+		var h2 = h_stop ?? color_get_hue(base_color);
+		var s2 = s_stop ?? color_get_saturation(base_color);
+		var v2 = v_stop ?? color_get_value(base_color)
 		
 		// see https://stackoverflow.com/a/56367615 for HSV lerp logic
 		

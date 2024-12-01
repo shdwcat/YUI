@@ -58,14 +58,14 @@ function YuiRGBCurveAnimation(props, resources, slot_values)
 		blue_stop = undefined;
 	}
 
-	static compute = function(curve_pos, raw_color, start_value, start_time) {
+	static compute = function(curve_pos, base_color, start_value, start_time) {
 		
 		var curve_value = animcurve_channel_evaluate(value_channel, curve_pos);
 		
 		// default behavior when from/to aren't present is to lerp from the previous value to the raw color
-		var lerp_r = lerp(red_start ?? color_get_red(start_value), red_stop ?? color_get_red(raw_color), curve_value);
-		var lerp_g = lerp(green_start ?? color_get_green(start_value), green_stop ?? color_get_green(raw_color), curve_value);
-		var lerp_b = lerp(blue_start ?? color_get_blue(start_value), blue_stop ?? color_get_blue(raw_color), curve_value);
+		var lerp_r = lerp(red_start ?? color_get_red(start_value), red_stop ?? color_get_red(base_color), curve_value);
+		var lerp_g = lerp(green_start ?? color_get_green(start_value), green_stop ?? color_get_green(base_color), curve_value);
+		var lerp_b = lerp(blue_start ?? color_get_blue(start_value), blue_stop ?? color_get_blue(base_color), curve_value);
 		
 		var color = make_color_rgb(lerp_r, lerp_g, lerp_b);
 		

@@ -47,10 +47,10 @@ function YuiCurveAnimation(props, resources, slot_values)
 	}
 	
 	static base_init = init;
-	static init = function(data) {
+	static init = function(data, _from = 0, _to = 1) {
 		base_init(data);
-		from = yui_resolve_binding(bindings.from, data) ?? 0;
-		to = yui_resolve_binding(bindings.to, data) ?? 1;
+		from = yui_resolve_binding(bindings.from, data) ?? _from;
+		to = yui_resolve_binding(bindings.to, data) ?? _to;
 		
 		curve = yui_resolve_binding(bindings.curve, data);
 		if is_string(curve) {
@@ -67,7 +67,7 @@ function YuiCurveAnimation(props, resources, slot_values)
 		value_channel = animcurve_get_channel(curve, channel_name_or_index)
 	}
 
-	static compute = function(curve_pos, raw_value, start_value, start_time) {
+	static compute = function(curve_pos, base_value, start_value, start_time) {
 		
 		var curve_value = animcurve_channel_evaluate(value_channel, curve_pos);
 				
@@ -83,17 +83,17 @@ function YuiCurveAnimation(props, resources, slot_values)
 	}
 	
 	// default lambda version
-	static evalEffect = function(raw_value, curve_value, state) {
-		return effect.call(/* no data */, [raw_value, curve_value, state])
+	static evalEffect = function(base_value, curve_value, state) {
+		return effect.call(/* no data */, [base_value, curve_value, state])
 	}
 	
-	static computeEffect = function(curve_pos, raw_value, start_value, start_time, state) {
+	static computeEffect = function(curve_pos, base_value, start_value, start_time, state) {
 		var curve_value = animcurve_channel_evaluate(value_channel, curve_pos);
 				
 		// lerp the curve value along the start/stop range
 		var lerp_value = lerp(from ?? start_value, to, curve_value);
 		
-		var effect_value = evalEffect(raw_value, lerp_value, state);
+		var effect_value = evalEffect(base_value, lerp_value, state);
 		
 		//yui_log("effect value is:", effect_value);
 		return effect_value;

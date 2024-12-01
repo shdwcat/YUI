@@ -131,11 +131,16 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		is_visible_live = yui_is_live_binding(visible);
 		is_tooltip_live = yui_is_live_binding(tooltip);
 		
+		default_anim = undefined;
+		
 		on_visible_anim = undefined;
 		on_arrange_anim = undefined;
 		on_unloading_anim = undefined;
 		
 		if props.animate != undefined {
+			// these are individual animation curves for when a bound animatable value changes
+			default_anim = props.animate[$"default"];
+			
 			var on_visible_animation = props.animate[$"on_visible"];
 			if on_visible_animation != undefined {
 				on_visible_anim = yui_resolve_animation_group(on_visible_animation, resources, slot_values);
@@ -158,6 +163,14 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 			|| yui_is_live_binding(size.h)
 	
 		tooltip_element = undefined;
+	}
+	
+	static getDefaultAnim = function(anim_name) {
+		if default_anim {
+			var anim = default_anim[$ anim_name];
+			if anim
+				return yui_resolve_animation(anim, resources, slot_values);
+		}
 	}
 	
 	static createTooltip = function() {
