@@ -545,6 +545,7 @@
     {"id":{"name":"__shd_scribble_bake_outline_8dir","path":"shaders/__shd_scribble_bake_outline_8dir/__shd_scribble_bake_outline_8dir.yy",},},
     {"id":{"name":"yui_icon_128","path":"sprites/yui_icon_128/yui_icon_128.yy",},},
     {"id":{"name":"YuiDocument","path":"scripts/YuiDocument/YuiDocument.yy",},},
+    {"id":{"name":"YuiEventHandler","path":"scripts/YuiEventHandler/YuiEventHandler.yy",},},
     {"id":{"name":"input_vibrate_get_pause","path":"scripts/input_vibrate_get_pause/input_vibrate_get_pause.yy",},},
     {"id":{"name":"curveExpoInOut","path":"animcurves/curveExpoInOut/curveExpoInOut.yy",},},
     {"id":{"name":"yui_ignore_warning","path":"scripts/yui_ignore_warning/yui_ignore_warning.yy",},},

@@ -1,5 +1,5 @@
 /// @description starts an interaction if it is valid to do so (via checking interaction.canStart())
-function yui_try_start_interaction(interaction_name, source_data, event) {
+function yui_try_start_interaction(interaction_name, source_data, event, item) {
 	
 	if !is_string(interaction_name) {
 		throw yui_error("yui_try_start_interaction() - interaction_name must be a string");
@@ -27,10 +27,11 @@ function yui_try_start_interaction(interaction_name, source_data, event) {
 	
 	yui_log($"starting {interaction.props.type} interaction");
 	
-	var element = interaction.start(source_data, event, id);
+	var element = interaction.start(source_data, event, item);
 	if element {
-		YuiCursorManager.visual_item = yui_make_render_instance(element, interaction, , 100);
-		YuiCursorManager.visual_item.parent = undefined;
+		with (item) {
+			YuiCursorManager.visual_item = yui_make_render_instance(element, interaction, , 100);
+		}
 		
 		var draw_rect = {
 			x: device_mouse_x_to_gui(0),

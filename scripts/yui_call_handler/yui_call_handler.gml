@@ -1,34 +1,22 @@
-/// @description calls a YUI event handler, resolving bindings as needed
+/// @description calls a YUI event handler
 /// @param handler - the event handler to call
-/// @param args - the args to pass to the handler function
+/// @param args - the args to pass to the handler function (only used by lambdas)
 /// @param data - the data for any bindings
 function yui_call_handler(handler, args, data) {
 	
 	if handler == undefined {
-		yui_warning("Trying to handle undefined event");
+		yui_warning("Trying to call undefined event handler");
 		return;
 	}
-	
-	// we might have an array of handlers, which we can resolve sequentially
-	if is_array(handler) {
+	else if is_array(handler) {
+		// meed to support calling an array directly until widgets have dedicated
+		// `events` support with proper merging for inherited widgets
 		var i = 0; repeat array_length(handler) {
-			yui_call_handler(handler[i++], args, data);
+			var handler_item = handler[i++];
+			handler_item.call(data, args, self);
 		}
-		return;
-	}
-	
-	if variable_struct_exists(handler, "interaction") {
-		var did_start = yui_try_start_interaction(handler.interaction, data, handler);
-		return did_start;
-	}
-	else if yui_is_call(handler) {
-		// e.g. '@@ some_function(arg1, arg2, etc)'
-		handler.resolve(data);
-	}
-	else if yui_is_lambda(handler) {
-		handler.call(data, args);
 	}
 	else {
-		yui_error("unsupported event handler instance");
+		return handler.call(data, args, self);
 	}
 }

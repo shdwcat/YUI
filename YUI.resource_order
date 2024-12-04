@@ -403,6 +403,7 @@
     {"name":"__shd_scribble_bake_outline_8dir","order":2,"path":"shaders/__shd_scribble_bake_outline_8dir/__shd_scribble_bake_outline_8dir.yy",},
     {"name":"yui_icon_128","order":4,"path":"sprites/yui_icon_128/yui_icon_128.yy",},
     {"name":"YuiDocument","order":25,"path":"scripts/YuiDocument/YuiDocument.yy",},
+    {"name":"YuiEventHandler","order":4,"path":"scripts/YuiEventHandler/YuiEventHandler.yy",},
     {"name":"input_vibrate_get_pause","order":3,"path":"scripts/input_vibrate_get_pause/input_vibrate_get_pause.yy",},
     {"name":"curveExpoInOut","order":16,"path":"animcurves/curveExpoInOut/curveExpoInOut.yy",},
     {"name":"yui_ignore_warning","order":7,"path":"scripts/yui_ignore_warning/yui_ignore_warning.yy",},
