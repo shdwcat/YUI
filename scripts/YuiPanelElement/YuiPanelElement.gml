@@ -63,9 +63,10 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	count = yui_bind_and_resolve(props.count, resources, slot_values);
 	reverse = yui_bind_and_resolve(props.reverse, resources, slot_values);
+	spacing = yui_bind_and_resolve(props.spacing, resources, slot_values);
 	
 	var make_layout = yui_resolve_layout(layout_type);
-	layout = new make_layout(alignment, props.spacing, size);
+	layout = new make_layout(alignment, spacing, size);
 	layout.trace = props.trace;
 	
 	resolveBackgroundAndBorder();

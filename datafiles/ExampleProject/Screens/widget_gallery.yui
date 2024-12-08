@@ -99,7 +99,7 @@ root:
               size: { w: 140, h: 20 }
               value: @slider_value
               background: white
-              meter_blend_color: blue
+              meter_blend_color: #227711
 
         - type: panel
           id: col2

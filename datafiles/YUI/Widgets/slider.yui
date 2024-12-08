@@ -27,6 +27,7 @@ resources:
 
       type: panel
       layout: $orientation
+      spacing: 5
       events:
         on_mouse_wheel_down: $on_value_changed(~max($value - $wheel_increment, $min))
         on_mouse_wheel_up: $on_value_changed(~min($value + $wheel_increment, $max))
@@ -34,7 +35,6 @@ resources:
 
         - type: text
           text: $min
-          padding: [0,0,8,0]
 
         - type: panel
           layout: canvas
@@ -44,32 +44,37 @@ resources:
             // slider thumb
             - type: button
               padding: 0
-              xoffset: $value / ($max - $min) * ($slider_size.w - $thumb_size.w + 10) - 10
+              xoffset: @@ ($value - $min) / ($max - $min) * ($slider_size.w)
               background: $thumb_background
               size: $thumb_size
               events:
                 on_mouse_down:
                   interaction: slider_drag
                   parameters:
-                    on_position_changed: @@ e => $on_value_changed(e.left * ($max - $min))
+                    on_position_changed:
+                      - @@ e => $on_value_changed((e.left * ($max - $min)) + $min)
+                      //- @@ e => ~yui_log(e.left)
                     on_drag_end: @@ e => $on_drag_end(e.left * ($max - $min))
 
             // slider line
             - type: border
               canvas:
-                left: -5
-                right: 5
+                left: $thumb_size.w / 2
+                right: $thumb_size.w / -2
                 center: v
               background: $line_color
               size: { h: 2, w: stretch }
 
         - type: text
+          xoffset: $thumb_size.w
           text: $max
 
         - type: text
+          xoffset: $thumb_size.w
           text: "-"
           visible: $show_value
 
         - type: text
+          xoffset: $thumb_size.w
           text: $value |> ~string_format(0, 0) // format as a whole number with no decimals
           visible: $show_value

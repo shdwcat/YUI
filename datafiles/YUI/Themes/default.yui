@@ -90,6 +90,10 @@ theme:
       item_background: &control_border
       item_highlight_alpha: 0.5
 
+    meter_bar:
+      border_color: &control_border
+      padding: 1
+
     slider:
       thumb_background: &focus_border
       line_color: &control_border

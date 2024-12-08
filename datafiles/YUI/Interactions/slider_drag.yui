@@ -2,6 +2,8 @@ id: slider_drag
 file_type: interaction
 type: element_drag
 
+mode: element
 normalized: true
+
 condition: null
 on_position_changed: null

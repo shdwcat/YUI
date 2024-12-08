@@ -20,6 +20,6 @@ resources:
         sprite: $meter_sprite
         blend_color: $meter_blend_color
         size:
-          w: $value / ($max - $min),
+          w: @@ ($value |> ~min($max)) / ($max - $min),
           w_type: proportional
           h: stretch

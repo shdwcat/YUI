@@ -6,7 +6,7 @@ function YuiElementDrag(_props, _resources) constructor {
 		id: undefined,
 		type: "element_drag",
 		
-		clamp_to_size: true,
+		clamp_to_size: true, // restrict drag position to within the parent's size
 		
 		mode: "point", // "point" or "element"
 		direct: false, // whether to directly move the target element
@@ -53,8 +53,8 @@ function YuiElementDrag(_props, _resources) constructor {
 		var gui_y = device_mouse_y_to_gui(0);
 		
 		// cursor position relative to the target
-		relative_x = gui_x - target.x;
-		relative_y = gui_y - target.y;
+		cursor_offset_x = gui_x - target.x;
+		cursor_offset_y = gui_y - target.y;
 		
 		event = {
 			source: target.id,
@@ -72,26 +72,32 @@ function YuiElementDrag(_props, _resources) constructor {
 		var relative_left = cursor_pos.x - parent_size.x;
 		var relative_top = cursor_pos.y - parent_size.y;
 		
-		var clamp_w = parent_size.w;
-		var clamp_h = parent_size.h;
-		
+		// in element mode, position by the corner of the target, not the position of the cursor
 		if props.mode == "element" {
-			relative_left -= relative_x;
-			relative_top -= relative_y;
-			clamp_w -= target.draw_size.w;
-			clamp_h -= target.draw_size.h;
+			relative_left -= cursor_offset_x;
+			relative_top -= cursor_offset_y;
 		}
 		
+		// if clamping, restrict the coords to the inside of the parent
 		if props.clamp_to_size {
+		
+			var clamp_w = parent_size.w;
+			var clamp_h = parent_size.h;
+			
+			// TODO: scrollbar needs some way to factor out the scrollbar thumb
+			// since it can't offset it outside the length like Slider does
+			
 			relative_left = clamp(relative_left, 0, clamp_w);
 			relative_top = clamp(relative_top, 0, clamp_h);
 		}
 		
+		// if normalizing, calculate the position as a ratio of the actual position to the containing size
 		if props.normalized {
 			relative_left = relative_left / parent_size.w;
 			relative_top = relative_top / parent_size.h;
 		}
 		
+		// calculate the coordinate differences stince the last frame
 		event.x_diff = event.left == undefined ? 0 : relative_left - event.left;
 		event.y_diff = event.top == undefined ? 0 : relative_top - event.top;
 		
@@ -131,8 +137,8 @@ function YuiElementDrag(_props, _resources) constructor {
 		target = undefined;
 		parent = undefined;
 		event = undefined;
-		relative_x = undefined;
-		relative_y = undefined;
+		cursor_offset_x = undefined;
+		cursor_offset_y = undefined;
 		on_position_changed = undefined;
 		on_drag_end = undefined;
 	}
