@@ -2,6 +2,7 @@
 function yui_register_events(events) {
 	if events.on_mouse_down != undefined {
 		left_pressed = function() {
+			if !enabled return;
 			var source = self;
 			var args = {
 				source: source,
@@ -13,6 +14,7 @@ function yui_register_events(events) {
 	
 	if events.on_mouse_up != undefined {
 		left_click = function() {
+			if !enabled return;
 			var source = self;
 			var args = {
 				source: source,
@@ -24,6 +26,11 @@ function yui_register_events(events) {
 	
 	if events.on_click != undefined {
 		left_click = function() {
+			if !enabled return;
+			
+			if focusable
+				focus();
+			
 			var source = self;
 			var args = {
 				source: source,
@@ -35,6 +42,7 @@ function yui_register_events(events) {
 	
 	if events.on_right_click != undefined {
 		right_click = function() {
+			if !enabled return;
 			var source = self;
 			var args = {
 				source: source,
@@ -46,6 +54,11 @@ function yui_register_events(events) {
 	
 	if events.on_double_click != undefined {
 		left_double_click = function() {
+			if !enabled return;
+			
+			if focusable
+				focus();
+			
 			var source = self;
 			var args = {
 				source: source,
@@ -60,6 +73,7 @@ function yui_register_events(events) {
 	
 	if events.on_mouse_wheel_up != undefined {
 		on_mouse_wheel_up = function() {
+			if !enabled return;
 			var source = self;
 			var args = {
 				source: source,
@@ -70,6 +84,7 @@ function yui_register_events(events) {
 	
 	if events.on_mouse_wheel_down != undefined {
 		on_mouse_wheel_down = function() {
+			if !enabled return;
 			var source = self;
 			var args = {
 				source: source,
@@ -77,6 +92,8 @@ function yui_register_events(events) {
 			yui_call_handler(events.on_mouse_wheel_down, [args], data_source);
 		}
 	}
+	
+	// should the rest of these return if disabled?
 	
 	if events.on_hover_changed != undefined {
 		on_hover_changed = function() {
