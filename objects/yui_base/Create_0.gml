@@ -256,7 +256,7 @@ process = function yui_base__process(became_visible) {
 		enabled = enabled_value.value;
 	}
 	else {
-		enabled = is_parent_enabled;
+		enabled = is_parent_enabled && enabled_value.value;
 	}	
 	
 	// update focus state
