@@ -5,6 +5,9 @@ event_inherited();
 
 has_content_item = false;
 
+recycling = false;
+recycling_lookup = undefined;
+
 layout = undefined;
 internal_children = [];
 is_arranging = false;
@@ -25,6 +28,19 @@ border_onLayoutInit = onLayoutInit;
 onLayoutInit = function() {
 	border_onLayoutInit();
 	layout = layout_props.layout;
+	recycling = layout_props.recycling;
+	recycling_lookup = ds_map_create();
+}
+
+logChildrenData = function(show_index) {
+	var datas = show_index
+		? array_map(internal_children, function(i, index) {
+			return  $"{i.data_context} idx:{i.item_index}";
+		})
+		: array_map(internal_children, function(i, index) {
+			return i.data_context;
+		});
+	yui_log($"internal children data: {datas}")
 }
 
 border_build = build;
@@ -42,67 +58,165 @@ build = function yui_panel__build() {
 	var excess_count = previous_count - display_count;
 	
 	//if trace
-	//	DEBUG_BREAK_YUI
+	//	yui_break();
 	
-	// resize the array if we need more room
-	if display_count > previous_count {
-		// TODO: this needs to cleanup the excess items or they will be orphaned
-		array_resize(internal_children, display_count);
-	}
-	var i = 0; repeat display_count {
-				
-		var child = internal_children[i];
-		var exists = child != 0;
+	if yui_element.uses_template && recycling {
 		
-		var data_index = layout_props.reverse ? child_count - i - 1 : i;
+		// add case - just build a new item for anything not found
+		// data [1, 2, A, 4, 5]
+		// elem [1, 2, 4, 5]
 		
-		if exists {
-			// TODO: if the render item type doesn't match, we need to recreate
-			// currently that's not possible so we won't worry about it
-			var new_data = yui_element.uses_template
-				? bound_values.data_items[data_index]
-				: bound_values.data_items;
+		// remove case - find the existing item for the data and swap
+		// (so that existing item gets cleaned up later if not re-used)
+		// data [1, 2, 3, 4]
+		// elem [1, 2, A, 3, 4]
+		
+		// swap case - swapping works fine because existing items have been preserved in the recycling_lookup
+		// data [1, 2, A, B]
+		// elem [1, 2, B, A]
+		
+		// map the previous children by their data_context
+		ds_map_clear(recycling_lookup);
+		var i = 0; repeat previous_count {
+			var child = internal_children[i++];
+			var child_data = child.data_context;
+			if child_data == undefined
+				continue;
+			
+			// maybe it's okay to just continue here? or somehow include an index
+			if ds_map_exists(recycling_lookup, child_data)
+				throw yui_error("Panel recycling mode is only supported for data sets where all items are unique");
 				
-			// check if we need to rebuild
-			child.rebuild = child.data_context != new_data;
-			if child.rebuild {
-				child.data_context = new_data;
-			}
-			//tracelog("replacing child at", i, old.id, "with", child.data_context.id);
+			recycling_lookup[? child_data] = child;
 		}
-		else {
-			if yui_element.uses_template {
-				var item_element =  yui_element.item_element;
-				var data = bound_values.data_items[data_index];
+		
+		//if trace {
+		//	yui_log("--- before update ---");
+		//	yui_log($"data items: {bound_values.data_items}");
+		//	logChildrenData();
+		//	yui_log("---");
+		//}
+		
+		// now loop through, and try to match to existing items by data
+		var item_element = yui_element.item_element;
+		var data_items = bound_values.data_items;
+		var insertion_count = 0;
+		var i = 0; repeat display_count {
+			var data_index = layout_props.reverse ? child_count - i - 1 : i;
+			var new_data = data_items[data_index];
+			
+			var item_at_index = data_index < previous_count
+				? internal_children[data_index]
+				: undefined;
+			var item_for_data = recycling_lookup[? new_data];
+			
+			if item_for_data == undefined {
+				// no match, insert new item
+			
+				// create the child render object
+				var child = yui_make_render_instance(item_element, new_data, i);
+				
+				//if trace
+				//	yui_log($"inserted item {new_data} at position {i}");
+
+				// insert it in our internal children array
+				array_insert(internal_children, i, child);
+				excess_count += 1;
+				insertion_count += 1;
+				
+				//logChildrenData();
+			}
+			else if item_for_data != item_at_index {
+				// found match at wrong index, swap with the correct item
+				
+				var item_for_data_index = item_for_data.item_index + insertion_count;
+				
+				if item_for_data_index == i
+					yui_break();
+				
+				//if trace
+				//	yui_log($"swapping correct item {new_data} at position {item_for_data_index} with item {item_at_index.data_context} at position {i}");
+				
+				// move the old item to the correct item's previous position
+				internal_children[item_for_data_index] = item_at_index;
+				item_at_index.item_index = item_for_data_index;
+				
+				// put the correct item in this place
+				internal_children[i] = item_for_data;
+				item_for_data.item_index = i;
+				
+				//logChildrenData();
 			}
 			else {
-				var item_element =  yui_element.item_elements[data_index];
-				var data = bound_values.data_items;
+				// correctly placed but might need item index update if something was inserted before
+				item_at_index.item_index = i;
 			}
-			
-			// create the child render object
-			var child = yui_make_render_instance(item_element, data, i);
-			
-			
-			//tracelog("creating child at", i, child.data_context[$"id"], "id:", child.id);
-
-			// track it in our internal children array
-			internal_children[i] = child;
+			i++;
 		}
-		i++;
+	}
+	else {
+		// resize the array if we need more room
+		if display_count > previous_count {
+			array_resize(internal_children, display_count);
+		}
+		var i = 0; repeat display_count {
+				
+			var child = internal_children[i];
+			var exists = child != 0;
+		
+			var data_index = layout_props.reverse ? child_count - i - 1 : i;
+		
+			if exists {
+				// TODO: if the render item type doesn't match, we need to recreate
+				// currently that's not possible so we won't worry about it
+				var new_data = yui_element.uses_template
+					? bound_values.data_items[data_index]
+					: bound_values.data_items;
+				
+				// check if we need to rebuild
+				child.rebuild = child.data_context != new_data;
+				if child.rebuild {
+					child.data_context = new_data;
+				}
+			}
+			else {
+				if yui_element.uses_template {
+					var item_element =  yui_element.item_element;
+					var data = bound_values.data_items[data_index];
+				}
+				else {
+					var item_element =  yui_element.item_elements[data_index];
+					var data = bound_values.data_items;
+				}
+			
+				// create the child render object
+				var child = yui_make_render_instance(item_element, data, i);
+
+				// track it in our internal children array
+				internal_children[i] = child;
+			}
+			i++;
+		}
 	}
 	
 	// clean up excess internal_children
 	if excess_count > 0 {
 		repeat excess_count {
 			var excess_child = internal_children[i++];
-			//tracelog("destroying excess child at", i, excess_child.data_context.id, "id: ", excess_child.id);
+			//yui_log($"disposed excess_child ({excess_child.data_context}) {excess_child.id}");
 			excess_child.unload();
 		}
 		
 		// resize the array to the new count
 		array_resize(internal_children, display_count);
 	}
+	
+	//if trace && recycling {
+	//	yui_log("");
+	//	logChildrenData(true);
+	//	yui_log("=======================");
+	//	yui_log("");
+	//}
 }
 
 /// @param {struct} available_size
@@ -119,7 +233,7 @@ arrange = function yui_panel__arrange(available_size, viewport_size) {
 	}
 	
 	//if trace {
-	//	DEBUG_BREAK_YUI;
+	//	yui_break();
 	//}
 	
 	var padding = layout_props.padding;

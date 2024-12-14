@@ -46,10 +46,6 @@ function yui_make_render_instance(yui_element, data, index = 0, depth_offset = 0
 		if visible {
 			build();
 			process(/* became_visible */ true);
-			
-			// NOTE: is this supposed to arrange? arrange will happen later...
-			if on_arrange_anim
-				beginAnimationGroup(on_arrange_anim);
 		}
 	}
 	

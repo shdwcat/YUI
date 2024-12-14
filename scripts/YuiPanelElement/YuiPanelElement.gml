@@ -5,8 +5,6 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		
 		// layout
 		layout: "vertical",
-		reverse: false, // when true, shows items in reverse order
-		count: undefined, // max number of items to show (applies after reverse)
 		padding: 0,
 		spacing: undefined,
 		alignment: "default",
@@ -26,10 +24,17 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		// option B: bind the element list to data, and use a template to render each element
 		template: undefined, // the template to use when rendering elements from the path
 		
+		// ===== non-template only =====
 		// child elements (and sub-children will be indexed by their positiin in this panel
 		// NOTE: setting 'indexed: true' on a sub-panel will replace this index
 		// NOTE: does not work for template mode
 		indexed: false,
+		
+		// ===== template only =====
+		// when true, will attempt to re-use existing items according to their data rather than position
+		recycling: false,
+		count: undefined, // max number of items to show (applies after reverse)
+		reverse: false, // when true, shows items in reverse order
 		
 		// allows binding slots at panel scope instead of item scope
 		bind_slot_scope: undefined,
@@ -61,6 +66,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	// live binding this is not (yet?) supported, but this enables $slot support
 	layout_type = yui_bind(props.layout, resources, slot_values);
 	
+	recycling = props.recycling;
 	count = yui_bind_and_resolve(props.count, resources, slot_values);
 	reverse = yui_bind_and_resolve(props.reverse, resources, slot_values);
 	spacing = yui_bind_and_resolve(props.spacing, resources, slot_values);
@@ -124,6 +130,7 @@ function YuiPanelElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 			layout,
 			reverse,
 			count,
+			recycling,
 			// border
 			border_color,
 			border_thickness: props.border_thickness,
