@@ -42,7 +42,7 @@ function YsSetParselet(precedence)
 		else if expr_type = "YuiIndexBinding" {
 			// needs special casing since we can't set array indexes the same way as struct variables
 			var index = left_expr.index;
-			left_expr = left_expr.left_expr;
+			left_expr = left_expr.left;
 			var right_expr = parser.parseExpression(precedence);
 			return new YuiSetIndex(left_expr, index, right_expr);
 		}
