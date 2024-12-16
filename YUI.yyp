@@ -652,6 +652,7 @@
     {"id":{"name":"yui_resolve_interaction","path":"scripts/yui_resolve_interaction/yui_resolve_interaction.yy",},},
     {"id":{"name":"input_max_value","path":"scripts/input_max_value/input_max_value.yy",},},
     {"id":{"name":"input_cursor_limit_boundary","path":"scripts/input_cursor_limit_boundary/input_cursor_limit_boundary.yy",},},
+    {"id":{"name":"YuiSetValueAnimation","path":"scripts/YuiSetValueAnimation/YuiSetValueAnimation.yy",},},
     {"id":{"name":"YuiIdentifier","path":"scripts/YuiIdentifier/YuiIdentifier.yy",},},
     {"id":{"name":"GsplEachIterator","path":"scripts/GsplEachIterator/GsplEachIterator.yy",},},
     {"id":{"name":"input_cursor_mouse_enabled_set","path":"scripts/input_cursor_mouse_enabled_set/input_cursor_mouse_enabled_set.yy",},},

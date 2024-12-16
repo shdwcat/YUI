@@ -196,7 +196,7 @@ bind_values = function yui_base__bind_values() {
 	}
 	
 	// get new values
-	var new_values = yui_element.getBoundValues(data_source, bound_values)
+	var new_values = yui_element.getBoundValues(data_source, bound_values, id);
 	
 	// handle custom cases where we might want to not be visible 
 	// e.g. text element text is undefined

@@ -32,8 +32,7 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	}
 	
 	is_bound = base_is_bound
-		|| yui_is_live_binding(sprite)
-		|| yui_is_live_binding(blend_color);
+		|| is_sprite_live;
 	
 	// ===== functions =====
 	
@@ -55,14 +54,17 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	}
 	
 	// feather ignore once GM2017
-	static getBoundValues = function YuiImageElement_getBoundValues(data, prev) {
-		var sprite = is_sprite_live ? self.sprite.resolve(data) : self.sprite;
-		if is_sprite_live {
+	static getBoundValues = function YuiImageElement_getBoundValues(data, prev, item) {
+
+		//if props.trace
+		//	yui_break();
+			
+		var sprite_changed = item.sprite_value.update(data);
+		var sprite = item.sprite_value.value;
+		
+		if sprite_changed {
 			validateSprite(sprite);
 		}
-
-		if props.trace
-			DEBUG_BREAK_YUI;
 			
 		var w = yui_resolve_binding(size.w, data);
 		var h = yui_resolve_binding(size.h, data);
@@ -72,7 +74,7 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		
 		// diff
 		if prev
-			&& sprite == prev.sprite
+			&& !sprite_changed
 			&& w == prev.w
 			&& h == prev.h
 			&& mirror_x == prev.mirror_x

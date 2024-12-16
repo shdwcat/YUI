@@ -11,10 +11,12 @@ event_inherited();
 
 onLayoutInit = function() {
 	
+	sprite_value = new YuiBindableValue(yui_element.sprite, yui_element.getDefaultAnim("sprite"));
 	frame_value = new YuiBindableValue(yui_element.frame, yui_element.getDefaultAnim("frame"));
 	angle_value = new YuiBindableValue(yui_element.angle, yui_element.getDefaultAnim("angle"));
 	blend_color_value = new YuiBindableValue(yui_element.blend_color, yui_element.getDefaultAnim("blend_color"));
 	
+	animatable.sprite = sprite_value;
 	animatable.frame = frame_value;
 	animatable.angle = angle_value;
 	animatable.blend_color = blend_color_value;
@@ -155,4 +157,5 @@ Inspectron()
 	.Section("yui_image")
 	.SpritePicker(nameof(sprite_index))
 	.Watch(nameof(sprite_width))
-	.Watch(nameof(sprite_height));
+	.Watch(nameof(sprite_height))
+	.Watch(nameof(image_index));
