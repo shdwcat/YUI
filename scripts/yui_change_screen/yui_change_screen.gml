@@ -17,7 +17,7 @@ function yui_change_screen(screen_id, view_item) {
 		var document = view_item.document;
 	}
 	
-	// change the file path, then reload
+	// change the file path, then reload (this ensures unload animations play)
 	document.yui_file = screen_file;
 	document.reload();
 }

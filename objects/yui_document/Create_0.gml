@@ -48,6 +48,9 @@ calcSize = function() {
 }
 
 load = function() {
+	// skip load if we're already loaded
+	if instance_exists(root) return;
+	
 	is_unloading = false;
 	document = new YuiDocument(yui_file, YuiGlobals.yui_cabinet);
 	document_error = document.load_error
@@ -61,30 +64,46 @@ load = function() {
 	root.arrange(draw_rect);
 }
 
-reload = function(destroy_now = false) {
-	if is_unloading return;
-	
-	var is_reload = instance_exists(root);
+// returns the time until unloading is complete (0 if complete), or undefined if already unloading
+unload = function(on_unloaded = undefined, destroy_now = false) {
+	if is_unloading return undefined;
 	
 	if destroy_now {
-		if instance_exists(root)
+		if instance_exists(root) {
 			root.destroy();
+			root = undefined;
+			return true;
+		}
 	}
 	
 	var unload_time = instance_exists(root)
 		? root.unload()
 		: 0;
-	
-	//yui_log($"document unload time is {unload_time} - {yui_file}");
-	//yui_log($"is reload: {is_reload}");
+		
+	is_unloading = unload_time > 0;
 	
 	if unload_time > 0 {
-		is_unloading = true;
-		call_later(unload_time / 1000, time_source_units_seconds, load);
+		call_later(unload_time / 1000, time_source_units_seconds, function() {
+			is_unloading = false;
+			root = undefined;
+		});
+		call_later(unload_time / 1000, time_source_units_seconds, on_unloaded);
 	}
 	else {
-		load();
+		on_unloaded();
 	}
+	
+	return unload_time;
+}
+
+reload = function(destroy_now = false) {
+	if is_unloading return;
+	
+	// for debugging
+	var is_reload = instance_exists(root);
+	
+	// queue load after unload
+	unload(load, destroy_now);
 }
 
 resize = function() {
