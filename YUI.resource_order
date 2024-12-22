@@ -163,6 +163,7 @@
     {"name":"curveSineInOut","order":29,"path":"animcurves/curveSineInOut/curveSineInOut.yy",},
     {"name":"input_binding_set","order":8,"path":"scripts/input_binding_set/input_binding_set.yy",},
     {"name":"yui_make_error_element","order":17,"path":"scripts/yui_make_error_element/yui_make_error_element.yy",},
+    {"name":"yui_document_create","order":28,"path":"scripts/yui_document_create/yui_document_create.yy",},
     {"name":"input_source_using","order":8,"path":"scripts/input_source_using/input_source_using.yy",},
     {"name":"yui_resolve_theme","order":1,"path":"scripts/yui_resolve_theme/yui_resolve_theme.yy",},
     {"name":"YuiWindowItem","order":2,"path":"scripts/YuiWindowItem/YuiWindowItem.yy",},

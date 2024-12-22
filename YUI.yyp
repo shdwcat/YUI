@@ -270,6 +270,7 @@
     {"id":{"name":"curveSineInOut","path":"animcurves/curveSineInOut/curveSineInOut.yy",},},
     {"id":{"name":"input_binding_set","path":"scripts/input_binding_set/input_binding_set.yy",},},
     {"id":{"name":"yui_make_error_element","path":"scripts/yui_make_error_element/yui_make_error_element.yy",},},
+    {"id":{"name":"yui_document_create","path":"scripts/yui_document_create/yui_document_create.yy",},},
     {"id":{"name":"input_source_using","path":"scripts/input_source_using/input_source_using.yy",},},
     {"id":{"name":"yui_resolve_theme","path":"scripts/yui_resolve_theme/yui_resolve_theme.yy",},},
     {"id":{"name":"input_binding_scan_abort","path":"scripts/input_binding_scan_abort/input_binding_scan_abort.yy",},},
