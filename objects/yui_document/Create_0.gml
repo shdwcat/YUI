@@ -72,7 +72,8 @@ unload = function(on_unloaded = undefined, destroy_now = false) {
 		if instance_exists(root) {
 			root.destroy();
 			root = undefined;
-			return true;
+			on_unloaded();
+			return 0;
 		}
 	}
 	
