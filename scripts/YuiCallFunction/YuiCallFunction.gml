@@ -70,7 +70,7 @@ function YuiCallFunction(target_expr, args) : YuiExpr() constructor {
 	static resolveScript = function(data) {
 			
 		var i = 0; repeat arg_count {
-			resolved_args[i] = args[i].resolve(data);
+			resolved_args[i] = yui_resolve_binding(args[i], data);
 			i++;
 		}
 			
@@ -80,7 +80,7 @@ function YuiCallFunction(target_expr, args) : YuiExpr() constructor {
 	static resolveRuntimeFunction = function(data) {
 
 		var i = 0; repeat arg_count {
-			resolved_args[i] = args[i].resolve(data);
+			resolved_args[i] = yui_resolve_binding(args[i], data);
 			i++;
 		}
 			
@@ -104,7 +104,7 @@ function YuiCallFunction(target_expr, args) : YuiExpr() constructor {
 	
 	static resolveLambda = function(data) {
 		var i = 0; repeat arg_count {
-			resolved_args[i] = args[i].resolve(data);
+			resolved_args[i] = yui_resolve_binding(args[i], data);
 			i++;
 		}
 		
@@ -116,7 +116,7 @@ function YuiCallFunction(target_expr, args) : YuiExpr() constructor {
 		// resolve the function reference and arguments
 		var func_ref = target_expr.resolve(data);
 		var i = 0; repeat arg_count {
-			resolved_args[i] = args[i].resolve(data);
+			resolved_args[i] = yui_resolve_binding(args[i], data);
 			i++;
 		}
 			
