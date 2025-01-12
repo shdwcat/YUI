@@ -4,6 +4,7 @@ function yui_draw_rect_outline(x, y, w, h, t, color, alpha) {
 	var x2 = x + w;
 	var y2 = y + h;
 	var old_color = draw_get_color();
+	var old_alpha = draw_get_alpha();
 	draw_set_color(color);
 	draw_set_alpha(alpha);
 	draw_primitive_begin(pr_trianglestrip);
@@ -19,6 +20,7 @@ function yui_draw_rect_outline(x, y, w, h, t, color, alpha) {
 		draw_vertex(x+t, y+t);
 	draw_primitive_end();
 	draw_set_color(old_color);
+	draw_set_alpha(old_alpha);
 }
 
 function yui_draw_rect_outline_clipped(x, y, w, h, cx1, cy1, cx2, cy2, t, color, alpha) {
@@ -35,6 +37,8 @@ function yui_draw_rect_outline_clipped(x, y, w, h, cx1, cy1, cx2, cy2, t, color,
 	var dx2 = min(x2, cx2);
 	var dy2 = min(y2, cy2);
 	
+	var old_color = draw_get_color();
+	var old_alpha = draw_get_alpha();
 	draw_set_color(color);
 	draw_set_alpha(alpha);
 	draw_primitive_begin(pr_trianglestrip);
@@ -77,6 +81,8 @@ function yui_draw_rect_outline_clipped(x, y, w, h, cx1, cy1, cx2, cy2, t, color,
 		}
 		
 	draw_primitive_end();
+	draw_set_color(old_color);
+	draw_set_alpha(old_alpha);
 }
 
 // credit to joh!
