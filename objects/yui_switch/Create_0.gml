@@ -19,8 +19,6 @@ build = function() {
 		case_item = undefined;
 	}
 	
-	opacity = parent.opacity
-	
 	// make/update the child item
 	if bound_values.switch_value != undefined {
 		if typeof(bound_values.switch_value) == "bool" {

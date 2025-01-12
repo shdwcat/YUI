@@ -15,8 +15,6 @@ destroy = function() {
 
 build = function() {
 	
-	opacity = parent.opacity
-	
 	// make/update the child item
 	if content_item {
 		content_item.unload();
