@@ -234,6 +234,7 @@
     {"id":{"name":"curveQuart","path":"animcurves/curveQuart/curveQuart.yy",},},
     {"id":{"name":"YuiLineElement","path":"scripts/YuiLineElement/YuiLineElement.yy",},},
     {"id":{"name":"yui_example_equip_item","path":"scripts/yui_example_equip_item/yui_example_equip_item.yy",},},
+    {"id":{"name":"YuiSpriteBuilder","path":"scripts/YuiSpriteBuilder/YuiSpriteBuilder.yy",},},
     {"id":{"name":"__input_gamepad_stop_trigger_effects","path":"scripts/__input_gamepad_stop_trigger_effects/__input_gamepad_stop_trigger_effects.yy",},},
     {"id":{"name":"yui_get_runner_temp_folder","path":"scripts/yui_get_runner_temp_folder/yui_get_runner_temp_folder.yy",},},
     {"id":{"name":"input_mouse_x","path":"scripts/input_mouse_x/input_mouse_x.yy",},},

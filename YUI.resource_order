@@ -130,6 +130,7 @@
     {"name":"curveQuart","order":22,"path":"animcurves/curveQuart/curveQuart.yy",},
     {"name":"YuiLineElement","order":7,"path":"scripts/YuiLineElement/YuiLineElement.yy",},
     {"name":"yui_example_equip_item","order":10,"path":"scripts/yui_example_equip_item/yui_example_equip_item.yy",},
+    {"name":"YuiSpriteBuilder","order":18,"path":"scripts/YuiSpriteBuilder/YuiSpriteBuilder.yy",},
     {"name":"__input_gamepad_stop_trigger_effects","order":8,"path":"scripts/__input_gamepad_stop_trigger_effects/__input_gamepad_stop_trigger_effects.yy",},
     {"name":"yui_get_runner_temp_folder","order":3,"path":"scripts/yui_get_runner_temp_folder/yui_get_runner_temp_folder.yy",},
     {"name":"input_mouse_x","order":11,"path":"scripts/input_mouse_x/input_mouse_x.yy",},

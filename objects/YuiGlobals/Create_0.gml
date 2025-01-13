@@ -15,6 +15,9 @@ element_map = {
 	viewport: YuiViewportElement,
 	text_input: YuiTextInputElement,
 	dynamic: YuiDynamicElement,
+	
+	// non-elements
+	sprite_builder: YuiSpriteBuilder,
 };
 
 if !instance_exists(YuiCursorManager) {
