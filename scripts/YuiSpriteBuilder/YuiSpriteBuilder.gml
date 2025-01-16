@@ -129,6 +129,7 @@ function YuiSpriteBuilder(_props, _resources, _slot_values) constructor {
 
 function YuiSpriteCache() constructor {
 	cache = {};
+	destroyed = false;
 	
 	get = function(cache_id) {
 		if cache_id == undefined 
@@ -145,6 +146,9 @@ function YuiSpriteCache() constructor {
 	destroy = function() {
 		struct_foreach(cache, function (k, v) {
 			sprite_delete(v);
+			cache[$ k] = undefined;
 		});
+		cache = undefined;
+		destroyed = true;
 	}
 }
