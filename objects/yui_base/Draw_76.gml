@@ -14,6 +14,7 @@ if unloading {
 // destroy once we're done unloading
 if unload_now {
 	instance_destroy();
+	destroyed = true;
 	return;
 }
 
