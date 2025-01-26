@@ -18,7 +18,7 @@ function yui_resolve_element(yui_data, resources, slot_values, parent_id = undef
 			
 				// if the result is not a binding, copy the resolved values to ensure we're not sharing state incorrectly
 				if !yui_is_binding(resolved_yui_data) && (is_struct(resolved_yui_data) || is_array(resolved_yui_data)) {
-					resolved_yui_data = yui_deep_copy(resolved_yui_data)
+					resolved_yui_data = variable_clone(resolved_yui_data)
 				}
 			
 				// the result might be something like a slot or resource, or 'raw' element props

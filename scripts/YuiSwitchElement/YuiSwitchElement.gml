@@ -15,7 +15,7 @@ function YuiSwitchElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 	switch_on = yui_bind(props.switch_on, resources, slot_values);
 	
 	// init/bind case elements
-	case_elements = yui_deep_copy(props.cases);
+	case_elements = variable_clone(props.cases);
 	var case_names = variable_struct_get_names(case_elements);
 	var i = 0; repeat array_length(case_names) {
 		var name = case_names[i++];

@@ -103,8 +103,8 @@ function YuiTemplateDefinition(name, template_props, resources) constructor {
 			var slot_value =
 				((yui_bind(element_props[$ slot_key], resources, outer_slot_values, /*bind_arrays*/ true)
 				?? yui_bind(outer_template_content[$ slot_key], resources, outer_slot_values, /*bind_arrays*/ true))
-				?? yui_deep_copy(template_theme[$ slot_key]))
-				?? yui_deep_copy(slot_definitions.get(slot_key));
+				?? variable_clone(template_theme[$ slot_key]))
+				?? variable_clone(slot_definitions.get(slot_key));
 				
 			slot_values.set(slot_key, slot_value);
 		}
