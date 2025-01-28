@@ -69,16 +69,13 @@ function YuiGridLayout(alignment, spacing) : YuiLayoutBase(alignment, spacing) c
 			}
 		}
 		
-		var grid_height = available_size.h;
-		if grid_height == infinity {
-			grid_height = grid_bottom - available_size.y;
-		}
+		var grid_width = columns * (column_width + column_spacing) - column_spacing;
+		var grid_height = grid_bottom - available_size.y;
 		
-		// grid (currently) always fills the available space
 		draw_size = {
 			x: available_size.x,
 			y: available_size.y,
-			w: available_size.w,
+			w: grid_width,
 			h: grid_height,
 		};
 		
