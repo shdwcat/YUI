@@ -1,7 +1,8 @@
 /// @description convert any binding expressions on the struct variables to YuiBindings
 function yui_bind_struct(struct, resources, slot_values, resolve = false, recursive = false) {
 		
-	if !is_struct(struct) return; // might be an array? is that useful?
+	if !is_struct(struct)
+		return struct; // might be an array? is that useful?
 	
 	// return a new struct to avoid modifying source data
 	var bound_struct = {};
