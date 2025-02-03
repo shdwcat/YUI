@@ -52,7 +52,7 @@ function yui_resolve_animation(anim_props, resources, slot_values) {
 			return anim;
 		}
 	}
-	else {		
+	else if anim_props != undefined {
 		throw yui_error("unsupported animation value:", anim_props);
 	}
 }

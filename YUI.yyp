@@ -539,6 +539,7 @@
     {"id":{"name":"input_vibrate_stop","path":"scripts/input_vibrate_stop/input_vibrate_stop.yy",},},
     {"id":{"name":"__input_validate_macros","path":"scripts/__input_validate_macros/__input_validate_macros.yy",},},
     {"id":{"name":"scribble_super_create","path":"scripts/scribble_super_create/scribble_super_create.yy",},},
+    {"id":{"name":"yui_linear_curve","path":"animcurves/yui_linear_curve/yui_linear_curve.yy",},},
     {"id":{"name":"curveElastic","path":"animcurves/curveElastic/curveElastic.yy",},},
     {"id":{"name":"input_player_gamepad_type_override_set","path":"scripts/input_player_gamepad_type_override_set/input_player_gamepad_type_override_set.yy",},},
     {"id":{"name":"YuiGlobals","path":"objects/YuiGlobals/YuiGlobals.yy",},},

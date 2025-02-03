@@ -1,4 +1,6 @@
 function yui_resolve_animation_group(anim_group_props, resources, slot_values) {
+	if anim_group_props == undefined
+		return undefined;
 	
 	// automatically turn an array of animation groups into an AnimationGroupSequence
 	if is_array(anim_group_props) {

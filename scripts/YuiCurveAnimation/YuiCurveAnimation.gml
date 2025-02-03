@@ -2,9 +2,10 @@
 function YuiCurveAnimation(props, resources, slot_values)
 	: YuiAnimationBase(props, resources, slot_values) constructor {
 
+	// NOTE: not automatically applied
 	default_props = {
 		type: "curve",
-		curve: undefined,
+		curve: yui_linear_curve,
 		channel: "value",
 		from: undefined,
 		to: 1,
@@ -16,14 +17,14 @@ function YuiCurveAnimation(props, resources, slot_values)
 	// store for diagnostics
 	self.props = props;
 	
-	bindings.curve = yui_bind(props.curve, resources, slot_values);
-	bindings.from = yui_bind(props[$"from"], resources, slot_values);
-	bindings.to = yui_bind(props[$"to"], resources, slot_values);
+	bindings.curve = yui_bind(props[$ "curve"], resources, slot_values) ?? yui_linear_curve;
+	bindings.from = yui_bind(props[$ "from"], resources, slot_values);
+	bindings.to = yui_bind(props[$ "to"], resources, slot_values);
 	
 	// not currently live bindable
-	channel_name_or_index = yui_bind_and_resolve(props[$"channel"], resources, slot_values) ?? 0;
+	channel_name_or_index = yui_bind_and_resolve(props[$ "channel"], resources, slot_values) ?? 0;
 	
-	var effect = props[$"effect"]
+	var effect = props[$ "effect"]
 	if effect != undefined {
 		has_effect = true;
 		// can't use start_value because the target may not be a number
@@ -56,12 +57,16 @@ function YuiCurveAnimation(props, resources, slot_values)
 		if is_string(curve) {
 			var curve_asset = asset_get_index(curve);
 			if curve_asset == -1 {
-				throw yui_error("could not find animation curve with name:", curve);
+				throw yui_error($"could not find animation curve with name: {curve}");
 			}
 			curve = curve_asset;
 		}
 		else if curve == undefined {
-			throw yui_error("could not find animation curve for:", props.curve);
+			if yui_is_binding(binding.curve)
+				throw yui_error($"could not find animation curve for {props.curve}");
+			else {
+				curve = yui_linear_curve;
+			}
 		}
 
 		value_channel = animcurve_get_channel(curve, channel_name_or_index)
