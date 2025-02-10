@@ -90,12 +90,12 @@ build = function yui_panel__build() {
 			recycling_lookup[? child_data] = child;
 		}
 		
-		//if trace {
-		//	yui_log("--- before update ---");
-		//	yui_log($"data items: {bound_values.data_items}");
-		//	logChildrenData();
-		//	yui_log("---");
-		//}
+		if trace {
+			yui_log("--- before update ---");
+			yui_log($"data items: {bound_values.data_items}");
+			logChildrenData();
+			yui_log("---");
+		}
 		
 		// now loop through, and try to match to existing items by data
 		var item_element = yui_element.item_element;
@@ -105,7 +105,7 @@ build = function yui_panel__build() {
 			var data_index = layout_props.reverse ? child_count - i - 1 : i;
 			var new_data = data_items[data_index];
 			
-			var item_at_index = data_index < previous_count
+			var item_at_index = data_index < (previous_count + insertion_count)
 				? internal_children[data_index]
 				: undefined;
 			var item_for_data = recycling_lookup[? new_data];
@@ -116,26 +116,27 @@ build = function yui_panel__build() {
 				// create the child render object
 				var child = yui_make_render_instance(item_element, new_data, i);
 				
-				//if trace
-				//	yui_log($"inserted item {new_data} at position {i}");
+				if trace
+					yui_log($"{i} - inserted item {new_data} at position {i}");
 
 				// insert it in our internal children array
 				array_insert(internal_children, i, child);
 				excess_count += 1;
 				insertion_count += 1;
 				
-				//logChildrenData();
+				if trace
+					logChildrenData();
 			}
 			else if item_for_data != item_at_index {
 				// found match at wrong index, swap with the correct item
 				
 				var item_for_data_index = item_for_data.item_index + insertion_count;
 				
-				if item_for_data_index == i
+				if item_at_index == undefined
 					yui_break();
 				
-				//if trace
-				//	yui_log($"swapping correct item {new_data} at position {item_for_data_index} with item {item_at_index.data_context} at position {i}");
+				if trace
+					yui_log($"{i} - swapping correct item {new_data} at position {item_for_data_index} with item [item_at_index.data_context] at position {i}");
 				
 				// move the old item to the correct item's previous position
 				internal_children[item_for_data_index] = item_at_index;
@@ -145,11 +146,15 @@ build = function yui_panel__build() {
 				internal_children[i] = item_for_data;
 				item_for_data.item_index = i;
 				
-				//logChildrenData();
+				if trace
+					logChildrenData();
 			}
 			else {
 				// correctly placed but might need item index update if something was inserted before
 				item_at_index.item_index = i;
+				
+				if trace
+					yui_log($"{i} - no swap needed");
 			}
 			i++;
 		}
