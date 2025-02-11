@@ -175,6 +175,8 @@ arrange = function yui_text__arrange(available_size, viewport_size) {
 		
 		if build_surface {
 			buildTextSurface();
+			if !text_surface
+				use_text_surface = false;
 		}
 	}
 	
@@ -194,13 +196,13 @@ buildTextSurface = function yui_text__buildTextSurface(text = undefined) {
 	if !bound_values return;
 	
 	// only build the surface if it would have any pixels
+	// TODO: fold this into use_text_surface determination?
 	if text_surface_w > 0 && text_surface_h > 0 {
 
 		text ??= formatted_text;
-				
-		if trace {
-			DEBUG_BREAK_YUI
-		}
+
+		if trace
+			yui_break();
 	
 		text_surface = yui_draw_text_to_surface(
 			text_surface_w, text_surface_h,
