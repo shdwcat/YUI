@@ -11,6 +11,10 @@
 // (can still be toggled at runtime by setting YuiCursorManager.is_navigation_active)
 #macro YUI_DEFAULT_IS_NAVIGATION_ACTIVE true
 
+// whether YUI should call yui_do_live_reload when the F5 key is pressed
+// (set this to false if you want to trigger live reload yourself)
+#macro YUI_ENABLE_F5_LIVE_RELOAD true
+
 // macro to control whether YUI should attempt to use Input 6 library for navigation and interaction
 #macro YUI_INPUT_LIB_ENABLED false
 

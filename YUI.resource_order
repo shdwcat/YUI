@@ -555,6 +555,7 @@
     {"name":"scribble_font_bake_outline_8dir","order":1,"path":"scripts/scribble_font_bake_outline_8dir/scribble_font_bake_outline_8dir.yy",},
     {"name":"gspl_string_substring","order":3,"path":"scripts/gspl_string_substring/gspl_string_substring.yy",},
     {"name":"yui_resolve_padding","order":1,"path":"scripts/yui_resolve_padding/yui_resolve_padding.yy",},
+    {"name":"yui_do_live_reload","order":30,"path":"scripts/yui_do_live_reload/yui_do_live_reload.yy",},
     {"name":"input_is_analogue","order":3,"path":"scripts/input_is_analogue/input_is_analogue.yy",},
     {"name":"curveExpo","order":15,"path":"animcurves/curveExpo/curveExpo.yy",},
     {"name":"input_check_long_released","order":5,"path":"scripts/input_check_long_released/input_check_long_released.yy",},

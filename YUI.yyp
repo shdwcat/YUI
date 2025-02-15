@@ -716,6 +716,7 @@
     {"id":{"name":"yui_resolve_padding","path":"scripts/yui_resolve_padding/yui_resolve_padding.yy",},},
     {"id":{"name":"gspl_queue_runner_event","path":"scripts/gspl_queue_runner_event/gspl_queue_runner_event.yy",},},
     {"id":{"name":"__input_hotswap_tick","path":"scripts/__input_hotswap_tick/__input_hotswap_tick.yy",},},
+    {"id":{"name":"yui_do_live_reload","path":"scripts/yui_do_live_reload/yui_do_live_reload.yy",},},
     {"id":{"name":"input_is_analogue","path":"scripts/input_is_analogue/input_is_analogue.yy",},},
     {"id":{"name":"curveExpo","path":"animcurves/curveExpo/curveExpo.yy",},},
     {"id":{"name":"input_check_long_released","path":"scripts/input_check_long_released/input_check_long_released.yy",},},

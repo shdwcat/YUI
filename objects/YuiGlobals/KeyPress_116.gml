@@ -1,15 +1,4 @@
 /// @description reload UI
 
-yui_cabinet.clearCache();
-screens = {};
-interactions = {};
-yui_cabinet.rescan();
-
-yui_log("BEGIN: Triggered global reload");
-
-with yui_document {
-	reload(true); // destroy now
-	yui_log("reloaded screen: " + yui_file);
-}
-
-yui_log("END: Triggered global reload");
+if YUI_ENABLE_F5_LIVE_RELOAD
+	yui_do_live_reload();
