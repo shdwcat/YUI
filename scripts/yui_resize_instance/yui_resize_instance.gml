@@ -14,8 +14,8 @@ function yui_resize_instance(width, height) {
 		draw_size.y = y;
 		draw_size.w = width;
 		draw_size.h = height;
-		
-		if sprite_index >= 0 {
+
+		if sprite_index >= 0 && sprite_exists(sprite_index) {
 			image_xscale = width / sprite_get_width(sprite_index);
 			image_yscale = height / sprite_get_height(sprite_index);
 		}
