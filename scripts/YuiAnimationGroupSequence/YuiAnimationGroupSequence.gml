@@ -9,6 +9,7 @@ function YuiAnimationGroupSequence(props, resources, slot_values) constructor {
 	}
 	
 	self.props = props;
+	duration = 0;
 	
 	enabled = yui_bind_and_resolve(props[$"enabled"], resources, slot_values) ?? true;
 	continuous = yui_bind_and_resolve(props[$"repeat"], resources, slot_values) ?? false;
@@ -28,7 +29,18 @@ function YuiAnimationGroupSequence(props, resources, slot_values) constructor {
 	}
 	
 	static init = function(data) {
-		// todo
+		var i = 0; repeat array_length(animations) {
+			var anim = animations[i++];
+			
+			// resolve bindings
+			anim.init(data);
+		
+			// track the max duration
+			duration = max(duration, anim.duration);
+		
+			// track if it's continuous
+			continuous |= anim.continuous;
+		}
 	}
 	
 	static start = function(animatable, owner) {
