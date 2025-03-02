@@ -925,6 +925,7 @@
     {"id":{"name":"yui_register_events","path":"scripts/yui_register_events/yui_register_events.yy",},},
     {"id":{"name":"yui_warning","path":"scripts/yui_warning/yui_warning.yy",},},
     {"id":{"name":"__input_config_icons","path":"scripts/__input_config_icons/__input_config_icons.yy",},},
+    {"id":{"name":"__yui_init_color_table","path":"scripts/__yui_init_color_table/__yui_init_color_table.yy",},},
     {"id":{"name":"input_mouse_capture_get","path":"scripts/input_mouse_capture_get/input_mouse_capture_get.yy",},},
     {"id":{"name":"YuiSwitchElement","path":"scripts/YuiSwitchElement/YuiSwitchElement.yy",},},
     {"id":{"name":"input_cursor_dx","path":"scripts/input_cursor_dx/input_cursor_dx.yy",},},

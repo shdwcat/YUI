@@ -11,5 +11,3 @@ if GM_build_type == "run"
 	yui_try_delete_file(YUI_LOCAL_PROJECT_DATA_FOLDER + YUI_ASSET_USE_CSV)
 	
 yui_log_to_datafile(YUI_ASSET_USE_CSV, "NAME, TYPE, SOURCE_EXPRESSION");
-
-__yui_init_globals();
