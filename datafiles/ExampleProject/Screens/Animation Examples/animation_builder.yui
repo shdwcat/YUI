@@ -1,7 +1,7 @@
 file_type: resources
 
 import:
-  - /YUI/Animations/transitions.yui
+  - /ExampleProject/Animations/transitions.yui
   - /YUI/Widgets/
 
 resources:

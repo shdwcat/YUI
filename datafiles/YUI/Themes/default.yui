@@ -152,15 +152,6 @@ theme:
       padding: [10, 5]
 
     popup:
-      // animate:
-      //   on_visible:
-      //     opacity: curveExpoInv
-        // on_unloading:
-        //   opacity:
-        //     type: curve
-        //     curve: curveLinear
-        //     duration: 200
-        //     end: 0
       background: &control_border
       border_color: &focus_border
       border_thickness: 1

@@ -2,7 +2,7 @@ id: inventory_screen
 file_type: screen
 
 import:
-  - /YUI/Animations/transitions.yui
+  - /ExampleProject/Animations/transitions.yui
 
   - ../Templates/
 

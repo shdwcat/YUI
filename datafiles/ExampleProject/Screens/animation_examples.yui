@@ -3,7 +3,7 @@ file_type: screen
 
 import:
   - ../Templates/
-  - /YUI/Animations/transitions.yui
+  - /ExampleProject/Animations/transitions.yui
   - /YUI/Widgets/
   - Animation Examples/
 

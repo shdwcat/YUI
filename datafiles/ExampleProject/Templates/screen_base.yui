@@ -3,7 +3,7 @@ file_type: resources
 import:
   - "../Templates/back_button.yui"
   - "../Templates/main_panel.yui"
-  - /YUI/Animations/transitions.yui
+  - /ExampleProject/Animations/transitions.yui
 
 resources:
 

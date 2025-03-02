@@ -6,25 +6,12 @@ import:
   - ../Templates/main_panel.yui
 
   // import all resources from transitions.yui to use in animations
-  - /YUI/Animations/transitions.yui
+  - /ExampleProject/Animations/transitions.yui
   - /YUI/Widgets/
 
 root:
   type: panel // panel is used to layout and arrange child elements
   layout: canvas // canvas can be used to position elements arbitrarily within the panel, or along the edges
-
-  // animate:
-  //   on_visible:
-  //     //opacity: &fade_in
-  //     xoffset:
-  //       type: curve
-  //       enabled: false
-  //       curve: curveExpoInv
-  //       duration: 2000
-  //       start: 300
-  //       end: 0
-    // on_unloading:
-    //   opacity: &fade_out
 
   elements: // this defines the child elements of the canvas
 
@@ -52,23 +39,6 @@ root:
           elements:
             - type: text // 'type: text' is how we draw text! simple
               text_style: title // this applies one of the text styles defined in the active theme
-              //opacity: @test_opacity
-              //enabled: false
-              //color: green
-              //trace: true
-              // animate:
-              //   on_visible:
-              //     text:
-              //       type: curve
-              //       curve: curveLinear
-              //       effect: @@ ~yui_reveal_string
-                  // type: anim_sequence
-                  // repeat: true
-                  // animations:
-                  //   - color: &fade_to_accent_color
-                  //     xoffset: &slide_right
-                  //   - color: &fade_to_green
-                  //     xoffset: &slide_left
               text: "Welcome to the YUI Example Project!" // and here we set the text itself
 
               // You can also just put a string as a child and it will automatically be converted to a 'text' element. Easy!
@@ -81,7 +51,6 @@ root:
                 on_region_hover_changed: @@ e => ~yui_log('region is ' + e.region)
 
             - You can edit this file while the game is running! Press F5 to reload after making changes
-            //- @app_name
             - " " // inserts a blank line
             - Select an option below to see more examples
 
@@ -184,13 +153,6 @@ root:
                   xoffset: &cascade_slide_in
                 on_unloading:
                   xoffset: &cascade_slide_out
-
-    // - type: button
-    //   content: Toggle Opacity
-    //   canvas:
-    //     top: 10
-    //     right: 300
-    //   on_click: @toggleOpacity()
 
     - type: button
       content: Toggle Theme
