@@ -106,7 +106,7 @@ function __snap_from_yui_tokenizer(_buffer) constructor
         }
         else if (_indent_search)
         {
-			 // find the current indent level
+			// find the current indent level
 
             if (_value == 0)
             {
@@ -118,7 +118,8 @@ function __snap_from_yui_tokenizer(_buffer) constructor
                 _chunk_start = buffer_tell(_buffer);
                 _chunk_end   = buffer_tell(_buffer);
             }
-            else if (_value > 32) // non-whitepace, so track indent level
+			// non-whitepace, so track indent level
+            else if (_value > 32)
             {
                 read_chunk_and_add(_chunk_start, buffer_tell(_buffer)-1, buffer_tell(_buffer), __SNAP_YUI.INDENT);
 
@@ -132,7 +133,8 @@ function __snap_from_yui_tokenizer(_buffer) constructor
         }
         else
         {
-            if (_scalar_first_character && (_value == 45)) //First character on the line is a hyphen
+			// First character on the line is a hyphen
+            if (_scalar_first_character && (_value == 45))
             {
                 var _next_value = buffer_peek(_buffer, buffer_tell(_buffer), buffer_u8);
 
@@ -164,8 +166,9 @@ function __snap_from_yui_tokenizer(_buffer) constructor
 					// ...or write my own parser
                 }
             }
+			// two slashes in a row
 			else if (_scalar_first_character
-				&& (_value == 47 && buffer_peek(_buffer, buffer_tell(_buffer), buffer_u8) == 47)) // two slashes in a row
+				&& (_value == 47 && buffer_peek(_buffer, buffer_tell(_buffer), buffer_u8) == 47))
 			{
 				_in_comment = true;
 			}
@@ -175,8 +178,9 @@ function __snap_from_yui_tokenizer(_buffer) constructor
 
                 if (_in_string)
                 {
+					 // Quote "  and  backslash \
                     if ((_value == 34)
-						&& (buffer_peek(_buffer, buffer_tell(_buffer)-2, buffer_u8) != 92)) //Quote "  and  backslash \
+						&& (buffer_peek(_buffer, buffer_tell(_buffer)-2, buffer_u8) != 92))
                     {
                         read_chunk_and_add(_chunk_start+1, buffer_tell(_buffer)-1, buffer_tell(_buffer), __SNAP_YUI.STRING);
 
@@ -188,21 +192,28 @@ function __snap_from_yui_tokenizer(_buffer) constructor
                 }
                 else
                 {
-                    if (_value <= 32) //Whitespace
+					// Whitespace
+                    if (_value <= 32)
                     {
                         if (!_scalar_has_content) _chunk_start = buffer_tell(_buffer);
                     }
-                    else //Not whitespace
+					// Not whitespace
+                    else
                     {
                         _scalar_has_content = true;
                     }
-
-                    if (_value == 34) //Quote "
+					
+					// mid scalar is when we are past the beginning of a scalar
+					var _mid_scalar = _chunk_start != _chunk_end && _scalar_has_content;
+					
+					// Quote " - starts a new scalar but not if we're in the middle of a scalar, and not in json)
+                    if (_value == 34 && !(_mid_scalar && _json_depth == 0))
                     {
                         _in_string = true;
                         _string_start = buffer_tell(_buffer);
                     }
-					else if ((_value == 47 && buffer_peek(_buffer, buffer_tell(_buffer), buffer_u8) == 47) // // comment
+					// // comment
+					else if ((_value == 47 && buffer_peek(_buffer, buffer_tell(_buffer), buffer_u8) == 47)
 						&& (buffer_tell(_buffer) >= 1) && (buffer_peek(_buffer, buffer_tell(_buffer)-2, buffer_u8) <= 32))
                     {
                         read_chunk_and_add(_chunk_start, _chunk_end, buffer_tell(_buffer), __SNAP_YUI.SCALAR);
@@ -211,11 +222,12 @@ function __snap_from_yui_tokenizer(_buffer) constructor
                         _chunk_end   = buffer_tell(_buffer);
                         _in_comment  = true;
                     }
-                    else if ((_value == 91) || (_value == 93) || (_value == 123) || (_value == 125)) // [ ] { }
+					// [ ] { }
+                    else if ((_value == 91) || (_value == 93) || (_value == 123) || (_value == 125))
                     {
-                        // if we're past the beginning of a scalar and not in json depth,
+                        // if we're in the middle of a scalar and not in json depth,
 						// then we don't need to treat []{} as the end of the scalar
-                        if _chunk_start != _chunk_end && _scalar_has_content && _json_depth == 0 {
+                        if _mid_scalar && _json_depth == 0 {
                             _chunk_end = buffer_tell(_buffer);
                         }
                         else {
@@ -237,7 +249,8 @@ function __snap_from_yui_tokenizer(_buffer) constructor
                             _scalar_has_content = false;
                         }
                     }
-                    else if ((_json_depth > 0) && (_value == 44)) //Comma ,
+					// Comma ,
+                    else if ((_json_depth > 0) && (_value == 44))
                     {
                         read_chunk_and_add(_chunk_start, _chunk_end, buffer_tell(_buffer), __SNAP_YUI.SCALAR);
                         _tokens_array[@ array_length(_tokens_array)] = [__SNAP_YUI.JSON_COMMA];
@@ -246,7 +259,8 @@ function __snap_from_yui_tokenizer(_buffer) constructor
                         _chunk_end          = buffer_tell(_buffer);
                         _scalar_has_content = false;
                     }
-                    else if (_value == 58) //Colon :
+					// Colon :
+                    else if (_value == 58)
                     {
                         if (_json_depth > 0)
                         {
@@ -263,13 +277,16 @@ function __snap_from_yui_tokenizer(_buffer) constructor
                             _tokens_array[@ array_length(_tokens_array)] = [__SNAP_YUI.STRUCT];
 
                             var _next_value = buffer_peek(_buffer, buffer_tell(_buffer), buffer_u8);
-                            if ((_next_value == 10) || (_next_value == 13)) //Next value is a newline
+							
+							// Next value is a newline
+                            if ((_next_value == 10) || (_next_value == 13))
                             {
                                 _chunk_start   = buffer_tell(_buffer);
                                 _chunk_end     = buffer_tell(_buffer);
                                 _indent_search = false;
                             }
-                            else if (_next_value == 32) //Next value is a space
+							// Next value is a space
+                            else if (_next_value == 32)
                             {
                                 buffer_seek(_buffer, buffer_seek_relative, 1);
                                 _chunk_start            = buffer_tell(_buffer);
@@ -278,7 +295,8 @@ function __snap_from_yui_tokenizer(_buffer) constructor
                             }
                         }
                     }
-                    else if ((_value == 0) || (_value == 10) || (_value == 13)) //Null or newline
+					// Null or newline
+                    else if ((_value == 0) || (_value == 10) || (_value == 13))
                     {
                         read_chunk_and_add(_chunk_start, _chunk_end, buffer_tell(_buffer), __SNAP_YUI.SCALAR);
                         _tokens_array[@ array_length(_tokens_array)] = [__SNAP_YUI.NEWLINE];
