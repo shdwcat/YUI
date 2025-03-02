@@ -150,6 +150,24 @@ initLayout = function() {
 	on_arrange_anim = yui_element.on_arrange_anim;
 	on_unloading_anim = yui_element.on_unloading_anim;
 	
+	on_got_focus_anim = yui_element.on_got_focus_anim;
+	on_lost_focus_anim = yui_element.on_lost_focus_anim;
+	
+	on_hover_anim = yui_element.on_hover_anim;
+	on_hover_end_anim = yui_element.on_hover_end_anim;
+
+	if on_got_focus_anim {
+		on_got_focus = function() {
+			beginAnimationGroup(on_got_focus_anim);
+		}
+	}
+	
+	if on_lost_focus_anim {
+		on_lost_focus = function() {
+			beginAnimationGroup(on_lost_focus_anim);
+		}
+	}
+	
 	layout_props = yui_element.getLayoutProps();
 	onLayoutInit();
 }
@@ -246,13 +264,10 @@ arrange = function(available_size, viewport_size) {
 // NOTE: only executes if the element is visible
 process = function yui_base__process(became_visible) {
 	
-	
 	// calculate enabled state from parent and/or live value
 	var is_parent_enabled = parent ? parent.enabled : true;
 	if is_parent_enabled && enabled_value.is_live {
-		var enc = enabled_value.update(data_source);
-		if enc && trace
-			yui_break();
+		enabled_value.update(data_source);
 		enabled = enabled_value.value;
 	}
 	else {
@@ -357,6 +372,7 @@ closePopup = function(close_parent = false) {
 		ancestor = ancestor.parent;
 	}
 }
+
 base_setHighlight = setHighlight;
 setHighlight = function(highlight) {
 	
@@ -380,6 +396,15 @@ setHighlight = function(highlight) {
 			tooltip_item.unload();
 			tooltip_item = undefined;
 		}
+	}
+	
+	if highlight {
+		if on_hover_anim
+			beginAnimationGroup(on_hover_anim);
+	}
+	else {
+		if on_hover_end_anim
+			beginAnimationGroup(on_hover_end_anim);
 	}
 }
 

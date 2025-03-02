@@ -19,6 +19,7 @@ function yui_resolve_render_item(type, element_props) {
 		case "data_template": return yui_data_template;
 		case "viewport": return yui_viewport;
 		case "dynamic": return yui_dynamic_item;
+		case "object_attachment": return yui_object_attachment;
 		default: return undefined;
 	}
 }

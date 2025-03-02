@@ -163,7 +163,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		var font = is_font_live ? self.font.resolve(data) : self.font;
 		
 		if props.trace
-			DEBUG_BREAK_YUI
+			yui_break()
 		
 		// diff
 		if prev

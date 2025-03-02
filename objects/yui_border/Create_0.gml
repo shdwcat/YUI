@@ -13,6 +13,8 @@ is_arranging = false;
 has_content_item = true; // yui_panel sets this to false
 content_item = undefined;
 
+background_initalized = false;
+
 bg_alpha = undefined;
 
 has_border_color = false;
@@ -39,7 +41,7 @@ onLayoutInit = function() {
 	}
 	
 	background_value = new YuiBindableValue(yui_element.background, yui_element.getDefaultAnim("background"));
-	animatable.background = background_value
+	animatable.background = background_value;
 	
 	if layout_props.border_focus_color != undefined {
 		has_focus_color = true;

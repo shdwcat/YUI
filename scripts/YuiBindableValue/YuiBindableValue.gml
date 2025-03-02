@@ -6,6 +6,8 @@ function YuiBindableValue(binding, default_anim) constructor {
 	self.default_anim = default_anim;
 	
 	is_live = false;
+	
+	self.value = undefined;
 		
 	self.animation = undefined;
 	self.animation_start_time = undefined;
@@ -50,15 +52,20 @@ function YuiBindableValue(binding, default_anim) constructor {
 // TODO support animation for bound values!
 
 // gets the initial value and then swaps over to the updateBinding function
-function YuiBindableValue__initValue(data) {
-	value = binding.resolve(data);
+function YuiBindableValue__initValue(data, args = undefined) {
+	value = args != undefined && yui_is_call(binding)
+		? binding.call(data, args)
+		: binding.resolve(data);
+		
 	bound_value = value;
 	update = YuiBindableValue__updateBinding;
 	return true;
 }
 
-function YuiBindableValue__updateBinding(data) {
-	var new_value = binding.resolve(data);
+function YuiBindableValue__updateBinding(data, args = undefined) {
+	var new_value = args != undefined && yui_is_call(binding)
+		? binding.call(data, args)
+		: binding.resolve(data);
 	
 	// check if we need to start a default animation
 	if default_anim {

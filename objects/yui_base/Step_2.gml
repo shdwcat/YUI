@@ -30,7 +30,7 @@ if trace
 // as the children will never get arranged and sized to 0 for being clipped
 // need to figure out how to fix this...
 
-var was_visible = visible
+var was_visible = visible;
 
 // NOTE: this will be false if no bindings are live
 if is_binding_active || !visible || rebuild {

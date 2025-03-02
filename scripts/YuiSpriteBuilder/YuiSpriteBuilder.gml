@@ -144,6 +144,8 @@ function YuiSpriteCache() constructor {
 	}
 	
 	destroy = function() {
+		if destroyed return; // TODO should this error?
+		
 		struct_foreach(cache, function (k, v) {
 			sprite_delete(v);
 			cache[$ k] = undefined;

@@ -24,8 +24,8 @@ function YuiButtonElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		on_click: undefined,
 	}
 	
-	if _props[$ "trace"] == true
-		DEBUG_BREAK_YUI
+	//if _props[$ "trace"] == true
+	//	yui_break();
 	
 	props = yui_apply_element_props(_props);
 	

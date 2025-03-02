@@ -13,6 +13,10 @@ function yui_resolve_animation(anim_props, resources, slot_values) {
 			var anim = new YuiSetValueAnimation(anim_props, resources, slot_values);
 			return anim;
 		}
+		else if anim_props.type == "reset_value" {
+			var anim = new YuiResetValueAnimation(anim_props, resources, slot_values);
+			return anim;
+		}
 		else if anim_props.type == "rgb_curve" {
 			var anim = new YuiRGBCurveAnimation(anim_props, resources, slot_values);
 			return anim;

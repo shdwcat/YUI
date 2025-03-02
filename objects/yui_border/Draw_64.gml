@@ -1,7 +1,10 @@
 /// @description
 
-// check live bg - TODO: move to process() override to keep code organized?
-if background_value.update(data_source) || bg_alpha == undefined {
+// check live bg
+// TODO: track hover/focused/etc in a ui_state struct rather than pass the element directly
+if background_value.update(data_source, self) || !background_initalized {
+	background_initalized = true;
+
 	var bg = background_value.value;
 	if is_handle(bg) {
 		bg_sprite = bg;

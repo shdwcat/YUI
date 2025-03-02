@@ -56,7 +56,7 @@ function YuiFocusScope(root_item, parent) constructor {
 		
 		if focused_item.on_got_focus focused_item.on_got_focus();
 		
-		yui_log($"set focus for scope {id} to {item ? item._id : "undefined"}");
+		//yui_log($"set focus for scope {id} to {item ? item._id : "undefined"}");
 	}
 	
 	findFocusTarget = function() {

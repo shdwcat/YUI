@@ -55,7 +55,7 @@ function YuiAnimationGroup(anim_group_props, resources, slot_values) constructor
 		var i = 0; repeat array_length(names) {
 			var name = names[i];
 			var anim = anim_properties[$ name];
-			target = animatable[$ name];
+			var target = animatable[$ name];
 			target.beginAnimation(anim);
 			i++;
 		}

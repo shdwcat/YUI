@@ -134,6 +134,10 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		default_anim = undefined;
 		
 		on_visible_anim = undefined;
+		on_got_focus_anim = undefined;
+		on_lost_focus_anim = undefined;
+		on_hover_anim = undefined;
+		on_hover_end_anim = undefined;
 		on_arrange_anim = undefined;
 		on_unloading_anim = undefined;
 		
@@ -141,18 +145,16 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 			// these are individual animation curves for when a bound animatable value changes
 			default_anim = props.animate[$"default"];
 			
-			var on_visible_animation = props.animate[$"on_visible"];
-			if on_visible_animation != undefined {
-				on_visible_anim = yui_resolve_animation_group(on_visible_animation, resources, slot_values);
-			}
-			var on_arrange_animation = props.animate[$"on_arrange"];
-			if on_arrange_animation != undefined {
-				on_arrange_anim = yui_resolve_animation_group(on_arrange_animation, resources, slot_values);
-			}
-			var on_unloading_animation = props.animate[$"on_unloading"];
-			if on_unloading_animation != undefined {
-				on_unloading_anim = yui_resolve_animation_group(on_unloading_animation, resources, slot_values);
-			}
+			on_visible_anim = yui_resolve_animation_group(props.animate[$"on_visible"], resources, slot_values);
+			
+			on_got_focus_anim = yui_resolve_animation_group(props.animate[$"on_got_focus"], resources, slot_values);
+			on_lost_focus_anim = yui_resolve_animation_group(props.animate[$"on_lost_focus"], resources, slot_values);
+			
+			on_hover_anim = yui_resolve_animation_group(props.animate[$"on_hover"], resources, slot_values);
+			on_hover_end_anim = yui_resolve_animation_group(props.animate[$"on_hover_end"], resources, slot_values);
+			
+			on_arrange_anim = yui_resolve_animation_group(props.animate[$"on_arrange"], resources, slot_values);
+			on_unloading_anim = yui_resolve_animation_group(props.animate[$"on_unloading"], resources, slot_values);
 		}
 			
 		base_is_bound =
@@ -196,8 +198,8 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		
 		background = undefined;
 				
-		if props.trace
-			DEBUG_BREAK_YUI
+		//if props.trace
+		//	yui_break();
 				
 		// resolve background
 		var bg = yui_bind(props.background, resources, slot_values);
@@ -210,9 +212,6 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 			else {
 				throw yui_error($"Unexpected element.background value of type: {typeof(bg)}");
 			}
-		}
-		else {
-			background = undefined;
 		}
 	
 		// resolve border
