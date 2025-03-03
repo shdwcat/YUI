@@ -1,4 +1,4 @@
-# YUI 0.6.6
+# YUI 0.6.7
 ## A UI system for GameMaker by [@shdwcat](https://github.com/shdwcat)
 
 ### Why YUI?
@@ -14,6 +14,9 @@ Writing UI code is annoying and tedious! Why write UI code when you can edit rea
 - VS Code syntax highlighting extension:
   https://marketplace.visualstudio.com/items?itemName=shdwcat.yui-vs-code-support
   ![syntax highlighting example image](https://github.com/shdwcat/yui-vs-code-support/raw/HEAD/images/highlighting.png)
+
+### Minimum GameMaker Version
+The current version of YUI requires GameMaker 2024.11 (runtime 227)
 
 ### Platform Support
 YUI is confirmed to work on Windows, Mac, and Linux. YUI does not *yet* work on HTML5 as included file handling needs to be fixed (#72). As far as I know, YUI has not been tested on mobile or consoles, if you want to try it out, please do and let me know if it works! (see Discord link below).

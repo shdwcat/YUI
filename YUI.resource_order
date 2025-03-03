@@ -281,6 +281,7 @@
     {"name":"__scribble_get_typewriter_events_map","order":15,"path":"scripts/__scribble_get_typewriter_events_map/__scribble_get_typewriter_events_map.yy",},
     {"name":"__scribble_system","order":10,"path":"scripts/__scribble_system/__scribble_system.yy",},
     {"name":"__scribble_tick","order":11,"path":"scripts/__scribble_tick/__scribble_tick.yy",},
+    {"name":"__yui_asset_references","order":21,"path":"scripts/__yui_asset_references/__yui_asset_references.yy",},
     {"name":"__yui_init_color_table","order":22,"path":"scripts/__yui_init_color_table/__yui_init_color_table.yy",},
     {"name":"__yui_init_crash_handler","order":23,"path":"scripts/__yui_init_crash_handler/__yui_init_crash_handler.yy",},
     {"name":"__yui_init_globals","order":17,"path":"scripts/__yui_init_globals/__yui_init_globals.yy",},

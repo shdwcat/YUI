@@ -401,6 +401,7 @@
     {"id":{"name":"__scribble_get_typewriter_events_map","path":"scripts/__scribble_get_typewriter_events_map/__scribble_get_typewriter_events_map.yy",},},
     {"id":{"name":"__scribble_system","path":"scripts/__scribble_system/__scribble_system.yy",},},
     {"id":{"name":"__scribble_tick","path":"scripts/__scribble_tick/__scribble_tick.yy",},},
+    {"id":{"name":"__yui_asset_references","path":"scripts/__yui_asset_references/__yui_asset_references.yy",},},
     {"id":{"name":"__yui_init_color_table","path":"scripts/__yui_init_color_table/__yui_init_color_table.yy",},},
     {"id":{"name":"__yui_init_crash_handler","path":"scripts/__yui_init_crash_handler/__yui_init_crash_handler.yy",},},
     {"id":{"name":"__yui_init_globals","path":"scripts/__yui_init_globals/__yui_init_globals.yy",},},
