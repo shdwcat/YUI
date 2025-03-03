@@ -53,6 +53,9 @@ function __snap_from_yui_tokenizer(_buffer, _string) constructor
 
     var _tokens_array = [];
     result = _tokens_array;
+	
+	// used when handling escape chracters in strings
+	partial_chunk = "";
 
 	var _line          = 1;
     var _chunk_start   = 0;
@@ -66,6 +69,7 @@ function __snap_from_yui_tokenizer(_buffer, _string) constructor
     var _string_start           = undefined;
     var _in_comment             = false;
 
+	// NOTE: _tell is passed so that we can return to the current position when done
     static read_chunk = function(_start, _end, _tell)
     {
         if (_end <= _start) return undefined;
@@ -79,13 +83,28 @@ function __snap_from_yui_tokenizer(_buffer, _string) constructor
         buffer_poke(buffer, _end, buffer_u8, _value);
         buffer_seek(buffer, buffer_seek_start, _tell);
 
-        return _string;
+		return _string;
+    }
+	
+    static read_partial_chunk = function(_start, _end, _tell)
+    {
+		// include any partial chunk we have so far
+		return partial_chunk + read_chunk(_start, _end, _tell);
     }
 
     static read_chunk_and_add = function(_start, _end, _tell, _type)
     {
         var _chunk = read_chunk(_start, _end, _tell);
-        if (_chunk != undefined) result[@ array_length(result)] = [_type, _chunk];
+		
+		// include any partial chunk already read
+		if partial_chunk != "" {
+			_chunk = partial_chunk + _chunk;
+			partial_chunk = "";
+		}
+		
+		// add the chunk to the token array
+        if (_chunk != undefined)
+			result[@ array_length(result)] = [_type, _chunk];
     }
 
     while(buffer_tell(_buffer) < _buffer_size)
@@ -197,12 +216,36 @@ function __snap_from_yui_tokenizer(_buffer, _string) constructor
 
                 if (_in_string)
                 {
-					 // Quote "  and  backslash \
+					// backlash escape supports \" \n \t \\
+					if (_value == 92) {
+						// read the partial chunk up to the escape (it will be added to the final string chunk)
+						var _current_pos = buffer_tell(_buffer);
+						partial_chunk = read_partial_chunk(_string_start, _current_pos-1, _current_pos);
+						
+						// read the escaped character and add it
+						
+						var _next_value = buffer_peek(_buffer, buffer_tell(_buffer), buffer_u8);
+						
+						if (_next_value == 34) // " (double quote)
+							partial_chunk += "\"";
+						else if (_next_value == 110) // letter n
+							partial_chunk += "\n";
+						else if (_next_value == 116)  // letter t
+							partial_chunk += "\t";
+						else if (_next_value == 92) // backslash
+							partial_chunk += @"\";
+						
+						// reset string start to after the escaped character
+						_string_start = _current_pos + 1;
+						buffer_seek(_buffer, buffer_seek_relative, 1);
+					}
+					
+					 // Quote " (except when escaped as \")
                     if ((_value == 34)
 						&& (buffer_peek(_buffer, buffer_tell(_buffer)-2, buffer_u8) != 92))
                     {
-                        read_chunk_and_add(_chunk_start+1, buffer_tell(_buffer)-1, buffer_tell(_buffer), __SNAP_YUI.STRING);
-
+                        read_chunk_and_add(_string_start, buffer_tell(_buffer)-1, buffer_tell(_buffer), __SNAP_YUI.STRING);
+						
                         _chunk_start        = buffer_tell(_buffer);
                         _chunk_end          = buffer_tell(_buffer);
                         _in_string          = false;
@@ -428,27 +471,17 @@ function __snap_from_yui_builder(_tokens_array, _replace_keywords, _track_field_
             }
             else
             {
-                var _result = _token[1];
-                if (_type == __SNAP_YUI.STRING)
+				var _result = _token[1];
+                if (_type == __SNAP_YUI.SCALAR)
                 {
-                    //Unescape characters
-                    //TODO - Do this when building tokens
-                    _result = string_replace_all(_result, "\\\"", "\"");
-                    _result = string_replace_all(_result, "\\\t", "\t");
-                    _result = string_replace_all(_result, "\\\r", "\r");
-                    _result = string_replace_all(_result, "\\\n", "\n");
-                    _result = string_replace_all(_result, "\\\\", "\\");
-                }
-                else
-                {
-                    try
+                    try 
                     {
                         _result = real(_result);
-                        //It's a number
+                        // It's a number
                     }
                     catch(_error)
                     {
-                        //It's a string
+                        // It's a string
                         if (replace_keywords)
                         {
                             switch(string_lower(_result))

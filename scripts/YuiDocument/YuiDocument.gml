@@ -36,6 +36,7 @@ function YuiDocument(_yui_file, cabinet) constructor {
 		}
 		
 		// load the file data (possibly cached)
+		var time = current_time;
 		yui_log($"loading yui_file {yui_filepath}");
 		var file_data = cabinet_file.tryRead();		
 		
@@ -58,5 +59,7 @@ function YuiDocument(_yui_file, cabinet) constructor {
 		
 		// resolve root element
 		root_element = yui_resolve_element(document_data.root, resources, undefined, document_data.id);
+		var elapsed = current_time - time;
+		yui_log($"Load completed in {elapsed/1000} seconds");
 	}
 }
