@@ -18,10 +18,11 @@ root:
   title: Viewport/Scrolling Example
   items:
 
+    - ~max(@scroll_info.x_max,1) ?? 1000
     - type: slider
       value: @scroll_x
       min: 0
-      max: @scroll_info.x_max ?? 1000
+      max: ~max(@scroll_info.x_max,1) ?? 1000
       on_value_changed: @@ value => @scroll_x = value |> ~floor()
       visible: @scroll_info.x_max > 0
       slider_size: { w: 200, h: 20 }
@@ -30,7 +31,7 @@ root:
     - type: slider
       value: @scroll_y
       min: 0
-      max: @scroll_info.y_max ?? 1000
+      max: ~max(@scroll_info.y_max,1) ?? 1000
       on_value_changed: @@ value => @scroll_y = value |> ~floor()
       visible: @scroll_info.y_max > 0
       slider_size: { w: 200, h: 20 }
