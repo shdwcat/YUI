@@ -20,11 +20,7 @@ if highlight && highlight_color != undefined {
 
 if is_string(color) color = yui_resolve_color(color);
 
-if use_scribble {
-	if trace {
-		DEBUG_BREAK_YUI;
-	}
-	
+if use_scribble {	
 	if regions.enabled {
 		var hover_region = scribble_element.region_detect(
 			x + element_xoffset,
@@ -58,10 +54,23 @@ if use_scribble {
 		}
 	}
 	
-	scribble_element.blend(color, opacity);
-
-	// draw the scribble element
-	scribble_element.draw(x + element_xoffset, y + element_yoffset, typist);
+	if viewport_size {
+		if viewport_part.visible {
+			var scissor = gpu_get_scissor();
+			gpu_set_scissor(viewport_part);
+			
+			// draw the scribble element
+			scribble_element.blend(color, opacity);
+			scribble_element.draw(x + element_xoffset, y + element_yoffset, typist);
+			
+			gpu_set_scissor(scissor);
+		}
+	}
+	else {
+		// draw the scribble element
+		scribble_element.blend(color, opacity);
+		scribble_element.draw(x + element_xoffset, y + element_yoffset, typist);
+	}
 }
 else {
 
