@@ -43,6 +43,12 @@ YUI has built-in optional support for the popular Scribble and Input libraries. 
 ### OK, where do I start?
 You can either clone the Example Project (this repo) to play around with it, or import the latest package from the [Releases](https://github.com/shdwcat/YUI/releases) page.
 
+When importing into the existing project just drag'n'drop the downloaded `*.yymps` file into IDE and import all suggested packages for a quickstart.
+Next, add the `yui_document` object to your level, and if you just launch your game you should see the placeholder UI rendered. From there, you can start adding your own widgets and styles and the best way to learn is to look at the Example Project.
+
+> [!IMPORTANT]  
+> If your IDE version is `v2024.11.0.179` or newer you MUST disable for now the `Automatically remove unused assets when compiling` at `Game Options -> Main`.
+
 Please note that the [Wiki](https://github.com/shdwcat/YUI/wiki) is quite out of date (but may still be useful).
 
 ### The Example Project
