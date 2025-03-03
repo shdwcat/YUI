@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "YuiSetValueAnimation",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Animation",
-    "path": "folders/Packages - YUI/Animation.yy",
+  "$GMScript":"v1",
+  "%Name":"YuiSetValueAnimation",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"YuiSetValueAnimation",
+  "parent":{
+    "name":"Animation",
+    "path":"folders/Packages - YUI/Animation.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

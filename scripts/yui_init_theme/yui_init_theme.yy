@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "yui_init_theme",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Themes",
-    "path": "folders/Packages - YUI/Themes.yy",
+  "$GMScript":"v1",
+  "%Name":"yui_init_theme",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"yui_init_theme",
+  "parent":{
+    "name":"Themes",
+    "path":"folders/Packages - YUI/Themes.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

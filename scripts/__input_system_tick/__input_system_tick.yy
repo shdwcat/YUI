@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "__input_system_tick",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Ticks",
-    "path": "folders/Input/(System)/Ticks.yy",
+  "$GMScript":"v1",
+  "%Name":"__input_system_tick",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__input_system_tick",
+  "parent":{
+    "name":"Ticks",
+    "path":"folders/Input/(System)/Ticks.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "YuiFocusScope",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Cursor",
-    "path": "folders/Packages - YUI/Cursor.yy",
+  "$GMScript":"v1",
+  "%Name":"YuiFocusScope",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"YuiFocusScope",
+  "parent":{
+    "name":"Cursor",
+    "path":"folders/Packages - YUI/Cursor.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

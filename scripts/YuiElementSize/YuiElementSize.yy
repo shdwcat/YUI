@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "YuiElementSize",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Layout",
-    "path": "folders/Packages - YUI/Layout.yy",
+  "$GMScript":"v1",
+  "%Name":"YuiElementSize",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"YuiElementSize",
+  "parent":{
+    "name":"Layout",
+    "path":"folders/Packages - YUI/Layout.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

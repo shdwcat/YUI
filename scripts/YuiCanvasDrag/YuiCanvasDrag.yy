@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "YuiCanvasDrag",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Interaction",
-    "path": "folders/Packages - YUI/Interaction.yy",
+  "$GMScript":"v1",
+  "%Name":"YuiCanvasDrag",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"YuiCanvasDrag",
+  "parent":{
+    "name":"Interaction",
+    "path":"folders/Packages - YUI/Interaction.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

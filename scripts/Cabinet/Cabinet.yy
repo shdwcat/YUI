@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "Cabinet",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Cabinet",
-    "path": "folders/Cabinet.yy",
+  "$GMScript":"v1",
+  "%Name":"Cabinet",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Cabinet",
+  "parent":{
+    "name":"Cabinet",
+    "path":"folders/Cabinet.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

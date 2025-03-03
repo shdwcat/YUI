@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "feather_control",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "YUI",
-    "path": "YUI.yyp",
+  "$GMScript":"v1",
+  "%Name":"feather_control",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"feather_control",
+  "parent":{
+    "name":"YUI",
+    "path":"YUI.yyp",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

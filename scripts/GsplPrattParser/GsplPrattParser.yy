@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "GsplPrattParser",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Pratt",
-    "path": "folders/Packages - gspl/Parser/Pratt.yy",
+  "$GMScript":"v1",
+  "%Name":"GsplPrattParser",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"GsplPrattParser",
+  "parent":{
+    "name":"Pratt",
+    "path":"folders/Packages - gspl/Parser/Pratt.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

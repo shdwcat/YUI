@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "input_icons_gamepad",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Icons",
-    "path": "folders/Input/(System)/Icons.yy",
+  "$GMScript":"v1",
+  "%Name":"input_icons_gamepad",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"input_icons_gamepad",
+  "parent":{
+    "name":"Icons",
+    "path":"folders/Input/(System)/Icons.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

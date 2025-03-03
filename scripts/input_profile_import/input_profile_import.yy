@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "input_profile_import",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "13  Exporting and Importing",
-    "path": "folders/Input/13  Exporting and Importing.yy",
+  "$GMScript":"v1",
+  "%Name":"input_profile_import",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"input_profile_import",
+  "parent":{
+    "name":"13  Exporting and Importing",
+    "path":"folders/Input/13  Exporting and Importing.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

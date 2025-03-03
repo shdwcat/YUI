@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "gspl_show_runtime_error",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Execute",
-    "path": "folders/Packages - gspl/Execute.yy",
+  "$GMScript":"v1",
+  "%Name":"gspl_show_runtime_error",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"gspl_show_runtime_error",
+  "parent":{
+    "name":"Execute",
+    "path":"folders/Packages - gspl/Execute.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

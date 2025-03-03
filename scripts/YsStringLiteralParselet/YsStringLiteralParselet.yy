@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "YsStringLiteralParselet",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Deprecated",
-    "path": "folders/Packages - YUI/Deprecated.yy",
+  "$GMScript":"v1",
+  "%Name":"YsStringLiteralParselet",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"YsStringLiteralParselet",
+  "parent":{
+    "name":"Deprecated",
+    "path":"folders/Packages - YUI/Deprecated.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }
