@@ -46,7 +46,7 @@ function YsDirectiveParselet() constructor {
 			
 			// TODO: gm_asset instead and allow any asset? what's the use case for that?
 			case "gm_object":
-				yui_warning($"gm_object directive is deprecated, use ~{expr.source} instead to access host functionality");
+				yui_error($"gm_object directive is deprecated, use ~{expr.source} instead to access host functionality");
 				expr = new YuiObjectBinding(expr);
 				break;
 				
