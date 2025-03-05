@@ -723,6 +723,8 @@
     {"id":{"name":"MxHostParselet","path":"scripts/MxHostParselet/MxHostParselet.yy",},},
     {"id":{"name":"MxIdentifierParselet","path":"scripts/MxIdentifierParselet/MxIdentifierParselet.yy",},},
     {"id":{"name":"MxListExpression","path":"scripts/MxListExpression/MxListExpression.yy",},},
+    {"id":{"name":"MxOptionalExpr","path":"scripts/MxOptionalExpr/MxOptionalExpr.yy",},},
+    {"id":{"name":"MxOptionalParselet","path":"scripts/MxOptionalParselet/MxOptionalParselet.yy",},},
     {"id":{"name":"MxParserDefinition","path":"scripts/MxParserDefinition/MxParserDefinition.yy",},},
     {"id":{"name":"scribble_add_macro","path":"scripts/scribble_add_macro/scribble_add_macro.yy",},},
     {"id":{"name":"scribble_anim_blink","path":"scripts/scribble_anim_blink/scribble_anim_blink.yy",},},
