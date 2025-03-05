@@ -5,7 +5,7 @@ function GsplIndexerParselet(precedence, indexer_end_token) : GsplInfixParselet(
 
 	static parse = function(parser, left_expr, token) {
 		
-		var index_expr = parser.parseExpression(precedence - 1);
+		var index_expr = parser.parseExpression();
 		
 		parser.consume(indexer_end_token, "Expecting ']' after index key.");
 		
