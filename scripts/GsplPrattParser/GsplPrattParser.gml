@@ -41,6 +41,22 @@ function GsplPrattParser(tokens, definition) : GsplParserBase(tokens, gspl_wrap(
 		return left_expr;
 	}
 	
+	static parseInfix = function(left_expr, precedence) {
+		
+		while peek()._type != eof_token && precedence < getPrecedence() {
+
+			var token = advance();
+			
+			var infix = definition.infix_parselets[token._type];
+			left_expr = infix.parse(self, left_expr, token);
+			if is_struct(left_expr) && left_expr[$ "optimize"] != undefined {
+				left_expr = left_expr.optimize();
+			}
+		}
+		
+		return left_expr;
+	}
+	
 	static getPrecedence = function() {
 		var infix = definition.infix_parselets[peek()._type];
 		

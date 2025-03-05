@@ -3,6 +3,13 @@ function GsplParserBase(tokens, eof_token) constructor {
 	self.tokens = tokens;
 	self.eof_token = eof_token;
 	
+	// turned on/off by GsplTraceParselet
+	self.trace = false;
+	
+	self.traceExpr = function(expr) {
+		throw "parser.traceExpr(expr) not implemented!";
+	}
+	
 	current = 0;
 	had_error = false;
 	
