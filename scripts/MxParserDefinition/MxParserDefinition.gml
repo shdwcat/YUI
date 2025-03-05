@@ -72,6 +72,9 @@ function MxParserDefinition() : GsplPrattParserDefinition(YS_TOKEN.EOF) construc
 	infix(YS_TOKEN.PIPE_GREATER,
 		new GsplInfixCallParselet(YS_PRECEDENCE.CALL));
 		
+	// breakpoint
+	infix(YS_TOKEN.BANG, new GsplTraceParselet(YS_PRECEDENCE.PREFIX));
+		
 	// infix call e.g. @foo >> bar()
 	// DEPRECATED
 	infix(YS_TOKEN.GREATER_GREATER,
