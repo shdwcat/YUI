@@ -98,6 +98,14 @@ function YuiFocusScope(root_item, parent) constructor {
 	unfocus = function(item) {
 		
 		if item != autofocus_target && doAutofocus() {
+			
+			// HACK - currently the autofocus logic can sometimes redirect back to
+			// the item we're trying to unfocus, which ends up re-triggering per frame
+			// (due to e.g. the item being disabled). The real fix is to make autofocus
+			// logic understand which item is being unfocused but for now this stops the
+			// loop
+			item.focused = false;
+			
 			yui_log($"reset focus to autofocus target in scope {id}");
 		}
 		else if parent {
