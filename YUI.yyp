@@ -173,6 +173,7 @@
     {"$GMIncludedFile":"","%Name":"listbox.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","name":"listbox.yui","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"menu.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","name":"menu.yui","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"meter_bar.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","name":"meter_bar.yui","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"scoped_switcher.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","name":"scoped_switcher.yui","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"scrollbox.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","name":"scrollbox.yui","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"slide_toggle.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","name":"slide_toggle.yui","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"slider.yui","CopyToMask":-1,"filePath":"datafiles/YUI/Widgets","name":"slider.yui","resourceType":"GMIncludedFile","resourceVersion":"2.0",},

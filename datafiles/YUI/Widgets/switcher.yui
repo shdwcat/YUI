@@ -4,14 +4,24 @@ resources:
   switcher_content_template:
     type: text
     padding: [0, 4, 0, 0]
-    text: $selection_scope.selected_item // refers to the switcher $selection_scope slot below
+    text: $items[$selected_index]
 
   switcher:
     type: template
 
     slots:
-      selection_scope: null
+      // array of items to select from
+      items: []
+
+      // the index of the selected item
+      selected_index: 0
+
+      // when the selection changes, this event is called with the new selected_index
+      on_index_selected: null
+
+      // when the selection changes, this event is called with the new selected_item
       on_item_selected: null
+
       content_template: &switcher_content_template
 
       button_padding: [9, 3]
@@ -20,7 +30,6 @@ resources:
       right_button_content: >
 
     template:
-
       type: panel
       layout: horizontal
       padding: 5
@@ -30,11 +39,11 @@ resources:
         - type: button
           padding: $button_padding
           background: $button_background
-          enabled: $selection_scope.selected_index > 0
+          enabled: $selected_index > 0
           content: $left_button_content
           on_click:
-            - $selection_scope.selectPreviousIndex()
-            - $on_item_selected($selection_scope.selected_item)
+            - $on_item_selected?($items[$selected_index - 1])
+            - $on_index_selected?($selected_index - 1)
 
         // content
         - $content_template
@@ -43,8 +52,8 @@ resources:
         - type: button
           padding: $button_padding
           background: $button_background
-          enabled: $selection_scope.canSelectNextIndex()
+          enabled: $selected_index + 1 < ~array_length($items)
           content: $right_button_content
-          on_click: 
-            - $selection_scope.selectNextIndex()
-            - $on_item_selected($selection_scope.selected_item)
+          on_click:
+            - $on_item_selected?($items[$selected_index + 1])
+            - $on_index_selected?($selected_index + 1)

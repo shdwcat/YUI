@@ -1,9 +1,12 @@
 /// @description
 function WidgetGalleryData() constructor {
 	check_state = false;
-	switcher_items = ["Windowed", "Borderless Test", "Fullscreen"];
+	selector_items = ["Windowed", "Borderless Test", "Fullscreen"];
+	selected_index = 1;
+	selected_item = selector_items[selected_index];
 	
-	switcher_selector = new YuiArraySelector(switcher_items, switcher_items[1])
+	// currently unused
+	//switcher_selector = new YuiArraySelector(selector_items, selected_index)
 	
 	selected_list_item = "one";
 	

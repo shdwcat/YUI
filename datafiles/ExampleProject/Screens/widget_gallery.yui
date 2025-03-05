@@ -26,14 +26,6 @@ root:
           elements:
 
             - type: text
-              text: Dropdown Selector
-              text_style: subtitle
-
-            - type: dropdown_menu
-              items: @switcher_items
-              selection_scope: @switcher_selector
-
-            - type: text
               text: Textbox
               text_style: subtitle
 
@@ -74,14 +66,22 @@ root:
               text_style: subtitle
 
             - type: text
+              text: Dropdown Selector
+              text_style: subtitle
+
+            - type: dropdown_menu
+              items: @selector_items
+              selected_item: @selected_item
+
+            - type: text
               text: Switcher
               text_style: subtitle
 
             - type: switcher
-              items: @switcher_items
-              selection_scope: @switcher_selector
-              selected_index: 1
-              on_item_selected: @@ value => ~show_debug_message('selected ' + value)
+              items: @selector_items
+              selected_index: @selected_index
+              on_index_selected: @@ i => @selected_index = i
+              on_item_selected: @@ item => @selected_item = item
 
             - type: text
               text: Slider

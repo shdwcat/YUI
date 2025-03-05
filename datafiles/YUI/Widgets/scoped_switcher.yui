@@ -1,0 +1,50 @@
+file_type: resources
+
+resources:
+  scoped_switcher_content_template:
+    type: text
+    padding: [0, 4, 0, 0]
+    text: $selection_scope.selected_item // refers to the switcher $selection_scope slot below
+
+  scoped_switcher:
+    type: template
+
+    slots:
+      selection_scope: null
+      on_item_selected: null
+      content_template: &scoped_switcher_content_template
+
+      button_padding: [9, 3]
+      button_background: #2f2f2f
+      left_button_content: <
+      right_button_content: >
+
+    template:
+
+      type: panel
+      layout: horizontal
+      padding: 5
+      elements:
+
+        // switch left
+        - type: button
+          padding: $button_padding
+          background: $button_background
+          enabled: $selection_scope.selected_index > 0
+          content: $left_button_content
+          on_click:
+            - $selection_scope.selectPreviousIndex()
+            - $on_item_selected?($selection_scope.selected_item)
+
+        // content
+        - $content_template
+
+        // switch right
+        - type: button
+          padding: $button_padding
+          background: $button_background
+          enabled: $selection_scope.canSelectNextIndex()
+          content: $right_button_content
+          on_click:
+            - $selection_scope.selectNextIndex()
+            - $on_item_selected?($selection_scope.selected_item)
