@@ -9,10 +9,20 @@ function YuiThenElseBinding(left, then_expr, else_expr) : YuiExpr() constructor 
 	// we're callable if either then and else are callable
 	self.is_call = then_expr.is_call || else_expr.is_call
 	
-	if (!left.is_yui_live_binding
+	if !left.is_yui_live_binding
 		&& !then_expr.is_yui_live_binding
-		&& !else_expr.is_yui_live_binding) {
+		&& (else_expr == undefined or !else_expr.is_yui_live_binding) {
 		self.is_yui_live_binding = false;
+	}
+	
+	static debug = function() {
+		return {
+			_type: instanceof(self),
+			condition: left.debug(),
+			then_expr: then_expr.debug(),
+			else_expr: else_expr.debug(),
+			is_call,
+		}
 	}
 	
 	static resolve = function(data)
@@ -22,7 +32,7 @@ function YuiThenElseBinding(left, then_expr, else_expr) : YuiExpr() constructor 
 		if left_val {
 			return then_expr.resolve(data);
 		}
-		else {
+		else if else_expr {
 			return else_expr.resolve(data);
 		}
 	}

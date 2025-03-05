@@ -12,6 +12,10 @@ function YuiValueWrapper(value, type = undefined) : YuiExpr() constructor {
 	
 	self.value = value
 	
+	static debug = function() {
+		return $"{value} ({instanceof(self)})";
+	}
+	
 	resolve = function() {
 		return value;
 	}

@@ -12,6 +12,21 @@ function YuiCallFunction(target_expr, args) : YuiExpr() constructor {
 	self.args = args;
 	self.arg_count = array_length(args);
 	self.resolved_args = array_create(arg_count);
+	
+	static debug = function() {
+		var args_list = array_create(arg_count);
+		var i = 0; repeat arg_count {
+			var expr = args[i];
+			args_list[i] = expr.debug();
+			i++;
+		}
+		
+		return {
+			_type: instanceof(self),
+			call_target: is_instanceof(target_expr, YuiExpr) ? target_expr.debug() : target_expr,
+			args: args_list,
+		}
+	}
 
 	if is_instanceof(target_expr, YuiAssetReference) {
 		var target = target_expr.resolve();

@@ -8,8 +8,17 @@ function YuiLambda(body, context) : YuiExpr() constructor {
 	self.context = context;
 	self.compiled_script_name = undefined;
 	
+	static debug = function() {
+		return {
+			_type: instanceof(self),
+			body: body.debug(),
+		}
+	}
+	
 	static resolve = function(data) {
-		throw yui_error("attemped to resolve() YuiLmabda, use call() instead");
+		// return the lambda itself, without calling it
+		return self;
+		//throw yui_error("attemped to resolve() YuiLmabda, use call() instead");
 	}
 	
 	static call = function(data, args) {

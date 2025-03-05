@@ -5,6 +5,14 @@ function YuiIndexBinding(left, index) : YuiExpr() constructor {
 	self.left = left;
 	self.index = index
 	
+	static debug = function() {
+		return {
+			_type: instanceof(self),
+			left: left.debug(),
+			index: index.debug(),
+		}
+	}
+	
 	static resolve = function(data)
 	{
 		var left_val = left.resolve(data);

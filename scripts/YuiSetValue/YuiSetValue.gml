@@ -8,6 +8,15 @@ function YuiSetValue(left, name, right) : YuiExpr() constructor {
 	self.name = name;
 	self.right = right;
 	
+	static debug = function() {
+		return {
+			_type: instanceof(self),
+			left: left.debug(),
+			name,
+			right: right.debug(),
+		}
+	}
+	
 	static resolve = function(data) {
 		var right_val = right.resolve(data);
 		var left_val = left.resolve(data);

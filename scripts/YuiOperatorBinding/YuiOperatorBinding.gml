@@ -15,6 +15,15 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 		self.is_yui_live_binding = false;
 	}
 	
+	static debug = function() {
+		return {
+			_type: instanceof(self),
+			left: left.debug(),
+			operator: operator_name,
+			right: right.debug(),
+		}
+	}
+	
 	switch self.operator {
 		case YS_TOKEN.EQUAL_EQUAL:
 		case YS_TOKEN.EQUALS:
@@ -265,6 +274,8 @@ function YuiPrefixOperatorBinding(operator_token, right) : YuiExpr() constructor
 			case YS_TOKEN.NOT:
 				return !right_val;
 			case YS_TOKEN.MINUS:
+				return -right_val;
+			case YS_TOKEN.QUESTION:
 				return -right_val;
 				
 			default:

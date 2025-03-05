@@ -8,6 +8,13 @@ function YuiBinding(path) : YuiExpr() constructor {
 		init(path);
 	}
 	
+	static debug = function() {
+		return {
+			_type: instanceof(self),
+			path,
+		}
+	}
+	
 	static init = function(path) {
 		
 		// get a resolver for the path if we have one
@@ -31,26 +38,11 @@ function YuiBinding(path) : YuiExpr() constructor {
 		else if is_instanceof(self, YuiBinding) {
 			throw "YuiBinding initialized without a path!";
 		}
-		
-		//// view_item resolution
-		//view_resolver = undefined;
-		
-		//// todo string hash the type name
-		//ancestor_type = value[$ "ancestor_type"];
-		//if ancestor_type != undefined {
-		//	view_resolver = resolveAncestorType;
-		//}
 	}
 	
 	// feather ignore once GM2017
 	static resolve = function YuiBinding_resolve(data_context, view_context) {
-		//if view_resolver {
-		//	// replace the data_context with the data_context from the resolved view item
-		//	data_context = view_resolver(view_context);
-		//}
-		
 		var data = resolver(data_context);
-		
 		return data;
 	}
 	
@@ -86,29 +78,6 @@ function YuiBinding(path) : YuiExpr() constructor {
 			}
 		}
 		return data;
-	}
-	
-	static resolveAncestorType = function(view_context) {
-		var data = undefined;
-		var parent = view_context.parent; // assumes yui_base
-		
-		while data == undefined {
-			// check if we ran out of parents
-			if parent == undefined break;
-			
-			// check if we found it
-			var parent_type = parent.yui_element.type; // TODO set this in yui_base
-			if parent_type == ancestor_type {
-				// NOTE: ignores 'data_source'!
-				return parent.data_context; // assumes yui_base
-			}
-			
-			// recurse up
-			parent = parent.parent;
-		}
-		
-		// if we got here we couldn't find the type
-		throw yui_error("unable to find item for ancestor_type", ancestor_type);
 	}
 	
 	static compile = function() {

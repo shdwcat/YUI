@@ -5,6 +5,13 @@ function YuiLambdaVariable(param_name, context) : YuiExpr() constructor {
 	self.param_name = param_name;
 	self.context = context;
 	
+	static debug = function() {
+		return {
+			_type: instanceof(self),
+			param_name,
+		}
+	}
+	
 	static resolve = function(data) {
 		// gets the defined parameter from the 'context params' which in this case
 		// is set up in YuiLambda/YuiLambdaParselet

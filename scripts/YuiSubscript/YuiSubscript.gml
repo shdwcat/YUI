@@ -5,6 +5,14 @@ function YuiSubscript(expr, variable_name) : YuiExpr() constructor {
 	self.expr = expr;
 	self.variable_name = variable_name;
 	
+	static debug = function() {
+		return {
+			_type: instanceof(self),
+			expr: expr.debug(),
+			variable_name,
+		}
+	}
+	
 	static resolve = function(data) {
 		var struct = expr.resolve(data);
 		var result = variable_struct_get(struct, variable_name);

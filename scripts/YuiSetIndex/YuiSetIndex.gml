@@ -8,6 +8,15 @@ function YuiSetIndex(left, index, right) : YuiExpr() constructor {
 	self.index = index;
 	self.right = right;
 	
+	static debug = function() {
+		return {
+			_type: instanceof(self),
+			left: left.debug(),
+			index: index.debug(),
+			right: right.debug(),
+		}
+	}
+	
 	static resolve = function(data) {
 		var right_val = right.resolve(data);
 		var left_val = left.resolve(data);

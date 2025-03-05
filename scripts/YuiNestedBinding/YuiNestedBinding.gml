@@ -5,6 +5,14 @@ function YuiNestedBinding(inner_binding, path) : YuiBinding(undefined) construct
 	self.inner_binding = inner_binding;
 	self.path = path;
 	
+	static debug = function() {
+		return {
+			_type: instanceof(self),
+			path,
+			inner_binding: inner_binding.debug(),
+		}
+	}
+	
 	if path == "" {
 		resolver = resolveEmptyPath;
 	}

@@ -5,6 +5,10 @@ function YuiIdentifier(identifier, source) : YuiExpr() constructor {
 	self.identifier = identifier;
 	self.source = source;
 	
+	static debug = function() {
+		return $"{identifier} ({instanceof(self)})";
+	}
+	
 	static resolve = function(data) {
 		// currently identifier just resolves to the string, which means any unquoted string
 		// in script will resolve to a string if it's not used where a function is expected
