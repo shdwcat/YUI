@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"SnapStringToFile",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"SnapStringToFile",
+  "parent":{
+    "name":"Utility",
+    "path":"folders/SNAP/Utility.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -58,10 +58,12 @@ https://discord.gg/8krYCqr
 ### Dependencies
 YUI has a number of dependencies, which are automatically included in the project.
 
-- [Inspectron](https://github.com/shdwcat/Inspectron) - runtime instance debug overlays
+- [Inspectron 1.0.1](https://github.com/shdwcat/Inspectron) - runtime instance debug overlays
 
 Credit to [@jujuadams](https://github.com/JujuAdams):
 - [Gumshoe](https://github.com/JujuAdams/Gumshoe) - file finder
+- [SNAP 7.0.2](https://github.com/JujuAdams/SNAP) - data format converters
+  * NOTE: only a subset of SNAP is included by default (YAML/JSON). If you need more, just import the SNAP package from the link into your project.
 
 And [@offalynne](https://github.com/offalynne):
 - [input-string](https://github.com/offalynne/input-string) - text input backend
