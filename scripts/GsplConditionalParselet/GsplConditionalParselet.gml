@@ -6,7 +6,7 @@ function GsplConditionalParselet(precedence, colon_token) : GsplInfixParselet(pr
 	static parse = function(parser, left_expr, token) {
 		
 		var then_expr = parser.parseExpression();
-		parser.consume(colon_token, "Expecting ':' for conditional (?:) expression");
+		parser.consume(colon_token, $"Expecting '{colon_token}' for conditional expression");
 		var else_expr = parser.parseExpression(precedence - 1);
 		
 		return new parser.Conditional(left_expr, then_expr, else_expr);
