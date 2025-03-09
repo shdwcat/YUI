@@ -1,0 +1,8 @@
+# GameMaker 2024.11 always saves these with LF endings
+*.yy        text diff=json eol=lf
+*.yyp       text diff=json eol=lf
+
+*.gml       text diff=gml
+*.md        text
+
+*.png       binary
