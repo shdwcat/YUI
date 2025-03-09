@@ -1,0 +1,5 @@
+*.yy        text diff=json
+*.gml       text diff=gml
+*.md        text
+
+*.png       binary

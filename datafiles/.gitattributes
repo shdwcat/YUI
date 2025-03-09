@@ -1,2 +1,3 @@
-*.yui linguist-language=YAML
-*.yui text eol=crlf
+*.yui       linguist-language=yaml
+*.yui       text eol=crlf diff=yaml
+*.csv       text diff=csv
