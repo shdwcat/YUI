@@ -9,157 +9,58 @@ import:
   - /ExampleProject/Animations/transitions.yui
   - /YUI/Widgets/
 
+// we can also declare resources in any screen or resources file
+resources:
+  example_link:
+    // a template allows you create your own own UI widgets
+    type: template
+    // slots are where you can define the additional properties your widget will have
+    // NOTE: These properties will be *added* to whatever element is returned in the
+    // 'template' part below, so in this case this widget also has all the properties
+    // of the 'button' element. This is also true for extending other template widgets!
+    slots:
+      label: null
+      description: null
+      screen: null
+    // template will be the content returned by using the widget elsewhere
+    template:
+      type: button
+      // to *use* a slot property defined above, you refer to it by $slot as
+      // demonstrated in this click handler
+      on_click: @@ e => ~yui_change_screen($screen, e.source)
+      animate:
+        on_visible:
+          xoffset: &cascade_slide_in
+        on_unloading:
+          xoffset: &cascade_slide_out
+      content:
+        type: panel
+        size: stretch
+        elements:
+          - type: text
+            text: $label
+            text_style: subtitle
+          - type: text
+            text: $description
+            color: #dfdfdf
+
 root:
   type: panel // panel is used to layout and arrange child elements
   layout: canvas // canvas can be used to position elements arbitrarily within the panel, or along the edges
-
   elements: // this defines the child elements of the canvas
 
     // helper message about live reload state
-    - type: text
-      text: @live_reload_label + ' - ' + @live_reload_message | final
+    - type: border
+      background: $theme.resources.control_bg
+      border_color: $theme.resources.control_border
       visible: @live_reload_label != ''
+      size: { w: stretch }
+      padding: 5
       canvas:
-        left: 5
-        bottom: 5
-
-    - type: main_panel // this is an example of a YUI fragment,
-                       // check out the main_panel.yui file referenced above
-      canvas: // when the parent panel's layout is set to 'canvas',
-              // you can set canvas properties on the child elements
-              // also supports: bottom, right, center: true, center: h, center: v
-        top: 50
-        left: 50
-      //enabled: @test_opacity == 1
-      padding: 20
-      spacing: 10 // spacing controls the distance between child elements of a panel
-      elements:
-        - type: panel
-          spacing: 5
-          elements:
-            - type: text // 'type: text' is how we draw text! simple
-              text_style: title // this applies one of the text styles defined in the active theme
-              text: "Welcome to the YUI Example Project!" // and here we set the text itself
-
-              // You can also just put a string as a child and it will automatically be converted to a 'text' element. Easy!
-            - type: text
-              scribble: true
-              autotype: true
-              region_color: #2277ff
-              text: This screen is defined in [region,file]datafiles/ExampleProject/Screens/welcome_screen.yui[/region]
-              events:
-                on_region_hover_changed: @@ e => ~yui_log('region is ' + e.region)
-
-            - You can edit this file while the game is running! Press F5 to reload after making changes
-            - " " // inserts a blank line
-            - Select an option below to see more examples
-
-        - type: panel
-          alignment: { h: stretch }
-          indexed: true
-          elements:
-
-            - type: button
-              content: Widget Gallery // the 'content' for a button can be a simple string like this, or a child element, which could be a panel containing more elements!
-
-              // on_click is how we tell the button what to do
-              // here we call the 'yui_change_screen' function and pass it
-              // the name of the screen, and a reference to the visual element
-              // so that the function can determine which screen to change
-              tooltip: View examples of the widgets included with YUI
-              on_click: @@ e => ~yui_change_screen(widget_gallery, e.source)
-              animate:
-                on_visible:
-                  xoffset: &cascade_slide_in
-                on_unloading:
-                  xoffset: &cascade_slide_out
-
-            - type: button
-              content: Animation Examples
-              tooltip: View examples of the animation system in use
-              on_click: @@ e => ~yui_change_screen(animation_examples, e.source)
-              animate:
-                on_visible:
-                  xoffset: &cascade_slide_in
-                on_unloading:
-                  xoffset: &cascade_slide_out
-
-            - type: button
-              content: "Drag and Drop Example: Inventory Screen"
-              tooltip: Demonstrates an inventory screen where you can drag and drop items onto equipment slots for a character
-              on_click: @@ e => ~yui_change_screen(inventory_screen, e.source)
-              animate:
-                on_visible:
-                  xoffset: &cascade_slide_in
-                on_unloading:
-                  xoffset: &cascade_slide_out
-
-            - type: button
-              content: Layout Examples
-              tooltip: View examples of the various panel layout options as including alignment behavior
-              on_click: @@ e => ~yui_change_screen(layout_example, e.source)
-              animate:
-                on_visible:
-                  xoffset: &cascade_slide_in
-                on_unloading:
-                  xoffset: &cascade_slide_out
-
-            - type: button
-              content: Windows Example
-              tooltip: View an example of the child_window widget, which creates a draggable window on screen
-              on_click: @@ e => ~yui_change_screen(windows_example, e.source)
-              animate:
-                on_visible:
-                  xoffset: &cascade_slide_in
-                on_unloading:
-                  xoffset: &cascade_slide_out
-
-            - type: button
-              content: Keyboard/Gamepad Navigation
-              tooltip: Basic demo for how automatic keyboard/gamepad navigation works
-              on_click: @@ e => ~yui_change_screen(kb_navigation_example, e.source)
-              animate:
-                on_visible:
-                  xoffset: &cascade_slide_in
-                on_unloading:
-                  xoffset: &cascade_slide_out
-
-            - type: button
-              content: Viewport example
-              tooltip: Demo of the viewport element showcasing complex inner context
-              on_click: @@ e => ~yui_change_screen(viewport_example, e.source)
-              animate:
-                on_visible:
-                  xoffset: &cascade_slide_in
-                on_unloading:
-                  xoffset: &cascade_slide_out
-
-            - type: button
-              content: TodoMVC Example
-              tooltip: Working example of the TodoMVC app (a basic todo list tracker)
-              on_click: @@ e => ~yui_change_screen(todo_mvc, e.source)
-              animate:
-                on_visible:
-                  xoffset: &cascade_slide_in
-                on_unloading:
-                  xoffset: &cascade_slide_out
-
-            - type: button
-              content: Dev Sandbox (Experimental)
-              tooltip: In development work (may crash!)
-              on_click: @@ e => ~yui_change_screen(sandbox, e.source)
-              animate:
-                on_visible:
-                  xoffset: &cascade_slide_in
-                on_unloading:
-                  xoffset: &cascade_slide_out
-
-    - type: button
-      content: Toggle Theme
-      canvas:
-        top: 10
-        right: 140
-      on_click: @toggleTheme()
+        bottom: 0
+      content:
+        type: text
+        text: @live_reload_label + ' - ' + @live_reload_message | final
 
     - type: button
       content: Main Menu
@@ -181,3 +82,103 @@ root:
               tooltip_placement: left_top // as with the popup itself, controls where the tooltip is placed
               padding: 10
               on_click: @@ e => ~yui_example_exit_game()
+
+    - type: button
+      depth: 100
+      content: Toggle Theme
+      padding: 10
+      canvas:
+        top: 10
+        right: 120
+      on_click: @toggleTheme()
+
+    - type: main_panel // this is an example of a YUI fragment,
+                       // check out the main_panel.yui file referenced above
+      // canvas: // when the parent panel's layout is set to 'canvas',
+      //         // you can set canvas properties on the child elements
+      //         // also supports: bottom, right, center: true, center: h, center: v
+      //   top: 50
+      //   // left: 50
+      //enabled: @test_opacity == 1
+      padding: [20, 20, 20, 40]
+      spacing: 10 // spacing controls the distance between child elements of a panel
+      elements:
+        - type: panel
+          spacing: 5
+          elements:
+            - type: text // 'type: text' is how we draw text! simple
+              text_style: title // this applies one of the text styles defined in the active theme
+              text: "Welcome to the YUI Example Project!" // and here we set the text itself
+
+              // You can also just put a string as a child and it will automatically be converted to a 'text' element. Easy!
+            - type: text
+              scribble: true
+              autotype: true
+              region_color: #2277ff
+              text: This screen is defined in [region,file]datafiles/ExampleProject/Screens/welcome_screen.yui[/region]
+              events:
+                on_region_hover_changed: @@ e => ~yui_log('region is ' + e.region)
+
+            - You can edit this file while the game is running! Press F5 to reload after making changes
+            - " " // inserts a blank line
+            - type: text
+              text: Select an option below to explore YUI's features
+              text_style: subtitle
+
+        - type: panel
+          layout: grid
+          grid:
+            rows: 5
+            row_spacing: 10
+            columns: 2
+            column_spacing: 10
+          alignment: { h: stretch }
+          indexed: true
+          elements:
+
+            // this 'example_link' type specified here is defined in the 'resources'
+            // section at the top of this file!
+            - type: example_link
+              label: Widget Gallery
+              description: View examples of the widgets included with YUI
+              screen: widget_gallery
+
+            - type: example_link
+              label: Animation Examples
+              description: View examples of the animation system in use
+              screen: animation_examples
+
+            - type: example_link
+              label: "Drag and Drop Example: Inventory Screen"
+              description: Demonstrates an inventory screen where you can drag and drop items onto equipment slots for a character
+              screen: inventory_screen
+
+            - type: example_link
+              label: Layout Examples
+              description: View examples of the various panel layout options as including alignment behavior
+              screen: layout_example
+
+            - type: example_link
+              label: Windows Example
+              description: View an example of the child_window widget, which creates a draggable window on screen
+              screen: windows_example
+
+            - type: example_link
+              label: Keyboard/Gamepad Navigation
+              description: Basic demo for how automatic keyboard/gamepad navigation works
+              screen: kb_navigation_example
+
+            - type: example_link
+              label: Viewport example
+              description: Demo of the viewport element showcasing complex inner context
+              screen: viewport_example
+
+            - type: example_link
+              label: TodoMVC Example
+              description: Working example of the TodoMVC app (a basic todo list tracker)
+              screen: todo_mvc
+
+            - type: example_link
+              label: Dev Sandbox (Experimental)
+              description: In development work (may crash!)
+              screen: sandbox
