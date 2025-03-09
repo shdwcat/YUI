@@ -11,7 +11,7 @@ resources:
     slots:
 
       // the scrollable content
-      content: undefined
+      content: null
 
       scroll_x: 0
       scroll_y: 0

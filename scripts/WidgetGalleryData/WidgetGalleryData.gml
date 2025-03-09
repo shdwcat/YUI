@@ -1,7 +1,7 @@
 /// @description
 function WidgetGalleryData() constructor {
 	check_state = false;
-	selector_items = ["Windowed", "Borderless Test", "Fullscreen"];
+	selector_items = ["Windowed", "Borderless", "Fullscreen"];
 	selected_index = 1;
 	selected_item = selector_items[selected_index];
 	

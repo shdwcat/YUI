@@ -83,9 +83,9 @@ resources:
             visible: $can_clear_value and ($selected_item != undefined or $selection_scope.selected_index >= 0)
             on_click:
               // update selection scope if it exists
-              - @@ $selection_scope then $selection_scope.select(undefined) else false
+              - @@ $selection_scope?.select(undefined)
               // invoke the user handler
-              - @@ $on_item_selected(undefined)
+              - @@ $on_item_selected?(undefined)
 
           - $indicator_template
 
@@ -136,8 +136,8 @@ resources:
         content: $item_template
         on_click:
           // update selection scope if it exists
-          - @@ $selection_scope then $selection_scope.select(@) else false
+          - @@ $selection_scope?.select(@)
           // invoke the user handler
-          - @@ $on_item_selected(@)
+          - @@ $on_item_selected?(@)
           // close the popup
           - @@ e => e.source.closePopup()

@@ -36,7 +36,7 @@ resources:
         // select the item
         //- @@ item => $selection_scope then $selection_scope.select(item) else false
         // invoke the user handler
-        - @@ item => $on_tab_selected(item)
+        - @@ item => $on_tab_selected?(item)
 
     template:
       type: panel

@@ -98,7 +98,7 @@ resources:
                 - $item_template
             on_click:
               - @command()
-              - e => e.source.closePopup(true) // recursive
+              - @@ e => e.source.closePopup(true) // recursive
 
           submenu:
             type: button

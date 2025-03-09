@@ -29,8 +29,8 @@ resources:
       layout: $orientation
       spacing: 5
       events:
-        on_mouse_wheel_down: $on_value_changed(~max($value - $wheel_increment, $min))
-        on_mouse_wheel_up: $on_value_changed(~min($value + $wheel_increment, $max))
+        on_mouse_wheel_down: $on_value_changed?(~max($value - $wheel_increment, $min))
+        on_mouse_wheel_up: $on_value_changed?(~min($value + $wheel_increment, $max))
       elements:
 
         - type: text
@@ -52,9 +52,9 @@ resources:
                   interaction: slider_drag
                   parameters:
                     on_position_changed:
-                      - @@ e => $on_value_changed((e.left * ($max - $min)) + $min)
+                      - @@ e => $on_value_changed?((e.left * ($max - $min)) + $min)
                       //- @@ e => ~yui_log(e.left)
-                    on_drag_end: @@ e => $on_drag_end(e.left * ($max - $min))
+                    on_drag_end: @@ e => $on_drag_end?(e.left * ($max - $min))
 
             // slider line
             - type: border

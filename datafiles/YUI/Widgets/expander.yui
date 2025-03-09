@@ -22,7 +22,7 @@ resources:
           - $icon_template
           - $header
       on_click:
-        @@ e => $is_expanded_changed(not $is_expanded)
+        @@ e => $is_expanded_changed?(not $is_expanded)
 
   expander_content:
     type: template
