@@ -1,8 +1,7 @@
 /// @description draw text/scribble element
 
-//if trace {
-//	DEBUG_BREAK_YUI;
-//}
+//if trace
+//	yui_break();
 
 // draw background
 if bg_alpha > 0 {

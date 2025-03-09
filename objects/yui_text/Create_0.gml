@@ -175,7 +175,7 @@ arrange = function yui_text__arrange(available_size, viewport_size) {
 		
 		if build_surface {
 			buildTextSurface();
-			if !text_surface
+			if text_surface == undefined
 				use_text_surface = false;
 		}
 	}
