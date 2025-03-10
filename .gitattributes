@@ -1,7 +1,11 @@
+<<<<<<< HEAD
 # GameMaker 2024.11 always saves these with LF endings
 *.yy        text diff=json eol=lf
 *.yyp       text diff=json eol=lf
 
+=======
+*.yy        text diff=json
+>>>>>>> a75572dcbe17acd73632906dbfeae8391bade0e0
 *.gml       text diff=gml
 *.md        text
 
