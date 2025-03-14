@@ -11,6 +11,9 @@ viewport_y = 0;
 content_w = infinity;
 content_h = infinity;
 
+// the measured size allotted to the child content
+content_size = undefined;
+
 // info about viewport extents
 viewport_info = {
 	x_ratio: 0,
@@ -71,7 +74,6 @@ arrange = function(available_size, viewport_size) {
 		h: content_h == "fit" ? actual_viewport_size.h : content_h,
 	}
 	
-	var content_size = undefined;
 	if content_item {
 		content_size = content_item.arrange(available_content_size, actual_viewport_size);
 	}
@@ -88,10 +90,16 @@ arrange = function(available_size, viewport_size) {
 	
 	yui_resize_instance(drawn_size.w, drawn_size.h);
 	
+	setViewportBounds();
+	
+	return draw_size;
+}
+
+setViewportBounds = function() {
 	// determine viewport bounds and position viewport content
 	
-	var viewport_x_max = max(0, content_size.w - drawn_size.w);
-	var viewport_y_max = max(0, content_size.h - drawn_size.h);
+	var viewport_x_max = max(0, content_size.w - draw_size.w);
+	var viewport_y_max = max(0, content_size.h - draw_size.h);
 	
 	if content_item && (viewport_x != 0 || viewport_y != 0) {
 		
@@ -112,8 +120,6 @@ arrange = function(available_size, viewport_size) {
 		viewport_info.viewport_h = draw_size.h;
 		yui_call_handler(set_viewport_info, [viewport_info], data_source);
 	}
-	
-	return draw_size;
 }
 
 border_move = move;

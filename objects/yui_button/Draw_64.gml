@@ -15,7 +15,7 @@ if show_highlight {
 				if viewport_part.clipped {
 					draw_sprite_ext(
 						yui_white_pixel, 0,
-						viewport_part.x, viewport_part.y, viewport_part.w, viewport_part.h,
+						viewport_part.x + xoffset, viewport_part.y + yoffset, viewport_part.w, viewport_part.h,
 						0, highlight_color, alpha);
 				}
 				else {

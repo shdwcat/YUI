@@ -413,10 +413,10 @@ isPointVisible = function(x, y) {
 	if viewport_part != undefined && viewport_part.clipped {
 		return point_in_rectangle(
 				x, y,
-				viewport_part.x,
-				viewport_part.y,
-				viewport_part.x + viewport_part.w,
-				viewport_part.y + viewport_part.h);
+				viewport_part.x + xoffset,
+				viewport_part.y + yoffset,
+				viewport_part.x + xoffset + viewport_part.w,
+				viewport_part.y + yoffset + viewport_part.h);
 	}
 	else {
 		return visible;

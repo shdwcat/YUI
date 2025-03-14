@@ -106,6 +106,10 @@ arrange = function yui_text__arrange(available_size, viewport_size) {
 		desired_size.h = layout_props.valign
 			? available_size.h
 			: new_bbox.height;
+			
+		if viewport_size {
+			updateViewport();
+		}
 	}
 	else {
 	
