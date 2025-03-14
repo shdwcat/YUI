@@ -1,0 +1,76 @@
+id: scrolling_example
+file_type: screen
+
+import:
+  - ../Templates/
+  - /ExampleProject/Animations/transitions.yui
+  - /YUI/Widgets/
+
+  resources:
+    textt:
+      type: fragment
+      content:
+        type: text
+        //trace: true
+
+root:
+  type: screen_base
+  title: Scrolling Example
+  items:
+
+    - type: scrollbox
+      xoffset: 105
+      yoffset: 55
+      size: { w: 500, h: 400 }
+      background: #252525
+      border_color: #1b1b1b
+      content_w: 500
+      content:
+
+        type: panel
+        padding: 5
+        id: vp_content
+        elements:
+
+          - type: text
+            // scribble: true
+            // trace: true
+            xoffset: 150
+            text_style: title
+            text: Loreum Ipsum
+
+          - type: slide_toggle
+            trace: true
+            is_checked: @widget_data.check_state
+            label: this is a slide toggle
+            on_checked_changed: @@ checked => @widget_data.check_state = checked
+            text_style: subtitle
+
+          - type: text
+            scribble: true
+            trace: true
+            text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum dui orci, in venenatis ipsum elementum vitae. Integer sagittis neque in nibh mollis venenatis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed commodo ultricies dolor eget maximus. Duis non gravida nulla, vel tincidunt lectus. Vestibulum dapibus sapien a augue ultrices porttitor. Fusce ultrices lacus nisl. Vestibulum nisi velit, placerat sed lacus vel, tincidunt ultricies metus. Maecenas porta, justo in imperdiet iaculis, urna ipsum varius urna, porta bibendum enim lorem sit amet enim. Nullam mattis tincidunt augue, vitae ultrices magna faucibus vel. Nunc lorem nunc, commodo ut tincidunt id, sagittis sed ipsum. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+
+          - type: image
+            trace: true
+            sprite: ~chest_armor
+            size: 64
+
+          - type: text
+            events:
+              on_mouse_down: @@ ~yui_log('click')
+            text: Mauris eleifend fringilla fringilla. Aliquam ut mi tincidunt, aliquam magna tincidunt, gravida turpis. Nullam eleifend ante sed pharetra commodo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nullam tempus bibendum elit ac tempor. Nullam ut euismod dui, nec pretium nulla. Curabitur vehicula quis purus vel molestie. Nam pharetra quis turpis sit amet malesuada. Cras vitae felis nec augue vestibulum condimentum eu id nisl. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam ut ligula vel mi ullamcorper vestibulum nec sit amet libero. Sed eros diam, pellentesque nec porta molestie, aliquet at sapien. In vulputate quam quis neque venenatis, vitae cursus quam ullamcorper. Donec quis accumsan augue, non luctus lectus. Aenean ultrices a ligula quis eleifend.
+
+          - type: slide_toggle
+            is_checked: @widget_data.check_state
+            label: this is a slide toggle
+            on_checked_changed: @@ checked => @widget_data.check_state = checked
+            text_style: subtitle
+
+          - type: text
+            events:
+              on_mouse_down: @@ e => ~yui_log('visible ' + e.source.visible)
+            text: Curabitur porta massa purus, at porta velit commodo vel. Sed consequat justo quam, nec tristique risus consequat et. Pellentesque vel tempus ligula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce erat lectus, commodo eu metus nec, dapibus tempor odio. Nullam quis lorem id massa lacinia placerat in ut risus. Cras placerat libero non suscipit varius. Sed iaculis erat ac ornare commodo. Duis aliquet erat eget cursus mattis. Praesent auctor sapien maximus lorem lacinia, vitae porttitor nisl auctor. Morbi ligula purus, dapibus vitae lobortis ac, aliquet ac mi. Mauris mollis nec tortor et vulputate. Fusce ac sollicitudin justo, in rhoncus lorem. Fusce eget eros molestie enim condimentum eleifend.
+
+          - type: text
+            text: Sed nunc nibh, rutrum vel vestibulum nec, luctus sit amet nisl. Nunc ultrices, nibh non hendrerit sodales, dolor ligula fringilla enim, non faucibus tellus nisl quis dui. Integer ut odio urna. Donec ut justo id erat vestibulum maximus. Quisque rutrum felis mauris, ut dignissim mauris tincidunt in. Aliquam id nisi varius justo efficitur congue. Etiam eleifend fringilla mi, ac placerat mauris ultrices eget. Phasellus sit amet est tempus, dignissim justo quis, fringilla magna. In luctus mauris felis, et interdum diam consequat at. Pellentesque posuere cursus tellus at tempus. Morbi id blandit felis. Aenean egestas velit convallis lacus venenatis interdum. In tincidunt dictum nisi.

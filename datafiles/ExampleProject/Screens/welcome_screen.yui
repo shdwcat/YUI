@@ -169,9 +169,9 @@ root:
               screen: kb_navigation_example
 
             - type: example_link
-              label: Viewport example
-              description: Demo of the viewport element showcasing complex inner context
-              screen: viewport_example
+              label: Scrolling Example
+              description: Demo of the scrollbox widget
+              screen: scrolling_example
 
             - type: example_link
               label: TodoMVC Example
