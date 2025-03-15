@@ -69,8 +69,8 @@ function YuiElementDrag(_props, _resources) constructor {
 		
 		var parent_size = parent.draw_size;
 		
-		var relative_left = cursor_pos.x - (parent_size.x + parent.xoffset);
-		var relative_top = cursor_pos.y - (parent_size.y + parent.yoffset);
+		var relative_left = cursor_pos.x - parent.x;
+		var relative_top = cursor_pos.y - parent.y;
 		
 		// in element mode, position by the corner of the target, not the position of the cursor
 		if props.mode == "element" {
