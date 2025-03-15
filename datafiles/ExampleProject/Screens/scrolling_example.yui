@@ -33,14 +33,10 @@ root:
         elements:
 
           - type: text
-            // scribble: true
-            // trace: true
-            xoffset: 150
             text_style: title
             text: Loreum Ipsum
 
           - type: slide_toggle
-            trace: true
             is_checked: @widget_data.check_state
             label: this is a slide toggle
             on_checked_changed: @@ checked => @widget_data.check_state = checked
@@ -48,11 +44,9 @@ root:
 
           - type: text
             scribble: true
-            trace: true
             text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum dui orci, in venenatis ipsum elementum vitae. Integer sagittis neque in nibh mollis venenatis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed commodo ultricies dolor eget maximus. Duis non gravida nulla, vel tincidunt lectus. Vestibulum dapibus sapien a augue ultrices porttitor. Fusce ultrices lacus nisl. Vestibulum nisi velit, placerat sed lacus vel, tincidunt ultricies metus. Maecenas porta, justo in imperdiet iaculis, urna ipsum varius urna, porta bibendum enim lorem sit amet enim. Nullam mattis tincidunt augue, vitae ultrices magna faucibus vel. Nunc lorem nunc, commodo ut tincidunt id, sagittis sed ipsum. Interdum et malesuada fames ac ante ipsum primis in faucibus.
 
           - type: image
-            trace: true
             sprite: ~chest_armor
             size: 64
 
