@@ -139,6 +139,7 @@ root:
             // this 'example_link' type specified here is defined in the 'resources'
             // section at the top of this file!
             - type: example_link
+              autofocus: true
               label: Widget Gallery
               description: View examples of the widgets included with YUI
               screen: widget_gallery
