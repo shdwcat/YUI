@@ -72,7 +72,10 @@ unload = function(on_unloaded = undefined, destroy_now = false) {
 		if instance_exists(root) {
 			root.destroy();
 			root = undefined;
-			on_unloaded();
+			
+			if on_unloaded != undefined
+				on_unloaded();
+				
 			return 0;
 		}
 	}
@@ -90,7 +93,7 @@ unload = function(on_unloaded = undefined, destroy_now = false) {
 		});
 		call_later(unload_time / 1000, time_source_units_seconds, on_unloaded);
 	}
-	else {
+	else if on_unloaded != undefined {
 		on_unloaded();
 	}
 	
