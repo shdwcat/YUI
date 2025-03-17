@@ -123,7 +123,7 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 		|| os_type == os_win8native
 		|| os_type == os_winphone;
 	
-	static _force_lowercase = !_is_microsoft && os_type != os_macosx;
+	static _force_lowercase = !_is_microsoft
 		
 }
 
