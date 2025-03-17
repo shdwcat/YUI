@@ -1,15 +1,15 @@
 /// @description find and run left_pressed handler
 
 // debug code
-//var i = hover_count - 1; repeat hover_count {
-//	var next = hover_list[| i];
+//var i = 0; repeat hover_count {
+//	var next = hover_array[i];
 //	yui_log("hover item at index", i, "is", next.id, "type", object_get_name(next.object_index), "depth", next.depth);
 //	i--;
 //}
 
 left_pressed_consumed = false;
-var i = hover_count - 1; repeat hover_count {
-	var next = hover_list[| i];
+var i = 0; repeat hover_count {
+	var next = hover_array[i];
 	//yui_log("pressed instance", i, "is", next.id, "type", object_get_name(next.object_index));
 	
 	if instance_exists(next) {
@@ -31,14 +31,15 @@ var i = hover_count - 1; repeat hover_count {
 		// a cursor layer blocks all events from propagating below it
 		// e.g. popups and windows
 		if next.is_cursor_layer {
+			left_pressed_consumed = true;
 			break;
 		}
 	}
 	
-	i--;
+	i++;
 }
 
-if i < 0 && global_left_pressed {
+if !left_pressed_consumed && global_left_pressed {
 	// Feather disable once GM1021
 	global_left_pressed();
 }

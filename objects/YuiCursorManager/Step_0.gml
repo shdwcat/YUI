@@ -58,12 +58,25 @@ else {
 		false);
 }
 
-// copy to array for easier debugging
+// copy to array for easier manipulation
 array_resize(hover_array, hover_count);
-var i = hover_count - 1; repeat hover_count {
+var i = 0; repeat hover_count {
 	hover_array[i] = hover_list[| i];
-	i--;
+	i++;
 }
+
+// sort by depth
+array_sort(hover_array, function(a,b) {
+	
+	// sort yui_base (UI layer) items first
+	var a_type = object_is_ancestor(a.object_index, yui_base) ? 1 : 2;
+	var b_type = object_is_ancestor(b.object_index, yui_base) ? 1 : 2;
+	if a_type != b_type {
+		return a_type - b_type;
+	}
+	
+	return a.depth - b.depth; 
+});
 
 var hover_consumed = false;
 
@@ -74,22 +87,25 @@ var i = 0; repeat ds_map_size(highlight_map) {
 }
 
 // check hover now so that it's available to item build/arrange
-var i = hover_count - 1; repeat hover_count {
-	var next = hover_list[| i];
+var i = 0; repeat hover_count {
+	var next = hover_array[i];
 	
 	if print_debug {
-		yui_log($"list instance {i} is {next.id} type {script_get_name(next.element_constructor)} and id {next._id}");
-		if next._id == "foopp"
-			DEBUG_BREAK_YUI
+		if object_is_ancestor(next.object_index, yui_base) {
+			yui_log($"list instance {i} depth {next.depth} is {next.id} type {script_get_name(next.element_constructor)} and id {next._id}");
+		}
+		else {
+			yui_log($"list instance {i} depth {next.depth} is {next.id} type {object_get_name(next.object_index)}");
+		}
 	}
 	
 	// skip if cursor is not on a visible part of the element
 	if !isCursorOnVisiblePart(next) {
-		i--;
+		i++;
 		continue;
 	}
 	
-	// should I rename this to hover to prevent confusion?
+	// TODO rename this to hover to prevent confusion
 
 	// only set highlight if not already highlighted
 	if !next.highlight {
@@ -112,12 +128,12 @@ var i = hover_count - 1; repeat hover_count {
 		break;
 	}
 	
-	i--;
+	i++;
 }
 
 
 if print_debug
-	DEBUG_BREAK_YUI
+	yui_break();
 
 // clear highlight from old items
 var keys = ds_map_keys_to_array(highlight_map);

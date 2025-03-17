@@ -1,9 +1,8 @@
 /// @description find and run right_pressed handler
 
 right_pressed_consumed = false;
-var i = hover_count - 1; repeat hover_count {
-	var next = hover_list[| i];
-	//yui_log("list instance", i, "is", next.id, "type", script_get_name(next.element_constructor));
+var i = 0; repeat hover_count {
+	var next = hover_array[i];
 	
 	if instance_exists(next) {
 		if next.right_pressed && isCursorOnVisiblePart(next) {
@@ -21,7 +20,8 @@ var i = hover_count - 1; repeat hover_count {
 		}
 	}
 	
-	i--;
+	i++;
 }
+
 trackMouseDownItems(mb_right);
 

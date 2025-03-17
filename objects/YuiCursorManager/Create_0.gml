@@ -164,16 +164,18 @@ activateFocused = function() {
 
 trackMouseDownItems = function(button) {
 	array_resize(mouse_down_array[button], hover_count);
-	var i = hover_count - 1; repeat hover_count {
+	var i = 0; repeat hover_count {
 		var item = hover_list[|i];
 		//var type = object_get_name(item.object_index);
 		//yui_log("mouse down on:", item, " - ", type, " - ", item[$" _id"]);
 		mouse_down_array[button][i] = item;
-		i--;
+		i++;
 	}
 }
 
 isCursorOnVisiblePart = function(item) {
+	if !object_is_ancestor(item.object_index, yui_base) return true;
+	
 	return item.isPointVisible(mouse_x + cursor_offset_x, mouse_y + cursor_offset_y);
 }
 
@@ -211,8 +213,8 @@ onKeyDown = function() {
 
 onCursorWheelUp = function() {
 	var wheel_up_consumed = false;
-	var i = hover_count - 1; repeat hover_count {
-		var next = hover_list[| i];
+	var i = 0; repeat hover_count {
+		var next = hover_array[i];
 	
 		if instance_exists(next) && isCursorOnVisiblePart(next) {
 			if next.on_mouse_wheel_up {
@@ -229,10 +231,10 @@ onCursorWheelUp = function() {
 			}
 		}
 	
-		i--;
+		i++;
 	}
 
-	if i < 0 && global_wheel_up {
+	if !wheel_up_consumed && global_wheel_up {
 		// Feather disable once GM1021
 		global_wheel_up();
 	}
@@ -240,8 +242,8 @@ onCursorWheelUp = function() {
 
 onCursorWheelDown = function() {
 	var wheel_down_consumed = false;
-	var i = hover_count - 1; repeat hover_count {
-		var next = hover_list[| i];
+	var i = 0; repeat hover_count {
+		var next = hover_array[i];
 	
 		if instance_exists(next) && isCursorOnVisiblePart(next) {
 			if next.on_mouse_wheel_down {
@@ -254,14 +256,15 @@ onCursorWheelDown = function() {
 			// a cursor layer blocks all events from propagating below it
 			// e.g. popdowns and windows
 			if next.is_cursor_layer {
+				wheel_down_consumed = true;
 				break;
 			}
 		}
 	
-		i--;
+		i++;
 	}
 
-	if i < 0 && global_wheel_down {
+	if !wheel_down_consumed && global_wheel_down {
 		// Feather disable once GM1021
 		global_wheel_down();
 	}

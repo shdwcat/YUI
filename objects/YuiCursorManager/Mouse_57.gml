@@ -1,8 +1,7 @@
 /// @description find and run right_clicked handler
 
-var i = hover_count - 1; repeat hover_count {
-	var next = hover_list[| i];
-	//yui_log("released instance", i, "is", next.id, "type", object_get_name(next.object_index));
+var i = 0; repeat hover_count {
+	var next = hover_array[i];
 	
 	if instance_exists(next) {
 		if next.right_click
@@ -23,7 +22,7 @@ var i = hover_count - 1; repeat hover_count {
 		}
 	}
 	
-	i--;
+	i++;
 }
 
 // forget the list
