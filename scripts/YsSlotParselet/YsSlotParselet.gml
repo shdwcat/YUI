@@ -17,6 +17,13 @@ function YsSlotParselet() : GsplPrefixParselet() constructor {
 			? path_parts[1]
 			: "";
 		
+		// if the slot value is an expression parse that also
+		// NOTE: this can happen when setting the default value of a slot to an expression
+		// as those are not parsed when the template/component is initialized
+		if yui_is_binding_expr(slot_value) {
+			slot_value = yui_parse_binding_expr(slot_value, parser.resources, parser.slot_values)
+		}
+		
 		if yui_is_binding(slot_value) {
 			if sub_path == "" {
 				// if there's no sub path, return the binding itself
@@ -25,9 +32,6 @@ function YsSlotParselet() : GsplPrefixParselet() constructor {
 			else {
 				return new YuiNestedBinding(slot_value, sub_path);
 			}
-		}
-		else if yui_is_binding_expr(slot_value) {
-			return yui_parse_binding_expr(slot_value, parser.resources, parser.slot_values)
 		}
 		else if sub_path == "" {
 			// if there is no sub path, return the value (wrapped)
