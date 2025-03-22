@@ -27,6 +27,8 @@ function yui_register_interactions(interactions, should_hash_items = false) {
 
 /// @description unregister interaction participation
 function yui_unregister_interactions(interactions) {
+	if !instance_exists(YuiCursorManager) exit;
+	
 	with YuiCursorManager {
 		if !ds_exists(participation_map, ds_type_map) return;
 
