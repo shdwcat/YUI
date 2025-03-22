@@ -4,7 +4,7 @@ function YuiRGBCurveAnimation(props, resources, slot_values)
 	
 	static default_props = {
 		type: "rgb_curve",
-		curve: undefined,
+		curve: yui_linear_curve,
 		channel: 0,
 		from: undefined,
 		to: undefined,
@@ -17,7 +17,9 @@ function YuiRGBCurveAnimation(props, resources, slot_values)
 	// store for diagnostics
 	self.props = props;
 	
-	curve = yui_bind_and_resolve(props.curve, resources, slot_values);
+	self.trace = props[$ "trace"];
+	
+	curve = yui_bind_and_resolve(props[$ "curve"], resources, slot_values) ?? yui_linear_curve;
 	if is_string(curve) {
 		var curve_asset = asset_get_index(curve);
 		if curve_asset == -1 {
@@ -69,7 +71,11 @@ function YuiRGBCurveAnimation(props, resources, slot_values)
 		
 		var color = make_color_rgb(lerp_r, lerp_g, lerp_b);
 		
-		return color;
+		if trace
+			yui_log($"rgb: {lerp_r} {lerp_g} {lerp_b}: {yui_color_to_hex(color)}");
+		
+		// set alpha to 1 (no alpha channel animation yet)
+		return color| $FF000000;
 	}
 	
 	static isComplete = function(start_time) {

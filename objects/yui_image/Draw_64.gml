@@ -4,11 +4,18 @@
 
 image_alpha = opacity ?? draw_get_alpha();
 
-if frame_value.is_live frame_value.update(data_source);
-var frame = frame_value.value;
-if frame != undefined {
-	image_index = frame_value.value;
-	image_speed = 0;
+if frame_value.is_live {
+	if frame_value.update(data_source) {
+		var frame = frame_value.value;
+		if frame != undefined {
+			image_index = frame_value.value;
+			image_speed = 0;
+		}
+		else {
+			// reset speed if frame is not directly controlled
+			image_speed = 1;
+		}
+	}
 }
 
 if angle_value.is_live angle_value.update(data_source);
@@ -19,7 +26,7 @@ var color = blend_color_value.value;
 if is_string(color) color = yui_resolve_color(color);
 
 if trace
-	DEBUG_BREAK_YUI
+	yui_break();
 
 if sprite_index >= 0 {
 	if viewport_size {

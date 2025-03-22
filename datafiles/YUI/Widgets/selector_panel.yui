@@ -1,0 +1,54 @@
+file_type: resources
+
+resources:
+
+  // default template for displaying the item value
+  selector_item_template:
+    type: text
+    text: @
+    color: $foreground
+
+  selector_panel:
+    type: template
+
+    slots:
+      selected_item: null
+
+      // array of items to select from
+      items: []
+
+      // template to use when rendering items in dropdown
+      item_template: &selector_item_template
+
+      // additional handler executed after item is selected
+      on_item_selected: null
+
+      item_bg_color: null
+      item_highlight_alpha: .5
+      selected_bg_color: null
+
+      // text color
+      foreground: null
+
+    template:
+
+      type: panel
+      elements: $items
+
+      // allows template to get these slot values in the scope of this panel instead of the template
+      bind_slot_scope:
+        on_item_selected: $on_item_selected
+        selected_item: $selected_item
+
+      template:
+
+        type: button
+        border_thickness: 0
+        padding: 0
+        background: @ == $selected_item then $selected_bg_color else $item_bg_color
+        highlight_alpha: 0
+        pressed_alpha: 0
+        content: $item_template
+
+        // invoke the item_selected event on the root widget
+        on_click: $on_item_selected?(@)

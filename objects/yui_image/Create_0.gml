@@ -158,4 +158,5 @@ Inspectron()
 	.SpritePicker(nameof(sprite_index))
 	.Watch(nameof(sprite_width))
 	.Watch(nameof(sprite_height))
-	.Watch(nameof(image_index));
+	.Watch(nameof(image_index))
+	.Watch(nameof(image_speed));
