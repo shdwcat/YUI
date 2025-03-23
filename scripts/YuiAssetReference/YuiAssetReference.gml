@@ -12,7 +12,7 @@ function YuiAssetReference(asset, source, is_runtime_function = false) : YuiExpr
 		return $"{string_trim(json_stringify(asset), trim_str)} ({instanceof(self)})";
 	}
 		
-	function resolve() {
+	resolve = function() {
 		return asset;
 	}
 }
