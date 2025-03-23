@@ -8,6 +8,7 @@
 //}
 
 left_pressed_consumed = false;
+left_pressed_consumer = undefined;
 var i = 0; repeat hover_count {
 	var next = hover_array[i];
 	//yui_log("pressed instance", i, "is", next.id, "type", object_get_name(next.object_index));
@@ -24,6 +25,7 @@ var i = 0; repeat hover_count {
 			//yui_log("pressed instance", i, "is", next.id, "type", object_get_name(next.object_index));
 			left_pressed_consumed = next.left_pressed() != false;
 			if left_pressed_consumed {
+				left_pressed_consumer = next;
 				break;
 			}
 		}

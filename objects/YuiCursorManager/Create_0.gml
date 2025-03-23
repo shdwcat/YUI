@@ -70,6 +70,9 @@ right_click_consumed = false;
 wheel_down_consumed = false;
 wheel_up_consumed = false;
 
+// which elements consumed the events
+left_pressed_consumer = false;
+
 // events to handle mouse interaction if YUI screen has not handled it
 // NOTE: only supports one subscriber!
 global_left_pressed = undefined;
