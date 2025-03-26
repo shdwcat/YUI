@@ -8,7 +8,7 @@ function yui_resolve_color(color_value) {
 			return yui_color_from_hex_string(color_value);
 		}
 		else {
-			var color = color_table[$ color_value];
+			var color = color_table[$ string_lower(color_value)];
 			if color >= 0 {
 				return color | $FF000000;
 			}
