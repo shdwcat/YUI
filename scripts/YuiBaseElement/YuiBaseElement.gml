@@ -170,7 +170,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	static getDefaultAnim = function(anim_name) {
 		if default_anim {
 			var anim = default_anim[$ anim_name];
-			if anim
+			if anim != undefined
 				return yui_resolve_animation(anim, resources, slot_values);
 		}
 	}
