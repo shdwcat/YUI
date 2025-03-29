@@ -19,6 +19,9 @@ function YuiIndexBinding(left, index) : YuiExpr() constructor {
 		
 		if is_array(left_val) {
 			var index_key = index.resolve(data);
+			if index_key >= array_length(left_val)
+				throw yui_error($"attempted to retrieve index {index_key} from array with length {array_length(left_val)}");
+			
 			return index_key != undefined ? left_val[index_key] : undefined;
 		}
 		else if is_struct(left_val) {
