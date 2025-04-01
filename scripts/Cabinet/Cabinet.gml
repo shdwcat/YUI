@@ -124,7 +124,7 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 		|| os_type == os_winphone;
 	
 	// lowercase platforms are any non-microsoft, *except* Mac when sandboxing is enabled
-	static _force_lowercase = !_is_microsoft && (os_type != os_macosx || !GM_is_sandboxed)
+	static _force_lowercase = !_is_microsoft && os_type != os_macosx || (os_type == os_macosx && GM_is_sandboxed);
 		
 }
 
