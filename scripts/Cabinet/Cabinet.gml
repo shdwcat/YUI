@@ -240,6 +240,10 @@ function CabinetFile(cabinet, data) constructor {
 		{
 			buffer_seek(_buffer, buffer_seek_start, 3);
 		}
+		
+		var size = buffer_get_size(_buffer);
+		if size == 0
+			return "";
 
 		var _string = buffer_read(_buffer, buffer_string);
 		buffer_delete(_buffer);
