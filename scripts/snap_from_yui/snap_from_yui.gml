@@ -31,6 +31,8 @@ enum __SNAP_YUI
 /// @jujuadams 2020-09-20
 function snap_from_yui(_string, _replace_keywords = true, _track_field_order = false)
 {
+	if _string == "" return undefined;
+	
     var _buffer = buffer_create(string_byte_length(_string)+1, buffer_fixed, 1);
     buffer_write(_buffer, buffer_text, _string);
     buffer_seek(_buffer, buffer_seek_start, 0);
@@ -425,6 +427,9 @@ function __snap_from_yui_builder(_tokens_array, _replace_keywords, _track_field_
 
     static read = function()
     {
+		if array_length(tokens_array) == 0
+			return undefined;
+		
         var _token = tokens_array[token_index];
         token_index++;
 
