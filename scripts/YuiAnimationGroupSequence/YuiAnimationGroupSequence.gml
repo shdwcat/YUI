@@ -11,19 +11,20 @@ function YuiAnimationGroupSequence(props, resources, slot_values) constructor {
 	self.props = props;
 	duration = 0;
 	
+	time_source = props[$"global"] == true ? time_source_global : time_source_game;
 	enabled = yui_bind_and_resolve(props[$"enabled"], resources, slot_values) ?? true;
 	continuous = yui_bind_and_resolve(props[$"repeat"], resources, slot_values) ?? false;
-	animations = yui_bind_and_resolve(props[$"animations"], resources, slot_values) ?? false;
-	anim_count = array_length(animations);
 	
-	time_source = props[$"global"] == true ? time_source_global : time_source_game;
+	var bound_animations = yui_bind_and_resolve(props[$"animations"], resources, slot_values) ?? false;
+	anim_count = array_length(bound_animations);
 	
-	if !is_array(animations)
+	if !is_array(bound_animations)
 		throw yui_error("anim_sequence.animations must be an array");
 	
 	// resolve inner animation groups
+	animations = array_create(anim_count);
 	var i = 0; repeat anim_count {
-		var anim_group_props = animations[i];
+		var anim_group_props = bound_animations[i];
 		var anim_group = yui_resolve_animation_group(anim_group_props, resources, slot_values);
 		animations[i++] = anim_group;
 	}
