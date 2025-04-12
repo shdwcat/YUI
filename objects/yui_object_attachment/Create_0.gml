@@ -22,13 +22,25 @@ alignToTarget = function(target) {
 		case YUI_PLACEMENT_MODE.TopRight:
 			yui_align_relative(target, fa_right, fa_top);
 			break;
-		
-		// todo actually support these -- need to figure out how tho
+
 		case YUI_PLACEMENT_MODE.LeftTop:
+			yui_align_relative(target, fa_left, fa_top);
+			break;
+		case YUI_PLACEMENT_MODE.LeftCenter:
+			yui_align_relative(target, fa_left, fa_middle);
+			break;
+		case YUI_PLACEMENT_MODE.LeftBottom:
+			yui_align_relative(target, fa_left, fa_bottom);
+			break;
+			
+		case YUI_PLACEMENT_MODE.RightTop:
 			yui_align_relative(target, fa_right, fa_top);
 			break;
-		case YUI_PLACEMENT_MODE.RightTop:
-			yui_align_relative(target, fa_left, fa_top);
+		case YUI_PLACEMENT_MODE.RightCenter:
+			yui_align_relative(target, fa_right, fa_middle);
+			break;
+		case YUI_PLACEMENT_MODE.RightBottom:
+			yui_align_relative(target, fa_right, fa_bottom);
 			break;
 		
 		case YUI_PLACEMENT_MODE.BottomLeft:
