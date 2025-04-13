@@ -7,6 +7,8 @@ function yui_register_events(events) {
 			var args = {
 				source: source,
 				button: "left",
+				room_x: mouse_x,
+				room_y: mouse_y,
 			};
 			yui_call_handler(events.on_mouse_down, [args], data_source);
 		}
@@ -19,6 +21,8 @@ function yui_register_events(events) {
 			var args = {
 				source: source,
 				button: "left",
+				room_x: mouse_x,
+				room_y: mouse_y,
 			};
 			yui_call_handler(events.on_mouse_up, [args], data_source);
 		}
@@ -35,6 +39,8 @@ function yui_register_events(events) {
 			var args = {
 				source: source,
 				button: "left",
+				room_x: mouse_x,
+				room_y: mouse_y,
 			};
 			yui_call_handler(events.on_click, [args], data_source);
 		}
@@ -47,6 +53,8 @@ function yui_register_events(events) {
 			var args = {
 				source: source,
 				button: "right",
+				room_x: mouse_x,
+				room_y: mouse_y,
 			};
 			yui_call_handler(events.on_right_click, [args], data_source);
 		}
@@ -64,6 +72,8 @@ function yui_register_events(events) {
 				source: source,
 				button: "left",
 				clicks: 2,
+				room_x: mouse_x,
+				room_y: mouse_y,
 			};
 			yui_call_handler(events.on_double_click, [args], data_source);
 		}
@@ -77,6 +87,8 @@ function yui_register_events(events) {
 			var source = self;
 			var args = {
 				source: source,
+				room_x: mouse_x,
+				room_y: mouse_y,
 			};
 			yui_call_handler(events.on_mouse_wheel_up, [args], data_source);
 		}
@@ -88,6 +100,8 @@ function yui_register_events(events) {
 			var source = self;
 			var args = {
 				source: source,
+				room_x: mouse_x,
+				room_y: mouse_y,
 			};
 			yui_call_handler(events.on_mouse_wheel_down, [args], data_source);
 		}
