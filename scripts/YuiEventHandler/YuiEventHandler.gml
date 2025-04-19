@@ -17,10 +17,11 @@ function YuiArrayEventHandler(handler_array) constructor {
 	static call = function(data, args, item) {
 		var i = 0; repeat array_length(handler_array) {
 			handler = handler_array[i++];
-			handler.call(data, args, item);
+			var result = handler.call(data, args, item);
 		}
 		
-		// NOTE: there isn't a clear way to compose the result of each of these into a value to return
+		// returns the result of the last handler in the array
+		return result;
 	}
 }
 

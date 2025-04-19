@@ -9,11 +9,17 @@ function yui_call_handler(handler, args, data) {
 		return;
 	}
 	else if is_array(handler) {
-		// meed to support calling an array directly until widgets have dedicated
-		// `events` support with proper merging for inherited widgets
+		// need to support calling an array directly until widgets have dedicated
+		// `events` that get bound as handlrs, with proper merging for inheriting widgets
 		var i = 0; repeat array_length(handler) {
 			var handler_item = handler[i++];
-			handler_item.call(data, args, self);
+			
+			if is_instanceof(handler_item, YuiExpr) && !handler_item.is_call {
+				handler_item.resolve(data);
+			}
+			else {
+				handler_item.call(data, args, self);
+			}
 		}
 	}
 	else {

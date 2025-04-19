@@ -4,7 +4,6 @@
 /// @description Calls a function with bindable arguments
 function YuiCallFunction(target_expr, args) : YuiExpr() constructor {
 	static is_yui_live_binding = true;
-	static is_call = true;
 	
 	static runtime_functions = gspl_get_runtime_function_map();
 	
