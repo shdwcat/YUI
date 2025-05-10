@@ -3,6 +3,11 @@ function MxHostParselet() : GsplPrefixParselet() constructor {
 	
 	static runtime_functions = gspl_get_runtime_function_map();
 	
+	static special_constants = {
+		infinity: infinity,
+		nan: NaN,
+	};
+	
 	static parse = function(parser, token) {
 		var name = token._lexeme;
 		if name == "" {
@@ -20,7 +25,12 @@ function MxHostParselet() : GsplPrefixParselet() constructor {
 			
 			// YuiCallFunction is very hacky and expects just the name of the runtime function
 			// not the function index itself
-			return new YuiIdentifier(name);
+			return new YuiIdentifier(name, parser.source);
+		}
+		
+		var special_constant = special_constants[$ string_lower(name)];
+		if special_constant != undefined {
+			return special_constant;
 		}
 		
 		var asset = asset_get_index(name);		
