@@ -62,9 +62,13 @@ function YuiSpriteBuilder(_props, _resources, _slot_values) constructor {
 			visible = true;
 			initLayout();
 			bind_values();
-			build();
-			enabled = true;
-			opacity = 1;
+			
+			// check visibility again as binding may have made it invisible
+			if visible {
+				build();
+				enabled = true;
+				opacity = 1;
+			}
 		});
 		
 		// arrange the tree
