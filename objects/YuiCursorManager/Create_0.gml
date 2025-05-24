@@ -82,6 +82,8 @@ global_wheel_down = undefined
 
 setFocus = function(focus_item) {
 	
+	if !YuiCursorManager.is_navigation_active return;
+	
 	// check if new focus is different from current
 	if focus_item == focused_item return;
 	
@@ -139,9 +141,7 @@ tryAutofocus = function(target, is_focus_root) {
 	if !is_focus_root {
 		// we will focus this item if it has autofocus: true OR there is no focused item at all
 		if target.autofocus || focused_item == undefined || !instance_exists(focused_item) {
-			if is_navigation_active {
-				setFocus(target);
-			}
+			setFocus(target);
 		}
 	}
 	
