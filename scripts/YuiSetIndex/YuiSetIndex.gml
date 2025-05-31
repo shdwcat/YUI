@@ -25,6 +25,10 @@ function YuiSetIndex(left, index, right) : YuiExpr() constructor {
 			var index_val = index.resolve(data);
 			left_val[index_val] = right_val;
 		}
+		else if is_struct(left_val) {
+			var index_val = index.resolve(data);
+			left_val[$ index_val] = right_val;
+		}
 		else if left_val == undefined {
 			throw yui_error("attempting to index an undefined value");
 		}

@@ -11,7 +11,13 @@ function YsSlotParselet() : GsplPrefixParselet() constructor {
 		if parser.slot_values == undefined
 			throw yui_error("YsSlotParselet: parser does not have any slot_values");
 
-		var slot_value = parser.slot_values.get(slot_key);
+		try {
+			var slot_value = parser.slot_values.get(slot_key);
+		}
+		catch (error) {
+			error = dcs_error(error.message + " in expression: " + parser.source);
+			throw error;
+		}
 		
 		var sub_path = array_length(path_parts) > 1
 			? path_parts[1]
