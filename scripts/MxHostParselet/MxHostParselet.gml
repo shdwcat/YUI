@@ -30,7 +30,7 @@ function MxHostParselet() : GsplPrefixParselet() constructor {
 		
 		var special_constant = special_constants[$ string_lower(name)];
 		if special_constant != undefined {
-			return special_constant;
+			return new YuiValueWrapper(special_constant);
 		}
 		
 		var asset = asset_get_index(name);		
