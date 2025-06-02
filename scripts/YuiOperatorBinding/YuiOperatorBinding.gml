@@ -8,8 +8,8 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 	self.operator_lexeme = operator._lexeme;
 	self.operator = operator._type;
 	
-	self.left_type = left.checkType();
-	self.right_type = right.checkType();
+	//self.left_type = left.checkType();
+	//self.right_type = right.checkType();
 	
 	if (!left.is_yui_live_binding && !right.is_yui_live_binding) {
 		self.is_yui_live_binding = false;
