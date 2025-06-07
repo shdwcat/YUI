@@ -24,6 +24,8 @@ function YuiElementDrag(_props, _resources) constructor {
 	resources = _resources;
 	
 	static makeHandler = function(handler_prop) {
+		if handler_prop == undefined return;
+		
 		if is_array(handler_prop) {
 			return new YuiArrayEventHandler(handler_prop);
 		}

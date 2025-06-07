@@ -29,7 +29,7 @@ drag:
       - type: text
         padding: 10
         text_style: subtitle
-        text: @source.data.name
+        text: @source?.data.name
 
   // by default, the visual for the item being dragged is drawn centered on the cursor
   // but we can disable that here, so that it's position with the cursor at the top left
