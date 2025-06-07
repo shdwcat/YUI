@@ -206,6 +206,20 @@ function InspectronRenderer(target, extends) constructor {
 	//	return owner;
 	//}
 	
+	/// @desc Sets the previous field to render on the same line as the field before it
+	///		Only valid for buttons and text
+	static SameLine = function() {
+		
+		var last = array_last(fields);
+		is_valid = is_instanceof(last, InspectronLabel)
+			|| is_instanceof(last, InspectronButton);
+		if !is_valid throw "Can only call .SameLine after .Label() or .Button()!";
+		
+		last.same_line = true;
+		
+		return self;
+	}
+	
 	/// @desc Ensures that the previous field will be rendered at the top of the inspector,
 	///		even if the inspectron is inherited by a child object or derived constructor.
 	///		(Useful for adding buttons/etc related to the base object/constructor.)
@@ -261,6 +275,7 @@ function InspectronField(custom_label = undefined) constructor {
 	self.custom_label = custom_label;
 	
 	self.owner = undefined;
+	self.same_line = false;
 		
 	function __label(level) {
 		var indent = string_repeat(INSPECTRON_INDENT, level);
@@ -286,6 +301,9 @@ function InspectronButton(custom_label, on_click) : InspectronField() constructo
 	self.on_click = on_click;
 	
 	function render(scope, scope_name, level) {
+		if same_line
+			dbg_same_line();
+			
 		var label = __label(level);
 		dbg_button(label, on_click);
 	}
@@ -295,6 +313,9 @@ function InspectronLabel(custom_label) : InspectronField() constructor {
 	self.custom_label = custom_label;
 	
 	function render(scope, scope_name, level) {
+		if same_line
+			dbg_same_line();
+			
 		var label = __label(level);
 		dbg_text(label);
 	}
