@@ -65,8 +65,21 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 				var left_val = left.resolve(data);
 				var right_val = right.resolve(data);
 				
-				if is_array(left_val) && is_array(right_val) {
-					return array_concat(left_val, right_val);
+				if is_array(left_val) {
+					if is_array(right_val) {
+						// [a] $+ [b] -> [a, b]
+						return array_concat(left_val, right_val);
+					}
+					else {
+						// [a] $+ b -> [a, b]
+						array_push(left_val, right_val);
+						return left_val;
+					}
+				}
+				else if is_array(left_val) {
+					// a $+ [b] -> [a, b]
+					array_insert(right_val, 0, left_val);
+					return right_val;
 				}
 				else {
 					return string(left_val) + string(right.resolve(data));
