@@ -11,7 +11,7 @@ function YsParser(tokens, source, resources, slot_values) : GsplPrattParser(toke
 	self.traceExpr = function(expr) {
 		var debug = expr.debug();
 		var debug_text = SnapToYAML(debug, true);
-		yui_log(debug_text);
+		log(debug_text);
 		clipboard_set_text(debug_text);
 	}
 

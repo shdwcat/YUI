@@ -1,18 +1,20 @@
 /// @description here
 function GsplTraceParselet(precedence) : GsplInfixParselet(precedence) constructor {
 
-	static parse = function(parser, left_expr, token) {
+	static parse = function(parser, left_expr, token, precedence) {
+		parser.trace = true;
 		
-		gspl_log("Tracing operation, left_expr is:");
+		parser.log("TraceInfix: left_expr is:");
 		parser.traceExpr(left_expr);
 		
-		parser.trace = true;
-		var operation = parser.parseInfix(left_expr);
-		parser.trace = false;
+		// re-use the outer precedence so we don't disrupt the parsing
+		var operation = parser.parseInfix(left_expr, precedence);
+		operation.trace = true;
 		
+		parser.log("TraceInfix: Result expr is:");
 		parser.traceExpr(operation);
 		
-		operation.trace = true;
+		parser.trace = false;
 		return operation;
 	}
 }

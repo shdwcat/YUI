@@ -4,7 +4,7 @@ function yui_log(message = "") {
 }
 
 function yui_log_to_datafile(filename, message = "") {
-	if GM_build_type == "exe" return
+	if GM_build_type == "exe" return;
 	
 	var _f = file_text_open_append(YUI_LOCAL_PROJECT_DATA_FOLDER + filename);
 	if (_f == -1) {
@@ -18,12 +18,20 @@ function yui_log_to_datafile(filename, message = "") {
 }
 
 function yui_log_asset_use(name, type, source) {
-	if GM_build_type == "exe" return
+	if GM_build_type == "exe" return;
 	
-	static used_assets = {}
+	static used_assets = {};
 	
 	if used_assets[$ name] == undefined {
 		used_assets[$ name] = true;
 		yui_log_to_datafile(YUI_ASSET_USE_CSV, $"{name}, {type}, \"{source}\"");
 	}
+}
+
+function yui_clear_temp_logs() {
+	static data_folder = YUI_LOCAL_PROJECT_DATA_FOLDER;
+	
+	var log_file = data_folder + "../logs/yui/parse.txt";
+	var exists = file_exists(log_file);
+	file_delete(log_file);
 }
