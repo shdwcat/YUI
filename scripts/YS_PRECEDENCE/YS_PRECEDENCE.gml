@@ -5,14 +5,15 @@ enum YS_PRECEDENCE {
 	
 	LAMBDA =      2,
 	ASSIGNMENT =  3,
-	CONDITIONAL = 4,
-	LOGIC_OR =    5,
-	LOGIC_AND =   6,
-	COMPARISON =  7,
-	EQUALITY =    8,
-	STRING_OP =   9,
-	SUM =         10,
-	PRODUCT =     11,
-	PREFIX =      12,
-	CALL =        13, // also subscript (e.g. member access and indexing)
+	CHAIN =       4,
+	CONDITIONAL = 5,
+	LOGIC_OR =    6,
+	LOGIC_AND =   7,
+	COMPARISON =  8,
+	EQUALITY =    9,
+	STRING_OP =   10,
+	SUM =         11,
+	PRODUCT =     12,
+	PREFIX =      13,
+	CALL =        14, // also subscript (e.g. member access and indexing)
 }

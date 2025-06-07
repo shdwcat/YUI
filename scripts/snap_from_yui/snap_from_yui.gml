@@ -449,6 +449,9 @@ function __snap_from_yui_builder(_tokens_array, _replace_keywords, _track_field_
                 while(token_index < token_count)
                 {
                     var _key = tokens_array[token_index][1];
+					
+					if struct_exists(_struct, _key)
+						throw $"snap_from_yui: Struct already has key: {_key}";
 
 					if (track_field_order) {
 						// add the key to the __snap_field_order array
@@ -564,6 +567,9 @@ function __snap_from_yui_builder(_tokens_array, _replace_keywords, _track_field_
             while((token_index < token_count) && (snap_from_yui_get_token_type != __SNAP_YUI.JSON_STRUCT_END))
             {
                 var _key = read();
+				
+				if struct_exists(_struct, _key)
+					throw $"snap_from_yui: Struct already has key: {_key}";
 
 				if (track_field_order) {
 					// add the key to the __snap_field_order array

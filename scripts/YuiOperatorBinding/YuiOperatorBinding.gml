@@ -63,7 +63,14 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 		case YS_TOKEN.STRING_PLUS:
 			self.resolve = function ys_operator_concat(data) {
 				var left_val = left.resolve(data);
-				return string(left_val) + string(right.resolve(data));
+				var right_val = right.resolve(data);
+				
+				if is_array(left_val) && is_array(right_val) {
+					return array_concat(left_val, right_val);
+				}
+				else {
+					return string(left_val) + string(right.resolve(data));
+				}
 			};
 			break;
 				

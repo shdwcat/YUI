@@ -41,7 +41,7 @@ function GsplPrattParser(tokens, definition) : GsplParserBase(tokens, gspl_wrap(
 		return left_expr;
 	}
 	
-	static parseInfix = function(left_expr, precedence) {
+	static parseInfix = function(left_expr, precedence = 0) {
 		
 		while peek()._type != eof_token && precedence < getPrecedence() {
 

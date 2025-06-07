@@ -66,18 +66,23 @@ function YuiBinding(path) : YuiExpr() constructor {
 			return undefined;
 		}
 		
-		var i = 0; repeat array_length(tokens) {
-			if is_string(data) {
+		var result = data;
+		
+		var token_count = array_length(tokens);
+		var i = 0; repeat token_count {
+			if is_string(result) {
 				return undefined; // expecting struct but got string
 			}
 			
 			var token = tokens[i++];
-			data = data[$ token];
-			if is_undefined(data) {
-				return undefined; // field not found on struct
+			result = result[$ token];
+			
+			if is_undefined(result) && i < token_count {
+				throw yui_error($"Unable to get value for {token} in path {path}");
 			}
 		}
-		return data;
+		
+		return result;
 	}
 	
 	static compile = function() {

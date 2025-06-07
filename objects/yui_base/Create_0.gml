@@ -539,8 +539,14 @@ generateLayoutLog = function() {
 	yui_log("TODO: generate layout log");
 }
 
+inspectDataContext = function() {
+	var data = data_source;
+	mx_break();
+}
+
 Inspectron()
 	.Button("Generate Focus Debug", generateFocusDebug).AtTop()
+	.Button("Inspect Data Context", inspectDataContext).SameLine().AtTop()
 	//.Button("Generate Layout Log", generateLayoutLog).AtTop()
 	.Section("yui_base")
 	.Checkbox(nameof(trace))

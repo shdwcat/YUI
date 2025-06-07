@@ -7,8 +7,10 @@ function GsplTraceParselet(precedence) : GsplInfixParselet(precedence) construct
 		parser.traceExpr(left_expr);
 		
 		parser.trace = true;
-		var operation = parser.parseInfix(left_expr, precedence);
+		var operation = parser.parseInfix(left_expr);
 		parser.trace = false;
+		
+		parser.traceExpr(operation);
 		
 		operation.trace = true;
 		return operation;
