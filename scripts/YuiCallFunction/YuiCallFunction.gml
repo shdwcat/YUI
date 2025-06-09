@@ -148,8 +148,8 @@ function YuiCallFunction(target_expr, args) : YuiExpr() constructor {
 			return func_ref.call(data, resolved_args);
 		}
 		
-		if !is_method(func_ref)
-			throw yui_error($"Cannot call expression value with type {typeof(func_ref)} as a function");
+		if !is_method(func_ref) && !script_exists(func_ref)
+			throw yui_error($"Cannot call expression value with type {typeof(func_ref)} as a function/script");
 
 		// NOTE: could hyperoptimize by setting .resolve based on the arg_count (which is already known)
 		var a = resolved_args;
