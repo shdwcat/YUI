@@ -5,6 +5,9 @@ function MxOptionalParselet(precedence) : GsplInfixParselet(precedence) construc
 		
 		var operation = parser.parseInfix(left_expr, precedence);
 		
+		if is_instanceof(left_expr, YuiBinding)
+			left_expr.optional = true;
+		
 		return new MxOptionalExpr(left_expr, operation, parser.source);
 	}
 }

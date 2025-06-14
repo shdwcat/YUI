@@ -3,6 +3,7 @@ function YuiBinding(path) : YuiExpr() constructor {
 	static is_yui_live_binding = true;
 	
 	self.path = path;
+	self.optional = false;
 	
 	if path != undefined {
 		init(path);
@@ -53,8 +54,11 @@ function YuiBinding(path) : YuiExpr() constructor {
 	
 	// feather ignore once GM2017
 	static resolveToken = function YuiBinding_resolveToken(data) {
-		if is_undefined(data) || is_string(data) {
-			return undefined; // expecting struct but got undefined or string
+		if !optional {
+			if data == undefined
+				throw yui_error($"YuiBinding: 'data' was undefined, expected struct with key {token}");
+			if !struct_exists(data, token)
+				throw yui_error($"Could not find key '{token}' on item type {instanceof(data)}");
 		}
 		return data[$ token];
 	}
@@ -67,18 +71,18 @@ function YuiBinding(path) : YuiExpr() constructor {
 		}
 		
 		var result = data;
+		var token = "@"; // this value only used for error messages
 		
 		var token_count = array_length(tokens);
 		var i = 0; repeat token_count {
-			if is_string(result) {
-				return undefined; // expecting struct but got string
-			}
+			if !is_struct(result) && !instance_exists(result)
+				throw yui_error($"Expected struct or instance at '{token}' in path '{path}' (got {instanceof(result)})");
 			
 			var token = tokens[i++];
 			result = result[$ token];
 			
 			if is_undefined(result) && i < token_count {
-				throw yui_error($"Unable to get value for {token} in path {path}");
+				throw yui_error($"Unable to get value for {token} in path '{path}' on item type {instanceof(data)}");
 			}
 		}
 		
