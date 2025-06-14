@@ -72,14 +72,20 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 					}
 					else {
 						// [a] $+ b -> [a, b]
-						array_push(left_val, right_val);
-						return left_val;
+						var left_count = array_length(left_val);
+						var result = array_create(left_count + 1);
+						result[left_count] = right_val;
+						array_copy(result, 0, left_val, 0, left_count);
+						return result;
 					}
 				}
-				else if is_array(left_val) {
+				else if is_array(right_val) {
 					// a $+ [b] -> [a, b]
-					array_insert(right_val, 0, left_val);
-					return right_val;
+					var right_count = array_length(right_val);
+					var result = array_create(right_count + 1);
+					result[0] = left_val;
+					array_copy(result, 1, right_val, 0, right_count);
+					return result;
 				}
 				else {
 					return string(left_val) + string(right.resolve(data));
