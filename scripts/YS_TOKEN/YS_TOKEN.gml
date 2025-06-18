@@ -3,6 +3,7 @@ enum YS_TOKEN {
 	LEFT_PAREN, RIGHT_PAREN,
 	LEFT_BRACKET, RIGHT_BRACKET,
 	DOT, // member access
+	DOT_DOT_DOT, // spread
 	COMMA, // function args
 	PIPE_GREATER, // |> infix function call
 	GREATER_GREATER, // >> infix function call

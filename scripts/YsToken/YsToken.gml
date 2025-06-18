@@ -24,6 +24,7 @@ function make_yscript_type_map() {
 	type_map[YS_TOKEN.LEFT_BRACKET] = "LEFT_BRACKET";
 	type_map[YS_TOKEN.RIGHT_BRACKET] = "RIGHT_BRACKET";
 	type_map[YS_TOKEN.DOT] = "DOT";
+	type_map[YS_TOKEN.DOT] = "DOT_DOT_DOT";
 	type_map[YS_TOKEN.COMMA] = "COMMA";
 	type_map[YS_TOKEN.PIPE_GREATER] = "PIPE_GREATER";
 	type_map[YS_TOKEN.GREATER_GREATER] = "GREATER_GREATER";

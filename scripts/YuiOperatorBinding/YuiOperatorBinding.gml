@@ -56,7 +56,7 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 		case YS_TOKEN.OR:
 			self.resolve = function ys_operator_or(data) {
 				var left_val = left.resolve(data);
-			return left_val or right.resolve(data);
+				return left_val or right.resolve(data);
 			};
 			break;
 				
@@ -110,53 +110,76 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 		case YS_TOKEN.MINUS:
 			self.resolve = function ys_operator_subtract(data) {
 				var left_val = left.resolve(data);
-				return left_val - right.resolve(data);
+				var right_val = right.resolve(data);
+				assertNotStructs(left_val, right_val);
+				return left_val - right_val;
 			};
 			break;
 				
 		case YS_TOKEN.STAR:
 			self.resolve = function ys_operator_multiply(data) {
 				var left_val = left.resolve(data);
-				return left_val * right.resolve(data);
+				var right_val = right.resolve(data);
+				assertNotStructs("+", left_val, right_val);
+				return left_val * right_val;
 			};
 			break;
 				
 		case YS_TOKEN.SLASH:
 			self.resolve = function ys_operator_divide(data) {
 				var left_val = left.resolve(data);
-				return left_val / right.resolve(data);
+				var right_val = right.resolve(data);
+				assertNotStructs("/", left_val, right_val);
+				return left_val / right_val;
 			};
 			break;
 		case YS_TOKEN.GREATER:
 			self.resolve = function ys_operator_greater_than(data) {
 				var left_val = left.resolve(data);
-				return left_val > right.resolve(data);
+				var right_val = right.resolve(data);
+				assertNotStructs(">", left_val, right_val);
+				return left_val > right_val;
 			};
 			break;
 				
 		case YS_TOKEN.GREATER_EQUAL:
 			self.resolve = function ys_operator_greater_than_or_equal(data) {
 				var left_val = left.resolve(data);
-				return left_val >= right.resolve(data);
+				var right_val = right.resolve(data);
+				assertNotStructs(">=", left_val, right_val);
+				return left_val >= right_val;
 			};
 			break;
 				
 		case YS_TOKEN.LESS:
 			self.resolve = function ys_operator_less_than(data) {
 				var left_val = left.resolve(data);
-				return left_val < right.resolve(data);
+				var right_val = right.resolve(data);
+				assertNotStructs("<", left_val, right_val);
+				return left_val < right_val;
 			};
 			break;
 				
 		case YS_TOKEN.LESS_EQUAL:
 			self.resolve = function ys_operator_less_than_or_equal(data) {
 				var left_val = left.resolve(data);
-				return left_val <= right.resolve(data);
+				var right_val = right.resolve(data);
+				assertNotStructs("<=", left_val, right_val);
+				return left_val <= right_val;
 			};
 			break;
 				
 		default:
 			throw yui_error("Unknown operator: " + operator_name);
+	}
+	
+	static assertNotStructs = function(op, left, right) {
+		if GM_build_type == "run" {
+			if is_struct(left)
+				throw yui_error($"Cannot apply '{op}' to struct (left-side: {instanceof(left)})");
+			if is_struct(right)
+				throw yui_error($"Cannot apply '{op}' to struct (right-side: {instanceof(right)})");
+		}
 	}
 	
 	static checkType = function() {

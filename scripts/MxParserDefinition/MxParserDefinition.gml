@@ -39,6 +39,9 @@ function MxParserDefinition() : GsplPrattParserDefinition(YS_TOKEN.EOF) construc
 	// list expressions
 	prefix(YS_TOKEN.LEFT_BRACKET, new GsplListParselet(YS_TOKEN.COMMA, YS_TOKEN.RIGHT_BRACKET));
 	
+	// list spread
+	prefix(YS_TOKEN.DOT_DOT_DOT, new MxSpreadParselet());
+	
 	// prefix operators
 	prefixOperator(YS_TOKEN.MINUS, YS_PRECEDENCE.PREFIX);
 	prefixOperator(YS_TOKEN.NOT, YS_PRECEDENCE.PREFIX);

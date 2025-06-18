@@ -568,6 +568,8 @@
     {"name":"MxOptionalExpr","order":19,"path":"scripts/MxOptionalExpr/MxOptionalExpr.yy",},
     {"name":"MxOptionalParselet","order":9,"path":"scripts/MxOptionalParselet/MxOptionalParselet.yy",},
     {"name":"MxParserDefinition","order":8,"path":"scripts/MxParserDefinition/MxParserDefinition.yy",},
+    {"name":"MxSpreadExpr","order":20,"path":"scripts/MxSpreadExpr/MxSpreadExpr.yy",},
+    {"name":"MxSpreadParselet","order":10,"path":"scripts/MxSpreadParselet/MxSpreadParselet.yy",},
     {"name":"scribble_anim_cycle","order":1,"path":"scripts/scribble_anim_cycle/scribble_anim_cycle.yy",},
     {"name":"scribble_anim_jitter","order":2,"path":"scripts/scribble_anim_jitter/scribble_anim_jitter.yy",},
     {"name":"scribble_anim_pulse","order":3,"path":"scripts/scribble_anim_pulse/scribble_anim_pulse.yy",},

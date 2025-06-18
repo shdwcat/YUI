@@ -12,6 +12,11 @@ function YsScanner(source) : GsplScanner(source, ys_token_definition()) construc
 		    case "]": addToken(YS_TOKEN.RIGHT_BRACKET); break;
 		    case ".":
 				if isDigit(peek()) scanNumber();
+				else if peek() == "." and peekNext() == "." {
+					advance(); 
+					advance();
+					addToken(YS_TOKEN.DOT_DOT_DOT);
+				}
 				else addToken(YS_TOKEN.DOT);
 				break;
 		    case ",": addToken(YS_TOKEN.COMMA); break;
