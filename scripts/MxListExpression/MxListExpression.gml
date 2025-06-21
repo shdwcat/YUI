@@ -45,7 +45,7 @@ function MxListExpression(item_exprs) : YuiExpr() constructor {
 				if spread_count = 0 {
 					result_count--;
 				}
-				if spread_count > 1 {
+				else if spread_count > 1 {
 					// increase the array size to account for the new items
 					// TODO: could optimize by only resizing once we need space for the new items
 					result_count += spread_count - 1;
