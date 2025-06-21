@@ -1,6 +1,10 @@
 function yui_resolve_animation_group(anim_group_props, resources, slot_values) {
 	if anim_group_props == undefined
 		return undefined;
+		
+	// allow animation groups to be declared as slots or resources
+	if yui_is_binding_expr(anim_group_props)
+		anim_group_props = yui_bind_and_resolve(anim_group_props, resources, slot_values);
 	
 	// automatically turn an array of animation groups into an AnimationGroupSequence
 	if is_array(anim_group_props) {
