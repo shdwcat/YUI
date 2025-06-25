@@ -146,15 +146,17 @@ initLayout = function() {
 	
 	if !enabled_value.is_live enabled = yui_element.enabled;
 	
-	on_visible_anim = yui_element.on_visible_anim;
-	on_arrange_anim = yui_element.on_arrange_anim;
-	on_unloading_anim = yui_element.on_unloading_anim;
+	yui_animations = yui_element.animations;
 	
-	on_got_focus_anim = yui_element.on_got_focus_anim;
-	on_lost_focus_anim = yui_element.on_lost_focus_anim;
+	on_visible_anim = yui_animations.on_visible;
+	on_arrange_anim = yui_animations.on_arrange;
+	on_unloading_anim = yui_animations.on_unloading;
 	
-	on_hover_anim = yui_element.on_hover_anim;
-	on_hover_end_anim = yui_element.on_hover_end_anim;
+	on_got_focus_anim = yui_animations.on_got_focus;
+	on_lost_focus_anim = yui_animations.on_lost_focus;
+	
+	on_hover_anim = yui_animations.on_hover;
+	on_hover_end_anim = yui_animations.on_hover_end;
 
 	if on_got_focus_anim {
 		on_got_focus = function() {
@@ -167,6 +169,15 @@ initLayout = function() {
 			beginAnimationGroup(on_lost_focus_anim);
 		}
 	}
+	
+	animation_signal = yui_element.animation_signal;
+	if animation_signal != undefined {
+		has_custom_animations = true;
+		is_animation_signal_live = yui_element.is_animation_signal_live;
+		last_signal = undefined;
+		last_signal_version = 0;
+	}
+	has_custom_animations = animation_signal != undefined;
 	
 	layout_props = yui_element.getLayoutProps();
 	onLayoutInit();
@@ -302,6 +313,48 @@ process = function yui_base__process(became_visible) {
 	if became_visible {
 		if on_visible_anim
 			beginAnimationGroup(on_visible_anim);
+	}
+	
+	if has_custom_animations {
+		var signal = is_animation_signal_live ?  animation_signal.resolve(data_source) : animation_signal;
+		if signal == undefined {
+			last_signal = undefined;
+			last_signal_version = 0;
+		}
+		else {
+			var signal_updated = false;
+			
+			// first check if we got a new signal source, the compare versions
+			if signal != last_signal {
+				if last_signal == undefined {
+					// if we didn't have a signal before, set our version to the signals current version
+					last_signal_version = signal.version
+				}
+				else {
+					signal_updated = true;
+				}
+				
+				last_signal = signal;
+			}
+			else {
+				signal_updated = signal.version > last_signal_version;
+			}
+			
+			if signal_updated {
+				last_signal_version = signal.version;
+				
+				var animation_name = signal.value;
+				var anim = yui_animations[$ animation_name];
+				if anim != undefined {
+					beginAnimationGroup(anim);
+				}
+				else if trace {
+					// NOTE: it's okay if we send a signal that the UI doesn't understand
+					// as different UIs may bind to the same source signal at different times
+					yui_log($"{_id} ({id}): got animation signal '{animation_name}' but no matching animation definition on element.animate");
+				}
+			}
+		}
 	}
 }
 
@@ -541,7 +594,7 @@ generateLayoutLog = function() {
 
 inspectDataContext = function() {
 	var data = data_source;
-	mx_break();
+	yui_break();
 }
 
 Inspectron()

@@ -562,6 +562,7 @@
     {"name":"KnitScanner","order":3,"path":"scripts/KnitScanner/KnitScanner.yy",},
     {"name":"KnitToken","order":1,"path":"scripts/KnitToken/KnitToken.yy",},
     {"name":"KnitTokenDefinition","order":2,"path":"scripts/KnitTokenDefinition/KnitTokenDefinition.yy",},
+    {"name":"MxAnimationSignal","order":15,"path":"scripts/MxAnimationSignal/MxAnimationSignal.yy",},
     {"name":"MxHostParselet","order":6,"path":"scripts/MxHostParselet/MxHostParselet.yy",},
     {"name":"MxIdentifierParselet","order":7,"path":"scripts/MxIdentifierParselet/MxIdentifierParselet.yy",},
     {"name":"MxListExpression","order":18,"path":"scripts/MxListExpression/MxListExpression.yy",},

@@ -32,8 +32,8 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		
 		events: undefined,
 		
-		// placeholder for animation info
 		animate: undefined,
+		animation_signal: undefined,
 		
 		// array of interaction.role participation
 		interactions: [], // these are defined in data!
@@ -131,36 +131,48 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		is_visible_live = yui_is_live_binding(visible);
 		is_tooltip_live = yui_is_live_binding(tooltip);
 		
-		default_anim = undefined;
+		animations = {
+			on_visible: undefined,
+			on_got_focus: undefined,
+			on_lost_focus: undefined,
+			on_hover: undefined,
+			on_hover_end: undefined,
+			on_arrange: undefined,
+			on_unloading: undefined,
+			
+			// custom animations will be picked up below if animation_signal is defined
+		};
 		
-		on_visible_anim = undefined;
-		on_got_focus_anim = undefined;
-		on_lost_focus_anim = undefined;
-		on_hover_anim = undefined;
-		on_hover_end_anim = undefined;
-		on_arrange_anim = undefined;
-		on_unloading_anim = undefined;
+		// these are individual animation curves for when a bound animatable value changes
+		default_animations = undefined;
 		
 		if props.animate != undefined {
-			// these are individual animation curves for when a bound animatable value changes
-			default_anim = props.animate[$"default"];
-			
-			on_visible_anim = yui_resolve_animation_group(props.animate[$"on_visible"], resources, slot_values);
-			
-			on_got_focus_anim = yui_resolve_animation_group(props.animate[$"on_got_focus"], resources, slot_values);
-			on_lost_focus_anim = yui_resolve_animation_group(props.animate[$"on_lost_focus"], resources, slot_values);
-			
-			on_hover_anim = yui_resolve_animation_group(props.animate[$"on_hover"], resources, slot_values);
-			on_hover_end_anim = yui_resolve_animation_group(props.animate[$"on_hover_end"], resources, slot_values);
-			
-			on_arrange_anim = yui_resolve_animation_group(props.animate[$"on_arrange"], resources, slot_values);
-			on_unloading_anim = yui_resolve_animation_group(props.animate[$"on_unloading"], resources, slot_values);
+			var anim_names = struct_get_names(props.animate);
+			var i = 0; repeat array_length(anim_names) {
+				var anim_name = anim_names[i++];
+				
+				if anim_name == "default" {
+					default_animations = props.animate[$ "default"];
+					continue;
+				}
+				
+				var anim = yui_resolve_animation_group(props.animate[$ anim_name], resources, slot_values);
+				animations[$ anim_name] = anim;
+			}
 		}
+		
+		// MxAnimationSignal binding for triggering animations from game logic
+		animation_signal = yui_bind(props.animation_signal, resources, slot_values);
+		is_animation_signal_live = yui_is_live_binding(animation_signal);
+		
+		if animation_signal != undefined && props.animate == undefined
+				throw yui_error("element 'animation_signal' was provided but element has no 'animate' defined");
 			
 		base_is_bound =
 			is_data_source_live
 			|| is_visible_live
 			|| is_tooltip_live
+			|| is_animation_signal_live
 			|| yui_is_live_binding(size.w)
 			|| yui_is_live_binding(size.h)
 	
@@ -168,8 +180,8 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	}
 	
 	static getDefaultAnim = function(anim_name) {
-		if default_anim {
-			var anim = default_anim[$ anim_name];
+		if default_animations {
+			var anim = default_animations[$ anim_name];
 			if anim != undefined
 				return yui_resolve_animation(anim, resources, slot_values);
 		}
