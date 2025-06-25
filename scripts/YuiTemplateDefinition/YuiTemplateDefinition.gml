@@ -14,12 +14,14 @@ function YuiTemplateDefinition(name, template_props, resources) constructor {
 	
 	content_type = content.type;
 	content_events = content[$"events"];
+	content_anims = content[$"animate"];
 	content_template = yui_get_or_init_template_def(resources, content_type);
 	
 	// TODO: convert back to regular map?
 	slot_definitions = new YuiChainedMap(/* no parent*/,  template_props[$"slots"]);
 	
 	events = template_props[$"events"];
+	animate = template_props[$"animate"];
 
 	static createElement = function(
 		element_props,
@@ -55,6 +57,13 @@ function YuiTemplateDefinition(name, template_props, resources) constructor {
 		if outer_events || content_events {
 			// TODO: currently events will override on collision, could merge handlers into array of handlers?
 			element_props.events = yui_apply_props(element_props[$"events"], outer_events, content_events);
+		}
+		
+		// merge content animations with animations from element props and outer template content
+		var outer_anims = outer_template_content ? outer_template_content[$"animate"] : undefined;
+		if outer_anims || content_anims {
+			// NOTE: animations will override on collision
+			element_props.animate = yui_apply_props(element_props[$"animate"], outer_anims, content_anims);
 		}
 		
 		if content_template {
