@@ -13,11 +13,13 @@ resources:
   anim_tab_panel:
     type: template
     slots:
-      anim_data: undefined
+      anim_data: null
+      context: null
     content:
       type: tab_panel
       bind_slot_scope:
         anim_data: $anim_data
+        context: $context
 
 root:
   type: screen_base
@@ -30,6 +32,7 @@ root:
       elements:
 
         - type: anim_tab_panel
+          context: @
           anim_data: @anim_data
           active_tab: @anim_examples.active_tab
           on_tab_selected: @@ item => @anim_examples.active_tab = item
@@ -38,6 +41,8 @@ root:
           tab_items:
             - header: Demo
               content: &animation_builder
+            - header: Animation Signals
+              content: &animation_signals
             // - header: Color Animations
             //   content: &color_examples
             // - header: Text Animations

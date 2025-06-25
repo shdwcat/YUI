@@ -27,6 +27,8 @@ function YuiExampleManager() constructor {
 	
 	widget_data = new WidgetGalleryData();
 	
+	animation_signal = new MxAnimationSignal();
+	
 	anim_data = {
 		xoffset: new AnimationPropertyData(),
 		yoffset: new AnimationPropertyData(),

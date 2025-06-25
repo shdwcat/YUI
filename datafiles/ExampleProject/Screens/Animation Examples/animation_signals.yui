@@ -1,0 +1,110 @@
+file_type: resources
+
+import:
+  - /ExampleProject/Animations/transitions.yui
+  - /YUI/Widgets/
+
+resources:
+
+  anim_button:
+    type: template
+    slots:
+      anim: null
+    template:
+      type: button
+      background: #3f3f3f
+      size: { w: 105 }
+      padding: 10
+      on_click: @animation_signal.signal($anim)
+
+
+  animation_signals:
+    type: panel
+    data_source: $context
+    padding: 0
+    layout: canvas
+    spacing: 10
+    elements:
+
+      - type: panel
+        canvas:
+          left: 10
+          top: 10
+        elements:
+          - type: text
+            text_style: subtitle
+            text: Animation Signals
+          - Animation signals allow you to trigger YUI animations from game code.
+          - Click a button below to trigger an animation.
+
+      - type: panel
+        canvas:
+          center: true
+          left: -100
+        padding: 5
+        elements:
+          - type: anim_button
+            content: Bounce
+            anim: bounce
+
+          - type: anim_button
+            content: Wiggle
+            anim: wiggle
+
+          - type: anim_button
+            content: Color Cycle
+            anim: change_color
+
+      - type: border
+        canvas:
+          left: 650
+          top: 270
+        padding: [25, 15]
+        content:
+          type: text
+          text_style: subtitle
+          text: A Thing!
+
+        animation_signal: @animation_signal
+        animate:
+          bounce:
+            - yoffset:
+                type: curve
+                curve: ~curveExpoInv
+                to: -100
+                duration: 500
+
+            - yoffset:
+                type: curve
+                curve: ~curveBounceInv
+                from: -100
+                to: 0
+
+          wiggle:
+            xoffset:
+              type: curve
+              curve: ~yui_wave_curve
+              from: -10
+              to: 10
+              duration: 500
+
+          change_color:
+            - background:
+                type: hsv_curve
+                curve: ~curveQuadInv
+                to: darkmagenta
+                duration: 500
+
+            - background:
+                type: hsv_curve
+                curve: ~curveExpoInv
+                to: firebrick
+                duration: 500
+
+          on_visible:
+            background:
+              type: hsv_curve
+              curve: ~curveExpoInOut
+              from: darkred
+              to: firebrick
+              duration: 50
