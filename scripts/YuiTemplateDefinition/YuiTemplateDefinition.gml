@@ -15,6 +15,7 @@ function YuiTemplateDefinition(name, template_props, resources) constructor {
 	content_type = content.type;
 	content_events = content[$"events"];
 	content_anims = content[$"animate"];
+	content_sounds = content[$"sounds"];
 	content_template = yui_get_or_init_template_def(resources, content_type);
 	
 	// TODO: convert back to regular map?
@@ -64,6 +65,13 @@ function YuiTemplateDefinition(name, template_props, resources) constructor {
 		if outer_anims || content_anims {
 			// NOTE: animations will override on collision
 			element_props.animate = yui_apply_props(element_props[$"animate"], outer_anims, content_anims);
+		}
+		
+		// merge content sounds with sounds from element props and outer template content
+		var outer_sounds = outer_template_content ? outer_template_content[$"sounds"] : undefined;
+		if outer_sounds || content_sounds {
+			// NOTE: sounds will override on collision
+			element_props.sounds = yui_apply_props(element_props[$"sounds"], outer_sounds, content_sounds);
 		}
 		
 		if content_template {

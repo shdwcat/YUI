@@ -60,9 +60,15 @@ setHighlight = function(highlight) {
 	var changed = self.highlight != highlight;
 	self.highlight = highlight;
 	
-	if changed && on_hover_changed {
+	if changed
+		hoverChanged(highlight);
+}
+
+// overridable by children
+hoverChanged = function(hover) {
+	if on_hover_changed {
 		// Feather disable once GM1021
-		on_hover_changed();
+		on_hover_changed(hover);
 	}
 }
 

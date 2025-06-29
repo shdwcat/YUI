@@ -15,6 +15,9 @@
 // (set this to false if you want to trigger live reload yourself)
 #macro YUI_ENABLE_F5_LIVE_RELOAD true
 
+// priority value to use when playing sound for UI elements (e.g. click)
+#macro YUI_DEFAULT_AUDIO_PRIORITY 100
+
 // macro to control whether YUI should attempt to use Input 6 library for navigation and interaction
 #macro YUI_INPUT_LIB_ENABLED false
 

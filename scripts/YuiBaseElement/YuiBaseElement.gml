@@ -37,6 +37,8 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		
 		// array of interaction.role participation
 		interactions: [], // these are defined in data!
+		
+		sounds: undefined,
 	};
 	
 	// common events across elements
@@ -80,6 +82,9 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	
 	// get the theme props for our element type
 	element_theme = theme.elements[$ _props.type];
+	
+	// HACK:- yui_apply_props doesn't merge sounds defined on the instance with sounds from the theme
+	needs_sound_merge = struct_exists(_props, "sounds") && struct_exists(element_theme, "sounds");
 	
 	// feather ignore once GM2017
 	static baseInit = function YuiBaseElement__baseInit(props, default_events = undefined) {
@@ -167,7 +172,23 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		
 		if animation_signal != undefined && props.animate == undefined
 				throw yui_error("element 'animation_signal' was provided but element has no 'animate' defined");
-			
+		
+		// bind sounds
+		var prop_sounds = props.sounds;
+		if needs_sound_merge {
+			prop_sounds = yui_apply_props(prop_sounds, element_theme.sounds);
+		}
+		sounds = {};
+		if props.sounds != undefined {
+			var sound_names = struct_get_names(prop_sounds);
+			var i = 0; repeat array_length(sound_names) {
+				var sound_name = sound_names[i++];
+				
+				var sound = yui_bind(prop_sounds[$ sound_name], resources, slot_values);
+				sounds[$ sound_name] = sound;
+			}
+		}
+		
 		base_is_bound =
 			is_data_source_live
 			|| is_visible_live

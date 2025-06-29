@@ -5,6 +5,8 @@ event_inherited();
 
 button_pressed = false;
 
+click_sound_id = undefined;
+
 // safely override border layout init
 border_onLayoutInit = onLayoutInit;
 onLayoutInit = function() {
@@ -19,19 +21,16 @@ left_pressed = function() {
 }
 
 left_click = function() {
+	// NOTE: generally this will get overwritten by yui_register_events() as long
+	// as a click event is defined, but if for some reason we want a button without
+	// a click handler, this ensures that it still behaves like a button by consuming
+	// the event and otherwise doing normal button behavior.
+	
 	if !enabled return;
 	
 	focus();
 	
-	if yui_element.on_click != undefined {
-		var element = self;
-		var args = {
-			source: element,
-			button: "left",
-		};
-		
-		yui_call_handler(yui_element.on_click, [args], data_source);
-	}
+	click_sound_id = playSound("click", click_sound_id);
 }
 
 cursor_hover = function() {

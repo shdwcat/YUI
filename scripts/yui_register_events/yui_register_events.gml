@@ -29,11 +29,14 @@ function yui_register_events(events) {
 	}
 	
 	if events.on_click != undefined {
+		click_sound_id = undefined;
 		left_click = function() {
 			if !enabled return;
 			
 			if focusable
 				focus();
+	
+			click_sound_id = playSound("click", click_sound_id);
 			
 			var source = self;
 			var args = {

@@ -146,6 +146,8 @@ initLayout = function() {
 	
 	if !enabled_value.is_live enabled = yui_element.enabled;
 	
+	// animations
+	
 	yui_animations = yui_element.animations;
 	
 	on_visible_anim = yui_animations.on_visible;
@@ -178,6 +180,8 @@ initLayout = function() {
 		last_signal_version = 0;
 	}
 	has_custom_animations = animation_signal != undefined;
+	
+	yui_sounds = yui_element.sounds;
 	
 	layout_props = yui_element.getLayoutProps();
 	onLayoutInit();
@@ -426,13 +430,15 @@ closePopup = function(close_parent = false) {
 	}
 }
 
-base_setHighlight = setHighlight;
-setHighlight = function(highlight) {
-	
-	base_setHighlight(highlight)
+base_hoverChanged = hoverChanged;
+hoverChanged = function(hover) {
+	if hover
+		playSound("hover");
+		
+	base_hoverChanged(hover);
 	
 	if has_tooltip {
-		if highlight {
+		if hover {
 			tooltip_element ??= yui_element.createTooltip();
 			if tooltip_item == undefined {
 				tooltip_item = yui_make_render_instance(
@@ -451,7 +457,7 @@ setHighlight = function(highlight) {
 		}
 	}
 	
-	if highlight {
+	if hover {
 		if on_hover_anim
 			beginAnimationGroup(on_hover_anim);
 	}
@@ -479,6 +485,22 @@ isPointVisible = function(x, y) {
 beginAnimationGroup = function(animation_group) {
 	if animation_group.enabled
 		animation_group.start(animatable, self);
+}
+
+playSound = function(sound_name, sound_id = undefined) {
+	var sound = yui_sounds[$ sound_name];
+	if sound != undefined {
+		sound = yui_resolve_binding(sound, data_source);
+		
+		if sound_id != undefined
+			audio_stop_sound(sound_id);
+		
+		// todo: YUI_wide audio gain setting?
+		return audio_play_sound(
+			sound,
+			YUI_DEFAULT_AUDIO_PRIORITY,
+			false); // no loops
+	}
 }
 
 unload = function(unload_root = undefined) {
