@@ -12,7 +12,7 @@ hit_test_source_position: true
 drag:
   // The 'condition' property controls whether an element can currently participate in the role.
   // In this case, it determines if the user can begin dragging this element.
-  condition: @is_equipped != true // NOTE - is_equipped isn't actually implemented yet...
+  condition: @?.is_equipped != true // NOTE - is_equipped isn't actually implemented yet...
 
   visual:
     // NOTE: import does not work in interactions yet :(
