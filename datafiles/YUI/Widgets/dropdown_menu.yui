@@ -68,7 +68,7 @@ resources:
           // current item text
           - type: border
             padding: [5, 0, 5, 0]
-            data_source: $selected_item ?? $selection_scope.selected_item
+            data_source: $selected_item ?? $selection_scope?.selected_item
             //flex: true
             content: $item_template
 
@@ -80,7 +80,7 @@ resources:
             padding: [5, 0]
             background: #00000000
             border_thickness: 0
-            visible: $can_clear_value and ($selected_item != undefined or $selection_scope.selected_index >= 0)
+            visible: $can_clear_value and ($selected_item != undefined or $selection_scope?.selected_index >= 0)
             on_click:
               // update selection scope if it exists
               - @@ $selection_scope?.select(undefined)
@@ -126,7 +126,7 @@ resources:
       bind_slot_scope:
         on_item_selected: $on_item_selected
         selection_scope: $selection_scope
-        selected_item: $selected_item ?? $selection_scope.selected_item // little trick to simplify referring to the selected item
+        selected_item: $selected_item ?? $selection_scope?.selected_item // little trick to simplify referring to the selected item
       elements: $items
       template:
         type: button
