@@ -432,7 +432,7 @@ closePopup = function(close_parent = false) {
 
 base_hoverChanged = hoverChanged;
 hoverChanged = function(hover) {
-	if hover
+	if hover && enabled
 		playSound("hover");
 		
 	base_hoverChanged(hover);
@@ -491,6 +491,8 @@ playSound = function(sound_name, sound_id = undefined) {
 	var sound = yui_sounds[$ sound_name];
 	if sound != undefined {
 		sound = yui_resolve_binding(sound, data_source);
+		if !is_handle(sound) && sound == false
+			return;
 		
 		if sound_id != undefined
 			audio_stop_sound(sound_id);
