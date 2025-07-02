@@ -223,6 +223,7 @@
     {"id":{"name":"yui_ease_in_curve","path":"animcurves/yui_ease_in_curve/yui_ease_in_curve.yy",},},
     {"id":{"name":"yui_linear_curve","path":"animcurves/yui_linear_curve/yui_linear_curve.yy",},},
     {"id":{"name":"yui_wave_curve","path":"animcurves/yui_wave_curve/yui_wave_curve.yy",},},
+    {"id":{"name":"yui_wiggle_curve","path":"animcurves/yui_wiggle_curve/yui_wiggle_curve.yy",},},
     {"id":{"name":"fnt_comic_sans_12","path":"fonts/fnt_comic_sans_12/fnt_comic_sans_12.yy",},},
     {"id":{"name":"fnt_comic_sans_16","path":"fonts/fnt_comic_sans_16/fnt_comic_sans_16.yy",},},
     {"id":{"name":"fnt_comic_sans_20","path":"fonts/fnt_comic_sans_20/fnt_comic_sans_20.yy",},},
