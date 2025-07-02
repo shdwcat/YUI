@@ -66,44 +66,34 @@ arrange = function(available_size, viewport_size) {
 	// width
 	
 	if layout_props.size.w_type == YUI_LENGTH_TYPE.Proportional {
-		// assume we want to stretch the sprite to fit the proportional space
-		image_xscale = padded_rect.w / sprite_get_width(sprite_index);
-		// only use the proportion
+		// w_type is handled in padding.apply
 		desired_size.w = padded_rect.w + padding.w;
 	}
 	else if layout_props.size.w == "stretch" {
-		image_xscale = padded_rect.w / sprite_get_width(sprite_index);
 		desired_size.w = available_size.w;
 	}
 	else if layout_props.size.w == "center" {
 		x += padded_rect.w / 2;
-		image_xscale = 1;
 		desired_size.w = available_size.w;
 	}
 	else {
-		image_xscale = 1;
 		desired_size.w = sprite_width + padding.w;
 	}
 	
 	// height
 	
 	if layout_props.size.h_type == YUI_LENGTH_TYPE.Proportional {
-		// assume we want to stretch the sprite to fit the proportional space
-		image_yscale = padded_rect.h / sprite_get_height(sprite_index);
-		// only use the proportion
+		// h_type is handled in padding.apply
 		desired_size.h = padded_rect.h + padding.h;
 	}
 	else if layout_props.size.h == "stretch" {
-		image_yscale = padded_rect.h / sprite_get_height(sprite_index);
 		desired_size.h = available_size.h;
 	}
 	else if layout_props.size.w == "center" {
 		y += padded_rect.h / 2;
-		image_yscale = 1;
 		desired_size.h = available_size.h;
 	}
 	else {
-		image_yscale = 1;
 		desired_size.h = sprite_height + padding.h;
 	}
 	
@@ -111,12 +101,10 @@ arrange = function(available_size, viewport_size) {
 	if sprite_width > padded_rect.w || sprite_height > padded_rect.h {
 		if is_numeric(layout_props.size.w) {
 			// scale down
-			image_xscale = padded_rect.w / sprite_get_width(sprite_index);
 			desired_size.w = padded_rect.w + padding.w;
 		}
 		if is_numeric(layout_props.size.h) {
 			// scale down
-			image_yscale = padded_rect.h / sprite_get_height(sprite_index);
 			desired_size.h = padded_rect.h + padding.h;
 		}
 		
