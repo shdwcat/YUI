@@ -23,11 +23,12 @@ function yui_bind(value, resources, slot_values, bind_arrays = false) {
 	
 	return value;
 }
-function yui_bind_and_resolve(value, resources, slot_values) {
+
+function yui_bind_and_resolve(value, resources, slot_values, data = undefined) {
 	var binding = yui_bind(value, resources, slot_values)
 	
 	return yui_is_binding(binding)
-		? binding.resolve()
+		? binding.resolve(data)
 		: binding;
 }
 
