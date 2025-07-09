@@ -33,14 +33,22 @@ function snap_from_yui(_string, _replace_keywords = true, _track_field_order = f
 {
 	if _string == "" return undefined;
 	
-    var _buffer = buffer_create(string_byte_length(_string)+1, buffer_fixed, 1);
+	// put the string into a buffer for faster parsing
+    var _buffer = buffer_create(string_byte_length(_string), buffer_fixed, 1);
     buffer_write(_buffer, buffer_text, _string);
+	
+	return snap_from_yui_buffer(_buffer, _replace_keywords, _track_field_order, _string);
+}
+
+function snap_from_yui_buffer(_buffer, _replace_keywords = true, _track_field_order = false, _source = undefined)
+{
     buffer_seek(_buffer, buffer_seek_start, 0);
 
-    var _tokens_array = (new __snap_from_yui_tokenizer(_buffer, _string)).result;
+    var _tokens_array = (new __snap_from_yui_tokenizer(_buffer, _source)).result;
+	__snap_from_yui_dump_tokens(_tokens_array);
     buffer_delete(_buffer);
 
-	var builder = (new __snap_from_yui_builder(_tokens_array, _replace_keywords, _track_field_order, _string));
+	var builder = (new __snap_from_yui_builder(_tokens_array, _replace_keywords, _track_field_order, _source));
     return builder.result;
 }
 
@@ -381,6 +389,11 @@ function __snap_from_yui_tokenizer(_buffer, _string) constructor
 
 					// move the chunk end forward
                     if (_value > 32) _chunk_end = buffer_tell(_buffer);
+					
+					// end of file in the middle of a scalar chunk
+					if buffer_tell(_buffer) >= _buffer_size {
+                        read_chunk_and_add(_chunk_start, _chunk_end, buffer_tell(_buffer), __SNAP_YUI.SCALAR);
+					}
                 }
             }
         }
@@ -429,6 +442,9 @@ function __snap_from_yui_builder(_tokens_array, _replace_keywords, _track_field_
     {
 		if array_length(tokens_array) == 0
 			return undefined;
+			
+		if token_index >= array_length(tokens_array)
+			throw "Expected more tokens but ran out";
 		
         var _token = tokens_array[token_index];
         token_index++;
