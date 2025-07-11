@@ -547,7 +547,9 @@ function InspectronAssetPicker(field_name, custom_label, asset_type, name_func, 
 function InspectronArrayDropDown(ref, label, items, label_func) {
 	
 	var pairs = array_map(items, method({ label_func }, function(item, index) {
-		return $"{label_func(item)}:{index}";
+		var label = label_func(item);
+		var sanitized = string_replace(label, ":", ";");
+		return $"{sanitized}:{index}";
 	}));
 	var specifier = string_join_ext(",", pairs);
 		
