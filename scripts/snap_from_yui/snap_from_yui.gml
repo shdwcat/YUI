@@ -26,7 +26,7 @@ enum __SNAP_YUI
 ///
 /// @param string              The YUI string to be decoded
 /// @param {bool} [replaceKeywords]   Whether to replace keywords (true, false, null) with boolean/undefined equivalents. Default to <true>
-/// @param {bool} [trackFieldOrder]   Whether to track the order of struct fields as they appear in the YUI string (stored in __snap_field_order field on each GML struct). Default to <false>
+/// @param {bool} [trackFieldOrder]   Whether to track the order of struct fields as they appear in the YUI string (stored in static snap_field_order field on each GML struct). Default to <false>
 ///
 /// @jujuadams 2020-09-20
 function snap_from_yui(_string, _replace_keywords = true, _track_field_order = false)
@@ -458,7 +458,9 @@ function __snap_from_yui_builder(_tokens_array, _replace_keywords, _track_field_
                 var _struct = {};
 				if (track_field_order) {
 					var field_index = 0;
-					_struct.__snap_field_order = [];
+					var snap_field_order = [];
+					var struct_static = { snap_field_order };
+					static_set(_struct, struct_static);
 				}
 
                 --token_index;
@@ -470,8 +472,8 @@ function __snap_from_yui_builder(_tokens_array, _replace_keywords, _track_field_
 						throw $"snap_from_yui: Struct already has key: {_key}";
 
 					if (track_field_order) {
-						// add the key to the __snap_field_order array
-						_struct.__snap_field_order[field_index++] = _key;
+						// add the key to the snap_field_order array
+						snap_field_order[field_index++] = _key;
 					}
 
                     token_index += 2; //Skip over the struct symbol
@@ -576,7 +578,9 @@ function __snap_from_yui_builder(_tokens_array, _replace_keywords, _track_field_
             var _struct = {};
 			if (track_field_order) {
 				var field_index = 0;
-				_struct.__snap_field_order = [];
+				var snap_field_order = [];
+				var struct_static = { snap_field_order };
+				static_set(_struct, struct_static);
 			}
 
             read_to_next();
@@ -588,8 +592,8 @@ function __snap_from_yui_builder(_tokens_array, _replace_keywords, _track_field_
 					throw $"snap_from_yui: Struct already has key: {_key}";
 
 				if (track_field_order) {
-					// add the key to the __snap_field_order array
-					_struct.__snap_field_order[field_index++] = _key;
+					// add the key to the snap_field_order array
+					_struct.snap_field_order[field_index++] = _key;
 				}
 
                 read_to_next();
