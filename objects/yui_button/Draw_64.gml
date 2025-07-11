@@ -1,13 +1,15 @@
 /// @description draw alpha + highlight
 
-// Inherit the parent event
-event_inherited();
-
 var show_highlight = (highlight || focused)
 	&& highlight_color != undefined
 	&& enabled;
 	
-if show_highlight {
+bg_blend_color = show_highlight ? highlight_color : c_white
+
+// Inherit the parent event
+event_inherited();
+	
+if show_highlight && bg_sprite == undefined {
 	var alpha = (button_pressed ? pressed_alpha : highlight_alpha) * opacity;
 	if alpha > 0 {
 		if viewport_size {

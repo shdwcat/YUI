@@ -17,6 +17,8 @@ background_initalized = false;
 
 bg_alpha = undefined;
 
+bg_blend_color = c_white; // blend color when drawing bg sprite
+
 has_border_color = false;
 has_focus_color = false;
 draw_border = false;

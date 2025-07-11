@@ -45,7 +45,7 @@ if bg_alpha > 0 {
 		draw_sprite_stretched_ext(
 			bg_sprite, 0,
 			x, y, draw_size.w, draw_size.h,
-			c_white, bg_alpha * opacity);
+			bg_blend_color, bg_alpha * opacity);
 	}
 	else if bg_color != undefined {
 		draw_sprite_ext(
