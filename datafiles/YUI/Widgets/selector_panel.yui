@@ -23,9 +23,11 @@ resources:
       // additional handler executed after item is selected
       on_item_selected: null
 
-      item_bg_color: null
+      item_bg: null
       item_highlight_alpha: .5
-      selected_bg_color: null
+      item_highlight_color: null
+      item_hover_bg: null
+      selected_bg: null
 
       // text color
       foreground: null
@@ -45,9 +47,18 @@ resources:
         type: button
         border_thickness: 0
         padding: 0
-        background: @ == $selected_item then $selected_bg_color else $item_bg_color
-        highlight_alpha: 0
-        pressed_alpha: 0
+
+        // NOTE: mixing background:hover and highlight here is a bit of a mess
+        // need to figure out how to make this more sensible on the YUI side
+
+        background:
+          type: check_element_state
+          hover: $item_hover_bg
+          normal: @ == $selected_item then $selected_bg else $item_bg
+
+        highlight_color: $item_highlight_color
+        highlight_alpha: $item_highlight_alpha
+
         content: $item_template
 
         // invoke the item_selected event on the root widget
