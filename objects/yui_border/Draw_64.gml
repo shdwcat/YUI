@@ -1,5 +1,8 @@
 /// @description background and border
 
+if trace
+	mx_break()
+
 // check live bg
 // TODO: track hover/focused/etc in a ui_state struct rather than pass the element directly
 if background_value.update(data_source, self) || !background_initalized {
@@ -17,6 +20,12 @@ if background_value.update(data_source, self) || !background_initalized {
 			? yui_resolve_color(bg)
 			: bg;
 		bg_alpha = ((bg_color & 0xFF000000) >> 24) / 255; // extract alpha
+	}
+	else {
+		// no background at all so clear it
+		bg_sprite = undefined;
+		bg_color = undefined;
+		bg_alpha = 0;
 	}
 }
 
@@ -45,7 +54,7 @@ if bg_alpha > 0 {
 		draw_sprite_stretched_ext(
 			bg_sprite, 0,
 			x, y, draw_size.w, draw_size.h,
-			bg_blend_color, bg_alpha * opacity);
+			active_bg_blend_color, bg_alpha * opacity);
 	}
 	else if bg_color != undefined {
 		draw_sprite_ext(

@@ -246,6 +246,9 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 				throw yui_error($"Unexpected element.background value of type: {typeof(bg)}");
 			}
 		}
+		
+		// resolve bg_blend_color
+		bg_blend_color = yui_resolve_color(yui_bind_and_resolve(props.bg_blend_color, resources, slot_values));
 	
 		// resolve border
 		border_color = yui_resolve_color(yui_bind_and_resolve(props.border_color, resources, slot_values));

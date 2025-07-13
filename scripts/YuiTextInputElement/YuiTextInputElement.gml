@@ -15,6 +15,8 @@ function YuiTextInputElement(_props, _resources, _slot_values) : YuiBaseElement(
 		
 		// border props
 		background: undefined,
+		bg_blend_color: c_white, // optional color to blend the background sprite
+		
 		border_color: undefined,
 		border_thickness: 1,
 		border_focus_color: undefined,

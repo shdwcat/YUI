@@ -11,6 +11,8 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		is_cursor_layer: true,
 		
 		background: undefined,
+		bg_blend_color: c_white, // optional color to blend the background sprite
+		
 		border_color: undefined,
 		border_thickness: undefined,
 	}
