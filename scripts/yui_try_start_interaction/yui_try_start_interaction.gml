@@ -29,7 +29,7 @@ function yui_try_start_interaction(interaction_name, source_data, event, item) {
 	
 	var element = interaction.start(source_data, event, item);
 	if element {
-		with (item) {
+		with item.parent {
 			YuiCursorManager.visual_item = yui_make_render_instance(element, interaction, , 100);
 		}
 		

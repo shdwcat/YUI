@@ -70,7 +70,7 @@ var yui_file_generator = function (text, cabinet_file) {
 	
 	switch cabinet_file.file_type {
 		case "interaction":
-			var interaction = yui_resolve_interaction(snap);
+			var interaction = yui_resolve_interaction(snap, cabinet_file);
 			return interaction;
 			
 		case "theme":

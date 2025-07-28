@@ -1,5 +1,5 @@
 /// @description
-function yui_resolve_interaction(snap) {
+function yui_resolve_interaction(snap, cabinet_file) {
 	// hack TODO real resources/import
 	var resources = {};
 	
@@ -17,7 +17,7 @@ function yui_resolve_interaction(snap) {
 			break;
 	}
 	
-	var result = new make_func(snap, resources);
+	var result = new make_func(snap, cabinet_file);
 	return result;
 }
 

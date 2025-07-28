@@ -1,9 +1,12 @@
 /// @description here
-function YuiDragAndDrop(_props, _resources) constructor {
+function YuiDragAndDrop(_props, cabinet_file) constructor {
 		
 	static default_props = {
 		id: undefined,
 		type: "drag_and_drop",
+		import: undefined,
+		resources: undefined,
+		
 		trace: false,
 		hide_source: false,
 		
@@ -27,7 +30,11 @@ function YuiDragAndDrop(_props, _resources) constructor {
 	};
 	
 	props = yui_apply_props(_props);
-	resources = _resources;
+	resources = yui_resolve_resource_imports(
+		props.resources,
+		props.import,
+		cabinet_file.directory,
+		cabinet_file.cabinet);
 	
 	drag_condition = yui_bind(props.drag.condition, resources, undefined);
 	drag_element = yui_resolve_element(props.drag.visual, resources, undefined);

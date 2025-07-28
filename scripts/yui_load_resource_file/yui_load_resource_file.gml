@@ -6,7 +6,9 @@ function yui_load_resource_file(filepath, cabinet, base_folder) {
 		var resource_filepath = cabinet.folder_path + string_delete(filepath, 1, 1);
 	}
 	else {
-		var resource_filepath = base_folder + "/" + filepath;
+		var resource_filepath = string_ends_with(base_folder, "/")
+			? base_folder + filepath
+			: base_folder + "/" + filepath;
 	}
 	
 	// if the filepath ends with a /, import the whole folder instead
