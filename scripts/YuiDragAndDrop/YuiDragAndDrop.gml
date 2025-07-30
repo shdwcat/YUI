@@ -205,7 +205,7 @@ function YuiDragAndDrop(_props, cabinet_file) constructor {
 		
 		// if it's not a yui_base, use the item itself as the data
 		var drop_data = is_gui_item
-			? drop_item.data_context
+			? drop_item.data_source
 			: drop_item;
 		
 		var drop_target = {
