@@ -27,8 +27,10 @@ function yui_register_interactions(interactions, should_hash_items = false) {
 
 /// @description unregister interaction participation
 function yui_unregister_interactions(interactions) {
-	if !instance_exists(YuiCursorManager) exit;
+	if !instance_exists(YuiCursorManager)
+		exit;
 	
+	var render_item = id;
 	with YuiCursorManager {
 		if !ds_exists(participation_map, ds_type_map) return;
 
@@ -41,7 +43,7 @@ function yui_unregister_interactions(interactions) {
 			}
 		
 			// clean up
-			ds_map_delete(inner_map, self.id);
+			ds_map_delete(inner_map, render_item);
 			if ds_map_empty(inner_map) {
 				ds_map_destroy(inner_map);
 				ds_map_delete(participation_map, interaction);
