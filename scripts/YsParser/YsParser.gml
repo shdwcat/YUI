@@ -1,5 +1,6 @@
 /// @description defines the pratt parser for YuiScript expressions
-function YsParser(tokens, source, resources, slot_values) : GsplPrattParser(tokens, mx_parser_definition()) constructor {
+function YsParser(tokens, source, resources, slot_values, definition = mx_parser_definition())
+	: GsplPrattParser(tokens, definition) constructor {
 	self.source = source;
 	
 	self.resources = resources;

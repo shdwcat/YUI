@@ -1,8 +1,3 @@
-function ys_token_definition() {
-	static definition = new YsTokenDefinition();
-	return definition;
-}
-
 /// @description YuiScript token definition
 function YsTokenDefinition() 
 	: GsplTokenDefinition(
