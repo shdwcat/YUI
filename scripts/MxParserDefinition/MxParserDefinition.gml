@@ -1,8 +1,3 @@
-function mx_parser_definition() {
-	static definition = new MxParserDefinition();	
-	return definition;
-}
-
 function MxParserDefinition() : GsplPrattParserDefinition(YS_TOKEN.EOF) constructor {
 
 	// feather disable GM2017
