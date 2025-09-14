@@ -33,6 +33,8 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 			};
 			break;
 		case YS_TOKEN.QUESTION_QUESTION:
+			self.left.optional = true;
+			
 			self.resolve = function ys_operator_null_coalesce(data) {
 				var left_val = left.resolve(data);
 				return left_val ?? right.resolve(data);
@@ -323,8 +325,6 @@ function YuiPrefixOperatorBinding(operator_token, right) : YuiExpr() constructor
 			case YS_TOKEN.NOT:
 				return !right_val;
 			case YS_TOKEN.MINUS:
-				return -right_val;
-			case YS_TOKEN.QUESTION:
 				return -right_val;
 				
 			default:

@@ -5,7 +5,7 @@ function YsResourceParselet() : GsplPrefixParselet() constructor {
 		var path = token._lexeme;
 		
 		// given 'foo.bar.baz' get 'foo' and 'bar.baz'
-		var path_parts = yui_string_split(path, ".", 2);
+		var path_parts = string_split(path, ".", , 1);
 		var resource_name = path_parts[0];
 
 		if !variable_struct_exists(parser.resources, resource_name) {

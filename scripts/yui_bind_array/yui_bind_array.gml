@@ -14,7 +14,7 @@ function yui_bind_array(array, resources, slot_values, resolve = false, recursiv
 		}
 		else {
 			var result = yui_bind(value, resources, slot_values);
-			if resolve && yui_is_binding(result) && !result.is_lambda {
+			if resolve && yui_is_binding(result) {
 				result = result.resolve();
 			}
 			bound_array[i] = result;

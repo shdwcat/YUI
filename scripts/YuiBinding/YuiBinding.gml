@@ -25,7 +25,7 @@ function YuiBinding(path) : YuiExpr() constructor {
 				resolver = resolveEmptyPath;
 			}
 			else {
-				var token_array = yui_string_split(path, ".");
+				var token_array = string_split(path, ".");
 				if array_length(token_array) == 1 {
 					resolver = resolveToken;
 					token = token_array[0];

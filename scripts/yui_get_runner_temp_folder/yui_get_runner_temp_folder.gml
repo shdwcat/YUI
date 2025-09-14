@@ -11,7 +11,7 @@ function yui_get_runner_temp_folder() {
 	if parameter_count() > 2 && parameter_string(1) == "-game" {
 		var temp_bundle = parameter_string(2);
 		
-		var tokens = yui_string_split(temp_bundle, "\\");
+		var tokens = string_split(temp_bundle, "\\");
 		
 		var temp_folder_name = yui_string_after(tokens[0], "Y:/");
 		var temp_root = yui_string_before(game_save_id, game_project_name + "\\");

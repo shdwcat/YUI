@@ -22,7 +22,7 @@ function YuiNestedBinding(inner_binding, path) : YuiBinding(undefined) construct
 	}
 	else {
 		resolver = resolveTokenArray;
-		tokens = yui_string_split(path, ".");
+		tokens = string_split(path, ".");
 	}
 
 	static resolve = function(data) {
