@@ -120,12 +120,21 @@ arrange = function yui_text__arrange(available_size, viewport_size) {
 		draw_set_font(font);
 	
 		// calc size
-		var native_width = string_width_ext(formatted_text, -1, padded_rect.w);
-		var native_height = string_height_ext(formatted_text, -1, padded_rect.w);
 		
 		// check wrapped
-		var native_width_nowrap = string_width(text);
+		var native_width_nowrap = string_width(formatted_text);
 		var is_wrapped = native_width_nowrap > padded_rect.w;
+		
+		// NOTE: if we use the string_width_ext when wrapping is not needed, trailing spaces get
+		// trimmed, which is not desired as the text may be used as a spacer between other text
+		if is_wrapped {
+			var native_width = string_width_ext(formatted_text, -1, padded_rect.w);
+			var native_height = string_height_ext(formatted_text, -1, padded_rect.w);
+		}
+		else {
+			var native_width = native_width_nowrap;
+			var native_height = string_height(formatted_text);
+		}
 		
 		//var render_width = new_bbox.width;
 		//var render_height = max(new_bbox.height, string_height("bq"));
