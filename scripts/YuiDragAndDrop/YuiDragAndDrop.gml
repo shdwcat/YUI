@@ -17,13 +17,15 @@ function YuiDragAndDrop(_props, cabinet_file) constructor {
 			condition: undefined,
 			center_visual: true,
 			visual: undefined,
-			start: undefined,
-			action: undefined
+			start: undefined, // called once when the interaction starts
+			action: undefined,
 		},
 		drop: {
 			condition: undefined,
 			visual: undefined,
-			action: undefined
+			init: undefined, // called once when the interaction starts
+			action: undefined,
+			finished: undefined
 		},
 		
 		on_cancel: undefined,
@@ -38,13 +40,17 @@ function YuiDragAndDrop(_props, cabinet_file) constructor {
 	
 	drag_condition = yui_bind(props.drag.condition, resources, undefined);
 	drag_element = yui_resolve_element(props.drag.visual, resources, undefined);
+	
 	drag_start = yui_bind_handler(props.drag[$ "start"], resources, undefined);
 	drag_action = yui_bind_handler(props.drag.action, resources, undefined);
 	
 	drop_hash_id = YuiCursorManager.participation_hash.getStringId(props.id + ".drop");
 	drop_condition = yui_bind(props.drop.condition, resources, undefined);
 	drop_element = yui_resolve_element(props.drop.visual, resources, undefined);
+	
+	drop_init = yui_bind_handler(props.drop[$ "init"], resources, undefined);
 	drop_action = yui_bind_handler(props.drop.action, resources, undefined);
+	drop_finished = yui_bind_handler(props.drop[$ "finished"], resources, undefined);
 	
 	on_cancel = yui_bind_handler(props.on_cancel, resources, undefined);
 	
@@ -133,6 +139,24 @@ function YuiDragAndDrop(_props, cabinet_file) constructor {
 			};
 			yui_call_handler(drag_start, , interaction_data);
 		}
+				
+		// init the instances in the 'drop' role if needed
+		if drop_init != undefined {
+			var interaction_data = {
+				source: source,
+				target: {
+					data: undefined,
+				},
+				cursor: cursor,
+			};
+			
+			var targets = yui_get_interaction_participants(drop_hash_id);
+			var i = 0; repeat array_length(targets) {
+				var drop_item = targets[i++];
+				interaction_data.target.data = getDropData(drop_item);
+				yui_call_handler(drop_init, , interaction_data);
+			}
+		}
 		
 		return drag_element;
 	}
@@ -199,20 +223,24 @@ function YuiDragAndDrop(_props, cabinet_file) constructor {
 		}
 	}
 	
-	static updateDropTarget = function(drop_item /* yui_cursor_item */) {
-		
+	static getDropData = function(drop_item) {
 		var is_gui_item = object_is_ancestor(drop_item.object_index, yui_base);
 		
 		// if it's not a yui_base, use the item itself as the data
 		var drop_data = is_gui_item
 			? drop_item.data_source
 			: drop_item;
+			return drop_data;
+	}
+	
+	static updateDropTarget = function(drop_item /* yui_cursor_item */) {
+		
+		var drop_data = getDropData(drop_item);
 		
 		var drop_target = {
 			data: drop_data,
 			hover: drop_item.highlight,
-		};
-		
+		};		
 		
 		// NOTE: a drop_element is currently required!
 		
@@ -227,6 +255,7 @@ function YuiDragAndDrop(_props, cabinet_file) constructor {
 			with drop_item {
 				interaction_item = yui_make_render_instance(other.drop_element, interaction_data, , 100);
 				
+				var is_gui_item = object_is_ancestor(drop_item.object_index, yui_base);
 				if !is_gui_item {
 					// align drop visual to game position
 					// TODO: move this to yui_game_item
@@ -279,10 +308,17 @@ function YuiDragAndDrop(_props, cabinet_file) constructor {
 	}
 	
 	static finish = function() {
+		
 		// clean up drop visuals
 		var targets = yui_get_interaction_participants(drop_hash_id);
 		var i = 0; repeat array_length(targets) {
 			var drop_item = targets[i++];
+			
+			if drop_finished != undefined {
+				var drop_data = getDropData(drop_item);
+				yui_call_handler(drop_finished, , drop_data);
+			}
+			
 			drop_item.interaction_item.unload();
 			drop_item.interaction_item = undefined;
 		}
