@@ -51,7 +51,7 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 		path = string_replace_all(path, "/", "\\");
 		path = string_lower(path);
 		path = string_replace_all(path, "\\", "/");
-		path = filename_path(path) + filename_name(path);	
+		path = string_replace_all(path, " ", "_");
 		var file = flat_map[$ __fixPath(path, is_included_file)];
 		if file == undefined && CABINET_VERBOSE_LOGGING {
 			show_debug_message("Unable to find file:");
@@ -114,8 +114,12 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 			options.cabinet_file_customizer(result);
 		}
 		
+		// Force lowercase and replace spaces with underline, due to datafile shennanigans
+		fullpath = string_lower(fullpath);
+		fullpath = string_replace_all(fullpath, " ", "_");
+
 		// point the flat_map entry at the cabinet file
-		flat_map[$ string_lower(fullpath)] = result;
+		flat_map[$ fullpath] = result;
 		
 		return result;
 	}
