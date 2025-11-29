@@ -45,7 +45,9 @@ function snap_from_yui_buffer(_buffer, _replace_keywords = true, _track_field_or
     buffer_seek(_buffer, buffer_seek_start, 0);
 
     var _tokens_array = (new __snap_from_yui_tokenizer(_buffer, _source)).result;
-	__snap_from_yui_dump_tokens(_tokens_array);
+	
+	//__snap_from_yui_dump_tokens(_tokens_array);
+	
     buffer_delete(_buffer);
 
 	var builder = (new __snap_from_yui_builder(_tokens_array, _replace_keywords, _track_field_order, _source));
