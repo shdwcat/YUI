@@ -154,7 +154,7 @@ function YuiSpriteCache() constructor {
 			sprite_delete(v);
 			cache[$ k] = undefined;
 		});
-		cache = undefined;
+		cache = {};
 		destroyed = true;
 	}
 }
