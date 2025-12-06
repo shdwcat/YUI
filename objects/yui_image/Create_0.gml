@@ -27,17 +27,15 @@ build = function() {
 		sprite_index = bound_values.sprite;
 	}
 	else {
-		// NOTE: not using hideElement() because this is just to not draw anything when there is no sprite
-		visible = false;
+		sprite_index = -1;
 		exit;
 	}
 	
 	mirror_x = bound_values.mirror_x;
 	mirror_y = bound_values.mirror_y;
 	
-	if trace {
-		DEBUG_BREAK_YUI
-	}
+	if trace
+		mx_break();
 }
 
 /// @param {struct.YuiArrangeSize} arrange_size
@@ -49,7 +47,7 @@ arrange = function(available_size, viewport_size) {
 	draw_rect = available_size;
 	self.viewport_size = viewport_size;
 	
-	if !visible {
+	if !visible or sprite_index < 0 {
 		return sizeToDefault();
 	}
 	

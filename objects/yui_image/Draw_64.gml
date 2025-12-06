@@ -1,6 +1,8 @@
-/// @description 
+/// @description
 
-// todo: 9-slicing?
+// skip rendering if we don't have a sprite
+if sprite_index < 0
+	return;
 
 image_alpha = opacity ?? draw_get_alpha();
 
