@@ -15,7 +15,7 @@ function YsSlotParselet() : GsplPrefixParselet() constructor {
 			var slot_value = parser.slot_values.get(slot_key);
 		}
 		catch (error) {
-			error = dcs_error(error.message + " in expression: " + parser.source);
+			error = yui_error(error.message + " in expression: " + parser.source);
 			throw error;
 		}
 		
