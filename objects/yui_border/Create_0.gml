@@ -26,8 +26,10 @@ draw_border = false;
 
 base_destroy = destroy;
 destroy = function() {
-	if content_item && instance_exists(content_item)
+	if content_item && instance_exists(content_item) {
 		content_item.destroy();
+		content_item = undefined;
+	}
 	base_destroy();
 }
 

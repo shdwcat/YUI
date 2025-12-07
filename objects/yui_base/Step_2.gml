@@ -10,8 +10,7 @@ if layout_props == undefined {
 
 // ensure invisible items destroy themselves since they won't run the Pre-Draw event
 if unload_now {
-	instance_destroy();
-	destroyed = true;
+	destroy();
 	return;
 }
 

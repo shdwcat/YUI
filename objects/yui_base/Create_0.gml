@@ -97,6 +97,7 @@ destroy = function() {
 	if tooltip_item && instance_exists(tooltip_item)
 		tooltip_item.destroy();
 	instance_destroy();
+	destroyed = true;
 	//yui_log($"destroyed instance {id} ({object_get_name(object_index)})");
 }
 
