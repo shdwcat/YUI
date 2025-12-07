@@ -27,6 +27,14 @@ if blend_color_value.is_live blend_color_value.update(data_source);
 var color = blend_color_value.value;
 if is_string(color) color = yui_resolve_color(color);
 
+if GM_build_type == "run" {
+	if color == undefined
+		throw yui_error($"blend_color was undefined for yui_image ({_id})");
+}
+else {
+	color ??= c_white;
+}
+
 if trace
 	yui_break();
 
