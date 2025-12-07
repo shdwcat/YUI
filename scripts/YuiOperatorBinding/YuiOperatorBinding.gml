@@ -105,6 +105,7 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 				else if is_string(right_val)
 					return string(left_val) + right_val;
 				else
+					assertNotStructs("+", left_val, right_val);
 					return left_val + right_val;
 				};
 			break;
@@ -113,7 +114,7 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 			self.resolve = function ys_operator_subtract(data) {
 				var left_val = left.resolve(data);
 				var right_val = right.resolve(data);
-				assertNotStructs(left_val, right_val);
+				assertNotStructs("-", left_val, right_val);
 				return left_val - right_val;
 			};
 			break;
@@ -122,7 +123,7 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 			self.resolve = function ys_operator_multiply(data) {
 				var left_val = left.resolve(data);
 				var right_val = right.resolve(data);
-				assertNotStructs("+", left_val, right_val);
+				assertNotStructs("*", left_val, right_val);
 				return left_val * right_val;
 			};
 			break;
