@@ -48,6 +48,13 @@ visible = false;
 // normal event order logic)
 opacity = 0;
 
+// whether to inherit enabled state from parent
+inherit_enabled = true;
+
+// whether to inherit opacity value from parent
+// (e.g. 0.5 opacity with 0.5 parent opacity = 0.25 opacity)
+inherit_opacity = true;
+
 // this only applies alpha for bg_color set on an element placed in the room editor
 bg_alpha = ((bg_color & 0xFF000000) >> 24) / 255;
 
@@ -281,13 +288,13 @@ arrange = function(available_size, viewport_size) {
 process = function yui_base__process(became_visible) {
 	
 	// calculate enabled state from parent and/or live value
-	var is_parent_enabled = parent ? parent.enabled : true;
-	if is_parent_enabled && enabled_value.is_live {
+	var base_enabled = inherit_enabled and parent ? parent.enabled : true;
+	if base_enabled && enabled_value.is_live {
 		enabled_value.update(data_source);
 		enabled = enabled_value.value;
 	}
 	else {
-		enabled = is_parent_enabled && enabled_value.value;
+		enabled = base_enabled && enabled_value.value;
 	}	
 	
 	// update focus state
@@ -306,9 +313,10 @@ process = function yui_base__process(became_visible) {
 	// update opacity
 	
 	if opacity_value.is_live opacity_value.update(data_source);
-		
+	
 	var old_opacity = opacity;
-	opacity = opacity_value.value * (parent ? parent.opacity : 1) * (1 - (!enabled * 0.5))
+	var base_opacity = inherit_opacity and parent ? parent.opacity : 1;
+	opacity = base_opacity * opacity_value.value * (1 - (!enabled * 0.5));
 	
 	// referenced by anything that needs to rebuild when opacity changes (e.g. text element)
 	opacity_changed = opacity != old_opacity;
@@ -473,10 +481,10 @@ isPointVisible = function(x, y) {
 	if viewport_part != undefined && viewport_part.clipped {
 		return point_in_rectangle(
 				x, y,
-				viewport_part.x + xoffset,
-				viewport_part.y + yoffset,
-				viewport_part.x + xoffset + viewport_part.w,
-				viewport_part.y + yoffset + viewport_part.h);
+				viewport_part.x,
+				viewport_part.y,
+				viewport_part.x + viewport_part.w,
+				viewport_part.y + viewport_part.h);
 	}
 	else {
 		return visible;
@@ -619,7 +627,7 @@ generateLayoutLog = function() {
 
 inspectDataContext = function() {
 	var data = data_source;
-	yui_break();
+	mx_break();
 }
 
 Inspectron()
