@@ -110,10 +110,9 @@ function yui_register_events(events) {
 		}
 	}
 	
-	// should the rest of these return if disabled?
-	
 	if events.on_hover_changed != undefined {
 		on_hover_changed = function() {
+			if !enabled return;
 			var source = self;
 			var args = {
 				source: source,
@@ -126,6 +125,7 @@ function yui_register_events(events) {
 	if events.on_got_focus != undefined {
 		base_on_got_focus = on_got_focus;
 		on_got_focus = function() {
+			if !enabled return;
 			var source = self;
 			var args = {
 				source: source,
@@ -140,6 +140,7 @@ function yui_register_events(events) {
 	if events.on_lost_focus != undefined {
 		base_on_lost_focus = on_lost_focus;
 		on_lost_focus = function() {
+			if !enabled return;
 			var source = self;
 			var args = {
 				source: source,

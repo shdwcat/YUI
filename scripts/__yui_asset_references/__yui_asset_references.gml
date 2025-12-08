@@ -4,6 +4,7 @@ function __yui_asset_references() {
 		yui_ease_in_curve,
 		yui_linear_curve,
 		yui_wave_curve,
+		yui_wiggle_curve,
 		fnt_yui_body,
 		fnt_yui_body_bold,
 		fnt_yui_subtitle,
