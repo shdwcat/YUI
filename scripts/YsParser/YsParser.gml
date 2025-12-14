@@ -7,7 +7,7 @@ function YsParser(tokens, source, resources, slot_values, definition = mx_parser
 	self.slot_values = slot_values;
 	
 	// used by YuiLambda/YuiLambdaVariable to coordinate param/identifier resolution
-	self.context = {};
+	self.context = undefined;
 	
 	self.data_paths = {};
 	

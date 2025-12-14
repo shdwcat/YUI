@@ -32,6 +32,9 @@ function YuiLambda(body, context) : YuiExpr() constructor {
 		// foo.resolve(data, environment)
 		// might need to be expr_context if we need more than the environment for some reason?
 		
+		// TODO: currently nested lambdas will only have access to the inner lambda params
+		// would to use e.g. YuiChainedMap to be able to inherit params values inside
+		
 		// set the context params from the args array
 		context.params = {};
 		
