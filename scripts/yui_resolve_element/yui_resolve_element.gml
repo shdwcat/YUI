@@ -37,6 +37,12 @@ function yui_resolve_element(yui_data, resources, slot_values, parent_id = undef
 				text: yui_data,
 			};
 		}
+		else if is_array(yui_data) {
+			yui_data = {
+				type: "panel",
+				elements: yui_data,
+			};
+		}
 	
 		// if we don't have slots yet (because this is a root element)
 		// then resolve the theme and use it as the initial slot values
