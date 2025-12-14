@@ -16,13 +16,15 @@ function YuiLambda(body, context) : YuiExpr() constructor {
 	}
 	
 	static resolve = function(data) {
+		// return a closure bound to the data_context where the lambda was declared
+		return new YuiClosure(self, data);
 		
 		// TODO: this could actually create a YuiLambdaClosure with the `data` attached
 		// so that .call can be only the args, allowing lambdas called from code to not
 		// also need the data context passed in to the caller
 		
 		// return the lambda itself, without calling it
-		return self;
+		//return self;
 		//throw yui_error("attemped to resolve() YuiLmabda, use call() instead");
 	}
 	
@@ -62,5 +64,22 @@ function YuiLambda(body, context) : YuiExpr() constructor {
 	static compile = function(func_name = "")
 	{
 		return "function " + func_name + "(data, " + context.arg_map[0] + ") {\n\t" + body.compile() + "\n}\n\n";
+	}
+}
+
+function YuiClosure(lambda_expr, original_data_context) : YuiExpr() constructor {
+	static is_yui_live_binding = true;
+	static is_call = true;
+	static is_lambda = true;
+	
+	self.lambda_expr = lambda_expr;
+	
+	// this is the data context from where the lambda was defined
+	self.original_data_context = original_data_context;
+	
+	static call = function(data, args) {
+		
+		// call the lambda with the data context from when the lambda was resolved
+		return lambda_expr.call(original_data_context, args);
 	}
 }
