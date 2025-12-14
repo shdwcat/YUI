@@ -18,14 +18,6 @@ function YuiLambda(body, context) : YuiExpr() constructor {
 	static resolve = function(data) {
 		// return a closure bound to the data_context where the lambda was declared
 		return new YuiClosure(self, data);
-		
-		// TODO: this could actually create a YuiLambdaClosure with the `data` attached
-		// so that .call can be only the args, allowing lambdas called from code to not
-		// also need the data context passed in to the caller
-		
-		// return the lambda itself, without calling it
-		//return self;
-		//throw yui_error("attemped to resolve() YuiLmabda, use call() instead");
 	}
 	
 	static call = function(data, args) {
