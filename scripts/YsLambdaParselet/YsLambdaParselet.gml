@@ -6,9 +6,7 @@ function YsLambdaParselet(precedence) : GsplInfixParselet(precedence) constructo
 		// track the previous context if one existed and set up a new context
 		// (lambdas can be nested)
 		var old_context = parser.context;
-		parser.context = {
-			arg_map: undefined,
-		};
+		parser.context = new YuiLambdaContext(old_context);
 		
 		// set up the args -> param name lookup
 		if is_instanceof(left_expr, YuiIdentifier) {
@@ -45,5 +43,39 @@ function YsLambdaParselet(precedence) : GsplInfixParselet(precedence) constructo
 		parser.context = old_context;
 		
 		return lambda;
+	}
+}
+
+function YuiLambdaContext(parent = undefined) constructor {
+	self.parent = parent;
+	self.arg_map = undefined;
+	
+	// the actual param values filled in during execution time
+	self.params = undefined;
+	
+	static isParamIdentifier = function(identifier_name) {
+		
+		if arg_map != undefined {
+			
+			if array_contains(arg_map, identifier_name) {
+				return true;
+			}
+			else if parent != undefined {
+				return parent.isParamIdentifier(identifier_name);
+			}
+		}
+		
+		// not a lambda param
+		return false;
+	}
+	
+	static getParamValue = function(param_name) {
+			
+		if struct_exists(params, param_name) {
+			return params[$ param_name];
+		}
+		else if parent != undefined {
+			return parent.getParamValue(param_name);
+		}
 	}
 }

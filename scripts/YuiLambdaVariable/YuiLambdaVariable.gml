@@ -15,8 +15,12 @@ function YuiLambdaVariable(param_name, context) : YuiExpr() constructor {
 	static resolve = function(data) {
 		// gets the defined parameter from the 'context params' which in this case
 		// is set up in YuiLambda/YuiLambdaParselet
-		// note: this is some bootleg shit
-		return context.params[$ param_name];
+		
+		// debug assert
+		if !context.isParamIdentifier(param_name)
+			throw dcs_error($"Could not get lambda param value for: '{param_name}'");
+			
+		return context.getParamValue(param_name);
 	}
 
 	static compile = function()
