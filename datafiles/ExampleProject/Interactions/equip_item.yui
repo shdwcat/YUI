@@ -3,6 +3,7 @@ file_type: interaction
 type: drag_and_drop
 
 hit_test_source_position: true
+hide_source: true
 
 // 'Interactions' are used to define complex UI behavior like Drag and Drop without writing code.
 // The core logic exists in GML code, but we can define custom behavior and visuals in .yui files.

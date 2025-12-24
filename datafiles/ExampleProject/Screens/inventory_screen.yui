@@ -54,31 +54,32 @@ resources:
       padding: 2
       border_color: $theme.resources.control_border
       background: $theme.resources.control_bg
+      size: 64
       content:
         type: image
         sprite: @sprite |> ~asset_get_index()
         size: stretch
 
-      // this section specifies that the 'equip_item' interaction should start when the mouse button
-      // is pressed on this panel. 'interaction' is an alternative to calling a function directly
-      events:
-        on_mouse_down:
-          interaction: equip_item
+        // this section specifies that the 'equip_item' interaction should start when the mouse button
+        // is pressed on this panel. 'interaction' is an alternative to calling a function directly
+        events:
+          on_mouse_down:
+            interaction: equip_item
 
-      tooltip_placement: top_left
-      tooltip:
-        type: panel
-        elements:
-          - type: text
-            text_style: subtitle
-            text: @name
+        tooltip_placement: top_left
+        tooltip:
+          type: panel
+          elements:
+            - type: text
+              text_style: subtitle
+              text: @name
 
-          // the text element accepts an array, which can be a mix of strings and bindings.
-          // This is more performant than using multiple text elements, so take advantage of it!
-          - type: text
-            text:
-              - "Slot: "
-              - @slot
+            // the text element accepts an array, which can be a mix of strings and bindings.
+            // This is more performant than using multiple text elements, so take advantage of it!
+            - type: text
+              text:
+                - "Slot: "
+                - @slot
 
 root:
   type: screen_base
