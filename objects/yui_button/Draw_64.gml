@@ -15,8 +15,11 @@ active_bg_blend_color = show_highlight
 
 // Inherit the parent event
 event_inherited();
-	
-if show_highlight && bg_sprite == undefined {
+
+// draw the highlight color as an overlay when either there is no background sprite, or there is
+// and the highlight color is white (because white won't do anything as active_bg_blend_color
+var draw_highlight = show_highlight and (bg_sprite == undefined or highlight_color & $ffffff);
+if draw_highlight {
 	
 	var alpha = (button_pressed ? pressed_alpha : highlight_alpha) * opacity;
 	if alpha > 0 {
