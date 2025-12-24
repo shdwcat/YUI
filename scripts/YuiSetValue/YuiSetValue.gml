@@ -21,6 +21,9 @@ function YuiSetValue(left, name, right) : YuiExpr() constructor {
 		var right_val = right.resolve(data);
 		var left_val = left.resolve(data);
 		
+		if mx_is_immutable(left_val)
+			throw mx_error($"Cannot set {name} on immutable struct");
+		
 		// set the value
 		variable_struct_set(left_val, name, right_val);
 	}

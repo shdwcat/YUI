@@ -26,6 +26,9 @@ function YuiSetIndex(left, index, right) : YuiExpr() constructor {
 			left_val[index_val] = right_val;
 		}
 		else if is_struct(left_val) {
+			if mx_is_immutable(left_val)
+				throw mx_error($"Cannot set {index_val} on immutable struct");
+				
 			var index_val = index.resolve(data);
 			left_val[$ index_val] = right_val;
 		}

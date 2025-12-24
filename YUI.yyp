@@ -728,6 +728,7 @@
     {"id":{"name":"MxAnimationSignal","path":"scripts/MxAnimationSignal/MxAnimationSignal.yy",},},
     {"id":{"name":"MxHostParselet","path":"scripts/MxHostParselet/MxHostParselet.yy",},},
     {"id":{"name":"MxIdentifierParselet","path":"scripts/MxIdentifierParselet/MxIdentifierParselet.yy",},},
+    {"id":{"name":"MxImmutable","path":"scripts/MxImmutable/MxImmutable.yy",},},
     {"id":{"name":"MxListExpression","path":"scripts/MxListExpression/MxListExpression.yy",},},
     {"id":{"name":"MxOptionalExpr","path":"scripts/MxOptionalExpr/MxOptionalExpr.yy",},},
     {"id":{"name":"MxOptionalParselet","path":"scripts/MxOptionalParselet/MxOptionalParselet.yy",},},
