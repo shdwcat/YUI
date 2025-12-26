@@ -23,12 +23,13 @@ function yui_color_from_hex_string(hex_string) {
 		color |= 0xFF000000;
 	}
 	else {
+		var raw_hex_value = hex_value;
 		
-		// set alpha
+		// extract alpha hex value
 		var alpha = hex_value & 0xFF000000;
 		
 		// clear alpha
-		hex_value = hex_value ^ 0xFF000000;
+		hex_value = hex_value & 0x00FFFFFF;
 		
 		// handle color with alpha
 		var red = hex_value >> 16;
