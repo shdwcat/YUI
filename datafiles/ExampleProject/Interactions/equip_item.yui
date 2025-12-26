@@ -62,7 +62,7 @@ drop:
     cases:
       false:
         type: image
-        sprite: ~yui_panel_bg
+        sprite: ~yui_white_pixel
         size: stretch
         blend_color: maroon
         opacity: 0.7
