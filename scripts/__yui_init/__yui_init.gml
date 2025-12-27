@@ -7,7 +7,7 @@ yui_log("Welcome to YUI by @shdwcat - version " + YUI_VERSION);
 __yui_init_live_reload();
 
 // reset log files
-if GM_build_type == "run"
+if GM_build_type == "run" && !GM_is_sandboxed
 	yui_try_delete_file(YUI_LOCAL_PROJECT_DATA_FOLDER + YUI_ASSET_USE_CSV)
 	
 yui_log_to_datafile(YUI_ASSET_USE_CSV, "NAME, TYPE, SOURCE_EXPRESSION");

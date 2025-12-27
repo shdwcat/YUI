@@ -4,7 +4,7 @@ function yui_log(message = "") {
 }
 
 function yui_log_to_datafile(filename, message = "") {
-	if GM_build_type == "exe" return;
+	if GM_build_type == "exe" or GM_is_sandboxed return;
 	
 	var _f = file_text_open_append(YUI_LOCAL_PROJECT_DATA_FOLDER + filename);
 	if (_f == -1) {
@@ -18,7 +18,7 @@ function yui_log_to_datafile(filename, message = "") {
 }
 
 function yui_log_asset_use(name, type, source) {
-	if GM_build_type == "exe" return;
+	if GM_build_type == "exe" or GM_is_sandboxed return;
 	
 	static used_assets = {};
 	
