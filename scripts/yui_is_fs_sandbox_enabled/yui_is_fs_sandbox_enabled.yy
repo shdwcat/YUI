@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"yui_is_fs_sandbox_enabled",
   "parent":{
-    "name":"scripts",
-    "path":"folders/Packages - YUI/scripts.yy",
+    "name":"Deprecated",
+    "path":"folders/Packages - YUI/Deprecated.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

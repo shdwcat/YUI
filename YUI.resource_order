@@ -711,7 +711,7 @@
     {"name":"yui_invoke_event","order":3,"path":"scripts/yui_invoke_event/yui_invoke_event.yy",},
     {"name":"yui_is_binding_expr","order":5,"path":"scripts/yui_is_binding_expr/yui_is_binding_expr.yy",},
     {"name":"yui_is_binding","order":4,"path":"scripts/yui_is_binding/yui_is_binding.yy",},
-    {"name":"yui_is_fs_sandbox_enabled","order":14,"path":"scripts/yui_is_fs_sandbox_enabled/yui_is_fs_sandbox_enabled.yy",},
+    {"name":"yui_is_fs_sandbox_enabled","order":21,"path":"scripts/yui_is_fs_sandbox_enabled/yui_is_fs_sandbox_enabled.yy",},
     {"name":"yui_load_and_merge_resource_files","order":1,"path":"scripts/yui_load_and_merge_resource_files/yui_load_and_merge_resource_files.yy",},
     {"name":"yui_load_interactions","order":2,"path":"scripts/yui_load_interactions/yui_load_interactions.yy",},
     {"name":"yui_load_resource_file","order":2,"path":"scripts/yui_load_resource_file/yui_load_resource_file.yy",},

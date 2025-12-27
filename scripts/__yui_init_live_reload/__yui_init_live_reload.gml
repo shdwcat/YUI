@@ -33,8 +33,7 @@ function __yui_init_live_reload() {
 		var project_folder = filename_dir(GM_project_filename);
 		var data_folder = string_replace_all(project_folder, "\\", "/") + "/datafiles/";	
 		
-		var is_sandboxed = yui_is_fs_sandbox_enabled();
-		if is_sandboxed {
+		if GM_is_sandboxed {
 			YUI_LIVE_RELOAD_STATE = YUI_LIVE_RELOAD_STATES.SANDBOX_ENABLED;
 			
 			yui_log("Application is sandboxed, using included /datafiles instead of project folder");
