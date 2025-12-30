@@ -11,7 +11,6 @@ function YuiCurveAnimation(props, resources, slot_values)
 		to: 1,
 		
 		effect: undefined, // function to compute the effect result
-		effect_interval: undefined, // milliseconds between effect updates
 	}
 	
 	// store for diagnostics
@@ -27,20 +26,14 @@ function YuiCurveAnimation(props, resources, slot_values)
 	var effect = props[$ "effect"]
 	if effect != undefined {
 		has_effect = true;
-		// can't use start_value because the target may not be a number
-		from ??= 0;
 		
 		self.effect = yui_bind_and_resolve(effect, resources, slot_values);
 		
-		// fallback if it's not a lambda
-		if is_string(self.effect) {
-			var script = asset_get_index(self.effect);
-			if script == -1 {
-				throw yui_error("Could not find script with name:", self.effect);
-			}
-			self.evalEffect = script;
+		// scripts and methods can be called directly
+		if script_exists(self.effect) or is_method(self.effect) {
+			self.evalEffect = self.effect;
 		}
-		else if !yui_is_lambda(self.effect) {
+		else if yui_is_lambda(self.effect) {
 			throw yui_error("curve effect must be a callable function (script, runtime function, or lambda function)");
 		}
 		
@@ -98,7 +91,7 @@ function YuiCurveAnimation(props, resources, slot_values)
 		// lerp the curve value along the start/stop range
 		var lerp_value = lerp(from ?? start_value, to, curve_value);
 		
-		var effect_value = evalEffect(base_value, lerp_value, state);
+		var effect_value = evalEffect(base_value, start_value, lerp_value, state);
 		
 		//yui_log("effect value is:", effect_value);
 		return effect_value;

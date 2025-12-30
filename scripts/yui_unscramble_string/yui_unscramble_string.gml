@@ -1,5 +1,5 @@
 /// @description here
-function yui_unscramble_string(str, curve_pos, state) {
+function yui_unscramble_string(str, old_str, curve_pos, state) {
 	
 	state[$"order"] ??= yui_random_range_order(string_length(str));
 	
