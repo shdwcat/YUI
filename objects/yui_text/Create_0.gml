@@ -45,9 +45,10 @@ build = function() {
 	font = bound_values.font;
 		
 	if use_scribble {
+		var font_name = is_string(font) ? font : font_get_name(font);
 		formatted_text = override_text ?? bound_values.text
 		scribble_element = scribble(formatted_text, string(id))
-			.starting_format(font_get_name(font))
+			.starting_format(font_name)
 			.align(layout_props.halign, layout_props.valign);
 		
 		if bound_values.typist {
@@ -99,6 +100,9 @@ arrange = function yui_text__arrange(available_size, viewport_size) {
 		scribble_element.wrap(padded_rect.w, padded_rect.h);
 		var is_wrapped = scribble_element.get_wrapped();
 		var new_bbox = scribble_element.get_bbox(x, y, padding.left, padding.top, padding.right, padding.bottom);
+		
+		if trace
+			mx_break();
 
 		desired_size.w = layout_props.halign == fa_center
 			? available_size.w
@@ -176,7 +180,7 @@ arrange = function yui_text__arrange(available_size, viewport_size) {
 		yui_break()
 	}
 	
-	use_text_surface = font >= 0 && !use_scribble;
+	use_text_surface = !use_scribble and font >= 0;
 	if use_text_surface {
 		
 		var build_surface = true;
