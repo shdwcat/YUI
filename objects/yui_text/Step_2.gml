@@ -15,3 +15,9 @@ if use_text_surface {
 		exit;
 	}
 }
+
+if scribble {
+	if angle_value.update(data_source) {
+		scribble_element.transform(1, 1, angle_value.value);
+	}
+}

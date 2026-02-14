@@ -18,6 +18,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		highlight_color: undefined,
 		
 		// these require scribble: true
+		angle: 0, // angle to draw the text
 		autotype: undefined, // simple option to enable typist.in()
 		typist: undefined, // controls typewriter behavior
 		regions: false, // whether region features are enabled at all
@@ -35,7 +36,9 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	
 	events.on_region_hover_changed = yui_bind_handler(events.on_region_hover_changed, resources, slot_values);
 	
-	if !scribble_enabled && (props.scribble || props.typist || props.autotype) {
+	if !scribble_enabled 
+	&& (props.scribble || props.angle || props.typist || props.autotype
+		|| props.region || props.region_color || props.region_blend) {
 		throw yui_error($"Add Scribble to your project in order to use scribble features (in {props.id})");
 	}
 	
@@ -76,6 +79,9 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		color = yui_resolve_color(color);
 	}
 	
+	angle = yui_bind(props.angle, resources, slot_values);
+	is_angle_live = yui_is_live_binding(angle);
+	
 	highlight_color = yui_resolve_color(yui_bind(props.highlight_color, resources, slot_values));
 	
 	// assume regions are enabled when region color is set
@@ -106,6 +112,7 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		|| is_text_live
 		|| is_font_live
 		|| is_color_live
+		|| is_angle_live
 		|| is_typist_live;
 		
 	// ===== functions =====
