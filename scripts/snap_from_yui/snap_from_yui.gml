@@ -80,6 +80,7 @@ function __snap_from_yui_tokenizer(_buffer, _string) constructor
     var _in_string              = false;
     var _string_start           = undefined;
     var _in_comment             = false;
+	var _block_key_line         = undefined; // if we've found the colon for a block pair's key, which line it is
 
 	// NOTE: _tell is passed so that we can return to the current position when done
     static read_chunk = function(_start, _end, _tell)
@@ -347,26 +348,31 @@ function __snap_from_yui_tokenizer(_buffer, _string) constructor
                         }
                         else
                         {
-                            read_chunk_and_add(_chunk_start, _chunk_end, buffer_tell(_buffer), __SNAP_YUI.SCALAR);
-                            _tokens_array[@ array_length(_tokens_array)] = [__SNAP_YUI.STRUCT];
-
-                            var _next_value = buffer_peek(_buffer, buffer_tell(_buffer), buffer_u8);
+							// only handle colon if it's on a different line than the last one we found
+							if _block_key_line != _line {
+								_block_key_line = _line;
 							
-							// Next value is a newline
-                            if ((_next_value == 10) || (_next_value == 13))
-                            {
-                                _chunk_start   = buffer_tell(_buffer);
-                                _chunk_end     = buffer_tell(_buffer);
-                                _indent_search = false;
-                            }
-							// Next value is a space
-                            else if (_next_value == 32)
-                            {
-                                buffer_seek(_buffer, buffer_seek_relative, 1);
-                                _chunk_start            = buffer_tell(_buffer);
-                                _chunk_end              = buffer_tell(_buffer);
-                                _scalar_first_character = true;
-                            }
+	                            read_chunk_and_add(_chunk_start, _chunk_end, buffer_tell(_buffer), __SNAP_YUI.SCALAR);
+	                            _tokens_array[@ array_length(_tokens_array)] = [__SNAP_YUI.STRUCT];
+
+	                            var _next_value = buffer_peek(_buffer, buffer_tell(_buffer), buffer_u8);
+							
+								// Next value is a newline
+	                            if ((_next_value == 10) || (_next_value == 13))
+	                            {
+	                                _chunk_start   = buffer_tell(_buffer);
+	                                _chunk_end     = buffer_tell(_buffer);
+	                                _indent_search = false;
+	                            }
+								// Next value is a space
+	                            else if (_next_value == 32)
+	                            {
+	                                buffer_seek(_buffer, buffer_seek_relative, 1);
+	                                _chunk_start            = buffer_tell(_buffer);
+	                                _chunk_end              = buffer_tell(_buffer);
+	                                _scalar_first_character = true;
+	                            }
+							}
                         }
                     }
 					// Null or \r - end chunk
