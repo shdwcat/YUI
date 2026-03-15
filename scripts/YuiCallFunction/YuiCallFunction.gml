@@ -144,7 +144,13 @@ function YuiCallFunction(target_expr, args) : YuiExpr() constructor {
 			return yui_call_handler(func_ref, resolved_args, data);
 		}
 		
+		if is_instanceof(func_ref, YuiClosure) {
+			// closure has its own data context
+			return func_ref.call(undefined, resolved_args);
+		}
+		
 		if is_instanceof(func_ref, YuiLambda) {
+			// this is still used in e.g. yui_init_theme as the lambdas are bound but not resolved
 			return func_ref.call(data, resolved_args);
 		}
 		
