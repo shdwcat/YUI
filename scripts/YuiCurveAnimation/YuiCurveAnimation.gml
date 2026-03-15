@@ -33,8 +33,8 @@ function YuiCurveAnimation(props, resources, slot_values)
 		if script_exists(self.effect) or is_method(self.effect) {
 			self.evalEffect = self.effect;
 		}
-		else if yui_is_lambda(self.effect) {
-			throw yui_error("curve effect must be a callable function (script, runtime function, or lambda function)");
+		else if !yui_is_call(self.effect) {
+			throw yui_error("curve effect must be a callable function (script, runtime function, or yui callable)");
 		}
 		
 		self.compute = computeEffect;
