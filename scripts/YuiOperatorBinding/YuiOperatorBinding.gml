@@ -105,7 +105,8 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 				else if is_string(right_val)
 					return string(left_val) + right_val;
 				else
-					assertNotStructs("+", left_val, right_val);
+					assertNotStructs("+", left_val, right_val, data);
+					assertNotUndefined("+", left_val, right_val, data);
 					return left_val + right_val;
 				};
 			break;
@@ -174,6 +175,15 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 				
 		default:
 			throw yui_error("Unknown operator: " + operator_name);
+	}
+	
+	static assertNotUndefined = function(op, left, right) {
+		if GM_build_type == "run" {
+			if left == undefined
+				throw yui_error($"Cannot apply '{op}' to undefined value (left side)");
+			if right == undefined
+				throw yui_error($"Cannot apply '{op}' to undefined vaue (right side)");
+		}
 	}
 	
 	static assertNotStructs = function(op, left, right) {
