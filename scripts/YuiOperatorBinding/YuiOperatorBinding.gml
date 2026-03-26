@@ -89,8 +89,15 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 					array_copy(result, 1, right_val, 0, right_count);
 					return result;
 				}
+				else if left_val == undefined {
+					// NOTE: this gets hairy if e.g. right_val is a string. do I want "foo" or ["foo"]?
+					return right_val == undefined ? undefined : [right_val]; // we know it's not an array here
+				}
+				else if right_val == undefined {
+					return [left_val]; // we know it's not an array here
+				}
 				else {
-					return string(left_val) + string(right.resolve(data));
+					return string(left_val) + string(right_val);
 				}
 			};
 			break;
