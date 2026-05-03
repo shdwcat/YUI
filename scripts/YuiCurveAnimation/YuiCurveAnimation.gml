@@ -61,6 +61,9 @@ function YuiCurveAnimation(props, resources, slot_values)
 				curve = yui_linear_curve;
 			}
 		}
+		
+		if !animcurve_exists(curve)
+			throw yui_error($"YuiCurveAnimation: Got unexpected 'curve' value of type {typeof(curve)}");
 
 		value_channel = animcurve_get_channel(curve, channel_name_or_index)
 	}
