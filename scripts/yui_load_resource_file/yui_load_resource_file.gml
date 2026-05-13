@@ -64,7 +64,16 @@ function yui_load_resource_file(filepath, cabinet, base_folder) {
 				yui_warning("Overwriting resource with name:", resource_name);
 			}
 			
-			resource_map[$resource_name] = file_resources[$resource_name];
+			// post-process resource
+			var resource = file_resources[$resource_name];
+			if resource[$ "type"] == "data" {
+				// data resources don't have access to slots or other resources
+				// TODO should have access to imported resources...
+				var data = yui_bind_struct(resource, undefined, undefined, true, true)
+				resource = data;
+			}
+			
+			resource_map[$resource_name] = resource;
 		}
 	}
 	
