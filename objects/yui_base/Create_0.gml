@@ -147,6 +147,7 @@ initLayout = function() {
 	
 	// map of animatable properties to the YuiBindableValues
 	animatable = {
+		type: object_get_name(object_index), // include the element name for error messages
 		opacity: opacity_value,
 		xoffset: xoffset_value,
 		yoffset: yoffset_value,
@@ -541,7 +542,7 @@ unload = function(unload_root = undefined) {
 	var unload_time = 0;
 	if on_unloading_anim {
 		// need to call init in order to force bound duration to calc
-		on_unloading_anim.init(data_source);
+		on_unloading_anim.init(data_source, animatable);
 		unload_time = on_unloading_anim.duration;
 	}
 	if tooltip_item {

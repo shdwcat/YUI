@@ -16,23 +16,32 @@ function YuiAnimationGroup(anim_group_props, resources, slot_values) constructor
 		i++;
 	}
 	
-	static init = function(data) {
+	static init = function(data, animatables) {
 		var names = variable_struct_get_names(anim_properties);
 		var i = 0; repeat array_length(names) {
 			var name = names[i];
-			var anim = anim_properties[$name];
+			var anim_property = anim_properties[$name];
+			
+			var animatable = animatables[$name];
+			if animatable == undefined
+				throw yui_error($"YuiAnimationGroup: '{animatables.type}' does not have animatable property '{name}'");
+				
+			// if the animation doesn't specify a 'from' value, we'll default to whatever the current
+			// animated value is. This means that we can chain a sequence of animations specifying only
+			// the 'to' value and the result will animate from one value to the next.
+			var current_value = animatable.value;
 			
 			// resolve bindings
-			anim.init(data);
+			anim_property.init(data, /* default from */ current_value, /* default to */ undefined);
 			
-			if anim.enabled {
+			if anim_property.enabled {
 				// track the max duration
-				duration = max(duration, anim.duration + anim.delay);
+				duration = max(duration, anim_property.duration + anim_property.delay);
 		
 				// track if it's continuous
-				continuous |= anim.continuous;
+				continuous |= anim_property.continuous;
 			}
-		
+			
 			i++;
 		}
 	}
@@ -46,7 +55,7 @@ function YuiAnimationGroup(anim_group_props, resources, slot_values) constructor
 		// in order to address the postInitCallback hackiness in a better way
 		
 		// call init to resolve bindings (e.g. duration and continuous)
-		init(owner.data_source);
+		init(owner.data_source, animatable);
 		
 		// very hacky way to allow customizing the results after the init
 		if postInitCallback

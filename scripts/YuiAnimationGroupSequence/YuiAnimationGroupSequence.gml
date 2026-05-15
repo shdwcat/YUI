@@ -29,18 +29,18 @@ function YuiAnimationGroupSequence(props, resources, slot_values) constructor {
 		animations[i++] = anim_group;
 	}
 	
-	static init = function(data) {
+	static init = function(data, animatables) {
 		var i = 0; repeat array_length(animations) {
-			var anim = animations[i++];
+			var anim_group = animations[i++];
 			
 			// resolve bindings
-			anim.init(data);
+			anim_group.init(data, animatables);
 		
 			// track the max duration
-			duration = max(duration, anim.duration);
+			duration = max(duration, anim_group.duration);
 		
 			// track if it's continuous
-			continuous |= anim.continuous;
+			continuous |= anim_group.continuous;
 		}
 	}
 	

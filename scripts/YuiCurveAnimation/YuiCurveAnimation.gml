@@ -43,6 +43,10 @@ function YuiCurveAnimation(props, resources, slot_values)
 	static base_init = init;
 	static init = function(data, _from = 0, _to = 1) {
 		base_init(data);
+		
+		if trace
+			mx_break();
+		
 		from = yui_resolve_binding(bindings.from, data) ?? _from;
 		to = yui_resolve_binding(bindings.to, data) ?? _to;
 		
