@@ -5,9 +5,13 @@ function YuiSpriteBuilder(_props, _resources, _slot_values) constructor {
 		
 		// the YUI content to draw to the sprite
 		content: undefined,
+		
+		// optional sprite to use as alpha mask against final result
+		alpha_mask_sprite: undefined,
 	};
 	
 	props = yui_apply_props(_props, _props[$ "template_def"]);
+	alpha_mask_sprite = yui_bind(props.alpha_mask_sprite, _resources, _slot_values);
 	
 	content_element = yui_resolve_element(props.content, _resources, _slot_values);
 	
@@ -105,6 +109,26 @@ function YuiSpriteBuilder(_props, _resources, _slot_values) constructor {
 			surface_reset_target();
 			surface_set_target(global.sprite_builder_surface);
 		});
+		
+		// apply alpha mask
+		var alpha_mask = yui_is_binding(alpha_mask_sprite)
+			? alpha_mask_sprite.resolve(data)
+			: alpha_mask_sprite;
+		if alpha_mask != undefined {
+			var old_blend_eq = gpu_get_blendequation();
+			var old_blend_mode = gpu_get_blendmode_ext();
+			
+			// we want to subtract the inverse of the mask sprite
+			gpu_set_blendequation(bm_eq_subtract);
+			gpu_set_blendmode_ext(bm_zero, bm_src_alpha);
+			//gpu_set_blendmode_ext(bm_inv_src_color, bm_one);
+			
+			draw_sprite(alpha_mask, 0, 0, 0);
+			
+			// restore previous values
+			gpu_set_blendequation(old_blend_eq);
+			gpu_set_blendmode_ext(old_blend_mode);
+		}
 	
 		// destroy the render tree now that we're done with it
 		var tree_items = [];
