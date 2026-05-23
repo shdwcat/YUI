@@ -66,7 +66,7 @@ function yui_load_resource_file(filepath, cabinet, base_folder) {
 			
 			// post-process resource
 			var resource = file_resources[$resource_name];
-			if resource[$ "type"] == "data" {
+			if is_struct(resource) && resource[$ "type"] == "data" {
 				// data resources don't have access to slots or other resources
 				// TODO should have access to imported resources...
 				var data = yui_bind_struct(resource, undefined, undefined, true, true)
