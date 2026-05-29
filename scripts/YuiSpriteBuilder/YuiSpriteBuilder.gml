@@ -123,7 +123,7 @@ function YuiSpriteBuilder(_props, _resources, _slot_values) constructor {
 			gpu_set_blendmode_ext(bm_zero, bm_src_alpha);
 			//gpu_set_blendmode_ext(bm_inv_src_color, bm_one);
 			
-			draw_sprite(alpha_mask, 0, 0, 0);
+			draw_sprite_stretched(alpha_mask, 0, 0, 0, width, height);
 			
 			// restore previous values
 			gpu_set_blendequation(old_blend_eq);
