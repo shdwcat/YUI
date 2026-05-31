@@ -76,6 +76,8 @@ function YuiDragAndDrop(_props, cabinet_file) constructor {
 		source = {
 			x: source_item.x,
 			y: source_item.y,
+			center_x: (source_item.bbox_left + source_item.bbox_right) / 2,
+			center_y: (source_item.bbox_top + source_item.bbox_bottom) / 2,
 			data: source_data,
 			event: { // TODO: include x/y in button event and pass directly?
 				x: device_mouse_x_to_gui(0),
@@ -165,6 +167,9 @@ function YuiDragAndDrop(_props, cabinet_file) constructor {
 		
 		// resets target state
 		resetFrame();
+		
+		source.center_x = (source_item.bbox_left + source_item.bbox_right) / 2;
+		source.center_y = (source_item.bbox_top + source_item.bbox_bottom) / 2;
 		
 		cursor.x = device_mouse_x_to_gui(0);
 		cursor.y = device_mouse_y_to_gui(0);
