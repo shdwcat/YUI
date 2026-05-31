@@ -852,6 +852,7 @@
     {"id":{"name":"yui_calc_popup_space","path":"scripts/yui_calc_popup_space/yui_calc_popup_space.yy",},},
     {"id":{"name":"yui_call_handler","path":"scripts/yui_call_handler/yui_call_handler.yy",},},
     {"id":{"name":"yui_change_screen","path":"scripts/yui_change_screen/yui_change_screen.yy",},},
+    {"id":{"name":"yui_check_cleanshapes","path":"scripts/yui_check_cleanshapes/yui_check_cleanshapes.yy",},},
     {"id":{"name":"yui_check_scribble","path":"scripts/yui_check_scribble/yui_check_scribble.yy",},},
     {"id":{"name":"yui_color_from_hex_string","path":"scripts/yui_color_from_hex_string/yui_color_from_hex_string.yy",},},
     {"id":{"name":"yui_color_set_luma","path":"scripts/yui_color_set_luma/yui_color_set_luma.yy",},},
