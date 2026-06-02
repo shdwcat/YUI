@@ -245,7 +245,7 @@ function YuiDragAndDrop(_props, cabinet_file) constructor {
 		var drop_target = {
 			data: drop_data,
 			hover: drop_item.highlight,
-		};		
+		};
 		
 		// NOTE: a drop_element is currently required!
 		
@@ -260,20 +260,19 @@ function YuiDragAndDrop(_props, cabinet_file) constructor {
 			with drop_item {
 				interaction_item = yui_make_render_instance(other.drop_element, interaction_data, , 100);
 				
-				var is_gui_item = object_is_ancestor(drop_item.object_index, yui_base);
-				if !is_gui_item {
-					// align drop visual to game position
-					// TODO: move this to yui_game_item
-					var size = {
-						x: x + yui_world_to_gui_x(x) - interaction_item.x,
-						y: y + yui_world_to_gui_y(y) - interaction_item.y,
-						w: infinity,
-						h: infinity,
-					};
-					interaction_item.arrange(size);
+				var is_gui_item = object_is_ancestor(object_index, yui_base);
+				if is_gui_item {
+					interaction_item.arrange(draw_size);
 				}
 				else {
-					interaction_item.arrange(drop_item.draw_size);
+					// if the object is not a YUI render item, size to the bbox
+					var bbox_size = {
+						x: bbox_left,
+						y: bbox_top,
+						w: bbox_right - bbox_left + 1,
+						h: bbox_bottom - bbox_top + 1,
+					};
+					interaction_item.arrange(bbox_size);
 				}
 			}
 		}
