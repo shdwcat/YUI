@@ -12,22 +12,27 @@ function yui_make_render_instance(yui_element, data, index = 0, depth_offset = 0
 	var parent = self;
 	var focus_scope = undefined;
 	
-	if instanceof(parent) == "instance"{
+	if instanceof(parent) == "instance" {
 		if object_index == yui_document {
-			var document = parent;
+			document = parent;
 			
 			// document doesn't have all the expected parent properties
 			parent = undefined;
 		}
-		else {
-			var document = parent.document;
+		else if object_is_ancestor(parent.object_index, yui_base) {
+			document = parent.document;
 			focus_scope = parent.focus_scope;
+		}
+		else if object_is_ancestor(parent.object_index, yui_game_item) {
+			// game items don't have all the parent properties
+			parent = undefined;
+		}
+		else {
+			throw yui_error($"yui_make_render_instance: unexpected parent type: {instanceof(parent)}");
 		}
 	}
 	else {
-		// TODO: validate whether we ever hit this (maybe in game items? need tests for that)
-		var document = parent.document;
-		//throw yui_error("unexpected parent type");
+		throw yui_error($"yui_make_render_instance: unexpected parent type: {typeof(parent)}");
 	}
 		
 	var child = instance_create_depth(x, y, depth - (1 + depth_offset), render_object, {
