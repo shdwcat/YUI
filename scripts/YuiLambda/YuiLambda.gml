@@ -34,8 +34,10 @@ function YuiLambda(body, context) : YuiExpr() constructor {
 		
 		if is_array(args) {
 			var i = 0; repeat array_length(args) {
-				var param_name = context.arg_map[i];
-				context.params[$ param_name] = args[i];
+				if i < array_length(context.arg_map) {
+					var param_name = context.arg_map[i];
+					context.params[$ param_name] = args[i];
+				}
 				i++;
 			}
 		}
