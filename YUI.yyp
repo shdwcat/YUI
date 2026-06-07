@@ -1009,6 +1009,7 @@
     {"id":{"name":"YuiSetIndex","path":"scripts/YuiSetIndex/YuiSetIndex.yy",},},
     {"id":{"name":"YuiSetValue","path":"scripts/YuiSetValue/YuiSetValue.yy",},},
     {"id":{"name":"YuiSetValueAnimation","path":"scripts/YuiSetValueAnimation/YuiSetValueAnimation.yy",},},
+    {"id":{"name":"YuiSounds","path":"scripts/YuiSounds/YuiSounds.yy",},},
     {"id":{"name":"YuiSpriteBuilder","path":"scripts/YuiSpriteBuilder/YuiSpriteBuilder.yy",},},
     {"id":{"name":"YuiStringHashMap","path":"scripts/YuiStringHashMap/YuiStringHashMap.yy",},},
     {"id":{"name":"YuiSubscript","path":"scripts/YuiSubscript/YuiSubscript.yy",},},

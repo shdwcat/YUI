@@ -826,6 +826,7 @@
     {"name":"YuiSetIndex","order":2,"path":"scripts/YuiSetIndex/YuiSetIndex.yy",},
     {"name":"YuiSetValue","order":3,"path":"scripts/YuiSetValue/YuiSetValue.yy",},
     {"name":"YuiSetValueAnimation","order":10,"path":"scripts/YuiSetValueAnimation/YuiSetValueAnimation.yy",},
+    {"name":"YuiSounds","order":20,"path":"scripts/YuiSounds/YuiSounds.yy",},
     {"name":"YuiSpriteBuilder","order":19,"path":"scripts/YuiSpriteBuilder/YuiSpriteBuilder.yy",},
     {"name":"YuiStringHashMap","order":1,"path":"scripts/YuiStringHashMap/YuiStringHashMap.yy",},
     {"name":"YuiSubscript","order":15,"path":"scripts/YuiSubscript/YuiSubscript.yy",},

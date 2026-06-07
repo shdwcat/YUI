@@ -178,16 +178,7 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		if needs_sound_merge {
 			prop_sounds = yui_apply_props(prop_sounds, element_theme.sounds);
 		}
-		sounds = {};
-		if props.sounds != undefined {
-			var sound_names = struct_get_names(prop_sounds);
-			var i = 0; repeat array_length(sound_names) {
-				var sound_name = sound_names[i++];
-				
-				var sound = yui_bind(prop_sounds[$ sound_name], resources, slot_values);
-				sounds[$ sound_name] = sound;
-			}
-		}
+		sounds = new YuiSounds(prop_sounds, resources, slot_values);
 		
 		base_is_bound =
 			is_data_source_live

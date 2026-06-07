@@ -30,7 +30,7 @@ left_click = function() {
 	
 	focus();
 	
-	click_sound_id = playSound("click", click_sound_id);
+	click_sound_id = yui_sounds.playSound("click", data_source, click_sound_id);
 }
 
 cursor_hover = function() {

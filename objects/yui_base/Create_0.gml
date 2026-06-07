@@ -443,7 +443,7 @@ closePopup = function(close_parent = false) {
 base_hoverChanged = hoverChanged;
 hoverChanged = function(hover) {
 	if hover && enabled
-		playSound("hover");
+		yui_sounds.playSound("hover", data_source);
 		
 	base_hoverChanged(hover);
 	
@@ -495,24 +495,6 @@ isPointVisible = function(x, y) {
 beginAnimationGroup = function(animation_group) {
 	if animation_group.enabled
 		animation_group.start(animatable, self);
-}
-
-playSound = function(sound_name, sound_id = undefined) {
-	var sound = yui_sounds[$ sound_name];
-	if sound != undefined {
-		sound = yui_resolve_binding(sound, data_source);
-		if !is_handle(sound) && sound == false
-			return;
-		
-		if sound_id != undefined
-			audio_stop_sound(sound_id);
-		
-		// todo: YUI_wide audio gain setting?
-		return audio_play_sound(
-			sound,
-			YUI_DEFAULT_AUDIO_PRIORITY,
-			false); // no loops
-	}
 }
 
 unload = function(unload_root = undefined) {
