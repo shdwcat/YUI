@@ -2,7 +2,12 @@
 /// @arg values...
 function yui_warning() {
 
-	var message = "YUI WARNING: " + string(argument[0]);
+	if YUI_SHOW_LOG_TIMESTAMPS {
+		var message = $"T-{current_time/1000} YUI WARNING: " + string(argument[0]);
+	}
+	else {
+		var message = "YUI WARNING: " + string(argument[0]);
+	}
 
 
 	var i = 1; repeat argument_count - 1 {
@@ -45,8 +50,12 @@ function yui_error() {
 			60);
 	}
 
-	var message = "YUI ERROR: " + string(argument[0]);
-
+	if YUI_SHOW_LOG_TIMESTAMPS {
+		var message = $"T-{current_time/1000} YUI ERROR: " + string(argument[0]);
+	}
+	else {
+		var message = "YUI ERROR: " + string(argument[0]);
+	}
 
 	var i = 1; repeat argument_count - 1 {
 		message += " ";

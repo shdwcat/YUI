@@ -7,6 +7,8 @@
 // the name of the default theme file, e.g. "default" will load default.yui from the Themes folder
 #macro DEFAULT_THEME_NAME "default"
 
+#macro YUI_SHOW_LOG_TIMESTAMPS false
+
 // whether gamepad/keyboard navigation is active by default
 // (can still be toggled at runtime by setting YuiCursorManager.is_navigation_active)
 #macro YUI_DEFAULT_IS_NAVIGATION_ACTIVE true
