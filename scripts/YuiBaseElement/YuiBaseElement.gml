@@ -84,7 +84,9 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 	element_theme = theme.elements[$ _props.type];
 	
 	// HACK:- yui_apply_props doesn't merge sounds defined on the instance with sounds from the theme
-	needs_sound_merge = struct_exists(_props, "sounds") && struct_exists(element_theme, "sounds");
+	needs_sound_merge = struct_exists(_props, "sounds")
+		&& element_theme != undefined
+		&& struct_exists(element_theme, "sounds");
 	
 	// feather ignore once GM2017
 	static baseInit = function YuiBaseElement__baseInit(props, default_events = undefined) {
