@@ -421,6 +421,25 @@ function __snap_from_yui_builder(_tokens_array, _replace_keywords, _track_field_
 
     indent = 0;
     line = 0;
+	
+	static __snap_yui_token_names = [
+	    "INDENT",
+	    "NEWLINE",
+	    "ARRAY",
+	    "STRUCT",
+	    "SCALAR",
+	    "STRING",
+	    "JSON_ARRAY_START",
+	    "JSON_ARRAY_END",
+	    "JSON_STRUCT_STAR",
+	    "JSON_STRUCT_END",
+	    "JSON_COMMA",
+	    "JSON_COLON",
+	]
+	
+	static getTokenName = function(token) {
+		return __snap_yui_token_names[token[0]];
+	}
 
     static read_to_next = function()
     {
@@ -474,7 +493,11 @@ function __snap_from_yui_builder(_tokens_array, _replace_keywords, _track_field_
                 --token_index;
                 while(token_index < token_count)
                 {
-                    var _key = tokens_array[token_index][1];
+					var token = tokens_array[token_index];
+					if array_length(token) < 2
+						throw $"Expecting token with key, but got token of type {getTokenName(token)}";
+					
+                    var _key = token[1];
 					
 					if struct_exists(_struct, _key)
 						throw $"snap_from_yui: Struct already has key: {_key}";
