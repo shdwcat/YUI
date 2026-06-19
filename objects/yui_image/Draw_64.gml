@@ -60,8 +60,8 @@ if sprite_index >= 0 {
 			else {
 				draw_sprite_ext(
 					sprite_index, image_index,
-					x + sprite_xoffset,
-					y + sprite_yoffset,
+					x,
+					y,
 					image_xscale, image_yscale,
 					image_angle, color, image_alpha);
 			}
@@ -70,8 +70,8 @@ if sprite_index >= 0 {
 	else {
 		draw_sprite_ext(
 			sprite_index, image_index,
-			x + sprite_xoffset,
-			y + sprite_yoffset,
+			x,
+			y,
 			image_xscale, image_yscale,
 			image_angle, color, image_alpha);
 	}
