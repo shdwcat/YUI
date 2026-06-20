@@ -14,11 +14,15 @@ onLayoutInit = function() {
 	sprite_value = new YuiBindableValue(yui_element.sprite, yui_element.getDefaultAnim("sprite"));
 	frame_value = new YuiBindableValue(yui_element.frame, yui_element.getDefaultAnim("frame"));
 	angle_value = new YuiBindableValue(yui_element.angle, yui_element.getDefaultAnim("angle"));
+	xscale_value = new YuiBindableValue(yui_element.xscale, yui_element.getDefaultAnim("xscale"));
+	yscale_value = new YuiBindableValue(yui_element.yscale, yui_element.getDefaultAnim("yscale"));
 	blend_color_value = new YuiBindableValue(yui_element.blend_color, yui_element.getDefaultAnim("blend_color"));
 	
 	animatable.sprite = sprite_value;
 	animatable.frame = frame_value;
 	animatable.angle = angle_value;
+	animatable.xscale = xscale_value;
+	animatable.yscale = yscale_value;
 	animatable.blend_color = blend_color_value;
 }
 
@@ -63,11 +67,7 @@ arrange = function(available_size, viewport_size) {
 	
 	// width
 	
-	if layout_props.size.w_type == YUI_LENGTH_TYPE.Proportional {
-		// w_type is handled in padding.apply
-		desired_size.w = padded_rect.w + padding.w;
-	}
-	else if layout_props.size.w == "stretch" {
+	if layout_props.size.w == "stretch" {
 		desired_size.w = available_size.w;
 	}
 	else if layout_props.size.w == "center" {
@@ -80,11 +80,7 @@ arrange = function(available_size, viewport_size) {
 	
 	// height
 	
-	if layout_props.size.h_type == YUI_LENGTH_TYPE.Proportional {
-		// h_type is handled in padding.apply
-		desired_size.h = padded_rect.h + padding.h;
-	}
-	else if layout_props.size.h == "stretch" {
+	if layout_props.size.h == "stretch" {
 		desired_size.h = available_size.h;
 	}
 	else if layout_props.size.w == "center" {

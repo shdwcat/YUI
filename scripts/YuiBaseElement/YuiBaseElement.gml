@@ -159,7 +159,8 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 				var anim_name = anim_names[i++];
 				
 				if anim_name == "default" {
-					default_animations = props.animate[$ "default"];
+					var default_anims = props.animate[$ "default"];
+					default_animations = yui_bind_and_resolve(default_anims, resources, slot_values);
 					continue;
 				}
 				

@@ -13,6 +13,8 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		
 		frame: undefined,
 		angle: 0,
+		xscale: 1,
+		yscale: 1,
 		mirror: undefined,
 		blend_color: c_white,
 	};
@@ -39,6 +41,8 @@ function YuiImageElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 	
 	frame = yui_bind(props.frame, _resources, _slot_values);
 	angle = yui_bind(props.angle, _resources, _slot_values);
+	xscale = yui_bind(props.xscale, _resources, _slot_values);
+	yscale = yui_bind(props.yscale, _resources, _slot_values);
 	mirror = yui_bind(props.mirror, _resources, _slot_values);
 	
 	blend_color = yui_bind(props.blend_color, _resources, _slot_values);

@@ -19,9 +19,6 @@ function YuiElementSize(size) constructor {
 	default_h = 0;
 	fill = false;
 	
-	w_type = YUI_LENGTH_TYPE.Pixel;
-	h_type = YUI_LENGTH_TYPE.Pixel;
-	
 	if is_numeric(size) {
 		var temp = {
 			w: size,
@@ -76,17 +73,6 @@ function YuiElementSize(size) constructor {
 			default_w = w;
 		if is_exact_h
 			default_h = h;
-		
-		if variable_struct_exists(size, "w_type") {
-			if size.w_type == "proportional" {
-				w_type = YUI_LENGTH_TYPE.Proportional;
-			}
-		}
-		if variable_struct_exists(size, "h_type") {
-			if size.h_type == "proportional" {
-				h_type = YUI_LENGTH_TYPE.Proportional;
-			}
-		}
 	}
 	else {
 		yui_warning("Invalid size:", size);

@@ -49,22 +49,12 @@ function YuiPadding(padding) constructor {
 				var height = element_size.h;
 			}
 		
-			if is_numeric(width) {			
-				if element_size.w_type == YUI_LENGTH_TYPE.Proportional {
-					max_w = width * max_w;
-				}
-				else {
-					max_w = width;
-				}
+			if is_numeric(width) {
+				max_w = width;
 			}
 		
 			if is_numeric(height) {
-				if element_size.h_type == YUI_LENGTH_TYPE.Proportional {
-					max_h = height * max_h;
-				}
-				else {
-					max_h = height;
-				}
+				max_h = height;
 			}
 		}
 	

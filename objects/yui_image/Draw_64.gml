@@ -23,6 +23,12 @@ if frame_value.is_live {
 if angle_value.is_live angle_value.update(data_source);
 image_angle = angle_value.value;
 
+if xscale_value.is_live xscale_value.update(data_source);
+var xscale = image_xscale * xscale_value.value;
+
+if yscale_value.is_live yscale_value.update(data_source);
+var yscale = image_yscale * yscale_value.value;
+
 if blend_color_value.is_live blend_color_value.update(data_source);
 var color = blend_color_value.value;
 if is_string(color) color = yui_resolve_color(color);
@@ -44,6 +50,7 @@ if sprite_index >= 0 {
 			if viewport_part.clipped {
 				// TODO clipping logic is ignoring scale/angle
 				// probably need a shader to solve that!
+				// TODO should we use the animated xscale/yscale values here?
 				draw_sprite_general(
 					sprite_index, image_index,
 					viewport_part.l / image_xscale,
@@ -62,7 +69,7 @@ if sprite_index >= 0 {
 					sprite_index, image_index,
 					x,
 					y,
-					image_xscale, image_yscale,
+					xscale, yscale,
 					image_angle, color, image_alpha);
 			}
 		}
@@ -72,7 +79,7 @@ if sprite_index >= 0 {
 			sprite_index, image_index,
 			x,
 			y,
-			image_xscale, image_yscale,
+			xscale, yscale,
 			image_angle, color, image_alpha);
 	}
 }
