@@ -11,6 +11,7 @@ resources:
       value: 0
       meter_sprite: ~yui_white_pixel // default to a white pixel
       meter_blend_color: null
+      animation: null
 
     template:
 
@@ -19,7 +20,7 @@ resources:
         type: image
         sprite: $meter_sprite
         blend_color: $meter_blend_color
-        size:
-          w: @@ ($value |> ~min($max)) / ($max - $min),
-          w_type: proportional
-          h: stretch
+        xscale: @@ ($value |> ~min($max)) / ($max - $min)
+        size: stretch
+        animate:
+          default: $animation
