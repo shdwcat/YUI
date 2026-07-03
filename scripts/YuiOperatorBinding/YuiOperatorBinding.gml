@@ -328,6 +328,10 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 function YuiPrefixOperatorBinding(operator_token, right) : YuiExpr() constructor {
 	static is_yui_binding = true;
 	static is_yui_live_binding = true;
+	
+	if !right.is_yui_live_binding {
+		self.is_yui_live_binding = false;
+	}
 
 	self.token = operator_token
 	self.operator = operator_token._type;
