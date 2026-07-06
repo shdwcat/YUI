@@ -106,7 +106,7 @@ closePopup = function(close_parent = false) {
 	if popup_item {
 		// if focus is within our popup, focus ourselves
 		var focus_target = popup_item.focus_scope.findFocusTarget();
-		if focus_target.focused
+		if focus_target and focus_target.focused
 			focus();
 		
 		popup_item.unload();
