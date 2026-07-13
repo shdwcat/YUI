@@ -81,6 +81,8 @@ function YuiCanvasLayout(alignment, spacing) : YuiLayoutBase(alignment, spacing)
 			
 			// if the item is live, get the live value instead
 			if canvas.is_bound {
+				// NOTE: the only remaining usage of this is for scrollbox viewport size calculation
+				// to account for the scrollbars when present. Would like to find an alternative for that.
 				var live_values = bound_values.liveItemValues[i];
 				var left = live_values.left;
 				var top = live_values.top;
@@ -88,10 +90,10 @@ function YuiCanvasLayout(alignment, spacing) : YuiLayoutBase(alignment, spacing)
 				var bottom = live_values.bottom;
 			}
 			else {
-				var left = canvas.left;
-				var top = canvas.top;
-				var right = canvas.right;
-				var bottom = canvas.bottom;
+				var left = yui_get_dimension_position(canvas.left, available_size.w);
+				var top = yui_get_dimension_position(canvas.top, available_size.h);
+				var right = yui_get_dimension_position(canvas.right, available_size.w);
+				var bottom = yui_get_dimension_position(canvas.bottom, available_size.h);
 			}
 			
 			// fit the item within the bounds defined by the canvas properties
@@ -163,10 +165,10 @@ function YuiCanvasPosition(canvas_position = {}, resources, slot_values, item_id
 	
 	normalized = canvas_position[$ "normalized"] == true;
 	
-	left = yui_bind(canvas_position[$ "left"], resources, slot_values);
-	top = yui_bind(canvas_position[$ "top"], resources, slot_values);
-	right = yui_bind(canvas_position[$ "right"], resources, slot_values);
-	bottom = yui_bind(canvas_position[$ "bottom"], resources, slot_values);
+	left = yui_parse_number_or_percent(yui_bind(canvas_position[$ "left"], resources, slot_values));
+	top = yui_parse_number_or_percent(yui_bind(canvas_position[$ "top"], resources, slot_values));
+	right = yui_parse_number_or_percent(yui_bind(canvas_position[$ "right"], resources, slot_values));
+	bottom = yui_parse_number_or_percent(yui_bind(canvas_position[$ "bottom"], resources, slot_values));
 	
 	is_bound = yui_is_live_binding(left)
 		|| yui_is_live_binding(top)
@@ -180,4 +182,32 @@ function YuiCanvasPosition(canvas_position = {}, resources, slot_values, item_id
 	top ??= 0;
 	right ??= 0;
 	bottom ??= 0;
+}
+
+function yui_get_dimension_position(value, dimension) {
+	if is_instanceof(value, MxPercent) {
+		return value.value * dimension;
+	}
+	else {
+		return value;
+	}
+}
+
+function yui_parse_number_or_percent(expr_value) {
+	static trim = ["%"];
+	if is_string(expr_value) {
+		if !string_ends_with(expr_value, "%")
+			throw yui_error($"Expected number or percent value, got '{expr_value}'");
+		
+		var number_token = string_trim_end(expr_value, trim);
+		var percent = real(number_token);
+		return new MxPercent(percent);
+	}
+	else {
+		return expr_value;
+	}
+}
+
+function MxPercent(value) constructor {
+	self.value = value / 100.0;
 }
