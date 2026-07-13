@@ -57,8 +57,14 @@ function YuiDocument(_yui_file, cabinet) constructor {
 			yui_folder,
 			cabinet);
 		
+		// resolve the theme and include it in the slot values
+		var theme = yui_resolve_theme(document_data.root[$ "theme"]);
+		var slot_values = new YuiChainedMap(/* no parent */, {
+			theme: theme,
+		});
+		
 		// resolve root element
-		root_element = yui_resolve_element(document_data.root, resources, undefined, document_data.id);
+		root_element = yui_resolve_element(document_data.root, resources, slot_values, document_data.id);
 		var elapsed = current_time - time;
 		yui_log($"Load completed in {elapsed/1000} seconds");
 	}

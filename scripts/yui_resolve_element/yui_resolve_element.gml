@@ -44,15 +44,6 @@ function yui_resolve_element(yui_data, resources, slot_values, parent_id = undef
 			};
 		}
 	
-		// if we don't have slots yet (because this is a root element)
-		// then resolve the theme and use it as the initial slot values
-		if slot_values == undefined {
-			var theme = yui_resolve_theme(yui_data[$ "theme"]);
-			slot_values = new YuiChainedMap(/* no parent */, {
-				theme: theme,
-			});
-		}
-	
 		if yui_data[$ "id"] == undefined {
 			// Feather disable once GM1041
 			if parent_id == undefined && variable_struct_exists(self, "props") {
