@@ -232,11 +232,22 @@ buildTextSurface = function yui_text__buildTextSurface(text = undefined) {
 
 		if trace
 			yui_break();
+			
+		var mirror_x = layout_props.mirror_x;
+		var mirror_y = layout_props.mirror_y;
+		
+		var text_x = mirror_x ? text_surface_w : 0;
+		var text_y = mirror_y ? text_surface_h : 0;
+		var xscale = mirror_x ? -1 : 1;
+		var yscale = mirror_y ? -1 : 1;
 	
 		text_surface = yui_draw_text_to_surface(
 			text_surface_w, text_surface_h,
 			text,
 			text_surface_w,
+			text_x, text_y,
+			xscale, yscale,
+			0, // angle
 			c_white, // color blending happens on surface draw
 			opacity,
 			font,

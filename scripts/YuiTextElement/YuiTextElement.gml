@@ -19,6 +19,8 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 		
 		// these require scribble: true
 		angle: 0, // angle to draw the text
+		mirror_x: undefined,
+		mirror_y: undefined,
 		autotype: undefined, // simple option to enable typist.in()
 		typist: undefined, // controls typewriter behavior
 		regions: false, // whether region features are enabled at all
@@ -82,6 +84,9 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	angle = yui_bind(props.angle, resources, slot_values);
 	is_angle_live = yui_is_live_binding(angle);
 	
+	mirror_x = yui_bind_and_resolve(props.mirror_x, resources, slot_values);
+	mirror_y = yui_bind_and_resolve(props.mirror_y, resources, slot_values);
+	
 	highlight_color = yui_resolve_color(yui_bind(props.highlight_color, resources, slot_values));
 	
 	// assume regions are enabled when region color is set
@@ -131,6 +136,8 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 			size,
 			halign,
 			valign,
+			mirror_x,
+			mirror_y,
 			highlight_color,
 			use_scribble: props.scribble,
 			autotype,
