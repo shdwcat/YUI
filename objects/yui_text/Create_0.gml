@@ -3,6 +3,14 @@
 // Inherit the parent event
 event_inherited();
 
+// document is undefined when inside a YuiSpriteBuilder, in which case we don't want to scale the size anyway
+if document == undefined {
+	ui_scale = 1;
+}
+else {
+	ui_scale = YUI.view_config.ui_scale;
+}
+
 use_scribble = false;
 scribble_element = undefined;
 typist = undefined;
@@ -100,6 +108,9 @@ arrange = function yui_text__arrange(available_size, viewport_size) {
 		return sizeToDefault();
 	}
 	
+	var available_w = padded_rect.w * ui_scale;
+	var available_h = padded_rect.h * ui_scale;
+	
 	element_xoffset = padding.left;
 	element_yoffset = padding.top;
 	
@@ -133,7 +144,7 @@ arrange = function yui_text__arrange(available_size, viewport_size) {
 		
 		// check wrapped
 		var native_width_nowrap = string_width(formatted_text);
-		var is_wrapped = native_width_nowrap > padded_rect.w;
+		var is_wrapped = native_width_nowrap > available_w;
 		
 		if trace
 			mx_break()
@@ -141,8 +152,8 @@ arrange = function yui_text__arrange(available_size, viewport_size) {
 		// NOTE: if we use the string_width_ext when wrapping is not needed, trailing spaces get
 		// trimmed, which is not desired as the text may be used as a spacer between other text
 		if is_wrapped {
-			var native_width = string_width_ext(formatted_text, -1, padded_rect.w);
-			var native_height = string_height_ext(formatted_text, -1, padded_rect.w);
+			var native_width = string_width_ext(formatted_text, -1, available_w);
+			var native_height = string_height_ext(formatted_text, -1, available_w);
 		}
 		else {
 			var native_width = native_width_nowrap;
@@ -171,10 +182,10 @@ arrange = function yui_text__arrange(available_size, viewport_size) {
 		// update draw size
 		desired_size.w = layout_props.halign == fa_center
 			? available_size.w
-			: native_width;
+			: native_width / ui_scale;
 		desired_size.h = layout_props.valign == fa_middle
 			? available_size.h
-			: native_height;
+			: native_height / ui_scale;
 	}
 	
 	// account for padding
@@ -211,10 +222,10 @@ arrange = function yui_text__arrange(available_size, viewport_size) {
 	
 	// when centering, center on the center of the padded rect
 	if layout_props.halign == fa_center {
-		element_xoffset += (padded_rect.w / 2) - (text_surface_w / 2);
+		element_xoffset += (padded_rect.w - (text_surface_w / ui_scale)) / 2;
 	}
 	if layout_props.valign == fa_middle {
-		element_yoffset += (padded_rect.h / 2) - (text_surface_h / 2);
+		element_yoffset += (padded_rect.h - (text_surface_h / ui_scale)) / 2;
 	}
 	
 	return draw_size;

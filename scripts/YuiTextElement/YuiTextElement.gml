@@ -69,7 +69,14 @@ function YuiTextElement(_props, _resources, _slot_values) : YuiBaseElement(_prop
 	}
 	
 	// look up the text style by name from the theme
-	text_style = theme.text_styles[$ props.text_style];
+	var style_affix = YUI.view_config.text_style_group;
+	if style_affix != undefined and !props.scribble {
+		text_style = theme.text_styles[$ props.text_style + "_" + style_affix]
+			?? theme.text_styles[$ props.text_style];
+	}
+	else {
+		text_style = theme.text_styles[$ props.text_style];
+	}
 	
 	font = props.font != undefined
 		? yui_bind(props.font, resources, slot_values)

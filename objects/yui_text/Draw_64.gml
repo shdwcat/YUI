@@ -99,6 +99,7 @@ else {
 					viewport_part.h,
 					viewport_part.x + xoffset,
 					viewport_part.y + yoffset,
+					ui_scale,
 					opacity,
 					color);
 			}
@@ -113,7 +114,9 @@ else {
 					text_surface,
 					x + element_xoffset,
 					y + element_yoffset,
-					opacity, color);
+					ui_scale,
+					opacity,
+					color);
 			}
 		}
 	}
