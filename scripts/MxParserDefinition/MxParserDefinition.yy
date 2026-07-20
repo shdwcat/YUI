@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"MxParserDefinition",
   "parent":{
-    "name":"Ys",
-    "path":"folders/Packages - YUI/Parser/Ys.yy",
+    "name":"Mx",
+    "path":"folders/Packages - YUI/Parser/Mx.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

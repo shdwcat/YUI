@@ -47,6 +47,7 @@ enum YS_TOKEN {
 	// values
 	STRING,
 	NUMBER,
+	PERCENT,
 	COLOR, // colors via 6 or 8 digit hex codes prefixed with #
 	
 	// literals

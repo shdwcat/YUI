@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"YsTokenDefinition",
+  "%Name":"MxSlotParselet",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"YsTokenDefinition",
+  "name":"MxSlotParselet",
   "parent":{
-    "name":"Deprecated",
-    "path":"folders/Packages - YUI/Deprecated.yy",
+    "name":"Parselets",
+    "path":"folders/Packages - YUI/Parser/Mx/Parselets.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

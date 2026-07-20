@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"YuiParser",
   "parent":{
-    "name":"Parser",
-    "path":"folders/Packages - YUI/Parser.yy",
+    "name":"Deprecated",
+    "path":"folders/Packages - YUI/Deprecated.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

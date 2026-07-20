@@ -1,5 +1,5 @@
 /// @description here
-function YuiCheckElementState(props, resources, slot_values) : YuiExpr() constructor {
+function YuiCheckElementState(props, parse_context) : YuiExpr() constructor {
 	static is_call = true;
 	
 	static default_props = {
@@ -9,6 +9,9 @@ function YuiCheckElementState(props, resources, slot_values) : YuiExpr() constru
 		focused: undefined,
 		normal: undefined,
 	}
+	
+	var resources = parse_context.resources;
+	var slot_values = parse_context.slot_values;
 	
 	props = yui_apply_props(props);
 	disabled = yui_bind(props.disabled, resources, slot_values);

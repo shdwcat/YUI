@@ -1,1 +1,1 @@
-#macro yui_parse_binding_expr YUI.Parser.parse
+//#macro yui_parse_binding_expr YUI.Parser.parse

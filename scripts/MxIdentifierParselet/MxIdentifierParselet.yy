@@ -6,7 +6,7 @@
   "name":"MxIdentifierParselet",
   "parent":{
     "name":"Parselets",
-    "path":"folders/Packages - YUI/Parser/Ys/Parselets.yy",
+    "path":"folders/Packages - YUI/Parser/Mx/Parselets.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

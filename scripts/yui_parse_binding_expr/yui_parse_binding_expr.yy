@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"yui_parse_binding_expr",
   "parent":{
-    "name":"Binding",
-    "path":"folders/Packages - YUI/Binding.yy",
+    "name":"Deprecated",
+    "path":"folders/Packages - YUI/Deprecated.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

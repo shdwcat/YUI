@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"YsScanner",
   "parent":{
-    "name":"Ys",
-    "path":"folders/Packages - YUI/Parser/Ys.yy",
+    "name":"Deprecated",
+    "path":"folders/Packages - YUI/Deprecated.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

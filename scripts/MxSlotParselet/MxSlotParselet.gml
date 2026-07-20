@@ -1,5 +1,10 @@
-/// @description
-function YsSlotParselet() : GsplPrefixParselet() constructor {
+/// @description here
+function MxSlotParselet() : GsplPrefixParselet() constructor {
+	
+	static initContext = function(parse_context) {
+		// add a map from slot keys to the sub expressions that reference them
+		parse_context.slot_expr_map = {};
+	}
 
 	static parse = function(parser, token) {
 		var path = token._lexeme;
@@ -7,7 +12,7 @@ function YsSlotParselet() : GsplPrefixParselet() constructor {
 		// given 'foo.bar.baz' get 'foo' and 'bar.baz'
 		var path_parts = string_split(path, ".", , 1);
 		var slot_key = path_parts[0];
-		
+				
 		var slot_values = parser.parse_context.slot_values;
 		if slot_values == undefined
 			throw yui_error("YsSlotParselet: parser does not have any slot_values");
@@ -31,21 +36,35 @@ function YsSlotParselet() : GsplPrefixParselet() constructor {
 			slot_value = YUI.Ys.parse(slot_value, parser.parse_context)
 		}
 		
+		
 		if yui_is_binding(slot_value) {
 			if sub_path == "" {
-				// if there's no sub path, return the binding itself
-				return slot_value;
+				// if there's no sub path, the result is the binding itself
+				var result = slot_value;
 			}
 			else {
-				return new YuiNestedBinding(slot_value, sub_path);
+				var result = new YuiNestedBinding(slot_value, sub_path);
 			}
 		}
 		else if sub_path == "" {
 			// if there is no sub path, return the value (wrapped)
-			return new YuiValueWrapper(slot_value);
+			var result = new YuiValueWrapper(slot_value);
 		}
 		else {
-			return new YuiValueBinding(slot_value, sub_path);
+			var result = new YuiValueBinding(slot_value, sub_path);
 		}
+		
+		// track the slot usage in the parse context
+		var slot_expr_map = parser.parse_context.slot_expr_map;		
+		var slot_expr_list = slot_expr_map[$ slot_key];
+		
+		if slot_expr_list == undefined {
+			slot_expr_map[$ slot_key] = [result];
+		}
+		else {
+			array_push(slot_expr_list, result);
+		}
+		
+		return result;
 	}
 }

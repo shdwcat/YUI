@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"YsTokenDefinition",
+  "%Name":"YsDefinition",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"YsTokenDefinition",
+  "name":"YsDefinition",
   "parent":{
-    "name":"Deprecated",
-    "path":"folders/Packages - YUI/Deprecated.yy",
+    "name":"Ys",
+    "path":"folders/Packages - YUI/Parser/Ys.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

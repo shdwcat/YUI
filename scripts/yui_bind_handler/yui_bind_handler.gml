@@ -16,7 +16,7 @@ function yui_bind_handler(handler, resources, slot_values, fallback_constructor 
 	
 	if is_string(handler) {
 		// parse the binding expression and make a handler for it
-		var binding = yui_parse_binding_expr(handler, resources, slot_values);
+		var binding = YUI.Ys.parse(handler, { resources, slot_values });
 		return new YuiBindingEventHandler(binding);
 	}
 	else {

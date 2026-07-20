@@ -1,4 +1,6 @@
 function MxParserDefinition() : GsplPrattParserDefinition(YS_TOKEN.EOF) constructor {
+	
+	self.context_parselets = [];
 
 	// feather disable GM2017
 	self.Literal = YuiValueWrapper;
@@ -18,13 +20,14 @@ function MxParserDefinition() : GsplPrattParserDefinition(YS_TOKEN.EOF) construc
 	// prefix
 	prefix(YS_TOKEN.STRING, new GsplLiteralParselet());
 	prefix(YS_TOKEN.NUMBER, new GsplLiteralParselet());
+	prefix(YS_TOKEN.PERCENT, new GsplLiteralParselet());
 	prefix(YS_TOKEN.COLOR, new GsplLiteralParselet());
 	prefix(YS_TOKEN.TRUE, new GsplLiteralParselet());
 	prefix(YS_TOKEN.FALSE, new GsplLiteralParselet());
 	prefix(YS_TOKEN.UNDEFINED, new GsplLiteralParselet());
 	
 	prefix(YS_TOKEN.BINDING_IDENTIFIER, new YsBindingParselet());
-	prefix(YS_TOKEN.SLOT_IDENTIFIER, new YsSlotParselet());
+	prefix(YS_TOKEN.SLOT_IDENTIFIER, new MxSlotParselet());
 	prefix(YS_TOKEN.RESOURCE_IDENTIFIER, new YsResourceParselet());
 	prefix(YS_TOKEN.HOST_IDENTIFIER, new MxHostParselet());
 	prefix(YS_TOKEN.IDENTIFIER, new MxIdentifierParselet());
@@ -103,4 +106,18 @@ function MxParserDefinition() : GsplPrattParserDefinition(YS_TOKEN.EOF) construc
 	infixOperatorLeft(YS_TOKEN.OR, YS_PRECEDENCE.LOGIC_OR);
 	
 	infixOperatorLeft(YS_TOKEN.QUESTION_QUESTION, YS_PRECEDENCE.CONDITIONAL);
+	
+	init();
+	
+	static init = function() {
+		var slot_parselet = prefix_parselets[YS_TOKEN.SLOT_IDENTIFIER];
+		context_parselets = [slot_parselet];
+	}
+	
+	static initContext = function(parse_context) {
+		var i = 0; repeat array_length(context_parselets) {
+			var parselet = context_parselets[i++];
+			parselet.initContext(parse_context);
+		}
+	}
 }

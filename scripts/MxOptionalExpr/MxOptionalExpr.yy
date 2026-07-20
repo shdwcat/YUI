@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"MxOptionalExpr",
   "parent":{
-    "name":"Structures",
-    "path":"folders/Packages - YUI/Binding/Structures.yy",
+    "name":"Exprs",
+    "path":"folders/Packages - YUI/Parser/Mx/Exprs.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

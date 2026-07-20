@@ -18,6 +18,9 @@ function YsDirectiveParselet() constructor {
 			case "trace":
 				expr.trace = true;
 				break;
+			case "defer":
+				expr = new MxDeferredExpr(expr);
+				break;
 				
 			case "final":
 			// TODO: maybe just wrap left_expr in a YuiFinalBinding?
@@ -38,7 +41,7 @@ function YsDirectiveParselet() constructor {
 				if is_instanceof(expr, YuiValueWrapper) {
 					var expr_value = expr.resolve();
 					if yui_is_binding_expr(expr_value) {
-						var inner_expr = yui_parse_binding_expr(expr_value, parser.resources, parser.slot_values);
+						var inner_expr = YUI.Ys.parse(expr_value, parser.parse_context);
 						expr = inner_expr;
 					}
 				}

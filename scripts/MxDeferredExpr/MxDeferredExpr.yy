@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"YsTokenDefinition",
+  "%Name":"MxDeferredExpr",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"YsTokenDefinition",
+  "name":"MxDeferredExpr",
   "parent":{
-    "name":"Deprecated",
-    "path":"folders/Packages - YUI/Deprecated.yy",
+    "name":"Exprs",
+    "path":"folders/Packages - YUI/Parser/Mx/Exprs.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -192,22 +192,3 @@ function yui_get_dimension_position(value, dimension) {
 		return value;
 	}
 }
-
-function yui_parse_number_or_percent(expr_value) {
-	static trim = ["%"];
-	if is_string(expr_value) {
-		if !string_ends_with(expr_value, "%")
-			throw yui_error($"Expected number or percent value, got '{expr_value}'");
-		
-		var number_token = string_trim_end(expr_value, trim);
-		var percent = real(number_token);
-		return new MxPercent(percent);
-	}
-	else {
-		return expr_value;
-	}
-}
-
-function MxPercent(value) constructor {
-	self.value = value / 100.0;
-}

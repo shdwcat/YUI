@@ -8,8 +8,7 @@ function ys_test(test_file, log_tokens = true) {
 	
 	var source = yui_string_from_file(project_test_file);
 	
-	var token_def = new YsTokenDefinition();
-	var scanner = new YsScanner(source, token_def);
+	var scanner = new MxScanner(source);
 	
 	gspl_log("scanning tokens");
 	var tokens = scanner.scanTokens();
