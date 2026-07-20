@@ -235,7 +235,11 @@
     {"id":{"name":"fnt_yui_subtitle","path":"fonts/fnt_yui_subtitle/fnt_yui_subtitle.yy",},},
     {"id":{"name":"fnt_yui_title","path":"fonts/fnt_yui_title/fnt_yui_title.yy",},},
     {"id":{"name":"scribble_fallback_font","path":"fonts/scribble_fallback_font/scribble_fallback_font.yy",},},
+    {"id":{"name":"yui_fnt_body_4k","path":"fonts/yui_fnt_body_4k/yui_fnt_body_4k.yy",},},
+    {"id":{"name":"yui_fnt_body_bold_4k","path":"fonts/yui_fnt_body_bold_4k/yui_fnt_body_bold_4k.yy",},},
     {"id":{"name":"yui_fnt_mono","path":"fonts/yui_fnt_mono/yui_fnt_mono.yy",},},
+    {"id":{"name":"yui_fnt_subtitle_4k","path":"fonts/yui_fnt_subtitle_4k/yui_fnt_subtitle_4k.yy",},},
+    {"id":{"name":"yui_fnt_title_4k","path":"fonts/yui_fnt_title_4k/yui_fnt_title_4k.yy",},},
     {"id":{"name":"_icon_credits","path":"notes/_icon_credits/_icon_credits.yy",},},
     {"id":{"name":"_yui_sprite_credits","path":"notes/_yui_sprite_credits/_yui_sprite_credits.yy",},},
     {"id":{"name":"credit","path":"notes/credit/credit.yy",},},
@@ -1092,5 +1096,7 @@
   "templateType":null,
   "TextureGroups":[
     {"$GMTextureGroup":"","%Name":"Default","autocrop":true,"border":2,"compressFormat":"bz2","customOptions":"","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"name":"Default","resourceType":"GMTextureGroup","resourceVersion":"2.0","targets":-1,},
+    {"$GMTextureGroup":"","%Name":"font_hd","autocrop":true,"border":2,"compressFormat":"bz2","customOptions":"","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"name":"font_hd","resourceType":"GMTextureGroup","resourceVersion":"2.0","targets":-1,},
+    {"$GMTextureGroup":"","%Name":"font_4k","autocrop":true,"border":2,"compressFormat":"bz2","customOptions":"","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"name":"font_4k","resourceType":"GMTextureGroup","resourceVersion":"2.0","targets":-1,},
   ],
 }

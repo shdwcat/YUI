@@ -169,3 +169,23 @@ theme:
     body:
       font: ~fnt_yui_body
       color: &text_color
+
+    bold:
+      font: ~fnt_yui_body_bold
+      color: &text_color
+
+    title_4k:
+      font: ~yui_fnt_title_4k
+      color: &text_color
+
+    subtitle_4k:
+      font: ~yui_fnt_subtitle_4k
+      color: &text_color
+
+    body_4k:
+      font: ~yui_fnt_body_4k
+      color: &text_color
+
+    bold_4k:
+      font: ~yui_fnt_body_bold_4k
+      color: &text_color
