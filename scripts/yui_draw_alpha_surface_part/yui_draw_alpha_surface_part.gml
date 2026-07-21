@@ -9,7 +9,14 @@ function yui_draw_alpha_surface_part(surface, left, top, width, height, x, y, ui
 	// need a shader to actually make animated alpha work
 	
 	var scale = 1 / ui_scale;
-	draw_surface_part_ext(surface, left, top, width, height, x, y, scale, scale, blend_color, alpha);
+	draw_surface_part_ext(
+		surface,
+		left * ui_scale,
+		top * ui_scale,
+		width * ui_scale,
+		height * ui_scale,
+		x, y, scale, scale,
+		blend_color, alpha);
 	
 	gpu_set_blendmode_ext(bm[0], bm[1]);
 }

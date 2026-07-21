@@ -39,10 +39,10 @@ if viewport_size {
 	if viewport_part.clipped {
 		var scissor = gpu_get_scissor();
 		gpu_set_scissor(
-			viewport_part.x + xoffset,
-			viewport_part.y + yoffset,
-			viewport_part.w,
-			viewport_part.h);
+			(viewport_part.x + xoffset) * ui_scale,
+			(viewport_part.y + yoffset) * ui_scale,
+			viewport_part.w * ui_scale,
+			viewport_part.h * ui_scale);
 	}
 }
 

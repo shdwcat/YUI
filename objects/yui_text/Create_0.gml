@@ -3,14 +3,6 @@
 // Inherit the parent event
 event_inherited();
 
-// document is undefined when inside a YuiSpriteBuilder, in which case we don't want to scale the size anyway
-if document == undefined {
-	ui_scale = 1;
-}
-else {
-	ui_scale = YUI.view_config.ui_scale;
-}
-
 use_scribble = false;
 scribble_element = undefined;
 typist = undefined;
