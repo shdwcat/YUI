@@ -61,6 +61,7 @@ function YuiDocument(_yui_file, cabinet) constructor {
 		var theme = yui_resolve_theme(document_data.root[$ "theme"]);
 		var slot_values = new YuiChainedMap(/* no parent */, {
 			theme: theme,
+			view_config: YUI.view_config,
 		});
 		
 		// resolve root element
