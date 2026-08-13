@@ -37,22 +37,29 @@ function YuiDragAndDrop(_props, cabinet_file) constructor {
 		props.import,
 		cabinet_file.directory,
 		cabinet_file.cabinet);
+		
+	// resolve the theme and include it in the slot values
+	var theme = yui_resolve_theme(); // TODO add theme prop
+	var slot_values = new YuiChainedMap(/* no parent */, {
+		theme: theme,
+		view_config: YUI.view_config,
+	});
 	
-	drag_condition = yui_bind(props.drag.condition, resources, undefined);
-	drag_element = yui_resolve_element(props.drag.visual, resources, undefined);
+	drag_condition = yui_bind(props.drag.condition, resources, slot_values);
+	drag_element = yui_resolve_element(props.drag.visual, resources, slot_values);
 	
-	drag_start = yui_bind_handler(props.drag[$ "start"], resources, undefined);
-	drag_action = yui_bind_handler(props.drag.action, resources, undefined);
+	drag_start = yui_bind_handler(props.drag[$ "start"], resources, slot_values);
+	drag_action = yui_bind_handler(props.drag.action, resources, slot_values);
 	
 	drop_hash_id = YuiCursorManager.participation_hash.getStringId(props.id + ".drop");
-	drop_condition = yui_bind(props.drop.condition, resources, undefined);
-	drop_element = yui_resolve_element(props.drop.visual, resources, undefined);
+	drop_condition = yui_bind(props.drop.condition, resources, slot_values);
+	drop_element = yui_resolve_element(props.drop.visual, resources, slot_values);
 	
-	drop_init = yui_bind_handler(props.drop[$ "init"], resources, undefined);
-	drop_action = yui_bind_handler(props.drop.action, resources, undefined);
-	drop_finished = yui_bind_handler(props.drop[$ "finished"], resources, undefined);
+	drop_init = yui_bind_handler(props.drop[$ "init"], resources, slot_values);
+	drop_action = yui_bind_handler(props.drop.action, resources, slot_values);
+	drop_finished = yui_bind_handler(props.drop[$ "finished"], resources, slot_values);
 	
-	on_cancel = yui_bind_handler(props.on_cancel, resources, undefined);
+	on_cancel = yui_bind_handler(props.on_cancel, resources, slot_values);
 	
 	
 	static canStart = function(source_data) {

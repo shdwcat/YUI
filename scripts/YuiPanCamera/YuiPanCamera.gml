@@ -18,8 +18,15 @@ function YuiPanCamera(_props, _resources) constructor {
 	
 	props = yui_apply_props(_props);
 	resources = _resources;
+		
+	// resolve the theme and include it in the slot values
+	var theme = yui_resolve_theme(); // TODO add theme prop
+	var slot_values = new YuiChainedMap(/* no parent */, {
+		theme: theme,
+		view_config: YUI.view_config,
+	});
 	
-	cursor_element = yui_resolve_element(props.cursor_visual, resources, undefined);
+	cursor_element = yui_resolve_element(props.cursor_visual, resources, slot_values);
 	
 	static canStart = function(source_data) {
 		return true;
