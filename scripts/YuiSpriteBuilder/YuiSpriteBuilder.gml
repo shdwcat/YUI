@@ -5,6 +5,7 @@ function YuiSpriteBuilder(_props, _resources, _slot_values) constructor {
 		
 		// the YUI content to draw to the sprite
 		content: undefined,
+		size: undefined,
 		
 		// optional sprite to use as alpha mask against final result
 		alpha_mask_sprite: undefined,
@@ -12,6 +13,7 @@ function YuiSpriteBuilder(_props, _resources, _slot_values) constructor {
 	
 	props = yui_apply_props(_props, _props[$ "template_def"]);
 	alpha_mask_sprite = yui_bind(props.alpha_mask_sprite, _resources, _slot_values);
+	size = yui_bind(props.size, _resources, _slot_values);
 	
 	content_element = yui_resolve_element(props.content, _resources, _slot_values);
 	
@@ -39,20 +41,20 @@ function YuiSpriteBuilder(_props, _resources, _slot_values) constructor {
 		
 		#region validation
 		if width == undefined {
-			if is_numeric(content_element.size.w)
-				width = content_element.size.w
+			if is_numeric(size.w)
+				width = size.w * YUI.view_config.ui_scale;
 			else
-				throw yui_error($"YuiSpriteBuilder: width not specified, and content_element width '{content_element.size.w}' is not numeric");
+				throw yui_error($"YuiSpriteBuilder: width not specified, and width '{size.w}' is not numeric");
 		}
 		else if !is_numeric(width) {
 				throw yui_error($"YuiSpriteBuilder:  width '{width}' is not numeric");
 		}
 		
 		if height == undefined {
-			if is_numeric(content_element.size.h)
-				height = content_element.size.h
+			if is_numeric(size.h)
+				height = size.h * YUI.view_config.ui_scale;
 			else
-				throw yui_error($"YuiSpriteBuilder: height not specified, and content_element height '{content_element.size.h}' is not numeric");
+				throw yui_error($"YuiSpriteBuilder: height not specified, and height '{size.h}' is not numeric");
 		}
 		else if !is_numeric(height) {
 				throw yui_error($"YuiSpriteBuilder:  height '{height}' is not numeric");
