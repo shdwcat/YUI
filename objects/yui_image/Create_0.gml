@@ -93,11 +93,11 @@ arrange = function(available_size, viewport_size) {
 	
 	// check if the sprite is bigger than the space
 	if sprite_width > padded_rect.w || sprite_height > padded_rect.h {
-		if is_numeric(layout_props.size.w) {
+		if is_numeric(bound_values.w) {
 			// scale down
 			desired_size.w = padded_rect.w + padding.w;
 		}
-		if is_numeric(layout_props.size.h) {
+		if is_numeric(bound_values.h) {
 			// scale down
 			desired_size.h = padded_rect.h + padding.h;
 		}
