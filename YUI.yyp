@@ -1012,6 +1012,7 @@
     {"id":{"name":"YuiObjectAttachmentElement","path":"scripts/YuiObjectAttachmentElement/YuiObjectAttachmentElement.yy",},},
     {"id":{"name":"YuiObjectBinding","path":"scripts/YuiObjectBinding/YuiObjectBinding.yy",},},
     {"id":{"name":"YuiOperatorBinding","path":"scripts/YuiOperatorBinding/YuiOperatorBinding.yy",},},
+    {"id":{"name":"YuiOverlayLayout","path":"scripts/YuiOverlayLayout/YuiOverlayLayout.yy",},},
     {"id":{"name":"YuiPadding","path":"scripts/YuiPadding/YuiPadding.yy",},},
     {"id":{"name":"YuiPanCamera","path":"scripts/YuiPanCamera/YuiPanCamera.yy",},},
     {"id":{"name":"YuiPanelElement","path":"scripts/YuiPanelElement/YuiPanelElement.yy",},},

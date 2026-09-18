@@ -7,6 +7,8 @@ function yui_resolve_layout(layout_type) {
 			return YuiVerticalLayout;
 		case "horizontal":
 			return YuiHorizontalLayout;
+		case "overlay":
+			return YuiOverlayLayout;
 		case "canvas":
 			return YuiCanvasLayout;
 		case "grid":
