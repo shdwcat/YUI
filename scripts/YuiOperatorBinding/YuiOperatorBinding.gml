@@ -72,6 +72,15 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 						// [a] $+ [b] -> [a, b]
 						return array_concat(left_val, right_val);
 					}
+					else if right_val == undefined {
+						// [a] $+ undefined -> [a]
+						if is_instanceof(left, MxListExpression)
+							// if we know the the value came from a list expr we don't need to copy it
+							return left_val;
+						else
+							// make sure to copy the array so that the original isn't modified
+							return variable_clone(left_val, 0);
+					}
 					else {
 						// [a] $+ b -> [a, b]
 						var left_count = array_length(left_val);
@@ -82,12 +91,24 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 					}
 				}
 				else if is_array(right_val) {
-					// a $+ [b] -> [a, b]
-					var right_count = array_length(right_val);
-					var result = array_create(right_count + 1);
-					result[0] = left_val;
-					array_copy(result, 1, right_val, 0, right_count);
-					return result;
+					if left_val == undefined 
+					{
+						// undefined $+ [b] -> [b]
+						if is_instanceof(right, MxListExpression)
+							// if we know the the value came from a list expr we don't need to copy it
+							return right_val;
+						else
+							// make sure to copy the array so that the original isn't modified
+							return variable_clone(right_val, 0);
+					}
+					else {
+						// a $+ [b] -> [a, b]
+						var right_count = array_length(right_val);
+						var result = array_create(right_count + 1);
+						result[0] = left_val;
+						array_copy(result, 1, right_val, 0, right_count);
+						return result;
+					}
 				}
 				else if left_val == undefined {
 					// NOTE: this gets hairy if e.g. right_val is a string. do I want "foo" or ["foo"]?
@@ -95,6 +116,12 @@ function YuiOperatorBinding(left, operator, right) : YuiExpr() constructor {
 				}
 				else if right_val == undefined {
 					return [left_val]; // we know it's not an array here
+				}
+				else if is_struct(left_val) {
+					throw mx_error($"Cannot use $+ with a struct and {instanceof(right_val)}");
+				}
+				else if is_struct(right_val) {
+					throw mx_error($"Cannot use $+ with a {instanceof(left_val)} and struct");
 				}
 				else {
 					return string(left_val) + string(right_val);
