@@ -66,11 +66,8 @@ function yui_load_resource_file(filepath, cabinet, base_folder) {
 			
 			// post-process resource
 			var resource = file_resources[$resource_name];
-			if is_struct(resource) && resource[$ "type"] == "data" {
-				// data resources don't have access to slots or other resources
-				// TODO should have access to imported resources...
-				var data = yui_bind_struct(resource, undefined, undefined, true, true)
-				resource = data;
+			if is_struct(resource) {
+				resource = yui_resolve_resource(resource);
 			}
 			
 			resource_map[$resource_name] = resource;
@@ -78,4 +75,18 @@ function yui_load_resource_file(filepath, cabinet, base_folder) {
 	}
 	
 	return resource_map;
+}
+
+function yui_resolve_resource(props) {
+	var type = props[$ "type"];
+	switch type {
+		case "data":
+			// data resources don't have access to slots or other resources
+			// TODO should have access to imported resources...
+			var data = yui_bind_struct(props, undefined, undefined, true, true)
+			return data;
+		
+		default:
+			return props
+	}
 }
