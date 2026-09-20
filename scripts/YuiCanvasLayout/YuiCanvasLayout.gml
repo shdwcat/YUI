@@ -2,6 +2,8 @@
 function YuiCanvasLayout(alignment, spacing) : YuiLayoutBase(alignment, spacing) constructor {
 	static is_live = false;
 	
+	static default_canvas_position = new YuiCanvasPosition();
+	
 	self.live_items = undefined;
 	
 	// elements may use this to calculate their own draw size
@@ -21,7 +23,7 @@ function YuiCanvasLayout(alignment, spacing) : YuiLayoutBase(alignment, spacing)
 				var item = items[i];
 				var canvas = item.canvas;
 				
-				if canvas.is_bound {
+				if canvas != undefined and canvas.is_bound {
 					is_live = true;
 					live_items[i] = item.canvas;
 				}
@@ -77,7 +79,7 @@ function YuiCanvasLayout(alignment, spacing) : YuiLayoutBase(alignment, spacing)
 		var i = 0; repeat array_length(items) {
 			
 			var item = items[i];
-			var canvas = item.canvas;
+			var canvas = item.canvas ?? default_canvas_position;
 			
 			// if the item is live, get the live value instead
 			if canvas.is_bound {

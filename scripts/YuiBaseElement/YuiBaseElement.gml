@@ -112,7 +112,10 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		size.max_w = yui_bind_and_resolve(size.max_w, resources, slot_values);
 		size.max_h = yui_bind_and_resolve(size.max_h, resources, slot_values);
 	
-		canvas = new YuiCanvasPosition(props.canvas, resources, slot_values, props.id);
+		canvas = props.canvas == undefined
+			? undefined
+			: new YuiCanvasPosition(props.canvas, resources, slot_values, props.id);
+			
 		flex = new YuiFlexValue(props.flex);
 		
 		padding = new YuiPadding(yui_bind(props[$"padding"] ?? 0, resources, slot_values));
