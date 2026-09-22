@@ -16,7 +16,8 @@ function yui_load_resource_file(filepath, cabinet, base_folder) {
 		// get the list of files in the folder
 		var filepaths = gumshoe(resource_filepath, cabinet.extension, false);
 		var i = 0; repeat array_length(filepaths) {
-			filepaths[i] = string_delete(yui_string_after(filepaths[i], resource_filepath), 1, 1);
+			// Using the string_length is all we need to trim the resource_filepath
+			filepaths[i] = string_delete(filepaths[i], 1, string_length(resource_filepath));
 			i++;
 		}
 		
