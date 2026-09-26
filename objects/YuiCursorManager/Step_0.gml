@@ -1,6 +1,6 @@
 /// @description check cursor hover and run interaction
 
-var print_debug = keyboard_check_pressed(vk_shift)
+var print_debug = keyboard_check_pressed(vk_control);
 
 // get gui mouse position once per frame
 var mouse_gui_x = device_mouse_x_to_gui(device_index);
