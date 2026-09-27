@@ -3,6 +3,9 @@
 // clear the sprite so that we don't accidentally draw the YUI sprite when no sprite is bound
 sprite_index = -1;
 
+sprite_w = 0;
+sprite_h = 0;
+
 mirror_x = false;
 mirror_y = false;
 
@@ -106,10 +109,22 @@ arrange = function(available_size, viewport_size) {
 		// other - draw_sprite_part to clip the image
 	}
 	
+	if trace
+		mx_break();
+	
 	// might need to use bbox size to accomodate rotated sprites?
 	var drawn_size = element_size.constrainDrawSize(available_size, desired_size);
 	
-	yui_resize_instance(drawn_size.w, drawn_size.h);
+	// yui_resize_instance doesn't check for the sprite size changing so we need to check for that
+	var new_sprite_w = sprite_get_width(sprite_index);
+	var new_sprite_h = sprite_get_height(sprite_index);
+	var force_resize = new_sprite_w != sprite_w || new_sprite_h != sprite_h;
+	if force_resize {
+		sprite_w = new_sprite_w;
+		sprite_h = new_sprite_h;
+	}
+	
+	yui_resize_instance(drawn_size.w, drawn_size.h, force_resize);
 	
 	// apply mirroring after sizing
 	if mirror_x {

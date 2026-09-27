@@ -1,10 +1,12 @@
 /// @desc  resizes an instance to the specified width and height
 /// @param {real} width
 /// @param {real} height
-function yui_resize_instance(width, height) {
+/// @param {boolean} force_resize used to override resize checking e.g. if sprite size changes
+function yui_resize_instance(width, height, force_resize = false) {
 	
 	is_size_changed =
-		draw_size.x != x
+		force_resize
+		|| draw_size.x != x
 		|| draw_size.y != y
 		|| draw_size.w != width
 		|| draw_size.h != height;
