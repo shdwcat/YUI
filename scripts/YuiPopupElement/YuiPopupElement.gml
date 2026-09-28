@@ -10,6 +10,8 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		// popups default to being a cursor layer
 		is_cursor_layer: true,
 		
+		inherit_opacity: false, // on our own layer so don't need to inherit the opacity
+		
 		background: undefined,
 		bg_blend_color: c_white, // optional color to blend the background sprite
 		

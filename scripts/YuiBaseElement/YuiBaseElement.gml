@@ -21,6 +21,10 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		xoffset: 0,
 		yoffset: 0,
 		
+		inherit_opacity: true, // whether to inherit opacity from parent element
+		inherit_enabled: true, // whether to inherit enabled from parent element
+		disabled_opacity: 0.5, // opacity factor to use when element is disabled
+		
 		canvas: undefined,
 		flex: undefined, // default behavior is "auto"
 		
@@ -128,6 +132,10 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		enabled = yui_bind(props.enabled, resources, slot_values);
 		visible = yui_bind(props.visible, resources, slot_values);
 		opacity = yui_bind(props.opacity, resources, slot_values);
+		
+		inherit_opacity = props.inherit_opacity;
+		inherit_enabled = props.inherit_enabled;
+		disabled_opacity = props.disabled_opacity;
 		
 		item_key = yui_bind(props.item_key, resources, slot_values);
 		tooltip = yui_bind(props.tooltip, resources, slot_values);

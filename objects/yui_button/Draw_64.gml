@@ -4,14 +4,18 @@ var show_highlight = (highlight || focused)
 	&& highlight_color != undefined
 	&& enabled;
 	
+if trace
+	mx_break()
+	
 if show_highlight and trace
 	mx_break()
 	
 active_bg_blend_color = show_highlight
 	? highlight_color
-	: (enabled
-		? bg_blend_color
-		: c_white);
+	: bg_blend_color;
+	//: (enabled
+	//	? bg_blend_color
+	//	: c_white);
 
 // Inherit the parent event
 event_inherited();

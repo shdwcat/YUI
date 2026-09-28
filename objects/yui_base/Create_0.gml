@@ -55,6 +55,12 @@ inherit_enabled = true;
 // (e.g. 0.5 opacity with 0.5 parent opacity = 0.25 opacity)
 inherit_opacity = true;
 
+// whether to inherit enabled value from parent
+inherit_enabled = true;
+
+// opacity factor for disabled elements
+disabled_opacity = undefined;
+
 // this only applies alpha for bg_color set on an element placed in the room editor
 bg_alpha = ((bg_color & 0xFF000000) >> 24) / 255;
 
@@ -147,6 +153,10 @@ initLayout = function() {
 	data_source_value = new YuiBindableValue(yui_element.data_source);
 	enabled_value = new YuiBindableValue(yui_element.enabled);
 	visible_value = new YuiBindableValue(yui_element.visible);
+	
+	inherit_opacity = yui_element.inherit_opacity;
+	inherit_enabled = yui_element.inherit_enabled;
+	disabled_opacity = yui_element.disabled_opacity;
 	
 	// animatable values
 	opacity_value = new YuiBindableValue(yui_element.opacity, yui_element.getDefaultAnim("opacity"));
@@ -325,7 +335,10 @@ process = function yui_base__process(became_visible) {
 	
 	var old_opacity = opacity;
 	var base_opacity = inherit_opacity and parent ? parent.opacity : 1;
-	opacity = base_opacity * opacity_value.value * (1 - (!enabled * 0.5));
+	
+	// when enabled is true, this will be: 1 - 0 = 1
+	// when enabled is false, this will be e.g.: 1 - (1 * (1 - 0.6)) = 1 - 0.4 = 0.6
+	opacity = base_opacity * opacity_value.value * (1 - (!enabled * (1 - disabled_opacity)));
 	
 	// referenced by anything that needs to rebuild when opacity changes (e.g. text element)
 	opacity_changed = opacity != old_opacity;

@@ -5,7 +5,7 @@ event_inherited();
 
 // don't inherit parent enabled/opacity since we're on a new layer
 inherit_enabled = false;
-inherit_opacity = false;
+//inherit_opacity = false;
 
 border_arrange = arrange;
 /// @param {struct} available_size
