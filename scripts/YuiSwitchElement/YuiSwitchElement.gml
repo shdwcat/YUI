@@ -64,7 +64,7 @@ function YuiSwitchElement(_props, _resources, _slot_values) : YuiBaseElement(_pr
 		if element != undefined {
 			
 			// resolve the case props to elements as needed (and store on the map for future use)
-			if instanceof(element) == "struct" {
+			if !is_instanceof(element, YuiBaseElement) {
 				element = yui_resolve_element(element, resources, slot_values);
 				case_elements[$ case_key] = element;
 			}
