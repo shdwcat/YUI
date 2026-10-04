@@ -13,7 +13,7 @@ function yui_resolve_resource_imports(resources, imports, base_folder, cabinet) 
 		
 			if variable_struct_exists(merged_resources, name)
 			&& merged_resources[$name] != document_resource[$name] {
-				yui_warning("Overwriting resource with name:", name);
+				yui_warning("yui_resolve_resource_imports: Overwriting resource with name:", name);
 			}
 		
 			var document_resource = variable_struct_get(resources, name);

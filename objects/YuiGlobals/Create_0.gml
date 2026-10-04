@@ -77,6 +77,10 @@ var yui_file_generator = function (text, cabinet_file) {
 			var theme = yui_init_theme(snap, cabinet_file.file_id, cabinet_file.directory);
 			return theme;
 			
+		case "resources":
+			var resources = yui_make_resources_from_file(snap, cabinet_file)
+			return resources;
+			
 		default:
 			return snap;
 	}

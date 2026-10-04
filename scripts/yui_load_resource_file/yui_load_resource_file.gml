@@ -38,15 +38,20 @@ function yui_load_resource_file(filepath, cabinet, base_folder) {
 	
 	// load the data
 	var resource_data = resource_file.tryRead();
+	return resource_data;
+}
+
+// called from YuiGlobals
+function yui_make_resources_from_file(resource_data, cabinet_file) {
 	
 	// resolve imports
 	var imports = resource_data[$ "import"];
 	if imports != undefined {
 			
 		// imports resolve relative to the current file
-		var relative_folder = filename_dir(resource_filepath);
+		var relative_folder = cabinet_file.directory;
 			
-		var resource_map = yui_load_and_merge_resource_files(imports, cabinet, relative_folder);
+		var resource_map = yui_load_and_merge_resource_files(imports, cabinet_file.cabinet, relative_folder);
 	}
 	else {
 		var resource_map = {};
@@ -61,7 +66,7 @@ function yui_load_resource_file(filepath, cabinet, base_folder) {
 			
 			if variable_struct_exists(resource_map, resource_name)
 			&& resource_map[$resource_name] != file_resources[$resource_name] {
-				yui_warning("Overwriting resource with name:", resource_name);
+				yui_warning("yui_make_resources_from_file: Overwriting resource with name:", resource_name);
 			}
 			
 			// post-process resource

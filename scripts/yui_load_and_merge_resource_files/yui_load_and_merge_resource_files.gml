@@ -14,7 +14,7 @@ function yui_load_and_merge_resource_files(filepaths, cabinet, base_folder) {
 			
 			if variable_struct_exists(resource_map, resource_name)
 			&& resource_map[$resource_name] != import_resources[$resource_name] {
-				yui_warning("Overwriting resource with name:", resource_name);
+				yui_warning("yui_load_and_merge_resource_files: Overwriting resource with name:", resource_name);
 			}
 			
 			resource_map[$resource_name] = import_resources[$resource_name];
