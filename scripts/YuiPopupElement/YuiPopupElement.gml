@@ -11,6 +11,7 @@ function YuiPopupElement(_props, _resources, _slot_values) : YuiBaseElement(_pro
 		is_cursor_layer: true,
 		
 		inherit_opacity: false, // on our own layer so don't need to inherit the opacity
+		inherit_enabled: false,
 		
 		background: undefined,
 		bg_blend_color: c_white, // optional color to blend the background sprite
