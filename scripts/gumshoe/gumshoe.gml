@@ -175,7 +175,7 @@ function __gumshoe_struct(_directory, _extension, _match_all_mask, _path_sep, _g
         {
             //Add this matching file to the output array
             var value = _generator ? _generator(_directory, _file, _extension, global.__gumshoe_count) : global.__gumshoe_count;
-            variable_struct_set(_result, _file, value);
+            variable_struct_set(_result, string_lower(_file), value);
             ++global.__gumshoe_count;
         }
     }

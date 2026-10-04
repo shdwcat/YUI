@@ -27,7 +27,7 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 			folder_path,
 			extension,
 			/* returnStruct */ false,
-			_force_lowercase,
+			false,
 			/* structValueGenerator */ undefined,
 			/* forceForwardSlash */ true);
 			
@@ -35,7 +35,7 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 			folder_path,
 			extension,
 			/* returnStruct */ true,
-			_force_lowercase,
+			false,
 			__generateCabinetItem,
 			/* forceForwardSlash */ true);
 	}
@@ -47,6 +47,11 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 	
 	// gets the CabinetFile corresponding to the provided 'path' if it exists
 	static file = function(path, is_included_file = true) {
+		// This ensures that weird paths are auto resolved, if in case for some reason they are not.
+		path = string_replace_all(path, "/", "\\");
+		path = string_lower(path);
+		path = string_replace_all(path, "\\", "/");
+		path = string_replace_all(path, " ", "_");
 		var file = flat_map[$ __fixPath(path, is_included_file)];
 		if file == undefined && CABINET_VERBOSE_LOGGING {
 			show_debug_message("Unable to find file:");
@@ -109,6 +114,10 @@ function Cabinet(folder_path, extension = ".*", options = undefined) constructor
 			options.cabinet_file_customizer(result);
 		}
 		
+		// Force lowercase and replace spaces with underline, due to datafile shennanigans
+		fullpath = string_lower(fullpath);
+		fullpath = string_replace_all(fullpath, " ", "_");
+
 		// point the flat_map entry at the cabinet file
 		flat_map[$ fullpath] = result;
 		
