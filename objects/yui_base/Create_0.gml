@@ -2,6 +2,9 @@
 
 event_inherited();
 
+_id = yui_element.props.id;
+trace = yui_element.props.trace;
+
 default_props = {};
 
 // the YuiElement for this render object
@@ -123,8 +126,6 @@ destroy = function() {
 }
 
 initLayout = function() {
-	_id = yui_element.props.id;
-	trace = yui_element.props.trace;
 	
 	element_size = yui_element.size;
 	canvas = yui_element.canvas;

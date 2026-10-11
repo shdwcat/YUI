@@ -13,6 +13,9 @@ if background_value.update(data_source, self) || !background_initalized {
 		bg_sprite = bg;
 		bg_color = undefined;
 		bg_alpha = 1;
+		
+		// TODO probably should check if the sprite is nine-sliced before applying the
+		// ui scaling down where it's drawn
 	}
 	else if bg != undefined {
 		bg_sprite = undefined;
@@ -51,11 +54,30 @@ if bg_alpha > 0 {
 	
 	if bg_sprite != undefined {
 		// use 9slicing
-		draw_sprite_stretched_ext(
-			bg_sprite, 0,
-			x, y, draw_size.w, draw_size.h,
-			active_bg_blend_color, bg_alpha * opacity);
+		
+		if apply_sprite_scaling and ui_scale != 1 {
+			// use matrix to get the 9slice background to upscale correctly for scaled UI
+			var matrix = matrix_build(x,y,depth,0,0,0,1/ui_scale,1/ui_scale,1);
+			matrix_set(matrix_world,matrix);
+
+			draw_sprite_stretched_ext(
+				bg_sprite, 0,
+				0, 0,
+				draw_size.w * ui_scale, draw_size.h * ui_scale,
+				active_bg_blend_color, bg_alpha * opacity);
+
+			matrix_set(matrix_world,matrix_build_identity())
+		}
+		else
+		{
+			draw_sprite_stretched_ext(
+				bg_sprite, 0,
+				x, y,
+				draw_size.w, draw_size.h,
+				active_bg_blend_color, bg_alpha * opacity);
+		}
 	}
+	
 	else if bg_color != undefined {
 		draw_sprite_ext(
 			yui_white_pixel, 0,

@@ -62,6 +62,8 @@ onLayoutInit = function() {
 	draw_border =
 		border_thickness > 0 
 		&& (has_border_color || has_focus_color);
+	
+	apply_sprite_scaling = yui_element.apply_sprite_scaling;
 }
 
 build = function() {

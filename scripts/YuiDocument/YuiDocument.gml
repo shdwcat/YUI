@@ -62,6 +62,7 @@ function YuiDocument(_yui_file, cabinet) constructor {
 		var slot_values = new YuiChainedMap(/* no parent */, {
 			theme: theme,
 			view_config: YUI.view_config,
+			ui_scale: YUI.view_config.ui_scale,
 		});
 		
 		// resolve root element

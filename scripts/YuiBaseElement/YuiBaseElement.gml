@@ -43,6 +43,9 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 		interactions: [], // these are defined in data!
 		
 		sounds: undefined,
+		
+		// whether to apply UI scaling to the background sprite
+		apply_sprite_scaling: true,
 	};
 	
 	// common events across elements
@@ -203,6 +206,8 @@ function YuiBaseElement(_props, _resources, _slot_values) constructor {
 			|| yui_is_live_binding(size.h)
 	
 		tooltip_element = undefined;
+	
+		apply_sprite_scaling = props.apply_sprite_scaling;
 	}
 	
 	static getDefaultAnim = function(anim_name) {

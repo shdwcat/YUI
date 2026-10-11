@@ -1,3 +1,7 @@
+// shared matrix for fast matrix operations
+global.__YUI_QUICK_MATRIX = matrix_build_identity();
+#macro YUI_QUICK_MATRIX global.__YUI_QUICK_MATRIX;
+
 YUI();
 
 // core access to global YUI functionality
